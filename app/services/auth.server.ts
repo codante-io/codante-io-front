@@ -109,7 +109,7 @@ export async function user({
 
       const session = await getSession(request.headers.get('Cookie'));
       if (session.has('user')) {
-        return redirect(`/${params.name}`, {
+        return redirect(`/${params?.name}`, {
           headers: {
             'Set-Cookie': await sessionStorage.destroySession(session),
           },

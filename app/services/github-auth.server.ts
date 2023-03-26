@@ -7,9 +7,9 @@ export let authenticator = new Authenticator<any>(sessionStorage);
 
 let gitHubStrategy = new GitHubStrategy(
   {
-    clientID: '50cdac68fc6c444bb0d3',
-    clientSecret: '84795e73b18a89b3cf6cc65eb14f1ff509be49e9',
-    callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
+    clientID: process.env.GITHUB_ID as string,
+    clientSecret: process.env.GITHUB_SECRET as string,
+    callbackURL: process.env.GITHUB_CALLBACK_URL as string
   },
   async (params) => {
     // get access token from github
