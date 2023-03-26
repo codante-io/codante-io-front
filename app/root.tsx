@@ -1,4 +1,4 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -6,29 +6,45 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
-import stylesheet from "~/tailwind.css";
+  useLoaderData,
+} from '@remix-run/react';
+import Footer from '~/components/footer';
+import Navbar from '~/components/navbar';
+import stylesheet from '~/tailwind.css';
+import { user } from './services/auth.server';
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  { rel: 'stylesheet', href: stylesheet },
+  { rel: 'icon', href: '/favicon.svg' },
 ];
 
-
 export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "New Remix App",
-  viewport: "width=device-width,initial-scale=1",
+  charset: 'utf-8',
+  title: 'Codante - Cursos e Projetos Online de Programação',
+  viewport: 'width=device-width,initial-scale=1',
 });
 
+export function loader({ request }: { request: Request }) {
+  return user({ request });
+}
+
+
 export default function App() {
+  const user = useLoaderData();
   return (
     <html lang="en">
       <head>
         <Meta />
         <Links />
       </head>
-      <body>
-        <Outlet />
+      <body className="bg-gray-800 text-white">
+        <div>
+          <Navbar user={user} />
+          <main className='min-h-screen mx-auto max-w-7xl'>
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
