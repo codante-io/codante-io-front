@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from '@remix-run/node';
 import axios from './axios.server';
-import type { AxiosError, AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -58,7 +58,7 @@ export async function logout({ request }: { request: Request }) {
   let { token } = session.get('user');
 
   try {
-    const res = await axios.post(
+    await axios.post(
       '/logout',
       {},
       {
