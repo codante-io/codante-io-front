@@ -106,7 +106,6 @@ export async function user({
   } catch (error: any) {
     // se o usuário não estiver autenticado, destrua a sessão e redirecione de volta.
     if (error?.response?.status === 401) {
-
       const session = await getSession(request.headers.get('Cookie'));
       if (session.has('user')) {
         return redirect(`/${params?.name}`, {
@@ -132,5 +131,40 @@ export async function requireAuth({ request }: { request: Request }) {
 
   if (!token) {
     throw redirect('/login');
+  }
+}
+
+export async function resetPassword({
+  token,
+  email,
+  password,
+  passwordConfirmation,
+}: {
+  token: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}) {
+  try {
+    const res = await axios.post('/reset-password', {
+      token,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+    });
+    console.log(res);
+  } catch (error: any) {
+    console.log(error);
+    return { errors: Object.values(error?.response?.data?.errors).flat() };
+  }
+}
+
+export async function sendPasswordLink({ email }: { email: string }) {
+  try {
+    const res = await axios.post('/forgot-password', { email });
+    console.log(res);
+  } catch (error: any) {
+    console.log(error);
+    return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
 }
