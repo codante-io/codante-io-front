@@ -157,6 +157,10 @@ export async function resetPassword({
     console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
+
+  return {
+    redirector: redirect('/login'),
+  };
 }
 
 export async function sendPasswordLink({ email }: { email: string }) {

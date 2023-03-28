@@ -8,11 +8,11 @@ export async function action({request}: {request: Request}) {
   const password = formData.get('password') as string;
   const passwordConfirmation = formData.get('password_confirmation') as string;
 
-  await resetPassword({email, token, password, passwordConfirmation})
+  const { errors, redirector } = await resetPassword({email, token, password, passwordConfirmation})
 
-  console.log({email, token, password, passwordConfirmation})
-  return({email, token, password, passwordConfirmation})
+  console.log({errors, redirector})
 
+  return errors || redirector;
 }
 
 export async function loader({request, params}: {request: Request, params: {token: string}}) {
