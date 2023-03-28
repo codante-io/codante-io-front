@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { redirect } from '@remix-run/node';
+import axios from "axios";
+import { redirect } from "@remix-run/node";
 
 let client = axios.create({
   baseURL: process.env.API_HOST,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type': 'application/json',
+    "X-Requested-With": "XMLHttpRequest",
+    "Content-Type": "application/json",
   },
 });
 

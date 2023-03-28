@@ -1,10 +1,14 @@
-import { json } from '@remix-run/node';
-import { useLoaderData, Link, Outlet } from '@remix-run/react';
-import { getWorkshops } from '~/models/workshop.server';
-import { user, currentToken } from '~/services/auth.server';
+import { json } from "@remix-run/node";
+import { useLoaderData, Link, Outlet } from "@remix-run/react";
+import { getWorkshops } from "~/models/workshop.server";
+import { user, currentToken } from "~/services/auth.server";
 
 export const loader = async ({ request }: { request: Request }) => {
-  return json({ workshops: await getWorkshops(), user: await user({ request }), apikey: await  currentToken({request})});
+  return json({
+    workshops: await getWorkshops(),
+    user: await user({ request }),
+    apikey: await currentToken({ request }),
+  });
 };
 export default function Workshops() {
   const { workshops, user, apikey } = useLoaderData<typeof loader>();
@@ -24,8 +28,7 @@ export default function Workshops() {
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <pre>{JSON.stringify(apikey, null, 2)}</pre>
       <Link to="/">Home</Link>
-          <Outlet />
-          
+      <Outlet />
     </main>
   );
 }

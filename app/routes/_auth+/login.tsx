@@ -1,11 +1,11 @@
-import { Form, Link, useActionData } from '@remix-run/react';
-import { login } from '~/services/auth.server';
+import { Form, Link, useActionData } from "@remix-run/react";
+import { login } from "~/services/auth.server";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
 
-  let email = formData.get('email') as string;
-  let password = formData.get('password') as string;
+  let email = formData.get("email") as string;
+  let password = formData.get("password") as string;
 
   let { errors, redirector } = await login({ request, email, password });
 
@@ -31,7 +31,9 @@ export default function Login() {
         <div>
           <h1>Login com githubssss</h1>
           <Form action="/auth/github" method="post">
-            <button className='mt-4 rounded bg-blue-900 text-white p-4'>Login with GitHub</button>
+            <button className="mt-4 rounded bg-blue-900 text-white p-4">
+              Login with GitHub
+            </button>
           </Form>
         </div>
       </div>

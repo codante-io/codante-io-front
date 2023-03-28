@@ -1,12 +1,12 @@
-import type { ActionArgs } from '@remix-run/node';
-import { redirect } from '@remix-run/node';
-import { authenticator } from '~/services/github-auth.server';
+import type { ActionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { authenticator } from "~/services/github-auth.server";
 
 export async function loader() {
-  return redirect('/login');
+  return redirect("/login");
 }
 
 export async function action({ request }: ActionArgs) {
-  return authenticator.authenticate('github', request)
+  return authenticator.authenticate("github", request);
   // return null;
 }
