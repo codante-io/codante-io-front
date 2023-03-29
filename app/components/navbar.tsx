@@ -1,11 +1,11 @@
-import { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link, useMatches } from '@remix-run/react';
-import { BiUserCircle } from 'react-icons/bi';
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link, useMatches } from "@remix-run/react";
+import { BiUserCircle } from "react-icons/bi";
 
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Example({ user }) {
@@ -14,18 +14,17 @@ export default function Example({ user }) {
 
   const navigation = [
     {
-      name: 'Workshops',
-      href: '/workshops',
-      current: id.includes('workshops'),
+      name: "Workshops",
+      href: "/workshops",
+      current: id.includes("workshops"),
     },
     {
-      name: 'Mini Projects',
-      href: '/projects',
-      current: id.includes('projects'),
+      name: "Mini Projects",
+      href: "/projects",
+      current: id.includes("projects"),
     },
-    { name: 'Agenda', href: '/agenda', current: id.includes('agenda') },
+    { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
   ];
-
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -69,11 +68,11 @@ export default function Example({ user }) {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "rounded-md px-3 py-2 text-sm font-medium"
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </a>
@@ -114,8 +113,8 @@ export default function Example({ user }) {
                             <a
                               href="#"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Dashboard
@@ -127,8 +126,8 @@ export default function Example({ user }) {
                             <a
                               href="#"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Perfil
@@ -140,8 +139,8 @@ export default function Example({ user }) {
                             <a
                               href="#"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Configurações
@@ -153,8 +152,8 @@ export default function Example({ user }) {
                             <form action="/logout" method="post">
                               <button
                                 className={classNames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-gray-700 block w-full text-left'
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700 block w-full text-left"
                                 )}
                               >
                                 Sair
@@ -168,7 +167,7 @@ export default function Example({ user }) {
                 </div>
               ) : (
                 <Link to="/login">Login</Link>
-                )}
+              )}
             </div>
           </div>
 
@@ -181,11 +180,11 @@ export default function Example({ user }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
