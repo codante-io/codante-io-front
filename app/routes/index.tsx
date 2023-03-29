@@ -1,17 +1,14 @@
-import { Link, useLoaderData } from '@remix-run/react';
-import { getSession, user } from '~/services/auth.server';
+import { Link, useLoaderData } from "@remix-run/react";
+import { getSession, user } from "~/services/auth.server";
 
 export let loader = async ({ request }: { request: Request }) => {
   const loggedUser = await user({ request });
 
   // get the current session
-  const session = await getSession(request.headers.get('Cookie'));
-
+  const session = await getSession(request.headers.get("Cookie"));
 
   return { user: loggedUser, session };
 };
-
-
 
 export default function Index() {
   let { user, session } = useLoaderData();
@@ -29,7 +26,7 @@ export default function Index() {
               <img
                 className="inline-block"
                 width={50}
-                style={{ borderRadius: '100px' }}
+                style={{ borderRadius: "100px" }}
                 src={user.avatar_url}
                 alt="Github Avatar"
               />

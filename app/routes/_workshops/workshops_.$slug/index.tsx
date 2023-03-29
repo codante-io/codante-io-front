@@ -1,7 +1,7 @@
-import type { LoaderArgs} from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import invariant from 'tiny-invariant'
+import invariant from "tiny-invariant";
 import { getWorkshop } from "~/models/workshop.server";
 
 export const loader = async ({ params }: LoaderArgs) => {
@@ -17,7 +17,7 @@ export default function WorkshopSlug() {
       <h1 className="my-6 border-b-2 text-center text-3xl capitalize">
         {workshop.name}
       </h1>
-        <pre>{JSON.stringify(workshop, null, 2)}</pre>
+      <pre>{JSON.stringify(workshop, null, 2)}</pre>
     </main>
   );
 }
