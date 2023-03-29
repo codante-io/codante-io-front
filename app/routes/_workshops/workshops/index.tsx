@@ -1,31 +1,52 @@
 import { json } from '@remix-run/node';
 import { useLoaderData, Link, Outlet } from '@remix-run/react';
-import { getWorkshops } from '~/models/workshop.server';
-import { user, currentToken } from '~/services/auth.server';
+import { getWorkshops } from '../../../models/workshop.server';
 
 export const loader = async ({ request }: { request: Request }) => {
-  return json({ workshops: await getWorkshops(), user: await user({ request }), apikey: await  currentToken({request})});
+  return json({
+    workshops: await getWorkshops(),
+  });
 };
 export default function Workshops() {
-  const { workshops, user, apikey } = useLoaderData<typeof loader>();
+  const { workshops } = useLoaderData<typeof loader>();
 
   return (
-    <main>
-      <h1>Workshops</h1>
-      <ul>
+    <main className="mt-10 text-center">
+      <h1 className="text-4xl font-lexend mb-10">Workshops</h1>
+      <section className="font-lexend grid gap-5 grid-cols-2 grid-rows-3">
         {workshops.map((workshop) => (
-          <li key={workshop.slug}>
-            <Link to={workshop.slug} className="text-blue-600 underline">
-              {workshop.name}
-            </Link>
-          </li>
+          <Link key={workshop.id} to={workshop.slug}>
+            <article className="border border-gray-500 rounded-lg p-10 bg-gray-900 mb-4">
+              <div>{/* image */}</div>
+              <div>
+                <div className="mb-4">
+                  <h2 className="text-xl capitalize">{workshop.name}</h2>
+                  <p className="text-xs font-light text-gray-500 capitalize">
+                    {workshop.categories.map(
+                      (category) => `${category.name}, `
+                    )}
+                  </p>
+                </div>
+                <div className="mb-4">
+                  {/* <img src="" alt="" /> */}
+                  <p className="text-sm font-light">
+                    {workshop.instructor.name}
+                  </p>
+                  <p className="text-xs font-light text-gray-500 capitalize">
+                    {workshop.instructor.company}
+                  </p>
+                </div>
+                <div>
+                  <p className="font-light text-gray-400">
+                    {workshop.short_description}
+                  </p>
+                </div>
+              </div>
+            </article>
+          </Link>
         ))}
-      </ul>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-      <pre>{JSON.stringify(apikey, null, 2)}</pre>
-      <Link to="/">Home</Link>
-          <Outlet />
-          
+      </section>
+      <Outlet />
     </main>
   );
 }

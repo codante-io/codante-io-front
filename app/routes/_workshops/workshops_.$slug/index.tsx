@@ -14,8 +14,8 @@ export default function WorkshopSlug() {
 
   return (
     <main className="mx-auto max-w-4xl">
-      <h1 className="my-6 border-b-2 text-center text-3xl">
-        Some Workshop: {slug}
+      <h1 className="my-6 border-b-2 text-center text-3xl capitalize">
+        {workshop.name}
       </h1>
         <pre>{JSON.stringify(workshop, null, 2)}</pre>
     </main>
