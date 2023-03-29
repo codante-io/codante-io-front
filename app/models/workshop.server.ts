@@ -18,11 +18,11 @@ type Workshop = {
 
 export async function getWorkshops(): Promise<Array<Workshop>> {
 
-  const workshops = await axios.get('http://127.0.0.1:8000/workshops').then(res => res.data.data)
+  const workshops = await axios.get(`${process.env.API_HOST}/workshops`).then(res => res.data.data)
   return workshops
 }
 
 export async function getWorkshop(slug: string) {
-  const workshop = await axios.get(`http://127.0.0.1:8000/workshops/${slug}`).then(res => res.data.data)
+  const workshop = await axios.get(`${process.env.API_HOST}/workshops/${slug}`).then(res => res.data.data)
   return workshop
 }
