@@ -27,9 +27,10 @@ export default function Login() {
             login
           </button>
         </form>
-        <Link to="/">Home</Link>
+        <Link to="/forgot-password">
+          Esqueci minha senha
+        </Link>
         <div>
-          <h1>Login com githubssss</h1>
           <Form action="/auth/github" method="post">
             <button className="mt-4 rounded bg-blue-900 text-white p-4">
               Login with GitHub

@@ -133,3 +133,42 @@ export async function requireAuth({ request }: { request: Request }) {
     throw redirect("/login");
   }
 }
+
+export async function resetPassword({
+  token,
+  email,
+  password,
+  passwordConfirmation,
+}: {
+  token: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}) {
+  try {
+    const res = await axios.post('/reset-password', {
+      token,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+    });
+    console.log(res);
+  } catch (error: any) {
+    console.log(error);
+    return { errors: Object.values(error?.response?.data?.errors).flat() };
+  }
+
+  return {
+    redirector: redirect('/login'),
+  };
+}
+
+export async function sendPasswordLink({ email }: { email: string }) {
+  try {
+    const res = await axios.post('/forgot-password', { email });
+    console.log(res);
+  } catch (error: any) {
+    console.log(error);
+    return { errors: Object.values(error?.response?.data?.errors).flat() };
+  }
+}
