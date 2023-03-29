@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 
-type Workshop = {
+export type Workshop = {
   id: string;
   name: string;
   slug: string;

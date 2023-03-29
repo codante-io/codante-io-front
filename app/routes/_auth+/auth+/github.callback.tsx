@@ -7,8 +7,6 @@ export async function loader({ request }: LoaderArgs) {
   return authenticator.authenticate("github", request, {
     successRedirect: "/",
     failureRedirect: "/failure",
-
-
   });
 
 };
