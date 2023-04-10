@@ -152,7 +152,6 @@ export async function resetPassword({
       password,
       password_confirmation: passwordConfirmation,
     });
-    console.log(res);
   } catch (error: any) {
     console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };
@@ -166,7 +165,6 @@ export async function resetPassword({
 export async function sendPasswordLink({ email }: { email: string }) {
   try {
     const res = await axios.post('/forgot-password', { email });
-    console.log(res);
   } catch (error: any) {
     console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };

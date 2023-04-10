@@ -13,7 +13,6 @@ export let loader = async ({ request }: { request: Request }) => {
 export default function Index() {
   let { user, session } = useLoaderData();
 
-  console.log(Request);
   return (
     <div className="bg-gray-800 min-h-screen text-white flex flex-col items-center justify-center">
       <h1 className="text-blue-500 text-5xl mb-6">Codante</h1>

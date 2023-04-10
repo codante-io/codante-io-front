@@ -10,8 +10,6 @@ export async function action({request}: {request: Request}) {
 
   const { errors, redirector } = await resetPassword({email, token, password, passwordConfirmation})
 
-  console.log({errors, redirector})
-
   return errors || redirector;
 }
 
@@ -27,7 +25,6 @@ export async function loader({request, params}: {request: Request, params: {toke
 
 export default function PasswordReset() {
   const { token, email } = useLoaderData<typeof loader>();
-  console.log(token, email)
   return (
     <main>
       <h1>Coloque seu novo password</h1>

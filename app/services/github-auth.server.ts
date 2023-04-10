@@ -18,14 +18,6 @@ let gitHubStrategy = new GitHubStrategy(
     });
     const token = res.data.token;
 
-    // let session = await sessionStorage.getSession(request.headers.get('Cookie'));
-    // session.set('userToken', token);
-
-    console.log(
-      `estou logado!, aqui está o token do github ${params.accessToken}`
-    );
-    console.log(`estou logado!, aqui está o token do usuário ${token}`);
-    console.log(params);
     return { token: token };
   }
 );
