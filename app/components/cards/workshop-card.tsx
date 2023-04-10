@@ -1,5 +1,5 @@
-import { Link } from '@remix-run/react';
-import type { Workshop } from '~/models/workshop.server';
+import { Link } from "@remix-run/react";
+import type { Workshop } from "~/models/workshop.server";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
@@ -8,9 +8,9 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
         <article className="border border-gray-500 rounded-lg bg-gray-900 mb-4 flex hover:border-blue-500 hover:shadow-xl">
           <div
             style={{
-              backgroundImage: 'url(/img/computer.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundImage: "url(/img/computer.jpg)",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
             className="workshop-image w-52 min-h-full rounded-l-md m-[4px]"
           >
@@ -21,31 +21,35 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                   /> */}
           </div>
           <div className="flex-1 px-6 py-4 text-left">
-            <div className="dificuldade mb-0">
-              <span className="text-xs font-bold text-gray-500 mr-3">
-                Dificuldade
-              </span>
+            <div className="dificuldade mb-2">
+              <span className="text-xs text-gray-500 mr-3">Dificuldade</span>
               <span
                 className={`h-2 w-2 inline-block rounded-full mr-1 ${
-                  workshop.difficulty >= 1 ? 'bg-blue-600' : 'bg-gray-600'
+                  workshop.difficulty >= 1 ? "bg-blue-600" : "bg-gray-600"
                 }`}
               ></span>
               <span
                 className={`h-2 w-2 inline-block rounded-full mr-1 ${
-                  workshop.difficulty >= 2 ? 'bg-blue-600' : 'bg-gray-600'
+                  workshop.difficulty >= 2 ? "bg-blue-600" : "bg-gray-600"
                 }`}
               ></span>
               <span
                 className={`h-2 w-2 inline-block rounded-full ${
-                  workshop.difficulty >= 3 ? 'bg-blue-600' : 'bg-gray-600'
+                  workshop.difficulty >= 3 ? "bg-blue-600" : "bg-gray-600"
                 }`}
               ></span>
             </div>
             <div className="mb-8">
-              <h2 className="text-xl capitalize">{workshop.name}</h2>
-              <p className="text-xs font-light text-gray-500 capitalize">
-                {workshop.categories.map((category) => `${category.name}, `)}
-              </p>
+              <h2 className="text-xl capitalize mb-1">{workshop.name}</h2>
+              <div className="text-xs font-light text-gray-500 capitalize">
+                {workshop.categories.map((category) => {
+                  return (
+                    <span className="mr-1 bg-black rounded-full px-2 text-gray-400">
+                      {category.name}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
             <div className="mb-8 flex">
               <img
@@ -60,10 +64,9 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 </p>
               </div>
             </div>
-            <div className="mb-10">
-              <p className="font-light text-gray-300 w-full">
-                {workshop.short_description.split(' ').slice(0, 20).join(' ') +
-                  ' ...'}
+            <div className="mb-10 h-24">
+              <p className="font-light text-gray-300 w-full line-clamp-3 ">
+                {workshop.short_description}
               </p>
             </div>
             <div>
