@@ -20,9 +20,9 @@ export default function Example({ user }) {
       current: id.includes("workshops"),
     },
     {
-      name: "Mini Projects",
-      href: "/projects",
-      current: id.includes("projects"),
+      name: "Mini Projetos",
+      href: "/mini-projetos",
+      current: id.includes("mini-projetos"),
     },
     { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
   ];
@@ -168,7 +168,9 @@ export default function Example({ user }) {
                   </Menu>
                 </div>
               ) : (
-                <Link to="/login">Login</Link>
+                <Link className="text-white" to="/login">
+                  Login
+                </Link>
               )}
             </div>
           </div>
