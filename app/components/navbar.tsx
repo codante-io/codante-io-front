@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useMatches } from "@remix-run/react";
 import { BiUserCircle } from "react-icons/bi";
 import ToggleColorMode from "~/components/ToggleColorMode";
@@ -9,7 +9,7 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ user }) {
+export default function Navbar({ user }: { user: any }) {
   const matches = useMatches();
   const { id } = matches[matches.length - 1];
 
@@ -20,9 +20,9 @@ export default function Example({ user }) {
       current: id.includes("workshops"),
     },
     {
-      name: "Mini Projects",
-      href: "/projects",
-      current: id.includes("projects"),
+      name: "Mini Projetos",
+      href: "/mini-projetos",
+      current: id.includes("mini-projetos"),
     },
     { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
   ];
@@ -64,9 +64,9 @@ export default function Example({ user }) {
                 <div className="hidden sm:ml-6 sm:pt-4 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
@@ -76,7 +76,7 @@ export default function Example({ user }) {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -113,7 +113,7 @@ export default function Example({ user }) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -126,7 +126,7 @@ export default function Example({ user }) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -139,7 +139,7 @@ export default function Example({ user }) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -168,7 +168,9 @@ export default function Example({ user }) {
                   </Menu>
                 </div>
               ) : (
-                <Link to="/login">Login</Link>
+                <Link className="text-white" to="/login">
+                  Login
+                </Link>
               )}
             </div>
           </div>

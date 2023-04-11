@@ -13,7 +13,6 @@ const ColorModeContext = createContext<ColorModeContextType | undefined>(
   undefined
 );
 const ColorModeProvider = ({ children }: { children: ReactNode }) => {
-  console.log("render");
   const [colorMode, rawSetColorMode] = useState<ColorMode | null>(null);
 
   useEffect(() => {

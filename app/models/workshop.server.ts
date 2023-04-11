@@ -13,16 +13,19 @@ export type Workshop = {
   duration_in_minutes: number;
   instructor: Instructor;
   lessons: Lesson[];
-  categories: any[];
+  tags: any[];
 };
 
 export async function getWorkshops(): Promise<Array<Workshop>> {
-
-  const workshops = await axios.get(`${process.env.API_HOST}/workshops`).then(res => res.data.data)
-  return workshops
+  const workshops = await axios
+    .get(`${process.env.API_HOST}/workshops`)
+    .then((res) => res.data.data);
+  return workshops;
 }
 
 export async function getWorkshop(slug: string) {
-  const workshop = await axios.get(`${process.env.API_HOST}/workshops/${slug}`).then(res => res.data.data)
-  return workshop
+  const workshop = await axios
+    .get(`${process.env.API_HOST}/workshops/${slug}`)
+    .then((res) => res.data.data);
+  return workshop;
 }

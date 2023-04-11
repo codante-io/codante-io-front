@@ -1,7 +1,7 @@
-import { json } from '@remix-run/node';
-import { useLoaderData, Link, Outlet } from '@remix-run/react';
-import { getWorkshops } from '../../../models/workshop.server';
-import WorkshopCard from '~/components/cards/workshop-card';
+import { json } from "@remix-run/node";
+import { useLoaderData, Link, Outlet } from "@remix-run/react";
+import { getWorkshops } from "../../../models/workshop.server";
+import WorkshopCard from "~/components/cards/workshop-card";
 
 export const loader = async ({ request }: { request: Request }) => {
   return json({
