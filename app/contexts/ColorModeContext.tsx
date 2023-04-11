@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import type { ColorMode } from "~/utils/dark-mode";
 
 export type ColorModeContextType = {
-  colorMode: ColorMode;
+  colorMode: ColorMode | null;
   toggleColorMode: () => void;
 };
 
