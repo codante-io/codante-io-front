@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getInitialColorMode, setColorModeClass } from "~/utils/dark-mode";
 
 import type { ReactNode } from "react";
@@ -13,9 +13,13 @@ const ColorModeContext = createContext<ColorModeContextType | undefined>(
   undefined
 );
 const ColorModeProvider = ({ children }: { children: ReactNode }) => {
-  const [colorMode, rawSetColorMode] = useState(
-    typeof window === "undefined" ? "light" : getInitialColorMode()
-  );
+  console.log("render");
+  const [colorMode, rawSetColorMode] = useState<ColorMode | null>(null);
+
+  useEffect(() => {
+    rawSetColorMode(getInitialColorMode());
+  }, []);
+
   const setColorMode = (colorMode: ColorMode) => {
     rawSetColorMode(colorMode);
     setColorModeClass(colorMode);

@@ -40,15 +40,15 @@ export default function App() {
       </head>
       <body className="dark:bg-gray-800 dark:text-white bg-white text-gray-800">
         <DarkModeScriptTag />
-        <div>
-          <ColorModeProvider>
-            <Navbar user={user} />
-            <main className="min-h-screen mx-auto max-w-7xl">
-              <Outlet />
-            </main>
-            <Footer />
-          </ColorModeProvider>
-        </div>
+
+        <ColorModeProvider>
+          <Navbar user={user} />
+          <main className="min-h-screen mx-auto max-w-7xl">
+            <Outlet />
+          </main>
+          <Footer />
+        </ColorModeProvider>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
