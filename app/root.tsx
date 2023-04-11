@@ -10,7 +10,9 @@ import {
 } from "@remix-run/react";
 import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
+import { ColorModeProvider } from "~/contexts/ColorModeContext";
 import stylesheet from "~/tailwind.css";
+import { DarkModeScriptTag } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
 
 export const links: LinksFunction = () => [
@@ -36,13 +38,16 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-gray-800 text-white">
+      <body className="dark:bg-gray-800 dark:text-white bg-white text-gray-800">
+        <DarkModeScriptTag />
         <div>
-          <Navbar user={user} />
-          <main className="min-h-screen mx-auto max-w-7xl">
-            <Outlet />
-          </main>
-          <Footer />
+          <ColorModeProvider>
+            <Navbar user={user} />
+            <main className="min-h-screen mx-auto max-w-7xl">
+              <Outlet />
+            </main>
+            <Footer />
+          </ColorModeProvider>
         </div>
         <ScrollRestoration />
         <Scripts />
