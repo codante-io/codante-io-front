@@ -1,5 +1,5 @@
-import { Link, useLoaderData } from "@remix-run/react";
 import { getSession, user } from "~/services/auth.server";
+import { BsFillPlayFill } from "react-icons/bs";
 
 export let loader = async ({ request }: { request: Request }) => {
   const loggedUser = await user({ request });
@@ -11,34 +11,73 @@ export let loader = async ({ request }: { request: Request }) => {
 };
 
 export default function Index() {
-  let { user, session } = useLoaderData();
-
   return (
-    <div className="bg-gray-800 min-h-screen text-white flex flex-col items-center justify-center">
-      <h1 className="text-blue-500 text-5xl mb-6">Codante</h1>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
+    <div className="text-white flex flex-col items-center justify-center">
+      <section id="headline" className="w-full bg-gray-900 flex justify-center">
+        <div className="container flex flex-col items-center">
+          <h1 className="font-lexend font-light mt-16 text-5xl text-center">
+            Evolua na{" "}
+            <span className="inline-block pr-4 font-bold text-blue-200">
+              programação
+            </span>
+          </h1>
+          <p className="font-inter text-xl font-light mt-16 text-center w-7/12">
+            Fuja dos tutoriais e aprimore suas{" "}
+            <span className="italic">skills</span> em programação com{" "}
+            <span className="font-bold italic">workshops</span> e{" "}
+            <span className="font-bold italic">mini projetos</span> ensinados
+            por profissionais do mercado.
+          </p>
+          <div className="flex mt-10 w-1/4 justify-around">
+            <button className="rounded-full py-2 px-4 bg-gray-700">
+              Comece agora
+            </button>
+            <button className="flex items-center rounded-full py-2 px-4 bg-slate-100 text-gray-700">
+              <BsFillPlayFill className="mr-2" color="#5282FF" /> Assista ao
+              vídeo
+            </button>
+          </div>
+          <div className="w-[553px] h-[311px] bg-black flex items-center justify-center rounded-lg mt-10">
+            <button className="flex items-center justify-center rounded-full h-12 w-12 bg-slate-100 text-gray-700">
+              <BsFillPlayFill size={24} color="#5282FF" />
+            </button>
+          </div>
+        </div>
+      </section>
+      <section
+        id="workshops"
+        className="w-full bg-gray-900 h-32 flex justify-center"
+      >
+        <div className="container">
+          <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">
+            Workshops
+          </h1>
+        </div>
+      </section>
+      <section
+        id="mini-projects"
+        className="w-full bg-slate-800 h-32 flex justify-center"
+      >
+        <div className="container">
+          <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">
+            Mini projetos
+          </h1>
+        </div>
+      </section>
+      <section
+        id="tracks"
+        className="w-full bg-gray-900 h-32 flex justify-center"
+      >
+        <div className="container">
+          <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">
+            Trilhas
+          </h1>
+        </div>
+      </section>
 
-      <div>
-        {user ? (
-          <>
-            <div className="text-center">
-              <img
-                className="inline-block"
-                width={50}
-                style={{ borderRadius: "100px" }}
-                src={user.avatar_url}
-                alt="Github Avatar"
-              />
-              <p>Você está logado, {user.name}</p>
-            </div>
-            <pre className="bg-gray-600 rounded p-4 mt-4">
-              {JSON.stringify(user, null, 2)}
-            </pre>
-          </>
-        ) : (
-          <p>Você está deslogado</p>
-        )}
-      </div>
+      <section id="pricing" className="w-full bg-slate-600 h-32">
+        <div className="container"></div>
+      </section>
     </div>
   );
 }

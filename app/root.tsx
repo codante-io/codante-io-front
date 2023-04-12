@@ -43,7 +43,7 @@ export default function App() {
 
         <ColorModeProvider>
           <Navbar user={user} />
-          <main className="min-h-screen mx-auto max-w-7xl">
+          <main className="min-h-screen mx-auto">
             <Outlet />
           </main>
           <Footer />
