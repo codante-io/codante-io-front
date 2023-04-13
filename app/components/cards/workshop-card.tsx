@@ -1,5 +1,8 @@
 import { Link } from "@remix-run/react";
 import type { Workshop } from "~/models/workshop.server";
+import CardDurationItem from "./card-item-duration";
+import CardItemDifficulty from "./card-item-difficulty";
+import CardItemTag from "./card-item-tag";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
@@ -21,38 +24,14 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                   /> */}
           </div>
           <div className="flex-1 px-6 py-4 text-left">
-            <div className="dificuldade mb-2">
-              <span className="text-xs text-gray-500 mr-3">Dificuldade</span>
-              <span
-                className={`h-2 w-2 inline-block rounded-full mr-1 ${
-                  workshop.difficulty >= 1 ? "bg-blue-600" : "bg-gray-600"
-                }`}
-              ></span>
-              <span
-                className={`h-2 w-2 inline-block rounded-full mr-1 ${
-                  workshop.difficulty >= 2 ? "bg-blue-600" : "bg-gray-600"
-                }`}
-              ></span>
-              <span
-                className={`h-2 w-2 inline-block rounded-full ${
-                  workshop.difficulty >= 3 ? "bg-blue-600" : "bg-gray-600"
-                }`}
-              ></span>
-            </div>
+            <CardItemDifficulty difficulty={workshop.difficulty} />
             <div className="mb-8">
               <h2 className="text-xl capitalize mb-1 text-white">
                 {workshop.name}
               </h2>
-              <div className="text-xs font-light text-gray-500 capitalize">
+              <div>
                 {workshop.tags.map((tag) => {
-                  return (
-                    <span
-                      key={tag.id}
-                      className="mr-1 bg-black rounded-full px-2 text-gray-400"
-                    >
-                      {tag.name}
-                    </span>
-                  );
+                  return <CardItemTag tagName={tag.name} key={tag.id} />;
                 })}
               </div>
             </div>
@@ -96,25 +75,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
 
                 <span className="text-sm text-gray-500">10 aulas</span>
               </div>
-              <div className="flex items-center gap-3">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10 5V10H13.75M17.5 10C17.5 10.9849 17.306 11.9602 16.9291 12.8701C16.5522 13.7801 15.9997 14.6069 15.3033 15.3033C14.6069 15.9997 13.7801 16.5522 12.8701 16.9291C11.9602 17.306 10.9849 17.5 10 17.5C9.01509 17.5 8.03982 17.306 7.12987 16.9291C6.21993 16.5522 5.39314 15.9997 4.6967 15.3033C4.00026 14.6069 3.44781 13.7801 3.0709 12.8701C2.69399 11.9602 2.5 10.9849 2.5 10C2.5 8.01088 3.29018 6.10322 4.6967 4.6967C6.10322 3.29018 8.01088 2.5 10 2.5C11.9891 2.5 13.8968 3.29018 15.3033 4.6967C16.7098 6.10322 17.5 8.01088 17.5 10Z"
-                    stroke="#8D8D8D"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <span className="text-sm text-gray-500">20 minutos</span>
-              </div>
+              <CardDurationItem durationString="20 minutos" />
             </div>
           </div>
         </article>
