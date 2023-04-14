@@ -17,7 +17,9 @@ export default function Projects() {
 
   return (
     <main className="mx-auto container">
-      <h1 className="my-6 text-center text-3xl">Mini Projetos</h1>
+      <h1 className="text-4xl font-lexend mb-10 text-center mt-10">
+        Mini Projetos
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
         <ChallengeCard challenge={challenge} />
         <ChallengeCard challenge={challenge} />
