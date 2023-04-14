@@ -5,6 +5,7 @@ import { Link, useMatches } from "@remix-run/react";
 import { BiUserCircle } from "react-icons/bi";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
+import { BsArrowRight } from "react-icons/bs";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -36,10 +37,7 @@ export default function Navbar({ user }: { user: any }) {
   ];
 
   return (
-    <Disclosure
-      as="nav"
-      className="dark:bg-[#0E141A] dark:text-white bg-white text-gray-900"
-    >
+    <Disclosure as="nav" className="bg-transparent bg-white text-gray-900">
       {({ open }) => (
         <>
           <div className="mx-auto container">
@@ -108,11 +106,13 @@ export default function Navbar({ user }: { user: any }) {
                   </div>
                 </div>
               </div>
-              <ToggleColorMode />
+              <div className="hidden sm:block mr-3">
+                <ToggleColorMode />
+              </div>
               {user ? (
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
                   {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
+                  <Menu as="div" className="relative">
                     <div>
                       <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
                         <span className="sr-only">Open user menu</span>
@@ -195,8 +195,11 @@ export default function Navbar({ user }: { user: any }) {
                   </Menu>
                 </div>
               ) : (
-                <Link className="dark:text-white text-gray-900" to="/login">
-                  Login
+                <Link
+                  className="dark:text-white text-gray-900 flex items-center gap-x-1"
+                  to="/login"
+                >
+                  Login <BsArrowRight />
                 </Link>
               )}
             </div>
@@ -220,6 +223,9 @@ export default function Navbar({ user }: { user: any }) {
                   {item.name}
                 </Disclosure.Button>
               ))}
+              <Disclosure.Button className="text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900block rounded-md px-3 py-2 text-base font-medium">
+                <ToggleColorMode />
+              </Disclosure.Button>
             </div>
           </Disclosure.Panel>
         </>
