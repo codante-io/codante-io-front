@@ -9,7 +9,7 @@ export default function ChallengeCard({
   challenge: ChallengeCardInfo;
 }) {
   return (
-    <article className="w-[300px] bg-white dark:bg-gray-900 shadow-md rounded-2xl p-6 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
+    <article className="w-[300px] bg-white dark:bg-[#17212B] shadow-md rounded-2xl p-6 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
       <CardItemDifficulty className="mb-3" difficulty={challenge?.difficulty} />
       <div className="p-16 bg-purple-200 dark:bg-purple-900 h-32 rounded-2xl flex items-center justify-center mb-6">
         <img src="/img/keyboard-icon.png" className=" inline-block" alt="" />

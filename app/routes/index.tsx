@@ -24,7 +24,10 @@ export default function Index() {
 
   return (
     <div className="text-white flex flex-col items-center justify-center">
-      <section id="headline" className="w-full bg-gray-900 flex justify-center">
+      <section
+        id="headline"
+        className="w-full bg-[#0E141A] flex justify-center"
+      >
         <div className="container flex flex-col items-center">
           <h1 className="font-lexend font-light mt-16 text-3xl md:text-5xl text-center">
             Evolua na{" "}
@@ -56,7 +59,7 @@ export default function Index() {
       </section>
       <section
         id="workshops"
-        className="w-full dark:bg-gray-900 bg-white flex justify-center text-gray-800 dark:text-white mb-16"
+        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white mb-16"
       >
         <div className="container mb-10">
           <h1 className="font-lexend font-light mt-16 mb-10 text-3xl sm:px-6 lg:px-8">
@@ -96,7 +99,7 @@ export default function Index() {
       />
       <section
         id="tracks"
-        className="w-full dark:bg-gray-900 bg-white flex justify-center text-gray-800 dark:text-white"
+        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white"
       >
         <div className="container relative -top-56">
           <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">
@@ -107,7 +110,7 @@ export default function Index() {
 
       <section
         id="tracks"
-        className="w-full dark:bg-gray-900 bg-white flex justify-center text-gray-800 dark:text-white text-center"
+        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white text-center"
       >
         <div className="container relative">
           <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">

@@ -38,7 +38,7 @@ export default function Navbar({ user }: { user: any }) {
   return (
     <Disclosure
       as="nav"
-      className="dark:bg-gray-900 dark:text-white bg-white text-gray-900"
+      className="dark:bg-[#0E141A] dark:text-white bg-white text-gray-900"
     >
       {({ open }) => (
         <>
