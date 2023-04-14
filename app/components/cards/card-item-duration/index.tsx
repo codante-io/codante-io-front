@@ -1,10 +1,12 @@
-export default function CardDurationItem({
+export default function CardItemDuration({
   durationString,
+  className,
 }: {
   durationString: string;
+  className?: string;
 }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex items-center gap-3 ${className}`}>
       <svg
         width="20"
         height="20"
