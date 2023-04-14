@@ -9,7 +9,7 @@ export type Workshop = {
   short_description: string;
   description: string;
   imageUrl?: string;
-  difficulty: number;
+  difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
   instructor: Instructor;
   lessons: Lesson[];
