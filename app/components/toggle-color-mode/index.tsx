@@ -1,4 +1,4 @@
-import { useColorMode } from "~/contexts/ColorModeContext";
+import { useColorMode } from "~/contexts/color-mode-context";
 
 export default function ToggleColorMode() {
   const { colorMode, toggleColorMode } = useColorMode();

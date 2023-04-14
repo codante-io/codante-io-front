@@ -3,8 +3,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useMatches } from "@remix-run/react";
 import { BiUserCircle } from "react-icons/bi";
-import ToggleColorMode from "~/components/ToggleColorMode";
-import { useColorMode } from "~/contexts/ColorModeContext";
+import ToggleColorMode from "~/components/toggle-color-mode";
+import { useColorMode } from "~/contexts/color-mode-context";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");

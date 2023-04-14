@@ -30,11 +30,10 @@ export default function Index() {
           </p>
           <div className="flex mt-10 w-1/4 justify-around">
             <button className="rounded-full py-2 px-4 bg-gray-700">
-              Comece agora
+              Saiba mais
             </button>
             <button className="flex items-center rounded-full py-2 px-4 bg-slate-100 text-gray-700">
-              <BsFillPlayFill className="mr-2" color="#5282FF" /> Assista ao
-              vídeo
+              <BsFillPlayFill className="mr-2" color="#5282FF" /> Cadastre-se
             </button>
           </div>
           <div className="w-[553px] h-[311px] bg-black flex items-center justify-center rounded-lg mt-10">
@@ -46,14 +45,19 @@ export default function Index() {
       </section>
       <section
         id="workshops"
-        className="w-full bg-gray-900 h-32 flex justify-center"
+        className="w-full bg-gray-900 flex justify-center"
       >
         <div className="container">
-          <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">
+          <h1 className="font-lexend font-light mt-16 mb-32 text-3xl sm:px-6 lg:px-8">
             Workshops
           </h1>
         </div>
       </section>
+      <img
+        src="/img/wave-top.svg"
+        className="w-full relative -top-32"
+        alt="Wave detail"
+      />
       <section
         id="mini-projects"
         className="w-full bg-slate-800 h-32 flex justify-center"
@@ -64,6 +68,7 @@ export default function Index() {
           </h1>
         </div>
       </section>
+      <img src="/img/wave-bottom.svg" className="w-full" alt="Wave detail" />
       <section
         id="tracks"
         className="w-full bg-gray-900 h-32 flex justify-center"

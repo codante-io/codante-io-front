@@ -10,7 +10,7 @@ import {
 } from "@remix-run/react";
 import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
-import { ColorModeProvider } from "~/contexts/ColorModeContext";
+import { ColorModeProvider } from "~/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
 import { DarkModeScriptTag } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";

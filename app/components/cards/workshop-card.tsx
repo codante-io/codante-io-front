@@ -5,7 +5,18 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id}>
       <Link to={workshop.slug}>
-        <article className="border border-gray-500 rounded-lg bg-gray-900 mb-4 flex hover:border-blue-500 hover:shadow-xl">
+        <article className="relative border border-gray-500 rounded-lg bg-gray-900 mb-4 flex hover:border-blue-500 hover:shadow-xl">
+          {/* <div className="w-36 aspect-square absolute -top-2 -right-2 overflow-hidden rounded-sm">
+            <div className="absolute top-0 left-0 bg-amber-500 h-2 w-2"></div>
+            <div className="absolute bottom-0 right-0 bg-amber-500 h-2 w-2"></div>
+            <a
+              href="#"
+              className="py-1.5 bg-amber-300 text-amber-800 font-semibold uppercase text-xs tracking-wider block w-square-diagonal text-center absolute bottom-0 right-0 rotate-45 origin-bottom-right shadow-sm hover:bg-yellow-300"
+            >
+              My cool ribbon
+            </a>
+          </div> */}
+
           <div
             style={{
               backgroundImage: "url(/img/computer.jpg)",
