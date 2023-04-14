@@ -18,6 +18,12 @@ module.exports = {
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter", "sans-serif"],
       },
+      colors: {
+        gray: {
+          darkest: "#0E141A",
+          dark: "#17212B",
+        },
+      },
     },
   },
   plugins: [],

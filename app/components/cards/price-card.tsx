@@ -7,7 +7,7 @@ export default function PriceCard({
   price: any;
 }) {
   return (
-    <article className="relative w-[300px] bg-white dark:bg-gray-900 shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
+    <article className="relative w-[300px] bg-white dark:bg-gray-dark shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
       {price?.banner && (
         <div className="w-36 aspect-square absolute -top-2 -right-2 overflow-hidden rounded-sm">
           <div className="absolute top-0 left-0 bg-blue-500 h-2 w-2"></div>

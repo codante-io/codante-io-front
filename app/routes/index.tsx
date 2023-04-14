@@ -26,43 +26,40 @@ export default function Index() {
     <div className="text-white flex flex-col items-center justify-center">
       <section
         id="headline"
-        className="w-full flex justify-center bg-[url('/img/bg.jpg')] bg-cover "
+        className="w-full bg-gray-darkest flex justify-center"
       >
-        <div className="w-full flex flex-col items-center backdrop-blur-sm">
-          <div className="container flex flex-col items-center">
-            <h1 className="font-lexend font-light mt-16 text-3xl md:text-5xl text-center">
-              Evolua na{" "}
-              <span className="inline-block pr-4 font-bold text-blue-200">
-                programação
-              </span>
-            </h1>
-            <p className="font-inter text-md px-2 md:text-xl font-light mt-16 text-center lg:w-7/12">
-              Fuja dos tutoriais e aprimore suas{" "}
-              <span className="italic">skills</span> em programação com{" "}
-              <span className="font-bold italic">workshops</span> e{" "}
-              <span className="font-bold italic">mini projetos</span> ensinados
-              por profissionais do mercado.
-            </p>
-            <div className="flex flex-col lg:flex-row mt-10 gap-4 justify-around">
-              <button className="rounded-full py-2 px-4 bg-gray-700">
-                Saiba mais
-              </button>
-              <button className="flex items-center rounded-full py-2 px-4 bg-slate-100 text-gray-700">
-                <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
-                Cadastre-se
-              </button>
-            </div>
-            <div className="w-[553px] h-[311px] bg-black flex items-center justify-center rounded-lg mt-10 mb-20">
-              <button className="flex items-center justify-center rounded-full h-12 w-12 bg-slate-100 text-gray-700">
-                <BsFillPlayFill size={24} color="#5282FF" />
-              </button>
-            </div>
+        <div className="container flex flex-col items-center">
+          <h1 className="font-lexend font-light mt-16 text-3xl md:text-5xl text-center">
+            Evolua na{" "}
+            <span className="inline-block pr-4 font-bold text-blue-200">
+              programação
+            </span>
+          </h1>
+          <p className="font-inter text-md px-2 md:text-xl font-light mt-16 text-center lg:w-7/12">
+            Fuja dos tutoriais e aprimore suas{" "}
+            <span className="italic">skills</span> em programação com{" "}
+            <span className="font-bold italic">workshops</span> e{" "}
+            <span className="font-bold italic">mini projetos</span> ensinados
+            por profissionais do mercado.
+          </p>
+          <div className="flex flex-col lg:flex-row mt-10 gap-4 justify-around">
+            <button className="rounded-full py-2 px-4 bg-gray-700">
+              Saiba mais
+            </button>
+            <button className="flex items-center rounded-full py-2 px-4 bg-slate-100 text-gray-700">
+              <BsFillPersonFill className="mr-2" color="#5282FF" /> Cadastre-se
+            </button>
+          </div>
+          <div className="w-[553px] h-[311px] bg-black flex items-center justify-center rounded-lg mt-10 mb-20">
+            <button className="flex items-center justify-center rounded-full h-12 w-12 bg-slate-100 text-gray-700">
+              <BsFillPlayFill size={24} color="#5282FF" />
+            </button>
           </div>
         </div>
       </section>
       <section
         id="workshops"
-        className="w-full dark:bg-gray-900 bg-white flex justify-center text-gray-800 dark:text-white mb-16"
+        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white mb-16"
       >
         <div className="container mb-10">
           <h1 className="font-lexend font-light mt-16 mb-10 text-3xl sm:px-6 lg:px-8">
@@ -106,7 +103,7 @@ export default function Index() {
       )}
       <section
         id="tracks"
-        className="w-full dark:bg-gray-900 bg-white flex justify-center text-gray-800 dark:text-white"
+        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white"
       >
         <div className="container relative -top-56">
           <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">
@@ -117,7 +114,7 @@ export default function Index() {
 
       <section
         id="tracks"
-        className="w-full dark:bg-gray-900 bg-white flex justify-center text-gray-800 dark:text-white text-center"
+        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white text-center"
       >
         <div className="container relative">
           <h1 className="font-lexend font-light mt-16 text-3xl sm:px-6 lg:px-8">

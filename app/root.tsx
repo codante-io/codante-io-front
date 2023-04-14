@@ -38,7 +38,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="dark:bg-gray-900 dark:text-white bg-white text-gray-800">
+      <body className="dark:bg-[#0E141A] dark:text-white bg-white text-gray-800">
         <DarkModeScriptTag />
         <ColorModeProvider>
           <Navbar user={user} />
