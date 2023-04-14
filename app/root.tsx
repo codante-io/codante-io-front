@@ -38,7 +38,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="dark:bg-gray-800 dark:text-white bg-white text-gray-800">
+      <body className="dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800">
         <DarkModeScriptTag />
 
         <ColorModeProvider>
