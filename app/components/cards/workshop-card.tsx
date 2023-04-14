@@ -9,7 +9,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id}>
       <Link to={workshop.slug}>
-        <article className="max-w-[600px] border-[1.5px] border-slate-300 rounded-2xl bg-gray-200 dark:bg-gray-900 mb-4 flex shadow-sm dark:shadow-none hover:border-blue-300 hover:shadow-lg">
+        <article className="max-w-[600px] border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-gray-200 dark:bg-gray-900 mb-4 flex shadow-sm dark:shadow-none hover:border-blue-300 hover:shadow-lg">
           <div
             style={{
               backgroundImage: "url(/img/computer.jpg)",
@@ -17,13 +17,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               backgroundPosition: "center",
             }}
             className="workshop-image w-52 min-h-full rounded-l-xl m-[4px]"
-          >
-            {/* <img
-                    src="/img/computer.jpg"
-                    alt=""
-                    className="w-full  rounded-l-md"
-                  /> */}
-          </div>
+          ></div>
           <div className="flex-1 px-6 py-4 text-left">
             <CardItemDifficulty
               difficulty={workshop.difficulty}
