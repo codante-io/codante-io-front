@@ -38,9 +38,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="dark:bg-gray-800 dark:text-white bg-gray-100 text-gray-800">
+      <body className="dark:bg-gray-900 dark:text-white bg-white text-gray-800">
         <DarkModeScriptTag />
-
         <ColorModeProvider>
           <Navbar user={user} />
           <main className="min-h-screen mx-auto">
@@ -48,10 +47,21 @@ export default function App() {
           </main>
           <Footer />
         </ColorModeProvider>
-
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        {process.env.NODE_ENV !== "production" && (
+          <div
+            className="fixed z-50 bottom-2 right-2 bg-blue-100 text-blue-700
+  text-center font-bold rounded-full py-2 w-20"
+          >
+            <span className="block md:hidden">sm</span>
+            <span className="hidden md:block lg:hidden">md</span>
+            <span className="hidden lg:block xl:hidden">lg</span>
+            <span className="hidden xl:block 2xl:hidden">xl</span>
+            <span className="hidden 2xl:block">2xl</span>
+          </div>
+        )}
       </body>
     </html>
   );

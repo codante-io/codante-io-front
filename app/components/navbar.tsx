@@ -142,7 +142,7 @@ export default function Navbar({ user }: { user: any }) {
                             <a
                               href="/"
                               className={classNames(
-                                active ? "bg-gray-100" : "",
+                                active ? "bg-white" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
@@ -155,7 +155,7 @@ export default function Navbar({ user }: { user: any }) {
                             <a
                               href="/"
                               className={classNames(
-                                active ? "bg-gray-100" : "",
+                                active ? "bg-white" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
@@ -168,7 +168,7 @@ export default function Navbar({ user }: { user: any }) {
                             <a
                               href="/"
                               className={classNames(
-                                active ? "bg-gray-100" : "",
+                                active ? "bg-white" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
@@ -181,7 +181,7 @@ export default function Navbar({ user }: { user: any }) {
                             <form action="/logout" method="post">
                               <button
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
+                                  active ? "bg-white" : "",
                                   "block px-4 py-2 text-sm text-gray-700 block w-full text-left"
                                 )}
                               >
