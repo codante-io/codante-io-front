@@ -80,7 +80,7 @@ export default function Login() {
             </Link>
             <button
               type="submit"
-              className="mt-10 rounded dark:bg-gray-600 bg-gray-500 text-white tsext-sslate-800 p-4 w-full flex items-center justify-center gap-4"
+              className="mt-10 rounded dark:bg-gray-600 bg-gray-500 text-white p-4 border-b-4 dark:border-b-gray-700 border-b-gray-600 w-full flex items-center justify-center gap-4"
             >
               Login
             </button>
