@@ -1,9 +1,7 @@
 import { Link } from "@remix-run/react";
 import type { Track } from "~/models/track.server";
-import CardDurationItem from "./card-item-duration";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
-import CardItemLessonsCount from "./card-item-lessons-count";
 import CardItemWorkshop from "~/components/cards/card-item-workshop";
 import CardItemChallenge from "~/components/cards/card-item-challenge";
 
@@ -22,7 +20,7 @@ function TrackCard({ track }: { track: Track }) {
           ></div>
           <div className="flex flex-col justify-between flex-1 px-6 py-4 text-left">
             <div>
-              <div className="flex justify-between">
+              <div className="flex flex-col md:flex-row justify-between">
                 <div>
                   <h2 className="text-xl capitalize text-gray-800 dark:text-white">
                     {track?.name}
