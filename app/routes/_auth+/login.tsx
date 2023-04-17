@@ -6,6 +6,7 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
+import Button from "~/components/form/button";
 import Input from "~/components/form/input";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { login } from "~/services/auth.server";
@@ -42,7 +43,7 @@ export default function Login() {
         <div
           className={`${
             opened ? "hidden" : ""
-          } dark:bg-[#17212B] shadow bg-white border-[1.5px] border-gray-300 dark:border-slate-700 p-10 rounded-2xl max-w-md md:w-[450px]`}
+          } dark:bg-[#17212B] shadow bg-white border-[1.5px] border-gray-300 dark:border-slate-700 p-8 px-10 rounded-2xl max-w-md md:w-[450px]`}
         >
           <Form action="/auth/github" method="post">
             <button className="rounded bg-gray-700 text-white p-4 w-full flex items-center justify-center gap-4">
@@ -55,7 +56,7 @@ export default function Login() {
         <div
           className={`${
             opened ? "" : "hidden"
-          } dark:bg-[#17212B] bg-white border-[1.5px] border-gray-300 dark:border-slate-700 p-10 rounded-2xl max-w-md md:w-[450px]`}
+          } dark:bg-[#17212B] bg-white border border-gray-300 dark:border-slate-700 p-10 rounded-2xl max-w-md md:w-[450px]`}
         >
           <form method="POST" className="flex flex-col ">
             <Input
@@ -78,17 +79,16 @@ export default function Login() {
             >
               Esqueceu sua senha?
             </Link>
-            <button
-              type="submit"
-              className="mt-10 rounded dark:bg-gray-600 bg-gray-500 text-white p-4 border-b-4 dark:border-b-gray-700 border-b-gray-600 w-full flex items-center justify-center gap-4"
-            >
-              Login
-            </button>
+            <div className="min-h-[16px] mt-2">
+              {errors && <div className="text-red-400 text-xs">{errors}</div>}
+            </div>
+            <div className="text-right">
+              <Button type="submit">Login</Button>
+            </div>
           </form>
-          {errors && <div className="text-red-500 text-xs mt-3">{errors}</div>}
         </div>
         <p
-          className={` text-xs font-light text-slate-400 mb-2 text-right mt-4`}
+          className={` text-xs font-light text-slate-500 mb-2 text-right mt-4`}
         >
           ... ou, se preferir, faça{" "}
           <button
