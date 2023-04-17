@@ -16,6 +16,49 @@ export let sessionStorage = createCookieSessionStorage({
 
 export let { getSession, commitSession, destroySession } = sessionStorage;
 
+export async function register({
+  request,
+  name,
+  email,
+  password,
+  passwordConfirmation,
+}: {
+  request: Request;
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}) {
+  let response: AxiosResponse;
+  let session = await sessionStorage.getSession(request.headers.get("Cookie"));
+
+  try {
+    response = await axios.post("/register", {
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+    });
+  } catch (error: any) {
+    return { errors: error?.response?.data?.message };
+  }
+
+  // let userData: { token?: string } = {};
+  // if (session.get("user")) {
+  //   userData = session.get("user");
+  // }
+  // userData.token = response.data.token;
+  // session.set("user", userData);
+
+  return {
+    redirector: redirect("/", {
+      headers: {
+        "Set-Cookie": await sessionStorage.commitSession(session),
+      },
+    }),
+  };
+}
+
 export async function login({
   request,
   email,

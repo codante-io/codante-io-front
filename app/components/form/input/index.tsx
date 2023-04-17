@@ -17,7 +17,7 @@ export default function Input({
     <>
       <label
         className="dark:text-slate-300 text-slate-600 text-sm mb-2"
-        htmlFor="email"
+        htmlFor={id}
       >
         {label}
       </label>

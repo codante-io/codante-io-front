@@ -14,9 +14,12 @@ import { ColorModeProvider } from "~/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
 import { DarkModeScriptTag } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
+import { ToastContainer } from "react-toastify";
+import toastifyCSS from "react-toastify/dist/ReactToastify.min.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: toastifyCSS },
   { rel: "icon", href: "/favicon.svg" },
 ];
 
@@ -41,6 +44,20 @@ export default function App() {
       <body className="dark:bg-[#0E141A] dark:text-white bg-gray-50 text-gray-800">
         <DarkModeScriptTag />
         <ColorModeProvider>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          {/* Same as */}
+          <ToastContainer />
           <Navbar user={user} />
           <main className="min-h-screen mx-auto">
             <Outlet />
