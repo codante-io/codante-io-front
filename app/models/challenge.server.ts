@@ -7,5 +7,5 @@ export type ChallengeCardInfo = {
   difficulty: 1 | 2 | 3;
   duration_in_minutes: string;
   enrolled_users_count: number;
-  tags: string[];
+  tags: any[];
 };

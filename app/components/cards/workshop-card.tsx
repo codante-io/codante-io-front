@@ -9,7 +9,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id}>
       <Link to={workshop.slug}>
-        <article className="max-w-[600px] border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-gray-200 dark:bg-gray-900 mb-4 flex shadow-sm dark:shadow-none hover:border-blue-300 hover:shadow-lg">
+        <article className="border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
           <div
             style={{
               backgroundImage: "url(/img/computer.jpg)",
@@ -25,15 +25,15 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             />
             <div className="mb-8">
               <h2 className="text-xl capitalize mb-1 text-gray-800 dark:text-white">
-                {workshop.name}
+                {workshop?.name}
               </h2>
               <div className="min-h-[24px]">
-                {workshop.tags.map((tag) => {
+                {workshop.tags?.map((tag) => {
                   return (
                     <CardItemTag
                       tagName={tag.name}
                       key={tag.id}
-                      className="bg-gray-300"
+                      className="bg-blue-900 text-white dark:bg-blue-900 dark:text-white"
                     />
                   );
                 })}
@@ -47,16 +47,16 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               />
               <div>
                 <p className="text-sm font-normal text-gray-800 dark:text-white">
-                  {workshop.instructor.name}
+                  {workshop?.instructor?.name}
                 </p>
-                <p className="text-xs font-light text-gray-500 capitalize">
-                  {workshop.instructor.company}
+                <p className="text-xs font-light dark:text-zinc-300 text-gray-700 capitalize">
+                  {workshop?.instructor?.company}
                 </p>
               </div>
             </div>
             <div className="mb-10 h-24">
-              <p className="font-light font-sans text-zinc-600 dark:text-gray-400 w-full line-clamp-3 ">
-                {workshop.short_description}
+              <p className="font-light font-sans text-slate-600 dark:text-zinc-300 w-full line-clamp-3 ">
+                {workshop?.short_description}
               </p>
             </div>
             <div>
