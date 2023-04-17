@@ -7,7 +7,7 @@ export default function PriceCard({
   price: any;
 }) {
   return (
-    <article className="relative w-[300px] bg-white dark:bg-gray-900 shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
+    <article className="relative w-[300px] bg-white dark:bg-gray-dark shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
       {price?.banner && (
         <div className="w-36 aspect-square absolute -top-2 -right-2 overflow-hidden rounded-sm">
           <div className="absolute top-0 left-0 bg-blue-500 h-2 w-2"></div>
@@ -33,18 +33,16 @@ export default function PriceCard({
       </button>
       <div className="h-[1px] bg-slate-500/30 w-full my-4" />
 
-      <ul className="mt-8 space-y-3 text-sm leading-8 dark:text-white text-slate-600">
+      <ul className="mt-8 space-y-3 text-sm leading-6 dark:text-white text-slate-600">
         {Object.entries(price?.features)?.map(
           ([feature, isAvailable], index) => (
             <li className="flex text-start gap-x-3" key={index}>
-              <>
-                {isAvailable ? (
-                  <AiOutlineCheck color="#5282FF" className="mr-2 w-4 h-4" />
-                ) : (
-                  <AiOutlineClose color="#F4B4AB" className="mr-2 w-4 h-4" />
-                )}{" "}
-                {feature}
-              </>
+              {isAvailable ? (
+                <AiOutlineCheck color="#5282FF" className="mr-2 h-6 w-5" />
+              ) : (
+                <AiOutlineClose color="#F4B4AB" className="mr-2 h-6 w-5" />
+              )}
+              {feature}
             </li>
           )
         )}
