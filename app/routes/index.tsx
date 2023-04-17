@@ -1,12 +1,14 @@
 import { BsFillPlayFill, BsFillPersonFill } from "react-icons/bs";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+
 import { json } from "@remix-run/node";
 import { getHome } from "~/models/home.server";
 import { useLoaderData } from "@remix-run/react";
 import WorkshopCard from "~/components/cards/workshop-card";
-import { useEffect } from "react";
 import ChallengeCard from "~/components/cards/challenge-card";
 import { useColorMode } from "~/contexts/color-mode-context";
 import PriceCard from "~/components/cards/price-card";
+import TrackCard from "~/components/cards/track-card";
 
 export const loader = async () => {
   return json({
@@ -17,10 +19,6 @@ export const loader = async () => {
 export default function Index() {
   const { homeInfo } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
-
-  useEffect(() => {
-    console.log(homeInfo);
-  }, [homeInfo]);
 
   return (
     <div className="dark:text-white text-gray-900 flex flex-col items-center justify-center">
@@ -55,11 +53,11 @@ export default function Index() {
         <div className="container flex flex-col items-center">
           <h1 className="font-lexend font-light mt-16 text-3xl md:text-5xl text-center">
             Evolua na{" "}
-            <span className="inline-block pr-4 font-bold dark:text-blue-200 text-blue-900">
+            <span className=" pr-4 font-bold animate-text bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text text-transparent">
               programação
             </span>
           </h1>
-          <p className="font-inter text-md px-2 md:text-xl font-light mt-16 text-center lg:w-7/12">
+          <p className="font-inter text-md md:text-xl font-light mt-16 text-center lg:w-7/12">
             Fuja dos tutoriais e aprimore suas{" "}
             <span className="italic">skills</span> em programação com{" "}
             <span className="font-bold italic">workshops</span> e{" "}
@@ -87,10 +85,19 @@ export default function Index() {
         className="w-full bg-transparent flex justify-center text-gray-800 dark:text-white mb-16"
       >
         <div className="container mb-10">
-          <h1 className="font-lexend font-light mt-16 mb-10 text-3xl">
+          <h1 className="flex items-center font-lexend font-light mt-16 text-3xl">
+            <MdKeyboardDoubleArrowRight
+              size={24}
+              className="text-blue-300 dark:text-blue-900 mr-2"
+            />{" "}
             Workshops
           </h1>
-          <section className="flex flex-wrap justify-between gap-4">
+          <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-start">
+            Aprenda de forma prática e objetiva com{" "}
+            <span className="font-bold italic">workshops</span> ensinados por
+            profissionais do mercado.
+          </p>
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {homeInfo?.featured_workshops?.slice(0, 2).map((workshop) => (
               <WorkshopCard key={workshop.id} workshop={workshop} />
             ))}
@@ -108,11 +115,20 @@ export default function Index() {
         id="mini-projects"
         className="w-full dark:bg-slate-800 bg-slate-100 text-gray-800 dark:text-white flex justify-center"
       >
-        <div className="container -top-56 relative">
-          <h1 className="font-lexend font-light mt-16 mb-10 text-3xl">
+        <div className="container -top-24 relative">
+          <h1 className="flex items-center font-lexend font-light mt-16 text-3xl">
+            <MdKeyboardDoubleArrowRight
+              size={24}
+              className="text-blue-300 dark:text-blue-900 mr-2"
+            />{" "}
             Mini projetos
           </h1>
-          <section className="grid grid-cols-4 gap-y-8">
+          <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-start">
+            O melhor jeito de aprender é praticando! Melhore suas skills fazendo{" "}
+            <span className="font-bold italic">mini projetos</span> e depois
+            assista a resolução feita por profissionais do mercado.
+          </p>
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {homeInfo?.featured_challenges?.map((challenge) => (
               <ChallengeCard key={challenge.id} challenge={challenge} />
             ))}
@@ -122,25 +138,49 @@ export default function Index() {
       {colorMode && (
         <img
           src={`/img/wave-bottom-${colorMode}.svg`}
-          className="w-full -top-20 relative"
+          className="w-full -top-42 relative"
           alt="Wave detail"
         />
       )}
       <section
         id="tracks"
-        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white"
+        className="w-full bg-transparent flex justify-center text-gray-800 dark:text-white"
       >
-        <div className="container relative -top-56">
-          <h1 className="font-lexend font-light mt-16 text-3xl">Trilhas</h1>
+        <div className="container relative -top-36">
+          <h1 className="flex items-center font-lexend font-light text-3xl">
+            <MdKeyboardDoubleArrowRight
+              size={24}
+              className="text-blue-300 dark:text-blue-900 mr-2"
+            />{" "}
+            Trilhas
+          </h1>
+          <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-start">
+            Obtenha a experiência de aprendizado completa unindo{" "}
+            <span className="font-bold italic">workshops</span> e{" "}
+            <span className="font-bold italic">mini projetos</span> para
+            aprender temas específicos em programação.
+          </p>
+          <section className="grid grid-cols-1 gap-4">
+            {homeInfo?.featured_tracks?.map((track) => (
+              <TrackCard key={track.id} track={track} />
+            ))}
+          </section>
         </div>
       </section>
 
       <section
-        id="tracks"
-        className="w-full dark:bg-[#0E141A] bg-white flex justify-center text-gray-800 dark:text-white text-center"
+        id="pricing"
+        className="w-full dark:bg-gray-darkest bg-white flex justify-center text-gray-800 dark:text-white text-center"
       >
-        <div className="container relative">
+        <div className="container flex items-center flex-col">
           <h1 className="font-lexend font-light mt-16 text-3xl">Preços</h1>
+          <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-center lg:max-w-7xl">
+            Temos o compromisso de oferecer muito conteúdo{" "}
+            <span className="font-bold italic">gratuito</span> e de{" "}
+            <span className="font-bold italic">qualidade</span>. <br />{" "}
+            Considere se tornar um membro Premium para apoiar o projeto e ter
+            acesso a mais conteúdos exclusivos.
+          </p>
           <section className="flex justify-center mt-10 gap-20 mb-20">
             <PriceCard
               price={{

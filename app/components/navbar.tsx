@@ -37,7 +37,7 @@ export default function Navbar({ user }: { user: any }) {
   ];
 
   return (
-    <Disclosure as="nav" className="bg-transparent bg-white text-gray-900">
+    <Disclosure as="nav" className="bg-transparent text-gray-900">
       {({ open }) => (
         <>
           <div className="mx-auto container">
