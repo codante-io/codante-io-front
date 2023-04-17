@@ -31,7 +31,9 @@ export async function login({
   try {
     response = await axios.post("/login", { email, password });
   } catch (error: any) {
-    return { errors: Object.values(error?.response?.data?.errors).flat() };
+    console.log(error.response.data.errors);
+    // return { errors: Object.values(error?.response?.data?.errors).flat() };
+    return { errors: error?.response?.data?.message };
   }
 
   let userData: { token?: string } = {};
@@ -146,7 +148,7 @@ export async function resetPassword({
   passwordConfirmation: string;
 }) {
   try {
-    const res = await axios.post('/reset-password', {
+    const res = await axios.post("/reset-password", {
       token,
       email,
       password,
@@ -158,13 +160,13 @@ export async function resetPassword({
   }
 
   return {
-    redirector: redirect('/login'),
+    redirector: redirect("/login"),
   };
 }
 
 export async function sendPasswordLink({ email }: { email: string }) {
   try {
-    const res = await axios.post('/forgot-password', { email });
+    const res = await axios.post("/forgot-password", { email });
   } catch (error: any) {
     console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };
