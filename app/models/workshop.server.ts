@@ -7,6 +7,7 @@ export type Workshop = {
   name: string;
   slug: string;
   short_description: string;
+  status: "draft" | "published" | "soon" | "archived";
   description: string;
   imageUrl?: string;
   difficulty: 1 | 2 | 3;

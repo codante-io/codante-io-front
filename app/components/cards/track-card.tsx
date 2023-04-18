@@ -4,12 +4,21 @@ import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import CardItemWorkshop from "~/components/cards/card-item-workshop";
 import CardItemChallenge from "~/components/cards/card-item-challenge";
+import CardItemRibbon from "~/components/cards/card-item-ribbon";
 
 function TrackCard({ track }: { track: Track }) {
   return (
     <div key={track?.id}>
-      <Link to={track?.slug}>
-        <article className="border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+      <Link
+        onClick={(e) => track?.status === "soon" && e.preventDefault()}
+        to={track?.slug}
+        className={
+          track?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
+        }
+      >
+        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+          {track?.status === "soon" && <CardItemRibbon text="Em breve" />}
+
           <div
             style={{
               backgroundImage: "url(/img/browser.png)",
