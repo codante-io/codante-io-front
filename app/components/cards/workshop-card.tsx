@@ -4,12 +4,21 @@ import CardDurationItem from "./card-item-duration";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import CardItemLessonsCount from "./card-item-lessons-count";
+import CardItemRibbon from "~/components/cards/card-item-ribbon";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id}>
-      <Link to={workshop.slug}>
-        <article className="border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+      <Link
+        onClick={(e) => workshop?.status === "soon" && e.preventDefault()}
+        to={workshop?.slug}
+        className={
+          workshop?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
+        }
+      >
+        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+          {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
+
           <div
             style={{
               backgroundImage: "url(/img/computer.jpg)",

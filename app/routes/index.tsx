@@ -115,7 +115,7 @@ export default function Index() {
         id="mini-projects"
         className="w-full dark:bg-slate-800 bg-slate-100 text-gray-800 dark:text-white flex justify-center"
       >
-        <div className="container -top-12 md:-top-24 relative">
+        <div className="container -top-12  relative">
           <h1 className="flex items-center font-lexend font-light mt-16 text-3xl">
             <MdKeyboardDoubleArrowRight
               size={24}
@@ -146,7 +146,7 @@ export default function Index() {
         id="tracks"
         className="w-full bg-transparent flex justify-center text-gray-800 dark:text-white"
       >
-        <div className="container relative -top-4 md:-top-16 xl:-top-36">
+        <div className="container relative top-4">
           <h1 className="flex items-center font-lexend font-light text-3xl">
             <MdKeyboardDoubleArrowRight
               size={24}
