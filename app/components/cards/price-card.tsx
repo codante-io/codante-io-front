@@ -1,4 +1,5 @@
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import CardItemRibbon from "~/components/cards/card-item-ribbon";
 
 export default function PriceCard({
   price,
@@ -8,15 +9,7 @@ export default function PriceCard({
 }) {
   return (
     <article className="relative w-[300px] bg-white dark:bg-gray-dark shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-slate-600">
-      {price?.banner && (
-        <div className="w-36 aspect-square absolute -top-2 -right-2 overflow-hidden rounded-sm">
-          <div className="absolute top-0 left-0 bg-blue-500 h-2 w-2"></div>
-          <div className="absolute bottom-0 right-0 bg-blue-500 h-2 w-2"></div>
-          <span className="w-[210px] px-8 py-1.5 bg-blue-300 text-blue-900 font-semibold uppercase text-xs tracking-wider block w-square-diagonal text-center absolute bottom-0 right-0 rotate-45 origin-bottom-right shadow-sm hover:bg-blue-300">
-            {price.banner}
-          </span>
-        </div>
-      )}
+      {price?.banner && <CardItemRibbon text={price?.banner} />}
 
       <div className="card-header mb-8">
         <h2 className="text-lg text-slate-600 dark:text-white mb-1 text-center">

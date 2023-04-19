@@ -9,7 +9,7 @@ export type Track = {
   short_description: string;
   description: string;
   image_url?: string;
-  status?: string;
+  status: "draft" | "published" | "soon" | "archived";
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
   instructor: Instructor;
