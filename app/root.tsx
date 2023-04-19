@@ -51,7 +51,8 @@ export default function App() {
         <DarkModeScriptTag />
         <ColorModeProvider>
           <Navbar user={user} />
-          <main className="min-h-screen mx-auto">
+          {/* altura do footer de 170px. Se mudar deve mudar o cálculo aqui */}
+          <main className="min-h-[calc(100vh-170px)] mx-auto">
             <Outlet />
           </main>
           <Footer />

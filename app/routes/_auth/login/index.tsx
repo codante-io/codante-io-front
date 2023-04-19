@@ -40,7 +40,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="h-[45px] mb-16">
+      <div className="h-[45px] mb-10 hidden sm:block">
         <img
           src={colorMode === "light" ? "/codante-light.svg" : "/codante.svg"}
           alt=""

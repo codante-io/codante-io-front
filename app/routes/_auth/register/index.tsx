@@ -45,7 +45,7 @@ export default function Register() {
 
   return (
     <>
-      <div className="h-[45px] mb-16">
+      <div className="h-[45px] mb-10 hidden md:block">
         <img
           src={colorMode === "light" ? "/codante-light.svg" : "/codante.svg"}
           alt=""
@@ -54,6 +54,9 @@ export default function Register() {
       </div>
 
       <AuthCard>
+        <h1 className="text-lg text-slate-700 dark:text-white mb-8">
+          Cadastre-se
+        </h1>
         <Form method="POST" className="flex flex-col">
           <Input
             name="name"
