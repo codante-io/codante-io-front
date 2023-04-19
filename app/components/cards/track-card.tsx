@@ -11,7 +11,7 @@ function TrackCard({ track }: { track: Track }) {
     <div key={track?.id}>
       <Link
         onClick={(e) => track?.status === "soon" && e.preventDefault()}
-        to={track?.slug}
+        to={`trilhas/${track?.slug}`}
         className={
           track?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
         }

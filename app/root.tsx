@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import BackgrounBlur from "~/components/background-blur";
 import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
 import { ColorModeProvider } from "~/contexts/color-mode-context";
@@ -47,6 +48,7 @@ export default function App() {
         <ColorModeProvider>
           <Navbar user={user} />
           <main className="min-h-screen mx-auto">
+            <BackgrounBlur />
             <Outlet />
           </main>
           <Footer />
