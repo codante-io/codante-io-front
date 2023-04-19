@@ -2,13 +2,25 @@ type ButtonProps = {
   children: React.ReactNode;
   type: "button" | "submit" | "reset";
   className?: string;
-};
+  disabled?: boolean;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function Button({ children, type, className }: ButtonProps) {
+export default function Button({
+  children,
+  type,
+  className,
+  disabled,
+  ...rest
+}: ButtonProps) {
   return (
     <button
       type={type}
-      className={`mt-4 rounded font-medium  bg-[#5282FF] text-white p-[0.4rem] px-8 border-b-2 -700 border-b-[#4572E4] ${className}`}
+      disabled={disabled}
+      className={`
+      rounded bg-[#5282FF] px-5 py-2 text-sm text-white transition duration-200 hover:bg-opacity-80 ${className} ${
+        disabled ? "bg-opacity-60 hover:bg-opacity-60" : ""
+      }`}
+      {...rest}
     >
       {children}
     </button>

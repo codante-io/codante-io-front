@@ -20,6 +20,7 @@ import toastifyCSS from "react-toastify/dist/ReactToastify.min.css";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
   { rel: "stylesheet", href: toastifyCSS },
+  { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   { rel: "icon", href: "/favicon.svg" },
 ];
 
