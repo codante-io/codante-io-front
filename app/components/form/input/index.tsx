@@ -22,7 +22,7 @@ export default function Input({
         {label}
       </label>
       <input
-        className={`rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 dark:text-white text-slate-600 w-full font-light ${className}`}
+        className={`rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-white text-slate-600 w-full font-light ${className}`}
         id={id}
         type={type}
         name={name}
