@@ -25,15 +25,14 @@ export default function PasswordReset() {
   const status = transition.state;
   let isSuccessfulSubmission = status === "idle" && errors === null;
 
-  useEffect(() => {
-    if (errors) {
-      console.log(errors);
-      errors.forEach((error: string) => {
-        console.log("oies");
-        toast(error, { type: "error" });
-      });
-    }
-  }, [errors]);
+  // useEffect(() => {
+  //   if (errors) {
+  //     console.log(errors);
+  //     errors.forEach((error: string) => {
+  //       toast(error, { type: "error" });
+  //     });
+  //   }
+  // }, [errors]);
 
   return (
     <AuthCard>
