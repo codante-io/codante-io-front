@@ -26,6 +26,9 @@ module.exports = {
           darkest: "#0E141A",
           dark: "#17212B",
         },
+        brand: {
+          DEFAULT: "#5282FF",
+        },
       },
       animation: {
         text: "text 5s ease infinite",

@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useMatches } from "@remix-run/react";
+import { Form, Link, useMatches } from "@remix-run/react";
 import { BiUserCircle } from "react-icons/bi";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -178,7 +178,7 @@ export default function Navbar({ user }: { user: any }) {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <form action="/logout" method="post">
+                            <Form action="/logout" method="post">
                               <button
                                 className={classNames(
                                   active ? "bg-white" : "",
@@ -187,7 +187,7 @@ export default function Navbar({ user }: { user: any }) {
                               >
                                 Sair
                               </button>
-                            </form>
+                            </Form>
                           )}
                         </Menu.Item>
                       </Menu.Items>

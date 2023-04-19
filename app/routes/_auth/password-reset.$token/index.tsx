@@ -1,5 +1,15 @@
-import { useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { resetPassword } from "~/services/auth.server";
+import AuthCard from "../auth-card";
+import Input from "~/components/form/input";
+import Button from "~/components/form/button";
+import Spinner from "~/components/spinner";
+import { CheckIcon } from "@heroicons/react/24/solid";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -15,7 +25,7 @@ export async function action({ request }: { request: Request }) {
     passwordConfirmation,
   });
 
-  return errors || redirector;
+  return errors || null;
 }
 
 export async function loader({
@@ -36,30 +46,71 @@ export async function loader({
 
 export default function PasswordReset() {
   const { token, email } = useLoaderData<typeof loader>();
+  const errors = useActionData();
+  const transition = useNavigation();
+
+  const status = transition.state;
+  let isSuccessfulSubmission = status === "idle" && errors === null;
+
   return (
-    <>
-      <h1>Coloque seu novo password</h1>
-      <form method="post">
-        <input type="hidden" name="email" value={email} />
-        <input type="hidden" name="token" value={token} />
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          type="password"
-          id="password"
-          className="text-black"
-        />
-        <label htmlFor="password_confirmation">Password Confirmation</label>
-        <input
-          name="password_confirmation"
-          type="password"
-          id="password_confirmation"
-          className="text-black"
-        />
-        <button type="submit" className="m-3 p-3 bg-blue-900">
-          Reset Password
-        </button>
-      </form>
-    </>
+    <AuthCard>
+      <h1 className="text-lg text-slate-700 dark:text-white">
+        Redefinir Senha
+      </h1>
+      {!isSuccessfulSubmission ? (
+        <Form method="post" className="mt-8">
+          <input type="hidden" name="email" value={email} />
+          <input type="hidden" name="token" value={token} />
+          <Input
+            label="Nova Senha"
+            type="password"
+            name="password"
+            id="password"
+          />
+          <div className="mt-4">
+            <Input
+              label="Confirmação da nova senha"
+              type="password"
+              id="password_confirmation"
+              name="password_confirmation"
+            />
+          </div>
+          <div className="text-red-400 text-xs mt-2 h-4">{errors}</div>
+
+          <div className="mt-8 text-right">
+            <Button
+              disabled={status !== "idle"}
+              type="submit"
+              className="relative transition duration-200"
+            >
+              {status === "submitting" && (
+                <div className="absolute inset-0 flex justify-center py-2">
+                  <Spinner />
+                </div>
+              )}
+              {isSuccessfulSubmission && (
+                <div className="absolute inset-0 flex justify-center py-2">
+                  <CheckIcon className="w-5" />
+                </div>
+              )}
+              <span
+                className={
+                  status === "idle" && !isSuccessfulSubmission
+                    ? ""
+                    : "invisible"
+                }
+              >
+                Redefinir Senha
+              </span>
+            </Button>
+          </div>
+        </Form>
+      ) : (
+        <div className="text-slate-500 text-slate-400 font-light text-sm mt-8">
+          Tudo certo! Você redefiniu uma nova senha. Agora, é só fazer o login
+          normalmente.
+        </div>
+      )}
+    </AuthCard>
   );
 }
