@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   darkMode: "class",
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
@@ -15,6 +17,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter", "sans-serif"],
       },
@@ -22,6 +25,9 @@ module.exports = {
         gray: {
           darkest: "#0E141A",
           dark: "#17212B",
+        },
+        brand: {
+          DEFAULT: "#5282FF",
         },
       },
       animation: {
@@ -41,5 +47,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

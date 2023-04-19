@@ -16,6 +16,49 @@ export let sessionStorage = createCookieSessionStorage({
 
 export let { getSession, commitSession, destroySession } = sessionStorage;
 
+export async function register({
+  request,
+  name,
+  email,
+  password,
+  passwordConfirmation,
+}: {
+  request: Request;
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}) {
+  let response: AxiosResponse;
+  let session = await sessionStorage.getSession(request.headers.get("Cookie"));
+
+  try {
+    response = await axios.post("/register", {
+      name,
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+    });
+  } catch (error: any) {
+    return { errors: error?.response?.data?.message };
+  }
+
+  // let userData: { token?: string } = {};
+  // if (session.get("user")) {
+  //   userData = session.get("user");
+  // }
+  // userData.token = response.data.token;
+  // session.set("user", userData);
+
+  return {
+    redirector: redirect("/", {
+      headers: {
+        "Set-Cookie": await sessionStorage.commitSession(session),
+      },
+    }),
+  };
+}
+
 export async function login({
   request,
   email,
@@ -31,7 +74,9 @@ export async function login({
   try {
     response = await axios.post("/login", { email, password });
   } catch (error: any) {
-    return { errors: Object.values(error?.response?.data?.errors).flat() };
+    console.log(error.response.data.errors);
+    // return { errors: Object.values(error?.response?.data?.errors).flat() };
+    return { errors: error?.response?.data?.message };
   }
 
   let userData: { token?: string } = {};
@@ -146,7 +191,7 @@ export async function resetPassword({
   passwordConfirmation: string;
 }) {
   try {
-    const res = await axios.post('/reset-password', {
+    const res = await axios.post("/reset-password", {
       token,
       email,
       password,
@@ -158,13 +203,13 @@ export async function resetPassword({
   }
 
   return {
-    redirector: redirect('/login'),
+    redirector: redirect("/login"),
   };
 }
 
 export async function sendPasswordLink({ email }: { email: string }) {
   try {
-    const res = await axios.post('/forgot-password', { email });
+    const res = await axios.post("/forgot-password", { email });
   } catch (error: any) {
     console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };
