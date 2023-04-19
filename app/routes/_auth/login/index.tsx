@@ -52,13 +52,13 @@ export default function Login() {
           <Form action="/auth/github" method="post">
             <button className="rounded bg-gray-700 text-white p-4 w-full flex items-center justify-center gap-4">
               <img src="/img/github-logo.svg" alt="" />
-              Login com GitHub
+              Entrar com GitHub
             </button>
           </Form>
         </AuthCard>
 
         <AuthCard className={opened ? "" : "hidden"}>
-          <form method="POST" className="flex flex-col ">
+          <Form method="POST" className="flex flex-col ">
             <Input
               name="email"
               id="email"
@@ -82,22 +82,22 @@ export default function Login() {
               </Link>
               <span className="text-blue-500 font-light"> &#8226; </span>
               <Link
-                to={`/register${opened && "?" + searchParams.toString()}`}
+                to="/register"
                 className="underline text-xs font-light text-gray-500"
               >
                 Não possui Cadastro?
               </Link>
             </div>
-            <div className="min-h-[16px] mt-2">
-              {errors && <div className="text-red-400 text-xs">{errors}</div>}
+            <div className="text-red-400 text-xs mt-2 min-h-4 mb-3">
+              {errors}
             </div>
             <div className="text-right">
               <Button type="submit">Login</Button>
             </div>
-          </form>
+          </Form>
         </AuthCard>
         <p className={` text-xs font-light text-slate-500 mb-2 mt-4`}>
-          ... ou, se preferir, faça{" "}
+          ... ou, se preferir, entre com{" "}
           <button
             className="underline"
             onClick={() => {
@@ -105,7 +105,7 @@ export default function Login() {
               navigator(opened ? "" : "?opened=true");
             }}
           >
-            login com {opened ? "github" : "email e senha"}
+            {opened ? "github" : "email e senha"}
           </button>
         </p>
       </div>

@@ -4,10 +4,7 @@ import Input from "~/components/form/input";
 import Button from "~/components/form/button";
 import Spinner from "~/components/spinner";
 import { CheckIcon } from "@heroicons/react/24/solid";
-
 import { Form, useActionData, useNavigation } from "@remix-run/react";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();

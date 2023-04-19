@@ -3,6 +3,7 @@ import {
   Link,
   useActionData,
   useNavigate,
+  useNavigation,
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
@@ -11,6 +12,8 @@ import Input from "~/components/form/input";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { login, register } from "~/services/auth.server";
 import AuthCard from "../auth-card";
+import Spinner from "~/components/spinner";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
@@ -32,14 +35,13 @@ export async function action({ request }: { request: Request }) {
 }
 
 export default function Register() {
-  let [searchParams] = useSearchParams();
-  const navigator = useNavigate();
+  let errors = useActionData();
+
+  const transition = useNavigation();
   const { colorMode } = useColorMode();
 
-  let initialOpened = Boolean(searchParams.get("opened") ?? false);
-
-  const [opened, setOpened] = useState(initialOpened);
-  let errors = useActionData();
+  const status = transition.state;
+  let isSuccessfulSubmission = status === "idle" && errors === null;
 
   return (
     <>
@@ -51,17 +53,8 @@ export default function Register() {
         />
       </div>
 
-      <AuthCard className={opened ? "hidden" : ""}>
-        <Form action="/auth/github" method="post">
-          <button className="rounded bg-gray-700 text-white p-4 w-full flex items-center justify-center gap-4">
-            <img src="/img/github-logo.svg" alt="" />
-            Cadastre com GitHub
-          </button>
-        </Form>
-      </AuthCard>
-
-      <AuthCard className={opened ? "" : "hidden"}>
-        <form method="POST" className="flex flex-col">
+      <AuthCard>
+        <Form method="POST" className="flex flex-col">
           <Input
             name="name"
             id="name"
@@ -92,7 +85,7 @@ export default function Register() {
           />
           <div>
             <Link
-              to={`/login${opened && "?" + searchParams.toString()}`}
+              to="/login"
               className="underline text-xs font-light text-gray-500"
             >
               Já possui cadastro? Faça login!
@@ -102,21 +95,39 @@ export default function Register() {
             {errors && <div className="text-red-400 text-xs">{errors}</div>}
           </div>
           <div className="text-right">
-            <Button type="submit">Cadastre-se</Button>
+            <Button
+              disabled={status !== "idle" || isSuccessfulSubmission}
+              type="submit"
+              className="mt-8 relative transition duration-200 "
+            >
+              {status === "submitting" && (
+                <div className="absolute inset-0 flex justify-center py-2">
+                  <Spinner />
+                </div>
+              )}
+              {isSuccessfulSubmission && (
+                <div className="absolute inset-0 flex justify-center py-2">
+                  <CheckIcon className="w-5" />
+                </div>
+              )}
+              <span
+                className={
+                  status === "idle" && !isSuccessfulSubmission
+                    ? ""
+                    : "invisible"
+                }
+              >
+                Cadastre-se
+              </span>
+            </Button>
           </div>
-        </form>
+        </Form>
       </AuthCard>
       <p className={` text-xs font-light text-slate-500 mb-2 text-right mt-4`}>
-        ... ou, se preferir, cadastre-se{" "}
-        <button
-          className="underline"
-          onClick={() => {
-            setOpened(!opened);
-            navigator(opened ? "" : "?opened=true");
-          }}
-        >
-          com {opened ? "github" : "email e senha"}
-        </button>
+        ... ou, se preferir, entre com{" "}
+        <Link to="/login" className="underline">
+          github
+        </Link>
       </p>
     </>
   );

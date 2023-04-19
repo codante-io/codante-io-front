@@ -17,7 +17,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       className={`
-      rounded bg-brand px-5 py-2 text-sm text-white transition duration-200 hover:bg-opacity-90 ${className} ${
+      rounded bg-brand px-5 py-2 text-sm text-white transition duration-200 hover:bg-opacity-90 disabled:cursor-not-allowed ${className} ${
         disabled ? "bg-opacity-60 hover:bg-opacity-60" : ""
       }`}
       {...rest}

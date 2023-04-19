@@ -43,6 +43,7 @@ export async function register({
     return { errors: error?.response?.data?.message };
   }
 
+  // return await login({ request, email, password });
   // let userData: { token?: string } = {};
   // if (session.get("user")) {
   //   userData = session.get("user");
@@ -50,13 +51,15 @@ export async function register({
   // userData.token = response.data.token;
   // session.set("user", userData);
 
-  return {
-    redirector: redirect("/", {
-      headers: {
-        "Set-Cookie": await sessionStorage.commitSession(session),
-      },
-    }),
-  };
+  // return {
+  //   redirector: redirect("/", {
+  //     headers: {
+  //       "Set-Cookie": await sessionStorage.commitSession(session),
+  //     },
+  //   }),
+  // };
+
+  return await login({ request, email, password });
 }
 
 export async function login({
