@@ -94,8 +94,8 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "dark:bg-gray-900 dark:text-white bg-white text-gray-900"
-                            : "text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                            ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -196,7 +196,7 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               ) : (
                 <Link
-                  className="dark:text-white text-gray-900 flex items-center gap-x-1"
+                  className="dark:text-white text-gray-700 flex items-center gap-x-1"
                   to="/login"
                 >
                   Login <BsArrowRight />
@@ -214,8 +214,8 @@ export default function Navbar({ user }: { user: any }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-900"
-                      : "text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
@@ -223,7 +223,7 @@ export default function Navbar({ user }: { user: any }) {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button className="text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900block rounded-md px-3 py-2 text-base font-medium">
+              <Disclosure.Button className="text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium">
                 <ToggleColorMode />
               </Disclosure.Button>
             </div>

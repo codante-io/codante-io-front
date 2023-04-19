@@ -93,7 +93,7 @@ export default function Register() {
           <div>
             <Link
               to={`/login${opened && "?" + searchParams.toString()}`}
-              className="underline text-xs font-light text-gray-400"
+              className="underline text-xs font-light text-gray-500"
             >
               Já possui cadastro? Faça login!
             </Link>
