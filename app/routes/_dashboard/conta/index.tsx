@@ -101,8 +101,11 @@ export default function Account() {
           className="text-blue-300 dark:text-blue-800 mr-2 inline-block"
         />{" "}
         Minha Conta
-        <span className="text-blue-500 font-light ml-3"> &#8226; </span>
-        <span className="font-light ml-3 text-base dark:text-slate-400">
+        <span className="hidden md:inline text-blue-500 font-light ml-3">
+          {" "}
+          &#8226;{" "}
+        </span>
+        <span className="hidden md:inline font-light ml-3 text-base dark:text-slate-400">
           {user.name}
         </span>
       </h2>
@@ -181,7 +184,7 @@ export default function Account() {
               value="changePassword"
               type="submit"
             >
-              Alterar Nome
+              Alterar Senha
             </LoadingButton>
           </div>
         </Form>
