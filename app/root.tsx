@@ -8,7 +8,6 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import BackgrounBlur from "~/components/background-blur";
 import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
 import { ColorModeProvider } from "~/contexts/color-mode-context";
@@ -40,7 +39,7 @@ export default function App() {
         <Links />
       </head>
       <body
-        className="dark:bg-gradient-to-br dark:from-gray-darkest dark:via-gray-dark dark:to-gray-dark
+        className="dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark
         bg-gradient-to-br from-white via-slate-50 to-slate-100
        dark:text-white bg-white text-gray-800"
       >
@@ -48,7 +47,6 @@ export default function App() {
         <ColorModeProvider>
           <Navbar user={user} />
           <main className="min-h-screen mx-auto">
-            <BackgrounBlur />
             <Outlet />
           </main>
           <Footer />

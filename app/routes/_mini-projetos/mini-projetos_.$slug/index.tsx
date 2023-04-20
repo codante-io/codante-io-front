@@ -5,7 +5,9 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import RepositoryCard from "~/components/cards/repository-card";
+import JoinChallengeSection from "~/components/join-challenge-section.tsx";
+
+import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getChallenge } from "~/models/challenge.server";
 
@@ -44,16 +46,16 @@ export default function WorkshopSlug() {
           <CardItemDifficulty difficulty={2} className="mb-2" />
         </div>
         <div className="container grid grid-cols-12 mt-10 gap-8">
-          <div className="col-span-12 lg:col-span-9">
+          <div className="col-span-12 lg:col-span-8">
             <h1 className="flex items-center font-lexend font-semibold text-2xl">
               Vídeo de introdução
             </h1>
-            <div className="w-full h-[210px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] bg-black flex items-center justify-center rounded-lg mt-4 mb-8">
+            <div className="w-full h-[310px] sm:h-[436px] md:h-[510px] bg-black flex items-center justify-center rounded-lg mt-4 mb-8">
               <button className="flex items-center justify-center rounded-full h-12 w-12 bg-slate-100 text-gray-700">
                 <BsFillPlayFill size={24} color="#5282FF" />
               </button>
             </div>
-            <div className="col-span-12 lg:col-span-9">
+            <div className="col-span-12 lg:col-span-8">
               <h1 className="flex items-center font-lexend font-semibold text-2xl mt-8 mb-4">
                 Descrição
               </h1>
@@ -62,11 +64,13 @@ export default function WorkshopSlug() {
               </p>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-3">
+          <div className="col-span-12 lg:col-span-4">
+            <JoinChallengeSection />
+
             <h1 className="flex items-center font-lexend font-semibold text-2xl mb-4">
               Repositório
             </h1>
-            <RepositoryCard
+            <RepositoryInfoSection
               repository={{
                 organization: "codante-io",
                 name: "countdown-timer",

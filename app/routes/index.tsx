@@ -9,6 +9,7 @@ import ChallengeCard from "~/components/cards/challenge-card";
 import { useColorMode } from "~/contexts/color-mode-context";
 import PriceCard from "~/components/cards/price-card";
 import TrackCard from "~/components/cards/track-card";
+import BackgroundBlur from "~/components/background-blur";
 
 export const loader = async () => {
   return json({
@@ -22,6 +23,8 @@ export default function Index() {
 
   return (
     <div className="dark:text-white text-gray-900 flex flex-col items-center justify-center">
+      <BackgroundBlur />
+
       <section
         id="headline"
         className="w-full min-h-screen flex justify-center"

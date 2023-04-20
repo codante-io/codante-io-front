@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { AiOutlineFork, AiOutlineStar } from "react-icons/ai";
 
-export default function RepositoryCard({
+export default function RepositoryInfoSection({
   repository,
 }: {
   // @TODO: change this to price when the API is ready
