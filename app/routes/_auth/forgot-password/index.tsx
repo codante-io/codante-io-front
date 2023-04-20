@@ -5,6 +5,7 @@ import Button from "~/components/form/button";
 import Spinner from "~/components/spinner";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
+import LoadingButton from "~/components/form/loading-button";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -22,15 +23,6 @@ export default function PasswordReset() {
   const status = transition.state;
   let isSuccessfulSubmission = status === "idle" && errors === null;
 
-  // useEffect(() => {
-  //   if (errors) {
-  //     console.log(errors);
-  //     errors.forEach((error: string) => {
-  //       toast(error, { type: "error" });
-  //     });
-  //   }
-  // }, [errors]);
-
   return (
     <AuthCard>
       <h1 className="text-lg text-slate-700 dark:text-white">
@@ -46,31 +38,14 @@ export default function PasswordReset() {
           <div className="text-red-400 text-xs mt-2 min-h-4">{errors}</div>
 
           <div className="text-right">
-            <Button
-              disabled={status !== "idle"}
+            <LoadingButton
               type="submit"
               className="mt-8 relative transition duration-200"
+              status={status}
+              isSuccessfulSubmission={isSuccessfulSubmission}
             >
-              {status === "submitting" && (
-                <div className="absolute inset-0 flex justify-center py-2">
-                  <Spinner />
-                </div>
-              )}
-              {isSuccessfulSubmission && (
-                <div className="absolute inset-0 flex justify-center py-2">
-                  <CheckIcon className="w-5" />
-                </div>
-              )}
-              <span
-                className={
-                  status === "idle" && !isSuccessfulSubmission
-                    ? ""
-                    : "invisible"
-                }
-              >
-                Redefinir Senha
-              </span>
-            </Button>
+              Redefinir Senha
+            </LoadingButton>
           </div>
         </Form>
       ) : (

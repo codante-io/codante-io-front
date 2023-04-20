@@ -5,8 +5,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useState } from "react";
 import Button from "~/components/form/button";
 import Input from "~/components/form/input";
 import { useColorMode } from "~/contexts/color-mode-context";

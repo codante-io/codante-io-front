@@ -154,7 +154,7 @@ export default function Navbar({ user }: { user: any }) {
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
-                              Configurações
+                              Minha Conta
                             </a>
                           )}
                         </Menu.Item>
