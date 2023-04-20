@@ -14,12 +14,10 @@ import { ColorModeProvider, useColorMode } from "~/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
 import { DarkModeScriptTag } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
-import { ToastContainer } from "react-toastify";
-import toastifyCSS from "react-toastify/dist/ReactToastify.min.css";
+import { Toaster } from "react-hot-toast";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
-  { rel: "stylesheet", href: toastifyCSS },
   { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   { rel: "icon", href: "/favicon.svg" },
 ];
@@ -60,7 +58,7 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        <ToastContainer />
+        <Toaster />
         {process.env.NODE_ENV !== "production" && (
           <div className="fixed z-50 bottom-2 left-2 bg-blue-100 text-blue-700 text-center font-bold rounded-full py-2 w-20">
             <span className="block md:hidden">sm</span>

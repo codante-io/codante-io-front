@@ -148,39 +148,13 @@ export default function Navbar({ user }: { user: any }) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="/"
+                              href="/conta"
                               className={classNames(
                                 active ? "bg-white" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
-                              Dashboard
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/"
-                              className={classNames(
-                                active ? "bg-white" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Perfil
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/"
-                              className={classNames(
-                                active ? "bg-white" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Configurações
+                              Minha Conta
                             </a>
                           )}
                         </Menu.Item>
