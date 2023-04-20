@@ -13,7 +13,7 @@ export default function Projects() {
     status: "published",
     duration_in_minutes: "3h30",
     enrolled_users_count: 8,
-    tags: ["Javascript", "React", "CSS"],
+    tags: [{ id: "1", name: "React", color: "#ff8052" }],
   };
 
   return (

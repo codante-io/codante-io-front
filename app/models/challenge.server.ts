@@ -1,3 +1,5 @@
+import type { Tag } from "./tag.server";
+
 export type ChallengeCardInfo = {
   id: string;
   name: string;
@@ -8,5 +10,5 @@ export type ChallengeCardInfo = {
   difficulty: 1 | 2 | 3;
   duration_in_minutes: string;
   enrolled_users_count: number;
-  tags: any[];
+  tags: Tag[];
 };
