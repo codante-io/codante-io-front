@@ -94,7 +94,7 @@ export default function Account() {
   }, [isChangeNameSuccess, isChangePasswordSuccess]);
 
   return (
-    <div className="container mx-auto mt-16">
+    <div className="container mx-auto mt-16 mb-16">
       <h2 className="text-xl flex items-center">
         <MdKeyboardDoubleArrowRight
           size={24}
