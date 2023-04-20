@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useMatches } from "@remix-run/react";
+import { Form, Link, useMatches } from "@remix-run/react";
 import { BiUserCircle } from "react-icons/bi";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -94,8 +94,8 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "dark:bg-gray-900 dark:text-white bg-white text-gray-900"
-                            : "text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                            ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -138,47 +138,29 @@ export default function Navbar({ user }: { user: any }) {
                     >
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
+                          <>
+                            <div className="block px-4 py-2 text-gray-500 text-xs font-light">
+                              Olá {user.name}
+                            </div>
+                            <hr />
+                          </>
+                        </Menu.Item>
+                        <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="/"
+                              href="/conta"
                               className={classNames(
                                 active ? "bg-white" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
-                              Dashboard
+                              Minha Conta
                             </a>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="/"
-                              className={classNames(
-                                active ? "bg-white" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Perfil
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/"
-                              className={classNames(
-                                active ? "bg-white" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Configurações
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <form action="/logout" method="post">
+                            <Form action="/logout" method="post">
                               <button
                                 className={classNames(
                                   active ? "bg-white" : "",
@@ -187,7 +169,7 @@ export default function Navbar({ user }: { user: any }) {
                               >
                                 Sair
                               </button>
-                            </form>
+                            </Form>
                           )}
                         </Menu.Item>
                       </Menu.Items>
@@ -196,7 +178,7 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               ) : (
                 <Link
-                  className="dark:text-white text-gray-900 flex items-center gap-x-1"
+                  className="dark:text-white text-gray-700 flex items-center gap-x-1"
                   to="/login"
                 >
                   Login <BsArrowRight />
@@ -214,8 +196,8 @@ export default function Navbar({ user }: { user: any }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-900"
-                      : "text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
@@ -223,7 +205,7 @@ export default function Navbar({ user }: { user: any }) {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button className="text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900block rounded-md px-3 py-2 text-base font-medium">
+              <Disclosure.Button className="text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium">
                 <ToggleColorMode />
               </Disclosure.Button>
             </div>

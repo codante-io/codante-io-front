@@ -7,12 +7,15 @@
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
+import { ColorModeProvider } from "./contexts/color-mode-context";
 
 startTransition(() => {
   hydrateRoot(
     document,
     <StrictMode>
-      <RemixBrowser />
+      <ColorModeProvider>
+        <RemixBrowser />
+      </ColorModeProvider>
     </StrictMode>
   );
 });

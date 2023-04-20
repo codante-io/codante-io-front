@@ -3,7 +3,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 import { json } from "@remix-run/node";
 import { getHome } from "~/models/home.server";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -81,6 +81,14 @@ export default function Index() {
               <WorkshopCard key={workshop.id} workshop={workshop} />
             ))}
           </section>
+          <section className="w-full flex justify-center mt-10">
+            <Link
+              to="/workshops"
+              className="rounded-full py-2 px-4 bg-slate-100 dark:bg-gray-dark "
+            >
+              Ver todos
+            </Link>
+          </section>
         </div>
       </section>
       {colorMode && (
@@ -112,6 +120,14 @@ export default function Index() {
               <ChallengeCard key={challenge.id} challenge={challenge} />
             ))}
           </section>
+          <section className="w-full flex justify-center mt-10">
+            <Link
+              to="/mini-projetos"
+              className="rounded-full py-2 px-4 bg-white dark:bg-gray-dark"
+            >
+              Ver todos
+            </Link>
+          </section>
         </div>
       </section>
       {colorMode && (
@@ -125,7 +141,7 @@ export default function Index() {
         id="tracks"
         className="w-full bg-transparent flex justify-center text-gray-800 dark:text-white"
       >
-        <div className="container relative top-4">
+        <div className="container relative top-4 mb-6">
           <h1 className="flex items-center font-lexend font-light text-3xl">
             <MdKeyboardDoubleArrowRight
               size={24}
@@ -133,16 +149,24 @@ export default function Index() {
             />{" "}
             Trilhas
           </h1>
-          <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-start">
+          <p className="font-inter text-md md:text-xl font-light mt-2 text-start">
             Obtenha a experiência de aprendizado completa unindo{" "}
             <span className="font-bold italic">workshops</span> e{" "}
             <span className="font-bold italic">mini projetos</span> para
             aprender temas específicos em programação.
           </p>
-          <section className="grid grid-cols-1 gap-4 mb-16">
+          <section className="grid grid-cols-1 gap-4 mb-6">
             {homeInfo?.featured_tracks?.map((track) => (
               <TrackCard key={track.id} track={track} />
             ))}
+          </section>
+          <section className="w-full flex justify-center mt-2 mb-4">
+            <Link
+              to="/trilhas"
+              className="rounded-full py-2 px-4 bg-slate-100 dark:bg-gray-dark "
+            >
+              Ver todas
+            </Link>
           </section>
         </div>
       </section>

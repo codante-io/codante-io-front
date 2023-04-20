@@ -12,7 +12,7 @@ export default function Workshops() {
   const { workshops } = useLoaderData<typeof loader>();
 
   return (
-    <main className="mt-10 text-center">
+    <main className="mt-10 text-center container mx-auto">
       <h1 className="text-4xl font-lexend mb-10">Workshops</h1>
       <section className="font-lexend grid gap-5 grid-cols-2">
         {workshops.map((workshop) => (

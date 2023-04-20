@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import type { ColorMode } from "~/utils/dark-mode";
 
 export type ColorModeContextType = {
-  colorMode: ColorMode | null;
+  colorMode: ColorMode;
   toggleColorMode: () => void;
 };
 
@@ -13,7 +13,7 @@ const ColorModeContext = createContext<ColorModeContextType | undefined>(
   undefined
 );
 const ColorModeProvider = ({ children }: { children: ReactNode }) => {
-  const [colorMode, rawSetColorMode] = useState<ColorMode | null>(null);
+  const [colorMode, rawSetColorMode] = useState<ColorMode>("dark");
 
   useEffect(() => {
     rawSetColorMode(getInitialColorMode());
