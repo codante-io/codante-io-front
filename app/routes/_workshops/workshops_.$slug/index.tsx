@@ -19,6 +19,7 @@ import type { Instructor } from "~/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { fromSecondsToTimeString } from "~/utils/interval";
+import BannerAlert from "~/components/banner-alert";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -28,9 +29,16 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop: Workshop = loaderData.workshop;
+  console.log(workshop);
 
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-16">
+      {workshop.status === "soon" && (
+        <BannerAlert
+          title="Ei! Esse workshop ainda não aconteceu!"
+          subtitle="Você poderá assistir ao vivo quando ele for ao ar!"
+        />
+      )}
       {/* Header */}
       <header className="flex flex-wrap items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
@@ -52,16 +60,17 @@ export default function WorkshopSlug() {
           {/* Difficulty Card */}
 
           {/* Video */}
-          {/*  */}
           <div className="mb-10">
-            <div className="relative mb-12 ">
-              <AiFillPlayCircle className="absolute opacity-1 top-[35%] left-[40%]  h-40 w-40" />
-              <img
-                src="https://loremflickr.com/1920/1080?lock=1"
-                alt=""
-                className="opacity-20"
-              />
-            </div>
+            {workshop.video_url && (
+              <div className="relative mb-12 ">
+                <AiFillPlayCircle className="absolute opacity-1 top-[35%] left-[40%]  h-40 w-40" />
+                <img
+                  src="https://loremflickr.com/1920/1080?lock=1"
+                  alt=""
+                  className="opacity-20"
+                />
+              </div>
+            )}
             <Subtitle text="Sobre o Workshop" />
             <p className="dark:text-slate-400 text-slate-600">
               {workshop.description}
@@ -82,37 +91,43 @@ export default function WorkshopSlug() {
           </div>
           {/* Aulas */}
           <div className="mt-12">
-            <div className="mb-8">
-              <span className="block -mb-1 text-xs text-slate-400 dark:text-slate-500">
-                Vídeos de:
-              </span>
-              <h3 className="mt-0 text-lg font-bold">{workshop.name}</h3>
-              <span className="block mt-2 text-sm font-light text-slate-400">
-                {workshop.lessons.length} aulas -{" "}
-                {fromSecondsToTimeString(
-                  workshop.lessons.reduce(
-                    (acc, lesson) => acc + lesson.duration_in_seconds,
-                    0
-                  )
-                )}
-              </span>
-            </div>
-            <ul className="mt-4">
-              {workshop.lessons.map((lesson: Lesson, id: number) => (
-                <li
-                  className="flex items-center justify-between gap-3 px-3 py-3 transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800"
-                  key={lesson.id}
-                >
-                  <span className="mr-3 text-sm text-brand ">{id + 1}.</span>
-                  <h4 className="flex-1 inline-block mr-2 font-light text-slate-700 dark:text-slate-200">
-                    {lesson.name}
-                  </h4>
-                  <span className="text-sm text-slate-500">
-                    {fromSecondsToTimeString(lesson.duration_in_seconds)}
+            {workshop.lessons.length > 0 && (
+              <>
+                <div className="mb-8">
+                  <span className="block -mb-1 text-xs text-slate-400 dark:text-slate-500">
+                    Vídeos de:
                   </span>
-                </li>
-              ))}
-            </ul>
+                  <h3 className="mt-0 text-lg font-bold">{workshop.name}</h3>
+                  <span className="block mt-2 text-sm font-light text-slate-400">
+                    {workshop.lessons.length} aulas -{" "}
+                    {fromSecondsToTimeString(
+                      workshop.lessons.reduce(
+                        (acc, lesson) => acc + lesson.duration_in_seconds,
+                        0
+                      )
+                    )}
+                  </span>
+                </div>
+                <ul className="mt-4">
+                  {workshop.lessons.map((lesson: Lesson, id: number) => (
+                    <li
+                      className="flex items-center justify-between gap-3 px-3 py-3 transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800"
+                      key={lesson.id}
+                    >
+                      <span className="mr-3 text-sm text-brand ">
+                        {id + 1}.
+                      </span>
+                      <h4 className="flex-1 inline-block mr-2 font-light text-slate-700 dark:text-slate-200">
+                        {lesson.name}
+                      </h4>
+                      <span className="text-sm text-slate-500">
+                        {fromSecondsToTimeString(lesson.duration_in_seconds)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </div>
