@@ -30,20 +30,22 @@ export default function WorkshopSlug() {
   const workshop: Workshop = loaderData.workshop;
 
   return (
-    <section className="container mx-auto mt-16 mb-16">
+    <section className="container mx-auto mt-8 mb-16 lg:mt-16">
       {/* Header */}
-      <header className="flex items-center gap-6 mb-8">
-        <TitleIcon className="" />
+      <header className="flex flex-wrap items-center gap-2 mb-8 lg:gap-6">
+        <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
         <div>
-          <span className="text-2xl font-extralight">Workshop</span>
-          <h1 className="text-5xl font-bold font-lexend">{workshop.name}</h1>
+          <span className="lg:text-2xl font-extralight">Workshop</span>
+          <h1 className="text-3xl font-bold lg:text-5xl font-lexend">
+            {workshop.name}
+          </h1>
         </div>
       </header>
       {/* layout */}
-      <div className="flex gap-14">
+      <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
         {/* left Side */}
         <div className="w-full">
-          <div className="inline-flex gap-10 px-8 py-4 mb-12 bg-slate-200 dark:bg-gray-dark rounded-xl">
+          <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
             <CardItemDifficulty difficulty={2} />
             <CardItemDuration durationString="2h50min" />
           </div>
@@ -85,7 +87,7 @@ export default function WorkshopSlug() {
           </div>
         </div>
         {/* Right Side */}
-        <div className="w-3/5">
+        <div className="lg:w-3/5">
           {/* Instrutor */}
 
           <div>
