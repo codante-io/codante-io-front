@@ -9,6 +9,16 @@ import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
 import { AiFillPlayCircle } from "react-icons/ai";
 import type { Lesson } from "~/models/lesson.server";
+import {
+  InformationCircleIcon,
+  LockClosedIcon,
+  XCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import type { Instructor } from "~/models/instructor.server";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { fromSecondsToTimeString } from "~/utils/interval";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -33,7 +43,7 @@ export default function WorkshopSlug() {
       <div className="flex gap-14">
         {/* left Side */}
         <div className="w-full">
-          <div className="inline-flex gap-10 px-8 py-4 mb-12 bg-gray-dark rounded-xl">
+          <div className="inline-flex gap-10 px-8 py-4 mb-12 bg-slate-200 dark:bg-gray-dark rounded-xl">
             <CardItemDifficulty difficulty={2} />
             <CardItemDuration durationString="2h50min" />
           </div>
@@ -50,17 +60,14 @@ export default function WorkshopSlug() {
                 className="opacity-20"
               />
             </div>
-            <Subtitle text="O que é esse Workshop?" />
-            <p className="text-slate-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-              dolor laborum dolores possimus quam repellendus labore optio totam
-              quae fugiat? Illo eveniet eum magni consequatur exercitationem,
-              non sapiente velit doloribus.
+            <Subtitle text="Sobre o Workshop" />
+            <p className="dark:text-slate-400 text-slate-600">
+              {workshop.description}
             </p>
           </div>
           <div className="mb-10">
             <Subtitle text="O que vou aprender?" />
-            <p className="text-slate-400">
+            <p className="text-slate-600 dark:text-slate-400">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
               dolor laborum dolores possimus quam repellendus labore optio totam
               quae fugiat? Illo eveniet eum magni consequatur exercitationem,
@@ -69,7 +76,7 @@ export default function WorkshopSlug() {
           </div>
           <div className="mb-10">
             <Subtitle text="Pré requisitos" />
-            <p className="text-slate-400">
+            <p className="text-slate-600 dark:text-slate-400">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
               dolor laborum dolores possimus quam repellendus labore optio totam
               quae fugiat? Illo eveniet eum magni consequatur exercitationem,
@@ -88,29 +95,12 @@ export default function WorkshopSlug() {
                 Seu <span className="font-bold">Instrutor</span>
               </h3>
             </div>
-            <div className="flex items-center mt-3 mb-4">
-              <img
-                src="/img/icaro.jpg"
-                alt=""
-                className="w-12 h-12 mr-4 border-2 border-gray-600 rounded-full"
-              />
-              <div>
-                <h4 className="text-slate-200 text-lexend">
-                  {workshop?.instructor?.name}
-                </h4>
-                <p className="text-sm font-light text-slate-400">
-                  {workshop.instructor.company}
-                </p>
-              </div>
-            </div>
-            <p className="text-sm font-light text-slate-300 line-clamp-3">
-              {workshop.instructor.bio}
-            </p>
+            <InstructorCard instructor={workshop.instructor} />
           </div>
           {/* Aulas */}
           <div className="mt-12">
-            <div>
-              <span className="block -mb-1 text-xs text-slate-500">
+            <div className="mb-8">
+              <span className="block -mb-1 text-xs text-slate-400 dark:text-slate-500">
                 Vídeos de:
               </span>
               <h3 className="mt-0 text-lg font-bold">{workshop.name}</h3>
@@ -121,14 +111,16 @@ export default function WorkshopSlug() {
             <ul className="mt-4">
               {workshop.lessons.map((lesson: Lesson, id: number) => (
                 <li
-                  className="flex items-center justify-between gap-3 px-2 py-3 cursor-pointer hover:bg-slate-800"
+                  className="flex items-center justify-between gap-3 px-3 py-3 transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800"
                   key={lesson.id}
                 >
-                  <span className="mr-3 text-sm text-slate-500">{id + 1}</span>
-                  <h4 className="flex-1 inline-block font-light text-slate-200">
+                  <span className="mr-3 text-sm text-brand ">{id + 1}.</span>
+                  <h4 className="flex-1 inline-block mr-2 font-light text-slate-700 dark:text-slate-200">
                     {lesson.name}
                   </h4>
-                  <span className="text-sm text-slate-500">22:04</span>
+                  <span className="text-sm text-slate-500">
+                    {fromSecondsToTimeString(lesson.duration_in_seconds)}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -143,7 +135,55 @@ function Subtitle({ text }: { text: string }) {
   return (
     <div className="flex items-center gap-3 mb-4">
       <TitleIcon className="w-5 h-5"></TitleIcon>
-      <h3 className="text-2xl text-slate-200">{text}</h3>
+      <h3 className="text-2xl text-slate-700 dark:text-slate-200">{text}</h3>
+    </div>
+  );
+}
+
+function InstructorCard({ instructor }: { instructor: Instructor }) {
+  const [opened, setOpened] = useState(false);
+  return (
+    <div className="p-2 py-4 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
+      <div className="flex items-center">
+        <img
+          src="/img/icaro.jpg"
+          alt=""
+          className="w-12 h-12 mr-4 border-2 border-gray-600 rounded-full"
+        />
+        <div className="flex-1">
+          <h4 className="dark:text-slate-200 text-lexend">
+            {instructor?.name}
+          </h4>
+          <p className="text-sm font-light text-slate-500 dark:text-slate-400">
+            {instructor.company}
+          </p>
+        </div>
+        {opened ? (
+          <XMarkIcon
+            onClick={() => setOpened(!opened)}
+            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+          />
+        ) : (
+          <InformationCircleIcon
+            onClick={() => setOpened(!opened)}
+            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+          />
+        )}
+      </div>
+
+      <AnimatePresence initial={false}>
+        <motion.p
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: opened ? 1 : 0, height: opened ? "auto" : 0 }}
+          exit={{ opacity: 0, height: 0 }}
+          key={"aasdjlf"}
+          className={`${
+            opened ? "visible" : "invisible"
+          } text-sm font-light text-slate-500 dark:text-slate-300 relative`}
+        >
+          <span className="block p-4 ml-12">{instructor.bio}</span>
+        </motion.p>
+      </AnimatePresence>
     </div>
   );
 }
