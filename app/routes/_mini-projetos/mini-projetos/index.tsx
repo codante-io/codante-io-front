@@ -10,7 +10,7 @@ export default function Projects() {
       "Uma professora está buscando uma forma diferente de cronometrar seus intervalos. Crie um timer ou cronômetro",
     image_url: "/img/keyboard-icon.png",
     difficulty: 1,
-    status: "published",
+    status: "soon",
     duration_in_minutes: "3h30",
     enrolled_users_count: 8,
     tags: [{ id: "1", name: "React", color: "#ff8052" }],

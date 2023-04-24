@@ -1,3 +1,4 @@
+import axios from "axios";
 import type { Tag } from "./tag.server";
 
 export type ChallengeCardInfo = {
@@ -12,3 +13,17 @@ export type ChallengeCardInfo = {
   enrolled_users_count: number;
   tags: Tag[];
 };
+
+export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
+  const challenges = await axios
+    .get(`${process.env.API_HOST}/challenges`)
+    .then((res) => res.data.data);
+  return challenges;
+}
+
+export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
+  const challenge = await axios
+    .get(`${process.env.API_HOST}/challenges/${slug}`)
+    .then((res) => res.data.data);
+  return challenge;
+}

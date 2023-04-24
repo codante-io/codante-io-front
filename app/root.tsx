@@ -10,7 +10,7 @@ import {
 } from "@remix-run/react";
 import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
-import { ColorModeProvider, useColorMode } from "~/contexts/color-mode-context";
+import { ColorModeProvider } from "~/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
 import { DarkModeScriptTag } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
@@ -42,7 +42,7 @@ export default function App() {
         <Links />
       </head>
       <body
-        className="dark:bg-gradient-to-br dark:from-gray-darkest dark:via-gray-dark dark:to-gray-dark
+        className="dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark
         bg-gradient-to-br from-white via-slate-50 to-slate-100
        dark:text-white bg-white text-gray-800"
       >

@@ -13,7 +13,7 @@ export default function ChallengeCard({
   return (
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
-      to={challenge?.slug}
+      to={`mini-projetos/${challenge?.slug}`}
       className={
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
       }
@@ -25,21 +25,21 @@ export default function ChallengeCard({
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
       >
         {challenge?.status === "soon" && <CardItemRibbon text="Em breve" />}
-        <div className="h-full flex flex-col justify-between">
+        <div className="flex flex-col justify-between h-full">
           <div>
             <CardItemDifficulty
               className="mb-3"
               difficulty={challenge?.difficulty}
             />
-            <div className="p-16 bg-purple-200 dark:bg-purple-900 h-32 rounded-2xl flex items-center justify-center mb-6">
+            <div className="flex items-center justify-center h-32 p-16 mb-6 bg-purple-200 dark:bg-purple-900 rounded-2xl">
               <img
                 src="/img/keyboard-icon.png"
-                className=" inline-block"
+                className="inline-block "
                 alt=""
               />
             </div>
-            <div className="card-header mb-8">
-              <h2 className="font-bold text-lg text-slate-800 dark:text-white mb-1">
+            <div className="mb-8 card-header">
+              <h2 className="mb-1 text-lg font-bold text-slate-800 dark:text-white">
                 {challenge?.name}
               </h2>
               <div className="tags">
@@ -52,11 +52,11 @@ export default function ChallengeCard({
                 ))}
               </div>
             </div>
-            <p className="slate-600 font-light text-sm mb-12 text-slate-600 dark:text-zinc-300">
+            <p className="mb-12 text-sm font-light slate-600 text-slate-600 dark:text-zinc-300">
               {challenge?.short_description}
             </p>
           </div>
-          <div className="card-footer flex items-center justify-between">
+          <div className="flex items-center justify-between card-footer">
             <div className="text-xs text-zinc-400">
               {challenge?.enrolled_users_count}{" "}
               {challenge?.enrolled_users_count === 1
