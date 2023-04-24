@@ -94,7 +94,7 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                            ? "bg-transparent dark:text-white  text-gray-700 dark:hover:bg-gray-700 underline"
                             : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -164,7 +164,7 @@ export default function Navbar({ user }: { user: any }) {
                               <button
                                 className={classNames(
                                   active ? "bg-white" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 block w-full text-left"
+                                  "block px-4 py-2 text-sm text-gray-700 w-full text-left"
                                 )}
                               >
                                 Sair
