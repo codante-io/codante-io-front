@@ -71,7 +71,6 @@ export default function WorkshopSlug() {
         {/* Right Side */}
         <div className="lg:w-3/5">
           {/* Instrutor */}
-
           <div>
             <div className="flex items-center">
               <TitleIcon className="inline-block w-3 h-3 mr-2" />
@@ -166,7 +165,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: opened ? 1 : 0, height: opened ? "auto" : 0 }}
           exit={{ opacity: 0, height: 0 }}
-          key={"aasdjlf"}
+          key={opened ? "open" : "closed"}
           className={`${
             opened ? "visible" : "invisible"
           } text-sm font-light text-slate-500 dark:text-slate-300 relative`}
