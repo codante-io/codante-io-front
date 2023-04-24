@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
+import type { Tag } from "./tag.server";
 
 export type Workshop = {
   id: string;
@@ -14,7 +15,7 @@ export type Workshop = {
   duration_in_minutes: number;
   instructor: Instructor;
   lessons: Lesson[];
-  tags: any[];
+  tags: Tag[];
 };
 
 export async function getWorkshops(): Promise<Array<Workshop>> {

@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { Tag } from "./tag.server";
 
 export type ChallengeCardInfo = {
   id: string;
@@ -10,7 +11,7 @@ export type ChallengeCardInfo = {
   difficulty: 1 | 2 | 3;
   duration_in_minutes: string;
   enrolled_users_count: number;
-  tags: any[];
+  tags: Tag[];
 };
 
 export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
