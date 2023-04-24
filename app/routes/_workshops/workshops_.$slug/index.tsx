@@ -163,8 +163,16 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
       <AnimatePresence initial={false}>
         <motion.p
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: opened ? 1 : 0, height: opened ? "auto" : 0 }}
-          exit={{ opacity: 0, height: 0 }}
+          animate={{
+            opacity: opened ? 1 : 0,
+            height: opened ? "auto" : 0,
+            transition: { opacity: { duration: 0.6 } },
+          }}
+          exit={{
+            opacity: 0,
+            height: 0,
+            transition: { opacity: { duration: 0.1 } },
+          }}
           key={opened ? "open" : "closed"}
           className={`${
             opened ? "visible" : "invisible"
