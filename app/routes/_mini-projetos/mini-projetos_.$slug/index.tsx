@@ -29,61 +29,61 @@ export default function WorkshopSlug() {
   const { colorMode } = useColorMode();
 
   return (
-    <div className="dark:text-white text-gray-900 flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center text-gray-900 dark:text-white">
       <section
         id="title"
-        className="w-full bg-transparent flex flex-col items-center text-gray-800 dark:text-white mb-16"
+        className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
       >
         <div className="container mt-16 mb-10">
           <CardItemDifficulty difficulty={2} className="mb-2" />
 
-          <h1 className="flex items-center font-lexend font-light text-3xl">
+          <h1 className="flex items-center text-3xl font-light font-lexend">
             <span>
               <MdKeyboardDoubleArrowRight
                 size={24}
-                className="text-blue-300 dark:text-blue-900 mr-2 inline"
+                className="inline mr-2 text-blue-300 dark:text-blue-900"
               />
               <span className="font-extralight">Projeto</span>{" "}
-              <span className="font-bold decoration-solid underline">
+              <span className="font-bold underline decoration-solid">
                 {challenge.name}
               </span>
             </span>
           </h1>
-          <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-start">
+          <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
             {challenge.short_description}
           </p>
         </div>
-        <div className="container grid grid-cols-12 mt-10 gap-10">
-          <div className="col-span-12 lg:col-span-8 space-y-20">
+        <div className="container grid grid-cols-12 gap-10 mt-10">
+          <div className="col-span-12 space-y-20 lg:col-span-8">
             <div>
-              <h1 className="flex items-center font-lexend font-semibold text-2xl">
+              <h1 className="flex items-center text-2xl font-semibold font-lexend">
                 Vídeo de introdução
               </h1>
               <div className="w-full h-[310px] sm:h-[436px] md:h-[510px] bg-black flex items-center justify-center rounded-lg mt-4 mb-8">
-                <button className="flex items-center justify-center rounded-full h-12 w-12 bg-slate-100 text-gray-700">
+                <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-slate-100">
                   <BsFillPlayFill size={24} color="#5282FF" />
                 </button>
               </div>
             </div>
             <div className="col-span-12 lg:col-span-8">
-              <h1 className="flex items-center font-lexend font-semibold text-2xl mb-4">
+              <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Descrição
               </h1>
-              <p className="font-inter text-md md:text-xl font-light mt-2 mb-4 text-start ">
+              <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start ">
                 {challenge?.description}
               </p>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-4 space-y-20">
+          <div className="col-span-12 space-y-20 lg:col-span-4">
             <div>
-              <h1 className="flex items-center font-lexend font-semibold text-2xl mb-4">
+              <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Participar
               </h1>
               <JoinChallengeSection user={user} />
             </div>
 
             <div>
-              <h1 className="flex items-center font-lexend font-semibold text-2xl mb-4">
+              <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Repositório
               </h1>
               <RepositoryInfoSection
@@ -96,11 +96,11 @@ export default function WorkshopSlug() {
               />
             </div>
             <div>
-              <h1 className="flex items-center font-lexend font-semibold text-2xl mb-4">
+              <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Resolução
               </h1>
               <div className="w-full h-[180px] bg-black flex items-center justify-center rounded-lg mt-4 mb-20">
-                <button className="flex items-center justify-center rounded-full h-8 w-8 bg-slate-100 text-gray-700">
+                <button className="flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-slate-100">
                   <BsFillPlayFill size={16} color="#5282FF" />
                 </button>
               </div>
@@ -112,19 +112,19 @@ export default function WorkshopSlug() {
       {colorMode && (
         <img
           src={`/img/wave-top-${colorMode}.svg`}
-          className="w-full relative"
+          className="relative w-full"
           alt="Wave detail"
         />
       )}
       <section
         id="mini-projects"
-        className="w-full dark:bg-slate-800 bg-slate-100 text-gray-800 dark:text-white flex justify-center"
+        className="flex justify-center w-full text-gray-800 dark:bg-slate-800 bg-slate-100 dark:text-white"
       >
-        <div className="container -top-12  relative">
-          <h1 className="flex justify-center text-center font-lexend font-light mt-24 text-2xl">
+        <div className="container relative -top-12">
+          <h1 className="flex justify-center mt-24 text-2xl font-light text-center font-lexend">
             <span>
               Junte-se a outras{" "}
-              <span className="font-bold mx-2"> 36 pessoas </span> que estão
+              <span className="mx-2 font-bold"> 36 pessoas </span> que estão
               fazendo esse mini projeto.
             </span>
           </h1>
