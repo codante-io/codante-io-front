@@ -67,24 +67,6 @@ export default function WorkshopSlug() {
               {workshop.description}
             </p>
           </div>
-          <div className="mb-10">
-            <Subtitle text="O que vou aprender?" />
-            <p className="text-slate-600 dark:text-slate-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-              dolor laborum dolores possimus quam repellendus labore optio totam
-              quae fugiat? Illo eveniet eum magni consequatur exercitationem,
-              non sapiente velit doloribus.
-            </p>
-          </div>
-          <div className="mb-10">
-            <Subtitle text="Pré requisitos" />
-            <p className="text-slate-600 dark:text-slate-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-              dolor laborum dolores possimus quam repellendus labore optio totam
-              quae fugiat? Illo eveniet eum magni consequatur exercitationem,
-              non sapiente velit doloribus.
-            </p>
-          </div>
         </div>
         {/* Right Side */}
         <div className="lg:w-3/5">
@@ -107,7 +89,13 @@ export default function WorkshopSlug() {
               </span>
               <h3 className="mt-0 text-lg font-bold">{workshop.name}</h3>
               <span className="block mt-2 text-sm font-light text-slate-400">
-                9 aulas - 3:08:10
+                {workshop.lessons.length} aulas -{" "}
+                {fromSecondsToTimeString(
+                  workshop.lessons.reduce(
+                    (acc, lesson) => acc + lesson.duration_in_seconds,
+                    0
+                  )
+                )}
               </span>
             </div>
             <ul className="mt-4">
