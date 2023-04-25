@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import CardItemDuration from "~/components/cards/card-item-duration";
@@ -110,20 +110,19 @@ export default function WorkshopSlug() {
                 </div>
                 <ul className="mt-4">
                   {workshop.lessons.map((lesson: Lesson, id: number) => (
-                    <li
-                      className="flex items-center justify-between gap-3 px-3 py-3 transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800"
-                      key={lesson.id}
-                    >
-                      <span className="mr-3 text-sm text-brand ">
-                        {id + 1}.
-                      </span>
-                      <h4 className="flex-1 inline-block mr-2 font-light text-slate-700 dark:text-slate-200">
-                        {lesson.name}
-                      </h4>
-                      <span className="text-sm text-slate-500">
-                        {fromSecondsToTimeString(lesson.duration_in_seconds)}
-                      </span>
-                    </li>
+                    <Link key={lesson.id} to={lesson.slug}>
+                      <li className="flex items-center justify-between gap-3 px-3 py-3 transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800">
+                        <span className="mr-3 text-sm text-brand ">
+                          {id + 1}.
+                        </span>
+                        <h4 className="flex-1 inline-block mr-2 font-light text-slate-700 dark:text-slate-200">
+                          {lesson.name}
+                        </h4>
+                        <span className="text-sm text-slate-500">
+                          {fromSecondsToTimeString(lesson.duration_in_seconds)}
+                        </span>
+                      </li>
+                    </Link>
                   ))}
                 </ul>
               </>
