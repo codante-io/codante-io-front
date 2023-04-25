@@ -1,4 +1,8 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import {
+  createCookie,
+  createCookieSessionStorage,
+  redirect,
+} from "@remix-run/node";
 import axios from "./axios.server";
 import type { AxiosResponse } from "axios";
 
@@ -220,3 +224,11 @@ export async function sendPasswordLink({ email }: { email: string }) {
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
 }
+
+export let redirectToCookie = createCookie("redirect-to", {
+  path: "/",
+  httpOnly: true,
+  sameSite: "lax",
+  maxAge: 60, // 1 minute because it makes no sense to keep it for a long time
+  secure: process.env.NODE_ENV === "production",
+});

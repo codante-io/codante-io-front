@@ -67,7 +67,8 @@ export default function Login() {
       </div>
       <div className="mx-auto max-w-md md:w-[450px]">
         <AuthCard className={opened ? "hidden" : ""}>
-          <Form action="/auth/github" method="post">
+          <Form action={`/auth/github`} method="get">
+            <input type="hidden" name="redirectTo" value={redirectTo} />
             <button className="flex items-center justify-center w-full gap-4 p-4 text-white bg-gray-700 rounded">
               <img src="/img/github-logo.svg" alt="" />
               Entrar com GitHub
