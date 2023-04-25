@@ -14,6 +14,7 @@ import LoadingButton from "~/components/form/loading-button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useColorMode } from "~/contexts/color-mode-context";
+import { authenticator } from "~/services/github-auth.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -53,6 +54,10 @@ export async function action({ request }: { request: Request }) {
 }
 
 export async function loader({ request }: { request: Request }) {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
+
   const userData = await user({ request });
   const token = await currentToken({ request });
   const session = await getSession(request.headers.get("Cookie"));
@@ -95,17 +100,17 @@ export default function Account() {
 
   return (
     <div className="container mx-auto mt-16 mb-16">
-      <h2 className="text-xl flex items-center">
+      <h2 className="flex items-center text-xl">
         <MdKeyboardDoubleArrowRight
           size={24}
-          className="text-blue-300 dark:text-blue-800 mr-2 inline-block"
+          className="inline-block mr-2 text-blue-300 dark:text-blue-800"
         />{" "}
         Minha Conta
-        <span className="hidden md:inline text-blue-500 font-light ml-3">
+        <span className="hidden ml-3 font-light text-blue-500 md:inline">
           {" "}
           &#8226;{" "}
         </span>
-        <span className="hidden md:inline font-light ml-3 text-base dark:text-slate-400">
+        <span className="hidden ml-3 text-base font-light md:inline dark:text-slate-400">
           {user.name}
         </span>
       </h2>
@@ -131,7 +136,7 @@ export default function Account() {
               disabled
             />
           </div>
-          <div className="text-red-400 text-xs mt-2 min-h-4 mb-3">
+          <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
             {changeNameErrors}
           </div>
           <div className="mt-8 text-right">
@@ -148,10 +153,10 @@ export default function Account() {
         </Form>
       </AuthCard>
 
-      <h2 className="text-xl flex items-center mt-12">
+      <h2 className="flex items-center mt-12 text-xl">
         <MdKeyboardDoubleArrowRight
           size={24}
-          className="text-blue-300 dark:text-blue-800 mr-2 inline-block"
+          className="inline-block mr-2 text-blue-300 dark:text-blue-800"
         />{" "}
         Alterar Senha
       </h2>
@@ -173,7 +178,7 @@ export default function Account() {
               autoComplete="off"
             />
           </div>
-          <div className="text-red-400 text-xs mt-2 min-h-4 mb-3">
+          <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
             {changePasswordErrors}
           </div>
           <div className="mt-8 text-right">

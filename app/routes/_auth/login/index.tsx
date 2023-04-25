@@ -2,6 +2,7 @@ import {
   Form,
   Link,
   useActionData,
+  useLoaderData,
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
@@ -11,18 +12,33 @@ import Input from "~/components/form/input";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { login } from "~/services/auth.server";
 import AuthCard from "../auth-card";
+import { authenticator } from "~/services/github-auth.server";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
 
   let email = formData.get("email") as string;
   let password = formData.get("password") as string;
+  let redirectTo = formData.get("redirectTo") as string;
 
-  let { errors, redirector } = await login({ request, email, password });
-
-  // toast
+  let { errors, redirector } = await login({
+    request,
+    email,
+    password,
+    redirectTo,
+  });
 
   return errors || redirector;
+}
+
+export async function loader({ request }: { request: Request }) {
+  await authenticator.isAuthenticated(request, {
+    successRedirect: "/",
+  });
+  // vamos pegar o redirectTo da query string
+  // para passar como parâmetro hidden para o form
+  const redirectTo = new URL(request.url).searchParams.get("redirectTo");
+  return { redirectTo };
 }
 
 export default function Login() {
@@ -35,7 +51,10 @@ export default function Login() {
   const [opened, setOpened] = useState(initialOpened);
   const errors = useActionData();
 
-  // return redirect()
+  // vamos pegar o redirectTo da query string
+  // para passar como parâmetro hidden para o form
+  const loaderData = useLoaderData();
+  const redirectTo = loaderData?.redirectTo ?? "/";
 
   return (
     <>
@@ -43,13 +62,14 @@ export default function Login() {
         <img
           src={colorMode === "light" ? "/codante-light.svg" : "/codante.svg"}
           alt=""
-          className="w-72 mx-auto mb-16"
+          className="mx-auto mb-16 w-72"
         />
       </div>
       <div className="mx-auto max-w-md md:w-[450px]">
         <AuthCard className={opened ? "hidden" : ""}>
-          <Form action="/auth/github" method="post">
-            <button className="rounded bg-gray-700 text-white p-4 w-full flex items-center justify-center gap-4">
+          <Form action={`/auth/github`} method="get">
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <button className="flex items-center justify-center w-full gap-4 p-4 text-white bg-gray-700 rounded">
               <img src="/img/github-logo.svg" alt="" />
               Entrar com GitHub
             </button>
@@ -58,6 +78,7 @@ export default function Login() {
 
         <AuthCard className={opened ? "" : "hidden"}>
           <Form method="POST" className="flex flex-col ">
+            <input type="hidden" name="redirectTo" value={redirectTo} />
             <Input
               name="email"
               id="email"
@@ -75,19 +96,19 @@ export default function Login() {
             <div>
               <Link
                 to="/forgot-password"
-                className="underline text-xs font-light text-gray-500"
+                className="text-xs font-light text-gray-500 underline"
               >
                 Esqueceu sua senha?
               </Link>
-              <span className="text-blue-500 font-light"> &#8226; </span>
+              <span className="font-light text-blue-500"> &#8226; </span>
               <Link
                 to="/register"
-                className="underline text-xs font-light text-gray-500"
+                className="text-xs font-light text-gray-500 underline"
               >
                 Não possui Cadastro?
               </Link>
             </div>
-            <div className="text-red-400 text-xs mt-2 min-h-4 mb-3">
+            <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
               {errors}
             </div>
             <div className="text-right">
@@ -101,7 +122,11 @@ export default function Login() {
             className="underline"
             onClick={() => {
               setOpened(!opened);
-              navigator(opened ? "" : "?opened=true");
+              navigator(
+                opened
+                  ? `?redirectTo=${redirectTo}`
+                  : `?opened=true&redirectTo=${redirectTo}`
+              );
             }}
           >
             {opened ? "github" : "email e senha"}

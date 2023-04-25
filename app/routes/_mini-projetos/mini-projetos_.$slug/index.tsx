@@ -24,7 +24,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   });
 };
 
-export default function WorkshopSlug() {
+export default function ChallengeSlug() {
   const { challenge, user } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
 
