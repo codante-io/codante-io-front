@@ -27,7 +27,7 @@ export default function LessonIndex() {
   const workshop: Workshop = loaderData.workshop;
   const slug = loaderData.slug;
   return (
-    <div className="container py-2 mx-auto lg:py-8 lg:px-6 xl:px-12 2xl:px-[10rem]">
+    <div className="container py-2 mx-auto lg:py-8">
       <section className="relative">
         <div className="relative aspect-video">
           {/* <img
