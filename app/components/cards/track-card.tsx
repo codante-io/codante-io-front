@@ -11,7 +11,7 @@ function TrackCard({ track }: { track: Track }) {
     <div key={track?.id}>
       <Link
         onClick={(e) => track?.status === "soon" && e.preventDefault()}
-        to={`trilhas/${track?.slug}`}
+        to={`/trilhas/${track?.slug}`}
         className={
           track?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
         }
@@ -25,13 +25,13 @@ function TrackCard({ track }: { track: Track }) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="track-image w-36 h-36 m-4 rounded-xl"
+            className="m-4 track-image w-36 h-36 rounded-xl"
           ></div>
           <div className="flex flex-col justify-between flex-1 px-6 py-4 text-left">
             <div>
-              <div className="flex flex-col md:flex-row justify-between">
+              <div className="flex flex-col justify-between md:flex-row">
                 <div>
-                  <h2 className="text-xl capitalize text-gray-800 dark:text-white">
+                  <h2 className="text-xl text-gray-800 capitalize dark:text-white">
                     {track?.name}
                   </h2>
                   <div className="min-h-[24px]">
@@ -40,7 +40,7 @@ function TrackCard({ track }: { track: Track }) {
                         <CardItemTag
                           tagName={tag.name}
                           key={tag.id}
-                          className="bg-blue-900 text-white dark:bg-blue-900 dark:text-white"
+                          className="text-white bg-blue-900 dark:bg-blue-900 dark:text-white"
                         />
                       );
                     })}
@@ -52,7 +52,7 @@ function TrackCard({ track }: { track: Track }) {
                 />
               </div>
 
-              <p className="font-light font-sans text-slate-600 dark:text-zinc-300 w-full line-clamp-3 ">
+              <p className="w-full font-sans font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
                 {track?.short_description}
               </p>
             </div>
