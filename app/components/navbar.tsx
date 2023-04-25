@@ -33,38 +33,38 @@ export default function Navbar({ user }: { user: any }) {
       href: "/mini-projetos",
       current: id.includes("mini-projetos"),
     },
-    { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
+    // { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
   ];
 
   return (
-    <Disclosure as="nav" className="bg-transparent text-gray-900">
+    <Disclosure as="nav" className="text-gray-900 bg-transparent">
       {({ open }) => (
         <>
-          <div className="mx-auto container">
-            <div className="relative flex h-16 items-center justify-between">
+          <div className="container mx-auto">
+            <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-900 dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    <XMarkIcon className="block w-6 h-6" aria-hidden="true" />
                   ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                    <Bars3Icon className="block w-6 h-6" aria-hidden="true" />
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
+              <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+                <div className="flex items-center flex-shrink-0">
                   <Link to="/">
                     {colorMode === "light" ? (
                       <img
-                        className="hidden h-16 w-auto lg:block"
+                        className="hidden w-auto h-16 lg:block"
                         src="/cdnt-light.svg"
                         alt="Codante"
                       />
                     ) : (
                       <img
-                        className="hidden h-16 w-auto lg:block"
+                        className="hidden w-auto h-16 lg:block"
                         src="/cdnt.svg"
                         alt="Codante"
                       />
@@ -73,13 +73,13 @@ export default function Navbar({ user }: { user: any }) {
                   <Link to="/">
                     {colorMode === "light" ? (
                       <img
-                        className="block h-16 w-auto lg:hidden"
+                        className="block w-auto h-16 lg:hidden"
                         src="/cdnt-light.svg"
                         alt="Codante"
                       />
                     ) : (
                       <img
-                        className="block h-16 w-auto lg:hidden"
+                        className="block w-auto h-16 lg:hidden"
                         src="/cdnt.svg"
                         alt="Codante"
                       />
@@ -94,7 +94,7 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                            ? "bg-transparent dark:text-white  text-gray-700 dark:hover:bg-gray-700 underline"
                             : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -106,7 +106,7 @@ export default function Navbar({ user }: { user: any }) {
                   </div>
                 </div>
               </div>
-              <div className="hidden sm:block mr-3">
+              <div className="hidden mr-3 sm:block">
                 <ToggleColorMode />
               </div>
               {user ? (
@@ -114,16 +114,16 @@ export default function Navbar({ user }: { user: any }) {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative">
                     <div>
-                      <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
+                      <Menu.Button className="flex text-sm bg-gray-900 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
                         <span className="sr-only">Open user menu</span>
                         {user?.avatar_url ? (
                           <img
-                            className="h-8 w-8 rounded-full"
+                            className="w-8 h-8 rounded-full"
                             src={user?.avatar_url}
                             alt=""
                           />
                         ) : (
-                          <BiUserCircle className="h-8 w-8 rounded-full" />
+                          <BiUserCircle className="w-8 h-8 rounded-full" />
                         )}
                       </Menu.Button>
                     </div>
@@ -136,10 +136,10 @@ export default function Navbar({ user }: { user: any }) {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           <>
-                            <div className="block px-4 py-2 text-gray-500 text-xs font-light">
+                            <div className="block px-4 py-2 text-xs font-light text-gray-500">
                               Olá {user.name}
                             </div>
                             <hr />
@@ -164,7 +164,7 @@ export default function Navbar({ user }: { user: any }) {
                               <button
                                 className={classNames(
                                   active ? "bg-white" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 block w-full text-left"
+                                  "block px-4 py-2 text-sm text-gray-700 w-full text-left"
                                 )}
                               >
                                 Sair
@@ -178,7 +178,7 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               ) : (
                 <Link
-                  className="dark:text-white text-gray-700 flex items-center gap-x-1"
+                  className="flex items-center text-gray-700 dark:text-white gap-x-1"
                   to="/login"
                 >
                   Login <BsArrowRight />
@@ -188,7 +188,7 @@ export default function Navbar({ user }: { user: any }) {
           </div>
 
           <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pt-2 pb-3">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
@@ -205,7 +205,7 @@ export default function Navbar({ user }: { user: any }) {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button className="text-gray-900 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium">
+              <Disclosure.Button className="block px-3 py-2 text-base font-medium text-gray-900 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900">
                 <ToggleColorMode />
               </Disclosure.Button>
             </div>

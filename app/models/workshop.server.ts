@@ -10,7 +10,8 @@ export type Workshop = {
   short_description: string;
   status: "draft" | "published" | "soon" | "archived";
   description: string;
-  imageUrl?: string;
+  image_url?: string;
+  video_url?: string;
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
   instructor: Instructor;

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export type Lesson = {
   id: string;
   workshop_id: string;
@@ -9,3 +11,10 @@ export type Lesson = {
   created_at: string;
   updated_at: string;
 };
+
+export async function getLesson(slug: string) {
+  const lesson = await axios
+    .get(`${process.env.API_HOST}/lessons/${slug}`)
+    .then((res) => res.data.data);
+  return lesson;
+}

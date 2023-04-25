@@ -10,10 +10,11 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id}>
       <Link
-        onClick={(e) => workshop?.status === "soon" && e.preventDefault()}
+        // onClick={(e) => workshop?.status === "soon" && e.preventDefault()}
         to={workshop?.slug}
         className={
-          workshop?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
+          // workshop?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
+          ""
         }
       >
         <article className="relative max-w-3xl border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
