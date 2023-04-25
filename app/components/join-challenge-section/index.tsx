@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import Button from "~/components/form/button";
@@ -12,6 +12,9 @@ export default function JoinChallengeSection({
   user?: any;
 }) {
   const { colorMode } = useColorMode();
+
+  // get current path
+  const { pathname } = useLocation();
 
   const steps = [
     {
@@ -76,16 +79,16 @@ export default function JoinChallengeSection({
                           aria-hidden="true"
                         />
                       ) : null}
-                      <div className="group relative flex items-start">
-                        <span className="flex h-9 items-center">
-                          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-blue-300 dark:bg-blue-900 group-hover:bg-blue-400 dark:group-hover:bg-blue-950">
+                      <div className="relative flex items-start group">
+                        <span className="flex items-center h-9">
+                          <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-900 group-hover:bg-blue-400 dark:group-hover:bg-blue-950">
                             <AiOutlineCheck
-                              className="h-5 w-5 text-white"
+                              className="w-5 h-5 text-white"
                               aria-hidden="true"
                             />
                           </span>
                         </span>
-                        <span className="ml-4 flex min-w-0 flex-col">
+                        <span className="flex flex-col min-w-0 ml-4">
                           <span className="text-sm font-medium">
                             {step.name}
                           </span>
@@ -104,18 +107,18 @@ export default function JoinChallengeSection({
                         />
                       ) : null}
                       <div
-                        className="group relative flex items-start"
+                        className="relative flex items-start group"
                         aria-current="step"
                       >
                         <span
-                          className="flex h-9 items-center"
+                          className="flex items-center h-9"
                           aria-hidden="true"
                         >
-                          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-300 dark:border-blue-900 bg-white">
+                          <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-white border-2 border-blue-300 rounded-full dark:border-blue-900">
                             <span className="h-2.5 w-2.5 rounded-full bg-blue-300 dark:bg-blue-900" />
                           </span>
                         </span>
-                        <span className="ml-4 flex min-w-0 flex-col">
+                        <span className="flex flex-col min-w-0 ml-4">
                           <span className="text-sm font-bold">{step.name}</span>
                           <span className="text-sm text-gray-500 dark:text-gray-400">
                             {step.description}
@@ -138,16 +141,16 @@ export default function JoinChallengeSection({
                           aria-hidden="true"
                         />
                       ) : null}
-                      <div className="group relative flex items-start">
+                      <div className="relative flex items-start group">
                         <span
-                          className="flex h-9 items-center"
+                          className="flex items-center h-9"
                           aria-hidden="true"
                         >
-                          <span className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white group-hover:border-gray-400">
+                          <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                             <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300 bg-gray-300 dark:bg-gray-400" />
                           </span>
                         </span>
-                        <span className="ml-4 flex min-w-0 flex-col">
+                        <span className="flex flex-col min-w-0 ml-4">
                           <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                             {step.name}
                           </span>
@@ -165,22 +168,22 @@ export default function JoinChallengeSection({
         </>
       ) : (
         <>
-          <section className="text-center text-lg">
+          <section className="text-lg text-center">
             <span>
               <span className="font-extralight">
                 Você precisa fazer login para participar dos mini projetos.
               </span>
             </span>
           </section>
-          {/* <section className="w-full flex justify-center my-8">
+          {/* <section className="flex justify-center w-full my-8">
             <img
               className="h-48"
               src={`/img/join-challenge-illustration-${colorMode}.svg`}
               alt="Person holding an X icon illustration"
             />
           </section> */}
-          <section className="mt-6 flex gap-8 justify-center">
-            <Link to="/login" className="w-full">
+          <section className="flex justify-center gap-8 mt-6">
+            <Link to={`/login?redirectTo=${pathname}`} className="w-full">
               <Button type="button" className="w-full rounded-full">
                 Login
               </Button>

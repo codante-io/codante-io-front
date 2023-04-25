@@ -66,10 +66,12 @@ export async function login({
   request,
   email,
   password,
+  redirectTo = "/",
 }: {
   request: Request;
   email: string;
   password: string;
+  redirectTo?: string;
 }) {
   let response: AxiosResponse;
   let session = await sessionStorage.getSession(request.headers.get("Cookie"));
@@ -90,7 +92,7 @@ export async function login({
   session.set("user", userData);
 
   return {
-    redirector: redirect("/", {
+    redirector: redirect(redirectTo, {
       headers: {
         "Set-Cookie": await sessionStorage.commitSession(session),
       },

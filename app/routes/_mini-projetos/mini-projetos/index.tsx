@@ -14,7 +14,6 @@ export async function loader({ request }: { request: Request }) {
 
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
-  console.log(challenges);
 
   return (
     <main className="container mx-auto">
