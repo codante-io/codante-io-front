@@ -9,6 +9,7 @@ export type ChallengeCardInfo = {
   short_description: string;
   description?: string;
   image_url: string;
+  video_url?: string;
   difficulty: 1 | 2 | 3;
   duration_in_minutes: string;
   enrolled_users_count: number;
