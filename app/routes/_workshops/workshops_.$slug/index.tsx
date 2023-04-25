@@ -20,6 +20,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import BannerAlert from "~/components/banner-alert";
+import WorkshopLessonsList from "~/components/workshop-lessons-list";
+import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -32,7 +34,7 @@ export default function WorkshopSlug() {
   console.log(workshop);
 
   return (
-    <section className="container mx-auto mt-8 mb-16 lg:mt-16">
+    <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
         <BannerAlert
           title="Ei! Esse workshop ainda não aconteceu!"
@@ -93,38 +95,8 @@ export default function WorkshopSlug() {
           <div className="mt-12">
             {workshop.lessons.length > 0 && (
               <>
-                <div className="mb-8">
-                  <span className="block -mb-1 text-xs text-slate-400 dark:text-slate-500">
-                    Vídeos de:
-                  </span>
-                  <h3 className="mt-0 text-lg font-bold">{workshop.name}</h3>
-                  <span className="block mt-2 text-sm font-light text-slate-400">
-                    {workshop.lessons.length} aulas -{" "}
-                    {fromSecondsToTimeString(
-                      workshop.lessons.reduce(
-                        (acc, lesson) => acc + lesson.duration_in_seconds,
-                        0
-                      )
-                    )}
-                  </span>
-                </div>
-                <ul className="mt-4">
-                  {workshop.lessons.map((lesson: Lesson, id: number) => (
-                    <Link key={lesson.id} to={lesson.slug}>
-                      <li className="flex items-center justify-between gap-3 px-3 py-3 transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800">
-                        <span className="mr-3 text-sm text-brand ">
-                          {id + 1}.
-                        </span>
-                        <h4 className="flex-1 inline-block mr-2 font-light text-slate-700 dark:text-slate-200">
-                          {lesson.name}
-                        </h4>
-                        <span className="text-sm text-slate-500">
-                          {fromSecondsToTimeString(lesson.duration_in_seconds)}
-                        </span>
-                      </li>
-                    </Link>
-                  ))}
-                </ul>
+                <WorkshopLessonsHeader workshop={workshop} />
+                <WorkshopLessonsList workshop={workshop} />
               </>
             )}
           </div>
