@@ -27,7 +27,7 @@ export default function LessonIndex() {
   const workshop: Workshop = loaderData.workshop;
   const slug = loaderData.slug;
   return (
-    <div className="container py-2 mx-auto lg:py-8">
+    <div className="container mx-auto">
       <section className="relative">
         <div className="relative aspect-video">
           {/* <img
@@ -65,9 +65,8 @@ export default function LessonIndex() {
             <div style={{ padding: "56.30% 0 0 0", position: "relative" }}>
               <iframe
                 src="https://player.vimeo.com/video/238455692"
-                frameborder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
                 style={{
                   position: "absolute",
                   top: "0",
@@ -80,7 +79,6 @@ export default function LessonIndex() {
             </div>
             <script src="https://player.vimeo.com/api/player.js"></script>
           </div>
-          {/* <script src="https://player.vimeo.com/api/player.js"></script> */}
         </div>
       </section>
       {/* <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4"> */}
