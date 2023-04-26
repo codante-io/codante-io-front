@@ -47,7 +47,7 @@ export default function App() {
           <Navbar user={user} />
           {/* altura do footer de 170px. Se mudar deve mudar o cálculo aqui */}
           <main className="py-10 min-h-[calc(100vh-170px)] mx-auto">
-            <Outlet />
+            <Outlet context={{ user }} />
           </main>
           <Footer />
         </ColorModeProvider>
