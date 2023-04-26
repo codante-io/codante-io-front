@@ -1,7 +1,7 @@
 export default function Tracks() {
   return (
-    <main className="mt-10 text-center container mx-auto">
-      <h1 className="text-4xl font-lexend mb-10 text-center">Trilhas</h1>
+    <main className="container mx-auto text-center">
+      <h1 className="mb-10 text-4xl text-center font-lexend">Trilhas</h1>
     </main>
   );
 }
