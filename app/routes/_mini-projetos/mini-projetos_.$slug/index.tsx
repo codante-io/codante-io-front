@@ -1,9 +1,11 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import type { AxiosError } from "axios";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
+import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import JoinChallengeSection from "~/components/join-challenge-section";
@@ -13,23 +15,30 @@ import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getChallenge } from "~/models/challenge.server";
 import { user } from "~/services/auth.server";
+import NotFound from "~/components/not-found";
+import { abort404 } from "~/utils/responses.server";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
+  const challenge = await getChallenge(params.slug);
+  if (!challenge) {
+    abort404();
+  }
+
   return json({
     user: await user({ request }),
     slug: params.slug,
-    challenge: await getChallenge(params.slug),
+    challenge,
   });
 };
 
 export default function ChallengeSlug() {
-  const { challenge, user } = useLoaderData<typeof loader>();
+  const { challenge, user } = useLoaderData();
   const { colorMode } = useColorMode();
 
   return (
-    <div className="flex flex-col items-center justify-center text-gray-900 dark:text-white">
+    <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-white">
       <section
         id="title"
         className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
@@ -131,6 +140,25 @@ export default function ChallengeSlug() {
           <ParticipantsSection />
         </div>
       </section>
+    </div>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <NotFound />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h1>Ops...</h1>
+      <p>Something went wrong.</p>
     </div>
   );
 }
