@@ -23,7 +23,6 @@ import {
 import type { Instructor } from "~/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { fromSecondsToTimeString } from "~/utils/interval";
 import BannerAlert from "~/components/banner-alert";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
@@ -180,25 +179,6 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           <span className="block p-4 ml-12">{instructor.bio}</span>
         </motion.p>
       </AnimatePresence>
-    </div>
-  );
-}
-
-export function ErrorBoundary() {
-  const error = useRouteError();
-
-  if (isRouteErrorResponse(error)) {
-    return (
-      <div>
-        <NotFound />
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <h1>Ops...</h1>
-      <p>Something went wrong.</p>
     </div>
   );
 }
