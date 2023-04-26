@@ -26,7 +26,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import BannerAlert from "~/components/banner-alert";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
-import NotFound from "~/components/not-found";
 import { abort404 } from "~/utils/responses.server";
 
 export const loader = async ({ params }: LoaderArgs) => {
