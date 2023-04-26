@@ -29,6 +29,11 @@ export async function getWorkshops(): Promise<Array<Workshop>> {
 export async function getWorkshop(slug: string) {
   const workshop = await axios
     .get(`${process.env.API_HOST}/workshops/${slug}`)
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
   return workshop;
 }
