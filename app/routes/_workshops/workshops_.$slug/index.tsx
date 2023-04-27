@@ -1,6 +1,11 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import {
+  Link,
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import CardItemDuration from "~/components/cards/card-item-duration";
@@ -18,13 +23,19 @@ import {
 import type { Instructor } from "~/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { fromSecondsToTimeString } from "~/utils/interval";
 import BannerAlert from "~/components/banner-alert";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
+import { abort404 } from "~/utils/responses.server";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
+
+  const workshop = await getWorkshop(params.slug);
+  if (!workshop) {
+    abort404();
+  }
+
   return json({ slug: params.slug, workshop: await getWorkshop(params.slug) });
 };
 

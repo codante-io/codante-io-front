@@ -11,8 +11,9 @@ export type ChallengeCardInfo = {
   repository_url: string;
   description?: string;
   image_url: string;
+  video_url?: string;
   difficulty: 1 | 2 | 3;
-  duration_in_minutes: string;
+  duration_in_minutes: number;
   enrolled_users_count: number;
   tags: Tag[];
 };
@@ -27,7 +28,12 @@ export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
 export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
   const challenge = await axios
     .get(`${process.env.API_HOST}/challenges/${slug}`)
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
   return challenge;
 }
 

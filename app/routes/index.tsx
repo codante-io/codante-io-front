@@ -3,13 +3,14 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 import { json } from "@remix-run/node";
 import { getHome } from "~/models/home.server";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
 import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
 import { useColorMode } from "~/contexts/color-mode-context";
 import PriceCard from "~/components/cards/price-card";
 import TrackCard from "~/components/cards/track-card";
 import BackgroundBlur from "~/components/background-blur";
+import type { User } from "~/models/user.server";
 
 export const loader = async () => {
   return json({
@@ -18,6 +19,9 @@ export const loader = async () => {
 };
 
 export default function Index() {
+  const ctx = useOutletContext<{ user: User }>();
+  const user = ctx?.user;
+
   const { homeInfo } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
 
@@ -45,12 +49,19 @@ export default function Index() {
           </p>
 
           <div className="flex flex-col justify-around gap-4 mt-10 lg:flex-row">
-            <button className="px-4 py-2 text-white bg-gray-700 rounded-full">
-              Saiba mais
-            </button>
-            <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-slate-200">
-              <BsFillPersonFill className="mr-2" color="#5282FF" /> Cadastre-se
-            </button>
+            {!user && (
+              <>
+                <button className="px-4 py-2 text-white bg-gray-700 rounded-full">
+                  Saiba mais
+                </button>
+                <Link to="/login">
+                  <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-slate-200">
+                    <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
+                    Cadastre-se
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
           <div className="w-[320px] h-[180px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] lg:w-[800px] lg:h-[450px] bg-black flex items-center justify-center rounded-lg mt-10 mb-20">
             <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-slate-100">
@@ -149,18 +160,18 @@ export default function Index() {
             />{" "}
             Trilhas
           </h1>
-          <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
+          <p className="mt-2 font-light font-inter text-md md:text-xl text-start">
             Obtenha a experiência de aprendizado completa unindo{" "}
             <span className="italic font-bold">workshops</span> e{" "}
             <span className="italic font-bold">mini projetos</span> para
             aprender temas específicos em programação.
           </p>
-          <section className="grid grid-cols-1 gap-4 mb-6">
+          <section className="grid grid-cols-1 gap-4 mt-16 mb-6">
             {homeInfo?.featured_tracks?.map((track) => (
               <TrackCard key={track.id} track={track} />
             ))}
           </section>
-          <section className="flex justify-center w-full mt-2 mb-4">
+          <section className="flex justify-center w-full mt-2 mb-12">
             <Link
               to="/trilhas"
               className="px-4 py-2 rounded-full bg-slate-100 dark:bg-gray-dark "
@@ -173,7 +184,7 @@ export default function Index() {
 
       <section
         id="pricing"
-        className="flex justify-center w-full text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-white"
+        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-white"
       >
         <div className="container flex flex-col items-center">
           <h1 className="mt-16 text-3xl font-light font-lexend">Preços</h1>

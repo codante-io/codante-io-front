@@ -24,11 +24,12 @@ export default function LoadingButton({
       className={`relative ${className}`}
       {...rest}
     >
-      {status === "submitting" && (
-        <div className="absolute inset-0 flex justify-center py-2">
-          <Spinner />
-        </div>
-      )}
+      {status === "submitting" ||
+        (status === "loading" && (
+          <div className="absolute inset-0 flex justify-center py-2">
+            <Spinner />
+          </div>
+        ))}
       {isSuccessfulSubmission && (
         <div className="absolute inset-0 flex justify-center py-2">
           <CheckIcon className="w-5" />

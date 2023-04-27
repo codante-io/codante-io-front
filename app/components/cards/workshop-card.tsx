@@ -5,6 +5,10 @@ import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import CardItemLessonsCount from "./card-item-lessons-count";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
+import {
+  fromSecondsToTimeString,
+  fromSecondsToTimeStringWithoutSeconds,
+} from "~/utils/interval";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
@@ -70,8 +74,18 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               </p>
             </div>
             <div>
-              <CardItemLessonsCount lessonsCount={8} className="mb-[0.2rem]" />
-              <CardDurationItem durationString="20 minutos" />
+              <CardItemLessonsCount
+                lessonsCount={workshop?.lessons?.length}
+                className="mb-[0.2rem]"
+              />
+              <CardDurationItem
+                durationString={fromSecondsToTimeStringWithoutSeconds(
+                  workshop.lessons.reduce(
+                    (acc, lesson) => acc + lesson.duration_in_seconds,
+                    0
+                  )
+                )}
+              />
             </div>
           </div>
         </article>

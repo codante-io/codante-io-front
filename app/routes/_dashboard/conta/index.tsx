@@ -5,7 +5,6 @@ import {
   useNavigation,
 } from "@remix-run/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import Button from "~/components/form/button";
 import Input from "~/components/form/input";
 import AuthCard from "~/routes/_auth/auth-card";
 import { currentToken, getSession, user } from "~/services/auth.server";
@@ -13,7 +12,6 @@ import { changeName, changePassword } from "./services.server";
 import LoadingButton from "~/components/form/loading-button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { useColorMode } from "~/contexts/color-mode-context";
 import { authenticator } from "~/services/github-auth.server";
 
 export async function action({ request }: { request: Request }) {
@@ -65,7 +63,6 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export default function Account() {
-  const { colorMode } = useColorMode();
   const transition = useNavigation();
   const changeNameStatus =
     transition.formData?.get("intent") === "changeName"
@@ -99,7 +96,7 @@ export default function Account() {
   }, [isChangeNameSuccess, isChangePasswordSuccess]);
 
   return (
-    <div className="container mx-auto mt-16 mb-16">
+    <div className="container mx-auto mb-16">
       <h2 className="flex items-center text-xl">
         <MdKeyboardDoubleArrowRight
           size={24}

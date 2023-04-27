@@ -41,17 +41,13 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body
-        className="dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark
-        bg-gradient-to-br from-white via-slate-50 to-slate-100
-       dark:text-white bg-white text-gray-800"
-      >
+      <body className="text-gray-800 bg-white dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-white">
         <DarkModeScriptTag />
         <ColorModeProvider>
           <Navbar user={user} />
           {/* altura do footer de 170px. Se mudar deve mudar o cálculo aqui */}
-          <main className="min-h-[calc(100vh-170px)] mx-auto">
-            <Outlet />
+          <main className="py-10 min-h-[calc(100vh-170px)] mx-auto">
+            <Outlet context={{ user }} />
           </main>
           <Footer />
         </ColorModeProvider>
@@ -60,7 +56,7 @@ export default function App() {
         <LiveReload />
         <Toaster />
         {process.env.NODE_ENV !== "production" && (
-          <div className="fixed z-50 bottom-2 left-2 bg-blue-100 text-blue-700 text-center font-bold rounded-full py-2 w-20">
+          <div className="fixed z-50 w-20 py-2 font-bold text-center text-blue-700 bg-blue-100 rounded-full bottom-2 left-2">
             <span className="block md:hidden">sm</span>
             <span className="hidden md:block lg:hidden">md</span>
             <span className="hidden lg:block xl:hidden">lg</span>

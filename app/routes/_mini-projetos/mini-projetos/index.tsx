@@ -17,10 +17,8 @@ export default function Projects() {
 
   return (
     <main className="container mx-auto">
-      <h1 className="mt-10 mb-10 text-4xl text-center font-lexend">
-        Mini Projetos
-      </h1>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 ">
+      <h1 className="mb-10 text-4xl text-center font-lexend">Mini Projetos</h1>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 ">
         {challenges.map((challenge: ChallengeCardInfo) => (
           <div key={challenge.slug} className="mx-auto">
             <ChallengeCard challenge={challenge} />

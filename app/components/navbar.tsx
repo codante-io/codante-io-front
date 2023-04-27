@@ -1,6 +1,10 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import { Form, Link, useMatches } from "@remix-run/react";
 import { BiUserCircle } from "react-icons/bi";
 import ToggleColorMode from "~/components/toggle-color-mode";
@@ -114,7 +118,7 @@ export default function Navbar({ user }: { user: any }) {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative">
                     <div>
-                      <Menu.Button className="flex text-sm bg-gray-900 rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
+                      <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
                         <span className="sr-only">Open user menu</span>
                         {user?.avatar_url ? (
                           <img
@@ -123,7 +127,7 @@ export default function Navbar({ user }: { user: any }) {
                             alt=""
                           />
                         ) : (
-                          <BiUserCircle className="w-8 h-8 rounded-full" />
+                          <UserCircleIcon className="w-6 h-6" />
                         )}
                       </Menu.Button>
                     </div>

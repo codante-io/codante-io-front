@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import { useLoaderData, Link, Outlet } from "@remix-run/react";
+import { useLoaderData, Outlet } from "@remix-run/react";
 import { getWorkshops } from "../../../models/workshop.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 
@@ -12,9 +12,9 @@ export default function Workshops() {
   const { workshops } = useLoaderData<typeof loader>();
 
   return (
-    <main className="mt-10 text-center container mx-auto">
-      <h1 className="text-4xl font-lexend mb-10">Workshops</h1>
-      <section className="font-lexend grid gap-5 grid-cols-2">
+    <main className="container mx-auto text-center">
+      <h1 className="mb-10 text-4xl font-lexend">Workshops</h1>
+      <section className="grid grid-cols-2 gap-5 font-lexend">
         {workshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}

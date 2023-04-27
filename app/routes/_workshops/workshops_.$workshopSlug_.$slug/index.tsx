@@ -1,73 +1,45 @@
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import React from "react";
-import invariant from "tiny-invariant";
+import { useLoaderData } from "@remix-run/react";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
-import type { Lesson } from "~/models/lesson.server";
-import { getLesson } from "~/models/lesson.server";
 import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
-import { fromSecondsToTimeString } from "~/utils/interval";
+import { abort404 } from "~/utils/responses.server";
 
 export async function loader({ params }: { params: any }) {
-  const slug = params.slug;
-  const WorkshopSlug = params.WorkshopSlug;
+  // se não houver workshop com esse slug ou lesson com esse slug, aborta com 404
+  const workshop = await getWorkshop(params.workshopSlug);
+  if (
+    !workshop ||
+    !workshop.lessons.find((lesson: any) => lesson.slug === params.slug)
+  ) {
+    abort404();
+  }
 
-  invariant(params.slug, `params.slug is required`);
-  invariant(params.workshopSlug, `params.workshopSlug is required`);
   return json({
     slug: params.slug,
     workshop: await getWorkshop(params.workshopSlug),
+    activeIndex: workshop.lessons.findIndex(
+      (lesson: any) => lesson.slug === params.slug
+    ),
   });
 }
 
 export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop: Workshop = loaderData.workshop;
+  const activeIndex = loaderData.activeIndex;
   const slug = loaderData.slug;
   return (
-    <div className="container py-2 mx-auto lg:py-8 lg:px-6 xl:px-12 2xl:px-[10rem]">
+    <div className="container mx-auto">
       <section className="relative">
         <div className="relative aspect-video">
-          {/* <img
-            alt="Email client"
-            width="1280"
-            height="720"
-            decoding="async"
-            data-nimg="1"
-            className="lg:rounded-xl"
-            srcSet="https://buildui.com/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2F7TEp7j9Sf24OMO2MCR1L&w=3840&q=100"
-          /> */}
-          {/* <button
-            className="absolute inset-0 z-10 flex items-center justify-center w-full h-full group"
-            data-testid="video-play-button"
-            onClick={() => alert('oie')}
-          >
-            <span className="flex items-center justify-center w-20 h-20 transition rounded-full bg-black/60 group-hover:bg-brand/80">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-                className="w-10 h-10 text-white"
-              >
-                <path
-                  fillRule="evenodd"
-                  className="fill-current"
-                  d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </span>
-          </button> */}
           <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
             <div style={{ padding: "56.30% 0 0 0", position: "relative" }}>
               <iframe
                 src="https://player.vimeo.com/video/238455692"
-                frameborder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
                 style={{
                   position: "absolute",
                   top: "0",
@@ -80,7 +52,6 @@ export default function LessonIndex() {
             </div>
             <script src="https://player.vimeo.com/api/player.js"></script>
           </div>
-          {/* <script src="https://player.vimeo.com/api/player.js"></script> */}
         </div>
       </section>
       {/* <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4"> */}
@@ -104,7 +75,10 @@ export default function LessonIndex() {
             {workshop.lessons.length > 0 && (
               <>
                 <WorkshopLessonsHeader workshop={workshop} />
-                <WorkshopLessonsList workshop={workshop} />
+                <WorkshopLessonsList
+                  workshop={workshop}
+                  activeIndex={activeIndex}
+                />
               </>
             )}
           </div>
