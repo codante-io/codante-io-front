@@ -19,12 +19,16 @@ export async function loader({ params }: { params: any }) {
   return json({
     slug: params.slug,
     workshop: await getWorkshop(params.workshopSlug),
+    activeIndex: workshop.lessons.findIndex(
+      (lesson: any) => lesson.slug === params.slug
+    ),
   });
 }
 
 export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop: Workshop = loaderData.workshop;
+  const activeIndex = loaderData.activeIndex;
   const slug = loaderData.slug;
   return (
     <div className="container mx-auto">
@@ -71,7 +75,10 @@ export default function LessonIndex() {
             {workshop.lessons.length > 0 && (
               <>
                 <WorkshopLessonsHeader workshop={workshop} />
-                <WorkshopLessonsList workshop={workshop} />
+                <WorkshopLessonsList
+                  workshop={workshop}
+                  activeIndex={activeIndex}
+                />
               </>
             )}
           </div>
