@@ -1,32 +1,106 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import JoinChallengeSection from "~/components/join-challenge-section";
-import ParticipantsSection from "~/components/participants-section";
+import JoinChallengeSection from "./join-challenge-section";
+import ParticipantsSection from "./participants-section";
 
 import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
-import { getChallenge } from "~/models/challenge.server";
-import { user } from "~/services/auth.server";
+import {
+  getChallenge,
+  joinChallenge,
+  updateChallengeCompleted,
+  updateUserJoinedDiscord,
+  userJoinedChallenge,
+  verifyAndUpdateForkURL,
+} from "~/models/challenge.server";
+import { logout, user as getUser } from "~/services/auth.server";
+import { buildInitialSteps, getUserFork } from "./challenges.server";
+import axios from "axios";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+
+export async function action({ request }: { request: Request }) {
+  const formData = await request.formData();
+
+  const intent = formData.get("intent") as string;
+  const redirectTo = formData.get("redirectTo") as string;
+  const slug = redirectTo.split("/")[2];
+  const user = await getUser({ request });
+
+  switch (intent) {
+    case "connect-github":
+      return logout({ request, redirectTo: `/login?redirectTo=${redirectTo}` });
+    case "join-challenge":
+      return joinChallenge({ request, slug });
+    case "verify-fork":
+      return verifyAndUpdateForkURL({
+        slug,
+        githubUser: user.github_user,
+        request,
+      });
+    case "join-discord":
+      return updateUserJoinedDiscord({
+        slug,
+        joinedDiscord: true,
+        request,
+      });
+    case "finish-challenge":
+      return updateChallengeCompleted({
+        slug,
+        completed: true,
+        request,
+      });
+  }
+}
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
+  const user = await getUser({ request });
+  const challenge = await getChallenge(params.slug);
+  let challengeUser;
+  if (user) {
+    try {
+      challengeUser = await userJoinedChallenge(params.slug, request);
+    } catch (err: any) {
+      if (axios.isAxiosError(err)) {
+        if (err?.response?.status) challengeUser = null;
+      }
+    }
+  }
+
   return json({
-    user: await user({ request }),
+    user,
     slug: params.slug,
-    challenge: await getChallenge(params.slug),
+    challenge,
+    initialSteps: buildInitialSteps({
+      user,
+      challengeUser,
+      repositoryUrl: challenge.repository_url,
+    }),
   });
 };
 
 export default function ChallengeSlug() {
-  const { challenge, user } = useLoaderData<typeof loader>();
+  const { challenge, initialSteps, user } = useLoaderData<typeof loader>();
+  const actionData = useActionData();
   const { colorMode } = useColorMode();
+
+  useEffect(() => {
+    if (actionData?.error) {
+      toast.error(actionData?.error);
+    }
+
+    if (actionData?.success) {
+      toast.success(actionData?.success);
+    }
+  }, [actionData]);
 
   return (
     <div className="flex flex-col items-center justify-center text-gray-900 dark:text-white">
@@ -79,7 +153,7 @@ export default function ChallengeSlug() {
               <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Participar
               </h1>
-              <JoinChallengeSection user={user} />
+              <JoinChallengeSection initialSteps={initialSteps} user={user} />
             </div>
 
             <div>
@@ -123,9 +197,8 @@ export default function ChallengeSlug() {
         <div className="container relative -top-12">
           <h1 className="flex justify-center mt-24 text-2xl font-light text-center font-lexend">
             <span>
-              Junte-se a outras{" "}
-              <span className="mx-2 font-bold"> 36 pessoas </span> que estão
-              fazendo esse mini projeto.
+              Junte-se a outras <span className="font-bold"> 36 pessoas </span>{" "}
+              que estão fazendo esse mini projeto.
             </span>
           </h1>
           <ParticipantsSection />

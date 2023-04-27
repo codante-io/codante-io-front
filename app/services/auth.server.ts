@@ -104,26 +104,64 @@ export async function login({
   };
 }
 
-export async function logout({ request }: { request: Request }) {
+export async function logout({
+  request,
+  redirectTo = "/login",
+}: {
+  request: Request;
+  redirectTo?: string;
+}) {
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie")
   );
 
-  let { token } = session.get("user");
+  let user = session.get("user");
 
-  try {
-    await axios.post(
-      "/logout",
-      {},
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-  } catch (e) {}
+  if (!user?.token) return redirect(redirectTo);
 
-  return redirect("/login", {
+  await axios.post(
+    "/logout",
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + user?.token,
+      },
+    }
+  );
+
+  return redirect(redirectTo, {
+    headers: {
+      "Set-Cookie": await sessionStorage.destroySession(session),
+    },
+  });
+}
+
+export async function logoutWithRedirectAfterLogin({
+  request,
+  redirectTo = "/login",
+}: {
+  request: Request;
+  redirectTo?: string;
+}) {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  let user = session.get("user");
+
+  if (!user?.token) return redirect(`/login?redirectTo=${redirectTo}`);
+
+  await axios.post(
+    "/logout",
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + user?.token,
+      },
+    }
+  );
+
+  return redirect(`/login?redirectTo=${redirectTo}`, {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
