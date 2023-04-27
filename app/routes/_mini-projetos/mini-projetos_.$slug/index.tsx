@@ -15,7 +15,7 @@ import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getChallenge } from "~/models/challenge.server";
 import { user } from "~/services/auth.server";
-import NotFound from "~/components/not-found";
+import NotFound from "~/components/errors/not-found";
 import { abort404 } from "~/utils/responses.server";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
