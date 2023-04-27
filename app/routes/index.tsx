@@ -166,12 +166,12 @@ export default function Index() {
             <span className="italic font-bold">mini projetos</span> para
             aprender temas específicos em programação.
           </p>
-          <section className="grid grid-cols-1 gap-4 mt-8 mb-6">
+          <section className="grid grid-cols-1 gap-4 mt-16 mb-6">
             {homeInfo?.featured_tracks?.map((track) => (
               <TrackCard key={track.id} track={track} />
             ))}
           </section>
-          <section className="flex justify-center w-full mt-2 mb-4">
+          <section className="flex justify-center w-full mt-2 mb-12">
             <Link
               to="/trilhas"
               className="px-4 py-2 rounded-full bg-slate-100 dark:bg-gray-dark "

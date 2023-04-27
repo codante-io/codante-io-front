@@ -43,7 +43,7 @@ export default function ChallengeSlug() {
         id="title"
         className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
       >
-        <div className="container mt-16 mb-10">
+        <div className="container">
           <CardItemDifficulty difficulty={2} className="mb-2" />
 
           <h1 className="flex items-center text-3xl font-light font-lexend">
