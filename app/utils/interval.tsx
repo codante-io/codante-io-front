@@ -7,3 +7,19 @@ export function fromSecondsToTimeString(seconds: number): string {
     minutes ? String(minutes).padStart(2, "0") + ":" : ""
   }${String(secondsLeft).padStart(2, "0")}`;
 }
+
+export function fromSecondsToTimeStringWithoutSeconds(seconds: number): string {
+  const fullString = fromSecondsToTimeString(seconds);
+  const [hours, minutes] = fullString.split(":");
+  // remove leading 0
+  if (hours === "00") {
+    return `${minutes}m`;
+  }
+
+  //remove first 0
+  if (hours.startsWith("0")) {
+    return `${hours.slice(1)}h${minutes}`;
+  }
+
+  return `${hours}h${minutes}`;
+}
