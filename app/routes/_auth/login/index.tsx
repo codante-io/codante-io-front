@@ -4,6 +4,7 @@ import {
   useActionData,
   useLoaderData,
   useNavigate,
+  useNavigation,
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
@@ -13,6 +14,7 @@ import { useColorMode } from "~/contexts/color-mode-context";
 import { login } from "~/services/auth.server";
 import AuthCard from "../auth-card";
 import { authenticator } from "~/services/github-auth.server";
+import LoadingButton from "~/components/form/loading-button";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
@@ -43,6 +45,11 @@ export async function loader({ request }: { request: Request }) {
 
 export default function Login() {
   let [searchParams] = useSearchParams();
+  const transition = useNavigation();
+
+  const status = transition.state;
+  console.log(status);
+
   const navigator = useNavigate();
   const { colorMode } = useColorMode();
 
@@ -69,10 +76,14 @@ export default function Login() {
         <AuthCard className={opened ? "hidden" : ""}>
           <Form action={`/auth/github`} method="get">
             <input type="hidden" name="redirectTo" value={redirectTo} />
-            <button className="flex items-center justify-center w-full gap-4 p-4 text-white bg-gray-700 rounded">
+            <LoadingButton
+              status={status}
+              type="submit"
+              className="relative w-full text-white transition duration-200  rounded-lg [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>*]:w-full [&>*]:gap-4 [&>*]:p-4 [&>*]:text-white [&>*]:transition [&>*]:duration-200 [&>*]:text-lg hover:bg-opacity-90 bg-gray-700 "
+            >
               <img src="/img/github-logo.svg" alt="" />
               Entrar com GitHub
-            </button>
+            </LoadingButton>
           </Form>
         </AuthCard>
 
