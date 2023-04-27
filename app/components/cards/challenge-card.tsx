@@ -4,6 +4,7 @@ import type { ChallengeCardInfo } from "~/models/challenge.server";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemDuration from "./card-item-duration";
 import CardItemTag from "./card-item-tag";
+import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 
 export default function ChallengeCard({
   challenge,
@@ -65,7 +66,11 @@ export default function ChallengeCard({
                   : "participantes"}
               </div>
             )}
-            <CardItemDuration durationString="3h30" />
+            <CardItemDuration
+              durationString={fromSecondsToTimeStringWithoutSeconds(
+                challenge.duration_in_minutes * 60
+              )}
+            />
           </div>
         </div>
       </article>
