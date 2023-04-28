@@ -6,7 +6,6 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Form, Link, useMatches } from "@remix-run/react";
-import { BiUserCircle } from "react-icons/bi";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { BsArrowRight } from "react-icons/bs";
@@ -23,11 +22,6 @@ export default function Navbar({ user }: { user: any }) {
 
   const navigation = [
     {
-      name: "Trilhas",
-      href: "/trilhas",
-      current: id.includes("trilhas"),
-    },
-    {
       name: "Workshops",
       href: "/workshops",
       current: id.includes("workshops"),
@@ -36,6 +30,11 @@ export default function Navbar({ user }: { user: any }) {
       name: "Mini Projetos",
       href: "/mini-projetos",
       current: id.includes("mini-projetos"),
+    },
+    {
+      name: "Trilhas",
+      href: "/trilhas",
+      current: id.includes("trilhas"),
     },
     // { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
   ];

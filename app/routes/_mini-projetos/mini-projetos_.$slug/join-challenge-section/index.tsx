@@ -25,7 +25,7 @@ export default function JoinChallengeSection({
     >
       <>
         <nav aria-label="Progress" className="m-4">
-          <ol role="list" className="overflow-hidden">
+          <ol className="overflow-hidden">
             {initialSteps?.map((step, stepIndex) => (
               <li
                 key={step.name}
@@ -38,15 +38,15 @@ export default function JoinChallengeSection({
                   <>
                     {stepIndex !== initialSteps.length - 1 ? (
                       <div
-                        className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-blue-300 dark:bg-blue-900"
+                        className="absolute left-3 top-3 -ml-px mt-0.5 h-full w-0.5 bg-blue-300 dark:bg-blue-900"
                         aria-hidden="true"
                       />
                     ) : null}
                     <div className="relative flex items-start group">
                       <span className="flex items-center h-9">
-                        <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-blue-300 rounded-full dark:bg-blue-900 group-hover:bg-blue-400 dark:group-hover:bg-blue-950">
+                        <span className="relative z-10 flex items-center justify-center w-6 h-6 bg-blue-300 rounded-full dark:bg-blue-900 group-hover:bg-blue-400 dark:group-hover:bg-blue-950">
                           <AiOutlineCheck
-                            className="w-5 h-5 text-white"
+                            className="w-3 h-3 text-white"
                             aria-hidden="true"
                           />
                         </span>
@@ -63,7 +63,7 @@ export default function JoinChallengeSection({
                   <>
                     {stepIndex !== initialSteps.length - 1 ? (
                       <div
-                        className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-gray-300 dark:bg-gray-400"
+                        className="absolute left-3 top-3 -ml-px mt-0.5 h-full w-0.5 bg-gray-300 dark:bg-gray-400"
                         aria-hidden="true"
                       />
                     ) : null}
@@ -75,8 +75,8 @@ export default function JoinChallengeSection({
                         className="flex items-center h-9"
                         aria-hidden="true"
                       >
-                        <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-white border-2 border-blue-300 rounded-full dark:border-blue-900">
-                          <span className="h-2.5 w-2.5 rounded-full bg-blue-300 dark:bg-blue-900" />
+                        <span className="relative z-10 flex items-center justify-center w-6 h-6 bg-white border-2 rounded-full border-brand">
+                          <span className="h-2.5 w-2.5 rounded-full bg-brand" />
                         </span>
                       </span>
                       <span className="flex flex-col min-w-0 ml-4">
@@ -111,7 +111,7 @@ export default function JoinChallengeSection({
                   <>
                     {stepIndex !== initialSteps.length - 1 ? (
                       <div
-                        className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-gray-300 dark:bg-gray-400"
+                        className="absolute left-3 top-3 -ml-px mt-0.5 h-full w-0.5 bg-gray-300 dark:bg-gray-400"
                         aria-hidden="true"
                       />
                     ) : null}
@@ -120,7 +120,8 @@ export default function JoinChallengeSection({
                         className="flex items-center h-9"
                         aria-hidden="true"
                       >
-                        <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
+                        <span className="relative z-10 flex items-center justify-center w-6 h-6 bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
+                          {" "}
                           <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300 bg-gray-300 dark:bg-gray-400" />
                         </span>
                       </span>

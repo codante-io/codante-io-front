@@ -174,7 +174,7 @@ export default function Index() {
             <span className="italic font-bold">mini projetos</span> para
             aprender temas específicos em programação.
           </p>
-          <section className="grid grid-cols-1 gap-4 mt-16 mb-6">
+          <section className="grid grid-cols-1 gap-4 mt-4 mb-6">
             {homeInfo?.featured_tracks?.map((track) => (
               <TrackCard key={track.id} track={track} />
             ))}
