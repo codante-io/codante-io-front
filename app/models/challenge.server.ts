@@ -10,6 +10,8 @@ export type ChallengeCardInfo = {
   status: "draft" | "published" | "soon" | "archived";
   short_description: string;
   repository_url: string;
+  stars?: number;
+  forks?: number;
   description?: string;
   image_url: string;
   video_url?: string;
@@ -18,6 +20,9 @@ export type ChallengeCardInfo = {
   enrolled_users_count: number;
   tags: Tag[];
   workshop?: Workshop;
+  pivot?: {
+    trackable_type: string;
+  };
 };
 
 export type ChallengeParticipants = {

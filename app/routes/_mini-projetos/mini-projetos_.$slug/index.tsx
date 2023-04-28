@@ -218,6 +218,8 @@ export default function ChallengeSlug() {
                 repository={{
                   organization: "codante-io",
                   name: challenge?.slug,
+                  stars: challenge?.stars,
+                  forks: challenge?.forks,
                 }}
               />
             </div>
