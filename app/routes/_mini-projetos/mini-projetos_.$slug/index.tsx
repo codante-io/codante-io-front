@@ -34,7 +34,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ChallengeSlug() {
-  const { challenge, user } = useLoaderData();
+  const { challenge, user } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
 
   return (
@@ -133,8 +133,14 @@ export default function ChallengeSlug() {
           <h1 className="flex justify-center mt-24 text-2xl font-light text-center font-lexend">
             <span>
               Junte-se a outras{" "}
-              <span className="mx-2 font-bold"> 36 pessoas </span> que estão
-              fazendo esse mini projeto.
+              <span className="mx-0 font-bold">
+                {" "}
+                {challenge.enrolled_users_count > 1
+                  ? challenge.enrolled_users_count
+                  : ""}{" "}
+                pessoas{" "}
+              </span>{" "}
+              que estão fazendo esse mini projeto.
             </span>
           </h1>
           <ParticipantsSection />
