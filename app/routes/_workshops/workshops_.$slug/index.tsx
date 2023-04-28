@@ -106,7 +106,7 @@ export default function WorkshopSlug() {
             {workshop.lessons.length > 0 && (
               <>
                 <WorkshopLessonsHeader workshop={workshop} />
-                <WorkshopLessonsList workshop={workshop} />
+                <WorkshopLessonsList activeIndex={-1} workshop={workshop} />
               </>
             )}
           </div>

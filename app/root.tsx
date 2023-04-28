@@ -12,7 +12,7 @@ import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
 import { ColorModeProvider } from "~/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
-import { DarkModeScriptTag } from "~/utils/dark-mode";
+import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
 import { Toaster } from "react-hot-toast";
 
@@ -41,8 +41,12 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="text-gray-800 bg-white min-w-fit dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-white">
-        <DarkModeScriptTag />
+      <body className="text-gray-800 bg-white dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-white">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: DarkModeScriptInnerHtml,
+          }}
+        />
         <ColorModeProvider>
           <Navbar user={user} />
           {/* altura do footer de 170px. Se mudar deve mudar o cálculo aqui */}

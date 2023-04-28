@@ -1,7 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useActionData, useLoaderData } from "@remix-run/react";
-import type { AxiosError } from "axios";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
@@ -28,7 +27,6 @@ import axios from "axios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { abort404 } from "~/utils/responses.server";
-import NotFound from "~/components/not-found";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 
 export async function action({ request }: { request: Request }) {

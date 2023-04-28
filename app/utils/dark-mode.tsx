@@ -23,8 +23,10 @@ export function getInitialColorMode() {
 export function setColorModeClass(colorMode: ColorMode) {
   if (colorMode === "dark") {
     document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
   } else {
     document.documentElement.classList.remove("dark");
+    document.documentElement.classList.add("light");
   }
 }
 
@@ -54,9 +56,5 @@ export function setColorMode() {
   }
 }
 
-export const DarkModeScriptTag = () => {
-  const codeToRunOnClient = `(${String(setColorMode)})()`;
-
-  // eslint-disable-next-line react/no-danger
-  return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
-};
+export const DarkModeScriptInnerHtml =
+  '(function setColorMode() {\n  function getColorMode() {\n    let persistedColorPreference = window.localStorage.getItem("color-mode");\n    if (typeof persistedColorPreference == "string")\n      return persistedColorPreference;\n    let mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");\n    return typeof mediaQueryList.matches == "boolean" && mediaQueryList.matches ? "dark" : "light";\n  }\n  getColorMode() === "dark" ? (document.documentElement.classList.add("dark"), document.documentElement.classList.remove("light")) : (document.documentElement.classList.remove("dark"), document.documentElement.classList.add("light"));\n})()';

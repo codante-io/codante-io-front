@@ -3,7 +3,13 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 import { json } from "@remix-run/node";
 import { getHome } from "~/models/home.server";
-import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
+import {
+  Link,
+  isRouteErrorResponse,
+  useLoaderData,
+  useOutletContext,
+  useRouteError,
+} from "@remix-run/react";
 import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -11,6 +17,8 @@ import PriceCard from "~/components/cards/price-card";
 import TrackCard from "~/components/cards/track-card";
 import BackgroundBlur from "~/components/background-blur";
 import type { User } from "~/models/user.server";
+import NotFound from "~/components/errors/not-found";
+import { Error500 } from "~/components/errors/500";
 
 export const loader = async () => {
   return json({
@@ -230,4 +238,18 @@ export default function Index() {
       </section>
     </div>
   );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <NotFound />
+      </div>
+    );
+  }
+
+  return <Error500 />;
 }
