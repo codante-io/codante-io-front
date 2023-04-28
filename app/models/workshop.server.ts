@@ -17,6 +17,9 @@ export type Workshop = {
   instructor: Instructor;
   lessons: Lesson[];
   tags: Tag[];
+  pivot?: {
+    trackable_type: string;
+  };
 };
 
 export async function getWorkshops(): Promise<Array<Workshop>> {
