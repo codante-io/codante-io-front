@@ -92,6 +92,8 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     slug: params.slug,
     challenge,
     participants,
+
+    challengeUser,
     initialSteps: buildInitialSteps({
       user,
       challengeUser,
@@ -101,7 +103,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ChallengeSlug() {
-  const { challenge, initialSteps, participants } =
+  const { challenge, initialSteps, participants, challengeUser } =
     useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { colorMode } = useColorMode();
@@ -128,7 +130,7 @@ export default function ChallengeSlug() {
             className="mb-2"
           />
 
-          <h1 className="flex items-center text-3xl font-light font-lexend">
+          <h1 className="flex items-center justify-between text-3xl font-light font-lexend">
             <span>
               <MdKeyboardDoubleArrowRight
                 size={24}
@@ -186,9 +188,23 @@ export default function ChallengeSlug() {
           </div>
           <div className="col-span-12 space-y-20 lg:col-span-4">
             <div>
-              <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
-                Participar
-              </h1>
+              <div className="flex items-center justify-between mb-4">
+                <h1 className="text-2xl font-semibold font-lexend">
+                  Participar
+                </h1>
+                {challengeUser && (
+                  <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">
+                    <svg
+                      className="h-1.5 w-1.5 fill-green-500 animate-pulse"
+                      viewBox="0 0 6 6"
+                      aria-hidden="true"
+                    >
+                      <circle cx={3} cy={3} r={3} />
+                    </svg>
+                    Você está participando
+                  </span>
+                )}
+              </div>
               <JoinChallengeSection initialSteps={initialSteps} />
             </div>
 
