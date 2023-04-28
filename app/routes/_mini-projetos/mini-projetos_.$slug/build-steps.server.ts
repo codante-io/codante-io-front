@@ -11,8 +11,7 @@ const initialSteps = [
   },
   {
     name: "Participe do mini projeto",
-    description:
-      "Clique aqui para registrar sua participação nesse projeto. É 100% gratuito!",
+    description: "Participe. É 100% gratuito!",
     button: "Participar",
     status: "upcoming",
     intent: "join-challenge",
@@ -21,15 +20,15 @@ const initialSteps = [
     name: "Faça o fork do repositório",
     description:
       'Acesse o link do repositório, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!',
-    button: "Verificar fork",
+    button: "Verificar Fork",
     status: "upcoming",
     intent: "verify-fork",
   },
   {
-    name: "Participe da nossa comunidade do Discord",
+    name: "Participe da nossa comunidade",
     description:
       "Acesse nossa comunidade do Discord para tirar dúvidas e se conectar com outras pessoas que estão fazendo o mini projeto.",
-    button: "Marcar como concluído",
+    button: "Feito!",
     status: "upcoming",
     intent: "join-discord",
   },

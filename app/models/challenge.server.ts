@@ -1,6 +1,7 @@
 import axios from "axios";
 import { currentToken, user } from "~/services/auth.server";
 import type { Tag } from "./tag.server";
+import type { Workshop } from "./workshop.server";
 
 export type ChallengeCardInfo = {
   id: string;
@@ -16,6 +17,7 @@ export type ChallengeCardInfo = {
   duration_in_minutes: number;
   enrolled_users_count: number;
   tags: Tag[];
+  workshop?: Workshop;
 };
 
 export type ChallengeParticipants = {
@@ -104,8 +106,12 @@ export async function getUserFork(
   challengeSlug: string
 ) {
   const repos = await axios
-    // .get(`https://api.github.com/repos/codante-io/${challengeSlug}/forks`)
-    .get(`https://api.github.com/repos/miniprojects-io/countdown-timer/forks`)
+    .get(`https://api.github.com/repos/codante-io/${challengeSlug}/forks`, {
+      headers: {
+        Authorization: `BEARER ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
+      },
+    })
+    // .get(`https://api.github.com/repos/miniprojects-io/countdown-timer/forks`)
     .then((res) => res.data);
 
   const userFork = repos.find(

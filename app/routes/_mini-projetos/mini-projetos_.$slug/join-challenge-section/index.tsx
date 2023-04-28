@@ -53,7 +53,7 @@ export default function JoinChallengeSection({
                       </span>
                       <span className="flex flex-col min-w-0 ml-4">
                         <span className="text-sm font-medium">{step.name}</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                           {step.description}
                         </span>
                       </span>
@@ -76,12 +76,12 @@ export default function JoinChallengeSection({
                         aria-hidden="true"
                       >
                         <span className="relative z-10 flex items-center justify-center w-6 h-6 bg-white border-2 rounded-full border-brand">
-                          <span className="h-2.5 w-2.5 rounded-full bg-brand" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-brand animate-pulse" />
                         </span>
                       </span>
                       <span className="flex flex-col min-w-0 ml-4">
                         <span className="text-sm font-bold">{step.name}</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                           <span
                             dangerouslySetInnerHTML={{
                               __html: step.description,
@@ -129,7 +129,7 @@ export default function JoinChallengeSection({
                         <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                           {step.name}
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                           {step.description}
                         </span>
                       </span>
