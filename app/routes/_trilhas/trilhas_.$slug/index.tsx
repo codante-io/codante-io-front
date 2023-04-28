@@ -117,10 +117,6 @@ export default function TrackSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const track: Track = loaderData.track;
 
-  useEffect(() => {
-    console.log(track);
-  }, [track]);
-
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-16">
       {/* Header */}

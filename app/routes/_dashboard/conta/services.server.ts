@@ -26,7 +26,6 @@ export async function changePassword({
       { headers: { Authorization: `Bearer ${token}` } }
     );
   } catch (error: any) {
-    // console.log(error.response?.data);
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),
       message: error.response?.data?.message,
@@ -44,7 +43,6 @@ export async function changeName({ request, name }: changeNameParams) {
       { headers: { Authorization: `Bearer ${token}` } }
     );
   } catch (error: any) {
-    console.log(error.response?.data);
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),
       message: error.response?.data?.message,

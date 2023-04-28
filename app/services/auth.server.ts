@@ -83,7 +83,6 @@ export async function login({
   try {
     response = await axios.post("/login", { email, password });
   } catch (error: any) {
-    console.log(error.response.data.errors);
     // return { errors: Object.values(error?.response?.data?.errors).flat() };
     return { errors: error?.response?.data?.message };
   }
@@ -245,7 +244,6 @@ export async function resetPassword({
       password_confirmation: passwordConfirmation,
     });
   } catch (error: any) {
-    console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
 
@@ -258,7 +256,6 @@ export async function sendPasswordLink({ email }: { email: string }) {
   try {
     const res = await axios.post("/forgot-password", { email });
   } catch (error: any) {
-    console.log(error);
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
 }

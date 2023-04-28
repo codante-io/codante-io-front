@@ -18,6 +18,11 @@ export type ChallengeCardInfo = {
   tags: Tag[];
 };
 
+export type ChallengeParticipants = {
+  count: number;
+  avatars: string[];
+};
+
 export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
   const challenges = await axios
     .get(`${process.env.API_HOST}/challenges`)
@@ -35,6 +40,20 @@ export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
       }
     });
   return challenge;
+}
+
+export async function getChallengeParticipants(
+  slug: string
+): Promise<ChallengeParticipants> {
+  const challengeParticipants = await axios
+    .get(`${process.env.API_HOST}/challenges/${slug}/participants`)
+    .then((res) => res.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
+  return challengeParticipants;
 }
 
 export async function joinChallenge({

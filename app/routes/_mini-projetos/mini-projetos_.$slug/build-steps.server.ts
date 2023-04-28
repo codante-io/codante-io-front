@@ -57,11 +57,10 @@ export function buildInitialSteps({
   } else if (challengeUser?.pivot.joined_discord) {
     index = 4;
   } else if (challengeUser?.pivot.fork_url?.length > 0) {
+    index = 3;
     initialSteps[
       index
     ].description = `Acesse <a class="dark:text-blue-200 text-blue-600 font-bold" href="${DISCORD_INVITE_URL}" target="_blank">nossa comunidade no Discord</a> para tirar dúvidas e se conectar com outras pessoas que estão fazendo o mini projeto.`;
-
-    index = 3;
   } else if (challengeUser) {
     index = 2;
     initialSteps[

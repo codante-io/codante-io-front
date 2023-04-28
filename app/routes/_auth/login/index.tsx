@@ -48,7 +48,6 @@ export default function Login() {
   const transition = useNavigation();
 
   const status = transition.state;
-  console.log(status);
 
   const navigator = useNavigate();
   const { colorMode } = useColorMode();
