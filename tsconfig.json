@@ -3,7 +3,7 @@
     "remix.env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/components/join-challenge-section"
+    "app/routes/_mini-projetos/mini-projetos_.$slug/join-challenge-section"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],

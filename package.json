@@ -1,5 +1,6 @@
 {
   "private": true,
+  "proxy": "http://127.0.0.1:8000",
   "sideEffects": false,
   "scripts": {
     "build": "remix build",

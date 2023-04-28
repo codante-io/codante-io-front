@@ -42,7 +42,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop: Workshop = loaderData.workshop;
-  console.log(workshop);
 
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">

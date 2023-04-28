@@ -96,7 +96,7 @@ export default function Index() {
             profissionais do mercado.
           </p>
           <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {homeInfo?.featured_workshops?.slice(0, 2).map((workshop) => (
+            {homeInfo?.featured_workshops?.map((workshop) => (
               <WorkshopCard key={workshop.id} workshop={workshop} />
             ))}
           </section>
@@ -212,9 +212,9 @@ export default function Index() {
                   Comunidade: true,
                   "Mini projetos": true,
                   "Workshops gratuitos": true,
-                  "Area vip da comunidade": false,
+                  "Área vip da comunidade": false,
                   "Workshops premium": false,
-                  "Resoluçoes dos mini projetos": false,
+                  "Resoluções dos mini projetos": false,
                 },
               }}
             />
@@ -227,9 +227,9 @@ export default function Index() {
                   Comunidade: true,
                   "Mini projetos": true,
                   "Workshops gratuitos": true,
-                  "Area vip da comunidade": true,
+                  "Área vip da comunidade": true,
                   "Workshops premium": true,
-                  "Resoluçoes dos mini projetos": true,
+                  "Resoluções dos mini projetos": true,
                 },
               }}
             />

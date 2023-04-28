@@ -73,8 +73,6 @@ export default function Account() {
       ? transition.state
       : "idle";
 
-  console.log(changeNameStatus);
-
   const { user } = useLoaderData();
   const actionData = useActionData();
   const changePasswordErrors = actionData?.changePasswordErrors;

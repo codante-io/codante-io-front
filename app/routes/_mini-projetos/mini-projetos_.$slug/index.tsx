@@ -1,45 +1,120 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import JoinChallengeSection from "~/components/join-challenge-section";
-import ParticipantsSection from "~/components/participants-section";
+import JoinChallengeSection from "./join-challenge-section";
+import ParticipantsSection from "./participants-section";
 
 import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
-import { getChallenge, getStarsAndForksCount } from "~/models/challenge.server";
-import { user } from "~/services/auth.server";
-import NotFound from "~/components/errors/not-found";
+import {
+  getChallenge,
+  joinChallenge,
+  updateChallengeCompleted,
+  updateUserJoinedDiscord,
+  userJoinedChallenge,
+  verifyAndUpdateForkURL,
+  getChallengeParticipants,
+} from "~/models/challenge.server";
+import { logout, user as getUser } from "~/services/auth.server";
+import { buildInitialSteps } from "./build-steps.server";
+import axios from "axios";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { abort404 } from "~/utils/responses.server";
+import CardItemRibbon from "~/components/cards/card-item-ribbon";
+
+export async function action({ request }: { request: Request }) {
+  const formData = await request.formData();
+
+  const intent = formData.get("intent") as string;
+  const redirectTo = formData.get("redirectTo") as string;
+  const slug = redirectTo.split("/")[2];
+  const user = await getUser({ request });
+
+  switch (intent) {
+    case "connect-github":
+      return logout({ request, redirectTo: `/login?redirectTo=${redirectTo}` });
+    case "join-challenge":
+      return joinChallenge({ request, slug });
+    case "verify-fork":
+      return verifyAndUpdateForkURL({
+        slug,
+        githubUser: user.github_user,
+        request,
+      });
+    case "join-discord":
+      return updateUserJoinedDiscord({
+        slug,
+        joinedDiscord: true,
+        request,
+      });
+    case "finish-challenge":
+      return updateChallengeCompleted({
+        slug,
+        completed: true,
+        request,
+      });
+  }
+}
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
+  const [challenge, participants] = await Promise.all([
+    getChallenge(params.slug),
+    getChallengeParticipants(params.slug),
+  ]);
 
-  const challenge = await getChallenge(params.slug);
   if (!challenge) {
     abort404();
   }
 
-  // get stars and forks
-  const { stars, forks } = await getStarsAndForksCount(params.slug);
+  const user = await getUser({ request });
+
+  let challengeUser;
+  if (user) {
+    try {
+      challengeUser = await userJoinedChallenge(params.slug, request);
+    } catch (err: any) {
+      if (axios.isAxiosError(err)) {
+        if (err?.response?.status) challengeUser = null;
+      }
+    }
+  }
 
   return json({
-    user: await user({ request }),
+    user,
     slug: params.slug,
     challenge,
-    stars,
-    forks,
+    participants,
+    initialSteps: buildInitialSteps({
+      user,
+      challengeUser,
+      repositoryUrl: challenge.repository_url,
+    }),
   });
 };
 
 export default function ChallengeSlug() {
-  const { challenge, user, stars, forks } = useLoaderData<typeof loader>();
+  const { challenge, initialSteps, participants } =
+    useLoaderData<typeof loader>();
+  const actionData = useActionData();
   const { colorMode } = useColorMode();
+
+  useEffect(() => {
+    if (actionData?.error) {
+      toast.error(actionData?.error);
+    }
+
+    if (actionData?.success) {
+      toast.success(actionData?.success);
+    }
+  }, [actionData]);
 
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-white">
@@ -48,7 +123,10 @@ export default function ChallengeSlug() {
         className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
       >
         <div className="container">
-          <CardItemDifficulty difficulty={2} className="mb-2" />
+          <CardItemDifficulty
+            difficulty={challenge?.difficulty}
+            className="mb-2"
+          />
 
           <h1 className="flex items-center text-3xl font-light font-lexend">
             <span>
@@ -72,11 +150,30 @@ export default function ChallengeSlug() {
               <h1 className="flex items-center text-2xl font-semibold font-lexend">
                 Vídeo de introdução
               </h1>
-              <div className="w-full h-[310px] sm:h-[436px] md:h-[510px] bg-black flex items-center justify-center rounded-lg mt-4 mb-8">
-                <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-slate-100">
-                  <BsFillPlayFill size={24} color="#5282FF" />
-                </button>
-              </div>
+              <section className="relative mt-4 mb-8">
+                <div className="relative aspect-video">
+                  <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
+                    <div
+                      style={{ padding: "56.30% 0 0 0", position: "relative" }}
+                    >
+                      <iframe
+                        src="https://player.vimeo.com/video/238455692"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowFullScreen
+                        style={{
+                          position: "absolute",
+                          top: "0",
+                          left: "0",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        title="C0193vid007-1"
+                      ></iframe>
+                    </div>
+                    <script src="https://player.vimeo.com/api/player.js"></script>
+                  </div>
+                </div>
+              </section>
             </div>
             <div className="col-span-12 lg:col-span-8">
               <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
@@ -92,7 +189,7 @@ export default function ChallengeSlug() {
               <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Participar
               </h1>
-              <JoinChallengeSection user={user} />
+              <JoinChallengeSection initialSteps={initialSteps} />
             </div>
 
             <div>
@@ -102,9 +199,7 @@ export default function ChallengeSlug() {
               <RepositoryInfoSection
                 repository={{
                   organization: "codante-io",
-                  name: "countdown-timer",
-                  stars,
-                  forks,
+                  name: challenge?.slug,
                 }}
               />
             </div>
@@ -112,8 +207,9 @@ export default function ChallengeSlug() {
               <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
                 Resolução
               </h1>
-              <div className="w-full h-[180px] bg-black flex items-center justify-center rounded-lg mt-4 mb-20">
-                <button className="flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-slate-100">
+              <div className="relative cursor-not-allowed w-full h-[250px] sm:h-[400px] lg:h-[210px] bg-black flex items-center justify-center rounded-lg mt-4 mb-20">
+                <CardItemRibbon text="Disponível em breve" />
+                <button className="flex items-center justify-center w-8 h-8 text-gray-700 rounded-full cursor-not-allowed bg-slate-100">
                   <BsFillPlayFill size={16} color="#5282FF" />
                 </button>
               </div>
@@ -134,20 +230,7 @@ export default function ChallengeSlug() {
         className="flex justify-center w-full text-gray-800 dark:bg-slate-800 bg-slate-100 dark:text-white"
       >
         <div className="container relative -top-12">
-          <h1 className="flex justify-center mt-24 text-2xl font-light text-center font-lexend">
-            <span>
-              Junte-se a outras{" "}
-              <span className="mx-0 font-bold">
-                {" "}
-                {challenge.enrolled_users_count > 1
-                  ? challenge.enrolled_users_count
-                  : ""}{" "}
-                pessoas{" "}
-              </span>{" "}
-              que estão fazendo esse mini projeto.
-            </span>
-          </h1>
-          <ParticipantsSection />
+          <ParticipantsSection participants={participants} />
         </div>
       </section>
     </div>
