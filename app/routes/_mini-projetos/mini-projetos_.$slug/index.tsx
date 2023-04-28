@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useActionData, useLoaderData } from "@remix-run/react";
+import { Link, useActionData, useLoaderData } from "@remix-run/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
@@ -28,6 +28,8 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { abort404 } from "~/utils/responses.server";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
+import NotFound from "~/components/errors/not-found";
+import { Error500 } from "~/components/errors/500";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -190,10 +192,10 @@ export default function ChallengeSlug() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h1 className="text-2xl font-semibold font-lexend">
-                  Participar
+                  {challengeUser ? "Seu progresso" : "Participe"}
                 </h1>
                 {challengeUser && (
-                  <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">
+                  <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700 shadow-sm">
                     <svg
                       className="h-1.5 w-1.5 fill-green-500 animate-pulse"
                       viewBox="0 0 6 6"
@@ -201,7 +203,7 @@ export default function ChallengeSlug() {
                     >
                       <circle cx={3} cy={3} r={3} />
                     </svg>
-                    Você está participando
+                    Você está ativo!
                   </span>
                 )}
               </div>
@@ -219,17 +221,9 @@ export default function ChallengeSlug() {
                 }}
               />
             </div>
-            <div>
-              <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
-                Resolução
-              </h1>
-              <div className="relative cursor-not-allowed w-full h-[250px] sm:h-[400px] lg:h-[210px] bg-black flex items-center justify-center rounded-lg mt-4 mb-20">
-                <CardItemRibbon text="Disponível em breve" />
-                <button className="flex items-center justify-center w-8 h-8 text-gray-700 rounded-full cursor-not-allowed bg-slate-100">
-                  <BsFillPlayFill size={16} color="#5282FF" />
-                </button>
-              </div>
-            </div>
+            <ResolutionSection
+              isAvailable={challenge?.workshop?.status === "published"}
+            />
           </div>
         </div>
       </section>
@@ -253,6 +247,38 @@ export default function ChallengeSlug() {
   );
 }
 
+function ResolutionSection({ isAvailable }: { isAvailable: boolean }) {
+  return (
+    <div>
+      <h1 className="flex items-center mb-2 text-2xl font-semibold font-lexend">
+        Resolução
+      </h1>
+      {!isAvailable && (
+        <p className="text-sm text-slate-400">
+          Esta resolução será publicada em breve!{" "}
+          <button className="text-xs underline text-brand">Me avise!</button>
+        </p>
+      )}
+      <Link to="resolucao">
+        <div
+          className={`relative w-full h-[250px] sm:h-[400px] lg:h-[210px] bg-black flex items-center justify-center rounded-lg mt-6 mb-20 ${
+            !isAvailable && "cursor-not-allowed"
+          }`}
+        >
+          {!isAvailable && <CardItemRibbon text="Disponível em breve" />}
+          <span
+            className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-slate-100 ${
+              !isAvailable && "cursor-not-allowed"
+            }`}
+          >
+            <BsFillPlayFill size={16} color="#5282FF" />
+          </span>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
 export function ErrorBoundary() {
   const error = useRouteError();
 
@@ -266,8 +292,7 @@ export function ErrorBoundary() {
 
   return (
     <div>
-      <h1>Ops...</h1>
-      <p>Something went wrong.</p>
+      <Error500 />
     </div>
   );
 }
