@@ -34,3 +34,21 @@ export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
     });
   return challenge;
 }
+
+export async function getStarsAndForksCount(repoSlug: string) {
+  try {
+    const { data } = await axios.get(
+      `https://api.github.com/repos/codante-io/${repoSlug}`
+    );
+    return {
+      stars: data.stargazers_count as number,
+      forks: data.forks_count as number,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      stars: 0,
+      forks: 0,
+    };
+  }
+}

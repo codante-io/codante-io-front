@@ -1,7 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import type { AxiosError } from "axios";
 import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
@@ -13,7 +12,7 @@ import ParticipantsSection from "~/components/participants-section";
 
 import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
-import { getChallenge } from "~/models/challenge.server";
+import { getChallenge, getStarsAndForksCount } from "~/models/challenge.server";
 import { user } from "~/services/auth.server";
 import NotFound from "~/components/errors/not-found";
 import { abort404 } from "~/utils/responses.server";
@@ -26,15 +25,20 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     abort404();
   }
 
+  // get stars and forks
+  const { stars, forks } = await getStarsAndForksCount(params.slug);
+
   return json({
     user: await user({ request }),
     slug: params.slug,
     challenge,
+    stars,
+    forks,
   });
 };
 
 export default function ChallengeSlug() {
-  const { challenge, user } = useLoaderData<typeof loader>();
+  const { challenge, user, stars, forks } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
 
   return (
@@ -99,8 +103,8 @@ export default function ChallengeSlug() {
                 repository={{
                   organization: "codante-io",
                   name: "countdown-timer",
-                  stars: 36,
-                  forks: 231,
+                  stars,
+                  forks,
                 }}
               />
             </div>
