@@ -12,7 +12,7 @@ export type ChallengeCardInfo = {
   video_url?: string;
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
-  enrolled_users_count: number;
+  enrolled_users_count?: number;
   tags: Tag[];
 };
 
