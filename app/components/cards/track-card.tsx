@@ -7,6 +7,14 @@ import CardItemChallenge from "~/components/cards/card-item-challenge";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 
 function TrackCard({ track }: { track: Track }) {
+  const numberOfWorkshops =
+    track?.trackables?.filter((trackable) =>
+      trackable?.pivot?.trackable_type.includes("Workshop")
+    ).length || 0;
+
+  const numberOfChallenges =
+    (track?.trackables?.length || 0) - (numberOfWorkshops || 0);
+
   return (
     <div key={track?.id}>
       <Link
@@ -57,8 +65,8 @@ function TrackCard({ track }: { track: Track }) {
               </p>
             </div>
             <div className="flex gap-4">
-              <CardItemWorkshop workshopsCount={2} />
-              <CardItemChallenge challengesCount={8} />
+              <CardItemWorkshop workshopsCount={numberOfWorkshops} />
+              <CardItemChallenge challengesCount={numberOfChallenges} />
             </div>
           </div>
         </article>
