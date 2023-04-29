@@ -42,13 +42,13 @@ export default function Index() {
         className="flex justify-center w-full min-h-screen"
       >
         <div className="container flex flex-col items-center">
-          <h1 className="mt-16 text-3xl font-light text-center font-lexend md:text-5xl">
+          <h1 className="text-3xl font-light text-center lg:mt-16 font-lexend md:text-5xl">
             Evolua na{" "}
             <span className="pr-4 font-bold text-transparent animate-text bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
               programação
             </span>
           </h1>
-          <p className="mt-16 font-light text-center font-inter text-md md:text-xl lg:w-7/12">
+          <p className="mt-6 font-light text-center lg:mt-16 font-inter text-md md:text-xl lg:w-7/12">
             Fuja dos tutoriais e aprimore suas{" "}
             <span className="italic">skills</span> em programação com{" "}
             <span className="italic font-bold">workshops</span> e{" "}

@@ -26,7 +26,7 @@ export default function RepositoryInfoSection({
       //   }
       // }}
     >
-      <article className="relative w-full bg-slate-50 dark:bg-gray-dark shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-slate-600">
+      <article className="relative w-full bg-white dark:bg-gray-dark shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-slate-600">
         <section>
           <AiFillGithub className="inline-block w-6 h-6 mr-2" />
           <span className="font-extralight">{repository?.organization} / </span>
