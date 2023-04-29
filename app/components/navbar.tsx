@@ -40,7 +40,10 @@ export default function Navbar({ user }: { user: any }) {
   ];
 
   return (
-    <Disclosure as="nav" className="text-gray-900 bg-transparent">
+    <Disclosure
+      as="nav"
+      className="text-gray-900 bg-white dark:bg-gray-darkest lg:bg-transparent"
+    >
       {({ open }) => (
         <>
           <div className="container mx-auto">
@@ -97,7 +100,7 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-transparent dark:text-white  text-gray-700 dark:hover:bg-gray-700 underline"
+                            ? "bg-transparent dark:hover:bg-gray-700 underline dark:bg-gray-900 dark:text-white bg-white text-gray-700"
                             : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -184,14 +187,14 @@ export default function Navbar({ user }: { user: any }) {
                   className="flex items-center text-gray-700 dark:text-white gap-x-1"
                   to="/login"
                 >
-                  Login <BsArrowRight />
+                  Login <BsArrowRight className="hidden md:inline" />
                 </Link>
               )}
             </div>
           </div>
 
           <Disclosure.Panel className="sm:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-b-2 dark:border-slate-600 dark:bg-gray-darkest">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
@@ -199,7 +202,7 @@ export default function Navbar({ user }: { user: any }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700 underline"
                       : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
