@@ -39,7 +39,7 @@ export default function Index() {
 
       <section
         id="headline"
-        className="flex justify-center w-full min-h-screen"
+        className="flex justify-center w-full sm:min-h-screen"
       >
         <div className="container flex flex-col items-center">
           <h1 className="text-3xl font-light text-center lg:mt-16 font-lexend md:text-5xl">
@@ -56,7 +56,7 @@ export default function Index() {
             por profissionais do mercado.
           </p>
 
-          <div className="flex flex-col justify-around gap-4 mt-10 lg:flex-row">
+          <div className="hidden mt-10 sm:justify-around sm:gap-4 md:flex-row sm:flex">
             {!user && (
               <>
                 <button className="px-4 py-2 text-white bg-gray-700 rounded-full">
@@ -71,7 +71,7 @@ export default function Index() {
               </>
             )}
           </div>
-          <div className="w-[320px] h-[180px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] lg:w-[800px] lg:h-[450px] bg-black flex items-center justify-center rounded-lg mt-10 mb-20">
+          <div className="w-[320px] h-[180px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] lg:w-[800px] lg:h-[450px] bg-black flex items-center justify-center rounded-lg mt-10 mb-10 sm:mb-20">
             <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-slate-100">
               <BsFillPlayFill size={24} color="#5282FF" />
             </button>
@@ -83,7 +83,7 @@ export default function Index() {
         className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
       >
         <div className="container mb-10">
-          <h1 className="flex items-center mt-16 text-3xl font-light font-lexend">
+          <h1 className="flex items-center mt-8 text-3xl font-light sm:mt-16 font-lexend">
             <MdKeyboardDoubleArrowRight
               size={24}
               className="mr-2 text-blue-300 dark:text-blue-900"
@@ -136,7 +136,9 @@ export default function Index() {
           </p>
           <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {homeInfo?.featured_challenges?.map((challenge) => (
-              <ChallengeCard key={challenge.id} challenge={challenge} />
+              <div key={challenge.slug} className="mx-auto">
+                <ChallengeCard challenge={challenge} />
+              </div>
             ))}
           </section>
           <section className="flex justify-center w-full mt-10">

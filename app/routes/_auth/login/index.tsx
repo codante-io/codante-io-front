@@ -87,6 +87,7 @@ export default function Login() {
         </AuthCard>
 
         <AuthCard className={opened ? "" : "hidden"}>
+          <h1 className="mb-8 text-lg text-slate-700 dark:text-white">Login</h1>
           <Form method="POST" className="flex flex-col ">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Input
@@ -126,7 +127,9 @@ export default function Login() {
             </div>
           </Form>
         </AuthCard>
-        <p className={` text-xs font-light text-slate-500 mb-2 mt-4`}>
+        <p
+          className={`text-center sm:text-left text-xs font-light text-slate-500 mb-2 mt-4`}
+        >
           ... ou, se preferir, entre com{" "}
           <button
             className="underline"
@@ -139,7 +142,7 @@ export default function Login() {
               );
             }}
           >
-            {opened ? "github" : "email e senha"}
+            {opened ? "Github" : "email e senha"}
           </button>
         </p>
       </div>

@@ -14,7 +14,7 @@ export default function Workshops() {
   return (
     <main className="container mx-auto text-center">
       <h1 className="mb-10 text-4xl font-lexend">Workshops</h1>
-      <section className="grid grid-cols-2 gap-5 font-lexend">
+      <section className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {workshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}

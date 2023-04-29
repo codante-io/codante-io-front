@@ -42,7 +42,7 @@ export default function Navbar({ user }: { user: any }) {
   return (
     <Disclosure
       as="nav"
-      className="text-gray-900 bg-white dark:bg-gray-darkest lg:bg-transparent"
+      className="text-gray-900 bg-transparent data-[headlessui-state=open]:bg-white dark:bg-gray-darkest lg:bg-transparent"
     >
       {({ open }) => (
         <>
@@ -184,7 +184,7 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               ) : (
                 <Link
-                  className="flex items-center text-gray-700 dark:text-white gap-x-1"
+                  className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700  dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0"
                   to="/login"
                 >
                   Login <BsArrowRight className="hidden md:inline" />
