@@ -93,7 +93,7 @@ export default function Index() {
           <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
             Aprenda de forma prática e objetiva com{" "}
             <span className="italic font-bold">workshops</span> ensinados por
-            profissionais do mercado!
+            profissionais do mercado
           </p>
           <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {homeInfo?.featured_workshops?.map((workshop) => (
