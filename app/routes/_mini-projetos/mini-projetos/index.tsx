@@ -12,11 +12,11 @@ export async function loader({ request }: { request: Request }) {
   });
 }
 
-export function headers() {
-  return {
-    "Cache-Control": "s-maxage=1, stale-while-revalidate=59",
-  };
-}
+// export function headers() {
+//   return {
+//     "Cache-Control": "s-maxage=1, stale-while-revalidate=59",
+//   };
+// }
 
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
