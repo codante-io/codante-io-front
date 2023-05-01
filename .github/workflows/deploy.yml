@@ -29,4 +29,4 @@ jobs:
             git pull
             npm install
             npm run build
-            pm2 restart my-remix-app
+            pm2 restart codante-io-front
