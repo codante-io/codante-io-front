@@ -27,4 +27,6 @@ jobs:
           script: |
             cd /var/www/codante-io-front
             git pull
-            pm2 restart front
+            npm install
+            npm run build
+            pm2 restart my-remix-app
