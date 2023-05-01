@@ -53,7 +53,7 @@ export default function Index() {
             <span className="italic">skills</span> em programação com{" "}
             <span className="italic font-bold">workshops</span> e{" "}
             <span className="italic font-bold">mini projetos</span> ensinados
-            por profissionais do mercado.
+            por profissionais do mercado!
           </p>
 
           <div className="hidden mt-10 sm:justify-around sm:gap-4 md:flex-row sm:flex">
