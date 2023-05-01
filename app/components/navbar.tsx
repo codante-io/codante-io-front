@@ -96,6 +96,7 @@ export default function Navbar({ user }: { user: any }) {
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Link
+                        prefetch="intent"
                         key={item.name}
                         to={item.href}
                         className={classNames(
@@ -153,15 +154,15 @@ export default function Navbar({ user }: { user: any }) {
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="/conta"
+                            <Link
+                              to="/conta"
                               className={classNames(
                                 active ? "bg-white" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Minha Conta
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
@@ -184,7 +185,7 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               ) : (
                 <Link
-                  className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700  dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0"
+                  className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0"
                   to="/login"
                 >
                   Login <BsArrowRight className="hidden md:inline" />
