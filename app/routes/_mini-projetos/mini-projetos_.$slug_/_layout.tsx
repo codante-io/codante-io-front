@@ -1,5 +1,5 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import {
   Link,
   Outlet,
@@ -37,6 +37,15 @@ import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 
+// export const routes = [
+//   {
+//     // Redirect /project/:slug to /projects/:slug/overview
+//     match: 'mini-projetos/:slug',
+//     action: redirect('/mini-projetos/:slug/overview'),
+//   },
+//   // Other routes...
+// ];
+
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
 
@@ -73,46 +82,25 @@ export async function action({ request }: { request: Request }) {
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
+
+  // redirect if page is not in overview or resolucao
+  if (!request.url.includes("overview") && !request.url.includes("resolucao")) {
+    return redirect(`/mini-projetos/${params.slug}/overview`);
+  }
+
   const [challenge, participants] = await Promise.all([
     getChallenge(params.slug),
     getChallengeParticipants(params.slug),
   ]);
 
-  if (!challenge) {
-    abort404();
-  }
-
-  const user = await getUser({ request });
-
-  let challengeUser;
-  if (user) {
-    try {
-      challengeUser = await userJoinedChallenge(params.slug, request);
-    } catch (err: any) {
-      if (axios.isAxiosError(err)) {
-        if (err?.response?.status) challengeUser = null;
-      }
-    }
-  }
-
   return json({
-    user,
     slug: params.slug,
     challenge,
-    participants,
-
-    challengeUser,
-    initialSteps: buildInitialSteps({
-      user,
-      challengeUser,
-      repositoryUrl: challenge.repository_url,
-    }),
   });
 };
 
 export default function ChallengeSlug() {
-  const { challenge, initialSteps, participants, challengeUser } =
-    useLoaderData<typeof loader>();
+  const { challenge, participants } = useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { colorMode } = useColorMode();
 
@@ -144,8 +132,8 @@ export default function ChallengeSlug() {
           ></path>
         </svg>
       ),
-      href: "infos",
-      current: location.pathname.includes("infos"),
+      href: "overview",
+      current: location.pathname.includes("overview"),
     },
     {
       name: "Resolução",
@@ -191,7 +179,7 @@ export default function ChallengeSlug() {
                 />
                 <span className="font-extralight">Projeto</span>{" "}
                 <span className="font-bold underline decoration-solid">
-                  {challenge.name}
+                  {/* {challenge.name} */}
                 </span>
               </span>
             </h1>

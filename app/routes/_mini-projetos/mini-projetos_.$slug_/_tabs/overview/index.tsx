@@ -98,7 +98,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ChallengeIndex() {
-  const { challenge, initialSteps, participants, challengeUser } =
+  const { challenge, initialSteps, challengeUser } =
     useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { colorMode } = useColorMode();
