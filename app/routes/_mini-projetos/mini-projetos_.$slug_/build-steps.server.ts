@@ -44,11 +44,11 @@ const DISCORD_INVITE_URL = "";
 export function buildInitialSteps({
   user,
   challengeUser,
-  repositoryUrl,
+  repositorySlug,
 }: {
   user?: any;
   challengeUser?: any;
-  repositoryUrl?: string;
+  repositorySlug?: string;
 }) {
   const initialStepsClone = structuredClone(initialSteps);
 
@@ -72,7 +72,7 @@ export function buildInitialSteps({
     index = 2;
     initialStepsClone[
       index
-    ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="${repositoryUrl}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
+    ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="https://github.com/codante-io/${repositorySlug}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
   } else if (user?.github_id?.length > 0) {
     index = 1;
   } else {

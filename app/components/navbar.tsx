@@ -42,7 +42,7 @@ export default function Navbar({ user }: { user: any }) {
   return (
     <Disclosure
       as="nav"
-      className="text-gray-900 bg-transparent data-[headlessui-state=open]:bg-white dark:bg-gray-darkest lg:bg-transparent"
+      className="text-gray-900 bg-transparent data-[headlessui-state=open]:bg-white dark:data-[headlessui-state=open]:bg-gray-darkest lg:bg-transparent"
     >
       {({ open }) => (
         <>

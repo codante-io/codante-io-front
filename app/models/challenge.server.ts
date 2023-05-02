@@ -151,31 +151,24 @@ export async function updateChallengeUser({
 
 export async function verifyAndUpdateForkURL({
   slug,
-  githubUser,
   request,
 }: {
   slug: string;
-  githubUser: string;
   request: Request;
 }): Promise<{ success?: string; error?: string }> {
-  const userFork = await getUserFork(githubUser, slug);
+  let token = await currentToken({ request });
 
-  if (!userFork) return { error: "Não encontramos o seu fork." };
+  const hasForked = await axios
+    .get(`${process.env.API_HOST}/challenges/${slug}/forked`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => res.data.data);
 
-  try {
-    await updateChallengeUser({
-      slug,
-      body: { fork_url: userFork.html_url },
-      request,
-    });
-
-    return { success: "Encontramos e registramos o seu fork." };
-  } catch (err) {
-    return {
-      error:
-        "Não foi possível registrar o seu fork. Por favor, tente novamente.",
-    };
-  }
+  return hasForked
+    ? { success: "Fork encontrado." }
+    : { error: "Não encontramos o seu fork. Tente novamente" };
 }
 
 export async function updateUserJoinedDiscord({

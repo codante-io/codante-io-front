@@ -33,30 +33,30 @@ export async function action({ request }: { request: Request }) {
   const slug = redirectTo.split("/")[2];
   const user = await getUser({ request });
 
-  switch (intent) {
-    case "connect-github":
-      return logout({ request, redirectTo: `/login?redirectTo=${redirectTo}` });
-    case "join-challenge":
-      return joinChallenge({ request, slug });
-    case "verify-fork":
-      return verifyAndUpdateForkURL({
-        slug,
-        githubUser: user.github_user,
-        request,
-      });
-    case "join-discord":
-      return updateUserJoinedDiscord({
-        slug,
-        joinedDiscord: true,
-        request,
-      });
-    case "finish-challenge":
-      return updateChallengeCompleted({
-        slug,
-        completed: true,
-        request,
-      });
-  }
+  // switch (intent) {
+  //   case "connect-github":
+  //     return logout({ request, redirectTo: `/login?redirectTo=${redirectTo}` });
+  //   case "join-challenge":
+  //     return joinChallenge({ request, slug });
+  //   case "verify-fork":
+  //     return verifyAndUpdateForkURL({
+  //       slug,
+  //       githubUser: user.github_user,
+  //       request,
+  //     });
+  //   case "join-discord":
+  //     return updateUserJoinedDiscord({
+  //       slug,
+  //       joinedDiscord: true,
+  //       request,
+  //     });
+  //   case "finish-challenge":
+  //     return updateChallengeCompleted({
+  //       slug,
+  //       completed: true,
+  //       request,
+  //     });
+  // }
 }
 
 export const loader = async ({ params, request }: LoaderArgs) => {
