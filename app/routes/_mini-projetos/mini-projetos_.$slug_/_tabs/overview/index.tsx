@@ -55,13 +55,15 @@ export default function ChallengeIndex() {
             {challengeUser && (
               <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700 shadow-sm">
                 <svg
-                  className="h-1.5 w-1.5 fill-green-500 animate-pulse"
+                  className={"h-1.5 w-1.5 animate-pulse fill-green-500"}
                   viewBox="0 0 6 6"
                   aria-hidden="true"
                 >
                   <circle cx={3} cy={3} r={3} />
                 </svg>
-                Você está ativo!
+                {challengeUser.pivot?.completed
+                  ? "Projeto concluído!"
+                  : "Você está participando!"}
               </span>
             )}
           </div>

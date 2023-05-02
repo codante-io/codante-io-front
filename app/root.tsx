@@ -58,7 +58,11 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            className: "bg-gray-50 dark:bg-gray-dark dark:text-white",
+          }}
+        />
         {process.env.NODE_ENV !== "production" && (
           <div className="fixed z-50 w-20 py-2 font-bold text-center text-blue-700 bg-blue-100 rounded-full bottom-2 left-2">
             <span className="block md:hidden">sm</span>
