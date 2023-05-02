@@ -10,6 +10,8 @@ export type ChallengeCardInfo = {
   status: "draft" | "published" | "soon" | "archived";
   short_description: string;
   repository_url: string;
+  stars?: number;
+  forks?: number;
   description?: string;
   image_url: string;
   video_url?: string;
@@ -18,6 +20,9 @@ export type ChallengeCardInfo = {
   enrolled_users_count: number;
   tags: Tag[];
   workshop?: Workshop;
+  pivot?: {
+    trackable_type: string;
+  };
 };
 
 export type ChallengeParticipants = {
@@ -40,6 +45,7 @@ export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
       if (e.response.status === 404) {
         return null;
       }
+      throw new Error("Erro ao buscar o mini projeto");
     });
   return challenge;
 }
@@ -54,6 +60,7 @@ export async function getChallengeParticipants(
       if (e.response.status === 404) {
         return null;
       }
+      throw new Error("Erro ao buscar participantes do mini projeto");
     });
   return challengeParticipants;
 }

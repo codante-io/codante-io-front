@@ -1,9 +1,5 @@
 import { Link } from "@remix-run/react";
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import { AiFillGithub, AiOutlineFork, AiOutlineStar } from "react-icons/ai";
-import { getRepoInfo } from "~/components/repository-info-section/get-repo-info";
-import { useUser } from "~/hooks/useUser";
 
 export default function RepositoryInfoSection({
   repository,
@@ -15,17 +11,7 @@ export default function RepositoryInfoSection({
     name: string;
   };
 }) {
-  const user = useUser();
   const repoUrl = `https://github.com/${repository?.organization}/${repository?.name}`;
-  const [{ stars, forks }, setInfo] = useState({ stars: 0, forks: 0 });
-
-  useEffect(() => {
-    async function setRepoInfo() {
-      setInfo(await getRepoInfo(repository?.name));
-    }
-
-    setRepoInfo();
-  }, []);
 
   return (
     <Link
@@ -50,12 +36,12 @@ export default function RepositoryInfoSection({
           <span className="flex items-center">
             <AiOutlineStar />
             {/* <div className="w-6 h-4 ml-1 rounded dark:bg-slate-700 bg-slate-200"></div> */}
-            {stars}
+            {repository?.stars || 0}
           </span>{" "}
           <span className="flex items-center">
             <AiOutlineFork />
             {/* <div className="w-8 h-4 ml-1 rounded dark:bg-slate-700 bg-slate-200"></div> */}
-            {forks}
+            {repository?.forks || 0}
           </span>
         </section>
       </article>

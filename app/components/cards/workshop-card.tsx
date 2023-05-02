@@ -80,7 +80,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               />
               <CardDurationItem
                 durationString={fromSecondsToTimeStringWithoutSeconds(
-                  workshop.lessons.reduce(
+                  workshop?.lessons?.reduce(
                     (acc, lesson) => acc + lesson.duration_in_seconds,
                     0
                   )
