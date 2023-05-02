@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const initialSteps = [
   {
     name: "Conecte o seu GitHub",
@@ -52,11 +50,13 @@ export function buildInitialSteps({
   challengeUser?: any;
   repositoryUrl?: string;
 }) {
+  const initialStepsClone = structuredClone(initialSteps);
+
   let index = 0;
 
   if (!user) {
-    initialSteps[index].status = "current";
-    return initialSteps;
+    initialStepsClone[index].status = "current";
+    return initialStepsClone;
   }
 
   if (challengeUser?.pivot.completed) {
@@ -65,12 +65,12 @@ export function buildInitialSteps({
     index = 4;
   } else if (challengeUser?.pivot.fork_url?.length > 0) {
     index = 3;
-    initialSteps[
+    initialStepsClone[
       index
     ].description = `Acesse <a class="dark:text-blue-200 text-blue-600 font-bold" href="${DISCORD_INVITE_URL}" target="_blank">nossa comunidade no Discord</a> para tirar dúvidas e se conectar com outras pessoas que estão fazendo o mini projeto.`;
   } else if (challengeUser) {
     index = 2;
-    initialSteps[
+    initialStepsClone[
       index
     ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="${repositoryUrl}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
   } else if (user?.github_id?.length > 0) {
@@ -79,8 +79,8 @@ export function buildInitialSteps({
     index = 0;
   }
 
-  for (let i = 0; i < index; i++) initialSteps[i].status = "complete";
-  if (index < 5) initialSteps[index].status = "current";
+  for (let i = 0; i < index; i++) initialStepsClone[i].status = "complete";
+  if (index < 5) initialStepsClone[index].status = "current";
 
-  return initialSteps;
+  return initialStepsClone;
 }
