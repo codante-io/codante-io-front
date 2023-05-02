@@ -13,38 +13,23 @@ import invariant from "tiny-invariant";
 import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import JoinChallengeSection from "./join-challenge-section";
 import ParticipantsSection from "./participants-section";
 
-import RepositoryInfoSection from "~/components/repository-info-section";
 import { useColorMode } from "~/contexts/color-mode-context";
 import {
   getChallenge,
   joinChallenge,
   updateChallengeCompleted,
   updateUserJoinedDiscord,
-  userJoinedChallenge,
   verifyAndUpdateForkURL,
   getChallengeParticipants,
 } from "~/models/challenge.server";
 import { logout, user as getUser } from "~/services/auth.server";
-import { buildInitialSteps } from "./build-steps.server";
-import axios from "axios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { abort404 } from "~/utils/responses.server";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
-
-// export const routes = [
-//   {
-//     // Redirect /project/:slug to /projects/:slug/overview
-//     match: 'mini-projetos/:slug',
-//     action: redirect('/mini-projetos/:slug/overview'),
-//   },
-//   // Other routes...
-// ];
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -84,7 +69,11 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   // redirect if page is not in overview or resolucao
-  if (!request.url.includes("overview") && !request.url.includes("resolucao")) {
+  const { pathname } = new URL(request.url);
+  if (
+    pathname === `/mini-projetos/${params.slug}/` ||
+    pathname === `/mini-projetos/${params.slug}`
+  ) {
     return redirect(`/mini-projetos/${params.slug}/overview`);
   }
 
@@ -96,6 +85,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   return json({
     slug: params.slug,
     challenge,
+    participants,
   });
 };
 
@@ -116,7 +106,12 @@ export default function ChallengeSlug() {
     }
   }, [actionData]);
 
-  const tabs = [
+  const tabs: {
+    name: string;
+    icon: React.ReactNode;
+    href: string;
+    current: boolean;
+  }[] = [
     {
       name: "Overview",
       icon: (
@@ -151,14 +146,11 @@ export default function ChallengeSlug() {
           ></path>
         </svg>
       ),
-      count: "Em breve!",
       current: location.pathname.includes("resolucao"),
     },
-    // { name: "Suas Submissões", href: "#", current: false },
-    // { name: "Todas Submissões", href: "#", count: "4", current: false },
   ];
 
-  function classNames(...classes) {
+  function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
 
@@ -179,7 +171,7 @@ export default function ChallengeSlug() {
                 />
                 <span className="font-extralight">Projeto</span>{" "}
                 <span className="font-bold underline decoration-solid">
-                  {/* {challenge.name} */}
+                  {challenge.name}
                 </span>
               </span>
             </h1>
@@ -199,7 +191,7 @@ export default function ChallengeSlug() {
                 id="tabs"
                 name="tabs"
                 className="block w-full border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
-                defaultValue={tabs.find((tab) => tab.current).name}
+                defaultValue={tabs.find((tab) => tab?.current)?.name}
               >
                 {tabs.map((tab) => (
                   <option key={tab.name}>{tab.name}</option>
@@ -209,9 +201,9 @@ export default function ChallengeSlug() {
             <div className="hidden sm:block">
               <nav className="flex space-x-4" aria-label="Tabs">
                 {tabs.map((tab) => (
-                  <a
+                  <Link
                     key={tab.name}
-                    href={tab.href}
+                    to={tab.href}
                     className={classNames(
                       tab.current
                         ? "bg-slate-200 dark:bg-slate-800 dark:text-white text-slate-800"
@@ -224,7 +216,7 @@ export default function ChallengeSlug() {
                       {tab.icon}
                     </span>
                     {tab.name}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -248,38 +240,6 @@ export default function ChallengeSlug() {
           <ParticipantsSection participants={participants} />
         </div>
       </section>
-    </div>
-  );
-}
-
-function ResolutionSection({ isAvailable }: { isAvailable: boolean }) {
-  return (
-    <div>
-      <h1 className="flex items-center mb-2 text-2xl font-semibold font-lexend">
-        Resolução
-      </h1>
-      {!isAvailable && (
-        <p className="text-sm text-slate-400">
-          Esta resolução será publicada em breve!{" "}
-          <button className="text-xs underline text-brand">Me avise!</button>
-        </p>
-      )}
-      <Link to="resolucao">
-        <div
-          className={`relative w-full h-[250px] sm:h-[400px] lg:h-[210px] bg-black flex items-center justify-center rounded-lg mt-6 mb-20 ${
-            !isAvailable && "cursor-not-allowed"
-          }`}
-        >
-          {!isAvailable && <CardItemRibbon text="Disponível em breve" />}
-          <span
-            className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-slate-100 ${
-              !isAvailable && "cursor-not-allowed"
-            }`}
-          >
-            <BsFillPlayFill size={16} color="#5282FF" />
-          </span>
-        </div>
-      </Link>
     </div>
   );
 }
