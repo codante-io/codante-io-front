@@ -45,6 +45,7 @@ export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
       if (e.response.status === 404) {
         return null;
       }
+      throw new Error("Erro ao buscar o mini projeto");
     });
   return challenge;
 }
@@ -59,6 +60,7 @@ export async function getChallengeParticipants(
       if (e.response.status === 404) {
         return null;
       }
+      throw new Error("Erro ao buscar participantes do mini projeto");
     });
   return challengeParticipants;
 }
