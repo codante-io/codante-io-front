@@ -40,7 +40,9 @@ const initialSteps = [
     intent: "finish-challenge",
   },
 ];
+
 const DISCORD_INVITE_URL = "";
+
 export function buildInitialSteps({
   user,
   challengeUser,
@@ -51,6 +53,12 @@ export function buildInitialSteps({
   repositoryUrl?: string;
 }) {
   let index = 0;
+
+  if (!user) {
+    initialSteps[index].status = "current";
+    return initialSteps;
+  }
+
   if (challengeUser?.pivot.completed) {
     index = 5;
   } else if (challengeUser?.pivot.joined_discord) {

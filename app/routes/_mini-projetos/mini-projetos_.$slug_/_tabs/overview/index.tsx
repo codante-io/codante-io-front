@@ -181,6 +181,8 @@ export default function ChallengeIndex() {
             repository={{
               organization: "codante-io",
               name: challenge?.slug,
+              forks: challenge?.forks,
+              stars: challenge?.stars,
             }}
           />
         </div>
