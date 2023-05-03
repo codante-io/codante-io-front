@@ -11,6 +11,7 @@ import {
 } from "~/utils/interval";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
+  console.log(workshop.image_url);
   return (
     <div key={workshop.id}>
       <Link
@@ -26,7 +27,9 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
 
           <div
             style={{
-              backgroundImage: "url(/img/computer.jpg)",
+              backgroundImage: `url(${
+                workshop.image_url || "/img/computer.jpg"
+              })`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               // boxShadow: "inset 0px -190px 50px -100px #1f2937",
