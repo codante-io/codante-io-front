@@ -55,11 +55,13 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               </div>
             </div>
             <div className="flex mb-8">
-              <img
-                src="/img/icaro.jpg"
-                alt=""
-                className="w-10 h-10 mr-4 border-2 border-gray-600 rounded-full"
-              />
+              {workshop?.instructor?.avatar_url && (
+                <img
+                  src={workshop?.instructor?.avatar_url}
+                  alt=""
+                  className="w-10 h-10 mr-4 border-2 border-gray-600 rounded-full"
+                />
+              )}
               <div>
                 <p className="text-sm font-normal text-gray-800 dark:text-white">
                   {workshop?.instructor?.name}

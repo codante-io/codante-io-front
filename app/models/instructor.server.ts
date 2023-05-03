@@ -3,7 +3,7 @@ export type Instructor = {
   name: string;
   company: string;
   email: string;
-  avatarURL?: string;
+  avatar_url?: string;
   bio: string;
   slug: string;
   created_at: string;
