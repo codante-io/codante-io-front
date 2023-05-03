@@ -27,6 +27,7 @@ import BannerAlert from "~/components/banner-alert";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import { abort404 } from "~/utils/responses.server";
+import VimeoPlayer from "~/components/vimeo-player";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -72,21 +73,16 @@ export default function WorkshopSlug() {
           {/* Difficulty Card */}
 
           {/* Video */}
-          <div className="mb-10">
-            {workshop.video_url && (
-              <div className="relative mb-12 ">
-                <AiFillPlayCircle className="absolute opacity-1 top-[35%] left-[40%]  h-40 w-40" />
-                <img
-                  src="https://loremflickr.com/1920/1080?lock=1"
-                  alt=""
-                  className="opacity-20"
-                />
-              </div>
-            )}
+          {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
+          <div className="mt-12">
             <Subtitle text="Sobre o Workshop" />
-            <p className="dark:text-slate-400 text-slate-600">
-              {workshop.description}
-            </p>
+            <div>
+              {workshop.description.split("\n").map((paragraph, index) => (
+                <p key={index} className="mb-4 text-lg font-light">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
         {/* Right Side */}
