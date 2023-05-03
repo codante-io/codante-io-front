@@ -12,7 +12,7 @@ export default function CardItemDifficulty({
   return (
     <div {...classes}>
       <span className="mr-3 text-xs font-bold tracking-wide text-gray-500 dark:text-zinc-400">
-        Dificuldade
+        Nível
       </span>
       <span
         className={`h-[0.6rem] w-[0.6rem] inline-block rounded-full mr-1 ${
