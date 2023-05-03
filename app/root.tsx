@@ -15,6 +15,7 @@ import stylesheet from "~/tailwind.css";
 import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
 import { Toaster } from "react-hot-toast";
+import LoadingBar from "~/components/loading-bar";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -48,6 +49,7 @@ export default function App() {
           }}
         />
         <ColorModeProvider>
+          <LoadingBar />
           <Navbar user={user} />
           {/* altura do footer de 170px. Se mudar deve mudar o cálculo aqui */}
           <main className="lg:py-10 py-6 min-h-[calc(100vh-170px)] mx-auto">
