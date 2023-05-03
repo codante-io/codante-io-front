@@ -21,7 +21,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
           ""
         }
       >
-        <article className="relative max-w-3xl border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+        <article className="relative flex-col flex md:flex-row max-w-3xl border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
           {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div
@@ -29,10 +29,11 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               backgroundImage: "url(/img/computer.jpg)",
               backgroundSize: "cover",
               backgroundPosition: "center",
+              // boxShadow: "inset 0px -190px 50px -100px #1f2937",
             }}
-            className="workshop-image w-52 min-h-full rounded-l-xl m-[4px]"
+            className="w-full md:w-52 h-32 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.slate.100')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.gray.800')] md:shadow-none"
           ></div>
-          <div className="flex-1 px-6 py-4 text-left">
+          <div className="flex-1 px-6 py-4 -mt-10 text-left md:mt-0">
             <CardItemDifficulty
               difficulty={workshop.difficulty}
               className="mb-2"
