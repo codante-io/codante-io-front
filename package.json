@@ -5,7 +5,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
-    "start": "remix-serve build",
+    "start": "dotenv -e .env.production remix-serve build",
     "typecheck": "tsc",
     "prepare": "husky install"
   },
