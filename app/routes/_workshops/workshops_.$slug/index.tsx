@@ -127,7 +127,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
     <div className="p-2 py-4 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
       <div className="flex items-center">
         <img
-          src="/img/icaro.jpg"
+          src={instructor?.avatar_url}
           alt=""
           className="w-12 h-12 mr-4 border-2 border-gray-600 rounded-full"
         />
