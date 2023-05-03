@@ -4,10 +4,12 @@ import { fromSecondsToTimeString } from "~/utils/interval";
 
 type WorkshopLessonsHeaderProps = {
   workshop: Workshop;
+  title?: string;
 };
 
 export default function WorkshopLessonsHeader({
   workshop,
+  title,
 }: WorkshopLessonsHeaderProps) {
   return (
     <div className="mb-4 lg:mb-8">
@@ -16,11 +18,12 @@ export default function WorkshopLessonsHeader({
       </span> */}
       <h3 className="mt-0 text-lg font-bold ">
         <Link className="hover:underline" to={`/workshops/${workshop.slug}`}>
-          {workshop.name}
+          {title || workshop.name}
         </Link>
       </h3>
       <span className="block mt-2 text-sm font-light text-slate-400">
-        {workshop.lessons.length} aulas{" "}
+        {workshop.lessons.length}{" "}
+        {workshop.lessons.length > 1 ? "vídeos" : "vídeo"}{" "}
         <span className="font-light text-blue-500"> &#8226; </span>
         {fromSecondsToTimeString(
           workshop.lessons.reduce(

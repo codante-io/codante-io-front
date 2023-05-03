@@ -7,7 +7,6 @@ import {
   useLoaderData,
   useLocation,
 } from "@remix-run/react";
-import { BsFillPlayFill } from "react-icons/bs";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
@@ -27,7 +26,6 @@ import {
 import { logout, user as getUser } from "~/services/auth.server";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 
@@ -171,12 +169,12 @@ export default function ChallengeSlug() {
                 />
                 <span className="font-extralight">Projeto</span>{" "}
                 <span className="font-bold underline decoration-solid">
-                  {challenge.name}
+                  {challenge?.name}
                 </span>
               </span>
             </h1>
             <p className="mt-2 mb-4 font-light font-inter text-md md:mt-3 text-slate-400 text-start">
-              {challenge.short_description}
+              {challenge?.short_description}
             </p>
           </div>
         </div>
@@ -186,7 +184,6 @@ export default function ChallengeSlug() {
               <label htmlFor="tabs" className="sr-only">
                 Select a tab
               </label>
-              {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
               <select
                 id="tabs"
                 name="tabs"
@@ -222,7 +219,7 @@ export default function ChallengeSlug() {
             </div>
           </div>
         </div>
-        <Outlet />
+        <Outlet context={{ challenge, participants }} />
       </section>
 
       {colorMode && (

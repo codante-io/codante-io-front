@@ -18,7 +18,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function TrackSlug() {
   const { track } = useLoaderData<typeof loader>();
 
-  console.log(track);
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-16">
       {/* Header */}

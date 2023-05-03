@@ -16,7 +16,12 @@ import {
 import { logout, user as getUser } from "~/services/auth.server";
 import { abort404 } from "~/utils/responses.server";
 import { buildInitialSteps } from "../../build-steps.server";
-import { Link, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Link,
+  useActionData,
+  useLoaderData,
+  useOutletContext,
+} from "@remix-run/react";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { toast } from "react-hot-toast";
 import JoinChallengeSection from "../../join-challenge-section";
@@ -60,14 +65,6 @@ export async function action({ request }: { request: Request }) {
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
-  const [challenge, participants] = await Promise.all([
-    getChallenge(params.slug),
-    getChallengeParticipants(params.slug),
-  ]);
-
-  if (!challenge) {
-    abort404();
-  }
 
   const user = await getUser({ request });
 
@@ -85,23 +82,19 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   return json({
     user,
     slug: params.slug,
-    challenge,
-    participants,
-
     challengeUser,
     initialSteps: buildInitialSteps({
       user,
       challengeUser,
-      repositoryUrl: challenge.repository_url,
     }),
   });
 };
 
 export default function ChallengeIndex() {
-  const { challenge, initialSteps, challengeUser } =
-    useLoaderData<typeof loader>();
+  const { initialSteps, challengeUser } = useLoaderData<typeof loader>();
   const actionData = useActionData();
-  const { colorMode } = useColorMode();
+
+  const { challenge } = useOutletContext();
 
   useEffect(() => {
     if (actionData?.error) {
