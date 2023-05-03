@@ -1,4 +1,5 @@
 import { useOutletContext, useParams } from "@remix-run/react";
+import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import type { ChallengeCardInfo } from "~/models/challenge.server";
@@ -19,26 +20,11 @@ export default function ChallengeResolutionSlug() {
   return (
     <div className="container mx-auto">
       <section className="relative">
-        <div className="relative aspect-video">
-          <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
-            <div style={{ padding: "56.30% 0 0 0", position: "relative" }}>
-              <iframe
-                src="https://player.vimeo.com/video/238455692"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "0",
-                  width: "100%",
-                  height: "100%",
-                }}
-                title="C0193vid007-1"
-              ></iframe>
-            </div>
-            <script src="https://player.vimeo.com/api/player.js"></script>
-          </div>
-        </div>
+        <VimeoPlayer
+          vimeoUrl={
+            workshop?.lessons.find((lesson) => lesson.slug === slug)?.video_url
+          }
+        />
       </section>
       {/* <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4"> */}
 
