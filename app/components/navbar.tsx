@@ -101,7 +101,7 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-transparent dark:hover:bg-gray-700 underline dark:bg-gray-900 dark:text-white bg-white text-gray-700"
+                            ? "bg-transparent dark:hover:bg-gray-700 underline dark:bg-gray-dark dark:text-white bg-white text-gray-700"
                             : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
@@ -205,7 +205,7 @@ export default function Navbar({ user }: { user: any }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "dark:bg-gray-900 dark:text-white bg-white text-gray-700 underline"
+                      ? "dark:bg-gray-dark dark:text-white bg-white text-gray-700 underline"
                       : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
                     "block rounded-md px-3 py-2 text-base font-medium"
                   )}
@@ -214,9 +214,11 @@ export default function Navbar({ user }: { user: any }) {
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button className="block px-3 py-2 text-base font-medium text-gray-900 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900">
+              <div className="px-3 py-2">
                 <ToggleColorMode />
-              </Disclosure.Button>
+              </div>
+              {/* <Disclosure.Button className="block px-3 py-2 text-base font-medium text-gray-900 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900">
+              </Disclosure.Button> */}
             </div>
           </Disclosure.Panel>
         </>
