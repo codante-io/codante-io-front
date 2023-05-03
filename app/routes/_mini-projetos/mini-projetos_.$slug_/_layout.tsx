@@ -120,6 +120,10 @@ export default function ChallengeSlug() {
   const actionData = useActionData();
   const { colorMode } = useColorMode();
 
+  const hasSolution = Boolean(
+    challenge?.workshop?.id && challenge.workshop.status === "published"
+  );
+
   const location = useLocation();
 
   useEffect(() => {
@@ -137,9 +141,11 @@ export default function ChallengeSlug() {
     icon: React.ReactNode;
     href: string;
     current: boolean;
+    isVisible: boolean;
   }[] = [
     {
       name: "Overview",
+      isVisible: true,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -159,6 +165,7 @@ export default function ChallengeSlug() {
     {
       name: "Resolução",
       href: "resolucao",
+      isVisible: hasSolution,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -216,39 +223,52 @@ export default function ChallengeSlug() {
                 id="tabs"
                 name="tabs"
                 className="block w-full border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
-                defaultValue={tabs.find((tab) => tab?.current)?.name}
+                defaultValue={
+                  tabs.filter((t) => t.isVisible).find((tab) => tab?.current)
+                    ?.name
+                }
               >
-                {tabs.map((tab) => (
-                  <option key={tab.name}>{tab.name}</option>
-                ))}
+                {tabs
+                  .filter((t) => t.isVisible)
+                  .map((tab) => (
+                    <option key={tab.name}>{tab.name}</option>
+                  ))}
               </select>
             </div>
             <div className="hidden sm:block">
               <nav className="flex space-x-4" aria-label="Tabs">
-                {tabs.map((tab) => (
-                  <Link
-                    key={tab.name}
-                    to={tab.href}
-                    className={classNames(
-                      tab.current
-                        ? "bg-slate-200 dark:bg-slate-800 dark:text-white text-slate-800"
-                        : "text-gray-500 hover:text-gray-700",
-                      "rounded-full px-3 py-1.5 text-sm flex items-center gap-2"
-                    )}
-                    aria-current={tab.current ? "page" : undefined}
-                  >
-                    <span className={tab.current ? "text-brand" : ""}>
-                      {tab.icon}
-                    </span>
-                    {tab.name}
-                  </Link>
-                ))}
+                {tabs
+                  .filter((t) => t.isVisible)
+                  .map((tab) => (
+                    <Link
+                      key={tab.name}
+                      to={tab.href}
+                      className={classNames(
+                        tab.current
+                          ? "bg-slate-200 dark:bg-slate-800 dark:text-white text-slate-800"
+                          : "text-gray-500 hover:text-gray-700",
+                        "rounded-full px-3 py-1.5 text-sm flex items-center gap-2"
+                      )}
+                      aria-current={tab.current ? "page" : undefined}
+                    >
+                      <span className={tab.current ? "text-brand" : ""}>
+                        {tab.icon}
+                      </span>
+                      {tab.name}
+                    </Link>
+                  ))}
               </nav>
             </div>
           </div>
         </div>
         <Outlet
-          context={{ challenge, challengeUser, participants, initialSteps }}
+          context={{
+            challenge,
+            challengeUser,
+            participants,
+            initialSteps,
+            hasSolution,
+          }}
         />
       </section>
 

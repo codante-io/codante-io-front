@@ -28,6 +28,7 @@ import JoinChallengeSection from "../../join-challenge-section";
 import RepositoryInfoSection from "~/components/repository-info-section";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import { BsFillPlayFill } from "react-icons/bs";
+import VimeoPlayer from "~/components/vimeo-player";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -94,8 +95,9 @@ export default function ChallengeIndex() {
   const { initialSteps, challengeUser } = useLoaderData<typeof loader>();
   const actionData = useActionData();
 
-  const { challenge } = useOutletContext();
+  const { challenge, hasSolution } = useOutletContext();
 
+  console.log(hasSolution);
   return (
     <div className="container grid grid-cols-12 gap-10">
       <div className="col-span-12 space-y-20 lg:col-span-8">
@@ -104,26 +106,7 @@ export default function ChallengeIndex() {
             Vídeo de introdução
           </h1>
           <section className="relative mt-4 mb-8">
-            <div className="relative aspect-video">
-              <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
-                <div style={{ padding: "56.30% 0 0 0", position: "relative" }}>
-                  <iframe
-                    src="https://player.vimeo.com/video/238455692"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    style={{
-                      position: "absolute",
-                      top: "0",
-                      left: "0",
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    title="C0193vid007-1"
-                  ></iframe>
-                </div>
-                <script src="https://player.vimeo.com/api/player.js"></script>
-              </div>
-            </div>
+            <VimeoPlayer vimeoUrl={challenge.video_url} />
           </section>
         </div>
         <div className="col-span-12 lg:col-span-8">
@@ -176,14 +159,21 @@ export default function ChallengeIndex() {
           />
         </div>
         <ResolutionSection
-          isAvailable={challenge?.workshop?.status === "published"}
+          isAvailable={hasSolution}
+          thumbnailUrl={challenge.workshop?.image_url}
         />
       </div>
     </div>
   );
 }
 
-function ResolutionSection({ isAvailable }: { isAvailable: boolean }) {
+function ResolutionSection({
+  isAvailable,
+  thumbnailUrl,
+}: {
+  isAvailable: boolean;
+  thumbnailUrl?: string;
+}) {
   return (
     <div>
       <h1 className="flex items-center mb-2 text-2xl font-semibold font-lexend">
@@ -192,12 +182,28 @@ function ResolutionSection({ isAvailable }: { isAvailable: boolean }) {
       {!isAvailable && (
         <p className="text-sm text-slate-400">
           Esta resolução será publicada em breve!{" "}
-          <button className="text-xs underline text-brand">Me avise!</button>
+          {/* <button className="text-xs underline text-brand">Me avise!</button> */}
         </p>
       )}
-      <Link to="resolucao">
+      {isAvailable ? (
+        <Link to="../resolucao" className="relative">
+          <img
+            className="relative rounded-lg aspect-video"
+            src={thumbnailUrl}
+            alt=""
+          />
+          <span
+            className={`absolute m-auto left-0 right-0 top-0 bottom-0
+            flex items-center justify-center w-10 h-10 text-gray-700 opacity-80 rounded-full bg-slate-100 ${
+              !isAvailable && "cursor-not-allowed"
+            }`}
+          >
+            <BsFillPlayFill size={16} color="#5282FF" />
+          </span>
+        </Link>
+      ) : (
         <div
-          className={`relative w-full h-[250px] sm:h-[400px] lg:h-[210px] bg-black flex items-center justify-center rounded-lg mt-6 mb-20 ${
+          className={`relative w-full aspect-video bg-gray-200 dark:bg-gray-800 flex items-center justify-center rounded-lg mt-6 mb-20 ${
             !isAvailable && "cursor-not-allowed"
           }`}
         >
@@ -210,7 +216,7 @@ function ResolutionSection({ isAvailable }: { isAvailable: boolean }) {
             <BsFillPlayFill size={16} color="#5282FF" />
           </span>
         </div>
-      </Link>
+      )}
     </div>
   );
 }
