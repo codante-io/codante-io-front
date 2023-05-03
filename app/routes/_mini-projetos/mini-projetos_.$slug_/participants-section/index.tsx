@@ -31,7 +31,7 @@ export default function ParticipantsSection({
           )}
         </h1>
         <section className="p-2">
-          <div className="flex flex-wrap justify-center -space-x-2 overflow-hidden">
+          <div className="flex flex-wrap justify-center -space-x-3 overflow-hidden">
             {participants?.avatars.map((avatar, index) => (
               <img
                 key={index}
