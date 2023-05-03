@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const initialSteps = [
   {
     name: "Conecte o seu GitHub",
@@ -40,39 +38,49 @@ const initialSteps = [
     intent: "finish-challenge",
   },
 ];
+
 const DISCORD_INVITE_URL = "";
+
 export function buildInitialSteps({
   user,
   challengeUser,
-  repositoryUrl,
+  repositorySlug,
 }: {
   user?: any;
   challengeUser?: any;
-  repositoryUrl?: string;
+  repositorySlug?: string;
 }) {
+  const initialStepsClone = structuredClone(initialSteps);
+
   let index = 0;
+
+  if (!user) {
+    initialStepsClone[index].status = "current";
+    return initialStepsClone;
+  }
+
   if (challengeUser?.pivot.completed) {
     index = 5;
   } else if (challengeUser?.pivot.joined_discord) {
     index = 4;
   } else if (challengeUser?.pivot.fork_url?.length > 0) {
     index = 3;
-    initialSteps[
+    initialStepsClone[
       index
     ].description = `Acesse <a class="dark:text-blue-200 text-blue-600 font-bold" href="${DISCORD_INVITE_URL}" target="_blank">nossa comunidade no Discord</a> para tirar dúvidas e se conectar com outras pessoas que estão fazendo o mini projeto.`;
   } else if (challengeUser) {
     index = 2;
-    initialSteps[
+    initialStepsClone[
       index
-    ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="${repositoryUrl}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
+    ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="https://github.com/codante-io/${repositorySlug}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
   } else if (user?.github_id?.length > 0) {
     index = 1;
   } else {
     index = 0;
   }
 
-  for (let i = 0; i < index; i++) initialSteps[i].status = "complete";
-  if (index < 5) initialSteps[index].status = "current";
+  for (let i = 0; i < index; i++) initialStepsClone[i].status = "complete";
+  if (index < 5) initialStepsClone[index].status = "current";
 
-  return initialSteps;
+  return initialStepsClone;
 }

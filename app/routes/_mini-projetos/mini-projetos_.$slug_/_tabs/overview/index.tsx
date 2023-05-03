@@ -96,15 +96,6 @@ export default function ChallengeIndex() {
 
   const { challenge } = useOutletContext();
 
-  useEffect(() => {
-    if (actionData?.error) {
-      toast.error(actionData?.error);
-    }
-
-    if (actionData?.success) {
-      toast.success(actionData?.success);
-    }
-  }, [actionData]);
   return (
     <div className="container grid grid-cols-12 gap-10">
       <div className="col-span-12 space-y-20 lg:col-span-8">
@@ -153,17 +144,22 @@ export default function ChallengeIndex() {
             {challengeUser && (
               <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700 shadow-sm">
                 <svg
-                  className="h-1.5 w-1.5 fill-green-500 animate-pulse"
+                  className={"h-1.5 w-1.5 animate-pulse fill-green-500"}
                   viewBox="0 0 6 6"
                   aria-hidden="true"
                 >
                   <circle cx={3} cy={3} r={3} />
                 </svg>
-                Você está ativo!
+                {challengeUser.pivot?.completed
+                  ? "Projeto concluído!"
+                  : "Você está participando!"}
               </span>
             )}
           </div>
-          <JoinChallengeSection initialSteps={initialSteps} />
+          <JoinChallengeSection
+            initialSteps={initialSteps}
+            slug={challenge?.slug}
+          />
         </div>
 
         <div>
@@ -174,6 +170,8 @@ export default function ChallengeIndex() {
             repository={{
               organization: "codante-io",
               name: challenge?.slug,
+              forks: challenge?.forks,
+              stars: challenge?.stars,
             }}
           />
         </div>

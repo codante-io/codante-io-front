@@ -22,12 +22,16 @@ import {
   updateUserJoinedDiscord,
   verifyAndUpdateForkURL,
   getChallengeParticipants,
+  userJoinedChallenge,
 } from "~/models/challenge.server";
 import { logout, user as getUser } from "~/services/auth.server";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
+import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
+import axios from "axios";
+import { abort404 } from "~/utils/responses.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -35,7 +39,6 @@ export async function action({ request }: { request: Request }) {
   const intent = formData.get("intent") as string;
   const redirectTo = formData.get("redirectTo") as string;
   const slug = redirectTo.split("/")[2];
-  const user = await getUser({ request });
 
   switch (intent) {
     case "connect-github":
@@ -45,7 +48,6 @@ export async function action({ request }: { request: Request }) {
     case "verify-fork":
       return verifyAndUpdateForkURL({
         slug,
-        githubUser: user.github_user,
         request,
       });
     case "join-discord":
@@ -80,15 +82,41 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     getChallengeParticipants(params.slug),
   ]);
 
+  if (!challenge) {
+    abort404();
+  }
+
+  const user = await getUser({ request });
+
+  let challengeUser;
+  if (user) {
+    try {
+      challengeUser = await userJoinedChallenge(params.slug, request);
+    } catch (err: any) {
+      if (axios.isAxiosError(err)) {
+        if (err?.response?.status) challengeUser = null;
+      }
+    }
+  }
+
   return json({
+    user,
     slug: params.slug,
     challenge,
     participants,
+
+    challengeUser,
+    initialSteps: buildInitialSteps({
+      user,
+      challengeUser,
+      repositorySlug: challenge.slug,
+    }),
   });
 };
 
 export default function ChallengeSlug() {
-  const { challenge, participants } = useLoaderData<typeof loader>();
+  const { challenge, participants, initialSteps, challengeUser } =
+    useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { colorMode } = useColorMode();
 
@@ -219,7 +247,9 @@ export default function ChallengeSlug() {
             </div>
           </div>
         </div>
-        <Outlet context={{ challenge, participants }} />
+        <Outlet
+          context={{ challenge, challengeUser, participants, initialSteps }}
+        />
       </section>
 
       {colorMode && (
