@@ -197,12 +197,12 @@ export default function ChallengeSlug() {
                 />
                 <span className="font-extralight">Projeto</span>{" "}
                 <span className="font-bold underline decoration-solid">
-                  {challenge.name}
+                  {challenge?.name}
                 </span>
               </span>
             </h1>
             <p className="mt-2 mb-4 font-light font-inter text-md md:mt-3 text-slate-400 text-start">
-              {challenge.short_description}
+              {challenge?.short_description}
             </p>
           </div>
         </div>
@@ -212,7 +212,6 @@ export default function ChallengeSlug() {
               <label htmlFor="tabs" className="sr-only">
                 Select a tab
               </label>
-              {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
               <select
                 id="tabs"
                 name="tabs"

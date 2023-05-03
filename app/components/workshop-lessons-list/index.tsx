@@ -7,16 +7,26 @@ import { fromSecondsToTimeString } from "~/utils/interval";
 type WorkshopLessonsListProps = {
   workshop: Workshop;
   activeIndex: number;
+  isChallengeResolution?: boolean;
+  challengeSlug?: string;
 };
 
 export default function WorkshopLessonsList({
   workshop,
   activeIndex,
+  isChallengeResolution = false,
+  challengeSlug = "",
 }: WorkshopLessonsListProps) {
+  // if is challenge resolution, we need to add the challenge slug to the link
+  // so we can navigate to the correct lesson
+  const linkPrefix = isChallengeResolution
+    ? `/mini-projetos/${challengeSlug}/resolucao`
+    : `/workshops/${workshop.slug}`;
+
   return (
     <ol className="mt-4">
       {workshop.lessons.map((lesson: Lesson, id: number) => (
-        <Link key={lesson.id} to={`/workshops/${workshop.slug}/${lesson.slug}`}>
+        <Link key={lesson.id} to={`${linkPrefix}/${lesson.slug}`}>
           <li
             className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 mb-1 ${
               activeIndex === id

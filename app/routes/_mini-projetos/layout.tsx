@@ -2,7 +2,7 @@ import { Outlet, isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
 
-export default function WorkshopLayout() {
+export default function ChallengeLayout() {
   return <Outlet />;
 }
 
