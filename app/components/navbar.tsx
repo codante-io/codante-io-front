@@ -143,13 +143,13 @@ export default function Navbar({ user }: { user: any }) {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-dark ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           <>
-                            <div className="block px-4 py-2 text-xs font-light text-gray-500">
+                            <div className="block px-4 py-2 text-xs font-light text-gray-500 dark:text-gray-300">
                               Olá {user.name}
                             </div>
-                            <hr />
+                            <hr className="dark:border-gray-800" />
                           </>
                         </Menu.Item>
                         <Menu.Item>
@@ -157,8 +157,8 @@ export default function Navbar({ user }: { user: any }) {
                             <Link
                               to="/conta"
                               className={classNames(
-                                active ? "bg-white" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
+                                active ? "dark:bg-gray-800/50 bg-gray-50" : "",
+                                "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700"
                               )}
                             >
                               Minha Conta
@@ -170,8 +170,10 @@ export default function Navbar({ user }: { user: any }) {
                             <Form action="/logout" method="post">
                               <button
                                 className={classNames(
-                                  active ? "bg-white" : "",
-                                  "block px-4 py-2 text-sm text-gray-700 w-full text-left"
+                                  active
+                                    ? "dark:bg-gray-800/50 bg-gray-50"
+                                    : "",
+                                  "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700 w-full text-left"
                                 )}
                               >
                                 Sair
