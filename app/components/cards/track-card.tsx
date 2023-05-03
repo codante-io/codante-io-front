@@ -15,6 +15,8 @@ function TrackCard({ track }: { track: Track }) {
   const numberOfChallenges =
     (track?.trackables?.length || 0) - (numberOfWorkshops || 0);
 
+  console.log(track.image_url);
+
   return (
     <div key={track?.id}>
       <Link
@@ -29,11 +31,11 @@ function TrackCard({ track }: { track: Track }) {
 
           <div
             style={{
-              backgroundImage: "url(/img/browser.png)",
+              backgroundImage: `url(${track.image_url})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="m-4 track-image w-36 h-36 rounded-xl"
+            className="m-4 bg-white dark:bg-slate-700 track-image w-36 h-36 rounded-xl"
           ></div>
           <div className="flex flex-col justify-between flex-1 px-6 py-4 text-left">
             <div>
