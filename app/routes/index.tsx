@@ -19,6 +19,7 @@ import BackgroundBlur from "~/components/background-blur";
 import type { User } from "~/models/user.server";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
+import TitleIcon from "~/components/title-icon";
 
 export const loader = async () => {
   return json({
@@ -32,6 +33,11 @@ export default function Index() {
 
   const { homeInfo } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
+
+  const saibaMaisButton = () =>
+    document
+      ?.getElementById("workshops")
+      ?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <div className="flex flex-col items-center justify-center text-gray-900 dark:text-white">
@@ -57,19 +63,22 @@ export default function Index() {
           </p>
 
           <div className="hidden mt-10 sm:justify-around sm:gap-4 md:flex-row sm:flex">
-            {!user && (
-              <>
-                <button className="px-4 py-2 text-white bg-gray-700 rounded-full">
-                  Saiba mais
-                </button>
+            <>
+              <button
+                onClick={saibaMaisButton}
+                className="px-4 py-2 text-white rounded-full animate-text bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+              >
+                Saiba mais
+              </button>
+              {!user && (
                 <Link to="/login">
                   <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-slate-200">
                     <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
                     Cadastre-se
                   </button>
                 </Link>
-              </>
-            )}
+              )}
+            </>
           </div>
           <div className="w-[320px] h-[180px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] lg:w-[800px] lg:h-[450px] bg-black flex items-center justify-center rounded-lg mt-10 mb-10 sm:mb-20">
             <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-slate-100">
@@ -84,10 +93,7 @@ export default function Index() {
       >
         <div className="container mb-10">
           <h1 className="flex items-center mt-8 text-3xl font-light sm:mt-16 font-lexend">
-            <MdKeyboardDoubleArrowRight
-              size={24}
-              className="mr-2 text-blue-300 dark:text-blue-900"
-            />{" "}
+            <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
             Workshops
           </h1>
           <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
@@ -123,11 +129,8 @@ export default function Index() {
       >
         <div className="container relative -top-12">
           <h1 className="flex items-center mt-16 text-3xl font-light font-lexend">
-            <MdKeyboardDoubleArrowRight
-              size={24}
-              className="mr-2 text-blue-300 dark:text-blue-900"
-            />{" "}
-            Mini projetos
+            <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" /> Mini
+            projetos
           </h1>
           <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
             O melhor jeito de aprender é praticando! Melhore suas skills fazendo{" "}
@@ -164,10 +167,7 @@ export default function Index() {
       >
         <div className="container relative mb-6 top-4">
           <h1 className="flex items-center text-3xl font-light font-lexend">
-            <MdKeyboardDoubleArrowRight
-              size={24}
-              className="mr-2 text-blue-300 dark:text-blue-900"
-            />{" "}
+            <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
             Trilhas
           </h1>
           <p className="mt-2 font-light font-inter text-md md:text-xl text-start">

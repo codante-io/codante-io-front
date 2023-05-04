@@ -32,9 +32,8 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               })`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              // boxShadow: "inset 0px -190px 50px -100px #1f2937",
             }}
-            className="w-full md:w-52 h-32 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.slate.100')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.gray.800')] md:shadow-none"
+            className="w-full md:w-52 h-32 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.slate.100')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.gray.800')] md:shadow-none md:dark:shadow-none"
           ></div>
           <div className="flex-1 px-6 py-4 -mt-10 text-left md:mt-0">
             <CardItemDifficulty
