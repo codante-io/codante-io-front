@@ -9,33 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Save .env.production file
-        run: |
-
-      - name: Remove existing directory
-        run: |
-
-      - name: Create new directory
-        run: |
-
-      - name: Restore .env.production file
-        run: |
-
-      - name: Download repo
-        uses: actions/checkout@v2
-        with:
-          ref: main
-          path: /var/www/codgit ante-io-front
-          clean: true
-
-      - name: Install dependencies
-        run: |
-
-      - name: Build app
-        run: |
-          cd /var/www/codante-io-front
-          npm run build
-
       - name: Deploy with pm2
         uses: appleboy/ssh-action@master
         with:
