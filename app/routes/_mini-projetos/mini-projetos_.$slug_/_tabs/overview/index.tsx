@@ -9,8 +9,8 @@ export default function ChallengeIndex() {
   const { challenge, initialSteps, challengeUser, hasSolution } =
     useOutletContext<any>();
   return (
-    <div className="container grid grid-cols-12 gap-10">
-      <div className="col-span-12 space-y-20 lg:col-span-8">
+    <div className="container grid grid-cols-3 gap-10">
+      <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">
         <div>
           <h1 className="flex items-center text-2xl font-semibold font-lexend">
             Vídeo de introdução
@@ -19,7 +19,7 @@ export default function ChallengeIndex() {
             <VimeoPlayer vimeoUrl={challenge.video_url} />
           </section>
         </div>
-        <div className="col-span-12 lg:col-span-8">
+        <div>
           <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
             Descrição
           </h1>
@@ -28,14 +28,14 @@ export default function ChallengeIndex() {
           </p>
         </div>
       </div>
-      <div className="col-span-12 space-y-20 lg:col-span-4">
+      <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-1">
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-wrap items-center justify-between mb-4 xl:flex-nowrap">
             <h1 className="text-2xl font-semibold font-lexend">
-              {challengeUser ? "Seu progresso" : "Participe"}
+              {challengeUser ? "Progresso" : "Participe"}
             </h1>
             {challengeUser && (
-              <span className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700 shadow-sm">
+              <div className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 xl:text-xs text-[0.65rem] font-medium text-green-700 shadow-sm">
                 <svg
                   className={"h-1.5 w-1.5 animate-pulse fill-green-500"}
                   viewBox="0 0 6 6"
@@ -43,10 +43,11 @@ export default function ChallengeIndex() {
                 >
                   <circle cx={3} cy={3} r={3} />
                 </svg>
+
                 {challengeUser.pivot?.completed
                   ? "Projeto concluído!"
                   : "Você está participando!"}
-              </span>
+              </div>
             )}
           </div>
           <JoinChallengeSection

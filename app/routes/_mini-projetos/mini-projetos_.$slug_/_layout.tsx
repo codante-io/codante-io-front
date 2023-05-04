@@ -6,6 +6,7 @@ import {
   useActionData,
   useLoaderData,
   useLocation,
+  useNavigate,
 } from "@remix-run/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
@@ -119,6 +120,7 @@ export default function ChallengeSlug() {
     useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
 
   const hasSolution = Boolean(
     challenge?.workshop?.id && challenge.workshop.status === "published"
@@ -196,14 +198,14 @@ export default function ChallengeSlug() {
               difficulty={challenge?.difficulty}
               className="mb-2"
             />
-            <h1 className="flex items-center justify-between text-3xl font-light font-lexend">
+            <h1 className="flex items-center justify-between text-2xl font-light lg:text-3xl font-lexend">
               <span>
                 <MdKeyboardDoubleArrowRight
                   size={24}
                   className="inline mr-2 text-blue-300 dark:text-blue-900"
                 />
-                <span className="font-extralight">Projeto</span>{" "}
-                <span className="font-bold underline decoration-solid">
+                <span className="inline font-extralight">Projeto</span>{" "}
+                <span className="inline font-bold underline decoration-solid first-letter:lowercase">
                   {challenge?.name}
                 </span>
               </span>
@@ -213,16 +215,22 @@ export default function ChallengeSlug() {
             </p>
           </div>
         </div>
-        <div className="container mt-8 mb-6">
+        <div className="container mt-4 mb-8 lg:mt-8 lg:mb-6">
           <div>
             <div className="sm:hidden">
               <label htmlFor="tabs" className="sr-only">
                 Select a tab
               </label>
               <select
+                onChange={(e) => {
+                  const tab = tabs.find((t) => t.name === e.target.value);
+                  if (tab) {
+                    navigate(`/mini-projetos/${challenge?.slug}/${tab.href}`);
+                  }
+                }}
                 id="tabs"
                 name="tabs"
-                className="block w-full border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
+                className="block w-full rounded-md dark:border-slate-600 dark:bg-slate-800 focus:border-indigo-500 focus:ring-indigo-500"
                 defaultValue={
                   tabs.filter((t) => t.isVisible).find((tab) => tab?.current)
                     ?.name
