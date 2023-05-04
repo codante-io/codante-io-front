@@ -21,7 +21,7 @@ export default function ChallengeCard({
     >
       <article
         className="
-          relative max-w-[300px] h-[500px] bg-white dark:bg-gray-dark shadow-md rounded-2xl p-6 pt-3
+          relative max-w-[300px] h-[450px] bg-white dark:bg-gray-dark shadow-md rounded-2xl p-6 pt-3
           font-lexend border-[1.5px] border-gray-300 dark:border-slate-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
       >
@@ -49,7 +49,7 @@ export default function ChallengeCard({
                 ))}
               </div>
             </div>
-            <p className="mb-12 text-sm font-light line-clamp-4 slate-600 text-slate-600 dark:text-zinc-300">
+            <p className="text-sm font-light line-clamp-4 slate-600 text-slate-600 dark:text-zinc-300">
               {challenge?.short_description}
             </p>
           </div>
