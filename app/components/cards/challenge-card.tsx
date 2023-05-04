@@ -33,11 +33,7 @@ export default function ChallengeCard({
               difficulty={challenge?.difficulty}
             />
             <div className="flex items-center justify-center h-32 p-16 mb-6 bg-purple-200 dark:bg-purple-900 rounded-2xl">
-              <img
-                src="/img/keyboard-icon.png"
-                className="inline-block "
-                alt=""
-              />
+              <img src={challenge.image_url} className="inline-block " alt="" />
             </div>
             <div className="mb-8 card-header">
               <h2 className="mb-1 text-lg font-bold text-slate-800 dark:text-white">
@@ -66,11 +62,11 @@ export default function ChallengeCard({
                   : "participantes"}
               </div>
             )}
-            <CardItemDuration
+            {/* <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
                 challenge.duration_in_minutes * 60
               )}
-            />
+            /> */}
           </div>
         </div>
       </article>
