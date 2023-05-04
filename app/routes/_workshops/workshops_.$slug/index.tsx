@@ -28,6 +28,7 @@ import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import { abort404 } from "~/utils/responses.server";
 import VimeoPlayer from "~/components/vimeo-player";
+import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -67,8 +68,15 @@ export default function WorkshopSlug() {
         {/* left Side */}
         <div className="w-full">
           <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
-            <CardItemDifficulty difficulty={2} />
-            <CardItemDuration durationString="2h50min" />
+            <CardItemDifficulty difficulty={workshop.difficulty} />
+            <CardItemDuration
+              durationString={fromSecondsToTimeStringWithoutSeconds(
+                workshop?.lessons?.reduce(
+                  (acc, lesson) => acc + lesson.duration_in_seconds,
+                  0
+                )
+              )}
+            />
           </div>
           {/* Difficulty Card */}
 
