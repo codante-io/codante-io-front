@@ -78,20 +78,22 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 {workshop?.short_description}
               </p>
             </div>
-            <div>
-              <CardItemLessonsCount
-                lessonsCount={workshop?.lessons?.length}
-                className="mb-[0.2rem]"
-              />
-              <CardDurationItem
-                durationString={fromSecondsToTimeStringWithoutSeconds(
-                  workshop?.lessons?.reduce(
-                    (acc, lesson) => acc + lesson.duration_in_seconds,
-                    0
-                  )
-                )}
-              />
-            </div>
+            {workshop.status === "published" && (
+              <div>
+                <CardItemLessonsCount
+                  lessonsCount={workshop?.lessons?.length}
+                  className="mb-[0.2rem]"
+                />
+                <CardDurationItem
+                  durationString={fromSecondsToTimeStringWithoutSeconds(
+                    workshop?.lessons?.reduce(
+                      (acc, lesson) => acc + lesson.duration_in_seconds,
+                      0
+                    )
+                  )}
+                />
+              </div>
+            )}
           </div>
         </article>
       </Link>
