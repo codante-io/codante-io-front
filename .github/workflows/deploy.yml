@@ -9,8 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Download repo
         uses: actions/checkout@v2
+        with:
+          clean: true
 
       # - name: Install dependencies
       #   run: npm install
@@ -26,7 +28,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/codante-io-front
-            git pull
             npm install
             npm run build
             pm2 restart codante-io-front
