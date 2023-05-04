@@ -41,7 +41,7 @@ function TrackCard({ track }: { track: Track }) {
             <div>
               <div className="flex flex-col justify-between md:flex-row">
                 <div>
-                  <h2 className="text-xl text-gray-800 capitalize dark:text-white">
+                  <h2 className="text-xl text-gray-800 dark:text-white">
                     {track?.name}
                   </h2>
                   <div className="min-h-[24px]">
