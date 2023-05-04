@@ -26,7 +26,7 @@ function TrackCard({ track }: { track: Track }) {
           track?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
         }
       >
-        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 flex shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col md:flex-row">
           {track?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div
@@ -35,16 +35,16 @@ function TrackCard({ track }: { track: Track }) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="m-4 bg-white dark:bg-slate-700 track-image w-36 h-36 rounded-xl"
+            className="w-auto m-4 mb-0 bg-white md:mb-4 dark:bg-slate-700 track-image md:w-36 h-36 rounded-xl"
           ></div>
           <div className="flex flex-col justify-between flex-1 px-6 py-4 text-left">
             <div>
-              <div className="flex flex-col justify-between md:flex-row">
+              <div className="flex flex-col md:justify-between md:flex-row">
                 <div>
-                  <h2 className="text-xl text-gray-800 dark:text-white">
+                  <h2 className="mb-2 text-xl text-gray-800 dark:text-white">
                     {track?.name}
                   </h2>
-                  <div className="min-h-[24px]">
+                  <div>
                     {track?.tags?.map((tag) => {
                       return (
                         <CardItemTag
@@ -66,7 +66,7 @@ function TrackCard({ track }: { track: Track }) {
                 {track?.short_description}
               </p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4 mt-6 sm:flex-row lg:mt-0">
               <CardItemWorkshop workshopsCount={numberOfWorkshops} />
               <CardItemChallenge challengesCount={numberOfChallenges} />
             </div>
