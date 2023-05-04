@@ -99,22 +99,14 @@ function ResolutionSection({
       {isAvailable ? (
         <Link to="../resolucao" className="relative">
           <img
-            className="relative rounded-lg aspect-video"
+            className="relative w-full rounded-lg aspect-video"
             src={thumbnailUrl}
             alt=""
           />
-          <span
-            className={`absolute m-auto left-0 right-0 top-0 bottom-0
-            flex items-center justify-center w-10 h-10 text-gray-700 opacity-80 rounded-full bg-slate-100 ${
-              !isAvailable && "cursor-not-allowed"
-            }`}
-          >
-            <BsFillPlayFill size={16} color="#5282FF" />
-          </span>
         </Link>
       ) : (
         <div
-          className={`relative w-full aspect-video bg-gray-200 dark:bg-gray-800 flex items-center justify-center rounded-lg mt-6 mb-20 ${
+          className={`relative w-full aspect-video max-w-full max-h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center rounded-lg mt-6 mb-20 ${
             !isAvailable && "cursor-not-allowed"
           }`}
         >
