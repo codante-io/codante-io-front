@@ -41,7 +41,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               className="mb-2"
             />
             <div className="mb-8">
-              <h2 className="mb-1 text-xl text-gray-800 capitalize dark:text-white">
+              <h2 className="mb-1 text-xl text-gray-800 dark:text-white">
                 {workshop?.name}
               </h2>
               <div className="min-h-[24px]">
@@ -68,7 +68,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 <p className="text-sm font-normal text-gray-800 dark:text-white">
                   {workshop?.instructor?.name}
                 </p>
-                <p className="text-xs font-light text-gray-700 capitalize dark:text-zinc-300">
+                <p className="text-xs font-light text-gray-700 dark:text-zinc-300">
                   {workshop?.instructor?.company}
                 </p>
               </div>
