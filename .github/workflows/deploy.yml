@@ -11,33 +11,25 @@ jobs:
     steps:
       - name: Save .env.production file
         run: |
-          cp /var/www/codante-io-front/.env.production /tmp/
 
       - name: Remove existing directory
         run: |
-          sudo rm -rf /var/www/codante-io-front
 
       - name: Create new directory
         run: |
-          sudo mkdir /var/www/codante-io-front
-          sudo chown $USER:$USER /var/www/codante-io-front
-          sudo chmod 777 /var/www/codante-io-front
 
       - name: Restore .env.production file
         run: |
-          cp /tmp/.env.production /var/www/codante-io-front/
 
       - name: Download repo
         uses: actions/checkout@v2
         with:
           ref: main
-          path: /var/www/codante-io-front
+          path: /var/www/codgit ante-io-front
           clean: true
 
       - name: Install dependencies
         run: |
-          cd /var/www/codante-io-front
-          npm install
 
       - name: Build app
         run: |
@@ -51,5 +43,18 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            rm -rf /var/www/tmp
+            mkdir /var/www/tmp
+            cp /var/www/codante-io-front/.env.production /var/www/tmp/
+
+            rm -rf /var/www/codante-io-front
+
+            git clone --depth 1 git@github.com:codante-io/codante-io-front.git /var/www/codante-io-front
+
+            cp /var/www/tmp/.env.production /var/www/codante-io-front/
+            rm -rf /var/www/tmp
+
             cd /var/www/codante-io-front
+            npm install
+            npm run build
             pm2 restart codante-io-front
