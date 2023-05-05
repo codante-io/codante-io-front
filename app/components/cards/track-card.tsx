@@ -15,8 +15,6 @@ function TrackCard({ track }: { track: Track }) {
   const numberOfChallenges =
     (track?.trackables?.length || 0) - (numberOfWorkshops || 0);
 
-  console.log(track.image_url);
-
   return (
     <div key={track?.id}>
       <Link

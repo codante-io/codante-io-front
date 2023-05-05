@@ -1,6 +1,6 @@
-import { Form, useLocation } from "@remix-run/react";
+import { Form, useLocation, useNavigation } from "@remix-run/react";
 import { AiOutlineCheck } from "react-icons/ai";
-import Button from "~/components/form/button";
+import LoadingButton from "~/components/form/loading-button";
 
 export default function JoinChallengeSection({
   className = "",
@@ -14,6 +14,7 @@ export default function JoinChallengeSection({
   slug: string;
 }) {
   const location = useLocation();
+  const navigation = useNavigation();
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -107,14 +108,15 @@ export default function JoinChallengeSection({
                               value={location.pathname}
                             />
                             <input type="hidden" name="user" value={user} />
-                            <Button
+                            <LoadingButton
+                              status={navigation.state}
                               type="submit"
                               className="my-4"
                               name="intent"
                               value={step.intent}
                             >
                               {step.button}
-                            </Button>
+                            </LoadingButton>
                           </Form>
                         </span>
                       </div>

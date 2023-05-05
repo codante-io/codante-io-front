@@ -29,6 +29,7 @@ import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import { abort404 } from "~/utils/responses.server";
 import VimeoPlayer from "~/components/vimeo-player";
 import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
+import MarkdownRenderer from "~/components/markdown-renderer";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -85,11 +86,7 @@ export default function WorkshopSlug() {
           <div className="mt-12">
             <Subtitle text="Sobre o Workshop" />
             <div>
-              {workshop.description.split("\n").map((paragraph, index) => (
-                <p key={index} className="mb-4 text-lg font-light">
-                  {paragraph}
-                </p>
-              ))}
+              <MarkdownRenderer markdown={workshop.description} />
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import RepositoryInfoSection from "~/components/repository-info-section";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import { BsFillPlayFill } from "react-icons/bs";
 import VimeoPlayer from "~/components/vimeo-player";
+import MarkdownRenderer from "~/components/markdown-renderer";
 
 export default function ChallengeIndex() {
   const { challenge, initialSteps, challengeUser, hasSolution } =
@@ -23,9 +24,12 @@ export default function ChallengeIndex() {
           <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
             Descrição
           </h1>
-          <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start ">
+
+          <MarkdownRenderer markdown={challenge?.description} />
+
+          {/* <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start ">
             {challenge?.description}
-          </p>
+          </p> */}
         </div>
       </div>
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-1">
