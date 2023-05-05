@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { TbSunFilled, TbMoonFilled } from "react-icons/tb";
 import React from "react";
+import useSound from "use-sound";
+
+import toggleSound from "./toggle.wav";
 
 const SunIcon = React.forwardRef(function SunIcon(
   props: any,
@@ -29,7 +32,13 @@ const MotionSun = motion(SunIcon);
 const MotionMoon = motion(MoonIcon);
 
 export default function ToggleColorMode() {
+  const [playSound] = useSound(toggleSound);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const handleClick = () => {
+    toggleColorMode();
+    playSound();
+  };
 
   const spring = {
     type: "spring",
@@ -38,7 +47,7 @@ export default function ToggleColorMode() {
   };
   return (
     <div
-      onClick={toggleColorMode}
+      onClick={handleClick}
       className={`flex-start flex h-6 w-10 rounded-full bg-slate-100 items-center px-[2px] shadow-inner hover:cursor-pointer dark:bg-gray-dark ${
         colorMode === "light" && "place-content-end"
       }`}
