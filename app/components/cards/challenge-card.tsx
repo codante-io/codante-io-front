@@ -32,10 +32,12 @@ export default function ChallengeCard({
               className="mb-3"
               difficulty={challenge?.difficulty}
             />
-            <div className="flex items-center justify-center h-32 p-16 mb-6 bg-blue-100 dark:bg-blue-900 rounded-2xl">
+            <div
+              className={`flex items-center justify-center h-32 p-16 mb-6 bg-opacity-20 dark:bg-opacity-40 rounded-2xl ${challenge.base_color} `}
+            >
               <img
                 src={challenge.image_url}
-                className="inline-block group-hover:animate-tada "
+                className="inline-block p-2 group-hover:animate-tada"
                 alt=""
               />
             </div>

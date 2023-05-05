@@ -47,18 +47,30 @@ module.exports = {
         tada: {
           from: { transform: "scale3d(1, 1, 1)" },
           "10%, 20%": {
-            transform: "scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg)",
+            transform: "scale3d(0.97, 0.97, 0.97) rotate3d(0, 0, 1, -3deg)",
           },
           "30%, 50%, 70%, 90%": {
-            transform: "scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg)",
+            transform: "scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, 3deg)",
           },
           "40%, 60%, 80%": {
-            transform: "scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)",
+            transform: "scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, -3deg)",
           },
           to: { transform: "scale3d(1, 1, 1)" },
         },
       },
     },
   },
+  safelist: [
+    "bg-orange-500",
+    "bg-orange-600",
+    "bg-amber-500",
+    "bg-amber-600",
+    "bg-lime-500",
+    "bg-lime-600",
+    "bg-blue-500",
+    "bg-blue-600",
+    "bg-yellow-500",
+    "bg-yellow-600",
+  ],
   plugins: [require("@tailwindcss/forms")],
 };
