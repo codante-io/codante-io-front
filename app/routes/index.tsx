@@ -45,10 +45,10 @@ export default function Index() {
 
       <section
         id="headline"
-        className="flex justify-center w-full sm:min-h-screen"
+        className="flex justify-center w-full md:min-h-screen"
       >
         <div className="container flex flex-col items-center">
-          <h1 className="text-3xl font-light text-center lg:mt-16 font-lexend md:text-5xl">
+          <h1 className="text-3xl font-light text-center md:mt-16 font-lexend md:text-5xl">
             Evolua na programação{" "}
             <span className="pr-4 font-bold text-transparent animate-text bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
               front-end
@@ -92,16 +92,16 @@ export default function Index() {
         className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
       >
         <div className="container mb-10">
-          <h1 className="flex items-center mt-8 text-3xl font-light sm:mt-16 font-lexend">
+          <h1 className="flex items-center mt-8 mb-4 text-3xl font-light sm:mt-16 font-lexend">
             <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
             Workshops
           </h1>
-          <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
+          <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
             Aprenda de forma prática e objetiva com{" "}
             <span className="italic font-bold">workshops</span> ensinados por
             profissionais do mercado
           </p>
-          <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <section className="grid grid-cols-1 gap-4 px-0 lg:grid-cols-2">
             {homeInfo?.featured_workshops?.map((workshop) => (
               <WorkshopCard key={workshop.id} workshop={workshop} />
             ))}
@@ -128,11 +128,11 @@ export default function Index() {
         className="flex justify-center w-full text-gray-800 dark:bg-slate-800 bg-slate-100 dark:text-white"
       >
         <div className="container relative -top-12">
-          <h1 className="flex items-center mt-16 text-3xl font-light font-lexend">
+          <h1 className="flex items-center mt-16 mb-4 text-3xl font-light font-lexend">
             <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" /> Mini
             projetos
           </h1>
-          <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start">
+          <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
             O melhor jeito de aprender é praticando! Melhore suas skills fazendo{" "}
             <span className="italic font-bold">mini projetos</span> e depois
             assista a resolução feita por profissionais do mercado.
@@ -166,11 +166,11 @@ export default function Index() {
         className="flex justify-center w-full text-gray-800 bg-transparent dark:text-white"
       >
         <div className="container relative mb-6 top-4">
-          <h1 className="flex items-center text-3xl font-light font-lexend">
+          <h1 className="flex items-center mb-4 text-3xl font-light font-lexend">
             <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
             Trilhas
           </h1>
-          <p className="mt-2 font-light font-inter text-md md:text-xl text-start">
+          <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
             Obtenha a experiência de aprendizado completa unindo{" "}
             <span className="italic font-bold">workshops</span> e{" "}
             <span className="italic font-bold">mini projetos</span> para

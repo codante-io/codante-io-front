@@ -33,7 +33,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="w-full md:w-52 h-56 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.slate.100')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.gray.800')] md:shadow-none md:dark:shadow-none"
+            className="w-full md:w-56 lg:w-40 xl:w-56 h-40 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.slate.100')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.gray.800')] md:dark:shadow-[inset_-130px_0px_25px_-100px_theme('colors.gray.800')] md:shadow-[inset_-130px_0px_25px_-100px_theme('colors.slate.100')]"
           ></div>
           <div className="flex-1 px-6 py-4 -mt-10 text-left md:mt-0">
             <CardItemDifficulty
@@ -41,7 +41,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               className="mb-2"
             />
             <div className="mb-8">
-              <h2 className="mb-1 text-xl text-gray-800 dark:text-white">
+              <h2 className="mb-1 text-lg text-gray-800 lg:text-xl dark:text-white">
                 {workshop?.name}
               </h2>
               <div className="min-h-[24px]">
@@ -73,8 +73,8 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 </p>
               </div>
             </div>
-            <div className="h-24 mb-10">
-              <p className="w-full font-sans font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
+            <div className="h-24 lg:mb-10">
+              <p className="w-full font-sans text-sm font-light md:text-base text-slate-600 dark:text-zinc-300 line-clamp-3 ">
                 {workshop?.short_description}
               </p>
             </div>
