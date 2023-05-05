@@ -20,7 +20,7 @@ export default function ChallengeCard({
       }
     >
       <article
-        className="
+        className=" group
           relative max-w-[300px] h-[450px] bg-white dark:bg-gray-dark shadow-md rounded-2xl p-6 pt-3
           font-lexend border-[1.5px] border-gray-300 dark:border-slate-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
@@ -33,7 +33,11 @@ export default function ChallengeCard({
               difficulty={challenge?.difficulty}
             />
             <div className="flex items-center justify-center h-32 p-16 mb-6 bg-blue-100 dark:bg-blue-900 rounded-2xl">
-              <img src={challenge.image_url} className="inline-block " alt="" />
+              <img
+                src={challenge.image_url}
+                className="inline-block group-hover:animate-tada "
+                alt=""
+              />
             </div>
             <div className="mb-8 card-header">
               <h2 className="mb-1 text-lg font-bold text-slate-800 dark:text-white">
