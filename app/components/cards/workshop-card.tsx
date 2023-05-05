@@ -16,7 +16,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
     <div key={workshop.id}>
       <Link
         // onClick={(e) => workshop?.status === "soon" && e.preventDefault()}
-        to={workshop?.slug}
+        to={`/workshops/${workshop?.slug}`}
         className={
           // workshop?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
           ""
