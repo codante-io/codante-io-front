@@ -79,6 +79,7 @@ export default function WorkshopSlug() {
               )}
             />
           </div>
+
           {/* Difficulty Card */}
 
           {/* Video */}

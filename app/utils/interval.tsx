@@ -8,9 +8,13 @@ export function fromSecondsToTimeString(seconds: number): string {
   }${String(secondsLeft).padStart(2, "0")}`;
 }
 
-export function fromSecondsToTimeStringWithoutSeconds(seconds: number): string {
+export function fromSecondsToTimeStringWithoutSeconds(
+  seconds: number
+): string | null {
+  if (!seconds) return null;
   const fullString = fromSecondsToTimeString(seconds);
   const [hours, minutes] = fullString.split(":");
+
   // remove leading 0
   if (hours === "00") {
     return `${minutes}m`;

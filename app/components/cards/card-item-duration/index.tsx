@@ -2,9 +2,11 @@ export default function CardItemDuration({
   durationString,
   className,
 }: {
-  durationString: string;
+  durationString: string | null;
   className?: string;
 }) {
+  if (!durationString) return null;
+
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <svg
@@ -23,7 +25,7 @@ export default function CardItemDuration({
         />
       </svg>
 
-      <span className="text-xs dark:text-zinc-300 text-gray-500">
+      <span className="text-xs text-gray-500 dark:text-zinc-300">
         {durationString}
       </span>
     </div>
