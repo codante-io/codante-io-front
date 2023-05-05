@@ -7,9 +7,8 @@ import {
 import { resetPassword } from "~/services/auth.server";
 import AuthCard from "../auth-card";
 import Input from "~/components/form/input";
-import Button from "~/components/form/button";
-import Spinner from "~/components/spinner";
-import { CheckIcon } from "@heroicons/react/24/solid";
+
+import LoadingButton from "~/components/form/loading-button";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -75,38 +74,22 @@ export default function PasswordReset() {
               name="password_confirmation"
             />
           </div>
-          <div className="text-red-400 text-xs mt-2 h-4">{errors}</div>
+          <div className="h-4 mt-2 text-xs text-red-400">{errors}</div>
 
           <div className="mt-8 text-right">
-            <Button
+            <LoadingButton
               disabled={status !== "idle"}
               type="submit"
+              isSuccessfulSubmission={isSuccessfulSubmission}
+              status={status}
               className="relative transition duration-200"
             >
-              {status === "submitting" && (
-                <div className="absolute inset-0 flex justify-center py-2">
-                  <Spinner />
-                </div>
-              )}
-              {isSuccessfulSubmission && (
-                <div className="absolute inset-0 flex justify-center py-2">
-                  <CheckIcon className="w-5" />
-                </div>
-              )}
-              <span
-                className={
-                  status === "idle" && !isSuccessfulSubmission
-                    ? ""
-                    : "invisible"
-                }
-              >
-                Redefinir Senha
-              </span>
-            </Button>
+              Redefinir Senha
+            </LoadingButton>
           </div>
         </Form>
       ) : (
-        <div className="text-slate-500 text-slate-400 font-light text-sm mt-8">
+        <div className="mt-8 text-sm font-light text-slate-500 text-slate-400">
           Tudo certo! Você redefiniu uma nova senha. Agora, é só fazer o login
           normalmente.
         </div>

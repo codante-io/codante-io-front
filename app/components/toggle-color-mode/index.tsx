@@ -1,9 +1,32 @@
 import { motion } from "framer-motion";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { TbSunFilled, TbMoonFilled } from "react-icons/tb";
+import React from "react";
 
-const MotionSun = motion(TbSunFilled);
-const MotionMoon = motion(TbMoonFilled);
+const SunIcon = React.forwardRef(function SunIcon(
+  props: any,
+  ref: React.Ref<any>
+) {
+  return (
+    <div ref={ref}>
+      <TbSunFilled {...props} />
+    </div>
+  );
+});
+
+const MoonIcon = React.forwardRef(function MoonIcon(
+  props: any,
+  ref: React.Ref<any>
+) {
+  return (
+    <div ref={ref}>
+      <TbMoonFilled {...props} />
+    </div>
+  );
+});
+
+const MotionSun = motion(SunIcon);
+const MotionMoon = motion(MoonIcon);
 
 export default function ToggleColorMode() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -28,12 +51,14 @@ export default function ToggleColorMode() {
         <div>
           {colorMode === "light" ? (
             <MotionSun
+              ref={null}
               initial={{ rotate: 0 }}
               animate={{ rotate: 360 }}
               className="block w-4 h-4 text-yellow-500"
             />
           ) : (
             <MotionMoon
+              ref={null}
               initial={{ rotate: 0 }}
               animate={{ rotate: 360 }}
               className="block w-4 h-4 text-white"
@@ -42,17 +67,5 @@ export default function ToggleColorMode() {
         </div>
       </motion.div>
     </div>
-
-    // <div
-    //   onClick={toggleColorMode}
-    //   className="inset-y-0 right-0 flex items-center pr-2 text-white cursor-pointer sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-    // >
-    //   {colorMode === "dark" && (
-    //     <img className="block w-6 h-6" src="/img/moon.svg" alt="Moon icon" />
-    //   )}
-    //   {colorMode === "light" && (
-    //     <img className="block w-6 h-6" src="/img/sun.svg" alt="Sun icon" />
-    //   )}
-    // </div>
   );
 }

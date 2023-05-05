@@ -1,19 +1,10 @@
-import {
-  Form,
-  Link,
-  useActionData,
-  useNavigate,
-  useNavigation,
-  useSearchParams,
-} from "@remix-run/react";
-import { useState } from "react";
-import Button from "~/components/form/button";
+import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
 import Input from "~/components/form/input";
 import { useColorMode } from "~/contexts/color-mode-context";
-import { login, register } from "~/services/auth.server";
+import { register } from "~/services/auth.server";
 import AuthCard from "../auth-card";
-import Spinner from "~/components/spinner";
-import { CheckIcon } from "@heroicons/react/24/outline";
+
+import LoadingButton from "~/components/form/loading-button";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
@@ -49,12 +40,12 @@ export default function Register() {
         <img
           src={colorMode === "light" ? "/codante-light.svg" : "/codante.svg"}
           alt=""
-          className="w-72 mx-auto "
+          className="mx-auto w-72 "
         />
       </div>
 
       <AuthCard>
-        <h1 className="text-lg text-slate-700 dark:text-white mb-8">
+        <h1 className="mb-8 text-lg text-slate-700 dark:text-white">
           Cadastre-se
         </h1>
         <Form method="POST" className="flex flex-col">
@@ -89,40 +80,23 @@ export default function Register() {
           <div>
             <Link
               to="/login"
-              className="underline text-xs font-light text-gray-500"
+              className="text-xs font-light text-gray-500 underline"
             >
               Já possui cadastro? Faça login!
             </Link>
           </div>
           <div className="min-h-[16px] mt-2">
-            {errors && <div className="text-red-400 text-xs">{errors}</div>}
+            {errors && <div className="text-xs text-red-400">{errors}</div>}
           </div>
           <div className="text-right">
-            <Button
-              disabled={status !== "idle" || isSuccessfulSubmission}
+            <LoadingButton
+              status={status}
+              isSuccessfulSubmission={isSuccessfulSubmission}
               type="submit"
-              className="mt-8 relative transition duration-200 "
+              className="relative mt-8 transition duration-200 "
             >
-              {status === "submitting" && (
-                <div className="absolute inset-0 flex justify-center py-2">
-                  <Spinner />
-                </div>
-              )}
-              {isSuccessfulSubmission && (
-                <div className="absolute inset-0 flex justify-center py-2">
-                  <CheckIcon className="w-5" />
-                </div>
-              )}
-              <span
-                className={
-                  status === "idle" && !isSuccessfulSubmission
-                    ? ""
-                    : "invisible"
-                }
-              >
-                Cadastre-se
-              </span>
-            </Button>
+              Cadastre-se
+            </LoadingButton>
           </div>
         </Form>
       </AuthCard>

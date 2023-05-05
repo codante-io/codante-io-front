@@ -1,9 +1,7 @@
 import { sendPasswordLink } from "~/services/auth.server";
 import AuthCard from "../auth-card";
 import Input from "~/components/form/input";
-import Button from "~/components/form/button";
-import Spinner from "~/components/spinner";
-import { CheckIcon } from "@heroicons/react/24/solid";
+
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 import LoadingButton from "~/components/form/loading-button";
 
@@ -35,12 +33,12 @@ export default function PasswordReset() {
             name="email"
             id="email"
           ></Input>
-          <div className="text-red-400 text-xs mt-2 min-h-4">{errors}</div>
+          <div className="mt-2 text-xs text-red-400 min-h-4">{errors}</div>
 
           <div className="text-right">
             <LoadingButton
               type="submit"
-              className="mt-8 relative transition duration-200"
+              className="relative mt-8 transition duration-200"
               status={status}
               isSuccessfulSubmission={isSuccessfulSubmission}
             >
@@ -49,7 +47,7 @@ export default function PasswordReset() {
           </div>
         </Form>
       ) : (
-        <div className="text-slate-500 dark:text-slate-400 font-light text-sm mt-8">
+        <div className="mt-8 text-sm font-light text-slate-500 dark:text-slate-400">
           Seu email foi enviado! Verifique sua caixa de entrada e siga as
           instruções no email.
         </div>

@@ -11,7 +11,6 @@ import {
 } from "~/utils/interval";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
-  console.log(workshop.image_url);
   return (
     <div key={workshop.id}>
       <Link

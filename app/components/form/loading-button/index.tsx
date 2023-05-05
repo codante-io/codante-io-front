@@ -1,4 +1,4 @@
-import Spinner from "~/components/spinner";
+import { CgSpinner } from "react-icons/cg";
 import type { ButtonProps } from "../button";
 import Button from "../button";
 import { CheckIcon } from "@heroicons/react/24/solid";
@@ -24,12 +24,11 @@ export default function LoadingButton({
       className={`relative ${className}`}
       {...rest}
     >
-      {status === "submitting" ||
-        (status === "loading" && (
-          <div className="absolute inset-0 flex justify-center py-2">
-            <Spinner />
-          </div>
-        ))}
+      {(status === "submitting" || status === "loading") && (
+        <div className="absolute inset-0 flex justify-center py-2">
+          <CgSpinner className="w-5 h-5 animate-spin" />
+        </div>
+      )}
       {isSuccessfulSubmission && (
         <div className="absolute inset-0 flex justify-center py-2">
           <CheckIcon className="w-5" />
