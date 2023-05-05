@@ -13,6 +13,7 @@ import LoadingButton from "~/components/form/loading-button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { authenticator } from "~/services/github-auth.server";
+import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -75,6 +76,7 @@ export default function Account() {
 
   const { user } = useLoaderData();
   const actionData = useActionData();
+  const { showSuccessToast } = useToasterWithSound();
   const changePasswordErrors = actionData?.changePasswordErrors;
   const changeNameErrors = actionData?.changeNameErrors;
 
@@ -85,11 +87,11 @@ export default function Account() {
 
   useEffect(() => {
     if (isChangeNameSuccess) {
-      toast.success("Você alterou seu nome com sucesso");
+      showSuccessToast("Você alterou seu nome com sucesso");
     }
 
     if (isChangePasswordSuccess) {
-      toast.success("Você alterou sua senha com sucesso.");
+      showSuccessToast("Você alterou sua senha com sucesso.");
     }
   }, [isChangeNameSuccess, isChangePasswordSuccess]);
 

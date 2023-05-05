@@ -33,6 +33,7 @@ import { Error500 } from "~/components/errors/500";
 import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
+import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -121,6 +122,7 @@ export default function ChallengeSlug() {
   const actionData = useActionData();
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
+  const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
   const hasSolution = Boolean(
     challenge?.workshop?.id && challenge.workshop.status === "published"
@@ -130,11 +132,11 @@ export default function ChallengeSlug() {
 
   useEffect(() => {
     if (actionData?.error) {
-      toast.error(actionData?.error);
+      showErrorToast(actionData?.error);
     }
 
     if (actionData?.success) {
-      toast.success(actionData?.success);
+      showSuccessToast(actionData?.success);
     }
   }, [actionData]);
 
