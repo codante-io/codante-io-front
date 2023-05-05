@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import useSound from "use-sound";
 
 import errorSound from "./error.wav";
-import successSound from "./success.wav";
+import successSound from "./success.mp3";
 
 export const useToasterWithSound = () => {
   const [playSuccess] = useSound(successSound);
