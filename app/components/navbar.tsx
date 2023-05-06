@@ -50,13 +50,9 @@ export default function Navbar({ user }: { user: any }) {
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ">
                   <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block w-6 h-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block w-6 h-6" aria-hidden="true" />
-                  )}
+                  <ToggleButton open={open} />
                 </Disclosure.Button>
               </div>
               <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
@@ -234,5 +230,46 @@ export default function Navbar({ user }: { user: any }) {
         </>
       )}
     </Disclosure>
+  );
+}
+function ToggleButton({ open }: { open: boolean }) {
+  return (
+    <svg width="23" height="23" viewBox="-1.5 -1.5 23 23" className="">
+      <Path
+        variants={{
+          closed: { d: "M 2 2.5 L 20 2.5" },
+          open: { d: "M 3 16.5 L 17 2.5" },
+        }}
+        animate={open ? "open" : "closed"}
+      />
+      <Path
+        d="M 2 9.423 L 20 9.423"
+        variants={{
+          closed: { opacity: 1 },
+          open: { opacity: 0 },
+        }}
+        transition={{ duration: 0.1 }}
+        animate={open ? "open" : "closed"}
+      />
+      <Path
+        variants={{
+          closed: { d: "M 2 16.346 L 20 16.346" },
+          open: { d: "M 3 2.5 L 17 16.346" },
+        }}
+        animate={open ? "open" : "closed"}
+      />
+    </svg>
+  );
+}
+
+function Path(props: any) {
+  return (
+    <motion.path
+      fill="transparent"
+      strokeWidth="2"
+      stroke="currentColor"
+      strokeLinecap="round"
+      {...props}
+    />
   );
 }
