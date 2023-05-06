@@ -174,7 +174,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           key={opened ? "open" : "closed"}
           className={`${
             opened ? "visible" : "invisible"
-          } text-sm font-light text-slate-500 dark:text-slate-300 relative`}
+          } text-sm font-light text-slate-500 dark:text-slate-300 relative overflow-hidden`}
         >
           <span className="block p-4 ml-12">{instructor.bio}</span>
         </motion.p>
