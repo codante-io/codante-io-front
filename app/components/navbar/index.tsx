@@ -10,12 +10,19 @@ import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { BsArrowRight } from "react-icons/bs";
 
+import switchSound from "./switch.mp3";
+import useSound from "use-sound";
+
+import { AnimatePresence, motion } from "framer-motion";
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ user }: { user: any }) {
   const matches = useMatches();
+  const [playSound] = useSound(switchSound, { volume: 0.25 });
+
   const { id } = matches[matches.length - 1];
 
   const { colorMode } = useColorMode();
@@ -50,13 +57,12 @@ export default function Navbar({ user }: { user: any }) {
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button
+                  className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  onClick={playSound}
+                >
                   <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block w-6 h-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block w-6 h-6" aria-hidden="true" />
-                  )}
+                  <ToggleButton open={open} />
                 </Disclosure.Button>
               </div>
               <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
@@ -196,33 +202,84 @@ export default function Navbar({ user }: { user: any }) {
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-b-2 dark:border-slate-600 dark:bg-gray-darkest">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "dark:bg-gray-dark dark:text-white bg-white text-gray-700 underline"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-              <div className="px-3 py-2">
-                <ToggleColorMode />
+          {/* <Disclosure.Panel className="sm:hidden"> */}
+          <AnimatePresence>
+            <motion.div
+              layout
+              animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
+              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, height: 0 }}
+              exit={{ height: 0, transition: { duration: 0.2 } }}
+              key="mobile-menu"
+              className="px-2 space-y-1 overflow-hidden bg-white border-b-2 dark:border-slate-600 dark:bg-gray-darkest"
+            >
+              <div className="py-2">
+                {navigation.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "dark:bg-gray-dark dark:text-white bg-white text-gray-700 underline"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Disclosure.Button>
+                ))}
+                <div className="px-3 py-2">
+                  <ToggleColorMode />
+                </div>
               </div>
-              {/* <Disclosure.Button className="block px-3 py-2 text-base font-medium text-gray-900 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900">
-              </Disclosure.Button> */}
-            </div>
-          </Disclosure.Panel>
+            </motion.div>
+          </AnimatePresence>
+          {/* </Disclosure.Panel> */}
         </>
       )}
     </Disclosure>
+  );
+}
+function ToggleButton({ open }: { open: boolean }) {
+  return (
+    <svg width="23" height="23" viewBox="-1.5 -1.5 23 23" className="">
+      <Path
+        variants={{
+          closed: { d: "M 2 2.5 L 20 2.5" },
+          open: { d: "M 3 16.5 L 17 2.5" },
+        }}
+        animate={open ? "open" : "closed"}
+      />
+      <Path
+        d="M 2 9.423 L 20 9.423"
+        variants={{
+          closed: { opacity: 1 },
+          open: { opacity: 0 },
+        }}
+        transition={{ duration: 0.1 }}
+        animate={open ? "open" : "closed"}
+      />
+      <Path
+        variants={{
+          closed: { d: "M 2 16.346 L 20 16.346" },
+          open: { d: "M 3 2.5 L 17 16.346" },
+        }}
+        animate={open ? "open" : "closed"}
+      />
+    </svg>
+  );
+}
+
+function Path(props: any) {
+  return (
+    <motion.path
+      fill="transparent"
+      strokeWidth="2"
+      stroke="currentColor"
+      strokeLinecap="round"
+      {...props}
+    />
   );
 }

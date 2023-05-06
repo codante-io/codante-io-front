@@ -55,7 +55,7 @@ export default function WorkshopSlug() {
         />
       )}
       {/* Header */}
-      <header className="flex flex-wrap items-center gap-2 mb-8 lg:gap-6">
+      <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
         <div>
           <span className="lg:text-2xl font-extralight">Workshop</span>
@@ -68,7 +68,7 @@ export default function WorkshopSlug() {
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
         {/* left Side */}
         <div className="w-full">
-          <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
+          <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
@@ -84,7 +84,7 @@ export default function WorkshopSlug() {
 
           {/* Video */}
           {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
-          <div className="mt-12">
+          <div className="mt-6 lg:mt-12">
             <Subtitle text="Sobre o Workshop" />
             <div>
               <MarkdownRenderer markdown={workshop.description} />
@@ -174,7 +174,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           key={opened ? "open" : "closed"}
           className={`${
             opened ? "visible" : "invisible"
-          } text-sm font-light text-slate-500 dark:text-slate-300 relative`}
+          } text-sm font-light text-slate-500 dark:text-slate-300 relative overflow-hidden`}
         >
           <span className="block p-4 ml-12">{instructor.bio}</span>
         </motion.p>
