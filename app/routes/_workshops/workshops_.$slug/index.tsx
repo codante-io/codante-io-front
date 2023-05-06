@@ -68,7 +68,7 @@ export default function WorkshopSlug() {
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
         {/* left Side */}
         <div className="w-full">
-          <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
+          <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
@@ -84,7 +84,7 @@ export default function WorkshopSlug() {
 
           {/* Video */}
           {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
-          <div className="mt-12">
+          <div className="mt-6 lg:mt-12">
             <Subtitle text="Sobre o Workshop" />
             <div>
               <MarkdownRenderer markdown={workshop.description} />
