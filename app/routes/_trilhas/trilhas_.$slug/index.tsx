@@ -25,7 +25,7 @@ export default function TrackSlug() {
         <div>
           <span className="lg:text-2xl font-extralight">Trilha</span>
           <h1 className="flex items-center gap-4 text-3xl font-bold lg:text-5xl font-lexend">
-            <TitleIcon className="w-4 h-4 lg:h-8 lg:w-8" />
+            {/* <TitleIcon className="w-4 h-4 lg:h-8 lg:w-8" /> */}
             {track.name}
           </h1>
         </div>
