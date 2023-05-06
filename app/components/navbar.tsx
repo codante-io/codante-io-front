@@ -196,48 +196,41 @@ export default function Navbar({ user }: { user: any }) {
             </div>
           </div>
 
-          <Transition
-            as={Fragment}
-            show={open}
-            enter="transform transition duration-[400ms]"
-            enterTo="opacity-100"
-            leave="transform duration-200 transition ease-in-out"
-            leaveTo="opacity-0 "
-          >
-            <Disclosure.Panel className="sm:hidden">
-              <motion.div
-                layout
-                animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
-                transition={{ duration: 0.2 }}
-                initial={{ opacity: 0, height: 0 }}
-                className="px-2 space-y-1 overflow-hidden bg-white border-b-2 dark:border-slate-600 dark:bg-gray-darkest"
-              >
-                <div className="py-2">
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "dark:bg-gray-dark dark:text-white bg-white text-gray-700 underline"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
-                  <div className="px-3 py-2">
-                    <ToggleColorMode />
-                  </div>
+          {/* <Disclosure.Panel className="sm:hidden"> */}
+          <AnimatePresence>
+            <motion.div
+              layout
+              animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
+              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, height: 0 }}
+              exit={{ height: 0, transition: { duration: 0.2 } }}
+              key="mobile-menu"
+              className="px-2 space-y-1 overflow-hidden bg-white border-b-2 dark:border-slate-600 dark:bg-gray-darkest"
+            >
+              <div className="py-2">
+                {navigation.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "dark:bg-gray-dark dark:text-white bg-white text-gray-700 underline"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Disclosure.Button>
+                ))}
+                <div className="px-3 py-2">
+                  <ToggleColorMode />
                 </div>
-                {/* <Disclosure.Button className="block px-3 py-2 text-base font-medium text-gray-900 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900">
-              </Disclosure.Button> */}
-              </motion.div>
-            </Disclosure.Panel>
-          </Transition>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+          {/* </Disclosure.Panel> */}
         </>
       )}
     </Disclosure>
