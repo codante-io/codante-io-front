@@ -12,20 +12,23 @@ export default function ChallengeIndex() {
   return (
     <div className="container grid grid-cols-3 gap-10">
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">
+        {challenge.video_url && (
+          <div>
+            <h1 className="flex items-center text-2xl font-semibold font-lexend text-brand">
+              Vídeo de introdução
+            </h1>
+            <section className="relative mt-4 mb-8">
+              <VimeoPlayer vimeoUrl={challenge.video_url} />
+            </section>
+          </div>
+        )}
         <div>
-          <h1 className="flex items-center text-2xl font-semibold font-lexend">
-            Vídeo de introdução
-          </h1>
-          <section className="relative mt-4 mb-8">
-            <VimeoPlayer vimeoUrl={challenge.video_url} />
-          </section>
-        </div>
-        <div>
-          <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
+          <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
             Descrição
           </h1>
-
-          <MarkdownRenderer markdown={challenge?.description} />
+          <div>
+            <MarkdownRenderer markdown={challenge?.description} />
+          </div>
 
           {/* <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start ">
             {challenge?.description}

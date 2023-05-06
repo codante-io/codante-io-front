@@ -34,20 +34,20 @@ const classOverrides = {
   h1: {
     component: H1WithDivider,
     props: {
-      className: "text-3xl mt-8 mb-2 font-semibold",
+      className: "text-2xl mt-8 mb-2 font-semibold",
     },
   },
 
   h2: {
     component: H2WithDivider,
     props: {
-      className: "text-2xl mt-8 mb-2 font-semibold",
+      className: "text-xl mt-8 mb-2 font-semibold",
     },
   },
 
   h3: {
     props: {
-      className: "text-xl mt-4 mb-2 font-semibold",
+      className: "text-lg mt-4 mb-2 font-semibold",
     },
   },
 
