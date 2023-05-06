@@ -59,7 +59,7 @@ export default function Navbar({ user }: { user: any }) {
                 {/* Mobile menu button*/}
                 <Disclosure.Button
                   className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  onClick={playSound}
+                  onClick={() => playSound()}
                 >
                   <span className="sr-only">Open main menu</span>
                   <ToggleButton open={open} />
@@ -275,6 +275,7 @@ function ToggleButton({ open }: { open: boolean }) {
 function Path(props: any) {
   return (
     <motion.path
+      initial={false}
       fill="transparent"
       strokeWidth="2"
       stroke="currentColor"
