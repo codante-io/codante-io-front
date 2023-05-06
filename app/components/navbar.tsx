@@ -199,11 +199,14 @@ export default function Navbar({ user }: { user: any }) {
           <Transition
             as={Fragment}
             show={open}
+            enter="transform transition duration-[400ms]"
+            enterTo="opacity-100"
             leave="transform duration-200 transition ease-in-out"
             leaveTo="opacity-0 "
           >
             <Disclosure.Panel className="sm:hidden">
               <motion.div
+                layout
                 animate={{ opacity: open ? 1 : 0, height: open ? "auto" : 0 }}
                 transition={{ duration: 0.2 }}
                 initial={{ opacity: 0, height: 0 }}
