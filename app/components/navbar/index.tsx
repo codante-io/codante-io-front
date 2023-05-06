@@ -9,13 +9,20 @@ import { Form, Link, useMatches } from "@remix-run/react";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { BsArrowRight } from "react-icons/bs";
+
+import switchSound from "./switch.mp3";
+import useSound from "use-sound";
+
 import { AnimatePresence, motion } from "framer-motion";
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar({ user }: { user: any }) {
   const matches = useMatches();
+  const [playSound] = useSound(switchSound, { volume: 0.25 });
+
   const { id } = matches[matches.length - 1];
 
   const { colorMode } = useColorMode();
@@ -50,7 +57,10 @@ export default function Navbar({ user }: { user: any }) {
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ">
+                <Disclosure.Button
+                  className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-slate-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  onClick={playSound}
+                >
                   <span className="sr-only">Open main menu</span>
                   <ToggleButton open={open} />
                 </Disclosure.Button>
