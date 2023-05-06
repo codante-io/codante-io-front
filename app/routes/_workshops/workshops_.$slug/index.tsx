@@ -55,7 +55,7 @@ export default function WorkshopSlug() {
         />
       )}
       {/* Header */}
-      <header className="flex flex-wrap items-center gap-2 mb-8 lg:gap-6">
+      <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
         <div>
           <span className="lg:text-2xl font-extralight">Workshop</span>
