@@ -2,9 +2,7 @@ import { Link } from "@remix-run/react";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import type { ChallengeCardInfo } from "~/models/challenge.server";
 import CardItemDifficulty from "./card-item-difficulty";
-import CardItemDuration from "./card-item-duration";
 import CardItemTag from "./card-item-tag";
-import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 
 export default function ChallengeCard({
   challenge,
