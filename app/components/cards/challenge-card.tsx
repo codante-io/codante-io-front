@@ -25,7 +25,12 @@ export default function ChallengeCard({
           font-lexend border-[1.5px] border-gray-300 dark:border-slate-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
       >
-        {challenge?.status === "soon" && <CardItemRibbon text="Em breve" />}
+        {challenge?.status === "soon" && (
+          <CardItemRibbon
+            className="group-hover:animate-tada"
+            text="Em breve"
+          />
+        )}
         <div className="flex flex-col justify-between h-full">
           <div>
             <CardItemDifficulty
@@ -37,7 +42,11 @@ export default function ChallengeCard({
             >
               <img
                 src={challenge.image_url}
-                className="inline-block p-2 group-hover:animate-tada"
+                className={`inline-block p-2 ${
+                  challenge.status === "soon"
+                    ? "group-hover:animate-tada"
+                    : "group-hover:animate-float"
+                }`}
                 alt=""
               />
             </div>
