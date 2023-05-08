@@ -8,4 +8,5 @@ export type Instructor = {
   slug: string;
   created_at: string;
   updated_at: string;
+  links?: { url: string; type: string }[];
 };

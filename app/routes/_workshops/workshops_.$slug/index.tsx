@@ -12,7 +12,12 @@ import CardItemDuration from "~/components/cards/card-item-duration";
 import TitleIcon from "~/components/title-icon";
 import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
-import { AiFillPlayCircle } from "react-icons/ai";
+import {
+  AiFillGithub,
+  AiFillLinkedin,
+  AiFillPlayCircle,
+  AiFillTwitterCircle,
+} from "react-icons/ai";
 import type { Lesson } from "~/models/lesson.server";
 import {
   InformationCircleIcon,
@@ -30,6 +35,8 @@ import { abort404 } from "~/utils/responses.server";
 import VimeoPlayer from "~/components/vimeo-player";
 import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 import MarkdownRenderer from "~/components/markdown-renderer";
+import { MdComputer } from "react-icons/md";
+import type { IconType } from "react-icons";
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
@@ -129,6 +136,12 @@ function Subtitle({ text }: { text: string }) {
 
 function InstructorCard({ instructor }: { instructor: Instructor }) {
   const [opened, setOpened] = useState(false);
+  const SocialIcons: { [key: string]: IconType } = {
+    github: AiFillGithub,
+    twitter: AiFillTwitterCircle,
+    linkedin: AiFillLinkedin,
+    website: MdComputer,
+  };
   return (
     <div className="p-2 py-4 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
       <div className="flex items-center">
@@ -159,7 +172,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
       </div>
 
       <AnimatePresence initial={false}>
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{
             opacity: opened ? 1 : 0,
@@ -176,8 +189,29 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
             opened ? "visible" : "invisible"
           } text-sm font-light text-slate-500 dark:text-slate-300 relative overflow-hidden`}
         >
-          <span className="block p-4 ml-12">{instructor.bio}</span>
-        </motion.p>
+          <div className="p-4 ml-12">
+            <p>{instructor.bio}</p>
+            <div>
+              {instructor.links?.map((link) => {
+                const Icon = SocialIcons[link.type] ?? null;
+                console.log(Icon);
+                return (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-8 mr-4 text-sm font-light text-slate-500 dark:text-slate-300"
+                  >
+                    {Icon && (
+                      <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700" />
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </motion.div>
       </AnimatePresence>
     </div>
   );
