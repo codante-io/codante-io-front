@@ -32,6 +32,7 @@ module.exports = {
       animation: {
         text: "text 5s ease infinite",
         tada: "tada 1s ease-in-out ",
+        float: "float 2s ease-in-out infinite",
       },
       keyframes: {
         text: {
@@ -56,6 +57,17 @@ module.exports = {
             transform: "scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, -3deg)",
           },
           to: { transform: "scale3d(1, 1, 1)" },
+        },
+        float: {
+          "0%": {
+            transform: "translatey(0px)",
+          },
+          "50%": {
+            transform: "translatey(-5px)",
+          },
+          "100%": {
+            transform: "translatey(0px)",
+          },
         },
       },
     },
