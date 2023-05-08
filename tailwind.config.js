@@ -75,6 +75,8 @@ module.exports = {
     "bg-teal-600",
     "bg-cyan-500",
     "bg-cyan-600",
+    "bg-red-500",
+    "bg-red-600",
   ],
   plugins: [require("@tailwindcss/forms")],
 };
