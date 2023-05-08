@@ -3,7 +3,7 @@ export default function CardItemRibbon({
   className,
 }: {
   text: string;
-  className: string;
+  className?: string;
 }) {
   return (
     <div
