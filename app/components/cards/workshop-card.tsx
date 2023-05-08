@@ -21,7 +21,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
           ""
         }
       >
-        <article className="relative flex-col flex md:flex-row max-w-3xl border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
           {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div
@@ -77,22 +77,24 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 {workshop?.short_description}
               </p>
             </div>
-            {workshop.status === "published" && (
-              <div>
-                <CardItemLessonsCount
-                  lessonsCount={workshop?.lessons?.length}
-                  className="mb-[0.2rem]"
-                />
-                <CardDurationItem
-                  durationString={fromSecondsToTimeStringWithoutSeconds(
-                    workshop?.lessons?.reduce(
-                      (acc, lesson) => acc + lesson.duration_in_seconds,
-                      0
-                    )
-                  )}
-                />
-              </div>
-            )}
+            <div className="h-10">
+              {workshop.status === "published" && (
+                <>
+                  <CardItemLessonsCount
+                    lessonsCount={workshop?.lessons?.length}
+                    className="mb-[0.2rem]"
+                  />
+                  <CardDurationItem
+                    durationString={fromSecondsToTimeStringWithoutSeconds(
+                      workshop?.lessons?.reduce(
+                        (acc, lesson) => acc + lesson.duration_in_seconds,
+                        0
+                      )
+                    )}
+                  />
+                </>
+              )}
+            </div>
           </div>
         </article>
       </Link>
