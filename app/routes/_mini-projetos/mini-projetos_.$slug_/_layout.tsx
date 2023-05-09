@@ -34,12 +34,12 @@ import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_
 import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { slugify } from "~/utils/path-utils";
+import { getOgGeneratorUrl, slugify } from "~/utils/path-utils";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
   const description = data.challenge.short_description;
-  const imageUrl = `https://og.codante.io/api/${slugify(data.challenge.name)}`;
+  const imageUrl = getOgGeneratorUrl(data.challenge.name, "Mini Projeto");
 
   return {
     title: title,

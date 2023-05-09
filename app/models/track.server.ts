@@ -27,7 +27,7 @@ export async function getTracks(): Promise<Array<Track>> {
   return tracks;
 }
 
-export async function getTrack(slug: string) {
+export async function getTrack(slug: string): Promise<Track> {
   const track = await axios
     .get(`${process.env.API_HOST}/tracks/${slug}`)
     .then((res) => res.data.data);

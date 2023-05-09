@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -9,6 +9,31 @@ import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
 import type { ChallengeCardInfo } from "~/models/challenge.server";
 import type { Workshop } from "~/models/workshop.server";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  const title = `Trilha: ${data.track?.name} | Codante.io`;
+  const description = data.track?.short_description ?? "";
+  const imageUrl = getOgGeneratorUrl(data.track?.name ?? "Codante", "Trilha");
+
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/trilhas/${params.slug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/trilhas/${params.slug}`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.track?.name,
+  };
+};
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);

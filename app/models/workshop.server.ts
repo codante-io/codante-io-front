@@ -29,7 +29,7 @@ export async function getWorkshops(): Promise<Array<Workshop>> {
   return workshops;
 }
 
-export async function getWorkshop(slug: string) {
+export async function getWorkshop(slug: string): Promise<Workshop | null> {
   const workshop = await axios
     .get(`${process.env.API_HOST}/workshops/${slug}`)
     .then((res) => res.data.data)

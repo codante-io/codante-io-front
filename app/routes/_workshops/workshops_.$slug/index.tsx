@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Link,
@@ -37,6 +37,34 @@ import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import { MdComputer } from "react-icons/md";
 import type { IconType } from "react-icons";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  const title = `Workshop: ${data.workshop?.name} | Codante.io`;
+  const description = data.workshop?.short_description ?? "";
+  const imageUrl = getOgGeneratorUrl(
+    data.workshop?.name ?? "Codante",
+    "Workshop"
+  );
+
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/workshops/${params.slug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/workshops/${params.slug}`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.workshop?.name,
+  };
+};
 
 export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);

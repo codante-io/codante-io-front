@@ -16,6 +16,7 @@ import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
 import { user } from "./services/auth.server";
 import { Toaster } from "react-hot-toast";
 import LoadingBar from "~/components/loading-bar";
+import { getOgGeneratorUrl } from "./utils/path-utils";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -27,6 +28,18 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Codante - Cursos e Projetos Online de Programação",
   viewport: "width=device-width,initial-scale=1",
+
+  "og:title": "Codante - Cursos e Projetos Online de Programação",
+  "og:description": "Codante - Cursos e Projetos Online de Programação",
+  "og:image": getOgGeneratorUrl("Codante"),
+  "og:type": "website",
+
+  "twitter:card": "summary_large_image",
+  "twitter:domain": "codante.io",
+  "twitter:title": "Codante - Cursos e Projetos Online de Programação",
+  "twitter:description": "Codante - Cursos e Projetos Online de Programação",
+  "twitter:image": getOgGeneratorUrl("Codante"),
+  "twitter:image:alt": "Codante",
 });
 
 export function loader({ request }: { request: Request }) {
