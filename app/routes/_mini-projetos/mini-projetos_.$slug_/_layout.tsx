@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {
   Link,
@@ -34,6 +34,31 @@ import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_
 import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
+import { slugify } from "~/utils/path-utils";
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  const title = `Projeto: ${data.challenge.name} | Codante.io`;
+  const description = data.challenge.short_description;
+  const imageUrl = `https://og.codante.io/${slugify(data.challenge.name)}`;
+
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/mini-projetos/${params.slug}/overview`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/mini-projetos/${params.slug}/overview`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.challenge.name,
+  };
+};
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
