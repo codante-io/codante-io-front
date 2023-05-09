@@ -39,7 +39,7 @@ import { slugify } from "~/utils/path-utils";
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
   const description = data.challenge.short_description;
-  const imageUrl = `https://og.codante.io/${slugify(data.challenge.name)}`;
+  const imageUrl = `https://og.codante.io/api/${slugify(data.challenge.name)}`;
 
   return {
     title: title,
