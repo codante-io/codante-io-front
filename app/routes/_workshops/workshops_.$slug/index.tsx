@@ -1,4 +1,9 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type {
+  LoaderArgs,
+  MetaDescriptor,
+  MetaFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Link,
@@ -40,6 +45,7 @@ import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  if (!data?.workshop) return {};
   const title = `Workshop: ${data.workshop?.name} | Codante.io`;
   const description = data.workshop?.short_description ?? "";
   const imageUrl = getOgGeneratorUrl(
