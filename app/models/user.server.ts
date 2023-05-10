@@ -6,5 +6,6 @@ export type User = {
   avatar_url?: string;
   email_verified_at?: string;
   created_at?: string;
+  is_admin?: boolean;
   updated_at?: string;
 };

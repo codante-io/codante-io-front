@@ -35,6 +35,8 @@ import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 import { getOgGeneratorUrl, slugify } from "~/utils/path-utils";
+import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
@@ -146,6 +148,8 @@ export default function ChallengeSlug() {
     useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { colorMode } = useColorMode();
+  const user = useUserFromOutletContext();
+
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
@@ -240,8 +244,10 @@ export default function ChallengeSlug() {
             <p className="mt-2 mb-4 font-light font-inter text-md md:mt-3 text-slate-400 text-start">
               {challenge?.short_description}
             </p>
+            <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
           </div>
         </div>
+
         <div className="container mt-4 mb-8 lg:mt-8 lg:mb-6">
           <div>
             <div className="sm:hidden">
@@ -296,8 +302,10 @@ export default function ChallengeSlug() {
             </div>
           </div>
         </div>
+
         <Outlet
           context={{
+            user,
             challenge,
             challengeUser,
             participants,
@@ -339,7 +347,7 @@ export function ErrorBoundary() {
 
   return (
     <div>
-      <Error500 />
+      <Error500 error={error} />
     </div>
   );
 }

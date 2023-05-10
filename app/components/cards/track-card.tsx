@@ -41,7 +41,7 @@ function TrackCard({ track }: { track: Track }) {
                   className="mb-2"
                 />
                 <div>
-                  <h2 className="mb-2 text-xl text-gray-800 dark:text-zinc-50">
+                  <h2 className="mb-2 text-xl text-gray-800 dark:text-zinc-50 font-lexend">
                     {track?.name}
                   </h2>
                   <div>
@@ -58,7 +58,7 @@ function TrackCard({ track }: { track: Track }) {
                 </div>
               </div>
 
-              <p className="w-full font-sans font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
+              <p className="w-full font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
                 {track?.short_description}
               </p>
             </div>

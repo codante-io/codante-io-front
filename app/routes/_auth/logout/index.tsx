@@ -5,13 +5,13 @@ export async function loader({ request }: { request: Request }) {
 
   return logoutWithRedirectAfterLogin({
     request,
-    redirectTo: redirectTo || "/login",
+    redirectTo: redirectTo || "/",
   });
 }
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
 
-  let redirectTo = (formData.get("redirectTo") as string) || "/login";
+  let redirectTo = (formData.get("redirectTo") as string) || "/";
   return logout({ request, redirectTo });
 }
