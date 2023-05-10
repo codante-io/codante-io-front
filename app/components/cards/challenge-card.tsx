@@ -21,7 +21,7 @@ export default function ChallengeCard({
         className=" group
           relative max-w-[300px] h-[450px] bg-white dark:bg-gray-dark shadow-md rounded-2xl p-6 pt-3
           font-lexend border-[1.5px] border-gray-300 dark:border-slate-600
-        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
+        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg text-left"
       >
         {challenge?.status === "soon" && (
           <CardItemRibbon
