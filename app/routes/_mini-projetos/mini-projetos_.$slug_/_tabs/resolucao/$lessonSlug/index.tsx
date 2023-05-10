@@ -1,4 +1,5 @@
 import { useOutletContext, useParams } from "@remix-run/react";
+import MarkdownRenderer from "~/components/markdown-renderer";
 import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
@@ -35,12 +36,18 @@ export default function ChallengeResolutionSlug() {
               <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
                 {workshop?.lessons.find((lesson) => lesson.slug === slug)?.name}
               </h1>
-              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-slate-400 text-slate-600">
+              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-slate-400 text-slate-500">
                 {
                   workshop?.lessons.find((lesson) => lesson.slug === slug)
                     ?.description
                 }
               </p>
+              <MarkdownRenderer
+                markdown={
+                  workshop.lessons.find((lesson) => lesson.slug === slug)
+                    ?.content || ""
+                }
+              />
             </div>
           </div>
           <div className="flex-shrink-0 w-full px-2 mb-8 ml-auto">

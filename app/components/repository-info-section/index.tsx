@@ -14,18 +14,7 @@ export default function RepositoryInfoSection({
   const repoUrl = `https://github.com/${repository?.organization}/${repository?.name}`;
 
   return (
-    <Link
-      to={repoUrl}
-      target="_blank"
-      // onClick={(e) => {
-      //   if (!user) {
-      //     e.preventDefault();
-      //     toast.error(
-      //       "Ops... você precisa estar logado para acessar essa página! \n \n Faça seu cadastro - é gratuito 🥳 "
-      //     );
-      //   }
-      // }}
-    >
+    <Link to={repoUrl} target="_blank">
       <article className="relative w-full bg-white dark:bg-gray-dark shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-slate-600">
         <section>
           <AiFillGithub className="inline-block w-6 h-6 mr-2" />
