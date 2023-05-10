@@ -1,9 +1,16 @@
-import { Outlet, isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import {
+  Outlet,
+  isRouteErrorResponse,
+  useOutletContext,
+  useRouteError,
+} from "@remix-run/react";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
+import type { User } from "~/models/user.server";
 
 export default function WorkshopLayout() {
-  return <Outlet />;
+  const { user } = useOutletContext<{ user: User | null }>();
+  return <Outlet context={{ user }} />;
 }
 
 export function ErrorBoundary() {
@@ -17,5 +24,5 @@ export function ErrorBoundary() {
     );
   }
 
-  return <Error500 />;
+  return <Error500 error={error} />;
 }

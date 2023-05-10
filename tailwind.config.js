@@ -16,9 +16,9 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        inter: ["Inter var", "sans-serif"],
       },
       colors: {
         gray: {

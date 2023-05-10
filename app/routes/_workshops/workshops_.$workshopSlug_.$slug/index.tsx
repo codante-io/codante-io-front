@@ -1,5 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import MarkdownRenderer from "~/components/markdown-renderer";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import type { Workshop } from "~/models/workshop.server";
@@ -13,16 +14,16 @@ export async function loader({ params }: { params: any }) {
     !workshop ||
     !workshop.lessons.find((lesson: any) => lesson.slug === params.slug)
   ) {
-    abort404();
+    return abort404();
   }
 
-  return json({
+  return {
     slug: params.slug,
-    workshop: await getWorkshop(params.workshopSlug),
+    workshop: workshop,
     activeIndex: workshop.lessons.findIndex(
       (lesson: any) => lesson.slug === params.slug
     ),
-  });
+  };
 }
 
 export default function LessonIndex() {
@@ -63,12 +64,19 @@ export default function LessonIndex() {
               <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
                 {workshop.lessons.find((lesson) => lesson.slug === slug)?.name}
               </h1>
-              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-slate-400 text-slate-600">
+              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-slate-300 text-slate-500">
                 {
                   workshop.lessons.find((lesson) => lesson.slug === slug)
                     ?.description
                 }
               </p>
+
+              <MarkdownRenderer
+                markdown={
+                  workshop.lessons.find((lesson) => lesson.slug === slug)
+                    ?.content || ""
+                }
+              />
             </div>
           </div>
           <div className="flex-shrink-0 w-full px-2 mb-8 ml-auto">

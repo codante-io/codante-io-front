@@ -1,4 +1,38 @@
+/* eslint-disable react/display-name */
 import Markdown from "markdown-to-jsx";
+import { Highlight, themes } from "prism-react-renderer";
+import { useColorMode } from "~/contexts/color-mode-context";
+import type { ColorMode } from "~/utils/dark-mode";
+
+const getCodeComponent =
+  (colorMode: ColorMode) =>
+  ({ className, children }: { className: string; children: string }) => {
+    const language = className
+      ?.split(" ")
+      ?.find((className) => className?.includes("lang-"))
+      ?.replace("lang-", "");
+
+    return (
+      <Highlight
+        theme={colorMode === "light" ? themes.nightOwlLight : themes.nightOwl}
+        code={children}
+        language={language || "javascript"}
+      >
+        {({ tokens, getLineProps, getTokenProps }) => (
+          <pre className={className}>
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line })}>
+                {/* <span>{i + 1}</span> */}
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
+    );
+  };
 
 function H1WithDivider({
   children,
@@ -30,11 +64,18 @@ function H2WithDivider({
   );
 }
 
-const classOverrides = {
+const generateClassOverrides = (colorMode: ColorMode) => ({
   h1: {
     component: H1WithDivider,
     props: {
       className: "text-2xl mt-8 mb-2 font-semibold",
+    },
+  },
+
+  code: {
+    component: getCodeComponent(colorMode),
+    props: {
+      className: "dark:bg-gray-dark bg-gray-200 p-4 rounded-lg",
     },
   },
 
@@ -68,13 +109,15 @@ const classOverrides = {
       className: "my-4",
     },
   },
-};
+});
 
 export default function MarkdownRenderer({ markdown }: { markdown: string }) {
+  const { colorMode } = useColorMode();
+
   return (
     <Markdown
       options={{
-        overrides: classOverrides,
+        overrides: generateClassOverrides(colorMode),
       }}
     >
       {markdown}

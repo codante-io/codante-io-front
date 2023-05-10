@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,4 +7,13 @@
 .bg-clip-text {
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+:root {
+  font-family: "Inter", sans-serif;
+}
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: "Inter var", sans-serif;
+  }
 }

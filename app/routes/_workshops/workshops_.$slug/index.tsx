@@ -1,30 +1,16 @@
 import type { LoaderArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import {
-  Link,
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
-} from "@remix-run/react";
+import { useLoaderData, useOutletContext } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import CardItemDuration from "~/components/cards/card-item-duration";
 import TitleIcon from "~/components/title-icon";
-import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
 import {
   AiFillGithub,
   AiFillLinkedin,
-  AiFillPlayCircle,
   AiFillTwitterCircle,
 } from "react-icons/ai";
-import type { Lesson } from "~/models/lesson.server";
-import {
-  InformationCircleIcon,
-  LockClosedIcon,
-  XCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { Instructor } from "~/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -38,8 +24,10 @@ import MarkdownRenderer from "~/components/markdown-renderer";
 import { MdComputer } from "react-icons/md";
 import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  if (!data?.workshop) return {};
   const title = `Workshop: ${data.workshop?.name} | Codante.io`;
   const description = data.workshop?.short_description ?? "";
   const imageUrl = getOgGeneratorUrl(
@@ -78,6 +66,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function WorkshopSlug() {
+  const { user } = useOutletContext();
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
 
@@ -120,6 +109,7 @@ export default function WorkshopSlug() {
           {/* Video */}
           {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
           <div className="mt-6 lg:mt-12">
+            <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
             <Subtitle text="Sobre o Workshop" />
             <div>
               <MarkdownRenderer markdown={workshop.description} />
@@ -231,7 +221,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
                     className="inline-block mt-2 mr-4 text-sm font-light text-slate-500 dark:text-slate-300"
                   >
                     {Icon && (
-                      <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700" />
+                      <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700 dark:text-slate-700 dark:hover:text-slate-300" />
                     )}
                   </a>
                 );

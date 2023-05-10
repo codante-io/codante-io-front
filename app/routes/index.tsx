@@ -28,8 +28,7 @@ export const loader = async () => {
 };
 
 export default function Index() {
-  const ctx = useOutletContext<{ user: User }>();
-  const user = ctx?.user;
+  const { user } = useOutletContext<{ user: User }>();
 
   const { homeInfo } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
@@ -253,5 +252,5 @@ export function ErrorBoundary() {
     );
   }
 
-  return <Error500 />;
+  return <Error500 error={error} />;
 }

@@ -10,6 +10,7 @@ export type Lesson = {
   duration_in_seconds: number;
   created_at: string;
   updated_at: string;
+  video_url?: string;
 };
 
 export async function getLesson(slug: string) {

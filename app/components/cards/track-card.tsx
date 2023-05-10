@@ -37,7 +37,7 @@ function TrackCard({ track }: { track: Track }) {
             <div>
               <div className="flex flex-col md:justify-between md:flex-row">
                 <div>
-                  <h2 className="mb-2 text-xl text-gray-800 dark:text-white">
+                  <h2 className="mb-2 text-xl text-gray-800 dark:text-white font-lexend">
                     {track?.name}
                   </h2>
                   <div>
@@ -58,7 +58,7 @@ function TrackCard({ track }: { track: Track }) {
                 />
               </div>
 
-              <p className="w-full font-sans font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
+              <p className="w-full font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
                 {track?.short_description}
               </p>
             </div>

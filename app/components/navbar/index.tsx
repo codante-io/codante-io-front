@@ -10,10 +10,8 @@ import { Form, Link, useMatches } from "@remix-run/react";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { BsArrowRight } from "react-icons/bs";
-
 import switchSound from "./switch.mp3";
 import useSound from "use-sound";
-
 import { AnimatePresence, motion } from "framer-motion";
 import type { User } from "~/models/user.server";
 
