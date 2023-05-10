@@ -75,7 +75,7 @@ export default function Schedule() {
 
             {Object.values(upcomingData[upcoming])?.map((item: any) => (
               <div
-                className="mb-10 text-right lg:mb-12"
+                className="mb-16 text-right lg:mb-16"
                 key={`${item.type}_${item.id}`}
               >
                 {item.type === "workshop" ? (
