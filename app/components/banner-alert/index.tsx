@@ -9,13 +9,13 @@ export default function BannerAlert({
 }) {
   return (
     <div
-      className="px-4 py-3 mb-8 -mt-8 bg-blue-100 border-t-4 rounded-b shadow-md text-brand border-brand dark:bg-blue-950"
+      className="px-4 py-3 mb-8 -mt-8 border rounded shadow-md bg-brand-100 border-brand dark:bg-brand-950"
       role="alert"
     >
       <div className="flex">
         <div className="py-1">
           <svg
-            className="w-6 h-6 mr-4 text-blue-500 fill-current dark:text-blue-300"
+            className="w-6 h-6 mr-4 fill-current text-brand-500 dark:text-brand-300"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -23,8 +23,12 @@ export default function BannerAlert({
           </svg>
         </div>
         <div>
-          <p className="font-bold text-blue-500 dark:text-blue-300">{title}</p>
-          <p className="text-sm text-blue-500 dark:text-blue-300">{subtitle}</p>
+          <p className="font-bold text-brand-500 dark:text-brand-300">
+            {title}
+          </p>
+          <p className="text-sm text-brand-500 dark:text-brand-300">
+            {subtitle}
+          </p>
         </div>
       </div>
     </div>
