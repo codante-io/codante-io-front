@@ -20,6 +20,7 @@ import { getOgGeneratorUrl } from "./utils/path-utils";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "preconnect", href: "https://rsms.me" },
   { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   { rel: "icon", href: "/favicon.svg" },
 ];
