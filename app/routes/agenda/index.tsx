@@ -10,8 +10,6 @@ import { getUpcoming } from "~/models/upcoming.server";
 export async function loader({ request }: { request: Request }) {
   const upcomingData = await getUpcoming();
 
-  console.log(upcomingData["2023-10-20"]);
-
   return json({
     upcomingData,
   });
@@ -77,7 +75,7 @@ export default function Schedule() {
 
             {Object.values(upcomingData[upcoming])?.map((item: any) => (
               <div
-                className="mb-10 text-right lg:mb-36"
+                className="mb-10 text-right lg:mb-12"
                 key={`${item.type}_${item.id}`}
               >
                 {item.type === "workshop" ? (
