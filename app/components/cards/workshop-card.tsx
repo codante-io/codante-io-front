@@ -21,7 +21,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
           ""
         }
       >
-        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-800 mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-slate-300 dark:border-gray-700 rounded-2xl bg-slate-100 dark:bg-gray-dark mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
           {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div
@@ -40,7 +40,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               className="mb-2"
             />
             <div className="mb-8">
-              <h2 className="mb-1 text-lg text-gray-800 lg:text-xl dark:text-white">
+              <h2 className="mb-1 text-lg text-gray-800 lg:text-xl dark:text-zinc-50">
                 {workshop?.name}
               </h2>
               <div className="min-h-[24px]">
@@ -49,7 +49,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                     <CardItemTag
                       tagName={tag.name}
                       key={tag.id}
-                      className="text-white bg-blue-900 dark:bg-blue-900 dark:text-white"
+                      className="bg-blue-900 dark:bg-blue-900 text-zinc-300"
                     />
                   );
                 })}
@@ -64,7 +64,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 />
               )}
               <div>
-                <p className="text-sm font-normal text-gray-800 dark:text-white">
+                <p className="text-sm font-normal text-gray-800 dark:text-zinc-50">
                   {workshop?.instructor?.name}
                 </p>
                 <p className="text-xs font-light text-gray-700 dark:text-zinc-300">

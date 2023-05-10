@@ -217,8 +217,8 @@ export default function ChallengeSlug() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-white">
-      <section className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-white">
+    <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-zinc-50">
+      <section className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-zinc-50">
         <div className="container">
           <div>
             <CardItemDifficulty
@@ -280,7 +280,7 @@ export default function ChallengeSlug() {
                       to={tab.href}
                       className={classNames(
                         tab.current
-                          ? "bg-slate-200 dark:bg-slate-800 dark:text-white text-slate-800"
+                          ? "bg-slate-200 dark:bg-slate-800 dark:text-zinc-50 text-slate-800"
                           : "text-gray-500 hover:text-gray-700",
                         "rounded-full px-3 py-1.5 text-sm flex items-center gap-2"
                       )}
@@ -316,7 +316,7 @@ export default function ChallengeSlug() {
       )}
       <section
         id="mini-projects"
-        className="flex justify-center w-full text-gray-800 dark:bg-slate-800 bg-slate-100 dark:text-white"
+        className="flex justify-center w-full text-gray-800 dark:bg-slate-800 bg-slate-100 dark:text-zinc-50"
       >
         <div className="container relative -top-12">
           <ParticipantsSection participants={participants} />

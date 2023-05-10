@@ -107,7 +107,7 @@ export default function Account() {
           {" "}
           &#8226;{" "}
         </span>
-        <span className="hidden ml-3 text-base font-light md:inline dark:text-slate-400">
+        <span className="hidden ml-3 text-base font-light md:inline dark:text-zinc-400">
           {user.name}
         </span>
       </h2>

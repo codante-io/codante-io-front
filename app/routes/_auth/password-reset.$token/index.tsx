@@ -53,7 +53,7 @@ export default function PasswordReset() {
 
   return (
     <AuthCard>
-      <h1 className="text-lg text-slate-700 dark:text-white">
+      <h1 className="text-lg text-slate-700 dark:text-zinc-50">
         Redefinir Senha
       </h1>
       {!isSuccessfulSubmission ? (

@@ -1,6 +1,4 @@
 import { BsFillPlayFill, BsFillPersonFill } from "react-icons/bs";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-
 import { json } from "@remix-run/node";
 import { getHome } from "~/models/home.server";
 import {
@@ -20,6 +18,7 @@ import type { User } from "~/models/user.server";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 import TitleIcon from "~/components/title-icon";
+import Wave from "~/components/wave";
 
 export const loader = async () => {
   return json({
@@ -40,7 +39,7 @@ export default function Index() {
       ?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <div className="flex flex-col items-center justify-center text-gray-900 dark:text-white">
+    <div className="flex flex-col items-center justify-center text-gray-900 dark:text-zinc-50">
       <BackgroundBlur />
 
       <section
@@ -89,7 +88,7 @@ export default function Index() {
       </section>
       <section
         id="workshops"
-        className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-white"
+        className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-zinc-50"
       >
         <div className="container mb-10">
           <h1 className="flex items-center mt-8 mb-4 text-3xl font-light sm:mt-16 font-lexend">
@@ -116,16 +115,10 @@ export default function Index() {
           </section>
         </div>
       </section>
-      {colorMode && (
-        <img
-          src={`/img/wave-top-${colorMode}.svg`}
-          className="relative w-full"
-          alt="Wave detail"
-        />
-      )}
+      <Wave position="top" />
       <section
         id="mini-projects"
-        className="flex justify-center w-full text-gray-800 dark:bg-slate-800 bg-slate-100 dark:text-white"
+        className="flex justify-center w-full text-gray-800 dark:bg-gray-800 bg-slate-100 dark:text-zinc-50"
       >
         <div className="container relative -top-12">
           <h1 className="flex items-center mt-16 mb-4 text-3xl font-light font-lexend">
@@ -154,16 +147,10 @@ export default function Index() {
           </section>
         </div>
       </section>
-      {colorMode && (
-        <img
-          src={`/img/wave-bottom-${colorMode}.svg`}
-          className="relative w-full -top-42"
-          alt="Wave detail"
-        />
-      )}
+      <Wave position="bottom" />
       <section
         id="tracks"
-        className="flex justify-center w-full text-gray-800 bg-transparent dark:text-white"
+        className="flex justify-center w-full text-gray-800 bg-transparent dark:text-zinc-50"
       >
         <div className="container relative mb-6 top-4">
           <h1 className="flex items-center mb-4 text-3xl font-light font-lexend">
@@ -194,7 +181,7 @@ export default function Index() {
 
       <section
         id="pricing"
-        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-white"
+        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-zinc-50"
       >
         <div className="container flex flex-col items-center">
           <h1 className="mt-16 text-3xl font-light font-lexend">Preços</h1>

@@ -87,7 +87,9 @@ export default function Login() {
         </AuthCard>
 
         <AuthCard className={opened ? "" : "hidden"}>
-          <h1 className="mb-8 text-lg text-slate-700 dark:text-white">Login</h1>
+          <h1 className="mb-8 text-lg text-slate-700 dark:text-zinc-50">
+            Login
+          </h1>
           <Form method="POST" className="flex flex-col ">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Input

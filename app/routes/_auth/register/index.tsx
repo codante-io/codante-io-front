@@ -45,7 +45,7 @@ export default function Register() {
       </div>
 
       <AuthCard>
-        <h1 className="mb-8 text-lg text-slate-700 dark:text-white">
+        <h1 className="mb-8 text-lg text-slate-700 dark:text-zinc-50">
           Cadastre-se
         </h1>
         <Form method="POST" className="flex flex-col">

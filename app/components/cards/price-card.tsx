@@ -13,12 +13,12 @@ export default function PriceCard({
       {price?.banner && <CardItemRibbon text={price?.banner} />}
 
       <div className="mb-8 card-header">
-        <h2 className="mb-1 text-lg text-center text-slate-600 dark:text-white">
+        <h2 className="mb-1 text-lg text-center text-slate-600 dark:text-zinc-50">
           {price?.name}
         </h2>
       </div>
 
-      <p className="mb-12 text-xl font-light text-gray-900 slate-600 dark:text-white">
+      <p className="mb-12 text-xl font-light text-gray-900 slate-600 dark:text-zinc-50">
         R$<span className="font-bold text-7xl">{price?.price}</span>
       </p>
 
@@ -29,7 +29,7 @@ export default function PriceCard({
       </Link>
       <div className="h-[1px] bg-slate-500/30 w-full my-4" />
 
-      <ul className="mt-8 space-y-3 text-sm leading-6 dark:text-white text-slate-600">
+      <ul className="mt-8 space-y-3 text-sm leading-6 dark:text-zinc-50 text-slate-600">
         {Object.entries(price?.features)?.map(
           ([feature, isAvailable], index) => (
             <li className="flex text-start gap-x-3" key={index}>

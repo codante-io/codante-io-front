@@ -49,7 +49,7 @@ export default function ChallengeCard({
               />
             </div>
             <div className="mb-8 card-header">
-              <h2 className="mb-1 text-lg font-bold leading-tight text-slate-800 dark:text-white">
+              <h2 className="mb-1 text-lg font-bold leading-tight text-slate-800 dark:text-zinc-50">
                 {challenge?.name}
               </h2>
               <div className="tags">
