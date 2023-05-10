@@ -22,7 +22,7 @@ function TrackCard({ track }: { track: Track }) {
         to={`/trilhas/${track?.slug}`}
         className="cursor-pointer"
       >
-        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-slate-100 dark:bg-gray-dark mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col md:flex-row">
+        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-background-100 dark:bg-gray-dark mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col md:flex-row">
           {track?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div

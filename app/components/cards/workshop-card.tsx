@@ -21,7 +21,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
           ""
         }
       >
-        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-slate-300 dark:border-gray-700 rounded-2xl bg-slate-100 dark:bg-gray-dark mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
+        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-slate-300 dark:border-gray-700 rounded-2xl bg-background-100 shadow dark:bg-gray-dark mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg">
           {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div

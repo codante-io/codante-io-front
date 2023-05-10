@@ -23,7 +23,8 @@ module.exports = {
       colors: {
         gray: {
           darkest: "#0E141A",
-          dark: "#17212B",
+          // dark: "#17212B",
+          dark: "#151E27",
         },
         brand: {
           DEFAULT: "#5282FF",
@@ -38,6 +39,20 @@ module.exports = {
           800: "#002FA9",
           900: "#001F71",
           950: "#001755",
+        },
+        background: {
+          DEFAULT: "#0E141A",
+          50: "#F5F7FA",
+          100: "#F1F4F8",
+          200: "#CDD8E4",
+          300: "#A8BCD0",
+          400: "#84A0BD",
+          500: "#5F84A9",
+          600: "#39516A",
+          700: "#2B3D4F",
+          800: "#1C2835",
+          900: "#0E141A",
+          950: "#040608",
         },
       },
       animation: {
