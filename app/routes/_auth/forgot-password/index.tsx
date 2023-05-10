@@ -47,7 +47,7 @@ export default function PasswordReset() {
           </div>
         </Form>
       ) : (
-        <div className="mt-8 text-sm font-light text-slate-500 dark:text-zinc-400">
+        <div className="mt-8 text-sm font-light text-slate-500 dark:text-background-300">
           Seu email foi enviado! Verifique sua caixa de entrada e siga as
           instruções no email.
         </div>

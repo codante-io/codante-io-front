@@ -170,19 +170,19 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
         />
         <div className="flex-1">
           <h4 className="dark:text-zinc-50 text-lexend">{instructor?.name}</h4>
-          <p className="text-sm font-light text-slate-500 dark:text-zinc-400">
+          <p className="text-sm font-light text-slate-500 dark:text-background-300">
             {instructor.company}
           </p>
         </div>
         {opened ? (
           <XMarkIcon
             onClick={() => setOpened(!opened)}
-            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:hover:text-zinc-300"
+            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 dark:text-background-300 hover:text-slate-700 dark:hover:text-zinc-300"
           />
         ) : (
           <InformationCircleIcon
             onClick={() => setOpened(!opened)}
-            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 hover:text-slate-700 dark:text-background-300 dark:hover:text-zinc-300"
           />
         )}
       </div>

@@ -40,7 +40,7 @@ export default function WorkshopLessonsList({
             >
               {lesson.name}
             </h4>
-            <span className="text-sm dark:text-zinc-400 text-slate-500">
+            <span className="text-sm dark:text-background-300 text-slate-500">
               {fromSecondsToTimeString(lesson.duration_in_seconds)}
             </span>
           </li>

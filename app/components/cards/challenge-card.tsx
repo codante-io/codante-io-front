@@ -20,7 +20,7 @@ export default function ChallengeCard({
       <article
         className=" group
           relative max-w-[300px] h-[450px] bg-white dark:bg-gray-dark shadow-md rounded-2xl p-6 pt-3
-          font-lexend border-[1.5px] border-gray-300 dark:border-slate-600
+          font-lexend border-[1.5px] border-background-200 dark:border-slate-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
       >
         {challenge?.status === "soon" && (
@@ -49,7 +49,7 @@ export default function ChallengeCard({
               />
             </div>
             <div className="mb-8 card-header">
-              <h2 className="mb-1 text-lg font-bold leading-tight text-slate-800 dark:text-zinc-50">
+              <h2 className="mb-1 text-lg font-bold leading-tight text-background-800 dark:text-zinc-50">
                 {challenge?.name}
               </h2>
               <div className="tags">
@@ -57,18 +57,18 @@ export default function ChallengeCard({
                   <CardItemTag
                     key={tag.id}
                     tagName={tag.name}
-                    className="bg-blue-900 text-slate-300"
+                    className="bg-blue-900 text-background-200"
                   />
                 ))}
               </div>
             </div>
-            <p className="text-sm font-light line-clamp-4 slate-600 text-slate-600 dark:text-zinc-300">
+            <p className="text-sm font-light line-clamp-4 slate-600 text-background-600 dark:text-background-300-300">
               {challenge?.short_description}
             </p>
           </div>
           <div className="flex items-center justify-between card-footer">
             {challenge.enrolled_users_count > 0 && (
-              <div className="text-xs text-zinc-400">
+              <div className="text-xs text-background-400">
                 {challenge?.enrolled_users_count}{" "}
                 {challenge?.enrolled_users_count === 1
                   ? "participante"

@@ -23,7 +23,7 @@ export default function CardItemLessonsCount({
         />
       </svg>
 
-      <span className="text-xs text-gray-500 dark:text-zinc-400">
+      <span className="text-xs text-gray-500 dark:text-background-300">
         {lessonsCount} aulas
       </span>
     </div>

@@ -11,7 +11,7 @@ export default function CardItemDifficulty({
 }: CardItemDifficultyProps) {
   return (
     <div {...classes}>
-      <span className="mr-3 text-xs font-bold tracking-wide text-gray-500 dark:text-zinc-400">
+      <span className="mr-3 text-xs font-bold tracking-wide text-background-600 dark:text-background-300">
         Nível
       </span>
       <span

@@ -25,7 +25,7 @@ export default function CardItemDuration({
         />
       </svg>
 
-      <span className="text-xs text-gray-500 dark:text-zinc-400">
+      <span className="text-xs text-gray-500 dark:text-background-300">
         {durationString}
       </span>
     </div>
