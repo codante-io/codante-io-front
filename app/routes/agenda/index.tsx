@@ -3,11 +3,14 @@ import { useLoaderData } from "@remix-run/react";
 import ChallengeCard from "~/components/cards/challenge-card";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { AddToCalendarButton } from "add-to-calendar-button-react";
+import { motion } from "framer-motion";
 
 import { getUpcoming } from "~/models/upcoming.server";
 
 export async function loader({ request }: { request: Request }) {
   const upcomingData = await getUpcoming();
+
+  console.log(upcomingData["2023-10-20"]);
 
   return json({
     upcomingData,
@@ -23,50 +26,77 @@ export default function Schedule() {
 
       <div>
         {Object.keys(upcomingData)?.map((upcoming, i) => (
-          <div key={upcoming} className="relative my-20">
+          <div
+            key={upcoming}
+            className="relative flex flex-wrap items-start justify-between lg:my-20"
+          >
             <div
               className={`absolute pointer-events-none w-full pt-0 pb-14 px-10 text-left text-black border-b-2  z-0   top-0 `}
+            ></div>
+            <motion.div
+              whileInView={{ opacity: 1, y: "0" }}
+              initial={{ opacity: 0, y: "100px" }}
+              className="z-20 p-4 mb-6 ml-4 text-left bg-gray-100 shadow-lg lg:mb-0"
             >
-              <div className="">
-                <div className="text-gray-800 text-7xl">
-                  {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
-                    new Date(upcoming)
-                  )}
-                </div>
-                <div className="text-4xl text-gray-800 font-lexend">
-                  {Intl.DateTimeFormat("pt-BR", { month: "long" })
-                    .format(new Date(upcoming))
-                    .charAt(0)
-                    .toUpperCase() +
-                    Intl.DateTimeFormat("pt-BR", { month: "long" })
-                      .format(new Date(upcoming))
-                      .slice(1)}
-                </div>
-                <div className="mt-2 font-light text-gray-600">
-                  {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
-                    new Date(upcoming)
-                  )}
-                </div>
-                <AddToCalendarButton
-                  name="Test-Event"
-                  startDate="2023-05-22"
-                  options={["Apple", "Google", "Yahoo", "iCal"]}
-                  onClick={() => alert("cli")}
-                ></AddToCalendarButton>
+              <div className="text-gray-800 text-7xl">
+                {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
+                  new Date(upcoming)
+                )}
               </div>
-            </div>
+              <div className="text-4xl text-gray-800 font-lexend">
+                {Intl.DateTimeFormat("pt-BR", { month: "long" })
+                  .format(new Date(upcoming))
+                  .charAt(0)
+                  .toUpperCase() +
+                  Intl.DateTimeFormat("pt-BR", { month: "long" })
+                    .format(new Date(upcoming))
+                    .slice(1)}
+              </div>
+              <div className="mt-2 mb-6 font-light text-gray-600">
+                {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
+                  new Date(upcoming)
+                )}
+              </div>
+              <AddToCalendarButton
+                buttonStyle="flat"
+                size="3"
+                language="pt"
+                hideBackground
+                hideCheckmark
+                // label="Adicionar ao calendário"
+                name={`Codante - ${
+                  upcomingData[upcoming.toString()][0].type === "workshop"
+                    ? "Workshop"
+                    : "Mini Projeto"
+                } - ${upcomingData[upcoming.toString()][0].name}`}
+                startDate={upcoming}
+                options={["Apple", "Google", "Yahoo", "iCal"]}
+              ></AddToCalendarButton>
+              <div></div>
+            </motion.div>
 
             {Object.values(upcomingData[upcoming])?.map((item: any) => (
-              <div className="text-right mb-36" key={`${item.type}_${item.id}`}>
+              <div
+                className="mb-10 text-right lg:mb-36"
+                key={`${item.type}_${item.id}`}
+              >
                 {item.type === "workshop" ? (
-                  <div className="inline-block lg:mr-10 ">
+                  <motion.div
+                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                    className="inline-block lg:mr-10 "
+                  >
                     <WorkshopCard workshop={item} />
-                  </div>
+                  </motion.div>
                 ) : null}
                 {item.type === "challenge" ? (
-                  <div className="inline-block lg:mr-10">
+                  <motion.div
+                    className="inline-block lg:mr-10"
+                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                  >
                     <ChallengeCard challenge={item} />
-                  </div>
+                  </motion.div>
                 ) : null}
               </div>
             ))}
