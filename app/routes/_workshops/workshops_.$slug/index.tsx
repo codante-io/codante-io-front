@@ -1,35 +1,16 @@
-import type {
-  LoaderArgs,
-  MetaDescriptor,
-  MetaFunction,
-  V2_MetaFunction,
-} from "@remix-run/node";
-import { json } from "@remix-run/node";
-import {
-  Link,
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
-} from "@remix-run/react";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import { useLoaderData, useOutletContext } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import CardItemDuration from "~/components/cards/card-item-duration";
 import TitleIcon from "~/components/title-icon";
-import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
 import {
   AiFillGithub,
   AiFillLinkedin,
-  AiFillPlayCircle,
   AiFillTwitterCircle,
 } from "react-icons/ai";
-import type { Lesson } from "~/models/lesson.server";
-import {
-  InformationCircleIcon,
-  LockClosedIcon,
-  XCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { Instructor } from "~/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -43,6 +24,7 @@ import MarkdownRenderer from "~/components/markdown-renderer";
 import { MdComputer } from "react-icons/md";
 import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (!data?.workshop) return {};
@@ -84,6 +66,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function WorkshopSlug() {
+  const { user } = useOutletContext();
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
 
@@ -126,6 +109,7 @@ export default function WorkshopSlug() {
           {/* Video */}
           {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
           <div className="mt-6 lg:mt-12">
+            <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
             <Subtitle text="Sobre o Workshop" />
             <div>
               <MarkdownRenderer markdown={workshop.description} />

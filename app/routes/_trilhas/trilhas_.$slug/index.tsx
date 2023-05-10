@@ -9,6 +9,7 @@ import ChallengeCard from "~/components/cards/challenge-card";
 import type { ChallengeCardInfo } from "~/models/challenge.server";
 import type { Workshop } from "~/models/workshop.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = `Trilha: ${data.track?.name} | Codante.io`;
@@ -59,6 +60,7 @@ export default function TrackSlug() {
         <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
           <CardItemDifficulty difficulty={2} />
         </div>
+        <AdminEditButton url={`/track/${track.id}/edit`} />
       </header>
       {/* layout */}
       <div className="flex flex-col items-center ">
