@@ -237,7 +237,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
                     className="inline-block mt-2 mr-4 text-sm font-light text-slate-500 dark:text-slate-300"
                   >
                     {Icon && (
-                      <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700" />
+                      <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700 dark:text-slate-700 dark:hover:text-slate-300" />
                     )}
                   </a>
                 );
