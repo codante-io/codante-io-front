@@ -36,14 +36,14 @@ export default function Schedule() {
             <motion.div
               whileInView={{ opacity: 1, y: "0" }}
               initial={{ opacity: 0, y: "100px" }}
-              className="z-20 p-4 mb-6 ml-4 text-left bg-gray-100 shadow-lg lg:mb-0"
+              className="z-20 p-4 mb-6 text-left bg-gray-100 shadow-lg lg:ml-4 dark:bg-gray-600 lg:mb-0"
             >
-              <div className="text-gray-800 text-7xl">
+              <div className="text-gray-800 dark:text-black text-7xl">
                 {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
                   new Date(upcoming)
                 )}
               </div>
-              <div className="text-4xl text-gray-800 font-lexend">
+              <div className="text-4xl text-gray-800 dark:text-black font-lexend">
                 {Intl.DateTimeFormat("pt-BR", { month: "long" })
                   .format(new Date(upcoming))
                   .charAt(0)
@@ -52,7 +52,7 @@ export default function Schedule() {
                     .format(new Date(upcoming))
                     .slice(1)}
               </div>
-              <div className="mt-2 mb-6 font-light text-gray-600">
+              <div className="mt-2 mb-6 font-light text-gray-600 dark:text-gray-800">
                 {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
                   new Date(upcoming)
                 )}
