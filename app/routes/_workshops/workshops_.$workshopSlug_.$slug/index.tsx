@@ -14,16 +14,16 @@ export async function loader({ params }: { params: any }) {
     !workshop ||
     !workshop.lessons.find((lesson: any) => lesson.slug === params.slug)
   ) {
-    abort404();
+    return abort404();
   }
 
-  return json({
+  return {
     slug: params.slug,
-    workshop: await getWorkshop(params.workshopSlug),
+    workshop: workshop,
     activeIndex: workshop.lessons.findIndex(
       (lesson: any) => lesson.slug === params.slug
     ),
-  });
+  };
 }
 
 export default function LessonIndex() {

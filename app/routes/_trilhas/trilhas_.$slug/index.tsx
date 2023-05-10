@@ -3,7 +3,6 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import TitleIcon from "~/components/title-icon";
 import { getTrack } from "~/models/track.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
@@ -63,27 +62,29 @@ export default function TrackSlug() {
       </header>
       {/* layout */}
       <div className="flex flex-col items-center ">
-        {track?.trackables.map(
-          (
-            workshopOrChallenge: ChallengeCardInfo | Workshop,
-            index: number
-          ) => (
-            <div className="flex flex-col items-center" key={index}>
-              {workshopOrChallenge?.pivot?.trackable_type.includes(
-                "Workshop"
-              ) ? (
-                <WorkshopCard workshop={workshopOrChallenge as Workshop} />
-              ) : (
-                <ChallengeCard
-                  challenge={workshopOrChallenge as ChallengeCardInfo}
-                />
-              )}
-              {index !== track?.trackables?.length - 1 && (
-                <div className="w-[1.5px] h-24 dark:bg-slate-600 bg-slate-200 mb-2" />
-              )}
-            </div>
-          )
-        )}
+        {track.trackables &&
+          track?.trackables.map(
+            (
+              workshopOrChallenge: ChallengeCardInfo | Workshop,
+              index: number
+            ) => (
+              <div className="flex flex-col items-center" key={index}>
+                {workshopOrChallenge?.pivot?.trackable_type.includes(
+                  "Workshop"
+                ) ? (
+                  <WorkshopCard workshop={workshopOrChallenge as Workshop} />
+                ) : (
+                  <ChallengeCard
+                    challenge={workshopOrChallenge as ChallengeCardInfo}
+                  />
+                )}
+                {track.trackables &&
+                  index !== track?.trackables?.length - 1 && (
+                    <div className="w-[1.5px] h-24 dark:bg-slate-600 bg-slate-200 mb-2" />
+                  )}
+              </div>
+            )
+          )}
       </div>
     </section>
   );

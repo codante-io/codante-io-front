@@ -23,7 +23,8 @@ export default function ChallengeResolutionSlug() {
       <section className="relative">
         <VimeoPlayer
           vimeoUrl={
-            workshop?.lessons.find((lesson) => lesson.slug === slug)?.video_url
+            workshop?.lessons.find((lesson) => lesson.slug === slug)
+              ?.video_url ?? ""
           }
         />
       </section>

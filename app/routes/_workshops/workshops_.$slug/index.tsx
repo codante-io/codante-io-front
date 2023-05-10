@@ -1,4 +1,9 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type {
+  LoaderArgs,
+  MetaDescriptor,
+  MetaFunction,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Link,
@@ -40,6 +45,7 @@ import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  if (!data?.workshop) return {};
   const title = `Workshop: ${data.workshop?.name} | Codante.io`;
   const description = data.workshop?.short_description ?? "";
   const imageUrl = getOgGeneratorUrl(
@@ -71,15 +77,15 @@ export const loader = async ({ params }: LoaderArgs) => {
 
   const workshop = await getWorkshop(params.slug);
   if (!workshop) {
-    abort404();
+    return abort404();
   }
 
-  return json({ slug: params.slug, workshop: await getWorkshop(params.slug) });
+  return { slug: params.slug, workshop };
 };
 
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
-  const workshop: Workshop = loaderData.workshop;
+  const workshop = loaderData?.workshop;
 
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
@@ -171,7 +177,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
     website: MdComputer,
   };
   return (
-    <div className="p-2 py-4 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
+    <div className="p-4 py-6 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
       <div className="flex items-center">
         <img
           src={instructor?.avatar_url}
@@ -217,19 +223,18 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
             opened ? "visible" : "invisible"
           } text-sm font-light text-slate-500 dark:text-slate-300 relative overflow-hidden`}
         >
-          <div className="p-4 ml-12">
-            <p>{instructor.bio}</p>
+          <div className=" [&>p]:mt-0 ">
+            <MarkdownRenderer markdown={instructor.bio} />
             <div>
-              {instructor.links?.map((link) => {
+              {instructor.links?.map((link, i) => {
                 const Icon = SocialIcons[link.type] ?? null;
-                console.log(Icon);
                 return (
                   <a
                     key={link.url}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block mt-8 mr-4 text-sm font-light text-slate-500 dark:text-slate-300"
+                    className="inline-block mt-2 mr-4 text-sm font-light text-slate-500 dark:text-slate-300"
                   >
                     {Icon && (
                       <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700" />
