@@ -40,7 +40,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               className="mb-2"
             />
             <div className="mb-8">
-              <h2 className="mb-1 text-lg text-gray-800 lg:text-xl dark:text-white">
+              <h2 className="mb-1 text-lg text-gray-800 lg:text-xl dark:text-white font-lexend">
                 {workshop?.name}
               </h2>
               <div className="min-h-[24px]">
@@ -73,7 +73,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               </div>
             </div>
             <div className="h-24 lg:mb-10">
-              <p className="w-full font-sans text-sm font-light md:text-base text-slate-600 dark:text-zinc-300 line-clamp-3 ">
+              <p className="w-full font-sans text-sm font-light md:text-base text-slate-600 dark:text-zinc-300 line-clamp-4 ">
                 {workshop?.short_description}
               </p>
             </div>

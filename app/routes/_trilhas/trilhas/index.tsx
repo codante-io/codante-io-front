@@ -14,7 +14,7 @@ export default function Workshops() {
   return (
     <main className="container mx-auto mt-10 text-center">
       <h1 className="mb-10 text-4xl font-lexend">Trilhas</h1>
-      <section className="grid grid-cols-1 gap-5 font-lexend">
+      <section className="grid grid-cols-1 gap-5 ">
         {tracks.map((track) => (
           <TrackCard key={track.slug} track={track} />
         ))}
