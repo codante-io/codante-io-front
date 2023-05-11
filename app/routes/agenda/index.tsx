@@ -34,9 +34,9 @@ export default function Schedule() {
               className="relative flex flex-wrap items-start justify-center max-w-5xl gap-6 mx-auto lg:justify-between lg:my-20"
             >
               <div
-                className={`absolute pointer-events-none w-full pt-0 pb-14 px-10 text-left text-black border-b-2  z-0   top-0 `}
+                className={`absolute pointer-events-none w-full pt-0 pb-14 px-10 text-left text-black border-b-2 dark:border-gray-700  z-0   top-0 `}
               ></div>
-              <div className="z-20 p-4 mb-0 text-left text-gray-800 bg-gray-100 shadow-lg dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
+              <div className="z-20 p-4 mb-0 text-center text-gray-800 bg-gray-100 rounded-lg shadow-lg lg:text-left dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
                 <div className="text-7xl">
                   {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
                     new Date(upcoming + "T00:00-0300") // esse espaço é necessário para a data funcionar corretamente
