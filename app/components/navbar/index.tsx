@@ -102,7 +102,7 @@ export default function Navbar({ user }: { user: any }) {
                         className={classNames(
                           item.current
                             ? "bg-transparent dark:hover:bg-gray-700 underline dark:bg-gray-dark dark:text-zinc-50 bg-white text-gray-700"
-                            : "text-gray-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                            : "text-gray-700 dark:text-zinc-300 hover:bg-background-200/20 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -216,7 +216,7 @@ export default function Navbar({ user }: { user: any }) {
                     className={classNames(
                       item.current
                         ? "dark:bg-gray-dark dark:text-zinc-50 bg-white text-gray-700 underline"
-                        : "text-gray-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                        : "text-gray-700 dark:text-zinc-300 hover:bg-background-200/20 dark:hover:bg-gray-700 hover:text-gray-900",
                       "block rounded-md px-3 py-2 text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}

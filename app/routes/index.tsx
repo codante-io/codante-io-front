@@ -38,7 +38,7 @@ export default function Index() {
       ?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <div className="flex flex-col items-center justify-center text-gray-900 dark:text-zinc-50">
+    <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
       <BackgroundBlur />
 
       <section
@@ -87,7 +87,7 @@ export default function Index() {
       </section>
       <section
         id="workshops"
-        className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-zinc-50"
+        className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50"
       >
         <div className="container mb-10">
           <h1 className="flex items-center mt-8 mb-4 text-3xl font-light sm:mt-16 font-lexend">
@@ -99,7 +99,7 @@ export default function Index() {
             <span className="italic font-bold">workshops</span> ensinados por
             profissionais do mercado
           </p>
-          <section className="grid grid-cols-1 gap-4 px-0 lg:grid-cols-2">
+          <section className="grid justify-center grid-cols-1 gap-4 px-0 lg:grid-cols-2">
             {homeInfo?.featured_workshops?.map((workshop) => (
               <WorkshopCard key={workshop.id} workshop={workshop} />
             ))}
@@ -107,7 +107,7 @@ export default function Index() {
           <section className="flex justify-center w-full mt-10">
             <Link
               to="/workshops"
-              className="px-4 py-2 rounded-full bg-slate-100 dark:bg-gray-dark "
+              className="px-4 py-2 rounded-full bg-background-100 dark:bg-background-700"
             >
               Ver todos
             </Link>
@@ -117,7 +117,7 @@ export default function Index() {
       <Wave position="top" />
       <section
         id="mini-projects"
-        className="flex justify-center w-full text-gray-800 dark:bg-gray-800 bg-slate-100 dark:text-zinc-50"
+        className="flex justify-center w-full text-gray-800 dark:bg-background-700 bg-background-100 dark:text-gray-50"
       >
         <div className="container relative -top-12">
           <h1 className="flex items-center mt-16 mb-4 text-3xl font-light font-lexend">
@@ -149,7 +149,7 @@ export default function Index() {
       <Wave position="bottom" />
       <section
         id="tracks"
-        className="flex justify-center w-full text-gray-800 bg-transparent dark:text-zinc-50"
+        className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50"
       >
         <div className="container relative mb-6 top-4">
           <h1 className="flex items-center mb-4 text-3xl font-light font-lexend">
@@ -170,7 +170,7 @@ export default function Index() {
           <section className="flex justify-center w-full mt-2 mb-12">
             <Link
               to="/trilhas"
-              className="px-4 py-2 rounded-full bg-slate-100 dark:bg-gray-dark "
+              className="px-4 py-2 rounded-full bg-background-50 dark:bg-background-700 "
             >
               Ver todas
             </Link>
@@ -180,7 +180,7 @@ export default function Index() {
 
       <section
         id="pricing"
-        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-zinc-50"
+        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-gray-50"
       >
         <div className="container flex flex-col items-center">
           <h1 className="mt-16 text-3xl font-light font-lexend">Preços</h1>

@@ -22,7 +22,7 @@ function TrackCard({ track }: { track: Track }) {
         to={`/trilhas/${track?.slug}`}
         className="cursor-pointer"
       >
-        <article className="relative border-[1.5px] border-slate-300 dark:border-slate-600 rounded-2xl bg-background-100 dark:bg-gray-dark mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col md:flex-row">
+        <article className="relative border-[1.5px] border-gray-300 dark:border-background-600 rounded-2xl bg-background-50 dark:bg-background-700 mb-4 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col md:flex-row">
           {track?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <div
@@ -31,7 +31,7 @@ function TrackCard({ track }: { track: Track }) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="w-auto m-4 mb-0 bg-white md:mb-4 dark:bg-slate-700 track-image md:w-36 h-36 rounded-xl"
+            className="w-auto h-40 m-4 mb-0 bg-white md:mb-4 dark:bg-slate-700 track-image md:w-40 rounded-xl"
           ></div>
           <div className="flex flex-col justify-between flex-1 px-6 py-4 text-left">
             <div>
@@ -41,7 +41,7 @@ function TrackCard({ track }: { track: Track }) {
                   className="mb-2"
                 />
                 <div>
-                  <h2 className="mb-2 text-xl text-gray-800 dark:text-zinc-50 font-lexend">
+                  <h2 className="mb-2 text-xl text-gray-800 dark:text-gray-50 font-lexend">
                     {track?.name}
                   </h2>
                   <div>
@@ -50,7 +50,7 @@ function TrackCard({ track }: { track: Track }) {
                         <CardItemTag
                           tagName={tag.name}
                           key={tag.id}
-                          className="text-white bg-blue-900 dark:bg-blue-900 dark:text-zinc-50"
+                          className="text-white bg-blue-900 dark:bg-blue-900 dark:text-gray-50"
                         />
                       );
                     })}
@@ -58,7 +58,7 @@ function TrackCard({ track }: { track: Track }) {
                 </div>
               </div>
 
-              <p className="w-full font-light text-slate-600 dark:text-zinc-300 line-clamp-3 ">
+              <p className="w-full font-light text-gray-600 dark:text-gray-300 line-clamp-2">
                 {track?.short_description}
               </p>
             </div>

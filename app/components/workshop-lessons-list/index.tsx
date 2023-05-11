@@ -36,11 +36,11 @@ export default function WorkshopLessonsList({
           >
             <span className={`mr-3 text-sm text-brand`}>{id + 1}.</span>
             <h4
-              className={`flex-1 inline-block mr-2 text-slate-700 dark:text-zinc-50`}
+              className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
             >
               {lesson.name}
             </h4>
-            <span className="text-sm dark:text-background-300 text-slate-500">
+            <span className="text-sm dark:text-gray-300 text-gray-500">
               {fromSecondsToTimeString(lesson.duration_in_seconds)}
             </span>
           </li>

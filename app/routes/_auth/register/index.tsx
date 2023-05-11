@@ -45,7 +45,7 @@ export default function Register() {
       </div>
 
       <AuthCard>
-        <h1 className="mb-8 text-lg text-slate-700 dark:text-zinc-50">
+        <h1 className="mb-8 text-lg text-gray-700 dark:text-gray-50">
           Cadastre-se
         </h1>
         <Form method="POST" className="flex flex-col">
@@ -100,7 +100,7 @@ export default function Register() {
           </div>
         </Form>
       </AuthCard>
-      <p className={` text-xs font-light text-slate-500 mb-2 text-right mt-4`}>
+      <p className={` text-xs font-light text-gray-500 mb-2 text-right mt-4`}>
         ... ou, se preferir, entre com{" "}
         <Link to="/login" className="underline">
           github
