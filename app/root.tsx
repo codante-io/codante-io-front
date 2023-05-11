@@ -56,7 +56,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="text-gray-800 bg-white dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-gray-50">
+      <body className="text-gray-800 bg-white dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-white">
         <script
           dangerouslySetInnerHTML={{
             __html: DarkModeScriptInnerHtml,
@@ -76,7 +76,7 @@ export default function App() {
         <LiveReload />
         <Toaster
           toastOptions={{
-            className: "bg-gray-50 dark:bg-gray-dark dark:text-gray-50",
+            className: "bg-gray-50 dark:bg-gray-dark dark:text-white",
           }}
         />
         {process.env.NODE_ENV !== "production" && (

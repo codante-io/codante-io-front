@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef } from "react";
+import React from "react";
 
 type CardItemDifficultyProps = ComponentPropsWithoutRef<"div"> & {
   difficulty: number;
@@ -10,7 +11,7 @@ export default function CardItemDifficulty({
 }: CardItemDifficultyProps) {
   return (
     <div {...classes}>
-      <span className="mr-3 text-xs font-bold tracking-wide text-gray-600 dark:text-gray-400">
+      <span className="mr-3 text-xs font-bold tracking-wide text-gray-500 dark:text-zinc-400">
         Nível
       </span>
       <span

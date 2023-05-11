@@ -22,7 +22,7 @@ export default function JoinChallengeSection({
 
   return (
     <article
-      className={`${className} relative w-full bg-white dark:bg-gray-dark shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-gray-600`}
+      className={`${className} relative w-full bg-white dark:bg-gray-dark shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-slate-600`}
     >
       <>
         <nav aria-label="Progress" className="m-4">
@@ -66,7 +66,7 @@ export default function JoinChallengeSection({
                           <span className="text-sm font-medium">
                             {step.name}
                           </span>
-                          <span className="mt-1 text-xs text-gray-500 dark:text-gray-300">
+                          <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                             {step.description}
                           </span>
                         </span>
@@ -94,7 +94,7 @@ export default function JoinChallengeSection({
                         </span>
                         <span className="flex flex-col min-w-0 ml-4">
                           <span className="text-sm font-bold">{step.name}</span>
-                          <span className="mt-1 text-xs text-gray-500 dark:text-gray-300">
+                          <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                             <span
                               dangerouslySetInnerHTML={{
                                 __html: step.description,
@@ -140,10 +140,10 @@ export default function JoinChallengeSection({
                           </span>
                         </span>
                         <span className="flex flex-col min-w-0 ml-4">
-                          <span className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                             {step.name}
                           </span>
-                          <span className="mt-1 text-xs text-gray-500 dark:text-gray-300">
+                          <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                             {step.description}
                           </span>
                         </span>
