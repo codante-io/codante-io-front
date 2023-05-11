@@ -6,6 +6,7 @@ import { AddToCalendarButton } from "add-to-calendar-button-react";
 import { motion } from "framer-motion";
 
 import { getUpcoming } from "~/models/upcoming.server";
+import { useColorMode } from "~/contexts/color-mode-context";
 
 export async function loader({ request }: { request: Request }) {
   const upcomingData = await getUpcoming();
@@ -17,6 +18,7 @@ export async function loader({ request }: { request: Request }) {
 
 export default function Schedule() {
   const { upcomingData } = useLoaderData<typeof loader>();
+  const { colorMode } = useColorMode();
 
   return (
     <main className="container mx-auto mt-10 text-center">
@@ -24,24 +26,22 @@ export default function Schedule() {
 
       <div>
         {Object.keys(upcomingData)?.map((upcoming, i) => (
-          <div
+          <motion.div
+            whileInView={{ opacity: 1, y: "0" }}
+            initial={{ opacity: 0, y: "100px" }}
             key={upcoming}
-            className="relative flex flex-wrap items-start justify-between lg:my-20"
+            className="relative flex flex-wrap items-start justify-center max-w-5xl gap-6 mx-auto lg:justify-between lg:my-20"
           >
             <div
               className={`absolute pointer-events-none w-full pt-0 pb-14 px-10 text-left text-black border-b-2  z-0   top-0 `}
             ></div>
-            <motion.div
-              whileInView={{ opacity: 1, y: "0" }}
-              initial={{ opacity: 0, y: "100px" }}
-              className="z-20 p-4 mb-6 text-left bg-gray-100 shadow-lg lg:ml-4 dark:bg-gray-600 lg:mb-0"
-            >
-              <div className="text-gray-800 dark:text-black text-7xl">
+            <div className="z-20 p-4 mb-0 text-left text-gray-800 bg-gray-100 shadow-lg dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
+              <div className="text-7xl">
                 {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
                   new Date(upcoming)
                 )}
               </div>
-              <div className="text-4xl text-gray-800 dark:text-black font-lexend">
+              <div className="text-4xl font-lexend">
                 {Intl.DateTimeFormat("pt-BR", { month: "long" })
                   .format(new Date(upcoming))
                   .charAt(0)
@@ -50,19 +50,21 @@ export default function Schedule() {
                     .format(new Date(upcoming))
                     .slice(1)}
               </div>
-              <div className="mt-2 mb-6 font-light text-gray-600 dark:text-gray-800">
+              <div className="mt-2 mb-3 font-light text-gray-600 dark:text-gray-500">
                 {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
                   new Date(upcoming)
                 )}
               </div>
+              <hr className="mx-8 mb-3 text-xs text-gray-400 text-light"></hr>
               <AddToCalendarButton
-                buttonStyle="flat"
+                buttonStyle="date"
                 size="3"
                 language="pt"
                 hideBackground
                 hideCheckmark
+                lightMode={colorMode === "light" ? "light" : "dark"}
                 // label="Adicionar ao calendário"
-                name={`Codante - ${
+                name={`[Codante] ${
                   upcomingData[upcoming.toString()][0].type === "workshop"
                     ? "Workshop"
                     : "Mini Projeto"
@@ -71,7 +73,7 @@ export default function Schedule() {
                 options={["Apple", "Google", "Yahoo", "iCal"]}
               ></AddToCalendarButton>
               <div></div>
-            </motion.div>
+            </div>
 
             {Object.values(upcomingData[upcoming])?.map((item: any) => (
               <div
@@ -98,7 +100,7 @@ export default function Schedule() {
                 ) : null}
               </div>
             ))}
-          </div>
+          </motion.div>
         ))}
       </div>
     </main>
