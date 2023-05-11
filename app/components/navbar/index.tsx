@@ -14,6 +14,7 @@ import switchSound from "./switch.mp3";
 import useSound from "use-sound";
 import { AnimatePresence, motion } from "framer-motion";
 import type { User } from "~/models/user.server";
+import { setActiveClassForPath } from "~/utils/path-utils";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -107,8 +108,8 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-transparent dark:hover:bg-gray-700 underline dark:bg-gray-dark dark:text-white bg-white text-gray-700"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900",
+                            ? "bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-700 underline dark:text-white  text-gray-700"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -118,7 +119,11 @@ export default function Navbar({ user }: { user: any }) {
                     ))}
                     <Link
                       to="/agenda"
-                      className="px-3 py-1.5 font-medium text-gray-700 rounded-md cursor-pointer dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900"
+                      className={`px-3 py-1.5 font-medium text-gray-700 rounded-md cursor-pointer dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 ${setActiveClassForPath(
+                        matches,
+                        "/agenda",
+                        "bg-gray-200 dark:bg-gray-700"
+                      )}`}
                     >
                       <CalendarDaysIcon className="w-6 h-6 " />
                     </Link>
@@ -177,7 +182,11 @@ export default function Navbar({ user }: { user: any }) {
                 <Disclosure.Button
                   as="a"
                   href="/agenda"
-                  className="block px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900"
+                  className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-gray-700 hover:text-gray-900 ${setActiveClassForPath(
+                    matches,
+                    "/agenda",
+                    "dark:bg-gray-dark dark:text-white bg-white text-gray-700 underline"
+                  )} `}
                 >
                   Agenda
                 </Disclosure.Button>

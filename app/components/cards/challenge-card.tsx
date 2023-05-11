@@ -55,7 +55,7 @@ export default function ChallengeCard({
               <div className="tags">
                 {challenge?.tags?.map((tag) => (
                   <CardItemTag
-                    key={tag.id}
+                    key={tag.name}
                     tagName={tag.name}
                     className="bg-blue-900 text-slate-300"
                   />
