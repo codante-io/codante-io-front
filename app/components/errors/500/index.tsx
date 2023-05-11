@@ -5,11 +5,11 @@ export function Error500({ error = null }: { error?: any }) {
   return (
     <div className="container py-20 mx-auto">
       <p className="mb-6 text-lg font-light text-brand">500</p>
-      <h1 className="mb-6 text-5xl font-bold font-lexend dark:text-slate-300">
+      <h1 className="mb-6 text-5xl font-bold font-lexend dark:text-zinc-300">
         Ops...
       </h1>
-      <p className="dark:text-slate-500">Alguma coisa deu errada...</p>
-      <p className="mb-10 dark:text-slate-500 ">
+      <p className="dark:text-zinc-400">Alguma coisa deu errada...</p>
+      <p className="mb-10 dark:text-zinc-400">
         Se o erro persistir, entra em contato com a gente!
       </p>
       {process.env.NODE_ENV !== "production" ? (

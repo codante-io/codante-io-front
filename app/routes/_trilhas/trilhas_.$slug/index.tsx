@@ -54,7 +54,7 @@ export default function TrackSlug() {
             {track.name}
           </h1>
         </div>
-        <p className="max-w-3xl dark:text-slate-50 text-slate-600">
+        <p className="max-w-3xl dark:text-zinc-50 text-slate-600">
           {track.short_description}
         </p>
         <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">

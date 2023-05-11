@@ -98,7 +98,7 @@ function ResolutionSection({
         Resolução
       </h1>
       {!isAvailable && (
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-gray-400">
           Esta resolução será publicada em breve!{" "}
           {/* <button className="text-xs underline text-brand">Me avise!</button> */}
         </p>

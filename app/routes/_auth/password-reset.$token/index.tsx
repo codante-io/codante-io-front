@@ -53,7 +53,7 @@ export default function PasswordReset() {
 
   return (
     <AuthCard>
-      <h1 className="text-lg text-slate-700 dark:text-white">
+      <h1 className="text-lg text-gray-700 dark:text-gray-50">
         Redefinir Senha
       </h1>
       {!isSuccessfulSubmission ? (
@@ -89,7 +89,7 @@ export default function PasswordReset() {
           </div>
         </Form>
       ) : (
-        <div className="mt-8 text-sm font-light text-slate-500 text-slate-400">
+        <div className="mt-8 text-sm font-light text-gray-500 text-gray-400">
           Tudo certo! Você redefiniu uma nova senha. Agora, é só fazer o login
           normalmente.
         </div>
