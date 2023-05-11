@@ -72,7 +72,7 @@ export default function Schedule() {
                   } - ${upcomingData[upcoming.toString()][0].name}`}
                   startDate={upcoming}
                   timeZone="America/Sao_Paulo"
-                  styleDark="--btn-shadow: ''; --btn-shadow-hover: ''; --btn-background: #17212B; --btn-background-hover: #0E141A; --list-background: '#17212B'; --btn-border:#475569"
+                  styleDark="--btn-shadow: ''; --btn-shadow-hover: ''; --btn-background: #17212B; --btn-background-hover: #0E141A; --list-background: #17212B; --list-background-hover: #0E141A; --btn-border:#475569"
                   styleLight="--btn-shadow: ''; --btn-shadow-hover: '';"
                   options={[
                     "Google",
