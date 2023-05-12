@@ -78,7 +78,7 @@ export default function Login() {
             <LoadingButton
               status={status}
               type="submit"
-              className="relative w-full text-white transition duration-200  rounded-lg [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>*]:w-full [&>*]:gap-4 [&>*]:p-2 [&>*]:text-white [&>*]:transition [&>*]:duration-200 [&>*]:text-lg hover:bg-opacity-90 bg-gray-700 "
+              className="relative w-full text-white transition duration-200  rounded-lg [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>*]:w-full [&>*]:gap-4 [&>*]:p-2 [&>*]:text-white [&>*]:transition [&>*]:duration-200 [&>*]:text-lg hover:bg-opacity-90 bg-background-700 "
             >
               <img src="/img/github-logo.svg" alt="" />
               Entrar com GitHub
@@ -87,7 +87,7 @@ export default function Login() {
         </AuthCard>
 
         <AuthCard className={opened ? "" : "hidden"}>
-          <h1 className="mb-8 text-lg text-slate-700 dark:text-zinc-50">
+          <h1 className="mb-8 text-lg text-gray-700 dark:text-gray-50">
             Login
           </h1>
           <Form method="POST" className="flex flex-col ">
@@ -130,7 +130,7 @@ export default function Login() {
           </Form>
         </AuthCard>
         <p
-          className={`text-center sm:text-left text-xs font-light text-slate-500 mb-2 mt-4`}
+          className={`text-center sm:text-left text-xs font-light text-gray-500 mb-2 mt-4`}
         >
           ... ou, se preferir, entre com{" "}
           <button

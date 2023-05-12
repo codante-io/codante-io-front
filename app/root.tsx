@@ -76,7 +76,8 @@ export default function App() {
         <LiveReload />
         <Toaster
           toastOptions={{
-            className: "bg-gray-50 dark:bg-gray-dark dark:text-gray-50",
+            className:
+              "bg-background-50 dark:bg-background-800 dark:text-gray-50",
           }}
         />
         {process.env.NODE_ENV !== "production" && (

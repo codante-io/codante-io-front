@@ -31,7 +31,7 @@ function TrackCard({ track }: { track: Track }) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="w-auto h-40 m-4 mb-0 bg-white md:mb-4 dark:bg-slate-700 track-image md:w-40 rounded-xl"
+            className="w-auto h-40 m-4 mb-0 bg-white md:mb-4 dark:bg-background-700 track-image md:w-40 rounded-xl"
           ></div>
           <div className="flex flex-col justify-between flex-1 px-6 py-4 text-left">
             <div>

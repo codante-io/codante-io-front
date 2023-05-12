@@ -44,7 +44,7 @@ function H1WithDivider({
   return (
     <>
       <h1 {...props}>{children}</h1>
-      <div className="w-full h-[1px] mt-2 mb-6 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+      <div className="w-full h-[1px] mt-2 mb-6 rounded-full bg-background-200 dark:bg-background-700"></div>
     </>
   );
 }
@@ -59,7 +59,7 @@ function H2WithDivider({
   return (
     <>
       <h2 {...props}>{children}</h2>
-      <div className="w-full h-[1px] mt-2 mb-6 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+      <div className="w-full h-[1px] mt-2 mb-6 rounded-full bg-background-200 dark:bg-background-700"></div>
     </>
   );
 }
@@ -75,7 +75,7 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
   code: {
     component: getCodeComponent(colorMode),
     props: {
-      className: "dark:bg-gray-dark bg-gray-200 p-4 rounded-lg",
+      className: "dark:bg-background-800 bg-background-200 p-4 rounded-lg",
     },
   },
 

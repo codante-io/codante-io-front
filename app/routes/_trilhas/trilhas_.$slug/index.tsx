@@ -54,10 +54,10 @@ export default function TrackSlug() {
             {track.name}
           </h1>
         </div>
-        <p className="max-w-3xl dark:text-zinc-50 text-slate-600">
+        <p className="max-w-3xl dark:text-gray-50 text-gray-600">
           {track.short_description}
         </p>
-        <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
+        <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-200 dark:bg-background-800 rounded-xl">
           <CardItemDifficulty difficulty={2} />
         </div>
         <AdminEditButton url={`/track/${track.id}/edit`} />
@@ -82,7 +82,7 @@ export default function TrackSlug() {
                 )}
                 {track.trackables &&
                   index !== track?.trackables?.length - 1 && (
-                    <div className="w-[1.5px] h-24 dark:bg-slate-600 bg-slate-200 mb-2" />
+                    <div className="w-[1.5px] h-24 dark:bg-background-600 bg-background-200 mb-2" />
                   )}
               </div>
             )

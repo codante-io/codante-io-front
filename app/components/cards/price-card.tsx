@@ -9,11 +9,11 @@ export default function PriceCard({
   price: any;
 }) {
   return (
-    <article className="relative w-[300px] bg-white dark:bg-gray-dark shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-background-600">
+    <article className="relative w-[300px] bg-white dark:bg-background-800 shadow-md rounded-2xl py-6 px-10 pt-3 font-lexend border-[1.5px] border-gray-300 dark:border-background-600">
       {price?.banner && <CardItemRibbon text={price?.banner} />}
 
       <div className="mb-8 card-header">
-        <h2 className="mb-1 text-lg text-center text-slate-600 dark:text-gray-50">
+        <h2 className="mb-1 text-lg text-center text-gray-600 dark:text-gray-50">
           {price?.name}
         </h2>
       </div>
@@ -29,7 +29,7 @@ export default function PriceCard({
       </Link>
       <div className="h-[1px] bg-background-500/30 w-full my-4" />
 
-      <ul className="mt-8 space-y-3 text-sm leading-6 dark:text-gray-50 text-slate-600">
+      <ul className="mt-8 space-y-3 text-sm leading-6 dark:text-gray-50 text-gray-600">
         {Object.entries(price?.features)?.map(
           ([feature, isAvailable], index) => (
             <li className="flex text-start gap-x-3" key={index}>

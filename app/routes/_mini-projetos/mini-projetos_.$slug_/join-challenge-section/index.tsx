@@ -22,7 +22,7 @@ export default function JoinChallengeSection({
 
   return (
     <article
-      className={`${className} relative w-full bg-white dark:bg-gray-dark shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-gray-600`}
+      className={`${className} relative w-full bg-white dark:bg-background-800 shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 dark:border-gray-600`}
     >
       <>
         <nav aria-label="Progress" className="m-4">
