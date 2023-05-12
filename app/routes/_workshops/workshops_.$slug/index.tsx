@@ -1,5 +1,5 @@
 import type { LoaderArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData, useOutletContext } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import CardItemDuration from "~/components/cards/card-item-duration";
@@ -66,7 +66,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 };
 
 export default function WorkshopSlug() {
-  const { user } = useOutletContext();
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
 
