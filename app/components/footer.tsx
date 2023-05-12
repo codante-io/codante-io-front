@@ -82,7 +82,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-transparent dark:bg-gray-darkest">
+    <footer className="bg-transparent dark:bg-background-900">
       <div className="px-6 py-12 mx-auto max-w-7xl md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
           {navigation.map((item) => (

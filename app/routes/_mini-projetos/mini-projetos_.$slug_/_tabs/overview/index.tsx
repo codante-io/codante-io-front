@@ -98,7 +98,7 @@ function ResolutionSection({
         Resolução
       </h1>
       {!isAvailable && (
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-gray-400">
           Esta resolução será publicada em breve!{" "}
           {/* <button className="text-xs underline text-brand">Me avise!</button> */}
         </p>
@@ -113,13 +113,13 @@ function ResolutionSection({
         </Link>
       ) : (
         <div
-          className={`relative w-full aspect-video max-w-full max-h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center rounded-lg mt-6 mb-20 ${
+          className={`relative w-full aspect-video max-w-full max-h-full bg-background-200 dark:bg-background-800 flex items-center justify-center rounded-lg mt-6 mb-20 ${
             !isAvailable && "cursor-not-allowed"
           }`}
         >
           {!isAvailable && <CardItemRibbon text="Disponível em breve" />}
           <span
-            className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-slate-100 ${
+            className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-background-100 ${
               !isAvailable && "cursor-not-allowed"
             }`}
           >
