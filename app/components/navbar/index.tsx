@@ -43,7 +43,7 @@ export default function Navbar({ user }: { user: any }) {
   return (
     <Disclosure
       as="nav"
-      className="text-gray-900 bg-transparent data-[headlessui-state=open]:bg-white dark:data-[headlessui-state=open]:bg-gray-darkest lg:bg-transparent"
+      className="text-gray-900 bg-transparent data-[headlessui-state=open]:bg-white dark:data-[headlessui-state=open]:bg-background-900 lg:bg-transparent"
     >
       {({ open }) => (
         <>
@@ -52,7 +52,7 @@ export default function Navbar({ user }: { user: any }) {
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button
-                  className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-zinc-50 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-zinc-50 hover:bg-background-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                   onClick={() => playSound()}
                 >
                   <span className="sr-only">Open main menu</span>
@@ -101,8 +101,8 @@ export default function Navbar({ user }: { user: any }) {
                         to={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-transparent dark:hover:bg-gray-700 underline dark:bg-gray-dark dark:text-zinc-50 bg-white text-gray-700"
-                            : "text-gray-700 dark:text-zinc-300 hover:bg-background-200/20 dark:hover:bg-gray-700 hover:text-gray-900",
+                            ? "bg-transparent dark:hover:bg-background-700 underline dark:bg-background-800 dark:text-zinc-50 bg-white text-gray-700"
+                            : "text-gray-700 dark:text-zinc-300 hover:bg-background-200/20 dark:hover:bg-background-700 hover:text-gray-900",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -143,7 +143,7 @@ export default function Navbar({ user }: { user: any }) {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-dark ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-background-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           <>
                             <div className="block px-4 py-2 text-xs font-light text-gray-500 dark:text-zinc-300">
@@ -157,7 +157,9 @@ export default function Navbar({ user }: { user: any }) {
                             <Link
                               to="/conta"
                               className={classNames(
-                                active ? "dark:bg-gray-800/50 bg-gray-50" : "",
+                                active
+                                  ? "dark:bg-background-800/50 bg-background-50"
+                                  : "",
                                 "block px-4 py-2 text-sm dark:text-zinc-50 text-gray-700"
                               )}
                             >
@@ -171,7 +173,7 @@ export default function Navbar({ user }: { user: any }) {
                               <button
                                 className={classNames(
                                   active
-                                    ? "dark:bg-gray-800/50 bg-gray-50"
+                                    ? "dark:bg-background-800/50 bg-background-50"
                                     : "",
                                   "block px-4 py-2 text-sm dark:text-zinc-50 text-gray-700 w-full text-left"
                                 )}
@@ -205,7 +207,7 @@ export default function Navbar({ user }: { user: any }) {
               initial={{ opacity: 0, height: 0 }}
               exit={{ height: 0, transition: { duration: 0.2 } }}
               key="mobile-menu"
-              className="px-2 space-y-1 overflow-hidden bg-white border-b-2 dark:border-slate-600 dark:bg-gray-darkest"
+              className="px-2 space-y-1 overflow-hidden bg-white border-b-2 dark:border-slate-600 dark:bg-background-900"
             >
               <div className="py-2">
                 {navigation.map((item) => (
@@ -215,8 +217,8 @@ export default function Navbar({ user }: { user: any }) {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? "dark:bg-gray-dark dark:text-zinc-50 bg-white text-gray-700 underline"
-                        : "text-gray-700 dark:text-zinc-300 hover:bg-background-200/20 dark:hover:bg-gray-700 hover:text-gray-900",
+                        ? "dark:bg-background-800 dark:text-zinc-50 bg-white text-gray-700 underline"
+                        : "text-gray-700 dark:text-zinc-300 hover:bg-background-200/20 dark:hover:bg-background-700 hover:text-gray-900",
                       "block rounded-md px-3 py-2 text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}

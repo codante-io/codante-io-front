@@ -70,7 +70,7 @@ export default function Index() {
               </button>
               {!user && (
                 <Link to="/login">
-                  <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-slate-200">
+                  <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-background-200">
                     <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
                     Cadastre-se
                   </button>
@@ -79,7 +79,7 @@ export default function Index() {
             </>
           </div>
           <div className="w-[320px] h-[180px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] lg:w-[800px] lg:h-[450px] bg-black flex items-center justify-center rounded-lg mt-10 mb-10 sm:mb-20">
-            <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-slate-100">
+            <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-background-100">
               <BsFillPlayFill size={24} color="#5282FF" />
             </button>
           </div>
@@ -139,7 +139,7 @@ export default function Index() {
           <section className="flex justify-center w-full mt-10">
             <Link
               to="/mini-projetos"
-              className="px-4 py-2 bg-white rounded-full dark:bg-gray-dark"
+              className="px-4 py-2 bg-white rounded-full dark:bg-background-800"
             >
               Ver todos
             </Link>
@@ -180,7 +180,7 @@ export default function Index() {
 
       <section
         id="pricing"
-        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-gray-darkest dark:text-gray-50"
+        className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-background-900 dark:text-gray-50"
       >
         <div className="container flex flex-col items-center">
           <h1 className="mt-16 text-3xl font-light font-lexend">Preços</h1>
