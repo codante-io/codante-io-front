@@ -5,10 +5,7 @@ import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import CardItemLessonsCount from "./card-item-lessons-count";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
-import {
-  fromSecondsToTimeString,
-  fromSecondsToTimeStringWithoutSeconds,
-} from "~/utils/interval";
+import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
@@ -32,7 +29,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            className="w-full md:w-56 lg:w-40 xl:w-56 h-40 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.slate.100')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.gray.dark')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
+            className="w-full md:w-56 lg:w-40 xl:w-56 h-40 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
           ></div>
           <div className="flex-1 px-6 py-4 -mt-10 text-left md:mt-0">
             <CardItemDifficulty
