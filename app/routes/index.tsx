@@ -79,7 +79,7 @@ export default function Index() {
               )}
             </>
           </div>
-          <div className="relative flex-1 w-full mt-4 lg:mt-10">
+          <div className="relative flex-1 w-full max-w-4xl mt-4 lg:mt-10">
             <VimeoPlayer vimeoUrl="https://player.vimeo.com/video/827298711" />
           </div>
         </div>
