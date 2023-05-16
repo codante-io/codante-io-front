@@ -74,7 +74,7 @@ export default function WorkshopSlug() {
       {workshop.status === "soon" && (
         <BannerAlert
           title="Ei! Esse workshop ainda não aconteceu!"
-          subtitle="Você poderá assistir ao vivo quando ele for ao ar!"
+          subtitle="Você poderá assistir ao vivo quando ele for ao ar - ou posteriormente assistir à gravação!"
         />
       )}
       {/* Header */}
