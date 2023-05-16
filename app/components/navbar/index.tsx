@@ -1,7 +1,12 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { UserCircleIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
-import { Form, Link, useMatches } from "@remix-run/react";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  UserCircleIcon,
+  CalendarDaysIcon,
+} from "@heroicons/react/24/outline";
+import { Form, Link, NavLink, useMatches } from "@remix-run/react";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { BsArrowRight } from "react-icons/bs";
@@ -27,17 +32,14 @@ export default function Navbar({ user }: { user: any }) {
     {
       name: "Workshops",
       href: "/workshops",
-      current: id.includes("workshops"),
     },
     {
       name: "Mini Projetos",
       href: "/mini-projetos",
-      current: id.includes("mini-projetos"),
     },
     {
       name: "Trilhas",
       href: "/trilhas",
-      current: id.includes("trilhas"),
     },
     // { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
   ];
@@ -97,31 +99,35 @@ export default function Navbar({ user }: { user: any }) {
                 <div className="hidden sm:ml-6 sm:pt-4 sm:block">
                   <div className="flex items-center space-x-2 md:space-x-4">
                     {navigation.map((item) => (
-                      <Link
+                      <NavLink
                         prefetch="intent"
                         key={item.name}
                         to={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 underline dark:text-white  text-gray-700"
-                            : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
+                        className={({ isActive }) =>
+                          classNames(
+                            isActive
+                              ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 underline dark:text-white  text-gray-700"
+                              : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )
+                        }
                       >
                         {item.name}
-                      </Link>
+                      </NavLink>
                     ))}
-                    <Link
+                    <NavLink
                       to="/agenda"
-                      className={`px-3 py-1.5 font-medium text-gray-700 rounded-md cursor-pointer dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
-                        matches,
-                        "/agenda",
-                        "bg-background-100/70 dark:bg-background-700"
-                      )}`}
+                      className={({ isActive }) =>
+                        classNames(
+                          isActive
+                            ? "bg-background-100/70 dark:bg-background-700"
+                            : "",
+                          "px-3 py-1.5 font-medium text-gray-700 rounded-md cursor-pointer dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                        )
+                      }
                     >
                       <CalendarDaysIcon className="w-6 h-6 " />
-                    </Link>
+                    </NavLink>
                   </div>
                 </div>
               </div>
