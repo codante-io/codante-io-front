@@ -64,7 +64,7 @@ export default function LessonIndex() {
               <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
                 {workshop.lessons.find((lesson) => lesson.slug === slug)?.name}
               </h1>
-              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-slate-300 text-slate-500">
+              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-gray-300 text-gray-500">
                 {
                   workshop.lessons.find((lesson) => lesson.slug === slug)
                     ?.description

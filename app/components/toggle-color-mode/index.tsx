@@ -48,12 +48,12 @@ export default function ToggleColorMode() {
   return (
     <div
       onClick={handleClick}
-      className={`flex-start flex h-6 w-10 rounded-full bg-slate-100 items-center px-[2px] shadow-inner hover:cursor-pointer dark:bg-gray-dark ${
+      className={`flex-start flex h-6 w-10 rounded-full bg-background-100 items-center px-[2px] shadow-inner hover:cursor-pointer dark:bg-background-800 ${
         colorMode === "light" && "place-content-end"
       }`}
     >
       <motion.div
-        className="flex items-center justify-center w-5 h-5 rounded-full bg-slate-200/50 dark:bg-gray-darkest"
+        className="flex items-center justify-center w-5 h-5 rounded-full bg-background-200/50 dark:bg-background-900"
         layout
         transition={{ ...spring, staggerChildren: 0.07 }}
       >

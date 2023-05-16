@@ -23,7 +23,7 @@ export default function PasswordReset() {
 
   return (
     <AuthCard>
-      <h1 className="text-lg text-slate-700 dark:text-white">
+      <h1 className="text-lg text-gray-700 dark:text-gray-50">
         Redefinir Senha
       </h1>
       {!isSuccessfulSubmission ? (
@@ -47,7 +47,7 @@ export default function PasswordReset() {
           </div>
         </Form>
       ) : (
-        <div className="mt-8 text-sm font-light text-slate-500 dark:text-slate-400">
+        <div className="mt-8 text-sm font-light text-gray-500 dark:text-gray-300">
           Seu email foi enviado! Verifique sua caixa de entrada e siga as
           instruções no email.
         </div>

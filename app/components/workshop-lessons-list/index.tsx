@@ -28,19 +28,19 @@ export default function WorkshopLessonsList({
       {workshop.lessons.map((lesson: Lesson, id: number) => (
         <Link key={lesson.id} to={`${linkPrefix}/${lesson.slug}`}>
           <li
-            className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 mb-1 ${
+            className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
               activeIndex === id
-                ? "bg-slate-200 dark:bg-slate-800 font-semibold"
+                ? "bg-background-200 dark:bg-background-800 font-semibold"
                 : ""
             }`}
           >
             <span className={`mr-3 text-sm text-brand`}>{id + 1}.</span>
             <h4
-              className={`flex-1 inline-block mr-2 text-slate-700 dark:text-slate-200`}
+              className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
             >
               {lesson.name}
             </h4>
-            <span className="text-sm text-slate-500">
+            <span className="text-sm text-gray-500 dark:text-gray-300">
               {fromSecondsToTimeString(lesson.duration_in_seconds)}
             </span>
           </li>

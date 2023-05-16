@@ -91,7 +91,7 @@ export default function WorkshopSlug() {
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
         {/* left Side */}
         <div className="w-full">
-          <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-slate-200 dark:bg-gray-dark rounded-xl">
+          <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-200 dark:bg-background-800 rounded-xl">
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
@@ -146,7 +146,7 @@ function Subtitle({ text }: { text: string }) {
   return (
     <div className="flex items-center gap-3 mb-4">
       <TitleIcon className="w-5 h-5"></TitleIcon>
-      <h3 className="text-2xl text-slate-700 dark:text-slate-200">{text}</h3>
+      <h3 className="text-2xl text-gray-700 dark:text-gray-50">{text}</h3>
     </div>
   );
 }
@@ -160,7 +160,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
     website: MdComputer,
   };
   return (
-    <div className="p-4 py-6 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800">
+    <div className="p-4 py-6 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-background-200 dark:hover:bg-background-800">
       <div className="flex items-center">
         <img
           src={instructor?.avatar_url}
@@ -168,22 +168,20 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           className="w-12 h-12 mr-4 border-2 border-gray-600 rounded-full"
         />
         <div className="flex-1">
-          <h4 className="dark:text-slate-200 text-lexend">
-            {instructor?.name}
-          </h4>
-          <p className="text-sm font-light text-slate-500 dark:text-slate-400">
+          <h4 className="dark:text-gray-50 text-lexend">{instructor?.name}</h4>
+          <p className="text-sm font-light text-gray-500 dark:text-gray-300">
             {instructor.company}
           </p>
         </div>
         {opened ? (
           <XMarkIcon
             onClick={() => setOpened(!opened)}
-            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+            className="w-6 h-6 text-gray-500 cursor-pointer font-extralight dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-300"
           />
         ) : (
           <InformationCircleIcon
             onClick={() => setOpened(!opened)}
-            className="w-6 h-6 cursor-pointer font-extralight text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+            className="w-6 h-6 text-gray-500 cursor-pointer font-extralight hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300"
           />
         )}
       </div>
@@ -204,7 +202,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           key={opened ? "open" : "closed"}
           className={`${
             opened ? "visible" : "invisible"
-          } text-sm font-light text-slate-500 dark:text-slate-300 relative overflow-hidden`}
+          } text-sm font-light text-gray-500 dark:text-gray-300 relative overflow-hidden`}
         >
           <div className=" [&>p]:mt-0 ">
             <MarkdownRenderer markdown={instructor.bio} />
@@ -217,10 +215,10 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block mt-2 mr-4 text-sm font-light text-slate-500 dark:text-slate-300"
+                    className="inline-block mt-2 mr-4 text-sm font-light text-gray-500 dark:text-gray-300"
                   >
                     {Icon && (
-                      <Icon className="mt-2 text-2xl transition text-slate-300 hover:text-slate-700 dark:text-slate-700 dark:hover:text-slate-300" />
+                      <Icon className="mt-2 text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
                     )}
                   </a>
                 );
