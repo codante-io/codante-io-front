@@ -97,7 +97,8 @@ export default function Index() {
           <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
             Aprenda de forma prática e objetiva com{" "}
             <span className="italic font-bold">workshops</span> ensinados por
-            profissionais do mercado
+            profissionais do mercado. Os workshops são gravados ao vivo e
+            posteriormente editados e disponibilizados na plataforma.
           </p>
           <section className="grid justify-center grid-cols-1 gap-4 px-0 lg:grid-cols-2">
             {homeInfo?.featured_workshops?.map((workshop) => (

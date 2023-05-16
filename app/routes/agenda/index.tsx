@@ -36,10 +36,10 @@ export default function Schedule() {
               <div
                 className={`absolute pointer-events-none w-full pt-0 pb-14 px-10 text-left text-black border-b-2 dark:border-gray-700  z-0   top-0 `}
               ></div>
-              <div className="z-20 p-4 mb-0 text-center text-gray-800 bg-gray-100 rounded-lg shadow-lg lg:text-left dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
+              <div className="z-20 max-w-xs p-4 mb-0 text-center text-gray-800 bg-gray-100 rounded-lg shadow-lg lg:text-left dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
                 <div className="text-7xl">
                   {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
-                    new Date(upcoming + "T00:00-0300") // esse espaço é necessário para a data funcionar corretamente
+                    new Date(upcoming + "T00:00-0300") // esse timezone é necessário para a data funcionar corretamente
                   )}
                 </div>
                 <div className="text-4xl font-lexend">
@@ -51,12 +51,18 @@ export default function Schedule() {
                       .format(new Date(upcoming + "T00:00-0300"))
                       .slice(1)}
                 </div>
-                <div className="mt-2 mb-3 font-light text-gray-600 dark:text-gray-500">
+                <div className="mt-2 mb-3 text-2xl font-light ">
                   {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
                     new Date(upcoming + "T00:00-0300")
                   )}
                 </div>
-                <hr className="mx-8 mb-3 text-xs text-gray-400 text-light"></hr>
+                <p className="text-xs text-gray-500">
+                  {upcomingData[upcoming][0]["type"] === "challenge"
+                    ? "Resolução do Mini Projeto"
+                    : "Workshop ao Vivo"}
+                  : <strong>{upcomingData[upcoming][0]["name"]}</strong>
+                </p>
+                <hr className="mx-8 mt-4 mb-3 text-xs text-gray-400 text-light"></hr>
                 <AddToCalendarButton
                   buttonStyle="round"
                   size="3"
