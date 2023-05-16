@@ -24,13 +24,11 @@ export default function RepositoryInfoSection({
         <section className="flex gap-4 mt-6">
           <span className="flex items-center">
             <AiOutlineStar />
-            {/* <div className="w-6 h-4 ml-1 rounded dark:bg-background-700 bg-background-200"></div> */}
-            {repository?.stars || 0}
+            <span className="ml-1">{repository?.stars || 0}</span>
           </span>{" "}
           <span className="flex items-center">
             <AiOutlineFork />
-            {/* <div className="w-8 h-4 ml-1 rounded dark:bg-background-700 bg-background-200"></div> */}
-            {repository?.forks || 0}
+            <span className="ml-1">{repository?.forks || 0}</span>
           </span>
         </section>
       </article>
