@@ -19,6 +19,7 @@ import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 import TitleIcon from "~/components/title-icon";
 import Wave from "~/components/wave";
+import VimeoPlayer from "~/components/vimeo-player";
 
 export const loader = async () => {
   return json({
@@ -78,13 +79,12 @@ export default function Index() {
               )}
             </>
           </div>
-          <div className="w-[320px] h-[180px] sm:w-[600px] sm:h-[336px] md:w-[728px] md:h-[409px] lg:w-[800px] lg:h-[450px] bg-black flex items-center justify-center rounded-lg mt-10 mb-10 sm:mb-20">
-            <button className="flex items-center justify-center w-12 h-12 text-gray-700 rounded-full bg-background-100">
-              <BsFillPlayFill size={24} color="#5282FF" />
-            </button>
+          <div className="relative flex-1 w-full mt-4 lg:mt-10">
+            <VimeoPlayer vimeoUrl="https://player.vimeo.com/video/827298711" />
           </div>
         </div>
       </section>
+
       <section
         id="workshops"
         className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50"
