@@ -1,12 +1,13 @@
 /* eslint-disable react/display-name */
 import Markdown from "markdown-to-jsx";
 import { Highlight, themes } from "prism-react-renderer";
+import type { ReactElement } from "react";
 import { useColorMode } from "~/contexts/color-mode-context";
 import type { ColorMode } from "~/utils/dark-mode";
 
 const getCodeComponent =
   (colorMode: ColorMode) =>
-  ({ className, children }: { className: string; children: string }) => {
+  ({ className, children }: { className: string; children: ReactElement }) => {
     const language = className
       ?.split(" ")
       ?.find((className) => className?.includes("lang-"))
@@ -15,7 +16,7 @@ const getCodeComponent =
     return (
       <Highlight
         theme={colorMode === "light" ? themes.nightOwlLight : themes.nightOwl}
-        code={children}
+        code={children?.props?.children}
         language={language || "javascript"}
       >
         {({ tokens, getLineProps, getTokenProps }) => (
@@ -72,10 +73,11 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
     },
   },
 
-  code: {
+  pre: {
     component: getCodeComponent(colorMode),
     props: {
-      className: "dark:bg-background-800 bg-background-200 p-4 rounded-lg",
+      className:
+        "dark:bg-background-800 bg-background-200 p-4 rounded-lg my-10",
     },
   },
 
