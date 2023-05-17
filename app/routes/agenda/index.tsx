@@ -34,7 +34,12 @@ export default function Schedule() {
           let endTime = undefined;
           if (publishedTime) {
             endTime = new Date(upcomingData[upcoming][0].published_at);
+            // add 2 hours to the published time - default duration of a challenge
             endTime.setHours(endTime.getHours() + 2);
+            if (upcomingData[upcoming][0].type === "workshop") {
+              // if workshop, add 2 more hours
+              endTime.setHours(endTime.getHours() + 2);
+            }
             endTime = Intl.DateTimeFormat("pt-BR", {
               hour: "numeric",
               minute: "numeric",
