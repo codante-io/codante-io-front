@@ -111,6 +111,12 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
       className: "my-4",
     },
   },
+
+  a: {
+    props: {
+      className: "text-blue-500 hover:underline",
+    },
+  },
 });
 
 export default function MarkdownRenderer({ markdown }: { markdown: string }) {
