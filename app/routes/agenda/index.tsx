@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 
 import { getUpcoming } from "~/models/upcoming.server";
 import { useColorMode } from "~/contexts/color-mode-context";
+import { getPublishedDateAndTime } from "~/utils/interval";
 
 export async function loader({ request }: { request: Request }) {
   const upcomingData = await getUpcoming();
@@ -26,6 +27,19 @@ export default function Schedule() {
 
       <div>
         {Object.keys(upcomingData)?.map((upcoming, i) => {
+          const [publishedDate, publishedTime] = getPublishedDateAndTime(
+            upcomingData[upcoming][0].published_at
+          );
+
+          let endTime = undefined;
+          if (publishedTime) {
+            endTime = new Date(upcomingData[upcoming][0].published_at);
+            endTime.setHours(endTime.getHours() + 2);
+            endTime = Intl.DateTimeFormat("pt-BR", {
+              hour: "numeric",
+              minute: "numeric",
+            }).format(endTime);
+          }
           return (
             <motion.div
               whileInView={{ opacity: 1, y: "0" }}
@@ -37,7 +51,7 @@ export default function Schedule() {
                 className={`absolute pointer-events-none w-full pt-0 pb-14 px-10 text-left text-black border-b-2 dark:border-gray-700  z-0   top-0 `}
               ></div>
               <div className="z-20 max-w-xs p-4 mb-0 text-center text-gray-800 bg-gray-100 rounded-lg shadow-lg lg:text-left dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
-                <div className="text-7xl">
+                <div className="text-7xl text-brand">
                   {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
                     new Date(upcoming + "T00:00-0300") // esse timezone é necessário para a data funcionar corretamente
                   )}
@@ -47,47 +61,56 @@ export default function Schedule() {
                     .format(new Date(upcoming + "T00:00-0300"))
                     .charAt(0)
                     .toUpperCase() +
-                    Intl.DateTimeFormat("pt-BR", { month: "long" })
+                    Intl.DateTimeFormat("pt-BR", { month: "short" })
                       .format(new Date(upcoming + "T00:00-0300"))
                       .slice(1)}
-                </div>
-                <div className="mt-2 mb-3 text-2xl font-light ">
+                  /{""}
                   {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
                     new Date(upcoming + "T00:00-0300")
                   )}
                 </div>
-                <p className="text-xs text-gray-500">
+                <div className="mt-2 text-2xl font-light "></div>
+                {publishedTime && (
+                  <div className="mb-3 font-light text-gray-400 ">
+                    às {publishedTime}
+                  </div>
+                )}
+                <p className="mt-3 text-xs text-gray-500">
                   {upcomingData[upcoming][0]["type"] === "challenge"
                     ? "Resolução do Mini Projeto"
                     : "Workshop ao Vivo"}
                   : <strong>{upcomingData[upcoming][0]["name"]}</strong>
                 </p>
                 <hr className="mx-8 mt-4 mb-3 text-xs text-gray-400 text-light"></hr>
-                <AddToCalendarButton
-                  buttonStyle="round"
-                  size="3"
-                  language="pt"
-                  hideBackground
-                  hideCheckmark
-                  lightMode={colorMode === "light" ? "light" : "dark"}
-                  // label="Adicionar ao calendário"
-                  name={`[Codante] ${
-                    upcomingData[upcoming.toString()][0].type === "workshop"
-                      ? "Workshop"
-                      : "Mini Projeto"
-                  } - ${upcomingData[upcoming.toString()][0].name}`}
-                  startDate={upcoming}
-                  timeZone="America/Sao_Paulo"
-                  styleDark="--btn-shadow: ''; --btn-shadow-hover: ''; --btn-background: #17212B; --btn-background-hover: #0E141A; --list-background: #17212B; --list-background-hover: #0E141A; --btn-border:#475569"
-                  styleLight="--btn-shadow: ''; --btn-shadow-hover: '';"
-                  options={[
-                    "Google",
-                    "Apple",
-                    "Microsoft365",
-                    "Outlook.com",
-                    "iCal",
-                  ]}
-                ></AddToCalendarButton>
+                <div className="flex justify-center w-full ">
+                  <AddToCalendarButton
+                    buttonStyle="round"
+                    size="3"
+                    language="pt"
+                    hideBackground
+                    hideCheckmark
+                    lightMode={colorMode === "light" ? "light" : "dark"}
+                    // label="Adicionar ao calendário"
+                    name={`[Codante] ${
+                      upcomingData[upcoming.toString()][0].type === "workshop"
+                        ? "Workshop"
+                        : "Mini Projeto"
+                    } - ${upcomingData[upcoming.toString()][0].name}`}
+                    startDate={upcoming}
+                    startTime={publishedTime ?? undefined}
+                    endTime={endTime ?? undefined}
+                    timeZone="America/Sao_Paulo"
+                    styleDark="--btn-shadow: ''; --btn-shadow-hover: ''; --btn-background: #17212B; --btn-background-hover: #0E141A; --list-background: #17212B; --list-background-hover: #0E141A; --btn-border:#475569"
+                    styleLight="--btn-shadow: ''; --btn-shadow-hover: '';"
+                    options={[
+                      "Google",
+                      "Apple",
+                      "Microsoft365",
+                      "Outlook.com",
+                      "iCal",
+                    ]}
+                  ></AddToCalendarButton>
+                </div>
                 <div></div>
               </div>
 
