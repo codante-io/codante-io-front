@@ -17,6 +17,7 @@ import { user } from "./services/auth.server";
 import { Toaster } from "react-hot-toast";
 import LoadingBar from "~/components/loading-bar";
 import { getOgGeneratorUrl } from "./utils/path-utils";
+import { GoogleTagManager } from "./components/google-tag-manager";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -61,6 +62,10 @@ export default function App() {
           dangerouslySetInnerHTML={{
             __html: DarkModeScriptInnerHtml,
           }}
+        />
+        <GoogleTagManager
+          environment={process.env.NODE_ENV}
+          gtmTrackingId="GTM-NXHM2J7"
         />
         <ColorModeProvider>
           <LoadingBar />
