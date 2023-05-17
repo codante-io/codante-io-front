@@ -199,7 +199,7 @@ export default function ChallengeSlug() {
     {
       name: "Resolução",
       href: "resolucao",
-      isVisible: hasSolution,
+      isVisible: true,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

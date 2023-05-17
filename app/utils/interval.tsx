@@ -27,3 +27,15 @@ export function fromSecondsToTimeStringWithoutSeconds(
 
   return `${hours}h${minutes}`;
 }
+
+export function getPublishedDateAndTime(
+  dateString: string | undefined | null
+): [date: string | null, time: string | null] {
+  if (!dateString) return [null, null];
+  const date = new Date(dateString);
+  const time =
+    date.getHours() !== 0
+      ? date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })
+      : null;
+  return [date.toLocaleDateString("pt-BR"), time];
+}

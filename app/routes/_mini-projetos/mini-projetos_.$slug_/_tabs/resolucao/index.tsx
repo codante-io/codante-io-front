@@ -5,7 +5,6 @@ import {
   getChallenge,
   type ChallengeCardInfo,
 } from "~/models/challenge.server";
-import { abort404 } from "~/utils/responses.server";
 
 export async function loader({ request }: LoaderArgs) {
   // get pathname
@@ -14,7 +13,9 @@ export async function loader({ request }: LoaderArgs) {
 
   if (pathname.endsWith("/resolucao") || pathname.endsWith("/resolucao/")) {
     const challenge = await getChallenge(pathname.split("/")[2]);
-    if (!challenge || !challenge.workshop) return abort404();
+    if (!challenge || !challenge.workshop) {
+      return redirect("em-breve");
+    }
     return redirect(challenge.workshop?.lessons[0].slug);
   }
 

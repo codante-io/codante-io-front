@@ -19,7 +19,10 @@ import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import { abort404 } from "~/utils/responses.server";
 import VimeoPlayer from "~/components/vimeo-player";
-import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
+import {
+  fromSecondsToTimeStringWithoutSeconds,
+  getPublishedDateAndTime,
+} from "~/utils/interval";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import { MdComputer } from "react-icons/md";
 import type { IconType } from "react-icons";
@@ -68,13 +71,21 @@ export const loader = async ({ params }: LoaderArgs) => {
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
+  const [publishedDate, publishedTime] = getPublishedDateAndTime(
+    workshop.published_at
+  );
+  console.log(publishedDate, publishedTime);
 
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
         <BannerAlert
           title="Ei! Esse workshop ainda não aconteceu!"
-          subtitle="Você poderá assistir ao vivo quando ele for ao ar - ou posteriormente assistir à gravação!"
+          subtitle={`Você poderá assisti-lo ao vivo${
+            publishedDate ? ` no dia ${publishedDate}` : " em breve"
+          }${
+            publishedTime ? ` às ${publishedTime}` : ""
+          }. Se preferir, será disponibilizada também a versão editada.`}
         />
       )}
       {/* Header */}
