@@ -19,6 +19,7 @@ export type ChallengeCardInfo = {
   duration_in_minutes: number;
   enrolled_users_count: number;
   base_color?: string;
+  published_at?: string;
   tags: Tag[];
   workshop?: Workshop;
   pivot?: {

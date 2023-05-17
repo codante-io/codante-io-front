@@ -14,6 +14,7 @@ export type Workshop = {
   video_url?: string;
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
+  published_at?: string;
   instructor: Instructor;
   lessons: Lesson[];
   tags: Tag[];
