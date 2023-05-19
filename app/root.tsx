@@ -30,6 +30,8 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Codante - Cursos e Projetos Online de Programação",
   viewport: "width=device-width,initial-scale=1",
+  description:
+    "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
 
   "og:title": "Codante - Cursos e Projetos Online de Programação",
   "og:description": "Codante - Cursos e Projetos Online de Programação",
