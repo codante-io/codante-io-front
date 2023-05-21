@@ -39,7 +39,7 @@ const initialSteps = [
   },
 ];
 
-const DISCORD_INVITE_URL = "";
+const DISCORD_INVITE_URL = "https://discord.com/invite/fmVw468ZMR";
 
 export function buildInitialSteps({
   user,
