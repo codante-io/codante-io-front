@@ -40,6 +40,11 @@ import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 import Wave from "~/components/wave";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  // para não quebrar se não houver challenge ainda.
+  if (!data?.challenge) {
+    return {};
+  }
+
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
   const description = data.challenge.short_description;
   const imageUrl = getOgGeneratorUrl(data.challenge.name, "Mini Projeto");
@@ -113,7 +118,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   ]);
 
   if (!challenge) {
-    abort404();
+    return abort404();
   }
 
   const user = await getUser({ request });
