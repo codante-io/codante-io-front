@@ -70,7 +70,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
               </div>
             </div>
             <div className="h-24 lg:mb-10">
-              <p className="w-full font-sans text-sm font-light text-gray-700 md:text-base dark:text-gray-300 line-clamp-4">
+              <p className="w-full font-sans font-light text-gray-700 md:text-base dark:text-gray-300 line-clamp-4">
                 {workshop?.short_description}
               </p>
             </div>
