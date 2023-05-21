@@ -3,6 +3,14 @@ import { useLoaderData, Outlet } from "@remix-run/react";
 import { getTracks } from "../../../models/track.server";
 import TrackCard from "~/components/cards/track-card";
 
+export function meta() {
+  return {
+    title: "Trilhas | Codante.io",
+    description:
+      "Nas trilhas você tem a união de workshops e mini projetos para aprender temas específicos em programação.",
+  };
+}
+
 export const loader = async ({ request }: { request: Request }) => {
   return json({
     tracks: await getTracks(),
