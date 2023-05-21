@@ -3,6 +3,15 @@ import { useLoaderData, Outlet } from "@remix-run/react";
 import { getWorkshops } from "../../../models/workshop.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 
+// meta function
+export function meta() {
+  return {
+    title: "Workshops | Codante.io",
+    description:
+      "Tópicos atuais de front end ensinados de forma prática e objetiva por profissionais do mercado.",
+  };
+}
+
 export const loader = async ({ request }: { request: Request }) => {
   return json({
     workshops: await getWorkshops(),
