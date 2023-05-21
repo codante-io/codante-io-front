@@ -6,6 +6,14 @@ import {
   type ChallengeCardInfo,
 } from "~/models/challenge.server";
 
+export function meta() {
+  return {
+    title: "Mini Projetos | Codante.io",
+    description:
+      "Mini Projetos de programação para você aprender particando. Escolha um Mini Projeto para você se desafiar e aprender ainda mais.",
+  };
+}
+
 export async function loader({ request }: { request: Request }) {
   return json({
     challenges: await getChallenges(),
