@@ -9,6 +9,15 @@ import { getUpcoming } from "~/models/upcoming.server";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getPublishedDateAndTime } from "~/utils/interval";
 
+// meta function
+export function meta() {
+  return {
+    title: "Agenda | Codante.io",
+    description:
+      "Acompanhe a agenda de workshops e mini projetos ao vivo do Codante.",
+  };
+}
+
 export async function loader({ request }: { request: Request }) {
   const upcomingData = await getUpcoming();
 
