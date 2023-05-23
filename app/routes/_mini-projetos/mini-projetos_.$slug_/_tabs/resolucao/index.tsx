@@ -13,7 +13,11 @@ export async function loader({ request }: LoaderArgs) {
 
   if (pathname.endsWith("/resolucao") || pathname.endsWith("/resolucao/")) {
     const challenge = await getChallenge(pathname.split("/")[2]);
-    if (!challenge || !challenge.workshop) {
+    if (
+      !challenge ||
+      !challenge.workshop ||
+      challenge.workshop.status !== "published"
+    ) {
       return redirect("em-breve");
     }
     return redirect(challenge.workshop?.lessons[0].slug);
