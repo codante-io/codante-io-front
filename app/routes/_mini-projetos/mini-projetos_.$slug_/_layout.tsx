@@ -8,7 +8,7 @@ import {
   useLocation,
   useNavigate,
 } from "@remix-run/react";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdBrowseGallery, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 
@@ -27,17 +27,17 @@ import {
 } from "~/models/challenge.server";
 import { logout, user as getUser } from "~/services/auth.server";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { getOgGeneratorUrl, slugify } from "~/utils/path-utils";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 import Wave from "~/components/wave";
+import { BsCloudUpload, BsFillCloudUploadFill, BsStars } from "react-icons/bs";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
@@ -86,6 +86,8 @@ export async function action({ request }: { request: Request }) {
         joinedDiscord: true,
         request,
       });
+    case "submit-challenge":
+      return redirect(`/mini-projetos/${slug}/submit`);
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
@@ -215,6 +217,20 @@ export default function ChallengeSlug() {
       ),
       current: location.pathname.includes("resolucao"),
     },
+    {
+      name: "Submissões",
+      href: "submissoes",
+      isVisible: true,
+      icon: <BsStars />,
+      current: location.pathname.includes("submissoes"),
+    },
+    {
+      name: "Minha Submissão",
+      href: "minha-submissao",
+      isVisible: true,
+      icon: <BsCloudUpload />,
+      current: location.pathname.includes("minha-submissao"),
+    },
   ];
 
   function classNames(...classes: string[]) {
@@ -285,6 +301,7 @@ export default function ChallengeSlug() {
                     <Link
                       key={tab.name}
                       to={tab.href}
+                      reloadDocument={tab.href === "resolucao"}
                       className={classNames(
                         tab.current
                           ? "bg-background-200 dark:bg-background-800 dark:text-gray-50 text-gray-800"

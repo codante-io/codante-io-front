@@ -1,4 +1,4 @@
-import { BsFillPlayFill, BsFillPersonFill } from "react-icons/bs";
+import { BsFillPlayFill, BsFillPersonFill, BsDiscord } from "react-icons/bs";
 import { json } from "@remix-run/node";
 import { getHome } from "~/models/home.server";
 import {
@@ -61,14 +61,8 @@ export default function Index() {
             pelos melhores profissionais do mercado!
           </p>
 
-          <div className="hidden mt-10 sm:justify-around sm:gap-4 md:flex-row sm:flex">
+          <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:justify-around md:flex-row">
             <>
-              <button
-                onClick={saibaMaisButton}
-                className="px-4 py-2 text-white rounded-full animate-text bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
-              >
-                Saiba mais
-              </button>
               {!user && (
                 <Link to="/login">
                   <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-background-200">
@@ -77,6 +71,15 @@ export default function Index() {
                   </button>
                 </Link>
               )}
+              <a
+                href="https://discord.gg/fmVw468ZMR"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-text bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+              >
+                <BsDiscord />
+                Entre na comunidade
+              </a>
             </>
           </div>
           <div className="relative flex-1 w-full max-w-4xl mt-4 lg:mt-10">
