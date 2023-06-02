@@ -1,6 +1,5 @@
-import { Form, useActionData, useOutletContext } from "@remix-run/react";
-import { useEffect } from "react";
-import { useToasterWithSound } from "~/hooks/useToasterWithSound";
+import { Form, useOutletContext } from "@remix-run/react";
+
 import { submitChallenge } from "~/models/challenge.server";
 
 import type { ChallengeUser } from "~/models/user.server";
@@ -13,7 +12,6 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  console.log(params);
   let formData = await request.formData();
 
   let submissionUrl = formData.get("submission-url") as string;
@@ -26,7 +24,8 @@ export default function MySubmission() {
     challengeUser: ChallengeUser;
   }>();
 
-  if (challengeUser.pivot.submission_url) return null;
+  console.log(challengeUser);
+  if (challengeUser?.pivot?.submission_url) return null;
   return (
     <Form className="container mt-8" method="POST">
       <div>

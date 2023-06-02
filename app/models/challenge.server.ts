@@ -21,6 +21,7 @@ export type ChallengeCardInfo = {
   base_color?: string;
   tags: Tag[];
   workshop?: Workshop;
+  users?: { avatar_url: string }[];
   pivot?: {
     trackable_type: string;
   };

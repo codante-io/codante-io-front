@@ -124,6 +124,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   if (user) {
     try {
       challengeUser = await userJoinedChallenge(params.slug, request);
+      console.log("challengeUser", challengeUser);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
         if (err?.response?.status) challengeUser = null;
