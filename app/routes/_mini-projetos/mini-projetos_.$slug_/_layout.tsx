@@ -24,6 +24,7 @@ import {
   verifyAndUpdateForkURL,
   getChallengeParticipants,
   userJoinedChallenge,
+  getChallengeSubmissions,
 } from "~/models/challenge.server";
 import { logout, user as getUser } from "~/services/auth.server";
 import { useEffect } from "react";
@@ -87,7 +88,7 @@ export async function action({ request }: { request: Request }) {
         request,
       });
     case "submit-challenge":
-      return redirect(`/mini-projetos/${slug}/submit`);
+      return redirect(`/mini-projetos/${slug}/minha-submissao`);
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
@@ -109,9 +110,10 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     return redirect(`/mini-projetos/${params.slug}/overview`);
   }
 
-  const [challenge, participants] = await Promise.all([
+  const [challenge, participants, challengeSubmissions] = await Promise.all([
     getChallenge(params.slug),
     getChallengeParticipants(params.slug),
+    getChallengeSubmissions(params.slug),
   ]);
 
   if (!challenge) {
@@ -124,7 +126,6 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   if (user) {
     try {
       challengeUser = await userJoinedChallenge(params.slug, request);
-      console.log("challengeUser", challengeUser);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
         if (err?.response?.status) challengeUser = null;
@@ -139,6 +140,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     participants,
 
     challengeUser,
+    challengeSubmissions,
     initialSteps: buildInitialSteps({
       user,
       challengeUser,
@@ -148,10 +150,14 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ChallengeSlug() {
-  const { challenge, participants, initialSteps, challengeUser } =
-    useLoaderData<typeof loader>();
+  const {
+    challenge,
+    participants,
+    initialSteps,
+    challengeUser,
+    challengeSubmissions,
+  } = useLoaderData<typeof loader>();
   const actionData = useActionData();
-  const { colorMode } = useColorMode();
   const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
@@ -159,6 +165,10 @@ export default function ChallengeSlug() {
 
   const hasSolution = Boolean(
     challenge?.workshop?.id && challenge.workshop.status === "published"
+  );
+
+  const hasSubmissions = Boolean(
+    challengeSubmissions?.length && challengeSubmissions.length > 0
   );
 
   const location = useLocation();
@@ -221,7 +231,7 @@ export default function ChallengeSlug() {
     {
       name: "Submissões",
       href: "submissoes",
-      isVisible: true,
+      isVisible: hasSubmissions,
       icon: <BsStars />,
       current: location.pathname.includes("submissoes"),
     },
@@ -327,6 +337,7 @@ export default function ChallengeSlug() {
             user,
             challenge,
             challengeUser,
+            challengeSubmissions,
             participants,
             initialSteps,
             hasSolution,

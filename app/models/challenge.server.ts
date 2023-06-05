@@ -267,7 +267,6 @@ export async function submitChallenge(
     )
     .then(() => ({ success: "Submissão registrada com sucesso." }))
     .catch((error) => {
-      console.log(error);
       return {
         error:
           "Não foi possível submeter o seu mini projeto. Por favor, tente novamente.",

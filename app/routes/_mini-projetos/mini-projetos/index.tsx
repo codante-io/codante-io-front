@@ -21,8 +21,6 @@ export async function loader({ request }: { request: Request }) {
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
 
-  console.log(challenges);
-
   return (
     <main className="container mx-auto">
       <h1 className="mb-10 text-4xl text-center font-lexend">Mini Projetos</h1>

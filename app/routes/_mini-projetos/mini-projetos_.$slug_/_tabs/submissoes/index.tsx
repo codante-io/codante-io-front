@@ -1,19 +1,11 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useOutletContext } from "@remix-run/react";
 
-import type { LoaderArgs } from "@remix-run/node";
-import { getChallengeSubmissions } from "~/models/challenge.server";
-import invariant from "tiny-invariant";
-
-export async function loader({ request, params }: LoaderArgs) {
-  invariant(params.slug, `params.slug is required`);
-
-  const challengeSubmissions = await getChallengeSubmissions(params.slug);
-
-  return { challengeSubmissions };
-}
+import type { ChallengeSubmission } from "~/models/challenge.server";
 
 export default function Submissions() {
-  const { challengeSubmissions } = useLoaderData<typeof loader>();
+  const { challengeSubmissions } = useOutletContext<{
+    challengeSubmissions: ChallengeSubmission[];
+  }>();
   return (
     <div className="container grid grid-cols-3 gap-10">
       {challengeSubmissions.map((submission) => (
