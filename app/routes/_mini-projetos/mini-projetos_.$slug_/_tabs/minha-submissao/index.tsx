@@ -42,10 +42,11 @@ export default function MySubmission() {
         Minha submissão
       </h1>
       {challengeUser?.pivot?.submission_url ? (
-        <div className="overflow-hidden w-96 h-w-96 rounded-xl">
+        <div className="overflow-hidden rounded-xl w-[377px] h-[212px]">
           <img
             src={challengeUser?.pivot?.submission_image_url}
             alt="Screenshot da aplicação submetida"
+            className="w-[377px] h-[212px] object-cover"
           />
         </div>
       ) : (

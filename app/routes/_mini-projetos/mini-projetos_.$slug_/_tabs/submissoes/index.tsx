@@ -7,16 +7,17 @@ export default function Submissions() {
     challengeSubmissions: ChallengeSubmission[];
   }>();
   return (
-    <div className="container grid grid-cols-3 gap-10">
+    <div className="container grid justify-center gap-10 lg:grid-cols-3 md:grid-cols-2">
       {challengeSubmissions.map((submission) => (
         <Link
           key={submission.user_github_user}
           to={submission.user_github_user}
         >
-          <article className="overflow-hidden rounded-xl border-[1.5px] dark:border-background-600 border-background-200 shadow-sm text-gray-800 dark:text-white hover:shadow-lg transition-shadow">
+          <article className="max-w-[377px] overflow-hidden rounded-xl border-[1.5px] dark:border-background-600 border-background-200 shadow-sm text-gray-800 dark:text-white hover:shadow-lg transition-shadow">
             <img
               src={submission.submission_image_url}
               alt="Print da aplicação submetida"
+              className="w-[377px] h-[212px] object-cover"
             />
             <footer className="flex items-center gap-4 p-4 dark:bg-background-700 ">
               <img
