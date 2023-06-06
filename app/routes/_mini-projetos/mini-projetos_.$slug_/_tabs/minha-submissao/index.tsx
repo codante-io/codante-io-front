@@ -4,6 +4,7 @@ import {
   useNavigation,
   useOutletContext,
 } from "@remix-run/react";
+import { FiExternalLink } from "react-icons/fi";
 import LoadingButton from "~/components/form/loading-button";
 
 import { submitChallenge } from "~/models/challenge.server";
@@ -42,13 +43,26 @@ export default function MySubmission() {
         Minha submissão
       </h1>
       {challengeUser?.pivot?.submission_url ? (
-        <div className="overflow-hidden rounded-xl w-[377px] h-[212px]">
-          <img
-            src={challengeUser?.pivot?.submission_image_url}
-            alt="Screenshot da aplicação submetida"
-            className="w-[377px] h-[212px] object-cover"
-          />
-        </div>
+        <a
+          href={challengeUser.pivot.submission_url}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div
+            className="relative rounded-xl  border-[1.5px] border-background-200 dark:border-background-600
+         hover:shadow-lg  dark:hover:shadow-lg transition-all group bg-background-800"
+          >
+            <button className="absolute inset-0 z-10 flex items-center justify-center w-24 h-20 p-4 m-auto transition-all opacity-0 rounded-2xl dark:bg-background-700 bg-background-200 group-hover:opacity-100">
+              {" "}
+              <FiExternalLink className="text-4xl text-gray-800 dark:text-white" />{" "}
+            </button>
+            <img
+              src={challengeUser?.pivot?.submission_image_url}
+              alt="Screenshot da aplicação submetida"
+              className="w-full transition-all aspect-video group-hover:blur-sm group-hover:opacity-40 rounded-xl"
+            />
+          </div>
+        </a>
       ) : (
         <Form method="POST">
           <div>

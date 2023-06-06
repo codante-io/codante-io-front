@@ -238,7 +238,7 @@ export default function ChallengeSlug() {
     {
       name: "Minha Submissão",
       href: "minha-submissao",
-      isVisible: true,
+      isVisible: !!user,
       icon: <BsCloudUpload />,
       current: location.pathname.includes("minha-submissao"),
     },
@@ -250,7 +250,7 @@ export default function ChallengeSlug() {
 
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
-      <section className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50">
+      <section className="flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
         <div className="container">
           <div>
             <CardItemDifficulty
@@ -276,7 +276,7 @@ export default function ChallengeSlug() {
           </div>
         </div>
 
-        <div className="container mt-4 mb-8 lg:mt-8 lg:mb-6">
+        <div className="container mt-4 mb-8 lg:mt-8 lg:mb-12">
           <div>
             <div className="sm:hidden">
               <label htmlFor="tabs" className="sr-only">
@@ -315,9 +315,9 @@ export default function ChallengeSlug() {
                       reloadDocument={tab.href === "resolucao"}
                       className={classNames(
                         tab.current
-                          ? "bg-background-200 dark:bg-background-800 dark:text-gray-50 text-gray-800"
+                          ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
                           : "text-gray-500 hover:text-gray-700",
-                        "rounded-full px-3 py-1.5 text-sm flex items-center gap-2"
+                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2"
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >
