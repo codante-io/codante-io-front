@@ -171,6 +171,8 @@ export default function ChallengeSlug() {
     challengeSubmissions?.length && challengeSubmissions.length > 0
   );
 
+  const isUserParticipating = Boolean(challengeUser?.id);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -238,7 +240,7 @@ export default function ChallengeSlug() {
     {
       name: "Minha Submissão",
       href: "minha-submissao",
-      isVisible: !!user,
+      isVisible: !!user && isUserParticipating,
       icon: <BsCloudUpload />,
       current: location.pathname.includes("minha-submissao"),
     },
