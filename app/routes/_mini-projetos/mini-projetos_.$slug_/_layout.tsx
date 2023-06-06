@@ -8,7 +8,7 @@ import {
   useLocation,
   useNavigate,
 } from "@remix-run/react";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdBrowseGallery, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 
@@ -24,20 +24,21 @@ import {
   verifyAndUpdateForkURL,
   getChallengeParticipants,
   userJoinedChallenge,
+  getChallengeSubmissions,
 } from "~/models/challenge.server";
 import { logout, user as getUser } from "~/services/auth.server";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { getOgGeneratorUrl, slugify } from "~/utils/path-utils";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 import Wave from "~/components/wave";
+import { BsCloudUpload, BsFillCloudUploadFill, BsStars } from "react-icons/bs";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver challenge ainda.
@@ -91,6 +92,8 @@ export async function action({ request }: { request: Request }) {
         joinedDiscord: true,
         request,
       });
+    case "submit-challenge":
+      return redirect(`/mini-projetos/${slug}/minha-submissao`);
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
@@ -112,9 +115,10 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     return redirect(`/mini-projetos/${params.slug}/overview`);
   }
 
-  const [challenge, participants] = await Promise.all([
+  const [challenge, participants, challengeSubmissions] = await Promise.all([
     getChallenge(params.slug),
     getChallengeParticipants(params.slug),
+    getChallengeSubmissions(params.slug),
   ]);
 
   if (!challenge) {
@@ -141,6 +145,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     participants,
 
     challengeUser,
+    challengeSubmissions,
     initialSteps: buildInitialSteps({
       user,
       challengeUser,
@@ -150,10 +155,14 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 
 export default function ChallengeSlug() {
-  const { challenge, participants, initialSteps, challengeUser } =
-    useLoaderData<typeof loader>();
+  const {
+    challenge,
+    participants,
+    initialSteps,
+    challengeUser,
+    challengeSubmissions,
+  } = useLoaderData<typeof loader>();
   const actionData = useActionData();
-  const { colorMode } = useColorMode();
   const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
@@ -161,6 +170,10 @@ export default function ChallengeSlug() {
 
   const hasSolution = Boolean(
     challenge?.workshop?.id && challenge.workshop.status === "published"
+  );
+
+  const hasSubmissions = Boolean(
+    challengeSubmissions?.length && challengeSubmissions.length > 0
   );
 
   const location = useLocation();
@@ -220,6 +233,20 @@ export default function ChallengeSlug() {
       ),
       current: location.pathname.includes("resolucao"),
     },
+    {
+      name: "Submissões",
+      href: "submissoes",
+      isVisible: hasSubmissions,
+      icon: <BsStars />,
+      current: location.pathname.includes("submissoes"),
+    },
+    {
+      name: "Minha Submissão",
+      href: "minha-submissao",
+      isVisible: !!user,
+      icon: <BsCloudUpload />,
+      current: location.pathname.includes("minha-submissao"),
+    },
   ];
 
   function classNames(...classes: string[]) {
@@ -228,7 +255,7 @@ export default function ChallengeSlug() {
 
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
-      <section className="flex flex-col items-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50">
+      <section className="flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
         <div className="container">
           <div>
             <CardItemDifficulty
@@ -254,7 +281,7 @@ export default function ChallengeSlug() {
           </div>
         </div>
 
-        <div className="container mt-4 mb-8 lg:mt-8 lg:mb-6">
+        <div className="container mt-4 mb-8 lg:mt-8 lg:mb-12">
           <div>
             <div className="sm:hidden">
               <label htmlFor="tabs" className="sr-only">
@@ -290,11 +317,12 @@ export default function ChallengeSlug() {
                     <Link
                       key={tab.name}
                       to={tab.href}
+                      reloadDocument={tab.href === "resolucao"}
                       className={classNames(
                         tab.current
-                          ? "bg-background-200 dark:bg-background-800 dark:text-gray-50 text-gray-800"
+                          ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
                           : "text-gray-500 hover:text-gray-700",
-                        "rounded-full px-3 py-1.5 text-sm flex items-center gap-2"
+                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2"
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >
@@ -314,6 +342,7 @@ export default function ChallengeSlug() {
             user,
             challenge,
             challengeUser,
+            challengeSubmissions,
             participants,
             initialSteps,
             hasSolution,

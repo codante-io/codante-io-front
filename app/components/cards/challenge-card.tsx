@@ -22,10 +22,10 @@ export default function ChallengeCard({
       }
     >
       <article
-        className=" group
+        className="group
           relative max-w-[300px] h-[450px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl p-6 pt-3
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
-        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg"
+        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
       >
         {challenge?.status === "soon" && (
           <CardItemRibbon
@@ -52,7 +52,7 @@ export default function ChallengeCard({
                 alt=""
               />
             </div>
-            <div className="mb-8 card-header">
+            <div className="mb-4 card-header">
               <h2 className="mb-1 text-lg font-bold leading-tight text-gray-700 dark:text-gray-50">
                 {challenge?.name}
               </h2>
@@ -66,24 +66,28 @@ export default function ChallengeCard({
                 ))}
               </div>
             </div>
-            <p className="text-sm font-light text-gray-600 line-clamp-4 slate-600 dark:text-gray-300">
+            <p className="h-16 text-sm font-light text-gray-600 line-clamp-4 slate-600 dark:text-gray-300">
               {challenge?.short_description}
             </p>
           </div>
-          <div className="flex items-center justify-between card-footer">
-            {challenge.enrolled_users_count > 0 && (
-              <div className="text-xs text-gray-400">
-                {challenge?.enrolled_users_count}{" "}
-                {challenge?.enrolled_users_count === 1
-                  ? "participante"
-                  : "participantes"}
+          <div className="flex flex-col items-end justify-center mt-4 card-footer">
+            <section className="">
+              <div className="flex -space-x-2 overflow-hidden">
+                {challenge?.users?.map((user, index) => (
+                  <img
+                    key={index}
+                    className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
+                    src={user.avatar_url || "https://source.boringavatars.com/"}
+                    alt="Avatar do usuário"
+                  />
+                ))}
+                {challenge?.enrolled_users_count > 5 && (
+                  <div className="w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
+                    +{challenge?.enrolled_users_count - 5}
+                  </div>
+                )}
               </div>
-            )}
-            {/* <CardItemDuration
-              durationString={fromSecondsToTimeStringWithoutSeconds(
-                challenge.duration_in_minutes * 60
-              )}
-            /> */}
+            </section>
           </div>
         </div>
       </article>

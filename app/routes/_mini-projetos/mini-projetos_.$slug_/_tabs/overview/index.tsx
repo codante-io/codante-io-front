@@ -14,18 +14,16 @@ export default function ChallengeIndex() {
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">
         {challenge.video_url && (
           <div>
-            <h1 className="flex items-center text-2xl font-semibold font-lexend text-brand">
-              Vídeo de introdução
-            </h1>
+            {/* <h1 className="flex items-center text-2xl font-semibold font-lexend text-brand">Intro</h1> */}
             <section className="relative mt-4 mb-8">
               <VimeoPlayer vimeoUrl={challenge.video_url} />
             </section>
           </div>
         )}
         <div>
-          <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
+          {/* <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
             Descrição
-          </h1>
+          </h1> */}
           <div>
             <MarkdownRenderer markdown={challenge?.description} />
           </div>

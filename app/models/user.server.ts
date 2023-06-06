@@ -9,3 +9,15 @@ export type User = {
   is_admin?: boolean;
   updated_at?: string;
 };
+
+export type ChallengeUser = User & {
+  pivot: {
+    challenge_id: number;
+    user_id: number;
+    completed: boolean;
+    fork_url: string;
+    joined_discord: boolean;
+    submission_url: string;
+    submission_image_url: string;
+  };
+};

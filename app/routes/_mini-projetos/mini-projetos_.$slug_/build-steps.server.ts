@@ -31,6 +31,14 @@ const initialSteps = [
     intent: "join-discord",
   },
   {
+    name: "Submeta sua resolução",
+    description:
+      "Faça deploy do seu mini-projeto e envie o link para aparecer na galeria de submissões.",
+    button: "Submeter",
+    status: "upcoming",
+    intent: "submit-challenge",
+  },
+  {
     name: "Finalizar projeto",
     description: "Quando acabar o seu mini projeto é só marcar como concluído.",
     button: "Marcar como concluído",
@@ -60,6 +68,8 @@ export function buildInitialSteps({
   }
 
   if (challengeUser?.pivot.completed) {
+    index = 6;
+  } else if (challengeUser?.pivot.submission_url) {
     index = 5;
   } else if (challengeUser?.pivot.joined_discord) {
     index = 4;

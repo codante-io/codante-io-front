@@ -22,6 +22,7 @@ export type ChallengeCardInfo = {
   published_at?: string;
   tags: Tag[];
   workshop?: Workshop;
+  users?: { avatar_url: string }[];
   pivot?: {
     trackable_type: string;
   };
@@ -30,6 +31,14 @@ export type ChallengeCardInfo = {
 export type ChallengeParticipants = {
   count: number;
   avatars: string[];
+};
+
+export type ChallengeSubmission = {
+  user_name: string;
+  user_avatar_url: string;
+  user_github_user: string;
+  submission_url: string;
+  submission_image_url: string;
 };
 
 export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
@@ -214,11 +223,54 @@ export async function updateChallengeCompleted({
       request,
     });
 
-    return { success: "Parabéns! Você concluiu esse mini projeto." };
+    return { success: "Parabéns! Você concluiu esse mini-projeto." };
   } catch (err) {
     return {
       error:
         "Não foi possível concluir este passo. Por favor, tente novamente.",
     };
   }
+}
+
+export async function getChallengeSubmissions(
+  slug: string
+): Promise<ChallengeSubmission[]> {
+  const challenge = await axios
+    .get(`${process.env.API_HOST}/challenges/${slug}/submissions`)
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+      throw new Error("Erro ao buscar as submissões do mini-projeto");
+    });
+  return challenge;
+}
+
+export async function submitChallenge(
+  request: Request,
+  slug: string,
+  submissionUrl: string
+): Promise<{ success?: string; error?: string }> {
+  let token = await currentToken({ request });
+
+  return axios
+    .post(
+      `${process.env.API_HOST}/challenges/${slug}/submit`,
+      {
+        submission_url: submissionUrl,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+    .then(() => ({ success: "Submissão registrada com sucesso." }))
+    .catch((error) => {
+      return {
+        error:
+          "Não foi possível submeter o seu mini projeto. Por favor, tente novamente.",
+      };
+    });
 }
