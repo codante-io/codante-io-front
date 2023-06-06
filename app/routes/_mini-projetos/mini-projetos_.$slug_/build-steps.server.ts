@@ -90,7 +90,7 @@ export function buildInitialSteps({
   }
 
   for (let i = 0; i < index; i++) initialStepsClone[i].status = "complete";
-  if (index < 5) initialStepsClone[index].status = "current";
+  if (index < 6) initialStepsClone[index].status = "current";
 
   return initialStepsClone;
 }

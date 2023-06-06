@@ -101,7 +101,11 @@ export default function JoinChallengeSection({
                               }}
                             ></span>
                           </span>
-                          <Form method="post" action={`/mini-projetos/${slug}`}>
+                          <Form
+                            method="post"
+                            action={`/mini-projetos/${slug}`}
+                            preventScrollReset
+                          >
                             <input
                               type="hidden"
                               name="redirectTo"
