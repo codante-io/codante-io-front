@@ -23,13 +23,8 @@ export default function Submissions() {
             rel="noreferrer"
           >
             <article className="max-w-[377px] overflow-hidden rounded-xl border-[1.5px] dark:border-background-600 border-background-200 shadow-sm text-gray-800 dark:text-white hover:shadow-lg transition-shadow group">
-              {/* <div
-              className="relative rounded-xl  border-[1.5px] border-background-200 dark:border-background-600
-         hover:shadow-lg  dark:hover:shadow-lg transition-all group bg-background-800"
-            > */}
-              <div className="relative">
-                <button className="absolute inset-0 z-10 flex items-center justify-center w-12 h-12 p-4 m-auto transition-all opacity-0 rounded-xl dark:bg-background-700 bg-background-200 group-hover:opacity-100">
-                  {" "}
+              <div className="relative overflow-hidden">
+                <button className="absolute inset-0 z-10 flex items-center justify-center w-12 h-12 p-4 m-auto transition-all opacity-0 bg-background-100 rounded-xl dark:bg-background-700 group-hover:opacity-100">
                   <FiExternalLink className="text-4xl text-gray-800 dark:text-white" />{" "}
                 </button>
                 <img
@@ -38,21 +33,14 @@ export default function Submissions() {
                   className="w-full transition-all aspect-video group-hover:blur-sm group-hover:opacity-40 "
                 />
               </div>
-              {/* </div> */}
 
-              {/*     
-              <img
-                src={submission.submission_image_url}
-                alt="Print da aplicação submetida"
-                className="w-[377px] h-[212px] object-cover"
-              /> */}
               <footer className="flex items-center gap-4 p-4 dark:bg-background-700 ">
                 <img
                   src={submission.user_avatar_url}
                   alt="Avatar do usuário"
                   className="w-10 h-10 border rounded-full border-background-200 dark:border-background-600"
                 />
-                <div>
+                <div className="">
                   <h4 className="text-xs dark:text-gray-400 font-regular">
                     Resolução de
                   </h4>

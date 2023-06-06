@@ -52,7 +52,7 @@ export default function MySubmission() {
             className="relative rounded-xl  border-[1.5px] border-background-200 dark:border-background-600
          hover:shadow-lg  dark:hover:shadow-lg transition-all group bg-background-800"
           >
-            <button className="absolute inset-0 z-10 flex items-center justify-center w-24 h-20 p-4 m-auto transition-all opacity-0 rounded-2xl dark:bg-background-700 bg-background-200 group-hover:opacity-100">
+            <button className="absolute inset-0 z-10 flex items-center justify-center w-24 h-20 p-4 m-auto transition-all opacity-0 rounded-2xl dark:bg-background-700 bg-background-100 group-hover:opacity-100">
               {" "}
               <FiExternalLink className="text-4xl text-gray-800 dark:text-white" />{" "}
             </button>
