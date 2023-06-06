@@ -270,6 +270,7 @@ export async function submitChallenge(
     .catch((error) => {
       return {
         error:
+          error?.response?.data?.message ||
           "Não foi possível submeter o seu mini projeto. Por favor, tente novamente.",
       };
     });
