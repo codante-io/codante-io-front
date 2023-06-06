@@ -68,9 +68,6 @@ export default function ChallengeCard({
           </div>
           <div className="flex flex-col items-end justify-center mt-4 card-footer">
             <section className="">
-              {/* {challenge.enrolled_users_count > 0 && (
-                <div className="mb-2 text-xs font-semibold ">Participantes</div>
-              )} */}
               <div className="flex -space-x-2 overflow-hidden">
                 {challenge?.users?.map((user, index) => (
                   <img
@@ -87,11 +84,6 @@ export default function ChallengeCard({
                 )}
               </div>
             </section>
-            {/* <CardItemDuration
-              durationString={fromSecondsToTimeStringWithoutSeconds(
-                challenge.duration_in_minutes * 60
-              )}
-            /> */}
           </div>
         </div>
       </article>
