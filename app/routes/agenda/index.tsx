@@ -35,7 +35,7 @@ export default function Schedule() {
   );
 
   return (
-    <main className="container mx-auto mt-10 text-center">
+    <main className="container mx-auto text-center">
       <h1 className="mb-10 text-4xl text-center font-lexend">Agenda</h1>
 
       <div>
