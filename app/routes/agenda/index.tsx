@@ -30,12 +30,16 @@ export default function Schedule() {
   const { upcomingData } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
 
+  const upcomingDates = Object.keys(upcomingData)?.filter(
+    (key) => key !== "soon"
+  );
+
   return (
     <main className="container mx-auto mt-10 text-center">
       <h1 className="mb-10 text-4xl text-center font-lexend">Agenda</h1>
 
       <div>
-        {Object.keys(upcomingData)?.map((upcoming, i) => {
+        {upcomingDates.map((upcoming, i) => {
           const [publishedDate, publishedTime] = getPublishedDateAndTime(
             upcomingData[upcoming][0].published_at
           );
@@ -156,6 +160,40 @@ export default function Schedule() {
             </motion.div>
           );
         })}
+      </div>
+      <div>
+        {upcomingData?.soon?.length > 0 ? (
+          <>
+            <h2 className="mb-10 text-2xl font-lexend">Sem data definida</h2>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              {upcomingData?.soon?.map((item: any) => (
+                <div
+                  className="mb-16 text-right lg:mb-16"
+                  key={`${item.type}_${item.id}`}
+                >
+                  {item.type === "workshop" ? (
+                    <motion.div
+                      whileInView={{ opacity: 1 }}
+                      initial={{ opacity: 0 }}
+                      className="inline-block lg:mr-10 "
+                    >
+                      <WorkshopCard workshop={item} />
+                    </motion.div>
+                  ) : null}
+                  {item.type === "challenge" ? (
+                    <motion.div
+                      className="inline-block lg:mr-10"
+                      whileInView={{ opacity: 1 }}
+                      initial={{ opacity: 0 }}
+                    >
+                      <ChallengeCard challenge={item} />
+                    </motion.div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </>
+        ) : null}
       </div>
     </main>
   );
