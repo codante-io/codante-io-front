@@ -97,12 +97,13 @@ export default function ReactionsButton({
   const handleClick = (reaction: AllowedReaction) => {
     popSound();
 
-    if (user) {
-      optimisticToggleReaction(reaction);
-    } else {
-      toast.showErrorToast("Você precisa fazer login para reagir a um post.");
+    if (!user) {
+      return toast.showErrorToast(
+        "Você precisa fazer login para reagir a um post."
+      );
     }
 
+    optimisticToggleReaction(reaction);
     const redirectTo = window.location.pathname;
 
     fetcher.submit(
