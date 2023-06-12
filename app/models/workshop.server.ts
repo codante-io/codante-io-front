@@ -16,6 +16,7 @@ export type Workshop = {
   duration_in_minutes: number;
   published_at?: string;
   instructor: Instructor;
+  is_standalone: boolean;
   lessons: Lesson[];
   tags: Tag[];
   pivot?: {

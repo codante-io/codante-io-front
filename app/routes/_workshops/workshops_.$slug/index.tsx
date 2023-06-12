@@ -61,7 +61,8 @@ export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const workshop = await getWorkshop(params.slug);
-  if (!workshop) {
+  console.log(workshop);
+  if (!workshop || !workshop.is_standalone) {
     return abort404();
   }
 
