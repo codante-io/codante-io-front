@@ -1,5 +1,6 @@
 import axios from "axios";
 import { currentToken, user } from "~/services/auth.server";
+import type { Reactions } from "~/models/reactions.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 
@@ -34,11 +35,13 @@ export type ChallengeParticipants = {
 };
 
 export type ChallengeSubmission = {
+  id: string;
   user_name: string;
   user_avatar_url: string;
   user_github_user: string;
   submission_url: string;
   submission_image_url: string;
+  reactions: Reactions;
 };
 
 export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
@@ -233,10 +236,17 @@ export async function updateChallengeCompleted({
 }
 
 export async function getChallengeSubmissions(
+  request: Request,
   slug: string
 ): Promise<ChallengeSubmission[]> {
+  let token = await currentToken({ request });
+
   const challenge = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/submissions`)
+    .get(`${process.env.API_HOST}/challenges/${slug}/submissions`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {
