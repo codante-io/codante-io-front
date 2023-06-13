@@ -46,7 +46,7 @@ export default function ReactionsButton({
     []
   );
 
-  const [popSound] = useSound(pop, { volume: 0.4 });
+  const [popSound] = useSound(pop, { volume: 0.3 });
   const user = useUserFromOutletContext();
 
   useEffect(() => {
