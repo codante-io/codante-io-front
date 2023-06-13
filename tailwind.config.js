@@ -59,6 +59,7 @@ module.exports = {
         text: "text 5s ease infinite",
         tada: "tada 1s ease-in-out ",
         float: "float 2s ease-in-out infinite",
+        popover: "popover 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         text: {
@@ -93,6 +94,16 @@ module.exports = {
           },
           "100%": {
             transform: "translatey(0px)",
+          },
+        },
+        popover: {
+          from: {
+            opacity: 0,
+            transform: "translateY(4px)",
+          },
+          to: {
+            opacity: 1,
+            transform: "translateY(0)",
           },
         },
       },

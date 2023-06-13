@@ -1,4 +1,4 @@
-import { VscHeart } from "react-icons/vsc";
+import { RiHeartAddLine, RiHeartAddFill } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
@@ -8,12 +8,13 @@ import { useFetcher } from "@remix-run/react";
 import type { Reactions, AllowedReaction } from "~/models/reactions.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+import * as Popover from "@radix-ui/react-popover";
 
 const allowedReactions: AllowedReaction[] = [
-  "like",
-  "exploding-head",
-  "fire",
   "rocket",
+  "fire",
+  "exploding-head",
+  "like",
 ];
 
 export default function ReactionsButton({
@@ -27,6 +28,7 @@ export default function ReactionsButton({
 }) {
   const fetcher = useFetcher();
   const toast = useToasterWithSound();
+  const user = useUserFromOutletContext();
 
   const reactionError = fetcher.data?.error;
 
@@ -47,7 +49,6 @@ export default function ReactionsButton({
   );
 
   const [popSound] = useSound(pop, { volume: 0.3 });
-  const user = useUserFromOutletContext();
 
   useEffect(() => {
     setTotalReactions(
@@ -79,6 +80,7 @@ export default function ReactionsButton({
           ...prev.slice(existingReactionIndex + 1),
         ];
       });
+      setTotalReactions((prev) => prev! - 1);
 
       setLocalReactions((prev) => ({
         ...prev,
@@ -86,6 +88,7 @@ export default function ReactionsButton({
       }));
     } else {
       setLocalUserReacted((prev) => [...prev, reaction]);
+      setTotalReactions((prev) => prev! + 1);
 
       setLocalReactions((prev) => ({
         ...prev,
@@ -115,56 +118,91 @@ export default function ReactionsButton({
     );
   };
 
-  return (
-    <>
-      <button
-        onClick={(ev) => ev.preventDefault()}
-        className="flex items-center justify-center h-16 gap-1 pl-6 bg-transparent rounded-full group/reaction peer dark:border-gray-400"
-      >
-        <VscHeart className="text-xl transition-transform scale-90 group-focus/reaction:scale-100 group-hover/reaction:scale-100" />
-        <span className="inline-block w-2 h-4 text-xs">{totalReactions}</span>
-      </button>
+  const handleTotalReactionsClick = (ev: React.MouseEvent<HTMLElement>) => {
+    const isPopoverClosed =
+      ev.currentTarget.getAttribute("data-state") === "closed";
 
-      <fetcher.Form
-        method="post"
-        onClick={(ev) => ev.preventDefault()}
-        className="peer -z-10 peer-focus:z-0 peer-hover:z-0 hover:z-0 hover:opacity-100 peer-hover:opacity-100 peer-focus:opacity-100 opacity-0 absolute right-2 flex items-center justify-around gap-6 px-4 h-14 mb-[6.5rem] bg-background-150 dark:bg-background-600 rounded-xl after:content-[''] after:bg-background-150 dark:after:bg-background-600 after:w-4 after:h-4 after:absolute after:right-[1.5rem] after:mt-12 after:rounded-br-sm after:rotate-45 after:clip-triangle shadow-lg after:shadow-lg"
+    if (isPopoverClosed && localUserReacted.length === 0 && user) {
+      handleClick("like");
+    }
+  };
+
+  const scale = {
+    initial: { scale: 0.9 },
+    animate: { scale: 1 },
+  };
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger
+        onClick={handleTotalReactionsClick}
+        className="flex items-center justify-center h-16 gap-1 p-2 bg-transparent group"
       >
-        <input type="hidden" name="reactable-id" value={reactableId} />
-        <input type="hidden" name="reactable-type" value={reactableType} />
-        {allowedReactions.map((reaction) => (
-          <button
-            key={reaction}
-            onClick={() => handleClick(reaction)}
-            className={classNames(
-              "flex flex-row items-center gap-1 p-2 transition-colors border rounded-xl",
-              localUserReacted.includes(reaction)
-                ? "border-opacity-100 border-brand-500"
-                : "border-transparent border-opacity-0"
-            )}
+        {localUserReacted.length > 0 ? (
+          <RiHeartAddFill className="text-xl transition-transform scale-90 fill-red-700" />
+        ) : (
+          <RiHeartAddLine className="text-xl transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105" />
+        )}
+        <span className="inline-block w-2 h-4 text-xs">{totalReactions}</span>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          side="top"
+          align="end"
+          alignOffset={-10}
+          sideOffset={-20}
+          className="p-2 data-[state=open]:animate-popover transition-opacity shadow-md bg-background-100 dark:bg-background-800 rounded-xl"
+        >
+          <fetcher.Form
+            method="post"
+            onClick={(ev) => ev.preventDefault()}
+            className="flex flex-col gap-1"
           >
-            <input type="hidden" name="reactable-type" value={reaction} />
-            <motion.div whileHover={{ scale: 1.1, y: -2 }} className="w-6 h-6">
-              {localUserReacted.includes(reaction) ? (
-                <img
-                  loading="lazy"
-                  src={`/img/emoji/${reaction}-animated.png`}
-                  alt={`Reaction button - ${reaction} emoji`}
-                />
-              ) : (
-                <img
-                  loading="lazy"
-                  src={`/img/emoji/${reaction}.png`}
-                  alt={`Reaction button - ${reaction} emoji`}
-                />
-              )}
-            </motion.div>
-            <span className="inline-block w-2 text-xs">
-              {localReactions[reaction] || 0}
-            </span>
-          </button>
-        ))}
-      </fetcher.Form>
-    </>
+            <input type="hidden" name="reactable-id" value={reactableId} />
+            <input type="hidden" name="reactable-type" value={reactableType} />
+            {allowedReactions.map((reaction) => (
+              <motion.button
+                key={reaction}
+                initial="initial"
+                animate="initial"
+                whileHover="animate"
+                onClick={() => handleClick(reaction)}
+                className={classNames(
+                  "flex flex-row items-center gap-1 p-2 transition-colors border rounded-xl hover:bg-background-150 hover:dark:bg-background-700",
+                  localUserReacted.includes(reaction)
+                    ? "border-opacity-100 border-brand-500 bg-background-150 dark:bg-background-700"
+                    : "border-transparent border-opacity-0"
+                )}
+              >
+                <input type="hidden" name="reactable-type" value={reaction} />
+                <motion.div variants={scale} className="w-6 h-6">
+                  {localUserReacted.includes(reaction) ? (
+                    <img
+                      loading="lazy"
+                      src={`/img/emoji/${reaction}-animated.png`}
+                      alt={`Reaction button - ${reaction} emoji`}
+                    />
+                  ) : (
+                    <img
+                      loading="lazy"
+                      src={`/img/emoji/${reaction}.png`}
+                      alt={`Reaction button - ${reaction} emoji`}
+                    />
+                  )}
+                </motion.div>
+                <span className="inline-block w-2 text-xs">
+                  {localReactions[reaction] || 0}
+                </span>
+              </motion.button>
+            ))}
+          </fetcher.Form>
+          <Popover.Arrow
+            width={15}
+            height={8}
+            className="fill-background-100 dark:fill-background-800"
+          />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

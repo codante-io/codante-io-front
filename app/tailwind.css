@@ -18,8 +18,6 @@
   }
 }
 
-@layer utilities {
-  .clip-triangle {
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-  }
+:focus-visible {
+  outline: 2px solid #5282ff;
 }
