@@ -61,7 +61,6 @@ export const loader = async ({ params }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const workshop = await getWorkshop(params.slug);
-  console.log(workshop);
   if (!workshop || !workshop.is_standalone) {
     return abort404();
   }
@@ -75,7 +74,6 @@ export default function WorkshopSlug() {
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     workshop.published_at
   );
-  console.log(publishedDate, publishedTime);
 
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">

@@ -1,6 +1,7 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import MarkdownRenderer from "~/components/markdown-renderer";
+import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import type { Workshop } from "~/models/workshop.server";
@@ -20,6 +21,7 @@ export async function loader({ params }: { params: any }) {
   return {
     slug: params.slug,
     workshop: workshop,
+    lesson: workshop.lessons.find((lesson) => lesson.slug === params.slug),
     activeIndex: workshop.lessons.findIndex(
       (lesson: any) => lesson.slug === params.slug
     ),
@@ -30,30 +32,12 @@ export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop: Workshop = loaderData.workshop;
   const activeIndex = loaderData.activeIndex;
+  const lesson = loaderData.lesson;
   const slug = loaderData.slug;
   return (
     <div className="container mx-auto">
       <section className="relative">
-        <div className="relative aspect-video">
-          <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
-            <div style={{ padding: "56.30% 0 0 0", position: "relative" }}>
-              <iframe
-                src="https://player.vimeo.com/video/238455692"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "0",
-                  width: "100%",
-                  height: "100%",
-                }}
-                title="C0193vid007-1"
-              ></iframe>
-            </div>
-            <script src="https://player.vimeo.com/api/player.js"></script>
-          </div>
-        </div>
+        <VimeoPlayer vimeoUrl={lesson?.video_url || ""} />
       </section>
       {/* <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4"> */}
 
@@ -62,13 +46,10 @@ export default function LessonIndex() {
           <div className="min-w-0 lg:col-span-2 lg:px-2 lg:text-lg">
             <div className="px-2 mb-8 sm:px-0">
               <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
-                {workshop.lessons.find((lesson) => lesson.slug === slug)?.name}
+                {lesson?.name}
               </h1>
               <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-gray-300 text-gray-500">
-                {
-                  workshop.lessons.find((lesson) => lesson.slug === slug)
-                    ?.description
-                }
+                {lesson?.description}
               </p>
 
               <MarkdownRenderer

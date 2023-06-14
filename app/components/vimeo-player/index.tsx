@@ -18,7 +18,7 @@ export default function VimeoPlayer({ vimeoUrl }: VimeoPlayerProps) {
               width: "100%",
               height: "100%",
             }}
-            title="C0193vid007-1"
+            title="Codante.io"
           ></iframe>
         </div>
         <script src="https://player.vimeo.com/api/player.js"></script>
