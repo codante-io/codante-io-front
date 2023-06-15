@@ -15,6 +15,7 @@ import useSound from "use-sound";
 import { AnimatePresence, motion } from "framer-motion";
 import type { User } from "~/models/user.server";
 import { setActiveClassForPath } from "~/utils/path-utils";
+import LinkToLoginWithRedirect from "../link-to-login-with-redirect";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -142,12 +143,9 @@ export default function Navbar({ user }: { user: any }) {
                   <ProfileMenu user={user} />
                 </div>
               ) : (
-                <Link
-                  className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0"
-                  to="/login"
-                >
+                <LinkToLoginWithRedirect className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0">
                   Login <BsArrowRight className="hidden md:inline" />
-                </Link>
+                </LinkToLoginWithRedirect>
               )}
             </div>
           </div>
