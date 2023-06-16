@@ -57,10 +57,11 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   };
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
-  const workshop = await getWorkshop(params.slug);
+  const workshop = await getWorkshop(params.slug, request);
+
   if (!workshop || !workshop.is_standalone) {
     return abort404();
   }

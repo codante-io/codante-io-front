@@ -8,9 +8,16 @@ import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
 import { abort404 } from "~/utils/responses.server";
 
-export async function loader({ params }: { params: any }) {
+export async function loader({
+  params,
+  request,
+}: {
+  params: any;
+  request: any;
+}) {
   // se não houver workshop com esse slug ou lesson com esse slug, aborta com 404
-  const workshop = await getWorkshop(params.workshopSlug);
+  const workshop = await getWorkshop(params.workshopSlug, request);
+  console.log(workshop);
   if (
     !workshop ||
     !workshop.lessons.find((lesson: any) => lesson.slug === params.slug)
@@ -37,7 +44,10 @@ export default function LessonIndex() {
   return (
     <div className="container mx-auto">
       <section className="relative">
-        <VimeoPlayer vimeoUrl={lesson?.video_url || ""} />
+        <VimeoPlayer
+          vimeoUrl={lesson?.video_url || ""}
+          onVideoPaused={() => console.log("pausou a lição", lesson.name)}
+        />
       </section>
       {/* <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4"> */}
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
+import { currentToken } from "~/services/auth.server";
 
 export type Workshop = {
   id: string;
@@ -31,14 +32,23 @@ export async function getWorkshops(): Promise<Array<Workshop>> {
   return workshops;
 }
 
-export async function getWorkshop(slug: string): Promise<Workshop | null> {
+export async function getWorkshop(
+  slug: string,
+  request: any
+): Promise<Workshop | null> {
+  const token = await currentToken({ request });
   const workshop = await axios
-    .get(`${process.env.API_HOST}/workshops/${slug}`)
+    .get(`${process.env.API_HOST}/workshops/${slug}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {
         return null;
       }
     });
+  console.log(workshop.user);
   return workshop;
 }
