@@ -81,10 +81,17 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
     },
   },
 
+  code: {
+    props: {
+      className:
+        "dark:text-brand-300 dark:bg-background-800 bg-background-200 px-1.5 py-0.5 rounded-md font-mono",
+    },
+  },
+
   h2: {
     component: H2WithDivider,
     props: {
-      className: "text-xl mt-8 mb-2 font-semibold",
+      className: "text-xl mt-14 mb-2 font-semibold",
     },
   },
 
@@ -108,7 +115,7 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
 
   li: {
     props: {
-      className: "my-4",
+      className: "my-3",
     },
   },
 
