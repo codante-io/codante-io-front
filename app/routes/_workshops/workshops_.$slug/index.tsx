@@ -62,6 +62,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 
   const workshop = await getWorkshop(params.slug, request);
 
+  // console.log(workshop)
   if (!workshop || !workshop.is_standalone) {
     return abort404();
   }

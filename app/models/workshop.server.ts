@@ -49,6 +49,5 @@ export async function getWorkshop(
         return null;
       }
     });
-  console.log(workshop.user);
   return workshop;
 }

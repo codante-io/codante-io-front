@@ -1,18 +1,16 @@
 import Vimeo from "@vimeo/player";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 type VimeoPlayerProps = {
   vimeoUrl: string;
   onVideoEnded?: () => void;
-  onVideoPaused?: () => void;
 };
 
 export default function VimeoPlayer({
   vimeoUrl,
   onVideoEnded,
-  onVideoPaused,
 }: VimeoPlayerProps) {
-  const playerRef = useRef(null);
+  const playerRef = useRef<Vimeo | null>(null);
 
   useEffect(() => {
     const player = new Vimeo(playerRef.current, {
@@ -21,32 +19,21 @@ export default function VimeoPlayer({
       allow: "autoplay; fullscreen; picture-in-picture",
     });
 
-    console.log("tenho o player");
-
-    player.on("pause", () => {
-      console.log("pausei!");
-    });
-
-    player.on("ended", () => {
-      console.log("ended");
+    player.on("ended", function () {
+      if (onVideoEnded) {
+        onVideoEnded();
+      }
     });
 
     return () => {
-      console.log("destruindo");
-
       player.destroy();
     };
   }, [vimeoUrl]);
 
   return (
-    <div className="aspect-video">
-      <div className="z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
-        <div
-          style={{ width: "100%", height: "100%" }}
-          id="vimeo-player"
-          ref={playerRef}
-          className="w-full h-full"
-        ></div>
+    <div className="relative aspect-video">
+      <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
+        <div className="vimeo-full-width" ref={playerRef}></div>
       </div>
     </div>
   );
