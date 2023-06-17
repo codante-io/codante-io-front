@@ -12,6 +12,7 @@ export type Lesson = {
   created_at: string;
   updated_at: string;
   video_url?: string;
+  user_completed?: boolean;
 };
 
 export async function getLesson(slug: string) {
@@ -21,13 +22,23 @@ export async function getLesson(slug: string) {
   return lesson;
 }
 
-export async function setCompleted(lessonId: string, request: any) {
+export async function setCompleted(
+  lessonId: string,
+  request: any,
+  markCompleted = true
+) {
   const token = await currentToken({ request });
 
-  console.log(lessonId, request);
+  let endpoint = "";
+  if (markCompleted) {
+    endpoint = `${process.env.API_HOST}/lessons/${lessonId}/completed`;
+  } else {
+    endpoint = `${process.env.API_HOST}/lessons/${lessonId}/uncompleted`;
+  }
+
   const data = await axios
     .post(
-      `${process.env.API_HOST}/lessons/${lessonId}/completed`,
+      endpoint,
       {},
       {
         headers: {
@@ -36,5 +47,6 @@ export async function setCompleted(lessonId: string, request: any) {
       }
     )
     .then((res) => res.data.data);
+
   return data;
 }

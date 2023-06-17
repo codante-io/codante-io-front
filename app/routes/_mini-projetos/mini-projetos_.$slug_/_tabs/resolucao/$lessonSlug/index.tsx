@@ -1,4 +1,4 @@
-import { useOutletContext, useParams } from "@remix-run/react";
+import { useFetcher, useOutletContext, useParams } from "@remix-run/react";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
@@ -11,21 +11,27 @@ export default function ChallengeResolutionSlug() {
   const workshop = outletContext.challenge.workshop;
   const params = useParams();
   const slug = params.lessonSlug;
+  const fetcher = useFetcher();
 
   if (!workshop) return null;
 
   const activeIndex = workshop.lessons.findIndex(
     (lesson) => lesson.slug === slug
   );
+  const lesson = workshop.lessons[activeIndex];
 
+  function handleVideoEnded(lessonId: string) {
+    fetcher.submit(
+      { lessonId, markCompleted: "true" },
+      { method: "post", action: "/api/set-watched?index" }
+    );
+  }
   return (
     <div className="container mx-auto">
       <section className="relative">
         <VimeoPlayer
-          vimeoUrl={
-            workshop?.lessons.find((lesson) => lesson.slug === slug)
-              ?.video_url ?? ""
-          }
+          vimeoUrl={lesson.video_url ?? ""}
+          onVideoEnded={() => handleVideoEnded(lesson.id ?? "")}
         />
       </section>
       {/* <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4"> */}

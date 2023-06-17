@@ -12,7 +12,7 @@ export async function loader({ request }: LoaderArgs) {
   const pathname = url.pathname;
 
   if (pathname.endsWith("/resolucao") || pathname.endsWith("/resolucao/")) {
-    const challenge = await getChallenge(pathname.split("/")[2]);
+    const challenge = await getChallenge(pathname.split("/")[2], request);
     if (
       !challenge ||
       !challenge.workshop ||

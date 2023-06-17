@@ -1,5 +1,6 @@
-import { Link } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 import React from "react";
+import { BsCheckSquare, BsSquare } from "react-icons/bs";
 import type { Lesson } from "~/models/lesson.server";
 import type { Workshop } from "~/models/workshop.server";
 import { fromSecondsToTimeString } from "~/utils/interval";
@@ -38,6 +39,7 @@ export default function WorkshopLessonsList({
                 : ""
             }`}
           >
+            <MarkCompletedButton lesson={lesson} />
             <span className={`mr-3 text-sm text-brand`}>{id + 1}.</span>
             <h4
               className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
@@ -51,5 +53,29 @@ export default function WorkshopLessonsList({
         </Link>
       ))}
     </ol>
+  );
+}
+
+function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
+  const fetcher = useFetcher();
+
+  function handleCheckClick(lessonId: string, markCompleted: boolean) {
+    fetcher.submit(
+      { lessonId, markCompleted: markCompleted.toString() },
+      {
+        method: "POST",
+        action: "/api/set-watched?index",
+      }
+    );
+  }
+
+  return (
+    <button
+      onClick={() =>
+        handleCheckClick(lesson.id, lesson.user_completed ? false : true)
+      }
+    >
+      {lesson.user_completed ? <BsCheckSquare /> : <BsSquare />}
+    </button>
   );
 }

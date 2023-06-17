@@ -116,7 +116,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   }
 
   const [challenge, participants, challengeSubmissions] = await Promise.all([
-    getChallenge(params.slug),
+    getChallenge(params.slug, request),
     getChallengeParticipants(params.slug),
     getChallengeSubmissions(request, params.slug),
   ]);

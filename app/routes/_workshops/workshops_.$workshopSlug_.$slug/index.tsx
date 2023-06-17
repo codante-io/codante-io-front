@@ -41,18 +41,6 @@ export async function loader({
   };
 }
 
-export async function action({ request }: { request: any }) {
-  // const lessonId = params.lessonId;
-
-  const formData = await request.formData();
-  const lessonId = formData.get("lessonId") as string;
-  await setCompleted(lessonId, request);
-
-  console.log(lessonId);
-
-  return null;
-}
-
 export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop: Workshop = loaderData.workshop;
@@ -63,11 +51,12 @@ export default function LessonIndex() {
   const fetcher = useFetcher();
 
   function handleVideoEnded(lessonId: string) {
-    console.log("estou no handleVideoEnded");
-    fetcher.submit({ lessonId }, { method: "post", action: "?index" });
+    fetcher.submit(
+      { lessonId, markCompleted: "true" },
+      { method: "post", action: "/api/set-watched?index" }
+    );
   }
 
-  console.log(workshop);
   return (
     <div className="container mx-auto">
       <section className="relative">
