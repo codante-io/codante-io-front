@@ -17,7 +17,8 @@ const ColorModeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     rawSetColorMode(getInitialColorMode());
-  }, []);
+    setColorModeClass(colorMode);
+  }, [colorMode]);
 
   const setColorMode = (colorMode: ColorMode) => {
     rawSetColorMode(colorMode);
