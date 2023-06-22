@@ -36,7 +36,6 @@ export default function WorkshopLessonsList({
                 : ""
             }`}
           >
-            <MarkCompletedButton lesson={lesson} />
             <span className={`mr-3 text-sm text-brand`}>{id + 1}.</span>
             <h4
               className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
@@ -50,38 +49,5 @@ export default function WorkshopLessonsList({
         </Link>
       ))}
     </ol>
-  );
-}
-
-function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
-  const fetcher = useFetcher();
-
-  function handleCheckClick(
-    event: MouseEvent<HTMLButtonElement>,
-    lessonId: string,
-    markCompleted: boolean
-  ) {
-    event.preventDefault();
-    fetcher.submit(
-      { lessonId, markCompleted: markCompleted.toString() },
-      {
-        method: "POST",
-        action: "/api/set-watched?index",
-      }
-    );
-  }
-
-  return (
-    <button
-      onClick={(event) =>
-        handleCheckClick(event, lesson.id, lesson.user_completed ? false : true)
-      }
-    >
-      {lesson.user_completed ? (
-        <BsCheckSquare className="transition-all hover:text-brand hover:scale-110" />
-      ) : (
-        <BsSquare className="transition-all hover:text-brand hover:scale-110" />
-      )}
-    </button>
   );
 }

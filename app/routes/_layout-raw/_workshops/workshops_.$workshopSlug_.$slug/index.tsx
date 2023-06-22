@@ -1,8 +1,8 @@
-import { json } from "@remix-run/node";
 import {
   Link,
   useFetcher,
   useLoaderData,
+  useNavigate,
   useOutletContext,
 } from "@remix-run/react";
 import type { MouseEvent } from "react";
@@ -23,7 +23,14 @@ import classNames from "~/utils/class-names";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import { abort404 } from "~/utils/responses.server";
 import { TiArrowBackOutline } from "react-icons/ti";
-import { MdOutlineSkipNext, MdOutlineSkipPrevious } from "react-icons/md";
+import { MdOutlineSkipNext } from "react-icons/md";
+
+// import styles from "./styles.css"
+import styles from "./styles.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
 
 export async function loader({
   params,
@@ -45,9 +52,7 @@ export async function loader({
   }
 
   return {
-    slug: slug,
     workshop: workshop,
-    request: request,
     lesson: lesson,
     activeIndex: workshop.lessons.findIndex(
       (lesson: Lesson) => lesson.slug === params.slug
@@ -60,16 +65,18 @@ export default function LessonIndex() {
   const { user } = useOutletContext<{ user: User | null }>();
   const workshop: Workshop = loaderData.workshop;
   const activeIndex = loaderData.activeIndex;
-  const request = loaderData.request;
   const lesson = loaderData.lesson;
-  const slug = loaderData.slug;
   const fetcher = useFetcher();
+  const navigate = useNavigate();
 
-  function handleVideoEnded(lessonId: string) {
+  async function handleVideoEnded(lessonId: string) {
     fetcher.submit(
       { lessonId, markCompleted: "true" },
       { method: "post", action: "/api/set-watched?index" }
     );
+    if (nextLessonPath()) {
+      navigate(nextLessonPath());
+    }
   }
 
   function nextLessonPath() {
@@ -84,7 +91,11 @@ export default function LessonIndex() {
   const { colorMode } = useColorMode();
 
   return (
-    <div className="max-w-[1600px] grid grid-cols-[350px,1fr] mx-auto gap-8 justify-center  min-h-[calc(100vh-200px)] relative px-4">
+    <div
+      className={`${
+        colorMode === "dark" ? "darkScroll" : "lightScroll"
+      } max-w-[1600px] grid grid-cols-[350px,1fr] mx-auto gap-8 justify-center  min-h-[calc(100vh-200px)] relative px-4`}
+    >
       <div className="sticky top-0 flex flex-col max-h-screen">
         <div className="">
           <div className="flex items-center justify-between h-20">
@@ -92,16 +103,22 @@ export default function LessonIndex() {
               <CodanteLogoMinimal />
             </Link>
 
-            <div className="text-2xl">
-              <TiArrowBackOutline />
-            </div>
+            <Link
+              to={`/workshops/${workshop.slug}`}
+              className="px-2 py-1 text-2xl transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700"
+            >
+              <TiArrowBackOutline className="text-gray-600 dark:text-gray-500" />
+            </Link>
           </div>
         </div>
         <div className="">
           <WorkshopTitle workshop={workshop} />
         </div>
 
-        <div className="max-h-full pr-4 overflow-y-scroll">
+        <div
+          className="max-h-full pb-8 pr-4 overflow-y-scroll overscroll-contain"
+          style={{}}
+        >
           {workshop.lessons.length > 0 && (
             <>
               <WorkshopLessonsList
@@ -113,7 +130,7 @@ export default function LessonIndex() {
         </div>
       </div>
 
-      <div className="">
+      <div className="pb-10">
         <section className="relative">
           <div className="flex items-center justify-end h-20">
             <div className="mr-3">
@@ -137,7 +154,7 @@ export default function LessonIndex() {
             <Breadcrumbs workshop={workshop} lesson={lesson} />
             {nextLessonPath() && (
               <Link to={nextLessonPath()}>
-                <div className="flex items-start px-1 pl-2 text-3xl transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700">
+                <div className="flex items-start px-1 pl-2 text-3xl text-gray-600 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500">
                   <MdOutlineSkipNext className="inline-block" />
                 </div>
               </Link>
@@ -147,6 +164,7 @@ export default function LessonIndex() {
             <VimeoPlayer
               vimeoUrl={lesson.video_url || ""}
               onVideoEnded={() => handleVideoEnded(lesson.id)}
+              autoplay={false}
             />
           </div>
           <h1 className="mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
@@ -155,6 +173,11 @@ export default function LessonIndex() {
           <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-gray-300 text-gray-500">
             {lesson?.description}
           </p>
+          {lesson.content && (
+            <div>
+              <MarkdownRenderer markdown={lesson.content} />
+            </div>
+          )}
         </section>
       </div>
     </div>

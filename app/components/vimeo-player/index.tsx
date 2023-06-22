@@ -4,11 +4,13 @@ import { useEffect, useRef } from "react";
 type VimeoPlayerProps = {
   vimeoUrl: string;
   onVideoEnded?: () => void;
+  autoplay?: boolean;
 };
 
 export default function VimeoPlayer({
   vimeoUrl,
   onVideoEnded,
+  autoplay = false,
 }: VimeoPlayerProps) {
   const playerRef = useRef<Vimeo | null>(null);
 
@@ -17,6 +19,7 @@ export default function VimeoPlayer({
       id: vimeoUrl,
       allowfullscreen: true,
       allow: "autoplay; fullscreen; picture-in-picture",
+      autoplay: autoplay,
     });
 
     player.on("ended", function () {
@@ -24,6 +27,21 @@ export default function VimeoPlayer({
         onVideoEnded();
       }
     });
+
+    player.on("playbackratechange", function (data) {
+      localStorage.setItem("videoSpeed", data.playbackRate.toString());
+    });
+
+    async function getPlaybackRateFromLocalStorage() {
+      if (localStorage.getItem("videoSpeed")) {
+        const playbackRate = await player.getPlaybackRate();
+        if (Number(localStorage.getItem("videoSpeed")) !== playbackRate) {
+          player.setPlaybackRate(Number(localStorage.getItem("videoSpeed")));
+        }
+      }
+    }
+
+    getPlaybackRateFromLocalStorage();
 
     return () => {
       player.destroy();
