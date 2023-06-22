@@ -12,10 +12,8 @@ import MarkdownRenderer from "~/components/markdown-renderer";
 import ProfileMenu from "~/components/navbar/profile-menu";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import VimeoPlayer from "~/components/vimeo-player";
-import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import { useColorMode } from "~/contexts/color-mode-context";
 import type { Lesson } from "~/models/lesson.server";
-import { setCompleted } from "~/models/lesson.server";
 import type { User } from "~/models/user.server";
 import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
@@ -28,6 +26,7 @@ import { MdOutlineSkipNext } from "react-icons/md";
 // import styles from "./styles.css"
 import styles from "./styles.css";
 import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
+import { user } from "~/services/auth.server";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -71,10 +70,12 @@ export default function LessonIndex() {
   const navigate = useNavigate();
 
   async function handleVideoEnded(lessonId: string) {
-    fetcher.submit(
-      { lessonId, markCompleted: "true" },
-      { method: "post", action: "/api/set-watched?index" }
-    );
+    if (user) {
+      fetcher.submit(
+        { lessonId, markCompleted: "true" },
+        { method: "post", action: "/api/set-watched?index" }
+      );
+    }
     if (nextLessonPath()) {
       navigate(nextLessonPath());
     }
@@ -113,7 +114,7 @@ export default function LessonIndex() {
           </div>
         </div>
         <div className="">
-          <WorkshopTitle workshop={workshop} />
+          <WorkshopTitle isLoggedIn={!!user} workshop={workshop} />
         </div>
 
         <div
@@ -125,6 +126,7 @@ export default function LessonIndex() {
               <WorkshopLessonsList
                 workshop={workshop}
                 activeIndex={activeIndex}
+                isLoggedIn={!!user}
               />
             </>
           )}
@@ -204,7 +206,13 @@ function Breadcrumbs({
   );
 }
 
-function WorkshopTitle({ workshop }: { workshop: Workshop }) {
+function WorkshopTitle({
+  workshop,
+  isLoggedIn = false,
+}: {
+  workshop: Workshop;
+  isLoggedIn?: boolean;
+}) {
   return (
     <div className="mb-4">
       <h3 className="mt-0 text-lg font-bold ">
@@ -224,7 +232,7 @@ function WorkshopTitle({ workshop }: { workshop: Workshop }) {
           )
         )}
       </span>
-      <ProgressBar lessons={workshop.lessons} />
+      {isLoggedIn && <ProgressBar lessons={workshop.lessons} />}
     </div>
   );
 }
@@ -289,9 +297,11 @@ type WorkshopLessonsListProps = {
   activeIndex: number;
   isChallengeResolution?: boolean;
   challengeSlug?: string;
+  isLoggedIn?: boolean;
 };
 
 function WorkshopLessonsList({
+  isLoggedIn = false,
   workshop,
   activeIndex,
   isChallengeResolution = false,
@@ -316,8 +326,8 @@ function WorkshopLessonsList({
           )}
         >
           <div className="flex items-center flex-1">
-            <MarkCompletedButton lesson={lesson} />
-            <span className={`ml-4 text-xs dark:text-gray-600 mr-2`}>
+            {isLoggedIn && <MarkCompletedButton lesson={lesson} />}
+            <span className={` text-xs dark:text-gray-600 mr-2`}>
               {id + 1}.
             </span>
             <Link
@@ -363,6 +373,7 @@ function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
       onClick={(event) =>
         handleCheckClick(event, lesson.id, lesson.user_completed ? false : true)
       }
+      className="mr-4"
     >
       {lesson.user_completed ? (
         <BsCheckSquare />
