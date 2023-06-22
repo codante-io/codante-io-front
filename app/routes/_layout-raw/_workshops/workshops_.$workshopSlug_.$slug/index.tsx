@@ -5,8 +5,8 @@ import {
   useNavigate,
   useOutletContext,
 } from "@remix-run/react";
-import type { MouseEvent } from "react";
-import { BsArrowRight, BsSquare } from "react-icons/bs";
+import { useState, type MouseEvent } from "react";
+import { BsArrowRight, BsSquare, BsXLg } from "react-icons/bs";
 import invariant from "tiny-invariant";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import ProfileMenu from "~/components/navbar/profile-menu";
@@ -22,11 +22,13 @@ import { fromSecondsToTimeString } from "~/utils/interval";
 import { abort404 } from "~/utils/responses.server";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { MdOutlineSkipNext } from "react-icons/md";
+import { useClickOutside } from "@mantine/hooks";
 
 // import styles from "./styles.css"
 import styles from "./styles.css";
 import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
 import { user } from "~/services/auth.server";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -68,6 +70,7 @@ export default function LessonIndex() {
   const lesson = loaderData.lesson;
   const fetcher = useFetcher();
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   async function handleVideoEnded(lessonId: string) {
     if (user) {
@@ -91,64 +94,51 @@ export default function LessonIndex() {
   }
 
   const { colorMode } = useColorMode();
-
+  // ${isSidebarOpen ? "grid-cols-[350px,1fr]" : "grid-cols-[0px,1fr]"}
   return (
     <div
-      className={`${
-        colorMode === "dark" ? "darkScroll" : "lightScroll"
-      } max-w-[1600px] grid grid-cols-[350px,1fr] mx-auto gap-8 justify-center  min-h-[calc(100vh-200px)] relative px-4`}
+      className={` min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 
+      ${colorMode === "dark" ? "darkScroll" : "lightScroll"}
+      $
+
+    `}
     >
-      <div className="sticky top-0 flex flex-col max-h-screen">
-        <div className="">
-          <div className="flex items-center justify-between h-20">
-            <Link to="/" className="">
-              <CodanteLogoMinimal />
-            </Link>
+      <Sidebar
+        workshop={workshop}
+        activeIndex={activeIndex}
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+        user={user}
+      />
 
-            <Link
-              to={`/workshops/${workshop.slug}`}
-              className="px-2 py-1 text-2xl transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700"
-            >
-              <TiArrowBackOutline className="text-gray-600 dark:text-gray-500" />
-            </Link>
-          </div>
-        </div>
-        <div className="">
-          <WorkshopTitle isLoggedIn={!!user} workshop={workshop} />
-        </div>
-
-        <div
-          className="max-h-full pb-8 pr-4 overflow-y-scroll overscroll-contain"
-          style={{}}
-        >
-          {workshop.lessons.length > 0 && (
-            <>
-              <WorkshopLessonsList
-                workshop={workshop}
-                activeIndex={activeIndex}
-                isLoggedIn={!!user}
-              />
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className="pb-10">
+      <div
+        className={`pb-10 px-4 transition-opacity ${
+          isSidebarOpen ? "opacity-30" : "opacity-100"
+        }`}
+      >
         <section className="relative">
-          <div className="flex items-center justify-end h-20">
-            <div className="mr-3">
-              <ToggleColorMode />
-            </div>
-            {user ? (
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
-                {/* Profile dropdown */}
-                <ProfileMenu user={user} />
+          <div className="flex items-center justify-between h-20 lg:justify-end">
+            <button
+              className=""
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            >
+              <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white" />
+            </button>
+            <div className="flex items-center">
+              <div className="mr-3">
+                <ToggleColorMode />
               </div>
-            ) : (
-              <LinkToLoginWithRedirect className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0">
-                Login <BsArrowRight className="hidden md:inline" />
-              </LinkToLoginWithRedirect>
-            )}
+              {user ? (
+                <div className="static inset-y-0 inset-auto right-0 flex items-center ">
+                  {/* Profile dropdown */}
+                  <ProfileMenu user={user} />
+                </div>
+              ) : (
+                <LinkToLoginWithRedirect className="static inset-y-0 inset-auto right-0 flex items-center text-gray-700 dark:text-white gap-x-1">
+                  Login <BsArrowRight className="hidden md:inline" />
+                </LinkToLoginWithRedirect>
+              )}
+            </div>
           </div>
           <div className="flex items-start justify-between h-8">
             <Breadcrumbs workshop={workshop} lesson={lesson} />
@@ -164,7 +154,7 @@ export default function LessonIndex() {
             <VimeoPlayer
               vimeoUrl={lesson.video_url || ""}
               onVideoEnded={() => handleVideoEnded(lesson.id)}
-              autoplay={false}
+              autoplay={true}
             />
           </div>
           <h1 className="mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
@@ -179,6 +169,73 @@ export default function LessonIndex() {
             </div>
           )}
         </section>
+      </div>
+    </div>
+  );
+}
+
+function Sidebar({
+  workshop,
+  activeIndex,
+  isSidebarOpen,
+  setIsSidebarOpen,
+  user,
+}: {
+  workshop: Workshop;
+  activeIndex: number;
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (value: boolean) => void;
+  user: User | null;
+}) {
+  const ref = useClickOutside(() => setIsSidebarOpen(false));
+
+  return (
+    <div
+      ref={ref}
+      className={`lg:sticky w-80 absolute overflow-y-auto left-0 z-10 bg-background-900 lg:bg-transparent top-0 flex-col duration-500 transition-all max-h-screen lg:opacity-100 lg:flex lg:translate-x-0 lg:visible ${
+        isSidebarOpen ? "" : "-translate-x-80"
+      }`}
+    >
+      <div className="px-4 lg:px-0">
+        <div className="">
+          <div className="flex items-center justify-between h-20">
+            <Link to="/" className="">
+              <CodanteLogoMinimal />
+            </Link>
+
+            {isSidebarOpen ? (
+              <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                <BsXLg className="text-gray-600 w-7 h-7 dark:text-white" />
+              </button>
+            ) : (
+              <Link
+                to={`/workshops/${workshop.slug}`}
+                className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:block hover:bg-gray-200 dark:hover:bg-background-700"
+              >
+                <TiArrowBackOutline className="text-gray-600 dark:text-gray-500" />
+              </Link>
+            )}
+          </div>
+        </div>
+        <div className="">
+          <WorkshopTitle isLoggedIn={!!user} workshop={workshop} />
+        </div>
+      </div>
+
+      <div
+        className="max-h-full pb-8 pr-4 lg:overflow-y-scroll lg:overscroll-contain"
+        style={{}}
+      >
+        {workshop.lessons.length > 0 && (
+          <>
+            <WorkshopLessonsList
+              workshop={workshop}
+              activeIndex={activeIndex}
+              isLoggedIn={!!user}
+              setIsSidebarOpen={setIsSidebarOpen}
+            />
+          </>
+        )}
       </div>
     </div>
   );
@@ -298,6 +355,7 @@ type WorkshopLessonsListProps = {
   isChallengeResolution?: boolean;
   challengeSlug?: string;
   isLoggedIn?: boolean;
+  setIsSidebarOpen: (value: boolean) => void;
 };
 
 function WorkshopLessonsList({
@@ -306,6 +364,7 @@ function WorkshopLessonsList({
   activeIndex,
   isChallengeResolution = false,
   challengeSlug = "",
+  setIsSidebarOpen,
 }: WorkshopLessonsListProps) {
   // if is challenge resolution, we need to add the challenge slug to the link
   // so we can navigate to the correct lesson
@@ -331,6 +390,7 @@ function WorkshopLessonsList({
               {id + 1}.
             </span>
             <Link
+              onClick={() => setIsSidebarOpen(false)}
               to={`${linkPrefix}/${lesson.slug}`}
               className="hover:underline"
             >
