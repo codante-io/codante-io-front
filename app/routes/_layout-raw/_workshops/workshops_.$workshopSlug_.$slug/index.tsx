@@ -27,6 +27,7 @@ import { MdOutlineSkipNext } from "react-icons/md";
 
 // import styles from "./styles.css"
 import styles from "./styles.css";
+import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -142,12 +143,9 @@ export default function LessonIndex() {
                 <ProfileMenu user={user} />
               </div>
             ) : (
-              <Link
-                className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0"
-                to="/login"
-              >
+              <LinkToLoginWithRedirect className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0">
                 Login <BsArrowRight className="hidden md:inline" />
-              </Link>
+              </LinkToLoginWithRedirect>
             )}
           </div>
           <div className="flex items-start justify-between h-8">
