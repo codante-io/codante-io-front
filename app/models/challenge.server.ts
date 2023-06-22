@@ -10,7 +10,7 @@ export type ChallengeCardInfo = {
   slug: string;
   status: "draft" | "published" | "soon" | "archived";
   short_description: string;
-  repository_url: string;
+  repository_name: string;
   stars?: number;
   forks?: number;
   description?: string;

@@ -149,7 +149,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     initialSteps: buildInitialSteps({
       user,
       challengeUser,
-      repositorySlug: challenge.slug,
+      repositorySlug: challenge.repository_name,
     }),
   });
 };
