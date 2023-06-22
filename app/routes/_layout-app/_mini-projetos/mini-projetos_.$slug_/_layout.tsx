@@ -30,7 +30,7 @@ import { logout, user as getUser } from "~/services/auth.server";
 import { useEffect } from "react";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
-import { buildInitialSteps } from "~/routes/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
+import { buildInitialSteps } from "./build-steps.server";
 import axios from "axios";
 import { abort404 } from "~/utils/responses.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";

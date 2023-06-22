@@ -1,5 +1,5 @@
-import { currentToken } from "../../../services/auth.server";
-import axios from "../../../services/axios.server";
+import { currentToken } from "../../../../services/auth.server";
+import axios from "../../../../services/axios.server";
 
 type changePasswordParams = {
   request: Request;

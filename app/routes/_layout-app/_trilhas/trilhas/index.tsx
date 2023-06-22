@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
-import { getTracks } from "../../../models/track.server";
+import { getTracks } from "../../../../models/track.server";
 import TrackCard from "~/components/cards/track-card";
 
 export function meta() {

@@ -1,4 +1,5 @@
 import { Link, useFetcher } from "@remix-run/react";
+import type { MouseEvent } from "react";
 import React from "react";
 import { BsCheckSquare, BsSquare } from "react-icons/bs";
 import type { Lesson } from "~/models/lesson.server";
@@ -27,11 +28,7 @@ export default function WorkshopLessonsList({
   return (
     <ol className="mt-4">
       {workshop.lessons.map((lesson: Lesson, id: number) => (
-        <Link
-          key={lesson.id}
-          to={`${linkPrefix}/${lesson.slug}`}
-          preventScrollReset
-        >
+        <Link key={lesson.id} to={`${linkPrefix}/${lesson.slug}`}>
           <li
             className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
               activeIndex === id
@@ -59,7 +56,12 @@ export default function WorkshopLessonsList({
 function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
   const fetcher = useFetcher();
 
-  function handleCheckClick(lessonId: string, markCompleted: boolean) {
+  function handleCheckClick(
+    event: MouseEvent<HTMLButtonElement>,
+    lessonId: string,
+    markCompleted: boolean
+  ) {
+    event.preventDefault();
     fetcher.submit(
       { lessonId, markCompleted: markCompleted.toString() },
       {
@@ -71,11 +73,15 @@ function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
 
   return (
     <button
-      onClick={() =>
-        handleCheckClick(lesson.id, lesson.user_completed ? false : true)
+      onClick={(event) =>
+        handleCheckClick(event, lesson.id, lesson.user_completed ? false : true)
       }
     >
-      {lesson.user_completed ? <BsCheckSquare /> : <BsSquare />}
+      {lesson.user_completed ? (
+        <BsCheckSquare className="transition-all hover:text-brand hover:scale-110" />
+      ) : (
+        <BsSquare className="transition-all hover:text-brand hover:scale-110" />
+      )}
     </button>
   );
 }

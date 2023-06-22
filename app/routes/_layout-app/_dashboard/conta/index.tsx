@@ -6,7 +6,7 @@ import {
 } from "@remix-run/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import Input from "~/components/form/input";
-import AuthCard from "~/routes/_auth/auth-card";
+import AuthCard from "../../_auth/auth-card";
 import { currentToken, getSession, user } from "~/services/auth.server";
 import { changeName, changePassword } from "./services.server";
 import LoadingButton from "~/components/form/loading-button";

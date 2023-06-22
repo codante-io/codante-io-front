@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
-import { getWorkshops } from "../../../models/workshop.server";
+import { getWorkshops } from "../../../../models/workshop.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 
 // meta function
