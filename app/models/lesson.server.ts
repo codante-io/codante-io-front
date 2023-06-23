@@ -29,11 +29,11 @@ export async function setCompleted(
 ) {
   const token = await currentToken({ request });
 
-  let endpoint = "";
+  let endpoint = `${process.env.API_HOST}/lessons/${lessonId}/`;
   if (markCompleted) {
-    endpoint = `${process.env.API_HOST}/lessons/${lessonId}/completed`;
+    endpoint += "completed";
   } else {
-    endpoint = `${process.env.API_HOST}/lessons/${lessonId}/uncompleted`;
+    endpoint += "uncompleted";
   }
 
   const data = await axios
