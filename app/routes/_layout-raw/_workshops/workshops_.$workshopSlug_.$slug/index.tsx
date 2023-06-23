@@ -112,7 +112,7 @@ export default function LessonIndex() {
               className=""
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
-              <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white" />
+              <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white lg:invisible" />
             </button>
             <div className="flex items-center">
               <div className="mr-3">
