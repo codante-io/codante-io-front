@@ -1,7 +1,4 @@
-import { Link, useFetcher } from "@remix-run/react";
-import type { MouseEvent } from "react";
-import React from "react";
-import { BsCheckSquare, BsSquare } from "react-icons/bs";
+import { Link } from "@remix-run/react";
 import type { Lesson } from "~/models/lesson.server";
 import type { Workshop } from "~/models/workshop.server";
 import { fromSecondsToTimeString } from "~/utils/interval";

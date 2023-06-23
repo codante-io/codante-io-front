@@ -1,3 +1,4 @@
+import { useClickOutside } from "@mantine/hooks";
 import {
   Link,
   useFetcher,
@@ -7,6 +8,8 @@ import {
 } from "@remix-run/react";
 import { useState, type MouseEvent } from "react";
 import { BsArrowRight, BsSquare, BsXLg } from "react-icons/bs";
+import { MdOutlineSkipNext } from "react-icons/md";
+import { TiArrowBackOutline } from "react-icons/ti";
 import invariant from "tiny-invariant";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import ProfileMenu from "~/components/navbar/profile-menu";
@@ -20,15 +23,9 @@ import { getWorkshop } from "~/models/workshop.server";
 import classNames from "~/utils/class-names";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import { abort404 } from "~/utils/responses.server";
-import { TiArrowBackOutline } from "react-icons/ti";
-import { MdOutlineSkipNext } from "react-icons/md";
-import { useClickOutside } from "@mantine/hooks";
-
-// import styles from "./styles.css"
-import styles from "./styles.css";
-import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
-import { user } from "~/services/auth.server";
 import { Bars3Icon } from "@heroicons/react/24/solid";
+import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
+import styles from "./styles.css";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -41,9 +38,6 @@ export async function loader({
   params: any;
   request: any;
 }) {
-  invariant(params.slug, `params.slug is required`);
-  const slug: string = params.slug;
-  // se não houver workshop com esse slug ou lesson com esse slug, aborta com 404
   const workshop = await getWorkshop(params.workshopSlug, request);
   const lesson = workshop?.lessons.find(
     (lesson) => lesson.slug === params.slug
@@ -94,7 +88,6 @@ export default function LessonIndex() {
   }
 
   const { colorMode } = useColorMode();
-  // ${isSidebarOpen ? "grid-cols-[350px,1fr]" : "grid-cols-[0px,1fr]"}
   return (
     <div
       className={` min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 

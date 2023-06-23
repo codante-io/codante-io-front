@@ -71,9 +71,6 @@ export default function App() {
         />
         <ColorModeProvider>
           <LoadingBar />
-          {/* <Navbar user={user} /> */}
-          {/* altura do footer de 170px. Se mudar deve mudar o cálculo aqui */}
-
           <Outlet context={{ user }} />
         </ColorModeProvider>
         <ScrollRestoration />

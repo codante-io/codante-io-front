@@ -12,10 +12,10 @@ import { ColorModeProvider } from "./contexts/color-mode-context";
 startTransition(() => {
   hydrateRoot(
     document,
-    // <StrictMode>
-    <ColorModeProvider>
-      <RemixBrowser />
-    </ColorModeProvider>
-    // </StrictMode>
+    <StrictMode>
+      <ColorModeProvider>
+        <RemixBrowser />
+      </ColorModeProvider>
+    </StrictMode>
   );
 });

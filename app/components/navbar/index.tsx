@@ -1,22 +1,15 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  Bars3Icon,
-  XMarkIcon,
-  UserCircleIcon,
-  CalendarDaysIcon,
-} from "@heroicons/react/24/outline";
-import { Form, Link, NavLink, useMatches } from "@remix-run/react";
+import { Disclosure } from "@headlessui/react";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { Link, NavLink, useMatches } from "@remix-run/react";
+import { AnimatePresence, motion } from "framer-motion";
+import { BsArrowRight } from "react-icons/bs";
+import useSound from "use-sound";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
-import { BsArrowRight } from "react-icons/bs";
-import switchSound from "./switch.mp3";
-import useSound from "use-sound";
-import { AnimatePresence, motion } from "framer-motion";
-import type { User } from "~/models/user.server";
 import { setActiveClassForPath } from "~/utils/path-utils";
-import ProfileMenu from "./profile-menu";
 import LinkToLoginWithRedirect from "../link-to-login-with-redirect";
+import ProfileMenu from "./profile-menu";
+import switchSound from "./switch.mp3";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
