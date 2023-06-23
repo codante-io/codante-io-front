@@ -32,12 +32,6 @@ export default function HomePage() {
   const { user } = useOutletContext<{ user: User }>();
 
   const { homeInfo } = useLoaderData<typeof loader>();
-  const { colorMode } = useColorMode();
-
-  const saibaMaisButton = () =>
-    document
-      ?.getElementById("workshops")
-      ?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <AppLayout user={user}>

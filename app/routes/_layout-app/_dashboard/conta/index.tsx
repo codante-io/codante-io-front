@@ -4,16 +4,15 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
+import { useEffect } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import Input from "~/components/form/input";
-import AuthCard from "../../_auth/auth-card";
-import { currentToken, getSession, user } from "~/services/auth.server";
-import { changeName, changePassword } from "./services.server";
 import LoadingButton from "~/components/form/loading-button";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
-import { authenticator } from "~/services/github-auth.server";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
+import { currentToken, getSession, user } from "~/services/auth.server";
+import { authenticator } from "~/services/github-auth.server";
+import AuthCard from "../../_auth/auth-card";
+import { changeName, changePassword } from "./services.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -93,7 +92,7 @@ export default function Account() {
     if (isChangePasswordSuccess) {
       showSuccessToast("Você alterou sua senha com sucesso.");
     }
-  }, [isChangeNameSuccess, isChangePasswordSuccess]);
+  }, [isChangeNameSuccess, isChangePasswordSuccess, showSuccessToast]);
 
   return (
     <div className="container mx-auto mb-16">

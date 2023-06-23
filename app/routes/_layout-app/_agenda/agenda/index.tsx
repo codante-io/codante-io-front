@@ -1,12 +1,11 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import ChallengeCard from "~/components/cards/challenge-card";
-import WorkshopCard from "~/components/cards/workshop-card";
 import { AddToCalendarButton } from "add-to-calendar-button-react";
 import { motion } from "framer-motion";
-
-import { getUpcoming } from "~/models/upcoming.server";
+import ChallengeCard from "~/components/cards/challenge-card";
+import WorkshopCard from "~/components/cards/workshop-card";
 import { useColorMode } from "~/contexts/color-mode-context";
+import { getUpcoming } from "~/models/upcoming.server";
 import { getPublishedDateAndTime } from "~/utils/interval";
 
 // meta function
@@ -18,16 +17,17 @@ export function meta() {
   };
 }
 
-export async function loader({ request }: { request: Request }) {
+export async function loader() {
   const upcomingData = await getUpcoming();
 
   return json({
-    upcomingData,
+    upcomingData: upcomingData,
   });
 }
 
 export default function Schedule() {
-  const { upcomingData } = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>();
+  const upcomingData = loaderData.upcomingData || {};
   const { colorMode } = useColorMode();
 
   const upcomingDates = Object.keys(upcomingData)?.filter(
@@ -40,7 +40,7 @@ export default function Schedule() {
 
       <div>
         {upcomingDates.map((upcoming, i) => {
-          const [publishedDate, publishedTime] = getPublishedDateAndTime(
+          const [, publishedTime] = getPublishedDateAndTime(
             upcomingData[upcoming][0].published_at
           );
 

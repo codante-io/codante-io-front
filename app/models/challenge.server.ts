@@ -1,6 +1,6 @@
 import axios from "axios";
-import { currentToken, user } from "~/services/auth.server";
 import type { Reactions } from "~/models/reactions.server";
+import { currentToken } from "~/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 

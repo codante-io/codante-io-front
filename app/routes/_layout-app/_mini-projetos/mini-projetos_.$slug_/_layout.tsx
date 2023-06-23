@@ -3,42 +3,42 @@ import { json, redirect } from "@remix-run/node";
 import {
   Link,
   Outlet,
+  isRouteErrorResponse,
   useActionData,
   useLoaderData,
   useLocation,
   useNavigate,
+  useRouteError,
 } from "@remix-run/react";
-import { MdBrowseGallery, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
-import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import ParticipantsSection from "./participants-section";
 
-import { useColorMode } from "~/contexts/color-mode-context";
+import axios from "axios";
+import { useEffect } from "react";
+import { BsCloudUpload, BsStars } from "react-icons/bs";
+import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
+import { Error500 } from "~/components/errors/500";
+import NotFound from "~/components/errors/not-found";
+import Wave from "~/components/wave";
+import { useToasterWithSound } from "~/hooks/useToasterWithSound";
+import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import {
   getChallenge,
+  getChallengeParticipants,
+  getChallengeSubmissions,
   joinChallenge,
   updateChallengeCompleted,
   updateUserJoinedDiscord,
-  verifyAndUpdateForkURL,
-  getChallengeParticipants,
   userJoinedChallenge,
-  getChallengeSubmissions,
+  verifyAndUpdateForkURL,
 } from "~/models/challenge.server";
-import { logout, user as getUser } from "~/services/auth.server";
-import { useEffect } from "react";
-import NotFound from "~/components/errors/not-found";
-import { Error500 } from "~/components/errors/500";
-import { buildInitialSteps } from "./build-steps.server";
-import axios from "axios";
-import { abort404 } from "~/utils/responses.server";
-import { useToasterWithSound } from "~/hooks/useToasterWithSound";
+import { user as getUser, logout } from "~/services/auth.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
-import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
-import Wave from "~/components/wave";
-import { BsCloudUpload, BsFillCloudUploadFill, BsStars } from "react-icons/bs";
+import { abort404 } from "~/utils/responses.server";
+import { buildInitialSteps } from "./build-steps.server";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver challenge ainda.

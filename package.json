@@ -7,6 +7,8 @@
     "dev": "remix dev",
     "start": "dotenv -e .env.production remix-serve build",
     "typecheck": "tsc",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "prepare": "husky install"
   },
   "dependencies": {

@@ -8,16 +8,14 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import Footer from "~/components/footer";
-import Navbar from "~/components/navbar";
+import { Toaster } from "react-hot-toast";
+import LoadingBar from "~/components/loading-bar";
 import { ColorModeProvider } from "~/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
 import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
-import { user } from "./services/auth.server";
-import { Toaster } from "react-hot-toast";
-import LoadingBar from "~/components/loading-bar";
-import { getOgGeneratorUrl } from "./utils/path-utils";
 import { GoogleTagManager } from "./components/google-tag-manager";
+import { user } from "./services/auth.server";
+import { getOgGeneratorUrl } from "./utils/path-utils";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
