@@ -6,5 +6,8 @@ module.exports = {
     "@remix-run/eslint-config/jest-testing-library",
     "prettier",
   ],
-  ignorePatterns: ["node_modules/", "dist/", "build/"],
+  ignorePatterns: ["node_modules/", "dist/", "build/", "public/", ".husky/"],
+  rules: {
+    "no-console": "warn",
+  },
 };

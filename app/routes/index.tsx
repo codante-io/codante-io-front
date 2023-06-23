@@ -1,6 +1,4 @@
-import { BsFillPersonFill, BsDiscord } from "react-icons/bs";
 import { json } from "@remix-run/node";
-import { getHome } from "~/models/home.server";
 import {
   Link,
   isRouteErrorResponse,
@@ -8,19 +6,20 @@ import {
   useOutletContext,
   useRouteError,
 } from "@remix-run/react";
-import WorkshopCard from "~/components/cards/workshop-card";
+import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
+import AppLayout from "~/components/_layouts/root-layout";
+import BackgroundBlur from "~/components/background-blur";
 import ChallengeCard from "~/components/cards/challenge-card";
-import { useColorMode } from "~/contexts/color-mode-context";
 import PriceCard from "~/components/cards/price-card";
 import TrackCard from "~/components/cards/track-card";
-import BackgroundBlur from "~/components/background-blur";
-import type { User } from "~/models/user.server";
-import NotFound from "~/components/errors/not-found";
+import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
+import NotFound from "~/components/errors/not-found";
 import TitleIcon from "~/components/title-icon";
-import Wave from "~/components/wave";
 import VimeoPlayer from "~/components/vimeo-player";
-import AppLayout from "~/components/_layouts/root-layout";
+import Wave from "~/components/wave";
+import { getHome } from "~/models/home.server";
+import type { User } from "~/models/user.server";
 
 export const loader = async () => {
   return json({
@@ -30,7 +29,6 @@ export const loader = async () => {
 
 export default function HomePage() {
   const { user } = useOutletContext<{ user: User }>();
-
   const { homeInfo } = useLoaderData<typeof loader>();
 
   return (
