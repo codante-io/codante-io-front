@@ -1,6 +1,6 @@
 import axios from "axios";
-import { currentToken, user } from "~/services/auth.server";
 import type { Reactions } from "~/models/reactions.server";
+import { currentToken } from "~/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 
@@ -51,9 +51,18 @@ export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
   return challenges;
 }
 
-export async function getChallenge(slug: string): Promise<ChallengeCardInfo> {
+export async function getChallenge(
+  slug: string,
+  request: Request
+): Promise<ChallengeCardInfo> {
+  const token = await currentToken({ request });
+
   const challenge = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}`)
+    .get(`${process.env.API_HOST}/challenges/${slug}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {

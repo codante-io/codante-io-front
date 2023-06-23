@@ -1,5 +1,4 @@
 import { Link } from "@remix-run/react";
-import React from "react";
 import type { Lesson } from "~/models/lesson.server";
 import type { Workshop } from "~/models/workshop.server";
 import { fromSecondsToTimeString } from "~/utils/interval";
@@ -26,11 +25,7 @@ export default function WorkshopLessonsList({
   return (
     <ol className="mt-4">
       {workshop.lessons.map((lesson: Lesson, id: number) => (
-        <Link
-          key={lesson.id}
-          to={`${linkPrefix}/${lesson.slug}`}
-          preventScrollReset
-        >
+        <Link key={lesson.id} to={`${linkPrefix}/${lesson.slug}`}>
           <li
             className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
               activeIndex === id

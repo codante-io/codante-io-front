@@ -1,27 +1,24 @@
 import { Link } from "@remix-run/react";
 import type { Workshop } from "~/models/workshop.server";
 import { fromSecondsToTimeString } from "~/utils/interval";
+import ProgressBar from "./progress-bar";
 
-type WorkshopLessonsHeaderProps = {
-  workshop: Workshop;
-  title?: string;
-};
-
-export default function WorkshopLessonsHeader({
+export default function WorkshopTitle({
   workshop,
-  title,
-}: WorkshopLessonsHeaderProps) {
+  isLoggedIn = false,
+}: {
+  workshop: Workshop;
+  isLoggedIn?: boolean;
+}) {
   return (
-    <div className="mb-4 lg:mb-8">
-      {/* <span className="block -mb-1 text-xs text-gray-400 dark:text-gray-300">
-        Vídeos de:
-      </span> */}
+    <div className="mb-4">
       <h3 className="mt-0 text-lg font-bold ">
         <Link className="hover:underline" to={`/workshops/${workshop.slug}`}>
-          {title || workshop.name}
+          {workshop.name}
         </Link>
       </h3>
-      <span className="block mt-2 text-sm font-light text-gray-400 dark:text-gray-300">
+      <p className="mb-4 text-xs text-brand">Workshop</p>
+      <span className="block mt-0 text-xs font-light text-gray-400 dark:text-gray-500">
         {workshop.lessons.length}{" "}
         {workshop.lessons.length > 1 ? "vídeos" : "vídeo"}{" "}
         <span className="font-light text-blue-500"> &#8226; </span>
@@ -32,6 +29,7 @@ export default function WorkshopLessonsHeader({
           )
         )}
       </span>
+      {isLoggedIn && <ProgressBar lessons={workshop.lessons} />}
     </div>
   );
 }

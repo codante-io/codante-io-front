@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
+import axios from "axios";
 import { currentToken } from "~/services/auth.server";
 
 export type AllowedReaction = "like" | "exploding-head" | "rocket" | "fire";

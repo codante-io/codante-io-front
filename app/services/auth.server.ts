@@ -33,11 +33,8 @@ export async function register({
   password: string;
   passwordConfirmation: string;
 }) {
-  let response: AxiosResponse;
-  let session = await sessionStorage.getSession(request.headers.get("Cookie"));
-
   try {
-    response = await axios.post("/register", {
+    await axios.post("/register", {
       name,
       email,
       password,
@@ -46,22 +43,6 @@ export async function register({
   } catch (error: any) {
     return { errors: error?.response?.data?.message };
   }
-
-  // return await login({ request, email, password });
-  // let userData: { token?: string } = {};
-  // if (session.get("user")) {
-  //   userData = session.get("user");
-  // }
-  // userData.token = response.data.token;
-  // session.set("user", userData);
-
-  // return {
-  //   redirector: redirect("/", {
-  //     headers: {
-  //       "Set-Cookie": await sessionStorage.commitSession(session),
-  //     },
-  //   }),
-  // };
 
   return await login({ request, email, password });
 }
@@ -83,7 +64,6 @@ export async function login({
   try {
     response = await axios.post("/login", { email, password });
   } catch (error: any) {
-    // return { errors: Object.values(error?.response?.data?.errors).flat() };
     return { errors: error?.response?.data?.message };
   }
 
@@ -237,7 +217,7 @@ export async function resetPassword({
   passwordConfirmation: string;
 }) {
   try {
-    const res = await axios.post("/reset-password", {
+    await axios.post("/reset-password", {
       token,
       email,
       password,
@@ -254,7 +234,7 @@ export async function resetPassword({
 
 export async function sendPasswordLink({ email }: { email: string }) {
   try {
-    const res = await axios.post("/forgot-password", { email });
+    await axios.post("/forgot-password", { email });
   } catch (error: any) {
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }

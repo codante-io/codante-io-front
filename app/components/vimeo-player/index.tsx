@@ -1,27 +1,57 @@
+import Vimeo from "@vimeo/player";
+import { useEffect, useRef } from "react";
+
 type VimeoPlayerProps = {
   vimeoUrl: string;
+  onVideoEnded?: () => void;
+  autoplay?: boolean;
 };
 
-export default function VimeoPlayer({ vimeoUrl }: VimeoPlayerProps) {
+export default function VimeoPlayer({
+  vimeoUrl,
+  onVideoEnded,
+  autoplay = false,
+}: VimeoPlayerProps) {
+  const playerRef = useRef<Vimeo | null>(null);
+
+  useEffect(() => {
+    const player = new Vimeo(playerRef.current, {
+      id: vimeoUrl,
+      allowfullscreen: true,
+      allow: "autoplay; fullscreen; picture-in-picture",
+      autoplay: autoplay,
+    });
+
+    player.on("ended", function () {
+      if (onVideoEnded) {
+        onVideoEnded();
+      }
+    });
+
+    player.on("playbackratechange", function (data) {
+      localStorage.setItem("videoSpeed", data.playbackRate.toString());
+    });
+
+    async function getPlaybackRateFromLocalStorage() {
+      if (localStorage.getItem("videoSpeed")) {
+        const playbackRate = await player.getPlaybackRate();
+        if (Number(localStorage.getItem("videoSpeed")) !== playbackRate) {
+          player.setPlaybackRate(Number(localStorage.getItem("videoSpeed")));
+        }
+      }
+    }
+
+    getPlaybackRateFromLocalStorage();
+
+    return () => {
+      player.destroy();
+    };
+  }, [vimeoUrl]);
+
   return (
     <div className="relative aspect-video">
       <div className="absolute top-0 z-0 w-full overflow-hidden opacity-1 lg:rounded-xl">
-        <div style={{ padding: "56.30% 0 0 0", position: "relative" }}>
-          <iframe
-            src={vimeoUrl}
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            style={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-            }}
-            title="Codante.io"
-          ></iframe>
-        </div>
-        <script src="https://player.vimeo.com/api/player.js"></script>
+        <div className="vimeo-full-width" ref={playerRef}></div>
       </div>
     </div>
   );
