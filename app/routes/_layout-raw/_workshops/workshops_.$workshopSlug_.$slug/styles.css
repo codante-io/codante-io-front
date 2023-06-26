@@ -2,11 +2,11 @@
   scrollbar-color: hsl(210deg 10% 40%) #0e141a;
   scrollbar-width: thin;
 
-  ::-webkit-scrollbar {
+  & ::-webkit-scrollbar {
     width: 10px;
     background-color: #0e141a;
   }
-  ::-webkit-scrollbar-thumb {
+  & ::-webkit-scrollbar-thumb {
     border-radius: 1000px;
     background-color: hsl(210deg 10% 40%);
     border: 2px solid #0e141a;
@@ -15,7 +15,7 @@
     Little bonus: on non-Firefox browsers,
     the thumb will light up on hover!
   */
-  ::-webkit-scrollbar-thumb:hover {
+  & ::-webkit-scrollbar-thumb:hover {
     background-color: hsl(210deg 8% 50%);
   }
 }
@@ -24,11 +24,11 @@
   scrollbar-color: #ccc #eee;
   scrollbar-width: thin;
 
-  ::-webkit-scrollbar {
+  & ::-webkit-scrollbar {
     width: 10px;
     background-color: #eee;
   }
-  ::-webkit-scrollbar-thumb {
+  & ::-webkit-scrollbar-thumb {
     border-radius: 1000px;
     background-color: #ccc;
     border: 2px solid #eee;
@@ -37,7 +37,7 @@
     Little bonus: on non-Firefox browsers,
     the thumb will light up on hover!
   */
-  ::-webkit-scrollbar-thumb:hover {
+  & ::-webkit-scrollbar-thumb:hover {
     background-color: hsl(210deg 8% 50%);
   }
 }
