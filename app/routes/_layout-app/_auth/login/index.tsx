@@ -16,7 +16,6 @@ import AuthCard from "../auth-card";
 import { authenticator } from "~/services/github-auth.server";
 import LoadingButton from "~/components/form/loading-button";
 
-// meta function
 export function links() {
   return {
     rel: "canonical",
