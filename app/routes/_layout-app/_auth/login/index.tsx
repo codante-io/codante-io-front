@@ -16,6 +16,14 @@ import AuthCard from "../auth-card";
 import { authenticator } from "~/services/github-auth.server";
 import LoadingButton from "~/components/form/loading-button";
 
+// meta function
+export function links() {
+  return {
+    rel: "canonical",
+    href: "https://codante.io/login",
+  };
+}
+
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
 
