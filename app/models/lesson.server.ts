@@ -24,7 +24,7 @@ export async function getLesson(slug: string) {
 
 export async function setCompleted(
   lessonId: string,
-  request: any,
+  request: Request,
   markCompleted = true
 ) {
   const token = await currentToken({ request });
