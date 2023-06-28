@@ -48,7 +48,9 @@ export default function Sidebar({
               </button>
             ) : (
               <Link
-                to={`/workshops/${workshop.slug}`}
+                to={`/${isChallenge ? "mini-projetos" : "workshops"}/${
+                  isChallenge ? challenge?.slug : workshop.slug
+                }`}
                 className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:block hover:bg-gray-200 dark:hover:bg-background-700"
               >
                 <TiArrowBackOutline className="text-gray-600 dark:text-gray-500" />
