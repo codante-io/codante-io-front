@@ -25,6 +25,14 @@ export function links() {
   ];
 }
 
+export function meta() {
+  return {
+    title: "Login | Codante.io",
+    description:
+      "Entre para ter acesso a todas as funcionalidades da plataforma.",
+  };
+}
+
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
 
