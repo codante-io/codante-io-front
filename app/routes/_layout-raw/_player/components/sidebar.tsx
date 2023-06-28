@@ -7,11 +7,14 @@ import type { Workshop } from "~/models/workshop.server";
 import CodanteLogoMinimal from "./codante-logo-minimal";
 import WorkshopTitle from "./workshop-title";
 import WorkshopLessonList from "./workshop-lesson-list";
+import type { ChallengeCardInfo } from "~/models/challenge.server";
 
 export default function Sidebar({
   workshop,
   activeIndex,
   isSidebarOpen,
+  isChallenge = false,
+  challenge = null,
   setIsSidebarOpen,
   user,
 }: {
@@ -19,6 +22,8 @@ export default function Sidebar({
   activeIndex: number;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (value: boolean) => void;
+  isChallenge?: boolean;
+  challenge?: ChallengeCardInfo | null;
   user: User | null;
 }) {
   const ref = useClickOutside(() => setIsSidebarOpen(false));
@@ -52,7 +57,12 @@ export default function Sidebar({
           </div>
         </div>
         <div className="">
-          <WorkshopTitle isLoggedIn={!!user} workshop={workshop} />
+          <WorkshopTitle
+            isLoggedIn={!!user}
+            workshop={workshop}
+            isChallenge={isChallenge}
+            challenge={challenge}
+          />
         </div>
       </div>
 
@@ -63,6 +73,8 @@ export default function Sidebar({
         {workshop.lessons.length > 0 && (
           <>
             <WorkshopLessonList
+              isChallenge={isChallenge}
+              challenge={challenge}
               workshop={workshop}
               activeIndex={activeIndex}
               isLoggedIn={!!user}

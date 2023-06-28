@@ -20,9 +20,9 @@ import type { User } from "~/models/user.server";
 import type { Workshop } from "~/models/workshop.server";
 import { getWorkshop } from "~/models/workshop.server";
 import { abort404 } from "~/utils/responses.server";
-import Sidebar from "./components/sidebar";
-import Breadcrumbs from "./components/workshop-breadcrumbs";
-import styles from "./styles.css";
+import Sidebar from "../components/sidebar";
+import Breadcrumbs from "../components/workshop-breadcrumbs";
+import styles from "../styles.css";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
