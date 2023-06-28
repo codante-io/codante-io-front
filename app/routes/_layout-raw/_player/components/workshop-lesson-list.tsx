@@ -4,28 +4,30 @@ import type { Lesson } from "~/models/lesson.server";
 import { Link } from "@remix-run/react";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import type { Workshop } from "~/models/workshop.server";
+import type { ChallengeCardInfo } from "~/models/challenge.server";
 
 type WorkshopLessonListProps = {
   workshop: Workshop;
   activeIndex: number;
   isChallengeResolution?: boolean;
-  challengeSlug?: string;
+  challenge?: ChallengeCardInfo | null;
   isLoggedIn?: boolean;
+  isChallenge?: boolean;
   setIsSidebarOpen: (value: boolean) => void;
 };
 
 export default function WorkshopLessonList({
   isLoggedIn = false,
   workshop,
+  isChallenge = false,
+  challenge = null,
   activeIndex,
-  isChallengeResolution = false,
-  challengeSlug = "",
   setIsSidebarOpen,
 }: WorkshopLessonListProps) {
   // if is challenge resolution, we need to add the challenge slug to the link
   // so we can navigate to the correct lesson
-  const linkPrefix = isChallengeResolution
-    ? `/mini-projetos/${challengeSlug}/resolucao`
+  const linkPrefix = isChallenge
+    ? `/mini-projetos/${challenge?.slug}/resolucao`
     : `/workshops/${workshop.slug}`;
 
   return (

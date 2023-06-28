@@ -15,7 +15,7 @@ export default function ChallengeIndex() {
         {challenge.video_url && (
           <div>
             {/* <h1 className="flex items-center text-2xl font-semibold font-lexend text-brand">Intro</h1> */}
-            <section className="relative mt-4 mb-8">
+            <section className="relative mb-8">
               <VimeoPlayer vimeoUrl={challenge.video_url} />
             </section>
           </div>

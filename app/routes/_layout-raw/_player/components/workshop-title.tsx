@@ -2,22 +2,36 @@ import { Link } from "@remix-run/react";
 import type { Workshop } from "~/models/workshop.server";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import ProgressBar from "./progress-bar";
+import type { ChallengeCardInfo } from "~/models/challenge.server";
 
 export default function WorkshopTitle({
   workshop,
+  isChallenge = false,
+  challenge = null,
   isLoggedIn = false,
 }: {
   workshop: Workshop;
   isLoggedIn?: boolean;
+  challenge?: ChallengeCardInfo | null;
+  isChallenge?: boolean;
 }) {
   return (
     <div className="mb-4">
       <h3 className="mt-0 text-lg font-bold ">
-        <Link className="hover:underline" to={`/workshops/${workshop.slug}`}>
-          {workshop.name}
+        <Link
+          className="hover:underline"
+          to={
+            isChallenge
+              ? `/mini-projetos/${challenge?.slug}`
+              : `/workshop/${workshop.slug}`
+          }
+        >
+          {isChallenge ? challenge?.name : workshop.name}
         </Link>
       </h3>
-      <p className="mb-4 text-xs text-brand">Workshop</p>
+      <p className="mb-4 text-xs text-brand">
+        {isChallenge ? "Resolução de Mini Projeto" : "Workshop"}
+      </p>
       <span className="block mt-0 text-xs font-light text-gray-400 dark:text-gray-500">
         {workshop.lessons.length}{" "}
         {workshop.lessons.length > 1 ? "vídeos" : "vídeo"}{" "}
