@@ -43,7 +43,7 @@ export default function HomePage() {
           <div className="container flex flex-col items-center">
             <h1 className="text-3xl font-light text-center md:mt-16 font-lexend md:text-5xl">
               Evolua na programação{" "}
-              <span className="pr-4 font-bold text-transparent animate-text bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+              <span className="pr-4 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
                 front-end
               </span>
             </h1>
@@ -69,7 +69,7 @@ export default function HomePage() {
                   href="https://discord.gg/fmVw468ZMR"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-text bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
                 >
                   <BsDiscord />
                   Entre na comunidade

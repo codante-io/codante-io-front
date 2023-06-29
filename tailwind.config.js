@@ -15,6 +15,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
@@ -56,13 +59,14 @@ module.exports = {
         },
       },
       animation: {
-        text: "text 5s ease infinite",
+        bg: "bg 5s ease infinite",
+        "rotate-bg": "rotate-bg 5s linear infinite",
         tada: "tada 1s ease-in-out ",
         float: "float 2s ease-in-out infinite",
         popover: "popover 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
-        text: {
+        bg: {
           "0%, 100%": {
             "background-size": "200% 200%",
             "background-position": "left center",
@@ -72,6 +76,18 @@ module.exports = {
             "background-position": "right center",
           },
         },
+        "rotate-bg": {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "50%": {
+            transform: "rotate(180deg)",
+          },
+          "100%": {
+            transform: "rotate(360deg)",
+          },
+        },
+
         tada: {
           from: { transform: "scale3d(1, 1, 1)" },
           "10%, 20%": {

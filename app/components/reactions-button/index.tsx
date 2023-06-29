@@ -21,10 +21,12 @@ export default function ReactionsButton({
   reactions,
   reactableType,
   reactableId,
+  readOnly,
 }: {
   reactions: Reactions;
   reactableType: string;
   reactableId: string;
+  readOnly?: boolean;
 }) {
   const fetcher = useFetcher();
   const toast = useToasterWithSound();
@@ -36,6 +38,7 @@ export default function ReactionsButton({
     if (fetcher.state === "idle" && reactionError) {
       toast.showErrorToast(reactionError);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reactionError, fetcher.state]);
 
   const [totalReactions, setTotalReactions] = useState<number | null>(null);
@@ -136,7 +139,10 @@ export default function ReactionsButton({
     <Popover.Root>
       <Popover.Trigger
         onClick={handleTotalReactionsClick}
-        className="flex items-center justify-center h-16 gap-1 p-2 bg-transparent group"
+        className={classNames(
+          "flex items-center justify-center  gap-1 p-2 bg-transparent group",
+          readOnly && "pointer-events-none"
+        )}
       >
         {localUserReacted.length > 0 ? (
           <RiHeartAddFill className="text-xl transition-transform scale-90 fill-red-700" />
