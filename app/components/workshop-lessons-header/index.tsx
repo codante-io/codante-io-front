@@ -21,7 +21,7 @@ export default function WorkshopLessonsHeader({
           {title || workshop.name}
         </Link>
       </h3>
-      <span className="block mt-2 text-sm font-light text-gray-400 dark:text-gray-300">
+      <span className="block mt-1 text-xs font-light text-gray-400 dark:text-gray-500">
         {workshop.lessons.length}{" "}
         {workshop.lessons.length > 1 ? "vídeos" : "vídeo"}{" "}
         <span className="font-light text-blue-500"> &#8226; </span>
