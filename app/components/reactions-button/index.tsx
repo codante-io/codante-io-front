@@ -27,11 +27,13 @@ export default function ReactionsButton({
   reactableType,
   reactableId,
   readOnly,
+  className = "",
 }: {
   reactions: Reactions;
   reactableType: string;
   reactableId: string;
   readOnly?: boolean;
+  className?: string;
 }) {
   const fetcher = useFetcher();
   const toast = useToasterWithSound();
@@ -148,7 +150,7 @@ export default function ReactionsButton({
       <Popover.Trigger
         onClick={handleTotalReactionsClick}
         className={classNames(
-          "flex items-center justify-center  gap-1 p-2 bg-transparent group",
+          `flex items-center justify-center  gap-1 p-2 bg-transparent group ${className}`,
           readOnly && "pointer-events-none"
         )}
       >
