@@ -21,16 +21,7 @@ export default function ChallengeIndex() {
           </div>
         )}
         <div>
-          {/* <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
-            Descrição
-          </h1> */}
-          <div>
-            <MarkdownRenderer markdown={challenge?.description} />
-          </div>
-
-          {/* <p className="mt-2 mb-4 font-light font-inter text-md md:text-xl text-start ">
-            {challenge?.description}
-          </p> */}
+          <MarkdownRenderer markdown={challenge?.description} />
         </div>
       </div>
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-1">
