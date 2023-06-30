@@ -28,12 +28,14 @@ export default function ReactionsButton({
   reactableId,
   readOnly,
   className = "",
+  side = "top",
 }: {
   reactions: Reactions;
   reactableType: string;
   reactableId: string;
   readOnly?: boolean;
   className?: string;
+  side?: "top" | "right";
 }) {
   const fetcher = useFetcher();
   const toast = useToasterWithSound();
@@ -163,7 +165,7 @@ export default function ReactionsButton({
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          side="top"
+          side={side}
           align="end"
           alignOffset={-10}
           sideOffset={-20}
@@ -172,7 +174,9 @@ export default function ReactionsButton({
           <fetcher.Form
             method="post"
             onClick={(ev) => ev.preventDefault()}
-            className="flex flex-col gap-1"
+            className={`flex gap-1 ${
+              side === "top" ? "flex-col" : "flex-row-reverse"
+            }`}
           >
             <input type="hidden" name="reactable-id" value={reactableId} />
             <input type="hidden" name="reactable-type" value={reactableType} />

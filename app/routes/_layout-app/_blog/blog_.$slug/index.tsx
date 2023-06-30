@@ -20,11 +20,24 @@ export default function BlogPost() {
         <div className="prose lg:prose-lg dark:prose-invert">
           <h1>{blogPost.title}</h1>
           <p className="lead">{blogPost.short_description}</p>
-          <ReactionsButton
-            reactableId={blogPost.id}
-            reactableType="BlogPost"
-            reactions={blogPost.reactions}
-          />
+          <div className="flex items-center justify-between">
+            <ReactionsButton
+              reactableId={blogPost.id}
+              reactableType="BlogPost"
+              reactions={blogPost.reactions}
+              className="pl-0"
+              side="right"
+            />
+
+            <div className="flex items-center gap-4 max-h-8">
+              <img
+                src={blogPost.instructor.avatar_url}
+                alt=""
+                className="w-8 h-8 m-0 rounded-full"
+              />
+              <span className="text-sm">{blogPost.instructor?.name}</span>
+            </div>
+          </div>
           <MarkdownRenderer markdown={blogPost.content} />
         </div>
       </div>
