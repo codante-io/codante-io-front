@@ -23,7 +23,10 @@ export default function Breadcrumbs({
       </Link>
       <span className="mx-1 text-brand-500">{">"}</span>
       {isChallenge ? (
-        <Link to={`/mini-projetos/${challenge.slug}`} className=" hover:underline">
+        <Link
+          to={`/mini-projetos/${challenge.slug}`}
+          className=" hover:underline"
+        >
           {challenge.name}
         </Link>
       ) : (

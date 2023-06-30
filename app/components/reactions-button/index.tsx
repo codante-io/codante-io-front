@@ -1,4 +1,9 @@
-import { RiHeartAddLine, RiHeartAddFill } from "react-icons/ri";
+import {
+  RiHeartAddLine,
+  RiHeartAddFill,
+  RiHeartLine,
+  RiHeartFill,
+} from "react-icons/ri";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
@@ -21,10 +26,16 @@ export default function ReactionsButton({
   reactions,
   reactableType,
   reactableId,
+  readOnly,
+  className = "",
+  side = "top",
 }: {
   reactions: Reactions;
   reactableType: string;
   reactableId: string;
+  readOnly?: boolean;
+  className?: string;
+  side?: "top" | "right";
 }) {
   const fetcher = useFetcher();
   const toast = useToasterWithSound();
@@ -36,6 +47,7 @@ export default function ReactionsButton({
     if (fetcher.state === "idle" && reactionError) {
       toast.showErrorToast(reactionError);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reactionError, fetcher.state]);
 
   const [totalReactions, setTotalReactions] = useState<number | null>(null);
@@ -132,22 +144,28 @@ export default function ReactionsButton({
     animate: { scale: 1 },
   };
 
+  const HeartIcon = readOnly ? RiHeartLine : RiHeartAddLine;
+  const HeartIconFill = readOnly ? RiHeartFill : RiHeartAddFill;
+
   return (
     <Popover.Root>
       <Popover.Trigger
         onClick={handleTotalReactionsClick}
-        className="flex items-center justify-center h-16 gap-1 p-2 bg-transparent group"
+        className={classNames(
+          `flex items-center justify-center  gap-1 p-2 bg-transparent group ${className}`,
+          readOnly && "pointer-events-none"
+        )}
       >
         {localUserReacted.length > 0 ? (
-          <RiHeartAddFill className="text-xl transition-transform scale-90 fill-red-700" />
+          <HeartIconFill className="text-xl transition-transform scale-90 fill-red-700" />
         ) : (
-          <RiHeartAddLine className="text-xl transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105" />
+          <HeartIcon className="text-xl transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105" />
         )}
         <span className="inline-block w-2 h-4 text-xs">{totalReactions}</span>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          side="top"
+          side={side}
           align="end"
           alignOffset={-10}
           sideOffset={-20}
@@ -156,7 +174,9 @@ export default function ReactionsButton({
           <fetcher.Form
             method="post"
             onClick={(ev) => ev.preventDefault()}
-            className="flex flex-col gap-1"
+            className={`flex gap-1 ${
+              side === "top" ? "flex-col" : "flex-row-reverse"
+            }`}
           >
             <input type="hidden" name="reactable-id" value={reactableId} />
             <input type="hidden" name="reactable-type" value={reactableType} />

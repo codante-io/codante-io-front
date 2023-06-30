@@ -2,7 +2,11 @@ import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import type { IconType } from "react-icons";
-import { AiFillGithub, AiFillLinkedin, AiFillTwitterCircle } from "react-icons/ai";
+import {
+  AiFillGithub,
+  AiFillLinkedin,
+  AiFillTwitterCircle,
+} from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import type { Instructor } from "~/models/instructor.server";

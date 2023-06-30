@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
+import { Link, useOutletContext } from "@remix-run/react";
 import JoinChallengeSection from "../../join-challenge-section";
 import RepositoryInfoSection from "~/components/repository-info-section";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";

@@ -58,7 +58,12 @@ export default function MainContent({
         </div>
       </div>
       <div className="flex items-start justify-between h-8">
-        <Breadcrumbs workshop={workshop} lesson={lesson} isChallenge={isChallenge} challenge={challenge}/>
+        <Breadcrumbs
+          workshop={workshop}
+          lesson={lesson}
+          isChallenge={isChallenge}
+          challenge={challenge}
+        />
         {nextLessonPath() && (
           <Link to={nextLessonPath() ?? ""}>
             <div className="flex items-start px-1 pl-2 text-3xl text-gray-600 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500">
