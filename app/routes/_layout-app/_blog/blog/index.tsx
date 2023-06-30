@@ -15,7 +15,7 @@ export default function Blog() {
       <h1 className="mb-10 text-4xl text-center font-lexend">
         Blog do Codante
       </h1>
-      <section className="grid justify-center gap-10 lg:grid-cols-3 md:grid-cols-2">
+      <section className="grid justify-center grid-cols-1 gap-10 lg:grid-cols-3 md:grid-cols-2">
         {blogPosts.map((blogPost: BlogPost) => (
           <BlogPostCard key={blogPost.slug} blogPost={blogPost} />
         ))}
