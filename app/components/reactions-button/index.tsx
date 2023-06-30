@@ -1,4 +1,9 @@
-import { RiHeartAddLine, RiHeartAddFill } from "react-icons/ri";
+import {
+  RiHeartAddLine,
+  RiHeartAddFill,
+  RiHeartLine,
+  RiHeartFill,
+} from "react-icons/ri";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
@@ -135,6 +140,9 @@ export default function ReactionsButton({
     animate: { scale: 1 },
   };
 
+  const HeartIcon = readOnly ? RiHeartLine : RiHeartAddLine;
+  const HeartIconFill = readOnly ? RiHeartFill : RiHeartAddFill;
+
   return (
     <Popover.Root>
       <Popover.Trigger
@@ -145,9 +153,9 @@ export default function ReactionsButton({
         )}
       >
         {localUserReacted.length > 0 ? (
-          <RiHeartAddFill className="text-xl transition-transform scale-90 fill-red-700" />
+          <HeartIconFill className="text-xl transition-transform scale-90 fill-red-700" />
         ) : (
-          <RiHeartAddLine className="text-xl transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105" />
+          <HeartIcon className="text-xl transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105" />
         )}
         <span className="inline-block w-2 h-4 text-xs">{totalReactions}</span>
       </Popover.Trigger>

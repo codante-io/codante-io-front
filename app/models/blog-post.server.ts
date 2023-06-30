@@ -19,7 +19,7 @@ export type BlogPost = {
 
 export async function getPosts(request: Request) {
   const token = await currentToken({ request });
-  const blogPosts = await axios
+  const blogPosts: BlogPost[] = await axios
     .get(`${process.env.API_HOST}/blog-posts`, {
       headers: {
         Authorization: "Bearer " + token,
@@ -31,7 +31,7 @@ export async function getPosts(request: Request) {
 
 export async function getPost(request: Request, slug: string) {
   const token = await currentToken({ request });
-  const blogPost = await axios
+  const blogPost: BlogPost = await axios
     .get(`${process.env.API_HOST}/blog-posts/${slug}`, {
       headers: {
         Authorization: "Bearer " + token,

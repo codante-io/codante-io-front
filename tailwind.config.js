@@ -144,5 +144,5 @@ module.exports = {
     "bg-red-600",
     "bg-purple-500",
   ],
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
 };

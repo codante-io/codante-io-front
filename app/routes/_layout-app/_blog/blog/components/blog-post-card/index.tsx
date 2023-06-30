@@ -20,7 +20,7 @@ export default function BlogPostCard({ blogPost }: { blogPost: BlogPost }) {
             reactions={blogPost.reactions}
             reactableId={blogPost.id}
             reactableType="BlogPost"
-            readOnly
+            readOnly={true}
           />
         </footer>
       </article>
