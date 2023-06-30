@@ -91,7 +91,7 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
   h2: {
     component: H2WithDivider,
     props: {
-      className: "text-xl mt-14 mb-2 font-semibold",
+      className: "mb-0",
     },
   },
 
@@ -130,12 +130,14 @@ export default function MarkdownRenderer({ markdown }: { markdown: string }) {
   const { colorMode } = useColorMode();
 
   return (
-    <Markdown
-      options={{
-        overrides: generateClassOverrides(colorMode),
-      }}
-    >
-      {markdown}
-    </Markdown>
+    <div className="prose lg:prose-lg dark:prose-invert prose-ul:ml-0 prose-h2:mb-2">
+      <Markdown
+        options={{
+          overrides: generateClassOverrides(colorMode),
+        }}
+      >
+        {markdown}
+      </Markdown>
+    </div>
   );
 }
