@@ -66,7 +66,7 @@ export default function ChallengeCard({
                 ))}
               </div>
             </div>
-            <p className="h-16 text-sm font-light text-gray-600 line-clamp-4 slate-600 dark:text-gray-300">
+            <p className="text-sm font-light text-gray-600 line-clamp-3 slate-600 dark:text-gray-300">
               {challenge?.short_description}
             </p>
           </div>
