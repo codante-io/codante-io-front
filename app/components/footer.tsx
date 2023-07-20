@@ -1,3 +1,5 @@
+import { Link } from "@remix-run/react";
+
 export default function Footer() {
   const navigation = [
     // {
@@ -99,9 +101,16 @@ export default function Footer() {
           ))}
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
-          <p className="text-xs leading-5 text-center text-gray-500">
+          <p className="text-xs leading-5 text-gray-500">
             &copy; {new Date().getFullYear()} Codante.io
           </p>
+
+          <Link
+            to={"/politica-de-privacidade"}
+            className="text-xs leading-5 text-center text-gray-500 hover:underline"
+          >
+            Política de Privacidade
+          </Link>
         </div>
       </div>
     </footer>
