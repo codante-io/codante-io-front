@@ -107,10 +107,16 @@ export default function Footer() {
 
           <Link
             to={"/politica-de-privacidade"}
-            className="text-xs leading-5 text-center text-gray-500 hover:underline"
+            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
           >
             Política de Privacidade
           </Link>
+          <a
+            href="https://changelog.codante.io"
+            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
+          >
+            Changelog do Codante
+          </a>
         </div>
       </div>
     </footer>
