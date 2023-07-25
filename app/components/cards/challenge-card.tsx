@@ -13,9 +13,7 @@ export default function ChallengeCard({
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
       to={
-        challenge?.status === "soon"
-          ? `#`
-          : `/mini-projetos/${challenge?.slug}/overview`
+        challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
       className={
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
