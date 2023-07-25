@@ -344,7 +344,6 @@ export default function ChallengeSlug() {
                 hasSolution={hasSolution}
                 initialSteps={initialSteps}
               />
-              {/* <div>Olá</div> */}
             </>
           ) : (
             <Outlet

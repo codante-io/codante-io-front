@@ -17,8 +17,6 @@ export default function Overview({
   hasSolution: boolean;
   initialSteps: any;
 }) {
-  // const { challenge, initialSteps, challengeUser, hasSolution } =
-  //   useOutletContext<any>();
   return (
     <div className="container grid grid-cols-3 gap-10">
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">
