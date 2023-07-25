@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import JoinChallengeSection from "../../join-challenge-section";
 import RepositoryInfoSection from "~/components/repository-info-section";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
@@ -6,9 +6,17 @@ import { BsFillPlayFill } from "react-icons/bs";
 import VimeoPlayer from "~/components/vimeo-player";
 import MarkdownRenderer from "~/components/markdown-renderer";
 
-export default function ChallengeIndex() {
-  const { challenge, initialSteps, challengeUser, hasSolution } =
-    useOutletContext<any>();
+export default function Overview({
+  challenge,
+  challengeUser,
+  hasSolution,
+  initialSteps,
+}: {
+  challenge: any;
+  challengeUser: any;
+  hasSolution: boolean;
+  initialSteps: any;
+}) {
   return (
     <div className="container grid grid-cols-3 gap-10">
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">

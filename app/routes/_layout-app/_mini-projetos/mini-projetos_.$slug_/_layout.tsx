@@ -39,6 +39,7 @@ import { user as getUser, logout } from "~/services/auth.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
 import { buildInitialSteps } from "./build-steps.server";
+import Overview from "./_tabs/_overview/overview";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver challenge ainda.
@@ -57,11 +58,11 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     "og:description": description,
     "og:image": imageUrl,
     "og:type": "website",
-    "og:url": `https://codante.io/mini-projetos/${params.slug}/overview`,
+    "og:url": `https://codante.io/mini-projetos/${params.slug}`,
 
     "twitter:card": "summary_large_image",
     "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/mini-projetos/${params.slug}/overview`,
+    "twitter:url": `https://codante.io/mini-projetos/${params.slug}`,
     "twitter:title": title,
     "twitter:description": description,
     "twitter:image": imageUrl,
@@ -105,15 +106,6 @@ export async function action({ request }: { request: Request }) {
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
-
-  // redirect if page is not in overview or resolucao
-  const { pathname } = new URL(request.url);
-  if (
-    pathname === `/mini-projetos/${params.slug}/` ||
-    pathname === `/mini-projetos/${params.slug}`
-  ) {
-    return redirect(`/mini-projetos/${params.slug}/overview`);
-  }
 
   const [challenge, participants, challengeSubmissions] = await Promise.all([
     getChallenge(params.slug, request),
@@ -188,7 +180,7 @@ export default function ChallengeSlug() {
     if (actionData?.success) {
       showSuccessToast(actionData?.success);
     }
-  }, [actionData]);
+  }, [actionData, showErrorToast, showSuccessToast]);
 
   const tabs: {
     name: string;
@@ -213,8 +205,10 @@ export default function ChallengeSlug() {
           ></path>
         </svg>
       ),
-      href: "overview",
-      current: location.pathname.includes("overview"),
+      href: "",
+      current:
+        location.pathname === `/mini-projetos/${challenge?.slug}` ||
+        location.pathname === `/mini-projetos/${challenge?.slug}/`,
     },
     {
       name: "Resolução",
@@ -339,17 +333,32 @@ export default function ChallengeSlug() {
           </div>
         </div>
 
-        <Outlet
-          context={{
-            user,
-            challenge,
-            challengeUser,
-            challengeSubmissions,
-            participants,
-            initialSteps,
-            hasSolution,
-          }}
-        />
+        {
+          // if path is /mini-projetos/:slug, show the overview tab, otherwise show the content of the tab
+          location.pathname === `/mini-projetos/${challenge?.slug}` ||
+          location.pathname === `/mini-projetos/${challenge?.slug}/` ? (
+            <>
+              <Overview
+                challenge={challenge}
+                challengeUser={challengeUser}
+                hasSolution={hasSolution}
+                initialSteps={initialSteps}
+              />
+            </>
+          ) : (
+            <Outlet
+              context={{
+                user,
+                challenge,
+                challengeUser,
+                challengeSubmissions,
+                participants,
+                initialSteps,
+                hasSolution,
+              }}
+            />
+          )
+        }
       </section>
 
       <Wave position="top" />
