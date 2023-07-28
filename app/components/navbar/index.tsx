@@ -1,7 +1,7 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BsArrowRight } from "react-icons/bs";
+import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
 import { RxDropdownMenu } from "react-icons/rx";
 import useSound from "use-sound";
 import ToggleColorMode from "~/components/toggle-color-mode";
@@ -44,6 +44,10 @@ export default function Navbar({ user }: { user: any }) {
   const moreMenuNavigation = [
     {
       name: "Blog",
+      href: "/blog",
+    },
+    {
+      name: "Desafios técnicos",
       href: "/blog",
     },
   ];
@@ -143,9 +147,8 @@ export default function Navbar({ user }: { user: any }) {
                                 {({ active }) => (
                                   <button
                                     className={`${
-                                      active
-                                        ? "bg-background-150 dark:bg-background-600"
-                                        : ""
+                                      active &&
+                                      "bg-background-150 dark:bg-background-600"
                                     } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
                                     onClick={() => navigate(item.href)}
                                   >
@@ -204,6 +207,54 @@ export default function Navbar({ user }: { user: any }) {
                     {item.name}
                   </Disclosure.Button>
                 ))}
+                {/* <Disclosure.Button
+                  className={`flex items-center justify-center px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900`}
+                >
+                  Mais
+                  <BsFillCaretDownFill className="ml-1 text-xs"/>
+                </Disclosure.Button> */}
+                <Menu
+                  as="div"
+                  className="block w-full px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                >
+                  <Menu.Button className="flex items-center justify-center w-full">
+                    Mais
+                    <BsFillCaretDownFill className="ml-1 text-xs" />
+                  </Menu.Button>
+                  <Transition
+                    enter="transition ease-out duration-150"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="w-40 m-auto mt-2 divide-y rounded-md shadow-lg bg-background-150 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="px-1 py-1 ">
+                        {moreMenuNavigation.map((item) => (
+                          <Disclosure.Button
+                            key={item.name}
+                            className="block w-full"
+                          >
+                            <Menu.Item>
+                              {({ active }) => (
+                                <button
+                                  className={`${
+                                    active &&
+                                    "bg-background-100 dark:bg-background-600"
+                                  } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                  onClick={() => navigate(item.href)}
+                                >
+                                  {item.name}
+                                </button>
+                              )}
+                            </Menu.Item>
+                          </Disclosure.Button>
+                        ))}
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
                 <div className="flex justify-end px-3 py-2">
                   <ToggleColorMode />
                 </div>
