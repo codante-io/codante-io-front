@@ -1,8 +1,8 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
+import { BsArrowRight } from "react-icons/bs";
+import { RxDropdownMenu } from "react-icons/rx";
 import useSound from "use-sound";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -35,7 +35,10 @@ export default function Navbar({ user }: { user: any }) {
       name: "Trilhas",
       href: "/trilhas",
     },
-    // { name: "Agenda", href: "/agenda", current: id.includes("agenda") },
+    {
+      name: "Agenda",
+      href: "/agenda",
+    },
   ];
 
   const moreMenuNavigation = [
@@ -43,7 +46,7 @@ export default function Navbar({ user }: { user: any }) {
       name: "Blog",
       href: "/blog",
     },
-  ]
+  ];
 
   return (
     <Disclosure
@@ -118,11 +121,8 @@ export default function Navbar({ user }: { user: any }) {
                     ))}
                     <Menu as="div" className="relative inline-block text-left">
                       <div>
-                        <Menu.Button
-                          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
-                        >
-                          Mais
-                          <BsFillCaretDownFill className="ml-1 text-xs"/>
+                        <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
+                          <RxDropdownMenu className="text-2xl" />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -135,13 +135,14 @@ export default function Navbar({ user }: { user: any }) {
                       >
                         <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div className="px-1 py-1 ">
-                            {
-                              moreMenuNavigation.map((item) => (
-                                <Menu.Item key={item.name}>
+                            {moreMenuNavigation.map((item) => (
+                              <Menu.Item key={item.name}>
                                 {({ active }) => (
                                   <button
                                     className={`${
-                                      active ? 'bg-background-150 dark:bg-background-600' : ''
+                                      active
+                                        ? "bg-background-150 dark:bg-background-600"
+                                        : ""
                                     } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
                                     onClick={() => navigate(item.href)}
                                   >
@@ -149,25 +150,11 @@ export default function Navbar({ user }: { user: any }) {
                                   </button>
                                 )}
                               </Menu.Item>
-                              ))
-                            }
+                            ))}
                           </div>
                         </Menu.Items>
                       </Transition>
                     </Menu>
-                    <NavLink
-                      to="/agenda"
-                      className={({ isActive }) =>
-                        classNames(
-                          isActive
-                            ? "bg-background-100/70 dark:bg-background-700"
-                            : "",
-                          "px-3 py-1.5 font-medium text-gray-700 rounded-md cursor-pointer dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
-                        )
-                      }
-                    >
-                      <CalendarDaysIcon className="w-6 h-6 " />
-                    </NavLink>
                   </div>
                 </div>
               </div>
@@ -214,16 +201,6 @@ export default function Navbar({ user }: { user: any }) {
                     {item.name}
                   </Disclosure.Button>
                 ))}
-                <Disclosure.Button
-                  className={`block px-3 py-2 w-full text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
-                    matches,
-                    "/agenda",
-                    "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
-                  )} `}
-                  onClick={() => navigate("/agenda")}
-                >
-                  Agenda
-                </Disclosure.Button>
                 <div className="flex justify-end px-3 py-2">
                   <ToggleColorMode />
                 </div>
