@@ -1,54 +1,22 @@
 import TitleIcon from "~/components/title-icon";
-import { LuFileCheck, LuVideo } from "react-icons/lu";
+import { LuFileCheck } from "react-icons/lu";
 import { TbSquareRoundedLetterB, TbSquareRoundedLetterF } from "react-icons/tb";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { json } from "@remix-run/node";
+import type { Assessment } from "~/models/assessments.server";
+import { getAssessments } from "~/models/assessments.server";
+import { useLoaderData } from "@remix-run/react";
+import { useColorMode } from "~/contexts/color-mode-context";
+
+export const loader = async ({ request }: { request: Request }) => {
+  return json({
+    assessments: await getAssessments(),
+  });
+};
 
 export default function TestesTecnicosPage() {
-  const assessments = [
-    {
-      slug: "testes-tecnicos",
-      title: "Nubank",
-      tags: ["React", "Node.js", "TypeScript", "GraphQL", "AWS"],
-      image: "/static/images/workshops/testes-tecnicos.png",
-      type: "backend",
-    },
-    {
-      slug: "testes-tecnicos1",
-      title: "XP Investimentos Limitada",
-      short_description: "Testes técnicos para programadores.",
-      image: "/static/images/workshops/testes-tecnicos.png",
-      type: "frontend",
-    },
-    {
-      slug: "testes-tecnicos2",
-      title: "Nubank",
-      short_description: "Testes técnicos para programadores.",
-      tags: ["React"],
-      image: "/static/images/workshops/testes-tecnicos.png",
-      type: "fullstack",
-    },
-    {
-      slug: "testes-tecnicos3",
-      title: "Estante Virtual",
-      short_description: "Testes técnicos para programadores.",
-      image: "/static/images/workshops/testes-tecnicos.png",
-      type: "backend",
-    },
-    {
-      slug: "testes-tecnicos4",
-      title: "Testes Técnicos",
-      short_description: "Testes técnicos para programadores.",
-      image: "/static/images/workshops/testes-tecnicos.png",
-      type: "frontend",
-    },
-    {
-      slug: "testes-tecnicos5",
-      title: "Nubank",
-      short_description: "Testes técnicos para programadores.",
-      image: "/static/images/workshops/testes-tecnicos.png",
-      type: "frontend",
-    },
-  ];
+  const { assessments } = useLoaderData<typeof loader>();
+  const { colorMode } = useColorMode();
 
   function borderColor(type: string) {
     switch (type) {
@@ -82,9 +50,17 @@ export default function TestesTecnicosPage() {
               background: borderColor(assessment.type),
             }}
           >
-            <article className="flex items-center gap-2 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 h-32">
-              <div>
-                <div className="w-20 h-20 bg-gray-500"></div>
+            <article className="flex items-start gap-2 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
+              <div className="flex items-center justify-center w-20 h-20">
+                <img
+                  src={
+                    colorMode === "dark"
+                      ? assessment.image_url_dark ?? assessment.image_url
+                      : assessment.image_url
+                  }
+                  alt="Logo da Empresa"
+                  className="w-4/5 rounded-lg"
+                />
               </div>
               <div className="flex-1">
                 <h2 className="mb-2 leading-tight font-lexend">
@@ -103,7 +79,7 @@ export default function TestesTecnicosPage() {
   );
 }
 
-function IconsAside({ assessment }: { assessment: any }) {
+function IconsAside({ assessment }: { assessment: Assessment }) {
   return (
     <div className="flex flex-col justify-start w-4 min-h-full gap-2">
       {(assessment.type === "frontend" || assessment.type === "fullstack") && (
@@ -117,12 +93,15 @@ function IconsAside({ assessment }: { assessment: any }) {
         </TooltipWrapper>
       )}
 
-      <TooltipWrapper text="Mini Projeto Disponível">
-        <LuFileCheck className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
-      </TooltipWrapper>
-      <TooltipWrapper text="Resolução Disponível">
+      {assessment.has_challenge && (
+        <TooltipWrapper text="Mini Projeto Disponível">
+          <LuFileCheck className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
+        </TooltipWrapper>
+      )}
+
+      {/* <TooltipWrapper text="Resolução Disponível">
         <LuVideo className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
-      </TooltipWrapper>
+      </TooltipWrapper> */}
     </div>
   );
 }
