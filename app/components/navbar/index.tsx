@@ -57,7 +57,7 @@ export default function Navbar({ user }: { user: any }) {
         <>
           <div className="container mx-auto">
             <div className="relative flex items-center justify-between h-16">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button
                   className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-gray-50 hover:bg-background-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -67,18 +67,18 @@ export default function Navbar({ user }: { user: any }) {
                   <ToggleButton open={open} />
                 </Disclosure.Button>
               </div>
-              <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+              <div className="flex items-center justify-center flex-1 md:items-stretch md:justify-start">
                 <div className="flex items-center flex-shrink-0">
                   <Link to="/">
                     {colorMode === "light" ? (
                       <img
-                        className="hidden w-auto h-16 lg:block"
+                        className="hidden w-auto h-16 md:block"
                         src="/cdnt-light.svg"
                         alt="Codante"
                       />
                     ) : (
                       <img
-                        className="hidden w-auto h-16 lg:block"
+                        className="hidden w-auto h-16 md:block"
                         src="/cdnt.svg"
                         alt="Codante"
                       />
@@ -87,20 +87,20 @@ export default function Navbar({ user }: { user: any }) {
                   <Link to="/">
                     {colorMode === "light" ? (
                       <img
-                        className="block w-auto h-16 lg:hidden"
+                        className="block w-auto h-16 md:hidden"
                         src="/cdnt-light.svg"
                         alt="Codante"
                       />
                     ) : (
                       <img
-                        className="block w-auto h-16 lg:hidden"
+                        className="block w-auto h-16 md:hidden"
                         src="/cdnt.svg"
                         alt="Codante"
                       />
                     )}
                   </Link>
                 </div>
-                <div className="hidden sm:ml-6 sm:pt-4 sm:block">
+                <div className="hidden md:ml-6 md:pt-4 md:block">
                   <div className="flex items-center space-x-2 md:space-x-4">
                     {navigation.map((item) => (
                       <NavLink
@@ -162,7 +162,7 @@ export default function Navbar({ user }: { user: any }) {
                 </div>
               </div>
 
-              <div className="hidden mr-3 sm:block">
+              <div className="hidden mr-3 md:block">
                 <ToggleColorMode />
               </div>
 
@@ -172,7 +172,7 @@ export default function Navbar({ user }: { user: any }) {
                   <ProfileMenu user={user} />
                 </div>
               ) : (
-                <LinkToLoginWithRedirect className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 sm:static sm:inset-auto sm:pr-0">
+                <LinkToLoginWithRedirect className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-white gap-x-1 md:static md:inset-auto md:pr-0">
                   Login <BsArrowRight className="hidden md:inline" />
                 </LinkToLoginWithRedirect>
               )}
