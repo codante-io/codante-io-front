@@ -1,6 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink, useMatches } from "@remix-run/react";
+import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsArrowRight } from "react-icons/bs";
 import useSound from "use-sound";
@@ -17,9 +17,8 @@ function classNames(...classes: any) {
 
 export default function Navbar({ user }: { user: any }) {
   const matches = useMatches();
+  const navigate = useNavigate();
   const [playSound] = useSound(switchSound, { volume: 0.25 });
-
-  const { id } = matches[matches.length - 1];
 
   const { colorMode } = useColorMode();
 
@@ -159,31 +158,27 @@ export default function Navbar({ user }: { user: any }) {
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
-                    as="a"
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
-                      "block rounded-md px-3 py-2 text-base font-medium"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
+                    className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
+                      matches,
+                      item.href,
+                      "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
+                    )} `}
+                    onClick={() => navigate(item.href)}
                   >
                     {item.name}
                   </Disclosure.Button>
                 ))}
                 <Disclosure.Button
-                  as="a"
-                  href="/agenda"
-                  className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
+                  className={`block px-3 py-2 w-full text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
                     matches,
                     "/agenda",
                     "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
                   )} `}
+                  onClick={() => navigate("/agenda")}
                 >
                   Agenda
                 </Disclosure.Button>
-                <div className="px-3 py-2">
+                <div className="flex justify-end px-3 py-2">
                   <ToggleColorMode />
                 </div>
               </div>
