@@ -46,10 +46,6 @@ export default function Navbar({ user }: { user: any }) {
       name: "Blog",
       href: "/blog",
     },
-    {
-      name: "Desafios técnicos",
-      href: "/blog",
-    },
   ];
 
   return (
