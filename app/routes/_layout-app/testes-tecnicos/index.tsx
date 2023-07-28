@@ -5,7 +5,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { json } from "@remix-run/node";
 import type { Assessment } from "~/models/assessments.server";
 import { getAssessments } from "~/models/assessments.server";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useColorMode } from "~/contexts/color-mode-context";
 
 export const loader = async ({ request }: { request: Request }) => {
@@ -43,36 +43,40 @@ export default function TestesTecnicosPage() {
       </header>
       <section className="grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {assessments.map((assessment) => (
-          <div
+          <Link
             key={assessment.slug}
-            className="pl-1.5 rounded-lg"
-            style={{
-              background: borderColor(assessment.type),
-            }}
+            to={`/testes-tecnicos/${assessment.slug}`}
           >
-            <article className="flex items-start gap-2 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
-              <div className="flex items-center justify-center w-20 h-20">
-                <img
-                  src={
-                    colorMode === "dark"
-                      ? assessment.image_url_dark ?? assessment.image_url
-                      : assessment.image_url
-                  }
-                  alt="Logo da Empresa"
-                  className="w-4/5 rounded-lg"
-                />
-              </div>
-              <div className="flex-1">
-                <h2 className="mb-2 leading-tight font-lexend">
-                  {assessment.title}
-                </h2>
-                <p className="text-xs text-gray-700 dark:text-gray-400">
-                  {assessment.tags?.join(", ")}
-                </p>
-              </div>
-              <IconsAside assessment={assessment} />
-            </article>
-          </div>
+            <div
+              className="pl-1.5 rounded-lg"
+              style={{
+                background: borderColor(assessment.type),
+              }}
+            >
+              <article className="flex items-start gap-2 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
+                <div className="flex items-center justify-center w-20 h-20">
+                  <img
+                    src={
+                      colorMode === "dark"
+                        ? assessment.image_url_dark ?? assessment.image_url
+                        : assessment.image_url
+                    }
+                    alt="Logo da Empresa"
+                    className="w-4/5 rounded-lg"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h2 className="mb-2 leading-tight font-lexend">
+                    {assessment.title}
+                  </h2>
+                  <p className="text-xs text-gray-700 dark:text-gray-400">
+                    {assessment.tags?.join(", ")}
+                  </p>
+                </div>
+                <IconsAside assessment={assessment} />
+              </article>
+            </div>
+          </Link>
         ))}
       </section>
     </main>
