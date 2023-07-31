@@ -45,6 +45,12 @@ export default function Navbar({ user }: { user: any }) {
     {
       name: "Blog",
       href: "/blog",
+      external: false,
+    },
+    {
+      name: "Changelog",
+      href: "https://changelog.codante.io/",
+      external: true,
     },
   ];
 
@@ -138,21 +144,42 @@ export default function Navbar({ user }: { user: any }) {
                       >
                         <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div className="px-1 py-1 ">
-                            {moreMenuNavigation.map((item) => (
-                              <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <button
-                                    className={`${
-                                      active &&
-                                      "bg-background-150 dark:bg-background-600"
-                                    } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                                    onClick={() => navigate(item.href)}
-                                  >
-                                    {item.name}
-                                  </button>
-                                )}
-                              </Menu.Item>
-                            ))}
+                            {moreMenuNavigation.map((item) => {
+                              return !item.external ? (
+                                <Menu.Item key={item.name}>
+                                  {({ active }) => (
+                                    <button
+                                      className={`${
+                                        active &&
+                                        "bg-background-150 dark:bg-background-600"
+                                      } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                      onClick={() => navigate(item.href)}
+                                    >
+                                      {item.name}
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              ) : (
+                                <Menu.Item key={item.name}>
+                                  {({ active }) => (
+                                    <a
+                                      href={item.href}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                    >
+                                      <button
+                                        className={`${
+                                          active &&
+                                          "bg-background-150 dark:bg-background-600"
+                                        } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                      >
+                                        {item.name}
+                                      </button>
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              );
+                            })}
                           </div>
                         </Menu.Items>
                       </Transition>
@@ -203,12 +230,6 @@ export default function Navbar({ user }: { user: any }) {
                     {item.name}
                   </Disclosure.Button>
                 ))}
-                {/* <Disclosure.Button
-                  className={`flex items-center justify-center px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900`}
-                >
-                  Mais
-                  <BsFillCaretDownFill className="ml-1 text-xs"/>
-                </Disclosure.Button> */}
                 <Menu
                   as="div"
                   className="block w-full px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
@@ -232,19 +253,40 @@ export default function Navbar({ user }: { user: any }) {
                             key={item.name}
                             className="block w-full"
                           >
-                            <Menu.Item>
-                              {({ active }) => (
-                                <button
-                                  className={`${
-                                    active &&
-                                    "bg-background-100 dark:bg-background-600"
-                                  } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                                  onClick={() => navigate(item.href)}
-                                >
-                                  {item.name}
-                                </button>
-                              )}
-                            </Menu.Item>
+                            {!item.external ? (
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    className={`${
+                                      active &&
+                                      "bg-background-100 dark:bg-background-600"
+                                    } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                    onClick={() => navigate(item.href)}
+                                  >
+                                    {item.name}
+                                  </button>
+                                )}
+                              </Menu.Item>
+                            ) : (
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <a
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    <button
+                                      className={`${
+                                        active &&
+                                        "bg-background-100 dark:bg-background-600"
+                                      } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                    >
+                                      {item.name}
+                                    </button>
+                                  </a>
+                                )}
+                              </Menu.Item>
+                            )}
                           </Disclosure.Button>
                         ))}
                       </div>
