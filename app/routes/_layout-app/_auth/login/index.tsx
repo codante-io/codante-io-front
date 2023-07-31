@@ -139,7 +139,7 @@ export default function Login() {
               </Link>
             </div>
             <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
-              {errors}
+              {errors as any}
             </div>
             <div className="text-right">
               <Button type="submit">Login</Button>
