@@ -165,6 +165,18 @@ export default function Login() {
           </button>
         </p>
       </div>
+      <div className="px-1 mt-4 mb-4">
+        <p className="text-sm font-normal text-center text-gray-500 sm:text-justify">
+          Ao entrar ou se cadastrar você está de acordo com a nossa{" "}
+          <Link
+            to="/politica-de-privacidade"
+            className="underline underline-offset-2 hover:opacity-70"
+          >
+            Política de Privacidade
+          </Link>
+          .
+        </p>
+      </div>
     </>
   );
 }
