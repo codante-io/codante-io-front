@@ -139,7 +139,7 @@ export default function Login() {
               </Link>
             </div>
             <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
-              {errors}
+              {errors as any}
             </div>
             <div className="text-right">
               <Button type="submit">Login</Button>
@@ -147,9 +147,9 @@ export default function Login() {
           </Form>
         </AuthCard>
         <p
-          className={`text-center sm:text-left text-xs font-light text-gray-500 mb-2 mt-4`}
+          className={`text-center sm:text-left text-sm font-light text-gray-600 dark:text-gray-400 mb-2 mt-4`}
         >
-          ... ou, se preferir, entre com{" "}
+          ... ou entre com{" "}
           <button
             className="underline"
             onClick={() => {
@@ -163,6 +163,18 @@ export default function Login() {
           >
             {opened ? "Github" : "email e senha"}
           </button>
+        </p>
+      </div>
+      <div className="px-1 mt-6 mb-4">
+        <p className="text-xs font-normal text-center text-gray-500 sm:text-justify">
+          Ao entrar ou se cadastrar você está de acordo com a nossa{" "}
+          <Link
+            to="/politica-de-privacidade"
+            className="hover:underline underline-offset-2 hover:opacity-70"
+          >
+            Política de Privacidade
+          </Link>
+          .
         </p>
       </div>
     </>
