@@ -103,9 +103,6 @@ function IconsAside({ assessment }: { assessment: Assessment }) {
         </TooltipWrapper>
       )}
 
-      {/* <TooltipWrapper text="Resolução Disponível">
-        <LuVideo className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
-      </TooltipWrapper> */}
     </div>
   );
 }
