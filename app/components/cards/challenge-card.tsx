@@ -3,12 +3,17 @@ import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import type { ChallengeCardInfo } from "~/models/challenge.server";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
+import PlayIcon from "./icons/playIcon.svg";
+import DarkPlayIcon from "./icons/darkPlayIcon.svg";
+import { useColorMode } from "~/contexts/color-mode-context";
 
 export default function ChallengeCard({
   challenge,
 }: {
   challenge: ChallengeCardInfo;
 }) {
+  const { colorMode } = useColorMode();
+
   return (
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
@@ -68,7 +73,15 @@ export default function ChallengeCard({
               {challenge?.short_description}
             </p>
           </div>
-          <div className="flex flex-col items-end justify-center mt-4 card-footer">
+          <div className="flex items-center justify-between mt-4 card-footer">
+            <section>
+              {colorMode === "light" && challenge?.workshop && (
+                <img src={PlayIcon} alt="Ícone de vídeo" />
+              )}
+              {colorMode === "dark" && challenge?.workshop && (
+                <img src={DarkPlayIcon} alt="Ícone de vídeo" />
+              )}
+            </section>
             <section className="">
               <div className="flex -space-x-2 overflow-hidden">
                 {challenge?.users?.map((user, index) => (
