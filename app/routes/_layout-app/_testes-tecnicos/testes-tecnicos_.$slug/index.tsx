@@ -170,16 +170,25 @@ function HeaderItem({
   if (href) {
     return (
       <div className="flex items-center gap-2 mb-2 overflow-hidden md:gap-4">
-        <div className="w-4 h-4">{icon}</div>
-        <a className="text-xs md:text-sm hover:underline" href={href}>
+        <div className="">{icon}</div>
+        <a
+          target="_blank"
+          className="flex items-center gap-2 text-xs md:text-sm hover:underline"
+          href={href}
+          rel="noreferrer"
+        >
           {text}
+          <FiExternalLink
+            strokeWidth={1.5}
+            className="text-xs font-thin text-gray-400 dark:text-gray-600 "
+          />
         </a>
       </div>
     );
   }
   return (
     <div className="flex items-center gap-2 mb-2 md:gap-4">
-      <div className="w-4 h-4">{icon}</div>
+      <div className="">{icon}</div>
 
       <p className="text-xs md:text-sm">{text}</p>
     </div>
