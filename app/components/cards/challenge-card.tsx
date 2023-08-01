@@ -6,6 +6,7 @@ import CardItemTag from "./card-item-tag";
 import PlayIcon from "./icons/playIcon.svg";
 import DarkPlayIcon from "./icons/darkPlayIcon.svg";
 import { useColorMode } from "~/contexts/color-mode-context";
+import TooltipWrapper from "../tooltip";
 
 export default function ChallengeCard({
   challenge,
@@ -76,10 +77,14 @@ export default function ChallengeCard({
           <div className="flex items-center justify-between mt-4 card-footer">
             <section>
               {colorMode === "light" && challenge?.workshop && (
-                <img src={PlayIcon} alt="Ícone de vídeo" />
+                <TooltipWrapper text="Resolução disponível">
+                  <img src={PlayIcon} alt="Ícone de vídeo" />
+                </TooltipWrapper>
               )}
               {colorMode === "dark" && challenge?.workshop && (
-                <img src={DarkPlayIcon} alt="Ícone de vídeo" />
+                <TooltipWrapper text="Resolução disponível">
+                  <img src={DarkPlayIcon} alt="Ícone de vídeo" />
+                </TooltipWrapper>
               )}
             </section>
             <section className="">
