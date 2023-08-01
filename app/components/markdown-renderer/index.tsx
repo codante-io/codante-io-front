@@ -126,16 +126,8 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
   },
 });
 
-export default function MarkdownRenderer({
-  markdown,
-}: {
-  markdown: string;
-  overrides?: any;
-}) {
+export default function MarkdownRenderer({ markdown }: { markdown: string }) {
   const { colorMode } = useColorMode();
-  // if (overrides === undefined) {
-  //   overrides = generateClassOverrides(colorMode);
-  // }
 
   return (
     <div className="prose lg:prose-lg dark:prose-invert prose-ul:ml-0 prose-h2:mb-2">
