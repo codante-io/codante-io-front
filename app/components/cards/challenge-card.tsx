@@ -4,8 +4,6 @@ import type { ChallengeCardInfo } from "~/models/challenge.server";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import PlayIcon from "./icons/playIcon.svg";
-import DarkPlayIcon from "./icons/darkPlayIcon.svg";
-import { useColorMode } from "~/contexts/color-mode-context";
 import TooltipWrapper from "../tooltip";
 
 export default function ChallengeCard({
@@ -13,8 +11,6 @@ export default function ChallengeCard({
 }: {
   challenge: ChallengeCardInfo;
 }) {
-  const { colorMode } = useColorMode();
-
   return (
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
@@ -76,14 +72,9 @@ export default function ChallengeCard({
           </div>
           <div className="flex items-center justify-between mt-4 card-footer">
             <section>
-              {colorMode === "light" && challenge?.workshop && (
+              {challenge?.workshop && (
                 <TooltipWrapper text="Resolução disponível">
                   <img src={PlayIcon} alt="Ícone de vídeo" />
-                </TooltipWrapper>
-              )}
-              {colorMode === "dark" && challenge?.workshop && (
-                <TooltipWrapper text="Resolução disponível">
-                  <img src={DarkPlayIcon} alt="Ícone de vídeo" />
                 </TooltipWrapper>
               )}
             </section>
