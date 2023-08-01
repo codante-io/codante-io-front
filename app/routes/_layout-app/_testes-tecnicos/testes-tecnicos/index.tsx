@@ -23,9 +23,9 @@ export default function TestesTecnicosPage() {
       case "frontend":
         return "rgb(82 130 255)";
       case "fullstack":
-        return "linear-gradient(to bottom, rgb(82 130 255) 50%, rgb(234 179 8) 50%) bottom, linear-gradient(to bottom, rgb(234 179 8) 50%, rgb(82 130 255) 50%) top";
+        return "linear-gradient(to bottom, rgb(82 130 255) 50%, #facc15 50%) bottom, linear-gradient(to bottom, #facc15 50%, rgb(82 130 255) 50%) top";
       case "backend":
-        return "rgb(234 179 8)";
+        return "#facc15";
       default:
         return "rgb(82 130 255)";
     }
