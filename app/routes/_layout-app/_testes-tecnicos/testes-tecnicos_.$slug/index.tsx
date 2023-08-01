@@ -108,54 +108,6 @@ export default function TestesTecnicosSlugPage() {
                 href={assessment.company_website}
               />
             </div>
-            {/* <div className="grid grid-cols-2 gap-2 text-gray-500 sm:gap-4 sm:grid-cols-3 dark:text-gray-400">
-              <div className="flex flex-col gap-2">
-                <HeaderItem
-                  icon={<FaRegCalendar />}
-                  text={assessment.assessment_year}
-                />
-                <HeaderItem
-                  icon={<FaRegFileCode />}
-                  text={assessment.tags?.join(", ")}
-                />
-                <HeaderItem
-                  icon={<HiMap />}
-                  text={assessment.company_headquarters}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <HeaderItem
-                  icon={<MdLocationCity />}
-                  text={assessment.company_industry}
-                />
-                <HeaderItem icon={<HiUsers />} text={assessment.company_size} />
-                <HeaderItem
-                  icon={<FaLinkedinIn />}
-                  text={assessment.company_linkedin
-                    ?.replace("https://", "")
-                    .replace("www.", "")
-                    .replace("linkedin.com/company", "")}
-                  href={assessment.company_linkedin}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <HeaderItem
-                  icon={<FaGithub />}
-                  text={assessment.company_github
-                    ?.replace("https://", "")
-                    .replace("www.", "")
-                    .replace("github.com", "")}
-                  href={assessment.company_github}
-                />
-                <HeaderItem
-                  icon={<TbWorld />}
-                  text={assessment.company_website
-                    ?.replace("https://", "")
-                    .replace("www.", "")}
-                  href={assessment.company_website}
-                />
-              </div>
-            </div> */}
           </div>
         </header>
         <main className="">
