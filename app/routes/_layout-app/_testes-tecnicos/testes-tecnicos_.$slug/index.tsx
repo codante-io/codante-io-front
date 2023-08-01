@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { HiUsers, HiMap } from "react-icons/hi";
 import { json } from "@remix-run/node";
+import type { Assessment } from "~/models/assessments.server";
 import { getAssessment } from "~/models/assessments.server";
 import { useLoaderData } from "@remix-run/react";
 import { MdLocationCity } from "react-icons/md";
@@ -64,50 +65,7 @@ export default function TestesTecnicosSlugPage() {
                 {assessment.title}
               </h1>
             </div>
-            <div className="text-gray-500 columns-1 sm:columns-2 lg:columns-3 gap-y-10 dark:text-gray-400">
-              <HeaderItem
-                icon={<FaRegCalendar />}
-                text={assessment.assessment_year}
-              />
-              <HeaderItem
-                icon={<FaRegFileCode />}
-                text={assessment.tags?.join(", ")}
-              />
-              <HeaderItem
-                icon={<HiMap />}
-                text={assessment.company_headquarters}
-              />
-
-              <HeaderItem
-                icon={<MdLocationCity />}
-                text={assessment.company_industry}
-              />
-              <HeaderItem icon={<HiUsers />} text={assessment.company_size} />
-              <HeaderItem
-                icon={<FaLinkedinIn />}
-                text={assessment.company_linkedin
-                  ?.replace("https://", "")
-                  .replace("www.", "")
-                  .replace("linkedin.com/company", "")}
-                href={assessment.company_linkedin}
-              />
-
-              <HeaderItem
-                icon={<FaGithub />}
-                text={assessment.company_github
-                  ?.replace("https://", "")
-                  .replace("www.", "")
-                  .replace("github.com", "")}
-                href={assessment.company_github}
-              />
-              <HeaderItem
-                icon={<TbWorld />}
-                text={assessment.company_website
-                  ?.replace("https://", "")
-                  .replace("www.", "")}
-                href={assessment.company_website}
-              />
-            </div>
+            <IconsList assessment={assessment} />
           </div>
         </header>
         <main className="">
@@ -137,7 +95,7 @@ export default function TestesTecnicosSlugPage() {
             <div className=" dark:bg-background-800 rounded-xl shadow bg-white border-[1.5px] border-background-100 dark:border-background-700">
               <div className="p-4 prose lg:py-6 lg:px-12 dark:prose-invert max-w-none dark:prose-headings:text-gray-300 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h2:mt-8 prose-h1:mt-2 lg:prose-h1:mt-4">
                 <MarkdownRenderer
-                  markdown={assessment.assessment_instructions_text as string}
+                  markdown={assessment.assessment_instructions_text ?? ""}
                 />
               </div>
             </div>
@@ -191,6 +149,66 @@ function HeaderItem({
       <div className="">{icon}</div>
 
       <p className="text-xs md:text-sm">{text}</p>
+    </div>
+  );
+}
+
+function IconsList({ assessment }: { assessment: Assessment }) {
+  return (
+    <div className="text-gray-500 columns-1 sm:columns-2 lg:columns-3 gap-y-10 dark:text-gray-400">
+      {assessment.assessment_year && (
+        <HeaderItem
+          icon={<FaRegCalendar />}
+          text={assessment.assessment_year}
+        />
+      )}
+      {assessment.tags?.length && assessment.tags.length > 0 ? (
+        <HeaderItem
+          icon={<FaRegFileCode />}
+          text={assessment.tags?.join(", ")}
+        />
+      ) : null}
+      {assessment.company_headquarters && (
+        <HeaderItem icon={<HiMap />} text={assessment.company_headquarters} />
+      )}
+      {assessment.company_industry && (
+        <HeaderItem
+          icon={<MdLocationCity />}
+          text={assessment.company_industry}
+        />
+      )}
+      {assessment.company_size && (
+        <HeaderItem icon={<HiUsers />} text={assessment.company_size} />
+      )}
+      {assessment.company_linkedin && (
+        <HeaderItem
+          icon={<FaLinkedinIn />}
+          text={assessment.company_linkedin
+            ?.replace("https://", "")
+            .replace("www.", "")
+            .replace("linkedin.com/company", "")}
+          href={assessment.company_linkedin}
+        />
+      )}
+      {assessment.company_github && (
+        <HeaderItem
+          icon={<FaGithub />}
+          text={assessment.company_github
+            ?.replace("https://", "")
+            .replace("www.", "")
+            .replace("github.com", "")}
+          href={assessment.company_github}
+        />
+      )}
+      {assessment.company_website && (
+        <HeaderItem
+          icon={<TbWorld />}
+          text={assessment.company_website
+            ?.replace("https://", "")
+            .replace("www.", "")}
+          href={assessment.company_website}
+        />
+      )}
     </div>
   );
 }
