@@ -7,7 +7,7 @@ export function meta() {
   return {
     title: "Blog | Codante.io",
     description:
-      "Blog da Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.",
+      "Blog do Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.",
   };
 }
 

@@ -12,7 +12,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
     return {};
   }
 
-  const title = `Blog: ${data.blogPost.title} | Codante.io`;
+  const title = `${data.blogPost.title} | Codante.io`;
   const description = data.blogPost.short_description;
   const imageUrl = getOgGeneratorUrl(data.blogPost.title, "Blog");
 
