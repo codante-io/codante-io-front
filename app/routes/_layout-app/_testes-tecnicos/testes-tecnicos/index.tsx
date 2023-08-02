@@ -7,6 +7,32 @@ import type { Assessment } from "~/models/assessments.server";
 import { getAssessments } from "~/models/assessments.server";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useColorMode } from "~/contexts/color-mode-context";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
+
+export function meta() {
+  const title = "Testes técnicos | Codante.io";
+  const description =
+    "Testes técnicos de programação utilizados em grandes empresas. Se prepare para ser aprovado no processo seletivo da sua empresa dos sonhos.";
+  const imageUrl = getOgGeneratorUrl("Testes tecnicos");
+
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/testes-tecnicos`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/testes-tecnicos`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": "Testes técnicos Codante",
+  };
+}
 
 export const loader = async ({ request }: { request: Request }) => {
   return json({
