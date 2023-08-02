@@ -10,7 +10,7 @@ export function meta() {
   return {
     title: "Mini Projetos | Codante.io",
     description:
-      "Mini Projetos de programação para você aprender particando. Escolha um Mini Projeto para você se desafiar e aprender ainda mais.",
+      "Mini Projetos de programação para você aprender praticando. Escolha um Mini Projeto para você se desafiar e aprender ainda mais.",
   };
 }
 
