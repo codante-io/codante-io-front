@@ -8,6 +8,14 @@ import { getAssessments } from "~/models/assessments.server";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useColorMode } from "~/contexts/color-mode-context";
 
+export function meta() {
+  return {
+    title: "Testes técnicos | Codante.io",
+    description:
+      "Testes técnicos de programação utilizados em grandes empresas. Se prepare para ser aprovado no processo seletivo da sua empresa dos sonhos.",
+  };
+}
+
 export const loader = async ({ request }: { request: Request }) => {
   return json({
     assessments: await getAssessments(),
@@ -102,7 +110,6 @@ function IconsAside({ assessment }: { assessment: Assessment }) {
           <LuFileCheck className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
         </TooltipWrapper>
       )}
-
     </div>
   );
 }

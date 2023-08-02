@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { HiUsers, HiMap } from "react-icons/hi";
 import { json } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 import type { Assessment } from "~/models/assessments.server";
 import { getAssessment } from "~/models/assessments.server";
 import { useLoaderData } from "@remix-run/react";
@@ -15,6 +16,36 @@ import { TbWorld } from "react-icons/tb";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { FiExternalLink } from "react-icons/fi";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  // para não quebrar se não houver teste técnico ainda.
+  if (!data?.assessment) {
+    return {};
+  }
+
+  const title = `Teste técnico: ${data.assessment.title} | Codante.io`;
+  const description = `Teste técnico ${data.assessment.title}. Vaga ${data.assessment.type}`;
+  const imageUrl = getOgGeneratorUrl(data.assessment.title, "Testes técnicos");
+
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/testes-tecnicos/${params.slug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/testes-tecnicos/${params.slug}`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.assessment.title,
+  };
+};
 
 export const loader = async ({
   request,
