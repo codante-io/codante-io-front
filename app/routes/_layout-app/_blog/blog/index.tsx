@@ -2,12 +2,30 @@ import { useLoaderData } from "@remix-run/react";
 import type { BlogPost } from "~/models/blog-post.server";
 import { getPosts } from "~/models/blog-post.server";
 import BlogPostCard from "./components/blog-post-card";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
 
 export function meta() {
+  const title = "Blog | Codante.io";
+  const description =
+    "Blog do Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.";
+  const imageUrl = getOgGeneratorUrl("Blog do Codante");
+
   return {
-    title: "Blog | Codante.io",
-    description:
-      "Blog do Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.",
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/blog`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/blog`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": "Blog do Codante",
   };
 }
 
