@@ -80,7 +80,7 @@ export default function TestesTecnicosPage() {
               }}
             >
               <article className="flex items-start gap-2 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
-                <div className="flex items-center justify-center w-20 h-20">
+                <div className="flex items-center justify-center w-20 h-20 border border-gray-200 rounded-lg dark:border-background-700">
                   <img
                     src={
                       colorMode === "dark"
