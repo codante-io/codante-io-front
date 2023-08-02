@@ -3,6 +3,8 @@ import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import type { ChallengeCardInfo } from "~/models/challenge.server";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
+import PlayIcon from "./icons/playIcon.svg";
+import TooltipWrapper from "../tooltip";
 
 export default function ChallengeCard({
   challenge,
@@ -68,7 +70,14 @@ export default function ChallengeCard({
               {challenge?.short_description}
             </p>
           </div>
-          <div className="flex flex-col items-end justify-center mt-4 card-footer">
+          <div className="flex items-center justify-between mt-4 card-footer">
+            <section>
+              {challenge?.workshop && (
+                <TooltipWrapper text="Resolução disponível">
+                  <img src={PlayIcon} alt="Ícone de vídeo" />
+                </TooltipWrapper>
+              )}
+            </section>
             <section className="">
               <div className="flex -space-x-2 overflow-hidden">
                 {challenge?.users?.map((user, index) => (
