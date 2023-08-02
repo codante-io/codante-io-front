@@ -1,9 +1,39 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { TiArrowBackOutline } from "react-icons/ti";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import ReactionsButton from "~/components/reactions-button";
 import { getPost } from "~/models/blog-post.server";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  // para não quebrar se não houver blogPost ainda.
+  if (!data?.blogPost) {
+    return {};
+  }
+
+  const title = `Blog: ${data.blogPost.title} | Codante.io`;
+  const description = data.blogPost.short_description;
+  const imageUrl = getOgGeneratorUrl(data.blogPost.title, "Blog");
+
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/blog/${params.slug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/blog/${params.slug}`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.blogPost.title,
+  };
+};
 
 export async function loader({ request, params }: LoaderArgs) {
   const blogPost = await getPost(request, params.slug!);

@@ -3,6 +3,14 @@ import type { BlogPost } from "~/models/blog-post.server";
 import { getPosts } from "~/models/blog-post.server";
 import BlogPostCard from "./components/blog-post-card";
 
+export function meta() {
+  return {
+    title: "Blog | Codante.io",
+    description:
+      "Blog da Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.",
+  };
+}
+
 export async function loader({ request }: { request: Request }) {
   const blogPosts = await getPosts(request);
 
