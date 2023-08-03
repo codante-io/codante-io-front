@@ -125,7 +125,10 @@ export default function Navbar({ user }: { user: any }) {
                         {item.name}
                       </NavLink>
                     ))}
-                    <Menu as="div" className="relative inline-block text-left">
+                    <Menu
+                      as="div"
+                      className="relative z-10 inline-block text-left"
+                    >
                       <div>
                         <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
                           <RxDropdownMenu
