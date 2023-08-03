@@ -125,7 +125,10 @@ export default function Navbar({ user }: { user: any }) {
                         {item.name}
                       </NavLink>
                     ))}
-                    <Menu as="div" className="relative inline-block text-left">
+                    <Menu
+                      as="div"
+                      className="relative z-10 inline-block text-left"
+                    >
                       <div>
                         <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
                           <RxDropdownMenu
@@ -142,7 +145,7 @@ export default function Navbar({ user }: { user: any }) {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div className="px-1 py-1 ">
                             {moreMenuNavigation.map((item) => (
                               <Menu.Item key={item.name}>
