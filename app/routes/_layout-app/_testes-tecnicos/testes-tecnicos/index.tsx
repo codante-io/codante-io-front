@@ -79,8 +79,8 @@ export default function TestesTecnicosPage() {
                 background: borderColor(assessment.type),
               }}
             >
-              <article className="flex items-start gap-2 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
-                <div className="flex items-center justify-center w-20 h-20 border border-gray-200 rounded-lg dark:border-background-700">
+              <article className="flex items-start gap-3 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
+                <div className="flex items-center justify-center w-16 h-16 ">
                   <img
                     src={
                       colorMode === "dark"
@@ -88,7 +88,7 @@ export default function TestesTecnicosPage() {
                         : assessment.image_url
                     }
                     alt="Logo da Empresa"
-                    className="w-4/5 rounded-lg"
+                    className="w-full border border-gray-200 rounded-lg dark:border-background-700"
                   />
                 </div>
                 <div className="flex-1">
