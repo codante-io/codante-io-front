@@ -5,6 +5,7 @@ import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import { BsFillPlayFill } from "react-icons/bs";
 import VimeoPlayer from "~/components/vimeo-player";
 import MarkdownRenderer from "~/components/markdown-renderer";
+import type { ChallengeCardInfo } from "~/models/challenge.server";
 
 export default function Overview({
   challenge,
@@ -76,6 +77,7 @@ export default function Overview({
         <ResolutionSection
           isAvailable={hasSolution}
           thumbnailUrl={challenge.workshop?.image_url}
+          challenge={challenge}
         />
       </div>
     </div>
@@ -85,9 +87,11 @@ export default function Overview({
 function ResolutionSection({
   isAvailable,
   thumbnailUrl,
+  challenge,
 }: {
   isAvailable: boolean;
   thumbnailUrl?: string;
+  challenge: ChallengeCardInfo;
 }) {
   return (
     <div>
@@ -101,7 +105,10 @@ function ResolutionSection({
         </p>
       )}
       {isAvailable ? (
-        <Link to="../resolucao" className="relative">
+        <Link
+          to={`/mini-projetos/${challenge.slug}/resolucao`}
+          className="relative"
+        >
           <img
             className="relative w-full rounded-lg aspect-video"
             src={thumbnailUrl}
