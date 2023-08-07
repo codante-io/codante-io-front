@@ -78,11 +78,8 @@ export default function TestesTecnicosPage() {
           >
             @felipefialho
           </a>
-          .
-        </p>
-        <p className="mt-2 text-sm">
-          <strong>Atenção</strong>, esta página não é uma página de recrutamento
-          e os testes abaixo não estão com vagas abertas!
+          . <strong>Atenção</strong>, esta página não é uma página de
+          recrutamento e os testes abaixo não estão com vagas abertas!
         </p>
       </header>
       <section className="grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
