@@ -59,13 +59,31 @@ export default function TestesTecnicosPage() {
 
   return (
     <main className="container mx-auto">
-      <header className="flex items-center gap-2 mt-4 mb-12 lg:gap-6">
-        <TitleIcon className="hidden w-8 h-8 lg:h-8 lg:w-8 md:inline-block" />
-        <div>
+      <header className="mt-4 mb-12">
+        <div className="flex items-center gap-2 lg:gap-6">
+          <TitleIcon className="hidden w-8 h-8 lg:h-8 lg:w-8 md:inline-block" />
           <h1 className="text-3xl lg:text-4xl font-lexend">
             Testes Técnicos de Programação
           </h1>
         </div>
+        <p className="mt-2 text-sm">
+          Esta é uma seleção de testes técnicos já aplicados em processos
+          seletivos passados. Use-os para se preparar para o processo seletivo
+          da sua empresa. Créditos ao repositório do{" "}
+          <a
+            href="https://github.com/felipefialho/frontend-challenges"
+            target="_blank"
+            rel="noreferrer"
+            className="underline"
+          >
+            @felipefialho
+          </a>
+          , muitas empresas que estão aqui estão também naquele repositório.
+        </p>
+        <p className="mt-2 text-sm">
+          <strong>Atenção</strong>, esta página não é uma página de recrutamento
+          e os testes abaixo não estão com vagas abertas!
+        </p>
       </header>
       <section className="grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {assessments.map((assessment) => (
