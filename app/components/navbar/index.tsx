@@ -43,6 +43,11 @@ export default function Navbar({ user }: { user: any }) {
 
   const moreMenuNavigation = [
     {
+      name: "Testes Técnicos",
+      href: "/testes-tecnicos",
+      external: false,
+    },
+    {
       name: "Blog",
       href: "/blog",
       external: false,
