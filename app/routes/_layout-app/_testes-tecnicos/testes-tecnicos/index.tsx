@@ -78,7 +78,7 @@ export default function TestesTecnicosPage() {
           >
             @felipefialho
           </a>
-          , muitas empresas que estão aqui estão também naquele repositório.
+          .
         </p>
         <p className="mt-2 text-sm">
           <strong>Atenção</strong>, esta página não é uma página de recrutamento
