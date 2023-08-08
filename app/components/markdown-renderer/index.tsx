@@ -121,7 +121,7 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
 
   a: {
     props: {
-      className: "text-blue-500 hover:underline",
+      className: "text-blue-500 no-underline truncate block hover:underline",
     },
   },
 });
