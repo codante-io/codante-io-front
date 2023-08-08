@@ -73,7 +73,7 @@ export default function TestesTecnicosSlugPage() {
               : assessment.image_url
           }
           alt=""
-          className="w-4/5"
+          className="w-4/5 rounded-lg"
         />
       </div>
       <div>
