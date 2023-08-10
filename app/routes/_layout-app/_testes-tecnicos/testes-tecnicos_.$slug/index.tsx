@@ -17,6 +17,7 @@ import MarkdownRenderer from "~/components/markdown-renderer";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { FiDownload, FiExternalLink } from "react-icons/fi";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver teste técnico ainda.
@@ -103,6 +104,9 @@ export default function TestesTecnicosSlugPage() {
           </div>
         </header>
         <main className="">
+          <AdminEditButton
+            url={`/technical-assessment/${assessment.id}/edit`}
+          />
           <section className="mt-12">
             <SecondaryTitle text="Sobre o Teste" />
             <p className="font-light text-gray-600 dark:text-gray-300">
