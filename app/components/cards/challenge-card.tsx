@@ -32,7 +32,7 @@ export default function ChallengeCard({
         >
           <img
             src={challenge.image_url}
-            className={`inline-block -mb-3 h-full ${
+            className={`inline-block -mb-3 h-full object-cover ${
               challenge.status === "soon"
                 ? "group-hover:animate-tada"
                 : "group-hover:animate-float"
