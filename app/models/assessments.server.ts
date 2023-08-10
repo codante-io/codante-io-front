@@ -24,6 +24,7 @@ export type Assessment = {
   assessment_instructions_url?: string;
   assessment_instructions_text?: string;
   job_position?: string;
+  zipped_files_url?: string;
 };
 
 export async function getAssessments(): Promise<Array<Assessment>> {

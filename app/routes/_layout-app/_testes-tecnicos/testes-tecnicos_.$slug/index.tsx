@@ -15,7 +15,7 @@ import { MdLocationCity } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import { useColorMode } from "~/contexts/color-mode-context";
-import { FiExternalLink } from "react-icons/fi";
+import { FiDownload, FiExternalLink } from "react-icons/fi";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
@@ -97,15 +97,12 @@ export default function TestesTecnicosSlugPage() {
               </h1>
             </div>
             <IconsList assessment={assessment} />
+            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              {assessment.company_description}
+            </p>
           </div>
         </header>
         <main className="">
-          <section className="mt-12">
-            <SecondaryTitle text="A Empresa" />
-            <p className="font-light text-gray-600 dark:text-gray-300">
-              {assessment.company_description}
-            </p>
-          </section>
           <section className="mt-12">
             <SecondaryTitle text="Sobre o Teste" />
             <p className="font-light text-gray-600 dark:text-gray-300">
@@ -114,17 +111,36 @@ export default function TestesTecnicosSlugPage() {
           </section>
           <section className="mt-12">
             <SecondaryTitle text="Instruções do Teste" />
-            {assessment.assessment_instructions_url && (
-              <a
-                target="_blank"
-                href={assessment.assessment_instructions_url}
-                className="flex items-center gap-2 mb-6 underline text-brand"
-                rel="noreferrer"
-              >
-                <FiExternalLink />
-                <p>Link para o teste</p>
-              </a>
-            )}
+            <div className="mb-8 text-gray-500 dark:text-gray-400">
+              <div className="mb-3">
+                {assessment.assessment_instructions_url && (
+                  <div className="flex items-center gap-2 mb-1 ">
+                    <FiExternalLink className="text-brand" />
+                    <a
+                      target="_blank"
+                      href={assessment.assessment_instructions_url}
+                      className="text-sm hover:underline"
+                      rel="noreferrer"
+                    >
+                      <p>Link para o teste técnico original</p>
+                    </a>
+                  </div>
+                )}
+                {assessment.zipped_files_url && (
+                  <div className="flex items-center gap-2 mb-1 ">
+                    <FiDownload className="text-brand" />
+                    <a
+                      target="_blank"
+                      href={assessment.zipped_files_url}
+                      className="text-sm hover:underline"
+                      rel="noreferrer"
+                    >
+                      <p>Baixar Arquivos do Teste Técnico</p>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
             <div className=" dark:bg-background-800 rounded-xl shadow bg-white border-[1.5px] border-background-100 dark:border-background-700">
               <div className="p-4 prose lg:py-6 lg:px-12 dark:prose-invert max-w-none dark:prose-headings:text-gray-300 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h2:mt-8 prose-h1:mt-2 lg:prose-h1:mt-4">
                 <MarkdownRenderer
