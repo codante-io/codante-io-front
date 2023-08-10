@@ -114,15 +114,17 @@ export default function TestesTecnicosSlugPage() {
           </section>
           <section className="mt-12">
             <SecondaryTitle text="Instruções do Teste" />
-            <a
-              target="_blank"
-              href={assessment.assessment_instructions_url}
-              className="flex items-center gap-2 mb-6 underline text-brand"
-              rel="noreferrer"
-            >
-              <FiExternalLink />
-              <p>Link para o teste</p>
-            </a>
+            {assessment.assessment_instructions_url && (
+              <a
+                target="_blank"
+                href={assessment.assessment_instructions_url}
+                className="flex items-center gap-2 mb-6 underline text-brand"
+                rel="noreferrer"
+              >
+                <FiExternalLink />
+                <p>Link para o teste</p>
+              </a>
+            )}
             <div className=" dark:bg-background-800 rounded-xl shadow bg-white border-[1.5px] border-background-100 dark:border-background-700">
               <div className="p-4 prose lg:py-6 lg:px-12 dark:prose-invert max-w-none dark:prose-headings:text-gray-300 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h2:mt-8 prose-h1:mt-2 lg:prose-h1:mt-4">
                 <MarkdownRenderer
