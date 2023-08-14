@@ -85,19 +85,19 @@ export default function TestesTecnicosPage() {
           </p>
         </p>
       </header>
-      <section className="grid grid-cols-1 gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {assessments.map((assessment) => (
           <Link
             key={assessment.slug}
             to={`/testes-tecnicos/${assessment.slug}`}
           >
             <div
-              className="pl-1.5 rounded-lg"
+              className="pl-1.5 rounded-lg h-full"
               style={{
                 background: borderColor(assessment.type),
               }}
             >
-              <article className="flex items-start gap-3 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
+              <article className="h-full flex items-start gap-3 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
                 <div className="flex items-center justify-center w-16 h-16 ">
                   <img
                     src={
