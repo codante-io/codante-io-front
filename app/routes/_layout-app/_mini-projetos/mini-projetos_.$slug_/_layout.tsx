@@ -154,6 +154,7 @@ export default function ChallengeSlug() {
     challengeUser,
     challengeSubmissions,
   } = useLoaderData<typeof loader>();
+
   const actionData = useActionData();
   const user = useUserFromOutletContext();
 
@@ -213,7 +214,7 @@ export default function ChallengeSlug() {
     {
       name: "Resolução",
       href: "resolucao",
-      isVisible: true,
+      isVisible: hasSolution,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
