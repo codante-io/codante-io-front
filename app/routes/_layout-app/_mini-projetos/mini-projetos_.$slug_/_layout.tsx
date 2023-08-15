@@ -14,7 +14,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
 
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import ParticipantsSection from "./participants-section";
+import ParticipantsSection from "./components/participants-section";
 
 import axios from "axios";
 import { useEffect } from "react";
