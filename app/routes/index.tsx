@@ -11,7 +11,6 @@ import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/background-blur";
 import ChallengeCard from "~/components/cards/challenge-card";
 import PriceCard from "~/components/cards/price-card";
-import TrackCard from "~/components/cards/track-card";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
@@ -144,7 +143,7 @@ export default function HomePage() {
             </section>
           </div>
         </section>
-        <Wave position="bottom" />
+        {/* <Wave position="bottom" />
         <section
           id="tracks"
           className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50"
@@ -174,7 +173,7 @@ export default function HomePage() {
               </Link>
             </section>
           </div>
-        </section>
+        </section> */}
 
         <section
           id="pricing"
