@@ -32,10 +32,6 @@ export default function Navbar({ user }: { user: any }) {
       href: "/mini-projetos",
     },
     {
-      name: "Trilhas",
-      href: "/trilhas",
-    },
-    {
       name: "Agenda",
       href: "/agenda",
     },
@@ -45,6 +41,11 @@ export default function Navbar({ user }: { user: any }) {
     {
       name: "Testes Técnicos",
       href: "/testes-tecnicos",
+      external: false,
+    },
+    {
+      name: "Ranking",
+      href: "/ranking",
       external: false,
     },
     {
