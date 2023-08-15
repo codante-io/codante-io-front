@@ -1,7 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import type { BlogPost } from "~/models/blog-post.server";
 import { getPosts } from "~/models/blog-post.server";
-import BlogPostCard from "./components/blog-post-card";
+import BlogPostCard from "./_components/blog-post-card";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 
 export function meta() {
