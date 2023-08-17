@@ -135,7 +135,9 @@ export default function TestesTecnicosSlugPage() {
           <AdminEditButton
             url={`/technical-assessment/${assessment.id}/edit`}
           />
-          <OutdatedAlert assessment={assessment} />
+          {assessment.status === "outdated" && (
+            <OutdatedAlert assessment={assessment} />
+          )}
           <section className="mt-12">
             <SecondaryTitle text="Sobre o Teste" />
             <p className="font-light text-gray-600 dark:text-gray-300">
