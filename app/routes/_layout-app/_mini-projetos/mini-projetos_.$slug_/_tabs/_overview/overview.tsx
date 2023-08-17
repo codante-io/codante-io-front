@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import JoinChallengeSection from "../../join-challenge-section";
+import JoinChallengeSection from "../../components/join-challenge-section";
 import RepositoryInfoSection from "~/components/repository-info-section";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import { BsFillPlayFill } from "react-icons/bs";
