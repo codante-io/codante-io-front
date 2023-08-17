@@ -8,6 +8,7 @@ import { getAssessments } from "~/models/assessments.server";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 export function meta() {
   const title = "Testes técnicos | Codante.io";
@@ -144,6 +145,12 @@ function IconsAside({ assessment }: { assessment: Assessment }) {
       {assessment.has_challenge && (
         <TooltipWrapper text="Mini Projeto Disponível">
           <LuFileCheck className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
+        </TooltipWrapper>
+      )}
+
+      {assessment.status === "outdated" && (
+        <TooltipWrapper text="Teste Desatualizado">
+          <ExclamationTriangleIcon className="text-red-400 hover:text-red-500 dark:hover:text-red-300" />
         </TooltipWrapper>
       )}
     </div>
