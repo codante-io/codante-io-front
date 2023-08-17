@@ -9,7 +9,7 @@ export type Assessment = {
   has_challenge: boolean;
   image_url?: string;
   image_url_dark?: string;
-  status: "draft" | "published";
+  status: "draft" | "published" | "outdated";
   tags?: Tag[];
   company_website?: string;
   company_headquarters?: string;
@@ -25,6 +25,7 @@ export type Assessment = {
   assessment_instructions_text?: string;
   job_position?: string;
   zipped_files_url?: string;
+  outdated_details?: string;
 };
 
 export async function getAssessments(): Promise<Array<Assessment>> {

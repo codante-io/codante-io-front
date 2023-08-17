@@ -24,6 +24,7 @@ import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 import { abort404 } from "~/utils/responses.server";
 import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver teste técnico ainda.
@@ -134,6 +135,7 @@ export default function TestesTecnicosSlugPage() {
           <AdminEditButton
             url={`/technical-assessment/${assessment.id}/edit`}
           />
+          <OutdatedAlert assessment={assessment} />
           <section className="mt-12">
             <SecondaryTitle text="Sobre o Teste" />
             <p className="font-light text-gray-600 dark:text-gray-300">
@@ -290,6 +292,38 @@ function IconsList({ assessment }: { assessment: Assessment }) {
           href={assessment.company_website}
         />
       )}
+    </div>
+  );
+}
+
+function OutdatedAlert({ assessment }: { assessment: Assessment }) {
+  return (
+    <div className="p-4 border border-l-4 border-yellow-400 rounded-lg bg-yellow-50 dark:bg-background-800">
+      <div className="flex">
+        <div className="flex-shrink-0">
+          <ExclamationTriangleIcon
+            className="w-5 h-5 text-yellow-400"
+            aria-hidden="true"
+          />
+        </div>
+        <div className="ml-3">
+          <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-100">
+            Teste técnico desatualizado
+          </h3>
+          <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-200">
+            <p>
+              Um ou mais links de referência deste teste técnico podem não estar
+              funcionando. Use-o apenas como referência.
+            </p>
+            {assessment.outdated_details && (
+              <p className="mt-1">
+                <span className="font-bold">Detalhes adicionais:</span>{" "}
+                {assessment.outdated_details}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
