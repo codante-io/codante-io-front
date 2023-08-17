@@ -121,17 +121,26 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
 
   a: {
     props: {
-      className:
-        "text-blue-500 no-underline truncate inline-block hover:underline",
+      className: "text-blue-500 no-underline hover:underline",
     },
   },
 });
 
-export default function MarkdownRenderer({ markdown }: { markdown: string }) {
+export default function MarkdownRenderer({
+  markdown,
+  wrapperClasses = undefined,
+}: {
+  markdown: string;
+  wrapperClasses?: string;
+}) {
   const { colorMode } = useColorMode();
 
   return (
-    <div className="prose lg:prose-lg dark:prose-invert prose-ul:ml-0 prose-h2:mb-2">
+    <div
+      className={`prose lg:prose-lg dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
+        wrapperClasses ?? ""
+      }`}
+    >
       <Markdown
         options={{
           overrides: generateClassOverrides(colorMode),
