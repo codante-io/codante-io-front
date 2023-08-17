@@ -6,11 +6,14 @@ import {
   FaRegFileCode,
 } from "react-icons/fa";
 import { HiUsers, HiMap } from "react-icons/hi";
-import { json } from "@remix-run/node";
 import type { MetaFunction } from "@remix-run/node";
 import type { Assessment } from "~/models/assessments.server";
 import { getAssessment } from "~/models/assessments.server";
-import { useLoaderData } from "@remix-run/react";
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import { MdLocationCity } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import MarkdownRenderer from "~/components/markdown-renderer";
@@ -18,6 +21,9 @@ import { useColorMode } from "~/contexts/color-mode-context";
 import { FiDownload, FiExternalLink } from "react-icons/fi";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
+import { abort404 } from "~/utils/responses.server";
+import NotFound from "~/components/errors/not-found";
+import { Error500 } from "~/components/errors/500";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver teste técnico ainda.
@@ -48,6 +54,20 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   };
 };
 
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <NotFound />
+      </div>
+    );
+  }
+
+  return <Error500 error={error} />;
+}
+
 export const loader = async ({
   request,
   params,
@@ -55,13 +75,20 @@ export const loader = async ({
   request: Request;
   params: { slug: string };
 }) => {
-  return json({
-    assessment: await getAssessment(params.slug),
-  });
+  const assessment = await getAssessment(params.slug);
+
+  if (!assessment) {
+    return abort404();
+  }
+
+  return {
+    assessment,
+  };
 };
 
 export default function TestesTecnicosSlugPage() {
-  const { assessment } = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>();
+  const assessment = loaderData?.assessment;
   const { colorMode } = useColorMode();
 
   return (
@@ -146,9 +173,10 @@ export default function TestesTecnicosSlugPage() {
               </div>
             </div>
             <div className=" dark:bg-background-800 rounded-xl shadow bg-white border-[1.5px] border-background-100 dark:border-background-700">
-              <div className="p-4 prose lg:py-6 lg:px-12 dark:prose-invert max-w-none dark:prose-headings:text-gray-300 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h2:mt-8 prose-h1:mt-2 lg:prose-h1:mt-4">
+              <div className="p-4 lg:py-6 lg:px-16 dark:prose-headings:text-gray-300 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h2:mt-8 prose-h1:mt-2 lg:prose-h1:mt-4 max-w-none">
                 <MarkdownRenderer
                   markdown={assessment.assessment_instructions_text ?? ""}
+                  wrapperClasses="max-w-none"
                 />
               </div>
             </div>
