@@ -12,6 +12,7 @@ import MarkdownRenderer from "~/components/markdown-renderer";
 import ReactionsButton from "~/components/reactions-button";
 import { getPost } from "~/models/blog-post.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import { abort404 } from "~/utils/responses.server";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver blogPost ainda.
@@ -58,6 +59,10 @@ export function ErrorBoundary() {
 
 export async function loader({ request, params }: LoaderArgs) {
   const blogPost = await getPost(request, params.slug!);
+  if (!blogPost) {
+    return abort404();
+  }
+
   return { blogPost };
 }
 
