@@ -5,7 +5,7 @@ import CardItemRibbon from "~/components/cards/card-item-ribbon";
 import { BsFillPlayFill } from "react-icons/bs";
 import VimeoPlayer from "~/components/vimeo-player";
 import MarkdownRenderer from "~/components/markdown-renderer";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 
 export default function Overview({
   challenge,
@@ -91,7 +91,7 @@ function ResolutionSection({
 }: {
   isAvailable: boolean;
   thumbnailUrl?: string;
-  challenge: ChallengeCardInfo;
+  challenge: Challenge;
 }) {
   return (
     <div>
