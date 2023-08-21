@@ -1,10 +1,18 @@
 import type { LoaderArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import {
+  Link,
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import { TiArrowBackOutline } from "react-icons/ti";
+import { Error500 } from "~/components/errors/500";
+import NotFound from "~/components/errors/not-found";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import ReactionsButton from "~/components/reactions-button";
 import { getPost } from "~/models/blog-post.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import { abort404 } from "~/utils/responses.server";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   // para não quebrar se não houver blogPost ainda.
@@ -35,8 +43,26 @@ export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   };
 };
 
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <NotFound />
+      </div>
+    );
+  }
+
+  return <Error500 error={error} />;
+}
+
 export async function loader({ request, params }: LoaderArgs) {
   const blogPost = await getPost(request, params.slug!);
+  if (!blogPost) {
+    return abort404();
+  }
+
   return { blogPost };
 }
 

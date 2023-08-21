@@ -37,6 +37,11 @@ export async function getPost(request: Request, slug: string) {
         Authorization: "Bearer " + token,
       },
     })
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
   return blogPost;
 }
