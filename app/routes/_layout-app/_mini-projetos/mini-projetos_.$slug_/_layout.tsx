@@ -368,7 +368,11 @@ export default function ChallengeSlug() {
         className="flex justify-center w-full text-gray-800 dark:bg-background-700 bg-background-100 dark:text-gray-50"
       >
         <div className="container relative -top-12">
-          <ParticipantsSection participants={participants} />
+          <ParticipantsSection
+            currentUserIsEnrolled={challenge.current_user_is_enrolled}
+            participants={participants}
+            userAvatar={user?.avatar_url}
+          />
         </div>
       </section>
     </div>

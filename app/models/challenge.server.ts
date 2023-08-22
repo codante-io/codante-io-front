@@ -27,6 +27,7 @@ export type Challenge = {
   pivot?: {
     trackable_type: string;
   };
+  current_user_is_enrolled: boolean;
 };
 
 export type ChallengeCard = {

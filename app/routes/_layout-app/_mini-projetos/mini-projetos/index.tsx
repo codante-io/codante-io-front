@@ -4,6 +4,7 @@ import ChallengeCard from "~/components/cards/challenge-card";
 import { getChallenges } from "~/models/challenge.server";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
+import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 
 export function meta() {
   const title = "Mini Projetos | Codante.io";
@@ -44,6 +45,7 @@ export async function loader({ request }: { request: Request }) {
 
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
+  const user = useUserFromOutletContext();
 
   return (
     <main className="container mx-auto">
@@ -52,7 +54,10 @@ export default function Projects() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 ">
         {challenges.map((challenge: ChallengeCardType) => (
           <div key={challenge.slug} className="mx-auto">
-            <ChallengeCard challenge={challenge} />
+            <ChallengeCard
+              loggedUser={user ?? undefined}
+              challenge={challenge}
+            />
           </div>
         ))}
       </div>

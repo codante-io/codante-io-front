@@ -5,14 +5,15 @@ import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import PlayIcon from "./icons/playIcon.svg";
 import TooltipWrapper from "../tooltip";
-import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+import type { User } from "~/models/user.server";
 
 export default function ChallengeCard({
   challenge,
+  loggedUser,
 }: {
   challenge: ChallengeCardType;
+  loggedUser?: User;
 }) {
-  const loggedUser = useUserFromOutletContext();
   return (
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
