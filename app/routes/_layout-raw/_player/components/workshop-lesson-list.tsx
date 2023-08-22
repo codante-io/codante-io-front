@@ -4,13 +4,13 @@ import type { Lesson } from "~/models/lesson.server";
 import { Link } from "@remix-run/react";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import type { Workshop } from "~/models/workshop.server";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 
 type WorkshopLessonListProps = {
   workshop: Workshop;
   activeIndex: number;
   isChallengeResolution?: boolean;
-  challenge?: ChallengeCardInfo | null;
+  challenge?: Challenge | null;
   isLoggedIn?: boolean;
   isChallenge?: boolean;
   setIsSidebarOpen: (value: boolean) => void;

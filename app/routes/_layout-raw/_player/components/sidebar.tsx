@@ -7,7 +7,7 @@ import type { Workshop } from "~/models/workshop.server";
 import CodanteLogoMinimal from "./codante-logo-minimal";
 import WorkshopTitle from "./workshop-title";
 import WorkshopLessonList from "./workshop-lesson-list";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 
 export default function Sidebar({
   workshop,
@@ -23,7 +23,7 @@ export default function Sidebar({
   isSidebarOpen: boolean;
   setIsSidebarOpen: (value: boolean) => void;
   isChallenge?: boolean;
-  challenge?: ChallengeCardInfo | null;
+  challenge?: Challenge | null;
   user: User | null;
 }) {
   const ref = useClickOutside(() => setIsSidebarOpen(false));

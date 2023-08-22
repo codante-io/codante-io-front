@@ -1,15 +1,18 @@
 import { Link } from "@remix-run/react";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import PlayIcon from "./icons/playIcon.svg";
 import TooltipWrapper from "../tooltip";
+import type { User } from "~/models/user.server";
 
 export default function ChallengeCard({
   challenge,
+  loggedUser,
 }: {
-  challenge: ChallengeCardInfo;
+  challenge: ChallengeCardType;
+  loggedUser?: User;
 }) {
   return (
     <Link
@@ -72,7 +75,7 @@ export default function ChallengeCard({
           </div>
           <div className="absolute bottom-0 right-0 flex items-center justify-between w-full p-6 mt-4 card-footer">
             <section>
-              {challenge?.workshop && (
+              {challenge?.has_workshop && (
                 <TooltipWrapper text="Resolução disponível">
                   <img src={PlayIcon} alt="Ícone de vídeo" />
                 </TooltipWrapper>
@@ -80,17 +83,47 @@ export default function ChallengeCard({
             </section>
             <section className="">
               <div className="flex -space-x-2 overflow-hidden">
-                {challenge?.users?.map((user, index) => (
+                {challenge.current_user_is_enrolled && loggedUser && (
                   <img
-                    key={index}
+                    key={loggedUser.id}
                     className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
-                    src={user.avatar_url || "https://source.boringavatars.com/"}
+                    src={
+                      loggedUser.avatar_url ||
+                      "https://source.boringavatars.com/"
+                    }
                     alt="Avatar do usuário"
                   />
-                ))}
-                {challenge?.enrolled_users_count > 5 && (
+                )}
+                {challenge.current_user_is_enrolled
+                  ? challenge?.users
+                      ?.filter(
+                        (user) => user.avatar_url !== loggedUser?.avatar_url
+                      )
+                      .slice(0, 4)
+                      .map((user, index) => (
+                        <img
+                          key={index}
+                          className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
+                          src={
+                            user.avatar_url ||
+                            "https://source.boringavatars.com/"
+                          }
+                          alt="Avatar do usuário"
+                        />
+                      ))
+                  : challenge?.users?.map((user, index) => (
+                      <img
+                        key={index}
+                        className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
+                        src={
+                          user.avatar_url || "https://source.boringavatars.com/"
+                        }
+                        alt="Avatar do usuário"
+                      />
+                    ))}
+                {challenge.enrolled_users_count > 5 && (
                   <div className="w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
-                    +{challenge?.enrolled_users_count - 5}
+                    +{challenge.enrolled_users_count - 5}
                   </div>
                 )}
               </div>

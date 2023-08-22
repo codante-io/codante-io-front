@@ -3,10 +3,10 @@ import MarkdownRenderer from "~/components/markdown-renderer";
 import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
-import { type ChallengeCardInfo } from "~/models/challenge.server";
+import { type Challenge } from "~/models/challenge.server";
 
 export default function Resolution() {
-  const context = useOutletContext<{ challenge: ChallengeCardInfo }>();
+  const context = useOutletContext<{ challenge: Challenge }>();
   const challenge = context?.challenge;
   const workshop = challenge?.workshop;
   const lesson = workshop?.lessons[0];

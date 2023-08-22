@@ -4,7 +4,7 @@ import { currentToken } from "~/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 
-export type ChallengeCardInfo = {
+export type Challenge = {
   id: string;
   name: string;
   slug: string;
@@ -27,6 +27,22 @@ export type ChallengeCardInfo = {
   pivot?: {
     trackable_type: string;
   };
+  current_user_is_enrolled: boolean;
+};
+
+export type ChallengeCard = {
+  id: string;
+  name: string;
+  slug: string;
+  status: "draft" | "published" | "soon" | "archived";
+  short_description: string;
+  image_url: string;
+  difficulty: 1 | 2 | 3;
+  tags: Tag[];
+  has_workshop: boolean;
+  users?: { avatar_url: string }[];
+  enrolled_users_count: number;
+  current_user_is_enrolled: boolean;
 };
 
 export type ChallengeParticipants = {
@@ -44,9 +60,16 @@ export type ChallengeSubmission = {
   reactions: Reactions;
 };
 
-export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
+export async function getChallenges(
+  request: Request
+): Promise<Array<ChallengeCard>> {
+  const token = await currentToken({ request });
   const challenges = await axios
-    .get(`${process.env.API_HOST}/challenges`)
+    .get(`${process.env.API_HOST}/challenges`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
     .then((res) => res.data.data);
   return challenges;
 }
@@ -54,7 +77,7 @@ export async function getChallenges(): Promise<Array<ChallengeCardInfo>> {
 export async function getChallenge(
   slug: string,
   request: Request
-): Promise<ChallengeCardInfo> {
+): Promise<Challenge> {
   const token = await currentToken({ request });
 
   const challenge = await axios
@@ -118,7 +141,7 @@ export async function joinChallenge({
 export async function userJoinedChallenge(
   slug: string,
   request: Request
-): Promise<ChallengeCardInfo> {
+): Promise<Challenge> {
   let token = await currentToken({ request });
 
   const challengeUser = await axios
@@ -159,7 +182,7 @@ export async function updateChallengeUser({
   slug: string;
   body: { fork_url?: string; joined_discord?: boolean; completed?: boolean };
   request: Request;
-}): Promise<ChallengeCardInfo> {
+}): Promise<Challenge> {
   let token = await currentToken({ request });
 
   const challengeUser = await axios
