@@ -11,7 +11,7 @@ export default function ResourcesSection({
     url: string;
     name: string;
   };
-  const resources = challenge.resources.filter(
+  const resources = challenge.resources?.filter(
     (resource: Resource) => resource.type === "figma"
   );
 
