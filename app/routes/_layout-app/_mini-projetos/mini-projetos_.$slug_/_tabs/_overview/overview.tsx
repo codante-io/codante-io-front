@@ -1,11 +1,9 @@
-import { Link } from "@remix-run/react";
-import JoinChallengeSection from "../../components/join-challenge-section";
-import RepositoryInfoSection from "~/components/repository-info-section";
-import CardItemRibbon from "~/components/cards/card-item-ribbon";
-import { BsFillPlayFill } from "react-icons/bs";
-import VimeoPlayer from "~/components/vimeo-player";
 import MarkdownRenderer from "~/components/markdown-renderer";
-import type { Challenge } from "~/models/challenge.server";
+import VimeoPlayer from "~/components/vimeo-player";
+import RepositoryInfoSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/repository-info-section";
+import JoinChallengeSection from "./components/join-challenge-section";
+import ResolutionSection from "./components/resolution-section";
+import ResourcesSection from "./components/resources-section";
 
 export default function Overview({
   challenge,
@@ -33,7 +31,7 @@ export default function Overview({
           <MarkdownRenderer markdown={challenge?.description} />
         </div>
       </div>
-      <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-1">
+      <div className="col-span-3 space-y-10 lg:space-y-12 lg:col-span-1">
         <div>
           <div className="flex flex-wrap items-center justify-between mb-4 xl:flex-nowrap">
             <h1 className="text-2xl font-semibold font-lexend">
@@ -61,76 +59,21 @@ export default function Overview({
           />
         </div>
 
-        <div>
-          <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend">
-            Repositório
-          </h1>
-          <RepositoryInfoSection
-            repository={{
-              organization: "codante-io",
-              name: challenge.repository_name,
-              forks: challenge?.forks,
-              stars: challenge?.stars,
-            }}
-          />
-        </div>
+        <RepositoryInfoSection
+          repository={{
+            organization: "codante-io",
+            name: challenge.repository_name,
+            forks: challenge?.forks,
+            stars: challenge?.stars,
+          }}
+        />
+        <ResourcesSection challenge={challenge} />
         <ResolutionSection
           isAvailable={hasSolution}
           thumbnailUrl={challenge.workshop?.image_url}
           challenge={challenge}
         />
       </div>
-    </div>
-  );
-}
-
-function ResolutionSection({
-  isAvailable,
-  thumbnailUrl,
-  challenge,
-}: {
-  isAvailable: boolean;
-  thumbnailUrl?: string;
-  challenge: Challenge;
-}) {
-  return (
-    <div>
-      <h1 className="flex items-center mb-2 text-2xl font-semibold font-lexend">
-        Resolução
-      </h1>
-      {!isAvailable && (
-        <p className="text-sm text-gray-400">
-          Esta resolução será publicada em breve!{" "}
-          {/* <button className="text-xs underline text-brand">Me avise!</button> */}
-        </p>
-      )}
-      {isAvailable ? (
-        <Link
-          to={`/mini-projetos/${challenge.slug}/resolucao`}
-          className="relative"
-        >
-          <img
-            className="relative w-full rounded-lg aspect-video"
-            src={thumbnailUrl}
-            alt=""
-          />
-        </Link>
-      ) : (
-        <div
-          className={`relative w-full aspect-video max-w-full max-h-full bg-background-200 dark:bg-background-800 flex items-center justify-center rounded-lg mt-6 mb-20 ${
-            !isAvailable && "cursor-not-allowed"
-          }`}
-        >
-          {!isAvailable && <CardItemRibbon text="Disponível em breve" />}
-          <span
-            className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full bg-background-100 ${
-              !isAvailable && "cursor-not-allowed"
-            }`}
-          >
-            <BsFillPlayFill size={16} color="#5282FF" />
-          </span>
-        </div>
-      )}
     </div>
   );
 }

@@ -28,6 +28,11 @@ export type Challenge = {
     trackable_type: string;
   };
   current_user_is_enrolled: boolean;
+  resources: {
+    name: string;
+    type: string;
+    url: string;
+  }[];
 };
 
 export type ChallengeCard = {

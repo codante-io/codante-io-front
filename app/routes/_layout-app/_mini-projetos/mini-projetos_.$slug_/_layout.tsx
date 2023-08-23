@@ -1,5 +1,5 @@
 import type { LoaderArgs, MetaFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import {
   Link,
   Outlet,
@@ -12,10 +12,8 @@ import {
 } from "@remix-run/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
-
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import ParticipantsSection from "./components/participants-section";
-
 import axios from "axios";
 import { useEffect } from "react";
 import { BsCloudUpload, BsStars } from "react-icons/bs";
@@ -38,10 +36,10 @@ import {
 import { user as getUser, logout } from "~/services/auth.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
-import { buildInitialSteps } from "./build-steps.server";
 import Overview from "./_tabs/_overview/overview";
+import { buildInitialSteps } from "./build-steps.server";
 
-export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta: MetaFunction = ({ data, params }) => {
   // para não quebrar se não houver challenge ainda.
   if (!data?.challenge) {
     return {};
@@ -130,7 +128,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     }
   }
 
-  return json({
+  return {
     user,
     slug: params.slug,
     challenge,
@@ -143,7 +141,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
       challengeUser,
       repositorySlug: challenge.repository_name,
     }),
-  });
+  };
 };
 
 export default function ChallengeSlug() {
