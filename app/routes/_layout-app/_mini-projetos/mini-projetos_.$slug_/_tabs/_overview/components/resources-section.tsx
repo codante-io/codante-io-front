@@ -16,7 +16,7 @@ export default function ResourcesSection({
       resource.type === "figma" || resource.type === "file"
   );
 
-  // Por enquanto apenas aceitando recursos do tipo Figma
+  // Por enquanto apenas aceitando recursos do tipo Figma e File
   const hasResourcesToShow = resources && resources?.length > 0;
 
   function getResourceName(resource: Resource) {
