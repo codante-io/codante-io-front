@@ -18,7 +18,7 @@ export default function ResourcesSection({
       resource.type === "github"
   );
 
-  // Por enquanto apenas aceitando recursos do tipo Figma e File
+  // Por enquanto apenas aceitando recursos do tipo Figma, file e github
   const hasResourcesToShow = resources && resources?.length > 0;
 
   if (!hasResourcesToShow) {
