@@ -1,4 +1,4 @@
-import { FiDownload, FiExternalLink, FiFigma } from "react-icons/fi";
+import { FiDownload, FiExternalLink, FiFigma, FiGithub } from "react-icons/fi";
 import type { Challenge } from "~/models/challenge.server";
 
 export default function ResourcesSection({
@@ -13,18 +13,13 @@ export default function ResourcesSection({
   };
   const resources = challenge.resources?.filter(
     (resource: Resource) =>
-      resource.type === "figma" || resource.type === "file"
+      resource.type === "figma" ||
+      resource.type === "file" ||
+      resource.type === "github"
   );
 
   // Por enquanto apenas aceitando recursos do tipo Figma e File
   const hasResourcesToShow = resources && resources?.length > 0;
-
-  function getResourceName(resource: Resource) {
-    if (resource.type === "figma") {
-      return "Design do Figma";
-    }
-    return resource.name;
-  }
 
   if (!hasResourcesToShow) {
     return null;
@@ -46,7 +41,7 @@ export default function ResourcesSection({
             <section className="flex items-center">
               <Icon resource={resource} />
               <p className="flex items-center gap-2 font-extralight ">
-                {getResourceName(resource)}
+                {resource.name}
                 {resource.type !== "file" && (
                   <span className="text-sm text-gray-400">
                     <FiExternalLink />
@@ -71,6 +66,12 @@ function Icon({ resource }: { resource: any }) {
   if (resource.type === "file") {
     return (
       <FiDownload className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors group-hover:text-brand-500 dark:group-hover:text-brand-300" />
+    );
+  }
+
+  if (resource.type === "github") {
+    return (
+      <FiGithub className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors group-hover:text-brand-500 dark:group-hover:text-brand-300" />
     );
   }
 
