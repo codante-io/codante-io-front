@@ -1,14 +1,9 @@
 import TitleIcon from "~/components/title-icon";
-import { LuFileCheck } from "react-icons/lu";
-import { TbSquareRoundedLetterB, TbSquareRoundedLetterF } from "react-icons/tb";
-import TooltipWrapper from "~/components/tooltip";
 import { json } from "@remix-run/node";
-import type { Assessment } from "~/models/assessments.server";
 import { getAssessments } from "~/models/assessments.server";
-import { Link, useLoaderData } from "@remix-run/react";
-import { useColorMode } from "~/contexts/color-mode-context";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import AssessmentCard from "./components/assessment-card";
 
 export function meta() {
   const title = "Testes técnicos | Codante.io";
@@ -43,20 +38,7 @@ export const loader = async ({ request }: { request: Request }) => {
 
 export default function TestesTecnicosPage() {
   const { assessments } = useLoaderData<typeof loader>();
-  const { colorMode } = useColorMode();
-
-  function borderColor(type: string) {
-    switch (type) {
-      case "frontend":
-        return "rgb(82 130 255)";
-      case "fullstack":
-        return "linear-gradient(to bottom, rgb(82 130 255) 50%, #facc15 50%) bottom, linear-gradient(to bottom, #facc15 50%, rgb(82 130 255) 50%) top";
-      case "backend":
-        return "#facc15";
-      default:
-        return "rgb(82 130 255)";
-    }
-  }
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <main className="container mx-auto">
@@ -86,73 +68,77 @@ export default function TestesTecnicosPage() {
           e os testes abaixo não estão com vagas abertas!
         </p>
       </header>
-      <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {assessments.map((assessment) => (
-          <Link
-            key={assessment.slug}
-            to={`/testes-tecnicos/${assessment.slug}`}
+      {/* Filtro */}
+      <section className="h-full my-10 p-3 bg-white rounded-lg shadow border-[1.5px] border-background-200 dark:border-background-700 dark:bg-background-800">
+        <label
+          className="block mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter"
+          htmlFor="nameSearch"
+        >
+          Busca por nome
+        </label>
+        <input
+          className="rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 w-full font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
+          id="nameSearch"
+          name="nameSearch"
+        />
+        <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
+          <button
+            onClick={() => setSearchParams({ stack: "front" })}
+            className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
+              searchParams.get("stack") === "front"
+                ? "border-brand-500 font-semibold"
+                : "border-[#0e141a]"
+            }`}
           >
-            <div
-              className="pl-1.5 rounded-lg h-full"
-              style={{
-                background: borderColor(assessment.type),
-              }}
-            >
-              <article className="h-full flex items-start gap-3 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
-                <div className="flex items-center justify-center w-16 h-16 ">
-                  <img
-                    src={
-                      colorMode === "dark"
-                        ? assessment.image_url_dark ?? assessment.image_url
-                        : assessment.image_url
-                    }
-                    alt="Logo da Empresa"
-                    className="w-full border border-gray-200 rounded-lg dark:border-background-700"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h2 className="mb-2 leading-tight font-lexend">
-                    {assessment.title}
-                  </h2>
-                  <p className="text-xs text-gray-700 dark:text-gray-400">
-                    {assessment.tags?.join(", ")}
-                  </p>
-                </div>
-                <IconsAside assessment={assessment} />
-              </article>
-            </div>
-          </Link>
-        ))}
+            Front
+          </button>
+          <button
+            onClick={() => setSearchParams({ stack: "back" })}
+            className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
+              searchParams.get("stack") === "back"
+                ? "border-yellow-500 font-semibold"
+                : "border-[#0e141a]"
+            }`}
+          >
+            Back
+          </button>
+          <button
+            onClick={() => setSearchParams({ stack: "fullstack" })}
+            className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
+              searchParams.get("stack") === "fullstack"
+                ? "border-[#F58FEB] font-semibold"
+                : "border-[#0e141a]"
+            }`}
+            // style={{borderColor: "rgb(245 143 235)"}}
+          >
+            FullStack
+          </button>
+        </div>
+      </section>
+      <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {searchParams.get("stack") === "front" &&
+          assessments
+            .filter((assessment) => assessment.type === "frontend")
+            .map((assessment) => (
+              <AssessmentCard key={assessment.slug} assessment={assessment} />
+            ))}
+        {searchParams.get("stack") === "back" &&
+          assessments
+            .filter((assessment) => assessment.type === "backend")
+            .map((assessment) => (
+              <AssessmentCard key={assessment.slug} assessment={assessment} />
+            ))}
+        {searchParams.get("stack") === "fullstack" &&
+          assessments
+            .filter((assessment) => assessment.type === "fullstack")
+            .map((assessment) => (
+              <AssessmentCard key={assessment.slug} assessment={assessment} />
+            ))}
+        {!searchParams.get("stack") &&
+          assessments.map((assessment) => (
+            <AssessmentCard key={assessment.slug} assessment={assessment} />
+          ))}
       </section>
     </main>
-  );
-}
-
-function IconsAside({ assessment }: { assessment: Assessment }) {
-  return (
-    <div className="flex flex-col justify-start w-4 min-h-full gap-2">
-      {(assessment.type === "frontend" || assessment.type === "fullstack") && (
-        <TooltipWrapper text="Frontend">
-          <TbSquareRoundedLetterF className="text-brand-500 dark:text-brand-500 dark:opacity-70 dark:hover:opacity-100 hover:text-brand-500" />
-        </TooltipWrapper>
-      )}
-      {(assessment.type === "backend" || assessment.type === "fullstack") && (
-        <TooltipWrapper text="Backend">
-          <TbSquareRoundedLetterB className="text-yellow-500 dark:opacity-70 dark:text-yellow-500 hover:text-yellow-500 dark:hover:opacity-100" />
-        </TooltipWrapper>
-      )}
-
-      {assessment.has_challenge && (
-        <TooltipWrapper text="Mini Projeto Disponível">
-          <LuFileCheck className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
-        </TooltipWrapper>
-      )}
-
-      {assessment.status === "outdated" && (
-        <TooltipWrapper text="Teste Desatualizado">
-          <ExclamationTriangleIcon className="text-red-400 hover:text-red-500 dark:hover:text-red-300" />
-        </TooltipWrapper>
-      )}
-    </div>
   );
 }
