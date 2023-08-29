@@ -4,6 +4,7 @@ import { getAssessments } from "~/models/assessments.server";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AssessmentCard from "./components/assessment-card";
+import { useState } from "react";
 
 export function meta() {
   const title = "Testes técnicos | Codante.io";
@@ -36,12 +37,25 @@ export const loader = async ({ request }: { request: Request }) => {
   });
 };
 
+type CheckboxState = {
+  [key: string]: boolean;
+};
+
 export default function TestesTecnicosPage() {
+  const [checkboxes, setCheckboxes] = useState<CheckboxState>({
+    frontend: false,
+    backend: false,
+    fullstack: false,
+  });
   const { assessments } = useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleClickStack(stack: string) {
     let stackParams = searchParams.getAll("stack");
+    setCheckboxes((prevCheckboxes) => ({
+      ...prevCheckboxes,
+      [stack]: !prevCheckboxes[stack],
+    }));
 
     if (!stackParams.includes(stack)) {
       searchParams.append("stack", stack);
@@ -54,6 +68,12 @@ export default function TestesTecnicosPage() {
       ) {
         searchParams.delete("stack");
         setSearchParams(searchParams);
+        setCheckboxes({
+          // desmarca todos os checkbox
+          frontend: false,
+          backend: false,
+          fullstack: false,
+        });
       }
 
       setSearchParams(searchParams);
@@ -116,6 +136,7 @@ export default function TestesTecnicosPage() {
                 type="checkbox"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                 onChange={() => handleClickStack("frontend")}
+                checked={checkboxes.frontend}
               />
               <label
                 htmlFor="front-checkbox"
@@ -131,6 +152,7 @@ export default function TestesTecnicosPage() {
                 id="back-checkbox"
                 type="checkbox"
                 onChange={() => handleClickStack("backend")}
+                checked={checkboxes.backend}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
@@ -146,6 +168,7 @@ export default function TestesTecnicosPage() {
               <input
                 id="fullstack-checkbox"
                 type="checkbox"
+                checked={checkboxes.fullstack}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                 onChange={({ target }) => handleClickStack("fullstack")}
               />
