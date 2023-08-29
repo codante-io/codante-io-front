@@ -40,6 +40,33 @@ export default function TestesTecnicosPage() {
   const { assessments } = useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  function handleClickStack(stack: string) {
+    let stackParams = searchParams.getAll("stack");
+
+    if (!stackParams.includes(stack)) {
+      searchParams.append("stack", stack);
+      stackParams = searchParams.getAll("stack");
+
+      if (
+        stackParams.includes("frontend") &&
+        stackParams.includes("backend") &&
+        stackParams.includes("fullstack")
+      ) {
+        searchParams.delete("stack");
+        setSearchParams(searchParams);
+      }
+
+      setSearchParams(searchParams);
+    } else {
+      const updatedStackParams = stackParams.filter((param) => param !== stack);
+      searchParams.delete("stack");
+      updatedStackParams.forEach((param) =>
+        searchParams.append("stack", param)
+      );
+      setSearchParams(searchParams);
+    }
+  }
+
   return (
     <main className="container mx-auto">
       <header className="mt-4 mb-12">
@@ -83,10 +110,7 @@ export default function TestesTecnicosPage() {
         />
         <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
           <button
-            onClick={() => {
-              searchParams.set("stack", "front");
-              setSearchParams(searchParams);
-            }}
+            onClick={() => handleClickStack("frontend")}
             className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
               searchParams.get("stack") === "front"
                 ? "border-brand-500 font-semibold"
@@ -96,10 +120,7 @@ export default function TestesTecnicosPage() {
             Front
           </button>
           <button
-            onClick={() => {
-              searchParams.set("stack", "back");
-              setSearchParams(searchParams);
-            }}
+            onClick={() => handleClickStack("backend")}
             className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
               searchParams.get("stack") === "back"
                 ? "border-yellow-500 font-semibold"
@@ -109,7 +130,7 @@ export default function TestesTecnicosPage() {
             Back
           </button>
           <button
-            onClick={() => setSearchParams({ stack: "fullstack" })}
+            onClick={() => handleClickStack("fullstack")}
             className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
               searchParams.get("stack") === "fullstack"
                 ? "border-[#F58FEB] font-semibold"
@@ -122,26 +143,13 @@ export default function TestesTecnicosPage() {
         </div>
       </section>
       <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {searchParams.get("stack") === "front" &&
-          assessments
-            .filter((assessment) => assessment.type === "frontend")
-            .map((assessment) => (
-              <AssessmentCard key={assessment.slug} assessment={assessment} />
-            ))}
-        {searchParams.get("stack") === "back" &&
-          assessments
-            .filter((assessment) => assessment.type === "backend")
-            .map((assessment) => (
-              <AssessmentCard key={assessment.slug} assessment={assessment} />
-            ))}
-        {searchParams.get("stack") === "fullstack" &&
-          assessments
-            .filter((assessment) => assessment.type === "fullstack")
-            .map((assessment) => (
-              <AssessmentCard key={assessment.slug} assessment={assessment} />
-            ))}
-        {!searchParams.get("stack") &&
-          assessments.map((assessment) => (
+        {assessments
+          .filter((assessment) => {
+            const stackParams = searchParams.getAll("stack");
+            if (stackParams.length === 0) return true;
+            return stackParams.includes(assessment.type);
+          })
+          .map((assessment) => (
             <AssessmentCard key={assessment.slug} assessment={assessment} />
           ))}
       </section>
