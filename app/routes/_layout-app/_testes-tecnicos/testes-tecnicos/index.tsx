@@ -107,6 +107,12 @@ export default function TestesTecnicosPage() {
           className="rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 w-full font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
           id="nameSearch"
           name="nameSearch"
+          onChange={(e) => {
+            setSearchParams({
+              stack: searchParams.getAll("stack"),
+              search: e.target.value,
+            });
+          }}
         />
         <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
           <button
@@ -148,6 +154,13 @@ export default function TestesTecnicosPage() {
             const stackParams = searchParams.getAll("stack");
             if (stackParams.length === 0) return true;
             return stackParams.includes(assessment.type);
+          })
+          .filter((assessment) => {
+            const search = searchParams.get("search");
+            if (!search) return true;
+            return assessment.title
+              .toLowerCase()
+              .includes(search.toLowerCase());
           })
           .map((assessment) => (
             <AssessmentCard key={assessment.slug} assessment={assessment} />
