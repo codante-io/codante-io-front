@@ -96,15 +96,9 @@ export default function TestesTecnicosPage() {
         </p>
       </header>
       {/* Filtro */}
-      <section className="h-full my-10 p-3 bg-white rounded-lg shadow border-[1.5px] border-background-200 dark:border-background-700 dark:bg-background-800">
-        <label
-          className="block mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter"
-          htmlFor="nameSearch"
-        >
-          Busca por nome
-        </label>
+      <section className="flex flex-col h-full gap-5 my-10 rounded-lg lg:flex-row">
         <input
-          className="rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 w-full font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
+          className="w-full rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
           id="nameSearch"
           name="nameSearch"
           onChange={(e) => {
@@ -114,7 +108,57 @@ export default function TestesTecnicosPage() {
             });
           }}
         />
-        <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
+        <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border rounded-lg sm:flex border-background-200 dark:border-background-700 dark:bg-background-800 dark:text-white">
+          <li className="w-full border-gray-200 sm:border-r dark:border-gray-600">
+            <div className="flex items-center pl-3">
+              <input
+                id="front-checkbox"
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                onChange={() => handleClickStack("frontend")}
+              />
+              <label
+                htmlFor="front-checkbox"
+                className="py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Front-end
+              </label>
+            </div>
+          </li>
+          <li className="w-full border-gray-200 sm:border-r dark:border-gray-600">
+            <div className="flex items-center pl-3">
+              <input
+                id="back-checkbox"
+                type="checkbox"
+                onChange={() => handleClickStack("backend")}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                htmlFor="back-checkbox"
+                className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Back-end
+              </label>
+            </div>
+          </li>
+          <li className="w-full border-gray-200 dark:border-gray-600">
+            <div className="flex items-center pl-3">
+              <input
+                id="fullstack-checkbox"
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                onChange={({ target }) => handleClickStack("fullstack")}
+              />
+              <label
+                htmlFor="fullstack-checkbox"
+                className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                FullStack
+              </label>
+            </div>
+          </li>
+        </ul>
+        {/* <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
           <button
             onClick={() => handleClickStack("frontend")}
             className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
@@ -146,7 +190,7 @@ export default function TestesTecnicosPage() {
           >
             FullStack
           </button>
-        </div>
+        </div> */}
       </section>
       <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {assessments
