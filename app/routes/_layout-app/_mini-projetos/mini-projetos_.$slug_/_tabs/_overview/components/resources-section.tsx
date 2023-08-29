@@ -59,19 +59,19 @@ export default function ResourcesSection({
 function Icon({ resource }: { resource: any }) {
   if (resource.type === "figma") {
     return (
-      <FiFigma className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors group-hover:text-brand-500 dark:group-hover:text-brand-300" />
+      <FiFigma className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300" />
     );
   }
 
   if (resource.type === "file") {
     return (
-      <FiDownload className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors group-hover:text-brand-500 dark:group-hover:text-brand-300" />
+      <FiDownload className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300" />
     );
   }
 
   if (resource.type === "github") {
     return (
-      <FiGithub className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors group-hover:text-brand-500 dark:group-hover:text-brand-300" />
+      <FiGithub className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300" />
     );
   }
 
