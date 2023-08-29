@@ -83,7 +83,10 @@ export default function TestesTecnicosPage() {
         />
         <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
           <button
-            onClick={() => setSearchParams({ stack: "front" })}
+            onClick={() => {
+              searchParams.set("stack", "front");
+              setSearchParams(searchParams);
+            }}
             className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
               searchParams.get("stack") === "front"
                 ? "border-brand-500 font-semibold"
@@ -93,7 +96,10 @@ export default function TestesTecnicosPage() {
             Front
           </button>
           <button
-            onClick={() => setSearchParams({ stack: "back" })}
+            onClick={() => {
+              searchParams.set("stack", "back");
+              setSearchParams(searchParams);
+            }}
             className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
               searchParams.get("stack") === "back"
                 ? "border-yellow-500 font-semibold"
