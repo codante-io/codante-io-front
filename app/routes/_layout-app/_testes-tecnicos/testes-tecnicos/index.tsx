@@ -5,6 +5,7 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AssessmentCard from "./components/assessment-card";
 import { useState } from "react";
+import { GoSearch } from "react-icons/go";
 
 export function meta() {
   const title = "Testes técnicos | Codante.io";
@@ -117,17 +118,21 @@ export default function TestesTecnicosPage() {
       </header>
       {/* Filtro */}
       <section className="flex flex-col h-full gap-5 my-10 rounded-lg lg:flex-row">
-        <input
-          className="w-full rounded p-2 px-3 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
-          id="nameSearch"
-          name="nameSearch"
-          onChange={(e) => {
-            setSearchParams({
-              stack: searchParams.getAll("stack"),
-              search: e.target.value,
-            });
-          }}
-        />
+        <div className="relative w-full">
+          <GoSearch className="absolute -translate-y-1/2 left-3 top-1/2" />
+          <input
+            className="h-full pl-9 w-full rounded-lg py-2 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
+            id="nameSearch"
+            name="nameSearch"
+            onChange={(e) => {
+              setSearchParams({
+                stack: searchParams.getAll("stack"),
+                search: e.target.value,
+              });
+            }}
+            placeholder="Nome da empresa"
+          />
+        </div>
         <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border rounded-lg sm:flex border-background-200 dark:border-background-700 dark:bg-background-800 dark:text-white">
           <li className="w-full border-gray-200 sm:border-r dark:border-gray-600">
             <div className="flex items-center pl-3">
@@ -181,39 +186,6 @@ export default function TestesTecnicosPage() {
             </div>
           </li>
         </ul>
-        {/* <div className="flex flex-col items-center mt-2 md:justify-evenly md:flex-row">
-          <button
-            onClick={() => handleClickStack("frontend")}
-            className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
-              searchParams.get("stack") === "front"
-                ? "border-brand-500 font-semibold"
-                : "border-[#0e141a]"
-            }`}
-          >
-            Front
-          </button>
-          <button
-            onClick={() => handleClickStack("backend")}
-            className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
-              searchParams.get("stack") === "back"
-                ? "border-yellow-500 font-semibold"
-                : "border-[#0e141a]"
-            }`}
-          >
-            Back
-          </button>
-          <button
-            onClick={() => handleClickStack("fullstack")}
-            className={`mt-2 md:mt-0 pb-2 w-28 border-b-[1.5px] ${
-              searchParams.get("stack") === "fullstack"
-                ? "border-[#F58FEB] font-semibold"
-                : "border-[#0e141a]"
-            }`}
-            // style={{borderColor: "rgb(245 143 235)"}}
-          >
-            FullStack
-          </button>
-        </div> */}
       </section>
       <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {assessments
