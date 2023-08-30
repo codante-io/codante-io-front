@@ -119,7 +119,7 @@ export default function TestesTecnicosPage() {
       {/* Filtro */}
       <section className="flex flex-col h-full gap-5 my-10 rounded-lg lg:flex-row">
         <div className="relative w-full">
-          <GoSearch className="absolute -translate-y-1/2 left-3 top-1/2" />
+          <GoSearch className="absolute -translate-y-1/2 opacity-50 left-3 top-1/2" />
           <input
             className="h-full pl-9 w-full rounded-lg py-2 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
             id="nameSearch"
@@ -135,7 +135,7 @@ export default function TestesTecnicosPage() {
         </div>
         <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border rounded-lg sm:flex border-background-200 dark:border-background-700 dark:bg-background-800 dark:text-white">
           <li className="w-full border-gray-200 sm:border-r dark:border-gray-600">
-            <div className="flex items-center pl-3">
+            <div className="flex items-center pl-3 text-center">
               <input
                 id="front-checkbox"
                 type="checkbox"
