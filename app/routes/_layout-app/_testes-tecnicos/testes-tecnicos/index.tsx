@@ -147,7 +147,7 @@ export default function TestesTecnicosPage() {
                 htmlFor="front-checkbox"
                 className="py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-                Front-end
+                Front end
               </label>
             </div>
           </li>
@@ -164,7 +164,7 @@ export default function TestesTecnicosPage() {
                 htmlFor="back-checkbox"
                 className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-                Back-end
+                Back end
               </label>
             </div>
           </li>
@@ -181,7 +181,7 @@ export default function TestesTecnicosPage() {
                 htmlFor="fullstack-checkbox"
                 className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
-                FullStack
+                Full stack
               </label>
             </div>
           </li>
