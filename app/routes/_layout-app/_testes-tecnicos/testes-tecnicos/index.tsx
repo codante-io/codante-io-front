@@ -51,6 +51,19 @@ export default function TestesTecnicosPage() {
   const { assessments } = useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  function handleSearchBar(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value) {
+      setSearchParams({
+        stack: searchParams.getAll("stack"),
+        search: e.target.value,
+      });
+    } else {
+      setSearchParams({
+        stack: searchParams.getAll("stack"),
+      });
+    }
+  }
+
   function handleClickStack(stack: string) {
     let stackParams = searchParams.getAll("stack");
     setCheckboxes((prevCheckboxes) => ({
@@ -124,12 +137,7 @@ export default function TestesTecnicosPage() {
             className="h-full pl-9 w-full rounded-lg py-2 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
             id="nameSearch"
             name="nameSearch"
-            onChange={(e) => {
-              setSearchParams({
-                stack: searchParams.getAll("stack"),
-                search: e.target.value,
-              });
-            }}
+            onChange={(e) => handleSearchBar(e)}
             placeholder="Nome da empresa"
           />
         </div>
