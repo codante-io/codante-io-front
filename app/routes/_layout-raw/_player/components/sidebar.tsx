@@ -31,7 +31,7 @@ export default function Sidebar({
   return (
     <div
       ref={ref}
-      className={`lg:sticky w-80 absolute overflow-y-auto left-0 z-10 bg-background-100 dark:bg-background-900 lg:bg-transparent top-0 flex-col duration-500 transition-all max-h-screen lg:opacity-100 lg:flex lg:translate-x-0 lg:visible ${
+      className={`lg:sticky w-80 absolute overflow-y-auto left-0 z-10 bg-background-100 dark:bg-background-900 lg:dark:bg-transparent lg:bg-transparent top-0 flex-col duration-500 transition-all max-h-screen lg:opacity-100 lg:flex lg:translate-x-0 lg:visible ${
         isSidebarOpen ? "" : "-translate-x-80"
       }`}
     >

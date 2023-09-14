@@ -7,7 +7,7 @@ import classNames from "~/utils/class-names";
 
 export default function ProfileMenu({ user }: { user: User }) {
   return (
-    <Menu as="div" className="relative">
+    <Menu as="div" className="relative z-50">
       <div>
         <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
           <span className="sr-only">Open user menu</span>
