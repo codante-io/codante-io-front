@@ -66,7 +66,7 @@ export default function MainContent({
         />
         {nextLessonPath() && (
           <Link to={nextLessonPath() ?? ""}>
-            <div className="flex items-start px-1 pl-2 text-3xl text-gray-500 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500 hover:text-brand">
+            <div className="flex items-start px-1 pl-2 text-3xl text-gray-500 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500 hover:text-brand dark:hover:text-brand">
               <MdOutlineSkipNext className="inline-block" />
             </div>
           </Link>
