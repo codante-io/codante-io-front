@@ -59,9 +59,6 @@ export default function WorkshopLessonList({
           <div className="flex items-center flex-1 gap-1 ">
             <div className="flex items-center gap-3">
               {getLessonIconPrefix(lesson)}
-              {/* <span className={` text-xs dark:text-gray-600 mr-2`}>
-                {id + 1}.
-              </span> */}
               <span className="mr-1 text-xs text-gray-400 font- ">
                 {id + 1}.
               </span>{" "}
