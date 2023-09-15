@@ -83,6 +83,3 @@ export default function WorkshopLessonList({
     </ol>
   );
 }
-
-// Aula Aberta  - Se estou logado, mostra o botão de marcar como concluída | Deslogado, não mostra o botão, mas não mostra o cadeado
-// Aula Fechada - Se estou logado, mostra o botão de marcar como concluída | Deslogado, não mostra o botão, mas mostra o cadeado
