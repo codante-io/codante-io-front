@@ -1,14 +1,11 @@
 import TitleIcon from "~/components/title-icon";
-import { LuFileCheck } from "react-icons/lu";
-import { TbSquareRoundedLetterB, TbSquareRoundedLetterF } from "react-icons/tb";
-import TooltipWrapper from "~/components/tooltip";
 import { json } from "@remix-run/node";
-import type { Assessment } from "~/models/assessments.server";
 import { getAssessments } from "~/models/assessments.server";
-import { Link, useLoaderData } from "@remix-run/react";
-import { useColorMode } from "~/contexts/color-mode-context";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import AssessmentCard from "./components/assessment-card";
+import { useState } from "react";
+import { GoSearch } from "react-icons/go";
 
 export function meta() {
   const title = "Testes técnicos | Codante.io";
@@ -41,20 +38,66 @@ export const loader = async ({ request }: { request: Request }) => {
   });
 };
 
-export default function TestesTecnicosPage() {
-  const { assessments } = useLoaderData<typeof loader>();
-  const { colorMode } = useColorMode();
+type CheckboxState = {
+  [key: string]: boolean;
+};
 
-  function borderColor(type: string) {
-    switch (type) {
-      case "frontend":
-        return "rgb(82 130 255)";
-      case "fullstack":
-        return "linear-gradient(to bottom, rgb(82 130 255) 50%, #facc15 50%) bottom, linear-gradient(to bottom, #facc15 50%, rgb(82 130 255) 50%) top";
-      case "backend":
-        return "#facc15";
-      default:
-        return "rgb(82 130 255)";
+export default function TestesTecnicosPage() {
+  const [checkboxes, setCheckboxes] = useState<CheckboxState>({
+    frontend: false,
+    backend: false,
+    fullstack: false,
+  });
+  const { assessments } = useLoaderData<typeof loader>();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  function handleSearchBar(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value) {
+      setSearchParams({
+        stack: searchParams.getAll("stack"),
+        search: e.target.value,
+      });
+    } else {
+      setSearchParams({
+        stack: searchParams.getAll("stack"),
+      });
+    }
+  }
+
+  function handleClickStack(stack: string) {
+    let stackParams = searchParams.getAll("stack");
+    setCheckboxes((prevCheckboxes) => ({
+      ...prevCheckboxes,
+      [stack]: !prevCheckboxes[stack],
+    }));
+
+    if (!stackParams.includes(stack)) {
+      searchParams.append("stack", stack);
+      stackParams = searchParams.getAll("stack");
+
+      if (
+        stackParams.includes("frontend") &&
+        stackParams.includes("backend") &&
+        stackParams.includes("fullstack")
+      ) {
+        searchParams.delete("stack");
+        setSearchParams(searchParams);
+        setCheckboxes({
+          // desmarca todos os checkbox
+          frontend: false,
+          backend: false,
+          fullstack: false,
+        });
+      }
+
+      setSearchParams(searchParams);
+    } else {
+      const updatedStackParams = stackParams.filter((param) => param !== stack);
+      searchParams.delete("stack");
+      updatedStackParams.forEach((param) =>
+        searchParams.append("stack", param)
+      );
+      setSearchParams(searchParams);
     }
   }
 
@@ -86,73 +129,90 @@ export default function TestesTecnicosPage() {
           e os testes abaixo não estão com vagas abertas!
         </p>
       </header>
-      <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {assessments.map((assessment) => (
-          <Link
-            key={assessment.slug}
-            to={`/testes-tecnicos/${assessment.slug}`}
-          >
-            <div
-              className="pl-1.5 rounded-lg h-full"
-              style={{
-                background: borderColor(assessment.type),
-              }}
-            >
-              <article className="h-full flex items-start gap-3 justify-center p-3 bg-white rounded-r-lg shadow border-[1.5px] border-l-0 border-background-200 dark:border-background-700 dark:bg-background-800 ">
-                <div className="flex items-center justify-center w-16 h-16 ">
-                  <img
-                    src={
-                      colorMode === "dark"
-                        ? assessment.image_url_dark ?? assessment.image_url
-                        : assessment.image_url
-                    }
-                    alt="Logo da Empresa"
-                    className="w-full border border-gray-200 rounded-lg dark:border-background-700"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h2 className="mb-2 leading-tight font-lexend">
-                    {assessment.title}
-                  </h2>
-                  <p className="text-xs text-gray-700 dark:text-gray-400">
-                    {assessment.tags?.join(", ")}
-                  </p>
-                </div>
-                <IconsAside assessment={assessment} />
-              </article>
+      {/* Filtro */}
+      <section className="flex flex-col h-full gap-5 my-10 rounded-lg lg:flex-row">
+        <div className="relative w-full">
+          <GoSearch className="absolute -translate-y-1/2 opacity-50 left-3 top-1/2" />
+          <input
+            className="h-full pl-9 w-full rounded-lg py-2 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
+            id="nameSearch"
+            name="nameSearch"
+            onChange={(e) => handleSearchBar(e)}
+            placeholder="Nome da empresa"
+          />
+        </div>
+        <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border rounded-lg sm:flex border-background-200 dark:border-background-700 dark:bg-background-800 dark:text-white">
+          <li className="w-full border-gray-200 sm:border-r dark:border-gray-600">
+            <div className="flex items-center pl-3 text-center">
+              <input
+                id="front-checkbox"
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                onChange={() => handleClickStack("frontend")}
+                checked={checkboxes.frontend}
+              />
+              <label
+                htmlFor="front-checkbox"
+                className="py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Front end
+              </label>
             </div>
-          </Link>
-        ))}
+          </li>
+          <li className="w-full border-gray-200 sm:border-r dark:border-gray-600">
+            <div className="flex items-center pl-3">
+              <input
+                id="back-checkbox"
+                type="checkbox"
+                onChange={() => handleClickStack("backend")}
+                checked={checkboxes.backend}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                htmlFor="back-checkbox"
+                className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Back end
+              </label>
+            </div>
+          </li>
+          <li className="w-full border-gray-200 dark:border-gray-600">
+            <div className="flex items-center pl-3">
+              <input
+                id="fullstack-checkbox"
+                type="checkbox"
+                checked={checkboxes.fullstack}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                onChange={({ target }) => handleClickStack("fullstack")}
+              />
+              <label
+                htmlFor="fullstack-checkbox"
+                className="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Full stack
+              </label>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section className="grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {assessments
+          .filter((assessment) => {
+            const stackParams = searchParams.getAll("stack");
+            if (stackParams.length === 0) return true;
+            return stackParams.includes(assessment.type);
+          })
+          .filter((assessment) => {
+            const search = searchParams.get("search");
+            if (!search) return true;
+            return assessment.title
+              .toLowerCase()
+              .includes(search.toLowerCase());
+          })
+          .map((assessment) => (
+            <AssessmentCard key={assessment.slug} assessment={assessment} />
+          ))}
       </section>
     </main>
-  );
-}
-
-function IconsAside({ assessment }: { assessment: Assessment }) {
-  return (
-    <div className="flex flex-col justify-start w-4 min-h-full gap-2">
-      {(assessment.type === "frontend" || assessment.type === "fullstack") && (
-        <TooltipWrapper text="Frontend">
-          <TbSquareRoundedLetterF className="text-brand-500 dark:text-brand-500 dark:opacity-70 dark:hover:opacity-100 hover:text-brand-500" />
-        </TooltipWrapper>
-      )}
-      {(assessment.type === "backend" || assessment.type === "fullstack") && (
-        <TooltipWrapper text="Backend">
-          <TbSquareRoundedLetterB className="text-yellow-500 dark:opacity-70 dark:text-yellow-500 hover:text-yellow-500 dark:hover:opacity-100" />
-        </TooltipWrapper>
-      )}
-
-      {assessment.has_challenge && (
-        <TooltipWrapper text="Mini Projeto Disponível">
-          <LuFileCheck className="text-gray-300 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-300" />
-        </TooltipWrapper>
-      )}
-
-      {assessment.status === "outdated" && (
-        <TooltipWrapper text="Teste Desatualizado">
-          <ExclamationTriangleIcon className="text-red-400 hover:text-red-500 dark:hover:text-red-300" />
-        </TooltipWrapper>
-      )}
-    </div>
   );
 }
