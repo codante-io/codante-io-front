@@ -62,7 +62,7 @@ export default function VimeoPlayer({
         <div className="vimeo-full-width" ref={playerRef}></div>
       </div>
 
-      <div className="flex items-center justify-center h-full overflow-hidden lg:rounded-xl dark:bg-background-800 ">
+      <div className="flex items-center justify-center h-full overflow-hidden lg:rounded-xl bg-background-200 dark:bg-background-800 ">
         {thumbnailURL && (
           <img
             key={thumbnailURL}
