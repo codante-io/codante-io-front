@@ -1,18 +1,16 @@
 export default function UserAvatar({
   key,
   avatarUrl,
-  size = "small",
+  className = "w-7 h-7 m-[2px]",
 }: {
   key?: number;
   avatarUrl?: string;
-  size?: "small" | "medium" | "large";
+  className?: string;
 }) {
   return (
     <img
       key={key || avatarUrl}
-      className={`${size === "small" && "w-7 h-7 m-[2px]"} ${
-        size === "medium" && "w-16 h-16"
-      } inline-block rounded-full ring-2 ring-white dark:ring-gray-800`}
+      className={`${className} inline-block rounded-full ring-2 ring-white dark:ring-gray-800`}
       src={avatarUrl || "https://source.boringavatars.com/"}
       alt="Avatar do usuário"
     />

@@ -1,6 +1,7 @@
 import { useOutletContext } from "@remix-run/react";
 import { FiExternalLink } from "react-icons/fi";
 import ReactionsButton from "~/components/reactions-button";
+import UserAvatar from "~/components/user-avatar";
 
 import type { ChallengeSubmission } from "~/models/challenge.server";
 
@@ -40,10 +41,9 @@ export default function Submissions() {
 
             <footer className="flex items-center justify-between gap-4 px-4 dark:bg-background-700">
               <div className="flex items-center gap-4 my-4">
-                <img
-                  src={submission.user_avatar_url}
-                  alt="Avatar do usuário"
-                  className="w-10 h-10 border rounded-full border-background-200 dark:border-background-600"
+                <UserAvatar
+                  avatarUrl={submission.user_avatar_url}
+                  className="w-10 h-10 border border-background-200 dark:border-background-600"
                 />
                 <div className="">
                   <h4 className="text-xs dark:text-gray-400 font-regular">

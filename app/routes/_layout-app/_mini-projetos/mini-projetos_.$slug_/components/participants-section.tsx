@@ -51,16 +51,24 @@ export default function ParticipantsSection({
         <section className="p-2">
           <div className="flex flex-wrap justify-center -space-x-3 overflow-hidden">
             {currentUserIsEnrolled && (
-              <UserAvatar avatarUrl={userAvatar} size="medium" />
+              <UserAvatar avatarUrl={userAvatar} className="w-16 h-16" />
             )}
             {currentUserIsEnrolled
               ? participants?.avatars
                   .filter((avatar) => avatar !== userAvatar)
                   .map((avatar, index) => (
-                    <UserAvatar key={index} avatarUrl={avatar} size="medium" />
+                    <UserAvatar
+                      key={index}
+                      avatarUrl={avatar}
+                      className="w-16 h-16"
+                    />
                   ))
               : participants?.avatars.map((avatar, index) => (
-                  <UserAvatar key={index} avatarUrl={avatar} size="medium" />
+                  <UserAvatar
+                    key={index}
+                    avatarUrl={avatar}
+                    className="w-16 h-16"
+                  />
                 ))}
           </div>
         </section>
