@@ -14,10 +14,40 @@ import { abort404 } from "~/utils/responses.server";
 import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
 import styles from "../styles.css";
+import type { MetaFunction } from "@remix-run/node";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  if (!data?.workshop) return {};
+  const title = `${data.lesson?.name} | ${data.workshop?.name} | Codante.io`;
+  const description = data.lesson.description ?? "";
+  const imageUrl = getOgGeneratorUrl(
+    data.lesson?.name ?? "Codante",
+    "Workshop " + data.workshop?.name
+  );
+
+  return {
+    title: title,
+    description: `${description} | Workshop: ${data.workshop?.name}`,
+    "og:title": title,
+    "og:description": `${description} | Workshop: ${data.workshop?.name}`,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/workshops/${params.workshopSlug}/${params.slug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/workshops/${params.workshopSlug}/${params.slug}`,
+    "twitter:title": title,
+    "twitter:description": `${description} | Workshop: ${data.workshop?.name}`,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.lesson?.name,
+  };
+};
 
 export async function loader({
   params,
