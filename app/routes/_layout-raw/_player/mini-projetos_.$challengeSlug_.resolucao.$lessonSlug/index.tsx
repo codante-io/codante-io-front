@@ -14,10 +14,40 @@ import { abort404 } from "~/utils/responses.server";
 import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
 import styles from "../styles.css";
+import { getOgGeneratorUrl } from "~/utils/path-utils";
+import type { MetaFunction } from "@remix-run/node";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
+
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+  if (!data?.challenge) return {};
+  const title = `${data.lesson?.name} | ${data.challenge?.name} | Codante.io`;
+  const description = data.lesson.description ?? "";
+  const imageUrl = getOgGeneratorUrl(
+    data.lesson?.name ?? "Codante",
+    "Mini Projeto " + data.challenge?.name
+  );
+
+  return {
+    title: title,
+    description: `${description} | Mini Projeto: ${data.challenge?.name}`,
+    "og:title": title,
+    "og:description": `${description} | Mini Projeto: ${data.challenge?.name}`,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/mini-projetos/${params.challengeSlug}/${params.lessonSlug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/mini-projetos/${params.challengeSlug}/${params.lessonSlug}`,
+    "twitter:title": title,
+    "twitter:description": `${description} | Workshop: ${data.challenge?.name}`,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.lesson?.name,
+  };
+};
 
 export async function loader({
   params,
