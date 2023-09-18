@@ -44,7 +44,12 @@ export async function register({
     return { errors: error?.response?.data?.message };
   }
 
-  return await login({ request, email, password });
+  return await login({
+    request,
+    email,
+    password,
+    redirectTo: "/?new-signup=true",
+  });
 }
 
 export async function login({
