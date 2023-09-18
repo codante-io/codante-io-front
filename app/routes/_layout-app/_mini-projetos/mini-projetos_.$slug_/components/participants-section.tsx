@@ -1,3 +1,4 @@
+import UserAvatar from "~/components/user-avatar";
 import type { ChallengeParticipants } from "~/models/challenge.server";
 
 export default function ParticipantsSection({
@@ -50,30 +51,16 @@ export default function ParticipantsSection({
         <section className="p-2">
           <div className="flex flex-wrap justify-center -space-x-3 overflow-hidden">
             {currentUserIsEnrolled && (
-              <img
-                className="inline-block w-16 h-16 rounded-full ring-2 ring-white dark:ring-gray-800"
-                src={userAvatar || "https://source.boringavatars.com/"}
-                alt="Avatar do github user"
-              />
+              <UserAvatar avatarUrl={userAvatar} size="medium" />
             )}
             {currentUserIsEnrolled
               ? participants?.avatars
                   .filter((avatar) => avatar !== userAvatar)
                   .map((avatar, index) => (
-                    <img
-                      key={index}
-                      className="inline-block w-16 h-16 rounded-full ring-2 ring-white dark:ring-gray-800"
-                      src={avatar || "https://source.boringavatars.com/"}
-                      alt=""
-                    />
+                    <UserAvatar key={index} avatarUrl={avatar} size="medium" />
                   ))
               : participants?.avatars.map((avatar, index) => (
-                  <img
-                    key={index}
-                    className="inline-block w-16 h-16 rounded-full ring-2 ring-white dark:ring-gray-800"
-                    src={avatar || "https://source.boringavatars.com/"}
-                    alt=""
-                  />
+                  <UserAvatar key={index} avatarUrl={avatar} size="medium" />
                 ))}
           </div>
         </section>
