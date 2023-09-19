@@ -18,7 +18,7 @@ export default function TooltipWrapper({
         <Tooltip.Portal>
           <Tooltip.Content
             side={side}
-            className="px-2 py-3 text-xs bg-gray-200 rounded shadow-lg dark:text-white dark:bg-gray-600 TooltipContent"
+            className="z-10 px-2 py-3 text-xs bg-gray-200 rounded shadow-lg dark:text-white dark:bg-gray-600 TooltipContent"
             sideOffset={5}
           >
             {text}
