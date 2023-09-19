@@ -6,11 +6,13 @@ export default function ParticipantsSection({
   participants,
   userAvatar,
   currentUserIsEnrolled,
+  currentUserIsPro,
 }: {
   className?: string;
   participants: ChallengeParticipants;
   userAvatar?: string;
   currentUserIsEnrolled: boolean;
+  currentUserIsPro: 0 | 1;
 }) {
   return (
     <article className={`${className} relative w-full p-4 pt-3 font-inter`}>
@@ -51,7 +53,11 @@ export default function ParticipantsSection({
         <section className="p-2">
           <div className="flex flex-wrap justify-center -space-x-3 overflow-hidden">
             {currentUserIsEnrolled && (
-              <UserAvatar avatarUrl={userAvatar} className="w-16 h-16" />
+              <UserAvatar
+                avatarUrl={userAvatar}
+                className="w-16 h-16"
+                isPro={currentUserIsPro}
+              />
             )}
             {currentUserIsEnrolled
               ? participants?.avatars
