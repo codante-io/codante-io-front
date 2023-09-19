@@ -13,7 +13,11 @@ export default function ProfileMenu({ user }: { user: User }) {
         <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
           <span className="sr-only">Open user menu</span>
           {user?.avatar_url ? (
-            <UserAvatar avatarUrl={user?.avatar_url} className="w-8 h-8" />
+            <UserAvatar
+              avatarUrl={user?.avatar_url}
+              isPro={user?.is_pro}
+              className="w-8 h-8"
+            />
           ) : (
             <UserCircleIcon className="w-6 h-6" />
           )}

@@ -83,11 +83,11 @@ export default function ChallengeCard({
               )}
             </section>
             <section className="">
-              <div className="flex -space-x-2 overflow-hidden">
+              <div className="flex -space-x-3 overflow-hidden">
                 {challenge.current_user_is_enrolled && loggedUser && (
                   <UserAvatar
-                    key={loggedUser.id}
                     avatarUrl={loggedUser.avatar_url}
+                    isPro={loggedUser.is_pro}
                   />
                 )}
                 {challenge.current_user_is_enrolled
@@ -97,13 +97,21 @@ export default function ChallengeCard({
                       )
                       .slice(0, 4)
                       .map((user, index) => (
-                        <UserAvatar key={index} avatarUrl={user.avatar_url} />
+                        <UserAvatar
+                          isPro={user.is_pro}
+                          key={index}
+                          avatarUrl={user.avatar_url}
+                        />
                       ))
                   : challenge?.users?.map((user, index) => (
-                      <UserAvatar key={index} avatarUrl={user.avatar_url} />
+                      <UserAvatar
+                        isPro={user.is_pro}
+                        key={index}
+                        avatarUrl={user.avatar_url}
+                      />
                     ))}
                 {challenge.enrolled_users_count > 5 && (
-                  <div className="w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
+                  <div className="relative w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
                     +{challenge.enrolled_users_count - 5}
                   </div>
                 )}
