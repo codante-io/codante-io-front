@@ -3,17 +3,21 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 export default function TooltipWrapper({
   children,
   text,
+  side = "right",
+  cursor = "cursor-pointer",
 }: {
   children: React.ReactNode;
   text: string;
+  side?: "left" | "right" | "top" | "bottom";
+  cursor?: string;
 }) {
   return (
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={0}>
-        <Tooltip.Trigger>{children}</Tooltip.Trigger>
+        <Tooltip.Trigger className={cursor}>{children}</Tooltip.Trigger>
         <Tooltip.Portal>
           <Tooltip.Content
-            side="right"
+            side={side}
             className="px-2 py-3 text-xs bg-gray-200 rounded shadow-lg dark:text-white dark:bg-gray-600 TooltipContent"
             sideOffset={5}
           >

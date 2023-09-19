@@ -17,6 +17,7 @@ export default function ProfileMenu({ user }: { user: User }) {
               avatarUrl={user?.avatar_url}
               isPro={user?.is_pro}
               className="w-8 h-8"
+              showTooltip={false}
             />
           ) : (
             <UserCircleIcon className="w-6 h-6" />
