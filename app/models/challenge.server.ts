@@ -52,7 +52,7 @@ export type ChallengeCard = {
 
 export type ChallengeParticipants = {
   count: number;
-  avatar_and_subscription: { avatar_url: string; is_pro: number }[];
+  avatars: { avatar_url: string; is_pro: number }[];
 };
 
 export type ChallengeSubmission = {

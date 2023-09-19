@@ -102,6 +102,7 @@ export default function RankingList() {
                   <UserAvatar
                     avatarUrl={user.avatar_url}
                     className="w-10 h-10"
+                    isPro={user.is_pro}
                   />
                   <span className="text-xl font-semibold text-gray-800 dark:text-white">
                     {user.name}

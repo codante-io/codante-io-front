@@ -54,7 +54,7 @@ export default function ParticipantsSection({
               <UserAvatar avatarUrl={userAvatar} className="w-16 h-16" />
             )}
             {currentUserIsEnrolled
-              ? participants?.avatar_and_subscription
+              ? participants?.avatars
                   .filter((info) => info.avatar_url !== userAvatar)
                   .map((info, index) => (
                     <UserAvatar
@@ -64,7 +64,7 @@ export default function ParticipantsSection({
                       isPro={info.is_pro}
                     />
                   ))
-              : participants?.avatar_and_subscription.map((info, index) => (
+              : participants?.avatars.map((info, index) => (
                   <UserAvatar
                     key={index}
                     avatarUrl={info.avatar_url}
