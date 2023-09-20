@@ -1,10 +1,10 @@
 import axios from "axios";
 import type { Workshop } from "./workshop.server";
-import type { ChallengeCardInfo } from "./challenge.server";
+import type { ChallengeCard } from "./challenge.server";
 
 export type HomeInfo = {
   featured_workshops: Workshop[];
-  featured_challenges: ChallengeCardInfo[];
+  featured_challenges: ChallengeCard[];
 
   // @TODO: remove this when we have a proper type for featured tracks
   featured_tracks: any[];

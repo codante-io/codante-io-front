@@ -1,9 +1,9 @@
 import { useOutletContext } from "@remix-run/react";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 import { getPublishedDateAndTime } from "~/utils/interval";
 
 export default function Soon() {
-  const { challenge } = useOutletContext<{ challenge: ChallengeCardInfo }>();
+  const { challenge } = useOutletContext<{ challenge: Challenge }>();
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     challenge.published_at
   );

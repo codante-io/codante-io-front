@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 import type { Workshop } from "~/models/workshop.server";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
@@ -17,7 +17,7 @@ export type Track = {
   instructor: Instructor;
   lessons: Lesson[];
   tags: any[];
-  trackables?: (ChallengeCardInfo | Workshop)[];
+  trackables?: (Challenge | Workshop)[];
 };
 
 export async function getTracks(): Promise<Array<Track>> {

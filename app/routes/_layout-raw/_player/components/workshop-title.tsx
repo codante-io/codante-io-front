@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import type { Workshop } from "~/models/workshop.server";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import ProgressBar from "./progress-bar";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 
 export default function WorkshopTitle({
   workshop,
@@ -12,7 +12,7 @@ export default function WorkshopTitle({
 }: {
   workshop: Workshop;
   isLoggedIn?: boolean;
-  challenge?: ChallengeCardInfo | null;
+  challenge?: Challenge | null;
   isChallenge?: boolean;
 }) {
   return (

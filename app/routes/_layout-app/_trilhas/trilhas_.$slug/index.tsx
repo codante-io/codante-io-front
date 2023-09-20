@@ -6,7 +6,7 @@ import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import { getTrack } from "~/models/track.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
-import type { ChallengeCardInfo } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 import type { Workshop } from "~/models/workshop.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
@@ -66,19 +66,14 @@ export default function TrackSlug() {
       <div className="flex flex-col items-center ">
         {track.trackables &&
           track?.trackables.map(
-            (
-              workshopOrChallenge: ChallengeCardInfo | Workshop,
-              index: number
-            ) => (
+            (workshopOrChallenge: Challenge | Workshop, index: number) => (
               <div className="flex flex-col items-center" key={index}>
                 {workshopOrChallenge?.pivot?.trackable_type.includes(
                   "Workshop"
                 ) ? (
                   <WorkshopCard workshop={workshopOrChallenge as Workshop} />
                 ) : (
-                  <ChallengeCard
-                    challenge={workshopOrChallenge as ChallengeCardInfo}
-                  />
+                  <ChallengeCard challenge={workshopOrChallenge as Challenge} />
                 )}
                 {track.trackables &&
                   index !== track?.trackables?.length - 1 && (

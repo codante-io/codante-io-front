@@ -1,19 +1,22 @@
 import type { RouteMatch } from "@remix-run/react";
+import slugify from "slugify";
 
-export function slugify(str: string) {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+// export function slugify(str: string) {
+//   return str
+//     .toLowerCase()
+//     .trim()
+//     .replace(/[^\w\s-]/g, "")
+//     .replace(/[\s_-]+/g, "-")
+//     .replace(/^-+|-+$/g, "");
+// }
 
 export function getOgGeneratorUrl(title: string, subtitle = "") {
   if (subtitle) {
-    return `https://og.codante.io/api/${slugify(subtitle)}/${slugify(title)}`;
+    return `https://og.codante.io/api/${slugify(subtitle, {
+      lower: true,
+    })}/${slugify(title, { lower: true })}`;
   }
-  return `https://og.codante.io/api/${slugify(title)}`;
+  return `https://og.codante.io/api/${slugify(title, { lower: true })}`;
 }
 
 /**
