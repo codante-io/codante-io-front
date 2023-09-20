@@ -20,14 +20,14 @@ export default function UserAvatar({
         {showTooltip ? (
           <TooltipWrapper text="PRO" side="bottom" cursor={cursor}>
             <img
-              className={`${className} border-2 border-amber-400 rounded-full ring-2 ring-white dark:ring-gray-800`}
+              className={`${className} border-2 border-amber-400 rounded-full`}
               src={avatarUrl || "https://source.boringavatars.com/"}
               alt="Avatar do usuário"
             />
           </TooltipWrapper>
         ) : (
           <img
-            className={`${className} border-2 border-amber-400 rounded-full ring-2 ring-white dark:ring-gray-800`}
+            className={`${className} border-2 border-amber-400 rounded-full`}
             src={avatarUrl || "https://source.boringavatars.com/"}
             alt="Avatar do usuário"
           />
