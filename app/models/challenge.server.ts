@@ -47,6 +47,9 @@ export type ChallengeCard = {
   users?: { avatar_url: string }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
+  weekly_featured_start_date: string | null;
+  solution_publish_date: string | null;
+  is_weekly_featured: boolean;
 };
 
 export type ChallengeParticipants = {

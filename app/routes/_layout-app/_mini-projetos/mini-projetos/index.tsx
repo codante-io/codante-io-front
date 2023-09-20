@@ -5,6 +5,9 @@ import { getChallenges } from "~/models/challenge.server";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+import Button from "~/components/form/button";
+import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
+import { useEffect, useState } from "react";
 
 export function meta() {
   const title = "Mini Projetos | Codante.io";
@@ -47,12 +50,122 @@ export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
   const user = useUserFromOutletContext();
 
+  const featuredChallenge = challenges.find(
+    (challenge) => challenge.is_weekly_featured === true
+  );
+
+  const challengesWithoutFeatured = challenges.filter(
+    (challenge) => challenge.is_weekly_featured !== true
+  );
+
+  const [remainingTime, setRemainingTime] = useState<null | number>(null);
+
+  useEffect(() => {
+    if (featuredChallenge && featuredChallenge.solution_publish_date) {
+      const intervalId = setInterval(() => {
+        const now = new Date().getTime();
+        const distance =
+          new Date(
+            featuredChallenge?.solution_publish_date as string
+          ).getTime() - now;
+        setRemainingTime(distance);
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [featuredChallenge]);
+
+  let days, hours, minutes, seconds;
+
+  if (remainingTime) {
+    days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+    hours = Math.floor(
+      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    )
+      .toString()
+      .padStart(2, "0");
+    minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60))
+      .toString()
+      .padStart(2, "0");
+    seconds = Math.floor((remainingTime % (1000 * 60)) / 1000)
+      .toString()
+      .padStart(2, "0");
+  }
   return (
     <main className="container mx-auto">
       <h1 className="mb-10 text-4xl text-center font-lexend">Mini Projetos</h1>
 
+      {featuredChallenge && (
+        <section
+          className="relative h-[350px] mb-32 mt-[80px] rounded-lg  p-10 pl-[380px] bosrder-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 flex items-center
+        "
+        >
+          {/* <div className="absolute top-0 w-full h-32 bg-green-500">
+            
+          </div> */}
+
+          <div>
+            <h3 className="font-light text-yellow-400 ">
+              Mini Projeto da Semana
+            </h3>
+            <h1 className="text-2xl font-bold text-white">
+              {featuredChallenge.name}
+            </h1>
+            <p className="mt-3 font-extralight">
+              Participe do Mini Projeto da semana com a gente. Toda semana um
+              novo Mini Projeto que será resolvido oficialmente pela equipe do
+              Codante
+            </p>
+            <p className="mt-4 text-sm ">
+              <span className="inline-flex items-center gap-1 text-brand-200">
+                <CalendarDaysIcon className="inline w-4 h-4 text-blue-200" />
+                Resolução:
+                <strong className="text-white">
+                  {new Intl.DateTimeFormat("pt-BR", {
+                    dateStyle: "short",
+                    timeStyle: "short",
+                  }).format(
+                    new Date(
+                      Date.parse(featuredChallenge.solution_publish_date)
+                    )
+                  )}
+                </strong>
+              </span>{" "}
+            </p>
+
+            <p className="mt-2 mb-8 text-sm ">
+              <span className="inline-flex items-center gap-1 text-brand-200">
+                <ClockIcon className="inline w-4 h-4 text-blue-200" />
+                Faltam:
+                {remainingTime && (
+                  <strong className="text-white">
+                    {days === 0
+                      ? ""
+                      : `${days} ${days === 1 ? "dia" : "dias"}, `}
+                    {hours}:{minutes}:{seconds}
+                  </strong>
+                )}
+              </span>
+            </p>
+
+            <Button
+              type="button"
+              className="text-white bg-transparent border-2 border-yellow-400 hover:bg-brand-500"
+            >
+              Participe do Mini Projeto
+            </Button>
+          </div>
+
+          <div className="absolute -top-[50px] left-10 shadow-xl ">
+            <ChallengeCard
+              className="shadow-[10px_10px_10px_0px_rgba(255,255,255,0.1)]"
+              challenge={featuredChallenge}
+            />
+          </div>
+        </section>
+      )}
+
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 ">
-        {challenges.map((challenge: ChallengeCardType) => (
+        {challengesWithoutFeatured.map((challenge: ChallengeCardType) => (
           <div key={challenge.slug} className="mx-auto">
             <ChallengeCard
               loggedUser={user ?? undefined}
