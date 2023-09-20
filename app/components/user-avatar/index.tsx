@@ -18,7 +18,14 @@ export default function UserAvatar({
     return (
       <>
         {showTooltip ? (
-          <TooltipWrapper text="PRO" side="bottom" cursor={cursor}>
+          <TooltipWrapper
+            text="PRO"
+            side="bottom"
+            cursor={cursor}
+            padding="px-2 py-1"
+            bgColor="bg-gray-50 dark:bg-background-800 border border-amber-400"
+            arrowColor="fill-amber-400"
+          >
             <img
               className={`${className} border-2 border-amber-400 rounded-full`}
               src={avatarUrl || "https://source.boringavatars.com/"}
