@@ -75,7 +75,7 @@ export default function ChallengeCard({
           </div>
           <div className="absolute bottom-0 right-0 flex items-center justify-between w-full p-6 mt-4 card-footer">
             <section>
-              {challenge?.has_workshop && (
+              {challenge?.has_solution && (
                 <TooltipWrapper text="Resolução disponível">
                   <img src={PlayIcon} alt="Ícone de vídeo" />
                 </TooltipWrapper>

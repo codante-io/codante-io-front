@@ -1,4 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
@@ -7,10 +8,15 @@ import { type Challenge } from "~/models/challenge.server";
 
 export default function Resolution() {
   const context = useOutletContext<{ challenge: Challenge }>();
+  const navigate = useNavigate();
   const challenge = context?.challenge;
   const workshop = challenge?.workshop;
   const lesson = workshop?.lessons[0];
   const slug = lesson?.slug;
+
+  if (!challenge?.has_solution) {
+    return navigate(`/mini-projetos/${challenge?.slug}`);
+  }
 
   return (
     <>

@@ -19,8 +19,7 @@ export type Challenge = {
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
   enrolled_users_count: number;
-  base_color?: string;
-  published_at?: string;
+  has_solution: boolean;
   tags: Tag[];
   workshop?: Workshop;
   users?: { avatar_url: string }[];
@@ -44,7 +43,7 @@ export type ChallengeCard = {
   image_url: string;
   difficulty: 1 | 2 | 3;
   tags: Tag[];
-  has_workshop: boolean;
+  has_solution: boolean;
   users?: { avatar_url: string }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
