@@ -31,10 +31,10 @@ export default function Navbar({ user }: { user: any }) {
       name: "Mini Projetos",
       href: "/mini-projetos",
     },
-    {
-      name: "Agenda",
-      href: "/agenda",
-    },
+    // {
+    //   name: "Agenda",
+    //   href: "/agenda",
+    // },
   ];
 
   const moreMenuNavigation = [
