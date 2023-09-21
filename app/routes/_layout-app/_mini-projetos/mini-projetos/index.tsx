@@ -79,9 +79,9 @@ export default function Projects() {
               {featuredChallenge.name}
             </h1>
             <p className="mt-3 font-extralight">
-              Participe do Mini Projeto da semana com a gente. Toda semana um
-              novo Mini Projeto que será resolvido oficialmente pela equipe do
-              Codante
+              Está em dúvidas sobre qual Mini Projeto fazer? Participe do Mini
+              Projeto da semana com a gente! Toda semana um novo Mini Projeto
+              que será resolvido oficialmente pela equipe do Codante.
             </p>
             <p className="mt-4 text-sm ">
               <span className="inline-flex items-center gap-1 text-brand-200">
