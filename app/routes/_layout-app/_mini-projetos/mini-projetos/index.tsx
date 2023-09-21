@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import ChallengeCard from "~/components/cards/challenge-card";
 import { getChallenges } from "~/models/challenge.server";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
@@ -58,38 +58,6 @@ export default function Projects() {
     (challenge) => challenge.is_weekly_featured !== true
   );
 
-  const [remainingTime, setRemainingTime] = useState<null | number>(null);
-
-  useEffect(() => {
-    if (featuredChallenge && featuredChallenge.solution_publish_date) {
-      const intervalId = setInterval(() => {
-        const now = new Date().getTime();
-        const distance =
-          new Date(
-            featuredChallenge?.solution_publish_date as string
-          ).getTime() - now;
-        setRemainingTime(distance);
-      }, 1000);
-      return () => clearInterval(intervalId);
-    }
-  }, [featuredChallenge]);
-
-  let days, hours, minutes, seconds;
-
-  if (remainingTime) {
-    days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-    hours = Math.floor(
-      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    )
-      .toString()
-      .padStart(2, "0");
-    minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60))
-      .toString()
-      .padStart(2, "0");
-    seconds = Math.floor((remainingTime % (1000 * 60)) / 1000)
-      .toString()
-      .padStart(2, "0");
-  }
   return (
     <main className="container mx-auto">
       <h1 className="mb-10 text-4xl text-center font-lexend">Mini Projetos</h1>
@@ -136,23 +104,18 @@ export default function Projects() {
               <span className="inline-flex items-center gap-1 text-brand-200">
                 <ClockIcon className="inline w-4 h-4 text-blue-200" />
                 Faltam:
-                {remainingTime && (
-                  <strong className="text-white">
-                    {days === 0
-                      ? ""
-                      : `${days} ${days === 1 ? "dia" : "dias"}, `}
-                    {hours}:{minutes}:{seconds}
-                  </strong>
-                )}
+                <Countdown featuredChallenge={featuredChallenge} />
               </span>
             </p>
 
-            <Button
-              type="button"
-              className="text-white bg-transparent border-2 border-yellow-400 hover:bg-brand-500"
-            >
-              Participe do Mini Projeto
-            </Button>
+            <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
+              <Button
+                type="button"
+                className="text-white bg-transparent border-2 border-yellow-400 hover:bg-brand-500"
+              >
+                Participe do Mini Projeto
+              </Button>
+            </Link>
           </div>
 
           <div className="absolute -top-[50px] left-10 shadow-xl ">
@@ -175,5 +138,54 @@ export default function Projects() {
         ))}
       </div>
     </main>
+  );
+}
+
+function Countdown({
+  featuredChallenge,
+}: {
+  featuredChallenge: ChallengeCardType;
+}) {
+  const [remainingTime, setRemainingTime] = useState<null | number>(null);
+
+  let days, hours, minutes, seconds;
+
+  if (remainingTime) {
+    days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+    hours = Math.floor(
+      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    )
+      .toString()
+      .padStart(2, "0");
+    minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60))
+      .toString()
+      .padStart(2, "0");
+    seconds = Math.floor((remainingTime % (1000 * 60)) / 1000)
+      .toString()
+      .padStart(2, "0");
+  }
+
+  useEffect(() => {
+    if (featuredChallenge && featuredChallenge.solution_publish_date) {
+      const intervalId = setInterval(() => {
+        const now = new Date().getTime();
+        const distance =
+          new Date(
+            featuredChallenge?.solution_publish_date as string
+          ).getTime() - now;
+        setRemainingTime(distance);
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [featuredChallenge]);
+
+  if (!remainingTime) return null;
+  return (
+    // {remainingTime && (
+    <strong className="text-white">
+      {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
+      {hours}:{minutes}:{seconds}
+    </strong>
+    // )}
   );
 }
