@@ -13,7 +13,7 @@ import { currentToken, getSession, user } from "~/services/auth.server";
 import { authenticator } from "~/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
 import { changeName, changePassword } from "./services.server";
-import proBadge from "./PRO-badge.svg";
+import ProBadge from "~/components/pro-badge";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -110,9 +110,7 @@ export default function Account() {
         <span className="hidden ml-3 text-base font-light md:inline dark:text-gray-300">
           {user.name}
         </span>
-        {user.is_pro === 1 && (
-          <img src={proBadge} alt="PRO" className="w-6 mx-2" />
-        )}
+        {user.is_pro === 1 && <ProBadge />}
       </h2>
 
       <AuthCard className="max-w-xl mt-6">
