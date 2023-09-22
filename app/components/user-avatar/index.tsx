@@ -44,7 +44,7 @@ export default function UserAvatar({
   }
   return (
     <img
-      className={`${className} rounded-full ring-2 ring-white dark:ring-gray-800`}
+      className={`${className} rounded-full border-2 border-white dark:border-gray-800`}
       src={avatarUrl || "https://source.boringavatars.com/"}
       alt="Avatar do usuário"
     />
