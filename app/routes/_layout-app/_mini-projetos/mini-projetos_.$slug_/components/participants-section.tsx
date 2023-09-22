@@ -1,3 +1,4 @@
+import UserAvatar from "~/components/user-avatar";
 import type { ChallengeParticipants } from "~/models/challenge.server";
 
 export default function ParticipantsSection({
@@ -5,11 +6,13 @@ export default function ParticipantsSection({
   participants,
   userAvatar,
   currentUserIsEnrolled,
+  currentUserIsPro,
 }: {
   className?: string;
   participants: ChallengeParticipants;
   userAvatar?: string;
   currentUserIsEnrolled: boolean;
+  currentUserIsPro: 0 | 1;
 }) {
   return (
     <article className={`${className} relative w-full p-4 pt-3 font-inter`}>
@@ -50,29 +53,29 @@ export default function ParticipantsSection({
         <section className="p-2">
           <div className="flex flex-wrap justify-center -space-x-3 overflow-hidden">
             {currentUserIsEnrolled && (
-              <img
-                className="inline-block w-16 h-16 rounded-full ring-2 ring-white dark:ring-gray-800"
-                src={userAvatar || "https://source.boringavatars.com/"}
-                alt="Avatar do github user"
+              <UserAvatar
+                avatarUrl={userAvatar}
+                className="w-16 h-16"
+                isPro={currentUserIsPro}
               />
             )}
             {currentUserIsEnrolled
               ? participants?.avatars
-                  .filter((avatar) => avatar !== userAvatar)
-                  .map((avatar, index) => (
-                    <img
+                  .filter((info) => info.avatar_url !== userAvatar)
+                  .map((info, index) => (
+                    <UserAvatar
                       key={index}
-                      className="inline-block w-16 h-16 rounded-full ring-2 ring-white dark:ring-gray-800"
-                      src={avatar || "https://source.boringavatars.com/"}
-                      alt=""
+                      avatarUrl={info.avatar_url}
+                      className="w-16 h-16"
+                      isPro={info.is_pro}
                     />
                   ))
-              : participants?.avatars.map((avatar, index) => (
-                  <img
+              : participants?.avatars.map((info, index) => (
+                  <UserAvatar
                     key={index}
-                    className="inline-block w-16 h-16 rounded-full ring-2 ring-white dark:ring-gray-800"
-                    src={avatar || "https://source.boringavatars.com/"}
-                    alt=""
+                    avatarUrl={info.avatar_url}
+                    className="w-16 h-16"
+                    isPro={info.is_pro}
                   />
                 ))}
           </div>
