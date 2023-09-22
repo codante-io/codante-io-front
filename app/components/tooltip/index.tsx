@@ -1,4 +1,5 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
+import classNames from "~/utils/class-names";
 
 export default function TooltipWrapper({
   children,
