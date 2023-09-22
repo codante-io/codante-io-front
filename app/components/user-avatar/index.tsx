@@ -14,7 +14,7 @@ export default function UserAvatar({
   showTooltip?: boolean;
   cursor?: string;
 }) {
-  if (isPro) {
+  if (isPro === 1) {
     return (
       <>
         {showTooltip ? (

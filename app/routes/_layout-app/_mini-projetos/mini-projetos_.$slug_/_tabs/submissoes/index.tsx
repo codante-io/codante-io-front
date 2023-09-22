@@ -9,6 +9,7 @@ export default function Submissions() {
   const { challengeSubmissions } = useOutletContext<{
     challengeSubmissions: ChallengeSubmission[];
   }>();
+
   return (
     <>
       <div className="container">
@@ -42,8 +43,9 @@ export default function Submissions() {
             <footer className="flex items-center justify-between gap-4 px-4 dark:bg-background-700">
               <div className="flex items-center gap-4 my-4">
                 <UserAvatar
+                  isPro={submission.is_pro}
                   avatarUrl={submission.user_avatar_url}
-                  className="w-10 h-10 border border-background-200 dark:border-background-600"
+                  className="w-10 h-10"
                 />
                 <div className="">
                   <h4 className="text-xs dark:text-gray-400 font-regular">
