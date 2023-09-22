@@ -83,7 +83,7 @@ export default function ChallengeCard({
               )}
             </section>
             <section className="">
-              <div className="flex -space-x-2 overflow-hidden">
+              <div className="flex -space-x-3 overflow-hidden">
                 {challenge.current_user_is_enrolled && loggedUser && (
                   <UserAvatar
                     avatarUrl={loggedUser.avatar_url}
