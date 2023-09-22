@@ -26,11 +26,12 @@ export default function TooltipWrapper({
         <Tooltip.Portal>
           <Tooltip.Content
             side={side}
-            className={`${padding || "px-2 py-3"} ${
-              bgColor || "bg-gray-200 dark:bg-gray-600"
-            } ${
-              textColor || "dark:text-white "
-            } z-10 text-xs rounded shadow-lg TooltipContent`}
+            className={classNames(
+              padding || "px-2 py-3",
+              bgColor || "bg-gray-200 dark:bg-gray-600",
+              textColor || "dark:text-white",
+              "z-10 text-xs rounded shadow-lg TooltipContent"
+            )}
             sideOffset={5}
           >
             {text}
