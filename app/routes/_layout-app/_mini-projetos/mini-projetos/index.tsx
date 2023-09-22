@@ -57,6 +57,7 @@ export default function Projects() {
   const challengesWithoutFeatured = challenges.filter(
     (challenge) => challenge.is_weekly_featured !== true
   );
+  //    bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-400 to-blue-500
 
   return (
     <main className="container mx-auto">
@@ -64,8 +65,14 @@ export default function Projects() {
 
       {featuredChallenge && (
         <section
-          className="relative h-[350px] mb-32 mt-[80px] rounded-lg  p-10 pl-[380px] bosrder-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 flex items-center
-        "
+          className="relative h-[350px] mb-32 mt-[80px] rounded-lg  p-10 pl-[380px] dark:bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] dark:from-sky-700 dark:to-indigo-900 flex items-center
+
+      
+
+          
+          //    bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-400 to-blue-600
+
+          "
         >
           {/* <div className="absolute top-0 w-full h-32 bg-green-500">
             
@@ -75,25 +82,27 @@ export default function Projects() {
             <h3 className="font-light text-yellow-400 ">
               Mini Projeto da Semana
             </h3>
-            <h1 className="text-2xl font-bold text-white">
+            <h1 className="text-2xl font-bold text-white ">
               {featuredChallenge.name}
             </h1>
-            <p className="mt-3 font-extralight">
+            <p className="mt-3 text-white font-extralight">
               Está em dúvidas sobre qual Mini Projeto fazer? Participe do Mini
               Projeto da semana com a gente! Toda semana um novo Mini Projeto
               que será resolvido oficialmente pela equipe do Codante.
             </p>
             <p className="mt-4 text-sm ">
-              <span className="inline-flex items-center gap-1 text-brand-200">
-                <CalendarDaysIcon className="inline w-4 h-4 text-blue-200" />
+              <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200">
+                <CalendarDaysIcon className="inline w-4 h-4 " />
                 Resolução:
-                <strong className="text-white">
+                <strong className="text-white dark:text-white ">
                   {new Intl.DateTimeFormat("pt-BR", {
                     dateStyle: "short",
                     timeStyle: "short",
                   }).format(
                     new Date(
-                      Date.parse(featuredChallenge.solution_publish_date)
+                      Date.parse(
+                        featuredChallenge.solution_publish_date as string
+                      )
                     )
                   )}
                 </strong>
@@ -101,8 +110,8 @@ export default function Projects() {
             </p>
 
             <p className="mt-2 mb-8 text-sm ">
-              <span className="inline-flex items-center gap-1 text-brand-200">
-                <ClockIcon className="inline w-4 h-4 text-blue-200" />
+              <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+                <ClockIcon className="inline w-4 h-4 " />
                 Faltam:
                 <Countdown featuredChallenge={featuredChallenge} />
               </span>
@@ -111,7 +120,7 @@ export default function Projects() {
             <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
               <Button
                 type="button"
-                className="text-white bg-transparent border-2 border-yellow-400 hover:bg-brand-500"
+                className="text-white bg-transparent border-2 border-yellow-400 hover:bg-blue-600 "
               >
                 Participe do Mini Projeto
               </Button>
@@ -120,7 +129,7 @@ export default function Projects() {
 
           <div className="absolute -top-[50px] left-10 shadow-xl ">
             <ChallengeCard
-              className="shadow-[10px_10px_10px_0px_rgba(255,255,255,0.1)]"
+              className="shadow-[7px_7px_20px_0px_rgba(255,255,255,0.10)] dark:hover:shadow-[7px_7px_20px_0px_rgba(255,255,255,0.20)]"
               challenge={featuredChallenge}
             />
           </div>
@@ -133,6 +142,7 @@ export default function Projects() {
             <ChallengeCard
               loggedUser={user ?? undefined}
               challenge={challenge}
+              className=""
             />
           </div>
         ))}
@@ -182,7 +192,7 @@ function Countdown({
   if (!remainingTime) return null;
   return (
     // {remainingTime && (
-    <strong className="text-white">
+    <strong className="text-white dark:text-white">
       {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
       {hours}:{minutes}:{seconds}
     </strong>
