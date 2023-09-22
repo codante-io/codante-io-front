@@ -27,7 +27,7 @@ export default function UserAvatar({
             arrowColor="fill-amber-400"
           >
             <img
-              className={`${className} border-2 border-amber-400 rounded-full`}
+              className={`${className} border-amber-400 border-2 rounded-full`}
               src={avatarUrl || "https://source.boringavatars.com/"}
               alt="Avatar do usuário"
             />
