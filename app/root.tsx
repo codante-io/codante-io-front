@@ -66,6 +66,7 @@ export default function App() {
         <GoogleTagManager
           environment={process.env.NODE_ENV}
           gtmTrackingId="GTM-NXHM2J7"
+          user={user}
         />
         <ColorModeProvider>
           <LoadingBar />

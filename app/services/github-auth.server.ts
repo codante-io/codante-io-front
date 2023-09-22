@@ -12,13 +12,13 @@ let gitHubStrategy = new GitHubStrategy(
     callbackURL: process.env.GITHUB_CALLBACK_URL as string,
   },
   async (params) => {
-    // get access token from github
     const res = await axios.post("/github-login", {
       github_token: params.accessToken,
     });
     const token = res.data.token;
 
-    return { token: token };
+    // Vamos enviar o token e o is_new_signup value para o cliente
+    return { token: token, is_new_signup: res.data.is_new_signup };
   }
 );
 
