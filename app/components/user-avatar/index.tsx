@@ -10,7 +10,7 @@ export default function UserAvatar({
   key?: number;
   avatarUrl?: string;
   className?: string;
-  isPro?: number;
+  isPro?: 0 | 1;
   showTooltip?: boolean;
   cursor?: string;
 }) {

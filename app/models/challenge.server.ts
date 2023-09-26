@@ -45,14 +45,14 @@ export type ChallengeCard = {
   difficulty: 1 | 2 | 3;
   tags: Tag[];
   has_workshop: boolean;
-  users?: { avatar_url: string; is_pro: number }[];
+  users?: { avatar_url: string; is_pro: 0 | 1 }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
 };
 
 export type ChallengeParticipants = {
   count: number;
-  avatars: { avatar_url: string; is_pro: number }[];
+  avatars: { avatar_url: string; is_pro: 0 | 1 }[];
 };
 
 export type ChallengeSubmission = {
