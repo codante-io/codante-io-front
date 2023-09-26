@@ -10,11 +10,11 @@ export default function UserAvatar({
   key?: number;
   avatarUrl?: string;
   className?: string;
-  isPro?: number;
+  isPro?: 0 | 1;
   showTooltip?: boolean;
   cursor?: string;
 }) {
-  if (isPro) {
+  if (isPro === 1) {
     return (
       <>
         {showTooltip ? (
@@ -27,14 +27,14 @@ export default function UserAvatar({
             arrowColor="fill-amber-400"
           >
             <img
-              className={`${className} border-2 border-amber-400 rounded-full`}
+              className={`${className} ring-amber-400 ring-2 rounded-full`}
               src={avatarUrl || "https://source.boringavatars.com/"}
               alt="Avatar do usuário"
             />
           </TooltipWrapper>
         ) : (
           <img
-            className={`${className} border-2 border-amber-400 rounded-full`}
+            className={`${className} ring-2 ring-amber-400 rounded-full`}
             src={avatarUrl || "https://source.boringavatars.com/"}
             alt="Avatar do usuário"
           />
