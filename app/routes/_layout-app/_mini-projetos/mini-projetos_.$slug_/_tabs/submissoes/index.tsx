@@ -1,5 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
-import { BiWorld } from "react-icons/bi";
+import { BsGlobe } from "react-icons/bs";
 import { BsGithub } from "react-icons/bs";
 import ReactionsButton from "~/components/reactions-button";
 import UserAvatar from "~/components/user-avatar";
@@ -29,7 +29,7 @@ export default function Submissions() {
                 className="absolute inset-0 z-10 flex items-center justify-center p-4 m-auto transition-all opacity-100 w-14 h-14 right-28 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
                 onClick={() => window.open(submission.submission_url, "_blank")}
               >
-                <BiWorld className="text-4xl text-gray-800 dark:text-white" />{" "}
+                <BsGlobe className="text-4xl text-gray-800 dark:text-white" />{" "}
               </button>
               <button
                 className="absolute inset-0 z-10 flex items-center justify-center p-4 m-auto transition-all opacity-100 w-14 h-14 left-28 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
