@@ -59,6 +59,7 @@ export type ChallengeSubmission = {
   id: string;
   user_name: string;
   user_avatar_url: string;
+  fork_url: string;
   user_github_user: string;
   submission_url: string;
   submission_image_url: string;
