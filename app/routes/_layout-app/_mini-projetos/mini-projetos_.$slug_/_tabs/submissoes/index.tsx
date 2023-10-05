@@ -26,13 +26,13 @@ export default function Submissions() {
           >
             <div className="relative overflow-hidden group">
               <button
-                className="absolute inset-0 z-10 flex items-center justify-center p-4 m-auto transition-all opacity-100 w-14 h-14 right-28 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
+                className="absolute inset-0 z-10 flex items-center justify-center w-20 h-16 p-6 m-auto transition-all shadow-lg opacity-100 md:w-14 md:h-14 md:p-4 right-32 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
                 onClick={() => window.open(submission.submission_url, "_blank")}
               >
                 <BsGlobe className="text-4xl text-gray-800 dark:text-white" />{" "}
               </button>
               <button
-                className="absolute inset-0 z-10 flex items-center justify-center p-4 m-auto transition-all opacity-100 w-14 h-14 left-28 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
+                className="absolute inset-0 z-10 flex items-center justify-center w-20 h-16 p-6 m-auto transition-all shadow-lg opacity-100 md:w-14 md:h-14 md:p-4 left-32 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
                 onClick={() => window.open(submission.fork_url, "_blank")}
               >
                 <BsGithub className="text-4xl text-gray-800 dark:text-white" />{" "}
@@ -40,7 +40,7 @@ export default function Submissions() {
               <img
                 src={submission.submission_image_url}
                 alt="Screenshot da aplicação submetida"
-                className="w-full transition-all delay-75 aspect-video blur-sm md:blur-none md:group-hover:blur-sm opacity-40 md:opacity-100 md:group-hover:opacity-40"
+                className="w-full transition-all delay-75 opacity-40 aspect-video blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40"
               />
             </div>
 
