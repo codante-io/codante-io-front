@@ -299,7 +299,8 @@ export async function getChallengeSubmissions(
 export async function submitChallenge(
   request: Request,
   slug: string,
-  submissionUrl: string
+  submissionUrl: string,
+  metadata?: any
 ): Promise<{ success?: string; error?: string }> {
   let token = await currentToken({ request });
 
@@ -308,6 +309,7 @@ export async function submitChallenge(
       `${process.env.API_HOST}/challenges/${slug}/submit`,
       {
         submission_url: submissionUrl,
+        metadata,
       },
       {
         headers: {
