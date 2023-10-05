@@ -156,9 +156,15 @@ function RinhaFormFields() {
             id="rinha_largest_filename"
             className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+            <option value="alltypes.json">alltypes.json</option>
+            <option value="verysmall.json">verysmall.json</option>
+            <option value="small.json">small.json</option>
+            <option value="pokedex.json">pokedex.json</option>
+            <option value="startwitharray.json">startwitharray.json</option>
+            <option value="large.json">large.json</option>
+            <option value="giant.json">giant.json</option>
+            <option value="invalid.json">invalid.json</option>
+            <option value="nullreference.json">nullreference.json</option>
           </select>
         </div>
       </div>
