@@ -1,5 +1,6 @@
 import { useOutletContext } from "@remix-run/react";
-import { FiExternalLink } from "react-icons/fi";
+import { BsGlobe } from "react-icons/bs";
+import { BsGithub } from "react-icons/bs";
 import ReactionsButton from "~/components/reactions-button";
 import UserAvatar from "~/components/user-avatar";
 
@@ -21,24 +22,27 @@ export default function Submissions() {
         {challengeSubmissions.map((submission) => (
           <article
             key={submission.user_github_user}
-            className=" relative max-w-[377px] overflow-hidden rounded-xl border-[1.5px] dark:border-background-600 border-background-200 shadow-sm text-gray-800 dark:text-white hover:shadow-lg transition-shadow"
+            className="relative max-w-[377px] overflow-hidden rounded-xl border-[1.5px] dark:border-background-600 border-background-200 shadow-sm text-gray-800 dark:text-white transition-shadow"
           >
-            <a
-              href={submission.submission_url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div className="relative overflow-hidden group">
-                <button className="absolute inset-0 z-10 flex items-center justify-center w-12 h-12 p-4 m-auto transition-all opacity-0 bg-background-100 rounded-xl dark:bg-background-700 group-hover:opacity-100">
-                  <FiExternalLink className="text-4xl text-gray-800 dark:text-white" />{" "}
-                </button>
-                <img
-                  src={submission.submission_image_url}
-                  alt="Screenshot da aplicação submetida"
-                  className="w-full transition-all delay-75 aspect-video group-hover:blur-sm group-hover:opacity-40 "
-                />
-              </div>
-            </a>
+            <div className="relative overflow-hidden group">
+              <button
+                className="absolute inset-0 z-10 flex items-center justify-center w-20 h-16 p-6 m-auto transition-all shadow-lg opacity-100 md:w-14 md:h-14 md:p-4 right-32 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
+                onClick={() => window.open(submission.submission_url, "_blank")}
+              >
+                <BsGlobe className="text-4xl text-gray-800 dark:text-white" />{" "}
+              </button>
+              <button
+                className="absolute inset-0 z-10 flex items-center justify-center w-20 h-16 p-6 m-auto transition-all shadow-lg opacity-100 md:w-14 md:h-14 md:p-4 left-32 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100"
+                onClick={() => window.open(submission.fork_url, "_blank")}
+              >
+                <BsGithub className="text-4xl text-gray-800 dark:text-white" />{" "}
+              </button>
+              <img
+                src={submission.submission_image_url}
+                alt="Screenshot da aplicação submetida"
+                className="w-full transition-all delay-75 opacity-40 aspect-video blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40"
+              />
+            </div>
 
             <footer className="flex items-center justify-between gap-4 px-4 dark:bg-background-700">
               <div className="flex items-center gap-4 my-4">
