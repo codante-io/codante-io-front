@@ -15,7 +15,13 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({ user }: { user: any }) {
+export default function Navbar({
+  user,
+  hideLinks,
+}: {
+  user: any;
+  hideLinks?: boolean;
+}) {
   const matches = useMatches();
   const navigate = useNavigate();
   const [playSound] = useSound(switchSound, { volume: 0.25 });
@@ -112,72 +118,74 @@ export default function Navbar({ user }: { user: any }) {
                     )}
                   </Link>
                 </div>
-                <div className="hidden md:ml-6 md:pt-4 md:block">
-                  <div className="flex items-center space-x-2 md:space-x-4">
-                    {navigation.map((item) => (
-                      <NavLink
-                        prefetch="intent"
-                        key={item.name}
-                        to={item.href}
-                        className={({ isActive }) =>
-                          classNames(
-                            isActive
-                              ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 underline dark:text-white text-gray-700"
-                              : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
-                            "rounded-md px-3 py-2 text-sm font-medium"
-                          )
-                        }
+                {!hideLinks && (
+                  <div className="hidden md:ml-6 md:pt-4 md:block">
+                    <div className="flex items-center space-x-2 md:space-x-4">
+                      {navigation.map((item) => (
+                        <NavLink
+                          prefetch="intent"
+                          key={item.name}
+                          to={item.href}
+                          className={({ isActive }) =>
+                            classNames(
+                              isActive
+                                ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 underline dark:text-white text-gray-700"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
+                              "rounded-md px-3 py-2 text-sm font-medium"
+                            )
+                          }
+                        >
+                          {item.name}
+                        </NavLink>
+                      ))}
+                      <Menu
+                        as="div"
+                        className="relative z-10 inline-block text-left"
                       >
-                        {item.name}
-                      </NavLink>
-                    ))}
-                    <Menu
-                      as="div"
-                      className="relative z-10 inline-block text-left"
-                    >
-                      <div>
-                        <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
-                          <RxDropdownMenu
-                            className="text-2xl"
-                            aria-label="Dropdown menu"
-                          />
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        enter="transition ease-out duration-150"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <div className="px-1 py-1 ">
-                            {moreMenuNavigation.map((item) => (
-                              <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <button
-                                    className={`${
-                                      active &&
-                                      "bg-background-150 dark:bg-background-600"
-                                    } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                                    onClick={() => {
-                                      item.external
-                                        ? window.open(item.href, "_blank")
-                                        : navigate(item.href);
-                                    }}
-                                  >
-                                    {item.name}
-                                  </button>
-                                )}
-                              </Menu.Item>
-                            ))}
-                          </div>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
+                        <div>
+                          <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
+                            <RxDropdownMenu
+                              className="text-2xl"
+                              aria-label="Dropdown menu"
+                            />
+                          </Menu.Button>
+                        </div>
+                        <Transition
+                          enter="transition ease-out duration-150"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="px-1 py-1 ">
+                              {moreMenuNavigation.map((item) => (
+                                <Menu.Item key={item.name}>
+                                  {({ active }) => (
+                                    <button
+                                      className={`${
+                                        active &&
+                                        "bg-background-150 dark:bg-background-600"
+                                      } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                      onClick={() => {
+                                        item.external
+                                          ? window.open(item.href, "_blank")
+                                          : navigate(item.href);
+                                      }}
+                                    >
+                                      {item.name}
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              ))}
+                            </div>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className="hidden mr-3 md:block">
@@ -209,65 +217,69 @@ export default function Navbar({ user }: { user: any }) {
               className="px-2 space-y-1 overflow-hidden bg-white border-b-2 dark:border-slate-600 dark:bg-background-900"
             >
               <div className="py-2">
-                {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
-                      matches,
-                      item.href,
-                      "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
-                    )} `}
-                    onClick={() => navigate(item.href)}
-                  >
-                    {item.name}
-                  </Disclosure.Button>
-                ))}
-                <Menu
-                  as="div"
-                  className="block w-full px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
-                >
-                  <Menu.Button className="flex items-center justify-center w-full">
-                    Mais
-                    <BsFillCaretDownFill className="ml-1 text-xs" />
-                  </Menu.Button>
-                  <Transition
-                    enter="transition ease-out duration-150"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="w-40 m-auto mt-2 divide-y rounded-md shadow-lg bg-background-150 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="px-1 py-1 ">
-                        {moreMenuNavigation.map((item) => (
-                          <Disclosure.Button
-                            key={item.name}
-                            className="block w-full"
-                          >
-                            <Menu.Item>
-                              {({ active }) => (
-                                <button
-                                  className={`${
-                                    active &&
-                                    "bg-background-100 dark:bg-background-600"
-                                  } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                                  onClick={() => {
-                                    item.external
-                                      ? window.open(item.href, "_blank")
-                                      : navigate(item.href);
-                                  }}
-                                >
-                                  {item.name}
-                                </button>
-                              )}
-                            </Menu.Item>
-                          </Disclosure.Button>
-                        ))}
-                      </div>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                {!hideLinks && (
+                  <>
+                    {navigation.map((item) => (
+                      <Disclosure.Button
+                        key={item.name}
+                        className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
+                          matches,
+                          item.href,
+                          "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
+                        )} `}
+                        onClick={() => navigate(item.href)}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
+                    <Menu
+                      as="div"
+                      className="block w-full px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                    >
+                      <Menu.Button className="flex items-center justify-center w-full">
+                        Mais
+                        <BsFillCaretDownFill className="ml-1 text-xs" />
+                      </Menu.Button>
+                      <Transition
+                        enter="transition ease-out duration-150"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="w-40 m-auto mt-2 divide-y rounded-md shadow-lg bg-background-150 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="px-1 py-1 ">
+                            {moreMenuNavigation.map((item) => (
+                              <Disclosure.Button
+                                key={item.name}
+                                className="block w-full"
+                              >
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      className={`${
+                                        active &&
+                                        "bg-background-100 dark:bg-background-600"
+                                      } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                      onClick={() => {
+                                        item.external
+                                          ? window.open(item.href, "_blank")
+                                          : navigate(item.href);
+                                      }}
+                                    >
+                                      {item.name}
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              </Disclosure.Button>
+                            ))}
+                          </div>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                  </>
+                )}
                 <div className="flex justify-end px-3 py-2">
                   <ToggleColorMode />
                 </div>
