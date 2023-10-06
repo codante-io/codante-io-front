@@ -96,21 +96,17 @@ export default function Projects() {
 
       {featuredChallenge && (
         <section
-          className="relative h-[350px] mb-32 mt-[80px] rounded-lg  p-10 pl-[380px] bosrder-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 flex items-center
+          className="md:relative md:h-[375px] lg:h-[350px] mb-32 mt-[80px] rounded-lg  p-10 md:pl-[380px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col
         "
         >
-          {/* <div className="absolute top-0 w-full h-32 bg-green-500">
-            
-          </div> */}
-
-          <div>
+          <div className="flex-col">
             <h3 className="font-light text-yellow-400 ">
               Mini Projeto da Semana
             </h3>
             <h1 className="text-2xl font-bold text-white">
               {featuredChallenge.name}
             </h1>
-            <p className="mt-3 font-extralight">
+            <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base">
               Participe do Mini Projeto da semana com a gente. Toda semana um
               novo Mini Projeto que será resolvido oficialmente pela equipe do
               Codante
@@ -149,13 +145,13 @@ export default function Projects() {
 
             <Button
               type="button"
-              className="text-white bg-transparent border-2 border-yellow-400 hover:bg-brand-500"
+              className="hidden mb-2 text-white bg-transparent border-2 border-yellow-400 hover:bg-brand-500 md:mb-0 md:block"
             >
               Participe do Mini Projeto
             </Button>
           </div>
 
-          <div className="absolute -top-[50px] left-10 shadow-xl ">
+          <div className="flex justify-center md:absolute md:-top-[50px] md:left-10 md:shadow-xl ">
             <ChallengeCard
               className="shadow-[10px_10px_10px_0px_rgba(255,255,255,0.1)]"
               challenge={featuredChallenge}
