@@ -8,6 +8,7 @@ export type User = {
   created_at?: string;
   is_admin?: boolean;
   updated_at?: string;
+  is_pro: 0 | 1;
 };
 
 export type ChallengeUser = User & {

@@ -22,7 +22,7 @@ import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
 import Wave from "~/components/wave";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+// import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import {
   getChallenge,
   getChallengeParticipants,
@@ -151,10 +151,11 @@ export default function ChallengeSlug() {
     initialSteps,
     challengeUser,
     challengeSubmissions,
+    user,
   } = useLoaderData<typeof loader>();
 
   const actionData = useActionData();
-  const user = useUserFromOutletContext();
+  // const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
@@ -370,6 +371,7 @@ export default function ChallengeSlug() {
             currentUserIsEnrolled={challenge.current_user_is_enrolled}
             participants={participants}
             userAvatar={user?.avatar_url}
+            currentUserIsPro={user?.is_pro}
           />
         </div>
       </section>

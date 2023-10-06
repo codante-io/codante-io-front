@@ -7,6 +7,7 @@ import PlayIcon from "./icons/playIcon.svg";
 import TooltipWrapper from "../tooltip";
 import type { User } from "~/models/user.server";
 import classNames from "~/utils/class-names";
+import UserAvatar from "../user-avatar";
 
 export default function ChallengeCard({
   challenge,
@@ -85,16 +86,12 @@ export default function ChallengeCard({
               )}
             </section>
             <section className="">
-              <div className="flex -space-x-2 overflow-hidden">
+              <div className="flex -space-x-3 overflow-hidden">
                 {challenge.current_user_is_enrolled && loggedUser && (
-                  <img
-                    key={loggedUser.id}
-                    className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
-                    src={
-                      loggedUser.avatar_url ||
-                      "https://source.boringavatars.com/"
-                    }
-                    alt="Avatar do usuário"
+                  <UserAvatar
+                    avatarUrl={loggedUser.avatar_url}
+                    isPro={loggedUser.is_pro}
+                    cursor="cursor-pointer"
                   />
                 )}
                 {challenge.current_user_is_enrolled
@@ -104,28 +101,23 @@ export default function ChallengeCard({
                       )
                       .slice(0, 4)
                       .map((user, index) => (
-                        <img
+                        <UserAvatar
+                          isPro={user.is_pro}
                           key={index}
-                          className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
-                          src={
-                            user.avatar_url ||
-                            "https://source.boringavatars.com/"
-                          }
-                          alt="Avatar do usuário"
+                          avatarUrl={user.avatar_url}
+                          cursor="cursor-pointer"
                         />
                       ))
                   : challenge?.users?.map((user, index) => (
-                      <img
+                      <UserAvatar
+                        isPro={user.is_pro}
                         key={index}
-                        className="inline-block w-7 h-7 m-[2px] rounded-full ring-2 ring-white dark:ring-background-800"
-                        src={
-                          user.avatar_url || "https://source.boringavatars.com/"
-                        }
-                        alt="Avatar do usuário"
+                        avatarUrl={user.avatar_url}
+                        cursor="cursor-pointer"
                       />
                     ))}
                 {challenge.enrolled_users_count > 5 && (
-                  <div className="w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
+                  <div className="relative w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
                     +{challenge.enrolled_users_count - 5}
                   </div>
                 )}
