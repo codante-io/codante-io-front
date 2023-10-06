@@ -41,7 +41,7 @@ export default function HomePage() {
     });
   }, [mousePosition]);
 
-  const challengeURL = "/mini-projetos/rinha-de-frontend";
+  const challengeURL = "/mini-projetos/rinha-frontend";
 
   function goToHowItWorks() {
     window?.document?.getElementById("como-funciona")?.scrollIntoView();
