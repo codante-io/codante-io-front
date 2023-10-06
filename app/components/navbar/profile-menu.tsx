@@ -4,6 +4,7 @@ import { Form, Link } from "@remix-run/react";
 import { Fragment } from "react";
 import type { User } from "~/models/user.server";
 import classNames from "~/utils/class-names";
+import UserAvatar from "../user-avatar";
 
 export default function ProfileMenu({ user }: { user: User }) {
   return (
@@ -12,10 +13,11 @@ export default function ProfileMenu({ user }: { user: User }) {
         <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
           <span className="sr-only">Open user menu</span>
           {user?.avatar_url ? (
-            <img
-              className="w-8 h-8 rounded-full"
-              src={user?.avatar_url}
-              alt=""
+            <UserAvatar
+              avatarUrl={user?.avatar_url}
+              isPro={user?.is_pro}
+              className="w-8 h-8"
+              showTooltip={false}
             />
           ) : (
             <UserCircleIcon className="w-6 h-6" />

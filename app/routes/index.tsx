@@ -17,6 +17,7 @@ import NotFound from "~/components/errors/not-found";
 import TitleIcon from "~/components/title-icon";
 import VimeoPlayer from "~/components/vimeo-player";
 import Wave from "~/components/wave";
+import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getHome } from "~/models/home.server";
 import type { User } from "~/models/user.server";
 
@@ -29,6 +30,17 @@ export const loader = async () => {
 export default function HomePage() {
   const { user } = useOutletContext<{ user: User }>();
   const { homeInfo } = useLoaderData<typeof loader>();
+
+  function sortByEnrolledUsersCount(challengesList: ChallengeCardType[]) {
+    if (!challengesList) return [];
+    return challengesList.sort(
+      (a, b) => b.enrolled_users_count - a.enrolled_users_count
+    );
+  }
+
+  const orderedChallengeList = sortByEnrolledUsersCount(
+    homeInfo.featured_challenges
+  );
 
   return (
     <AppLayout user={user}>
@@ -127,7 +139,7 @@ export default function HomePage() {
               depois assista a resolução feita por profissionais do mercado.
             </p>
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {homeInfo?.featured_challenges?.map((challenge) => (
+              {orderedChallengeList.map((challenge) => (
                 <div key={challenge.slug} className="mx-auto">
                   <ChallengeCard loggedUser={user} challenge={challenge} />
                 </div>

@@ -43,8 +43,8 @@ export type ChallengeCard = {
   image_url: string;
   difficulty: 1 | 2 | 3;
   tags: Tag[];
-  has_solution: boolean;
-  users?: { avatar_url: string }[];
+  has_workshop: boolean;
+  users?: { avatar_url: string; is_pro: 0 | 1 }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
   weekly_featured_start_date: string | null;
@@ -54,17 +54,19 @@ export type ChallengeCard = {
 
 export type ChallengeParticipants = {
   count: number;
-  avatars: string[];
+  avatars: { avatar_url: string; is_pro: 0 | 1 }[];
 };
 
 export type ChallengeSubmission = {
   id: string;
   user_name: string;
   user_avatar_url: string;
+  fork_url: string;
   user_github_user: string;
   submission_url: string;
   submission_image_url: string;
   reactions: Reactions;
+  is_pro: 0 | 1;
 };
 
 export async function getChallenges(
@@ -299,7 +301,8 @@ export async function getChallengeSubmissions(
 export async function submitChallenge(
   request: Request,
   slug: string,
-  submissionUrl: string
+  submissionUrl: string,
+  metadata?: any
 ): Promise<{ success?: string; error?: string }> {
   let token = await currentToken({ request });
 
@@ -308,6 +311,7 @@ export async function submitChallenge(
       `${process.env.API_HOST}/challenges/${slug}/submit`,
       {
         submission_url: submissionUrl,
+        metadata,
       },
       {
         headers: {

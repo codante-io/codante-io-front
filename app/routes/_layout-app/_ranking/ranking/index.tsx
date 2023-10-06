@@ -9,6 +9,7 @@ import {
   ThirdPlace,
 } from "~/components/ranking-badges";
 import classNames from "~/utils/class-names";
+import UserAvatar from "~/components/user-avatar";
 
 // meta function
 export function meta() {
@@ -98,11 +99,10 @@ export default function RankingList() {
                   )}
                 </div>
                 <div className="flex items-center gap-4">
-                  <img
-                    key={index}
-                    className="inline-block w-10 h-10 rounded-full ring-2 ring-white dark:ring-gray-800"
-                    src={user.avatar_url || "https://source.boringavatars.com/"}
-                    alt=""
+                  <UserAvatar
+                    avatarUrl={user.avatar_url}
+                    className="w-10 h-10"
+                    isPro={user.is_pro}
                   />
                   <span className="text-xl font-semibold text-gray-800 dark:text-white">
                     {user.name}
