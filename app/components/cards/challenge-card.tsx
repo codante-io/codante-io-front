@@ -6,14 +6,17 @@ import CardItemTag from "./card-item-tag";
 import PlayIcon from "./icons/playIcon.svg";
 import TooltipWrapper from "../tooltip";
 import type { User } from "~/models/user.server";
+import classNames from "~/utils/class-names";
 import UserAvatar from "../user-avatar";
 
 export default function ChallengeCard({
   challenge,
   loggedUser,
+  className = "",
 }: {
   challenge: ChallengeCardType;
   loggedUser?: User;
+  className?: string;
 }) {
   return (
     <Link
@@ -21,15 +24,15 @@ export default function ChallengeCard({
       to={
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
-      className={
+      className={classNames(
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
-      }
+      )}
     >
       <article
-        className="group
+        className={`group
           relative max-w-[300px] h-[450px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
-        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
+        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ${className}`}
       >
         <div
           className={`flex m-1 items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600 overflow-hidden`}
@@ -76,7 +79,7 @@ export default function ChallengeCard({
           </div>
           <div className="absolute bottom-0 right-0 flex items-center justify-between w-full p-6 mt-4 card-footer">
             <section>
-              {challenge?.has_workshop && (
+              {challenge?.has_solution && (
                 <TooltipWrapper text="Resolução disponível">
                   <img src={PlayIcon} alt="Ícone de vídeo" />
                 </TooltipWrapper>
