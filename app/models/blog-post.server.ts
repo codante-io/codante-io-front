@@ -45,3 +45,20 @@ export async function getPost(request: Request, slug: string) {
     });
   return blogPost;
 }
+
+export async function getPage(request: Request, slug: string) {
+  const token = await currentToken({ request });
+  const page: BlogPost = await axios
+    .get(`${process.env.API_HOST}/pages/${slug}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
+  return page;
+}
