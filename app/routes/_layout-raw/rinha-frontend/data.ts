@@ -45,8 +45,13 @@ export const faqs = [
     answer: "Não, a aplicação deve rodar inteiramente no lado do cliente.",
   },
   {
+    question: "Posso fazer uma aplicação mobile?",
+    answer:
+      "Depende. Sua aplicação deverá estar em produção e necessariamente rodar em um navegador - se você quiser, você poderá fazer um PWA, mas não uma aplicação nativa.",
+  },
+  {
     question: "Qual é o prazo final para submissão?",
-    answer: "Aceitaremos submissões até 10/11/2023 às 23:59.",
+    answer: "Aceitaremos submissões até 31/10/2023 às 23:59.",
   },
   {
     question: "Como posso tirar dúvidas ou pedir ajuda?",
