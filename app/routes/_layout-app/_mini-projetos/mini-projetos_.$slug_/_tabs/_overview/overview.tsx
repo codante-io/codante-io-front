@@ -68,11 +68,14 @@ export default function Overview({
           }}
         />
         <ResourcesSection challenge={challenge} />
-        <ResolutionSection
-          isAvailable={hasSolution}
-          thumbnailUrl={challenge.workshop?.image_url}
-          challenge={challenge}
-        />
+
+        {!challenge?.slug.includes("rinha") && (
+          <ResolutionSection
+            isAvailable={hasSolution}
+            thumbnailUrl={challenge.workshop?.image_url}
+            challenge={challenge}
+          />
+        )}
       </div>
     </div>
   );

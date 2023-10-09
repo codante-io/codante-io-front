@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 import {
   BsFillPersonFill,
   BsFillPersonPlusFill,
-  BsLightbulbFill,
+  BsTwitter,
 } from "react-icons/bs";
 
 import AppLayout from "~/components/_layouts/root-layout";
@@ -43,8 +43,11 @@ export default function HomePage() {
 
   const challengeURL = "/mini-projetos/rinha-frontend";
 
-  function goToHowItWorks() {
-    window?.document?.getElementById("como-funciona")?.scrollIntoView();
+  function goToTwitter() {
+    window?.open(
+      "https://twitter.com/rinhafront?ref_src=twsrc%5Etfw",
+      "_blank"
+    );
   }
 
   return (
@@ -79,11 +82,11 @@ export default function HomePage() {
             <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:justify-around md:flex-row">
               <>
                 <button
-                  onClick={goToHowItWorks}
+                  onClick={goToTwitter}
                   className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-background-200"
                 >
-                  <BsLightbulbFill className="mr-2" color="#5282FF" /> Saiba
-                  mais
+                  <BsTwitter className="mr-2" color="#5282FF" /> Siga no
+                  Twitter/X
                 </button>
 
                 <Link
@@ -120,7 +123,7 @@ export default function HomePage() {
           className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50"
         >
           <div className="container mb-10">
-            <h1 className="flex items-center mt-8 mb-4 text-3xl font-light sm:mt-16 font-lexend">
+            <h1 className="flex items-center mt-4 mb-4 text-3xl font-light sm:mt-8 font-lexend">
               <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" /> Como
               vai funcionar?
             </h1>
@@ -134,7 +137,7 @@ export default function HomePage() {
               {steps.map(({ title, description, img, alt }, index) => (
                 <div
                   key={index}
-                  className="relative overflow-hidden min-h-[300px] group/border rounded-xl p-1"
+                  className="relative overflow-hidden h-[400px] md:h-[300px] min-h-[300px] group/border rounded-xl p-1"
                 >
                   <article className="absolute z-10 flex flex-col gap-4 p-6 pb-4 transition-shadow inset-px dark:bg-background-700 bg-background-50 rounded-xl dark:border-background-600 hover:shadow-lg border-[1.5px] border-background-200">
                     <div className="flex items-center gap-3">
@@ -143,7 +146,9 @@ export default function HomePage() {
                       </div>
                       <h1 className="text-lg font-semibold">{title}</h1>
                     </div>
-                    <p>{description}</p>
+                    <p className="text-base md:text-sm xl:text-base">
+                      {description}
+                    </p>
                     <img
                       src={
                         colorMode === "light"
@@ -151,7 +156,7 @@ export default function HomePage() {
                           : img.replace(".png", "-dark.png")
                       }
                       alt={alt}
-                      className="mt-2 hover:animate-float h-full max-h-[150px] object-contain"
+                      className="mt-2 hover:animate-float h-full max-h-[200px] md:max-h-[120px] xl:max-h-[150px] object-contain"
                     />
                   </article>
                   <span
