@@ -140,6 +140,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
       user,
       challengeUser,
       repositorySlug: challenge.repository_name,
+      isRinha: params.slug.includes("rinha"),
     }),
   };
 };
