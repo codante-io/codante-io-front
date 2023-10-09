@@ -17,12 +17,17 @@ export const faqs = [
   {
     question: "Quais são os critérios de avaliação?",
     answer:
-      'O primeiro critério de avaliação é o maior tamanho de JSON que seu app consegue carregar, com base nos arquivos disponibilizados. Depois disso os critérios são "Correctness" (se o app funciona como esperado), "Performance" e "Acessibilidade". Os detalhes da avaliação estão disponíveis no repositório do desafio.',
+      'O primeiro critério de avaliação é o maior tamanho de JSON que seu app consegue carregar, com base nos arquivos disponibilizados. Vamos fazer o ranking das primeiras colocações baseado nisso. Depois disso os critérios para desempate são "Correctness" (se o app funciona como esperado), "Performance" e "Acessibilidade". Os detalhes da avaliação estão disponíveis no repositório do desafio.',
   },
   {
     question: "Quem fará a avaliação e o ranking?",
     answer:
       "A avaliação e classificação dos resultados será feita pelos apoiadores e organizadores do evento. Entre em contato caso você queira ser um apoiador.",
+  },
+  {
+    question: "Todos os projetos serão manualmente avaliados?",
+    answer:
+      "Nem todos. Vamos fazer o ranking de 'cima para baixo': os projetos que conseguiram carregar os maiores JSON serão avaliados e testados primeiro. Depois, iremos testando os projetos subsequentes enquanto tivermos capacidade e disponibilidade do time de avaliação.",
   },
   {
     question: "Como será avaliado o desempenho e acessibilidade da aplicação?",
