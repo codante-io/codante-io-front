@@ -70,20 +70,19 @@ export default function Projects() {
         >
           <div className="flex-col">
             <h3 className="font-light text-yellow-400 ">
-              Mini Projeto da Semana
+              Mini Projeto em Destaque
             </h3>
             <h1 className="text-2xl font-bold text-white ">
               {featuredChallenge.name}
             </h1>
             <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base">
-              Participe do Mini Projeto da semana com a gente. Toda semana um
-              novo Mini Projeto que será resolvido oficialmente pela equipe do
-              Codante
+              Participe do Mini Projeto em destaque com a gente. Corra! Pois
+              esse Mini Projeto aceitará submissões por tempo limitado.
             </p>
             <p className="mt-4 text-sm ">
               <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200">
                 <CalendarDaysIcon className="inline w-4 h-4 " />
-                Resolução:
+                Encerramento:
                 <strong className="text-white dark:text-white ">
                   {new Intl.DateTimeFormat("pt-BR", {
                     dateStyle: "short",
