@@ -33,6 +33,8 @@ export default function HomePage() {
   const { colorMode } = useColorMode();
 
   useEffect(() => {
+    if (window?.screen?.width < 640) return;
+
     let xy = [mousePosition.x, mousePosition.y];
     let position = xy.concat([imageRef.current]);
 
