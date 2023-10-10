@@ -171,7 +171,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
     website: MdComputer,
   };
   return (
-    <div className="p-4 py-6 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-background-200 dark:hover:bg-background-800">
+    <div className="p-4 py-6 pr-4 mt-1 mb-4 transition rounded-lg hover:bg-background-150 dark:hover:bg-background-800">
       <div className="flex items-center">
         <img
           src={instructor?.avatar_url}
@@ -216,7 +216,10 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
           } text-sm font-light text-gray-500 dark:text-gray-300 relative overflow-hidden`}
         >
           <div className=" [&>p]:mt-0 ">
-            <MarkdownRenderer markdown={instructor.bio} />
+            <MarkdownRenderer
+              markdown={instructor.bio}
+              wrapperClasses="prose-p:text-sm"
+            />
             <div>
               {instructor.links?.map((link, i) => {
                 const Icon = SocialIcons[link.type] ?? null;
@@ -229,7 +232,7 @@ function InstructorCard({ instructor }: { instructor: Instructor }) {
                     className="inline-block mt-2 mr-4 text-sm font-light text-gray-500 dark:text-gray-300"
                   >
                     {Icon && (
-                      <Icon className="mt-2 text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                      <Icon className="mt-2 text-2xl text-gray-400 transition hover:text-gray-700 dark:text-gray-600 dark:hover:text-gray-300" />
                     )}
                   </a>
                 );
