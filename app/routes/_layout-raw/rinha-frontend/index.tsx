@@ -25,6 +25,30 @@ import transformElement from "./transformElement";
 import { faqs, supporters, techs, steps } from "./data";
 
 import { useColorMode } from "~/contexts/color-mode-context";
+import type { MetaFunction } from "@remix-run/node";
+import type { loader } from "~/root";
+
+export const meta: MetaFunction<typeof loader> = () => {
+  return {
+    title: "Rinha de Frontend",
+    description: "A melhor rinha de frontend",
+    "og:title": "Rinha de Frontend",
+    "og:description": "A melhor rinha de frontend",
+    "og:image":
+      "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
+    "og:type": "website",
+    "og:url": `https://codante.io/rinha-frontend`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/rinha-frontend`,
+    "twitter:title": "Rinha de Frontend",
+    "twitter:description": "A melhor rinha de frontend",
+    "twitter:image":
+      "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
+    "twitter:image:alt": "Rinha de Frontend",
+  };
+};
 
 export default function HomePage() {
   const { user } = useOutletContext<{ user: User }>();
