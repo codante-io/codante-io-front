@@ -43,7 +43,7 @@ export type ChallengeCard = {
   image_url: string;
   difficulty: 1 | 2 | 3;
   tags: Tag[];
-  has_workshop: boolean;
+  has_solution: boolean;
   users?: { avatar_url: string; is_pro: 0 | 1 }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;

@@ -54,10 +54,12 @@ export default function Projects() {
     (challenge) => challenge.is_weekly_featured === true
   );
 
-  const challengesWithoutFeatured = challenges.filter(
-    (challenge) => challenge.is_weekly_featured !== true
-  );
-  //    bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-400 to-blue-500
+  const challengesWithoutFeatured = () => {
+    const withoutFeatured = challenges.filter(
+      (challenge) => challenge.is_weekly_featured !== true
+    );
+    return withoutFeatured.sort((_a, b) => (b.has_solution ? 1 : -1));
+  };
 
   return (
     <main className="container mx-auto">
@@ -127,7 +129,7 @@ export default function Projects() {
       )}
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 ">
-        {challengesWithoutFeatured.map((challenge: ChallengeCardType) => (
+        {challengesWithoutFeatured().map((challenge: ChallengeCardType) => (
           <div key={challenge.slug} className="mx-auto">
             <ChallengeCard
               loggedUser={user ?? undefined}
