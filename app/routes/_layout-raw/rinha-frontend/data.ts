@@ -56,7 +56,7 @@ export const faqs = [
   {
     question: "Posso fazer um layout diferente do Figma?",
     answer:
-      "A fidelidade ao layout não é um critério de avaliação. <br /> A gente quis simplificar ao máximo o layout pra poder focar no desafio principal de trabalhar com JSONs pesados. <br /> Então não tem problema alterar o layout, mas isso não vai trazer vantagens na hora da avaliação. <br /> Resumindo: não precisa seguir o figma, mas fazer um layout bonito não vai te trazer mais pontos ",
+      "A fidelidade ao layout não é um critério de avaliação. A gente quis simplificar ao máximo o layout pra poder focar no desafio principal de trabalhar com JSONs pesados. Então não tem problema alterar o layout, mas isso não vai trazer vantagens na hora da avaliação. Resumindo: não precisa seguir o figma, mas fazer um layout bonito não vai te trazer mais pontos ",
   },
   {
     question: "Qual é o prazo final para submissão?",
