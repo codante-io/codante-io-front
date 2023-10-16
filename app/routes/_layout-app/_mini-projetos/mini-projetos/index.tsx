@@ -57,7 +57,6 @@ export default function Projects() {
   const challengesWithoutFeatured = challenges.filter(
     (challenge) => challenge.is_weekly_featured !== true
   );
-  //    bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-400 to-blue-500
 
   return (
     <main className="container mx-auto">
