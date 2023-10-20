@@ -14,7 +14,7 @@ export default function Breadcrumbs({
   challenge?: any;
 }) {
   return (
-    <div className="text-sm text-gray-500 dark:text-gray-400">
+    <div className="text-xs text-gray-500  dark:text-gray-400">
       <Link
         to={`${isChallenge ? "/mini-projetos" : "/workshops"}`}
         className=" hover:underline"

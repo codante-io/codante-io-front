@@ -1,4 +1,10 @@
-import { FiDownload, FiExternalLink, FiFigma, FiGithub } from "react-icons/fi";
+import {
+  FiDownload,
+  FiExternalLink,
+  FiFigma,
+  FiGithub,
+  FiGlobe,
+} from "react-icons/fi";
 import type { Challenge } from "~/models/challenge.server";
 
 export default function ResourcesSection({
@@ -57,22 +63,22 @@ export default function ResourcesSection({
 }
 
 function Icon({ resource }: { resource: any }) {
+  const classnames =
+    "inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300";
   if (resource.type === "figma") {
-    return (
-      <FiFigma className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300" />
-    );
+    return <FiFigma className={classnames} />;
   }
 
   if (resource.type === "file") {
-    return (
-      <FiDownload className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300" />
-    );
+    return <FiDownload className={classnames} />;
   }
 
   if (resource.type === "github") {
-    return (
-      <FiGithub className="inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300" />
-    );
+    return <FiGithub className={classnames} />;
+  }
+
+  if (resource.type === "url") {
+    return <FiGlobe className={classnames} />;
   }
 
   return null;
