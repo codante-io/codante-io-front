@@ -1,16 +1,17 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Link } from "@remix-run/react";
 import { BsArrowRight } from "react-icons/bs";
+import { MdOutlineSkipNext } from "react-icons/md";
 import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
+import MarkdownRenderer from "~/components/markdown-renderer";
 import ProfileMenu from "~/components/navbar/profile-menu";
 import ToggleColorMode from "~/components/toggle-color-mode";
+import VimeoPlayer from "~/components/vimeo-player";
 import type { Lesson } from "~/models/lesson.server";
 import type { User } from "~/models/user.server";
 import type { Workshop } from "~/models/workshop.server";
 import Breadcrumbs from "./workshop-breadcrumbs";
-import { Link } from "@remix-run/react";
-import { MdOutlineSkipNext } from "react-icons/md";
-import VimeoPlayer from "~/components/vimeo-player";
-import MarkdownRenderer from "~/components/markdown-renderer";
+import WorkshopResourcesMenuButton from "./workshop-resources-menu-button";
 
 type MainContentProps = {
   setIsSidebarOpen: (value: boolean) => void;
@@ -57,22 +58,29 @@ export default function MainContent({
           )}
         </div>
       </div>
-      <div className="flex items-start justify-between h-8">
+      <div className="flex items-center justify-between h-8">
         <Breadcrumbs
           workshop={workshop}
           lesson={lesson}
           isChallenge={isChallenge}
           challenge={challenge}
         />
-        {nextLessonPath() && (
-          <Link to={nextLessonPath() ?? ""}>
-            <div className="flex items-start px-1 pl-2 text-3xl text-gray-500 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500 hover:text-brand dark:hover:text-brand">
-              <MdOutlineSkipNext className="inline-block" />
-            </div>
-          </Link>
-        )}
+        <div className="flex items-center gap-2">
+          <div>
+            {workshop.resources.length > 0 && (
+              <WorkshopResourcesMenuButton resources={workshop.resources} />
+            )}
+          </div>
+          {nextLessonPath() && (
+            <Link to={nextLessonPath() ?? ""}>
+              <div className="flex items-center p-2 text-3xl text-gray-500 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500 hover:text-brand dark:hover:text-brand">
+                <MdOutlineSkipNext className="inline-block" />
+              </div>
+            </Link>
+          )}
+        </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-3">
         <VimeoPlayer
           vimeoUrl={lesson.video_url || ""}
           onVideoEnded={() => handleVideoEnded(lesson.id)}

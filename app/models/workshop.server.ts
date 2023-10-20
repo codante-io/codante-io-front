@@ -16,6 +16,11 @@ export type Workshop = {
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
   published_at?: string;
+  resources: {
+    name: string;
+    type: string;
+    url: string;
+  }[];
   instructor: Instructor;
   is_standalone: boolean;
   lessons: Lesson[];
