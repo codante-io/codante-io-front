@@ -23,7 +23,7 @@ export default function WorkshopTitle({
           to={
             isChallenge
               ? `/mini-projetos/${challenge?.slug}`
-              : `/workshop/${workshop.slug}`
+              : `/workshops/${workshop.slug}`
           }
         >
           {isChallenge ? challenge?.name : workshop.name}
