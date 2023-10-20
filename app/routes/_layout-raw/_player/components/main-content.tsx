@@ -67,7 +67,7 @@ export default function MainContent({
         />
         <div className="flex items-center gap-2">
           <div>
-            {workshop.resources.length > 0 && (
+            {workshop.resources && workshop.resources.length > 0 && (
               <WorkshopResourcesMenuButton resources={workshop.resources} />
             )}
           </div>
