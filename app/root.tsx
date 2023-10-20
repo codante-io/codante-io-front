@@ -6,7 +6,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { Toaster } from "react-hot-toast";
 import LoadingBar from "~/components/loading-bar";
@@ -16,6 +18,9 @@ import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
 import { GoogleTagManager } from "./components/google-tag-manager";
 import { user } from "./services/auth.server";
 import { getOgGeneratorUrl } from "./utils/path-utils";
+import NotFound from "./components/errors/not-found";
+import { Error500 } from "./components/errors/500";
+import type { User } from "./models/user.server";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -49,7 +54,7 @@ export function loader({ request }: { request: Request }) {
 }
 
 export default function App() {
-  const user = useLoaderData();
+  const user = useLoaderData<User | null>();
 
   return (
     <html lang="en">
@@ -90,6 +95,41 @@ export default function App() {
             <span className="hidden 2xl:block">2xl</span>
           </div>
         )}
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  return (
+    <html>
+      <head>
+        <title>
+          {isRouteErrorResponse(error)
+            ? `Página não encontrada`
+            : "Ops... algum erro aconteceu!"}
+        </title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="text-gray-800 dark:bg-background-900 bg-background-50 dark:text-gray-50">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: DarkModeScriptInnerHtml,
+          }}
+        />
+        <ColorModeProvider>
+          <LoadingBar />
+
+          {isRouteErrorResponse(error) ? (
+            <NotFound />
+          ) : (
+            <Error500 error={error} />
+          )}
+        </ColorModeProvider>
+        <Scripts />
       </body>
     </html>
   );

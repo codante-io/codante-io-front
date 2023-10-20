@@ -5,6 +5,7 @@ import {
 } from "@remix-run/node";
 import axios from "./axios.server";
 import type { AxiosResponse } from "axios";
+import type { User } from "~/models/user.server";
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -174,7 +175,7 @@ export async function user({
   let token = await currentToken({ request });
 
   try {
-    response = await axios.get("/api/user", {
+    response = await axios.get<User>("/api/user", {
       headers: {
         Authorization: "Bearer " + token,
       },
