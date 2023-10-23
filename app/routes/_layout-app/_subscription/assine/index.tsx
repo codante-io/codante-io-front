@@ -10,38 +10,68 @@ export default function AssinePage() {
       <section>
         <div className="container flex flex-col items-center">
           <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-7xl">
-            Temos o compromisso de oferecer muito conteúdo{" "}
-            <span className="italic font-bold">gratuito</span> e de{" "}
-            <span className="italic font-bold">qualidade</span>. <br />{" "}
-            Considere se tornar um membro Premium para apoiar o projeto e ter
-            acesso a mais conteúdos exclusivos.
+            Assine nosso{" "}
+            <span className="text-brand-400">
+              plano vitalício com valor promocional de lançamento
+            </span>{" "}
+            <span className="font-bold text-brand-400">
+              por tempo limitado.
+            </span>{" "}
+            Sem assinaturas. Pague apenas uma vez, acesse para sempre.
           </p>
+
           <section className="flex flex-col justify-center gap-20 mt-10 mb-20 md:flex-row">
             <PriceCard
               price={{
                 name: "Gratuito",
                 price: 0,
+                installments: 0,
                 features: {
-                  Comunidade: true,
-                  "Mini projetos": true,
-                  "Workshops limitados": true,
-                  // "Área vip da comunidade": false,
-                  // "Resoluções dos mini projetos": false,
+                  "Mini Projetos": {
+                    "Acesso a todos os Mini Projetos": true,
+                    "Submeta sua resolução": true,
+                    "Resolução Oficial com vídeo": false,
+                    Certificado: false,
+                  },
+                  Workshops: {
+                    "Acesso limitado aos workshops": true,
+                    "Acesso a todos os workshops": false,
+                    Certificado: false,
+                  },
+                  "Outras vantagens": {
+                    "Acesso à Comunidade": true,
+                    "Canais PRO da Comunidade": false,
+                    "Pro Badge": false,
+                    "Acesso ao Ranking Premiado": false,
+                  },
                 },
               }}
             />
             <PriceCard
               price={{
-                name: "Premium",
-                banner: "Gratuito por tempo limitado",
-                price: 0,
+                name: "PRO (Vitalício)",
+                fullPrice: 948,
+                banner: "Oferta de lançamento",
+                immediateSettlementAmount: 588,
+                price: 49,
+                installments: 12,
                 features: {
-                  Comunidade: true,
-                  "Mini projetos": true,
-                  "Todos os Workshops": true,
-                  "Resoluções oficiais dos mini projetos": true,
-                  "PRO Badge": true,
-                  "Área vip da comunidade": true,
+                  "Mini Projetos": {
+                    "Acesso a todos os Mini Projetos": true,
+                    "Submeta sua resolução": true,
+                    "Resolução Oficial com vídeo": true,
+                    Certificado: true,
+                  },
+                  Workshops: {
+                    "Acesso a todos os workshops": true,
+                    Certificado: true,
+                  },
+                  "Outras vantagens": {
+                    "Pro Badge": true,
+                    "Canais PRO da Comunidade": true,
+                    "Acesso ao Ranking Premiado": true,
+                    "Plano Vitalício: pague uma vez, tenha para sempre": true,
+                  },
                 },
               }}
             />
