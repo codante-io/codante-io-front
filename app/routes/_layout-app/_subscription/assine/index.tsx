@@ -4,7 +4,7 @@ export default function AssinePage() {
   return (
     <main className="container mx-auto ">
       <h1 className="mb-10 text-4xl text-center font-lexend">
-        Assine o Codante
+        <span className="border-b-2 border-amber-400">Assine</span> o Codante
       </h1>
 
       <section>

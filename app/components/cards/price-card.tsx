@@ -76,8 +76,8 @@ export default function PriceCard({
                   <li className="text-start gap-x-3" key={index}>
                     {isAvailable ? (
                       <div className="flex items-center">
-                        <AiOutlineCheck className="w-4 h-5 mr-5 text-green-600 dark:text-green-300" />
-                        <span className="">{featureName}</span>
+                        <AiOutlineCheck className="flex-shrink-0 w-4 h-5 mr-5 text-green-600 dark:text-green-300" />
+                        <span>{featureName}</span>
                       </div>
                     ) : (
                       <div className="flex items-center">
