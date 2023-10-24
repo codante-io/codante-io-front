@@ -200,35 +200,157 @@ export default function HomePage() {
               Considere se tornar um membro Premium para apoiar o projeto e ter
               acesso a mais conteúdos exclusivos.
             </p>
-            <section className="flex flex-col justify-center gap-20 mt-10 mb-20 md:flex-row">
+            <section className="flex flex-col justify-center gap-20 mt-10 mb-20 text-start md:flex-row">
               <PriceCard
-                price={{
+                featuresByCategory={[
+                  {
+                    "Mini Projetos": [
+                      {
+                        title: "Acesso a todos os Mini Projetos",
+                        info: "Acesse todos os mini projetos disponíveis. lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Submeta sua resolução",
+                        info: "Submeta sua resolução para o mini projeto",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Resolução Oficial com vídeo",
+                        info: "Assista a resolução oficial do mini projeto em vídeo",
+                        isAvailable: false,
+                      },
+                      {
+                        title: "Certificado",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: false,
+                      },
+                    ],
+                  },
+                  {
+                    Workshops: [
+                      {
+                        title: "Acesso limitado aos workshops",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Acesso a todos os workshops",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: false,
+                      },
+                      {
+                        title: "Certificado",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: false,
+                      },
+                    ],
+                  },
+                  {
+                    "Outras Vantagens": [
+                      {
+                        title: "Acesso à Comunidade",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Canais PRO da Comunidade",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: false,
+                      },
+                      {
+                        title: "Pro Badge",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: false,
+                      },
+                      {
+                        title: "Acesso ao Ranking Premiado",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: false,
+                      },
+                    ],
+                  },
+                ]}
+                data={{
                   name: "Gratuito",
                   price: 0,
-                  features: {
-                    Comunidade: true,
-                    "Mini projetos": true,
-                    "Workshops gratuitos": true,
-                    "Área vip da comunidade": false,
-                    "Workshops premium": false,
-                    "Resoluções dos mini projetos": false,
-                  },
+                  installments: 0,
                 }}
               />
               <PriceCard
-                price={{
-                  name: "Premium",
-                  banner: "Gratuito por tempo limitado",
-                  price: 0,
-                  features: {
-                    Comunidade: true,
-                    "Mini projetos": true,
-                    "Workshops gratuitos": true,
-                    "Área vip da comunidade": true,
-                    "Workshops premium": true,
-                    "Resoluções dos mini projetos": true,
-                  },
+                data={{
+                  name: "PRO (Vitalício)",
+                  fullPrice: 948,
+                  banner: "Oferta de lançamento",
+                  immediateSettlementAmount: 588,
+                  price: 49,
+                  installments: 12,
                 }}
+                featuresByCategory={[
+                  {
+                    "Mini Projetos": [
+                      {
+                        title: "Acesso a todos os Mini Projetos",
+                        info: "Acesse todos os mini projetos disponíveis",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Submeta sua resolução",
+                        info: "Submeta sua resolução para o mini projeto",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Resolução Oficial com vídeo",
+                        info: "Assista a resolução oficial do mini projeto em vídeo",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Certificado",
+                        info: "Obtenha um certificado de conclusão do mini projeto",
+                        isAvailable: true,
+                      },
+                    ],
+                  },
+                  {
+                    Workshops: [
+                      {
+                        title: "Acesso a todos os workshops",
+                        info: "Obtenha acesso a todos os workshops disponíveis",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Certificado",
+                        info: "Obtenha um certificado de conclusão do workshop",
+                        isAvailable: true,
+                      },
+                    ],
+                  },
+                  {
+                    "Outras vantagens": [
+                      {
+                        title: "Pro Badge",
+                        info: "Obtenha um badge de PRO na comunidade",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Canais PRO da Comunidade",
+                        info: "Acesse os canais exclusivos da comunidade PRO",
+                        isAvailable: true,
+                      },
+                      {
+                        title: "Acesso ao Ranking Premiado",
+                        info: "Participe do ranking premiado da comunidade",
+                        isAvailable: true,
+                      },
+                      {
+                        title:
+                          "Plano Vitalício: pague uma vez, tenha para sempre",
+                        info: "Adquira o plano vitalício da comunidade PRO",
+                        isAvailable: true,
+                      },
+                    ],
+                  },
+                ]}
               />
             </section>
           </div>
