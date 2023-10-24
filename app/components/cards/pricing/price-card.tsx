@@ -32,7 +32,7 @@ export default function PriceCard({
         data?.name.startsWith("PRO")
           ? "border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white"
           : "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl",
-        "relative w-[450px] dark:bg-background-800  rounded-2xl py-6 px-8 pt-3 font-lexend "
+        "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full"
       )}
     >
       {data?.banner && <CardItemRibbon text={data?.banner} />}
@@ -112,22 +112,22 @@ function FeatureItem({
 }) {
   return (
     <li className="text-start" key={feature.title}>
-      <div className="flex items-center gap-x-1">
+      <div className="text-[13px] md:text-[14px] flex items-center gap-x-1">
         {feature.isAvailable ? (
           <>
-            <AiOutlineCheck className="flex-shrink-0 w-5 h-5 mr-5 text-green-600 dark:text-green-300" />
-            <span className="font-light break-words">{feature.title}</span>
+            <AiOutlineCheck className="flex-shrink-0 w-3 h-3 mr-2 text-green-600 md:w-5 md:h-5 md:mr-5 dark:text-green-300" />
+            <span className="font-light">{feature.title}</span>
           </>
         ) : (
           <>
-            <AiOutlineClose className="w-5 h-5 mr-5 text-red-500" />
-            <span className="font-light line-through break-words opacity-50">
+            <AiOutlineClose className="w-3 h-3 mr-2 text-red-500 md:w-5 md:h-5 md:mr-5" />
+            <span className="font-light line-through opacity-50">
               {feature.title}
             </span>
           </>
         )}
         {feature.info && (
-          <span className="flex items-center">
+          <span className="items-center hidden md:flex">
             <TooltipWrapper text={feature.info}>
               <BsInfoCircle className="ml-1 text-gray-300 hover:text-gray-500 dark:hover:text-background-300 dark:text-background-600" />
             </TooltipWrapper>

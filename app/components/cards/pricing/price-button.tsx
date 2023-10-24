@@ -27,7 +27,7 @@ export default function PriceButton({
       return (
         <button
           onClick={() => navigate("/login?redirectTo=/assine")}
-          className="flex items-center justify-center w-full p-2 py-4 text-white border rounded-md bg-background-700 border-background-600 gap-x-2 hover:bg-background-600"
+          className="flex items-center justify-center w-full p-2 text-white border rounded-md sm:py-2 md:py-4 bg-background-700 border-background-600 gap-x-2 hover:bg-background-600"
         >
           <FiGithub />
           Entre com Github
@@ -39,7 +39,7 @@ export default function PriceButton({
         onClick={() => navigate("/login?redirectTo=/assine")} // TODO - alterar para link de pagamento
         className={classNames(
           isHovering && "bg-opacity-50",
-          "w-full p-2 text-white bg-brand rounded-md py-4 flex items-center justify-center gap-x-2"
+          "w-full p-2 text-white bg-brand rounded-md sm:py-2 md:py-4 flex items-center justify-center gap-x-2"
         )}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -53,7 +53,7 @@ export default function PriceButton({
     return (
       <button
         disabled
-        className="w-full p-2 py-4 text-white border rounded-md cursor-not-allowed bg-background-700 gap-x-2 border-background-600"
+        className="w-full p-2 text-white border rounded-md cursor-not-allowed sm:py-2 md:py-4 bg-background-700 gap-x-2 border-background-600"
       >
         Você já tem esse plano
       </button>
@@ -63,7 +63,7 @@ export default function PriceButton({
   return (
     <button
       onClick={() => navigate("/assine")} // TODO - alterar para link de pagamento
-      className="w-full p-2 py-4 text-white rounded-md bg-brand"
+      className="w-full p-2 text-white rounded-md sm:py-2 md:py-4 bg-brand"
     >
       Assinar PRO
     </button>
