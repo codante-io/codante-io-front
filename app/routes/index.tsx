@@ -6,6 +6,7 @@ import {
   useOutletContext,
   useRouteError,
 } from "@remix-run/react";
+import { FaCrown } from "react-icons/fa";
 import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
 import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/background-blur";
@@ -69,7 +70,13 @@ export default function HomePage() {
 
             <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:justify-around md:flex-row">
               <>
-                {!user && (
+                {user ? (
+                  <Link to="/assine">
+                    <button className="flex items-center px-4 py-2 text-gray-800 rounded-full bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400">
+                      <FaCrown className="mr-2 text-amber-400" /> Seja PRO
+                    </button>
+                  </Link>
+                ) : (
                   <Link to="/login">
                     <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-background-200">
                       <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
