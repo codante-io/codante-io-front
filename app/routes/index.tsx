@@ -10,7 +10,8 @@ import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
 import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/background-blur";
 import ChallengeCard from "~/components/cards/challenge-card";
-import PriceCard from "~/components/cards/price-card";
+import PriceCard from "~/components/cards/pricing/price-card";
+import { freePlan, proPlan } from "~/components/cards/pricing/pricingData";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
@@ -192,85 +193,26 @@ export default function HomePage() {
           className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-background-900 dark:text-gray-50"
         >
           <div className="container flex flex-col items-center">
-            <h1 className="mt-16 text-3xl font-light font-lexend">Preços</h1>
-            <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-7xl">
-              Temos o compromisso de oferecer muito conteúdo{" "}
-              <span className="italic font-bold">gratuito</span> e de{" "}
-              <span className="italic font-bold">qualidade</span>. <br />{" "}
-              Considere se tornar um membro Premium para apoiar o projeto e ter
-              acesso a mais conteúdos exclusivos.
+            <h1 className="mt-16 text-3xl font-light font-lexend">
+              Seja{" "}
+              <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+                PRO
+              </span>
+            </h1>
+            <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+              No Codante sempre teremos muito conteúdo gratuito. Para uma
+              experiência completa, assine nosso{" "}
+              <span className="text-brand-400">
+                plano vitalício com valor promocional de lançamento
+              </span>{" "}
+              <span className="font-bold underline text-brand-400">
+                por tempo limitado
+              </span>
+              . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
             </p>
-            <section className="flex flex-col justify-center gap-20 mt-10 mb-20 text-start md:flex-row">
+            <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
               <PriceCard
-                featuresByCategory={[
-                  {
-                    "Mini Projetos": [
-                      {
-                        title: "Acesso a todos os Mini Projetos",
-                        info: "Acesse todos os mini projetos disponíveis. lorem ipsum dolor sit amet consectetur adipisicing elit.",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Submeta sua resolução",
-                        info: "Submeta sua resolução para o mini projeto",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Resolução Oficial com vídeo",
-                        info: "Assista a resolução oficial do mini projeto em vídeo",
-                        isAvailable: false,
-                      },
-                      {
-                        title: "Certificado",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: false,
-                      },
-                    ],
-                  },
-                  {
-                    Workshops: [
-                      {
-                        title: "Acesso limitado aos workshops",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Acesso a todos os workshops",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: false,
-                      },
-                      {
-                        title: "Certificado",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: false,
-                      },
-                    ],
-                  },
-                  {
-                    "Outras Vantagens": [
-                      {
-                        title: "Acesso à Comunidade",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Canais PRO da Comunidade",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: false,
-                      },
-                      {
-                        title: "Pro Badge",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: false,
-                      },
-                      {
-                        title: "Acesso ao Ranking Premiado",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: false,
-                      },
-                    ],
-                  },
-                ]}
+                featuresByCategory={freePlan}
                 data={{
                   name: "Gratuito",
                   price: 0,
@@ -286,71 +228,7 @@ export default function HomePage() {
                   price: 49,
                   installments: 12,
                 }}
-                featuresByCategory={[
-                  {
-                    "Mini Projetos": [
-                      {
-                        title: "Acesso a todos os Mini Projetos",
-                        info: "Acesse todos os mini projetos disponíveis",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Submeta sua resolução",
-                        info: "Submeta sua resolução para o mini projeto",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Resolução Oficial com vídeo",
-                        info: "Assista a resolução oficial do mini projeto em vídeo",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Certificado",
-                        info: "Obtenha um certificado de conclusão do mini projeto",
-                        isAvailable: true,
-                      },
-                    ],
-                  },
-                  {
-                    Workshops: [
-                      {
-                        title: "Acesso a todos os workshops",
-                        info: "Obtenha acesso a todos os workshops disponíveis",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Certificado",
-                        info: "Obtenha um certificado de conclusão do workshop",
-                        isAvailable: true,
-                      },
-                    ],
-                  },
-                  {
-                    "Outras vantagens": [
-                      {
-                        title: "Pro Badge",
-                        info: "Obtenha um badge de PRO na comunidade",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Canais PRO da Comunidade",
-                        info: "Acesse os canais exclusivos da comunidade PRO",
-                        isAvailable: true,
-                      },
-                      {
-                        title: "Acesso ao Ranking Premiado",
-                        info: "Participe do ranking premiado da comunidade",
-                        isAvailable: true,
-                      },
-                      {
-                        title:
-                          "Plano Vitalício: pague uma vez, tenha para sempre",
-                        info: "Adquira o plano vitalício da comunidade PRO",
-                        isAvailable: true,
-                      },
-                    ],
-                  },
-                ]}
+                featuresByCategory={proPlan}
               />
             </section>
           </div>
