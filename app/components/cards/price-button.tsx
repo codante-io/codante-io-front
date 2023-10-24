@@ -1,5 +1,6 @@
 import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import { FiGithub } from "react-icons/fi";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import classNames from "~/utils/class-names";
 
@@ -12,16 +13,24 @@ export default function PriceButton({
   const navigate = useNavigate();
 
   const [isHovering, setIsHovering] = useState(false);
-  const buttonText = isHovering ? "Você precisa se cadastrar" : "Assinar PRO";
+  const buttonText = isHovering ? (
+    <>
+      <FiGithub />
+      Entre com Github
+    </>
+  ) : (
+    "Assinar PRO"
+  );
 
   if (!user) {
     if (plan === "Gratuito") {
       return (
         <button
           onClick={() => navigate("/login?redirectTo=/assine")}
-          className="w-full p-2 text-white bg-green-700 rounded-md"
+          className="flex items-center justify-center w-full p-2 py-4 text-white border rounded-md bg-background-700 border-background-600 gap-x-2 hover:bg-background-600"
         >
-          Cadastre-se
+          <FiGithub />
+          Entre com Github
         </button>
       );
     }
@@ -30,7 +39,7 @@ export default function PriceButton({
         onClick={() => navigate("/login?redirectTo=/assine")} // TODO - alterar para link de pagamento
         className={classNames(
           isHovering && "bg-opacity-50",
-          "w-full p-2 text-white bg-green-700 rounded-md"
+          "w-full p-2 text-white bg-brand rounded-md py-4 flex items-center justify-center gap-x-2"
         )}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -44,9 +53,9 @@ export default function PriceButton({
     return (
       <button
         disabled
-        className="w-full p-2 text-white bg-green-700 bg-opacity-50 rounded-md"
+        className="w-full p-2 py-4 text-white border rounded-md cursor-not-allowed bg-background-700 gap-x-2 border-background-600"
       >
-        Você faz parte desse plano
+        Você já tem esse plano
       </button>
     );
   }
@@ -54,7 +63,7 @@ export default function PriceButton({
   return (
     <button
       onClick={() => navigate("/assine")} // TODO - alterar para link de pagamento
-      className="w-full p-2 text-white bg-green-700 rounded-md"
+      className="w-full p-2 py-4 text-white rounded-md bg-brand"
     >
       Assinar PRO
     </button>
