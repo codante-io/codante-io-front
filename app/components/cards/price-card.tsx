@@ -30,7 +30,7 @@ export default function PriceCard({
     <article
       className={classNames(
         data?.name.startsWith("PRO")
-          ? "border-brand shadow-lg dark:shadow-blue-400 dark:shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white"
+          ? "border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white"
           : "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl",
         "relative w-[450px]  dark:bg-background-800   rounded-2xl py-6 px-8 pt-3 font-lexend "
       )}
