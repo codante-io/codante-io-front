@@ -12,7 +12,6 @@ import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/background-blur";
 import ChallengeCard from "~/components/cards/challenge-card";
 import PriceCard from "~/components/cards/pricing/price-card";
-import { freePlan, proPlan } from "~/components/cards/pricing/pricingData";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
@@ -22,6 +21,12 @@ import Wave from "~/components/wave";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getHome } from "~/models/home.server";
 import type { User } from "~/models/user.server";
+import {
+  freePlanDetails,
+  freePlanFeatures,
+  proPlanDetails,
+  proPlanFeatures,
+} from "~/components/cards/pricing/pricing-data";
 
 export const loader = async () => {
   return json({
@@ -163,37 +168,6 @@ export default function HomePage() {
             </section>
           </div>
         </section>
-        {/* <Wave position="bottom" />
-        <section
-          id="tracks"
-          className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50"
-        >
-          <div className="container relative mb-6 top-4">
-            <h1 className="flex items-center mb-4 text-3xl font-light font-lexend">
-              <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
-              Trilhas
-            </h1>
-            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
-              Obtenha a experiência de aprendizado completa unindo{" "}
-              <span className="italic font-bold">workshops</span> e{" "}
-              <span className="italic font-bold">mini projetos</span> para
-              aprender temas específicos em programação.
-            </p>
-            <section className="grid grid-cols-1 gap-4 mt-4 mb-6">
-              {homeInfo?.featured_tracks?.map((track) => (
-                <TrackCard key={track.id} track={track} />
-              ))}
-            </section>
-            <section className="flex justify-center w-full mt-2 mb-12">
-              <Link
-                to="/trilhas"
-                className="px-4 py-2 rounded-full bg-background-50 dark:bg-background-700 "
-              >
-                Ver todas
-              </Link>
-            </section>
-          </div>
-        </section> */}
 
         <section
           id="pricing"
@@ -219,23 +193,12 @@ export default function HomePage() {
             </p>
             <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
               <PriceCard
-                featuresByCategory={freePlan}
-                data={{
-                  name: "Gratuito",
-                  price: 0,
-                  installments: 0,
-                }}
+                featuresByCategory={freePlanFeatures}
+                data={freePlanDetails}
               />
               <PriceCard
-                data={{
-                  name: "PRO (Vitalício)",
-                  fullPrice: 948,
-                  banner: "Oferta de lançamento",
-                  immediateSettlementAmount: 588,
-                  price: 49,
-                  installments: 12,
-                }}
-                featuresByCategory={proPlan}
+                data={proPlanDetails}
+                featuresByCategory={proPlanFeatures}
               />
             </section>
           </div>

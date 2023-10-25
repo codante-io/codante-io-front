@@ -1,5 +1,10 @@
 import PriceCard from "~/components/cards/pricing/price-card";
-import { freePlan, proPlan } from "~/components/cards/pricing/pricingData";
+import {
+  freePlanDetails,
+  freePlanFeatures,
+  proPlanDetails,
+  proPlanFeatures,
+} from "~/components/cards/pricing/pricing-data";
 
 export default function AssinePage() {
   return (
@@ -24,23 +29,12 @@ export default function AssinePage() {
 
           <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row">
             <PriceCard
-              featuresByCategory={freePlan}
-              data={{
-                name: "Gratuito",
-                price: 0,
-                installments: 0,
-              }}
+              featuresByCategory={freePlanFeatures}
+              data={freePlanDetails}
             />
             <PriceCard
-              data={{
-                name: "PRO (Vitalício)",
-                fullPrice: 948,
-                banner: "Oferta de lançamento",
-                immediateSettlementAmount: 588,
-                price: 49,
-                installments: 12,
-              }}
-              featuresByCategory={proPlan}
+              data={proPlanDetails}
+              featuresByCategory={proPlanFeatures}
             />
           </section>
         </div>

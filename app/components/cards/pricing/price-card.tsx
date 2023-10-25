@@ -4,27 +4,15 @@ import PriceButton from "./price-button";
 import classNames from "~/utils/class-names";
 import { BsInfoCircle } from "react-icons/bs";
 import TooltipWrapper from "../../tooltip";
+import type { PlanDetails, PlanFeaturesByCategory } from "./pricing-types";
 
 export default function PriceCard({
   data,
   featuresByCategory,
 }: {
   // @TODO: change this to price when the API is ready
-  data: {
-    name: "Gratuito" | "PRO (Vitalício)";
-    price: number;
-    installments: number;
-    fullPrice?: number;
-    immediateSettlementAmount?: number;
-    banner?: string;
-  };
-  featuresByCategory: {
-    [key: string]: {
-      title: string;
-      info?: string;
-      isAvailable: boolean;
-    }[];
-  }[];
+  data: PlanDetails;
+  featuresByCategory: PlanFeaturesByCategory;
 }) {
   return (
     <article
