@@ -1,14 +1,19 @@
 import axios from "axios";
+import { currentToken } from "~/services/auth.server";
 
 export async function sendPagarmePaymentToBackend(
-  token: string,
+  request: Request,
+  pagarmeToken: string,
   paymentMethod: string
 ) {
+  // console.log({ pagarmeToken, paymentMethod });
+  let token = await currentToken({ request });
+
   return axios
     .post(
       `${process.env.API_HOST}/subscribe`,
       {
-        token,
+        pagarmeToken,
         paymentMethod,
       },
       {

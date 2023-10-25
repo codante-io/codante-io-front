@@ -1,8 +1,7 @@
-import { useNavigate } from "@remix-run/react";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { FiGithub } from "react-icons/fi";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
-import { sendPagarmePaymentToBackend } from "~/models/subscription.server";
 import classNames from "~/utils/class-names";
 
 export default function PriceButton({
@@ -12,6 +11,7 @@ export default function PriceButton({
 }) {
   const user = useUserFromOutletContext();
   const navigate = useNavigate();
+  const fetcher = useFetcher();
 
   const [isHovering, setIsHovering] = useState(false);
 
@@ -29,43 +29,45 @@ export default function PriceButton({
   function openModal() {
     //@ts-ignore-next-line
     var checkout = new PagarMeCheckout.Checkout({
-      encryption_key: "ek_test_nWQIY4KP0COFXNZ2I8ztt9WPc40PLr",
+      encryption_key: process.env.PAGARME_ENCRYPTION_KEY,
       success: async function (data: {
         token: string;
         payment_method: string;
       }) {
-        const token = data.token;
+        const pagarmeToken = data.token;
         const paymentMethod = data.payment_method;
 
         // enviar para backend.
         try {
-          const responseData = await sendPagarmePaymentToBackend(
-            token,
-            paymentMethod
+          fetcher.submit(
+            { pagarmeToken, paymentMethod },
+            {
+              method: "post",
+              action: "/api/subscribe",
+            }
           );
-          console.log(responseData);
         } catch (error) {
-          console.log(error);
+          alert("erro!!");
         }
       },
-      error: function (err) {
-        console.log(err);
-        // Mensagem de erro do Front (modal).
+      error: function (err: any) {
+        alert("ERRO!");
       },
       close: function () {
-        console.log("The modal has been closed.");
+        // console.log("The modal has been closed.");
       },
     });
 
     checkout.open({
-      amount: 10000,
+      amount: 58800,
       customerData: "true",
       createToken: "true",
+      maxInstallments: 12,
       items: [
         {
           id: "1",
-          title: "ebook",
-          unit_price: 1500,
+          title: "Codante - Vitalício",
+          unit_price: 58800,
           quantity: 1,
           tangible: "false",
         },

@@ -1,3 +1,4 @@
+import type { LoaderArgs } from "@remix-run/node";
 import PriceCard from "~/components/cards/pricing/price-card";
 import {
   freePlanDetails,
@@ -5,6 +6,10 @@ import {
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/cards/pricing/pricing-data";
+
+export function loader({ request }: LoaderArgs) {
+  return { request };
+}
 
 export default function AssinePage() {
   return (
