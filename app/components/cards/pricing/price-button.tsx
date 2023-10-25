@@ -63,7 +63,7 @@ export default function PriceButton({
   return (
     <button
       onClick={() => navigate("/assine")} // TODO - alterar para link de pagamento
-      className="w-full p-2 text-white rounded-md sm:py-2 md:py-4 bg-brand"
+      className="w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand"
     >
       Assinar PRO
     </button>
