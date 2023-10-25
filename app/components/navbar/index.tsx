@@ -10,6 +10,7 @@ import { setActiveClassForPath } from "~/utils/path-utils";
 import LinkToLoginWithRedirect from "../link-to-login-with-redirect";
 import ProfileMenu from "./profile-menu";
 import switchSound from "./switch.mp3";
+import type { User } from "~/models/user.server";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -57,7 +58,7 @@ export default function Navbar({
   user,
   hideLinks,
 }: {
-  user: any;
+  user: User;
   hideLinks?: boolean;
 }) {
   return (
@@ -126,7 +127,7 @@ function DesktopNavbar({
   user,
   hideLinks,
 }: {
-  user: any;
+  user: User;
   hideLinks?: boolean;
 }) {
   const { colorMode } = useColorMode();
@@ -186,22 +187,24 @@ function DesktopNavbar({
                   {item.name}
                 </NavLink>
               ))}
-              <NavLink
-                to="/assine"
-                className={({ isActive }) =>
-                  classNames(
-                    isActive
-                      ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 dark:text-white text-gray-700"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
-                    "rounded-md px-3 py-2 text-sm font-medium"
-                  )
-                }
-              >
-                Seja{" "}
-                <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
-                  PRO
-                </span>
-              </NavLink>
+              {!user?.is_pro && (
+                <NavLink
+                  to="/assine"
+                  className={({ isActive }) =>
+                    classNames(
+                      isActive
+                        ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 dark:text-white text-gray-700"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
+                      "rounded-md px-3 py-2 text-sm font-medium"
+                    )
+                  }
+                >
+                  Seja{" "}
+                  <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+                    PRO
+                  </span>
+                </NavLink>
+              )}
               <Menu as="div" className="relative z-10 inline-block text-left">
                 <div>
                   <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
@@ -289,7 +292,7 @@ function MobileNavbar({
   hideLinks,
 }: {
   open: boolean;
-  user: any;
+  user: User;
   hideLinks?: boolean;
 }) {
   const matches = useMatches();
@@ -322,19 +325,21 @@ function MobileNavbar({
                   {item.name}
                 </Disclosure.Button>
               ))}
-              <Disclosure.Button
-                onClick={() => navigate("/assine")}
-                className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
-                  matches,
-                  "/assine",
-                  "dark:bg-background-800 dark:text-white bg-white text-gray-700"
-                )} `}
-              >
-                Seja{" "}
-                <span className="text-white font-semibold dark:text-gray-900 px-[2px] py-[1px] rounded bg-amber-400">
-                  PRO
-                </span>
-              </Disclosure.Button>
+              {!user?.is_pro && (
+                <Disclosure.Button
+                  onClick={() => navigate("/assine")}
+                  className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
+                    matches,
+                    "/assine",
+                    "dark:bg-background-800 dark:text-white bg-white text-gray-700"
+                  )} `}
+                >
+                  Seja{" "}
+                  <span className="text-white font-semibold dark:text-gray-900 px-[2px] py-[1px] rounded bg-amber-400">
+                    PRO
+                  </span>
+                </Disclosure.Button>
+              )}
               <Menu
                 as="div"
                 className="block w-full px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
