@@ -72,7 +72,7 @@ export default function HomePage() {
               <>
                 {user ? (
                   <Link to="/assine">
-                    <button className="flex items-center px-4 py-2 text-gray-800 rounded-full bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400">
+                    <button className="flex items-center px-4 py-2 text-gray-800 rounded-full bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
                       <FaCrown className="mr-2 text-amber-400" /> Seja PRO
                     </button>
                   </Link>
@@ -88,7 +88,7 @@ export default function HomePage() {
                   href="https://discord.gg/fmVw468ZMR"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
                 >
                   <BsDiscord />
                   Entre na comunidade
