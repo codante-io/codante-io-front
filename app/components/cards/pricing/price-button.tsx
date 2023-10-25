@@ -27,6 +27,7 @@ export default function PriceButton({
   }, []);
 
   function openModal() {
+    //@ts-ignore-next-line
     var checkout = new PagarMeCheckout.Checkout({
       encryption_key: "ek_test_nWQIY4KP0COFXNZ2I8ztt9WPc40PLr",
       success: async function (data: {
