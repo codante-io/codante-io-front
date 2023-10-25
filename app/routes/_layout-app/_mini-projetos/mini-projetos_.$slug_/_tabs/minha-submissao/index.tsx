@@ -6,7 +6,7 @@ import {
 } from "@remix-run/react";
 import LoadingButton from "~/components/form/loading-button";
 
-import type { Challenge } from "~/models/challenge.server";
+import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
 import { submitChallenge } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
@@ -39,10 +39,15 @@ function getMetadataFromFormData(formData: FormData) {
 
 export default function MySubmission() {
   // get challengeUser from outlet context
-  const { challengeUser, challenge } = useOutletContext<{
+  const { challengeUser, challenge, challengeSubmissions } = useOutletContext<{
     challengeUser: ChallengeUser;
     challenge: Challenge;
+    challengeSubmissions: ChallengeSubmission[];
   }>();
+
+  const userSubmission = challengeSubmissions.find(
+    (submission) => submission.id === challengeUser.pivot.id
+  );
 
   const errors = useActionData();
   const transition = useNavigation();
@@ -55,16 +60,11 @@ export default function MySubmission() {
       <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
         Minha submissão
       </h1>
-      {challengeUser?.pivot?.submission_url ? (
+      {userSubmission ? (
         <SubmissionCard
-          submissionUrl={challengeUser?.pivot?.submission_url}
-          githubUrl={challengeUser?.pivot?.fork_url}
-          submissionImage={challengeUser?.pivot?.submission_image_url}
-          user={{
-            is_pro: challengeUser?.is_pro,
-            avatar_url: challengeUser?.user_avatar_url,
-            name: challengeUser?.user_name,
-          }}
+          submission={{ id: userSubmission.id, ...challengeUser.pivot }}
+          user={challengeUser}
+          reactions={userSubmission?.reactions}
         />
       ) : (
         <Form method="POST">

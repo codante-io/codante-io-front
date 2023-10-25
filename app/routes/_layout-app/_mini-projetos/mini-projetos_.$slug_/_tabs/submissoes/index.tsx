@@ -21,16 +21,14 @@ export default function Submissions() {
         {challengeSubmissions.map((submission) => (
           <SubmissionCard
             key={submission.id}
-            submissionUrl={submission.submission_url}
-            githubUrl={submission.fork_url}
-            submissionImage={submission.submission_image_url}
+            submission={submission}
             user={{
               is_pro: submission.is_pro,
               avatar_url: submission.user_avatar_url,
               name: submission.user_name,
             }}
             reactions={submission.reactions}
-            submissionId={submission.id}
+            size="medium"
           />
         ))}
       </div>
