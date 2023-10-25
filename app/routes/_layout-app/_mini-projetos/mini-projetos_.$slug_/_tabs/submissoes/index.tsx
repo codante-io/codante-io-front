@@ -1,6 +1,4 @@
 import { useOutletContext } from "@remix-run/react";
-// import ReactionsButton from "~/components/reactions-button";
-// import UserAvatar from "~/components/user-avatar";
 
 import type { ChallengeSubmission } from "~/models/challenge.server";
 import SubmissionCard from "../../components/submission-card";
