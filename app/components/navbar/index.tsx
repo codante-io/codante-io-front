@@ -251,28 +251,23 @@ export default function Navbar({
                         <Menu.Items className="w-40 m-auto mt-2 divide-y rounded-md shadow-lg bg-background-150 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <div className="px-1 py-1 ">
                             {moreMenuNavigation.map((item) => (
-                              <Disclosure.Button
-                                key={item.name}
-                                className="block w-full"
-                              >
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <button
-                                      className={`${
-                                        active &&
-                                        "bg-background-100 dark:bg-background-600"
-                                      } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                                      onClick={() => {
-                                        item.external
-                                          ? window.open(item.href, "_blank")
-                                          : navigate(item.href);
-                                      }}
-                                    >
-                                      {item.name}
-                                    </button>
-                                  )}
-                                </Menu.Item>
-                              </Disclosure.Button>
+                              <Menu.Item key={item.name}>
+                                {({ active }) => (
+                                  <button
+                                    className={`${
+                                      active &&
+                                      "bg-background-100 dark:bg-background-600"
+                                    } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                    onClick={() => {
+                                      item.external
+                                        ? window.open(item.href, "_blank")
+                                        : navigate(item.href);
+                                    }}
+                                  >
+                                    {item.name}
+                                  </button>
+                                )}
+                              </Menu.Item>
                             ))}
                           </div>
                         </Menu.Items>
