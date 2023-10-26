@@ -238,7 +238,7 @@ export default function Navbar({
                     >
                       <Menu.Button className="flex items-center justify-center w-full px-3 py-2 rounded-md hover:bg-background-100 dark:hover:bg-background-700">
                         Mais
-                        <BsFillCaretDownFill className="ml-1 text-xs" />
+                        <BsFillCaretDownFill className="ml-1 text-xs transition-transform ui-not-open:rotate-0 ui-open:rotate-180" />
                       </Menu.Button>
                       <Transition
                         enter="transition ease-out duration-150"
