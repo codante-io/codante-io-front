@@ -26,38 +26,65 @@ export default function PriceButton({
     };
   }, []);
 
-  function openModal() {
-    //@ts-ignore-next-line
+  async function sendPaymentRequest(
+    pagarmeToken: string,
+    paymentMethod: string
+  ) {
+    // const formData = new FormData();
+    // formData.append("pagarmeToken", pagarmeToken);
+    // formData.append("paymentMethod", paymentMethod);
+
+    try {
+      fetcher.submit(
+        { pagarmeToken, paymentMethod },
+        { method: "post", action: "/assine" }
+      );
+    } catch (error) {
+      // console.log(error);
+    }
+
+    //   const response = await fetch("/assine", {
+    //     method: "POST",
+    //     body: formData,
+    //   });
+
+    //   const data = await response.json();
+    //   console.log(response);
+    //   console.log(data);
+
+    //   if (!response.ok) {
+    //     toast.error(data.error);
+    //     toast.error(`Erro no pagamento, transação não realizada.`);
+    //   } else {
+    //     toast.success("Pagamento realizado com sucesso!", {
+    //       duration: 5000,
+    //       style: {
+    //         minWidth: "500px",
+    //         padding: "20px",
+    //         fontSize: "18px",
+    //       },
+    //     });
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
+  }
+
+  async function openModal() {
+    // @ts-ignore-next-line
     var checkout = new PagarMeCheckout.Checkout({
-      encryption_key: process.env.PAGARME_ENCRYPTION_KEY,
+      // @ts-ignore-next-line
+      encryption_key: window.ENV.PAGARME_ENCRYPTION_KEY,
       success: async function (data: {
         token: string;
         payment_method: string;
       }) {
-        const pagarmeToken = data.token;
-        const paymentMethod = data.payment_method;
-
-        // enviar para backend.
-        try {
-          fetcher.submit(
-            { pagarmeToken, paymentMethod },
-            {
-              method: "post",
-              action: "/api/subscribe",
-            }
-          );
-        } catch (error) {
-          alert("erro!!");
-        }
+        sendPaymentRequest(data.token, data.payment_method);
       },
       error: function (err: any) {
-        alert("ERRO!");
-      },
-      close: function () {
-        // console.log("The modal has been closed.");
+        // console.log("Erro no Modal!");
       },
     });
-
     checkout.open({
       amount: 58800,
       customerData: "true",

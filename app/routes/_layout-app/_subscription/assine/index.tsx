@@ -1,4 +1,5 @@
 import type { LoaderArgs } from "@remix-run/node";
+import axios from "axios";
 import PriceCard from "~/components/cards/pricing/price-card";
 import {
   freePlanDetails,
@@ -6,9 +7,56 @@ import {
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/cards/pricing/pricing-data";
+import { currentToken } from "~/services/auth.server";
 
 export function loader({ request }: LoaderArgs) {
   return { request };
+}
+
+export async function action({ request }: { request: Request }) {
+  const formData = await request.formData();
+  const pagarmeToken = formData.get("pagarmeToken");
+  const paymentMethod = formData.get("paymentMethod");
+
+  let token = await currentToken({ request });
+
+  try {
+    const response = await axios.post(
+      `${process.env.API_HOST}/subscribe`,
+      {
+        pagarmeToken,
+        paymentMethod,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+
+    // Redirect to another page
+    return new Response(JSON.stringify(response.data), {
+      status: 302,
+      headers: { Location: "/assine/sucesso" },
+    });
+
+    // return new Response(JSON.stringify(response.data), {
+    //   status: 200,
+    //   headers: {
+    //     "Content-Type": "application/pdf",
+    //   },
+    // });
+  } catch (error: any) {
+    // console.log('errooooo')
+    // console.log(error)
+    return new Response(
+      JSON.stringify({ error: error.response.data.message }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
 }
 
 export default function AssinePage() {
