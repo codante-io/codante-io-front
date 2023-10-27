@@ -156,8 +156,40 @@ export default function Account() {
           size={24}
           className="inline-block mr-2 text-blue-300 dark:text-blue-800"
         />{" "}
+        Minha Assinatura
+      </h2>
+
+      <AuthCard className="max-w-xl mt-6">
+        <p className="mb-6 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
+          Codante
+          <span className="px-1 mx-1 text-xs rounded py-0.5 bg-amber-400 text-background-50 dark:text-background-900">
+            PRO
+          </span>{" "}
+          - Vitalício
+        </p>
+        <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
+          Status: <span className="text-green-400">Ativa</span>
+        </p>
+        <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
+          Início: <span className="text-white">27/10/2023</span>{" "}
+        </p>
+        <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
+          Término: <span className="text-white">Vitalício</span>
+        </p>
+        <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
+          Forma de Pagamento:{" "}
+          <span className="text-white">Cartão de Crédito</span>
+        </p>
+      </AuthCard>
+
+      <h2 className="flex items-center mt-12 text-xl">
+        <MdKeyboardDoubleArrowRight
+          size={24}
+          className="inline-block mr-2 text-blue-300 dark:text-blue-800"
+        />{" "}
         Alterar Senha
       </h2>
+
       <AuthCard className="max-w-xl mt-6">
         <Form replace method="post">
           <Input
