@@ -147,7 +147,7 @@ export default function Navbar({
                           onClick={() => playSound()}
                         >
                           <AiOutlineMenu />
-                          <BsFillCaretDownFill className="w-2 h-2 p-0 m-0 ml-1 transition-transform ui-open:rotate-180" />
+                          <BsFillCaretDownFill className="w-[10px] h-[10px] p-0 m-0 ml-1 transition-transform ui-open:rotate-180" />
                         </Menu.Button>
                         <Transition
                           enter="transition ease-out duration-150"
