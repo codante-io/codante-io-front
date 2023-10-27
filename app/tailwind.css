@@ -9,6 +9,15 @@
   background-clip: text;
 }
 
+.scrollbar-thumb::-webkit-scrollbar-thumb {
+  background: #bfdbfe;
+}
+
+.overflow-scrollbar::-webkit-scrollbar {
+  height: 3px;
+  /* background-color: #BFDBFE */
+}
+
 :root {
   font-family: "Inter", sans-serif;
 }
