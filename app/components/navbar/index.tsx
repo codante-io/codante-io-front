@@ -2,7 +2,6 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
-import { RxDropdownMenu } from "react-icons/rx";
 import useSound from "use-sound";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -10,6 +9,7 @@ import { setActiveClassForPath } from "~/utils/path-utils";
 import LinkToLoginWithRedirect from "../link-to-login-with-redirect";
 import ProfileMenu from "./profile-menu";
 import switchSound from "./switch.mp3";
+import { AiOutlineMenu } from "react-icons/ai";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -142,14 +142,13 @@ export default function Navbar({
                         as="div"
                         className="relative z-10 inline-block text-left"
                       >
-                        <div>
-                          <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
-                            <RxDropdownMenu
-                              className="text-2xl"
-                              aria-label="Dropdown menu"
-                            />
-                          </Menu.Button>
-                        </div>
+                        <Menu.Button
+                          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                          onClick={() => playSound()}
+                        >
+                          <AiOutlineMenu />
+                          <BsFillCaretDownFill className="w-2 h-2 p-0 m-0 ml-1 transition-transform ui-open:rotate-180" />
+                        </Menu.Button>
                         <Transition
                           enter="transition ease-out duration-150"
                           enterFrom="transform opacity-0 scale-95"
