@@ -9,13 +9,24 @@
   background-clip: text;
 }
 
-.scrollbar-thumb::-webkit-scrollbar-thumb {
-  background: #bfdbfe;
+.scrollbar-thumb {
+  scrollbar-color: #bfdbfe #f7fafc;
+}
+
+.overflow-scrollbar {
+  scrollbar-width: 1px;
 }
 
 .overflow-scrollbar::-webkit-scrollbar {
   height: 3px;
-  /* background-color: #BFDBFE */
+}
+
+.overflow-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #bfdbfe;
+}
+
+.overflow-scrollbar::-moz-scrollbar-thumb {
+  background-color: #bfdbfe;
 }
 
 :root {

@@ -30,7 +30,7 @@ export default function ChallengeCard({
     >
       <article
         className={`group
-          relative max-w-[300px] h-[450px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
+          relative xl:max-w-[276px] max-w-[298px] h-[450px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ${className}`}
       >
@@ -64,12 +64,12 @@ export default function ChallengeCard({
                 {challenge?.name}
               </h2>
               {/* <div className="break-all tags"> */}
-              <div className="pb-1 overflow-x-auto overflow-scrollbar scrollbar-thumb tags">
+              <div className="w-full pb-1 overflow-x-auto tags">
                 {challenge?.tags?.map((tag) => (
                   <CardItemTag
                     key={tag.id ?? tag.name}
                     tagName={tag.name}
-                    className="text-blue-900 bg-blue-200 pointer-events-none dark:text-gray-300 dark:bg-blue-900"
+                    className="text-blue-900 bg-blue-200 dark:text-gray-300 dark:bg-blue-900"
                   />
                 ))}
               </div>
