@@ -92,13 +92,20 @@ export default function WorkshopSlug() {
       )}
 
       {workshop.status === "streaming" && (
-        <BannerAlert bgColor="bg-transparent" borderColor="border-red-500">
-          <MdLiveTv className="w-6 h-6 mr-4 text-red-500 fill-current dark:text-red-500" />
+        <BannerAlert
+          bgColor="dark:bg-transparent bg-white"
+          borderColor="border-red-500"
+          className="w-full "
+        >
+          <MdLiveTv className="w-10 h-10 mb-4 text-red-500 fill-current dark:text-red-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
           <div>
-            <BannerAlert.Title textColor="text-white">
+            <BannerAlert.Title
+              textColor="dark:text-white text-gray-800"
+              className="mb-3 text-center md:text-left md:mb-0"
+            >
               Esse workshop está acontecendo agora!
             </BannerAlert.Title>
-            <BannerAlert.Subtitle textColor="text-white">
+            <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-center md:text-left">
               Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥
             </BannerAlert.Subtitle>
           </div>
