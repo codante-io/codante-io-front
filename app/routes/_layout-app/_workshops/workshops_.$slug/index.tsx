@@ -24,10 +24,12 @@ import {
   getPublishedDateAndTime,
 } from "~/utils/interval";
 import MarkdownRenderer from "~/components/markdown-renderer";
-import { MdComputer } from "react-icons/md";
+import { MdComputer, MdLiveTv } from "react-icons/md";
 import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
+import BannerAlertInfo from "~/components/banner-alert/banner-alert-info";
+import YoutubePlayer from "~/components/youtube-player";
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (!data?.workshop) return {};
@@ -79,7 +81,7 @@ export default function WorkshopSlug() {
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
-        <BannerAlert
+        <BannerAlertInfo
           title="Ei! Esse workshop ainda não aconteceu!"
           subtitle={`Você poderá assisti-lo ao vivo${
             publishedDate ? ` no dia ${publishedDate}` : " em breve"
@@ -88,6 +90,21 @@ export default function WorkshopSlug() {
           }. Se preferir, será disponibilizada também a versão editada.`}
         />
       )}
+
+      {workshop.status === "streaming" && (
+        <BannerAlert bgColor="bg-transparent" borderColor="border-red-500">
+          <MdLiveTv className="w-6 h-6 mr-4 text-red-500 fill-current dark:text-red-500" />
+          <div>
+            <BannerAlert.Title textColor="text-white">
+              Esse workshop está acontecendo agora!
+            </BannerAlert.Title>
+            <BannerAlert.Subtitle textColor="text-white">
+              Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥
+            </BannerAlert.Subtitle>
+          </div>
+        </BannerAlert>
+      )}
+
       {/* Header */}
       <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
@@ -98,6 +115,7 @@ export default function WorkshopSlug() {
           </h1>
         </div>
       </header>
+
       {/* layout */}
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
         {/* left Side */}
@@ -114,10 +132,14 @@ export default function WorkshopSlug() {
             />
           </div>
 
-          {/* Difficulty Card */}
-
           {/* Video */}
-          {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
+          {workshop.status === "streaming" && workshop.streaming_url && (
+            <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
+          )}
+          {workshop.video_url && workshop.status !== "streaming" && (
+            <VimeoPlayer vimeoUrl={workshop.video_url} />
+          )}
+
           <div className="mt-6 lg:mt-12">
             <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
             <Subtitle text="Sobre o Workshop" />

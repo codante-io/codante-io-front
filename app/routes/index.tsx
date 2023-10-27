@@ -20,6 +20,8 @@ import Wave from "~/components/wave";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getHome } from "~/models/home.server";
 import type { User } from "~/models/user.server";
+import BannerAlert from "~/components/banner-alert";
+import { MdLiveTv } from "react-icons/md";
 
 export const loader = async () => {
   return json({
@@ -52,6 +54,33 @@ export default function HomePage() {
           className="flex justify-center w-full md:min-h-screen"
         >
           <div className="container flex flex-col items-center">
+            {/* Live Streaming Banner */}
+            {homeInfo.live_streaming_workshop && (
+              <BannerAlert
+                bgColor="dark:bg-transparent bg-white"
+                borderColor="border-red-500"
+                className="w-full max-w-2xl mt-2 md:-mb-5"
+              >
+                <MdLiveTv className="w-10 h-10 mb-4 text-red-500 fill-current dark:text-red-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
+                <div>
+                  <BannerAlert.Title
+                    textColor="dark:text-white text-gray-800"
+                    className="mb-3 text-center md:text-left md:mb-0"
+                  >
+                    Existe um workshop acontecendo ao vivo agora!
+                  </BannerAlert.Title>
+                  <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-center md:text-left">
+                    Clique para assistir juntos o streaming do workshop:{" "}
+                    <Link
+                      to={`/workshops/${homeInfo.live_streaming_workshop.slug}`}
+                      className="underline"
+                    >
+                      <b>{homeInfo.live_streaming_workshop.name}</b>
+                    </Link>
+                  </BannerAlert.Subtitle>
+                </div>
+              </BannerAlert>
+            )}
             <h1 className="text-3xl font-light text-center md:mt-16 font-lexend md:text-5xl">
               Evolua na programação{" "}
               <span className="pr-4 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
