@@ -2,7 +2,6 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
-import { RxDropdownMenu } from "react-icons/rx";
 import useSound from "use-sound";
 import ToggleColorMode from "~/components/toggle-color-mode";
 import { useColorMode } from "~/contexts/color-mode-context";
@@ -10,6 +9,7 @@ import { setActiveClassForPath } from "~/utils/path-utils";
 import LinkToLoginWithRedirect from "../link-to-login-with-redirect";
 import ProfileMenu from "./profile-menu";
 import switchSound from "./switch.mp3";
+import { AiOutlineMenu } from "react-icons/ai";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -142,14 +142,13 @@ export default function Navbar({
                         as="div"
                         className="relative z-10 inline-block text-left"
                       >
-                        <div>
-                          <Menu.Button className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900">
-                            <RxDropdownMenu
-                              className="text-2xl"
-                              aria-label="Dropdown menu"
-                            />
-                          </Menu.Button>
-                        </div>
+                        <Menu.Button
+                          className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                          onClick={() => playSound()}
+                        >
+                          <AiOutlineMenu />
+                          <BsFillCaretDownFill className="w-[10px] h-[10px] p-0 m-0 ml-1 transition-transform ui-open:rotate-180" />
+                        </Menu.Button>
                         <Transition
                           enter="transition ease-out duration-150"
                           enterFrom="transform opacity-0 scale-95"
@@ -234,11 +233,14 @@ export default function Navbar({
                     ))}
                     <Menu
                       as="div"
-                      className="block w-full px-3 py-2 text-base font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                      className="block w-full text-base font-medium text-gray-700 dark:text-gray-300"
                     >
-                      <Menu.Button className="flex items-center justify-center w-full">
+                      <Menu.Button
+                        className="flex items-center justify-center w-full px-3 py-2 rounded-md hover:bg-background-100 dark:hover:bg-background-700"
+                        onClick={() => playSound()}
+                      >
                         Mais
-                        <BsFillCaretDownFill className="ml-1 text-xs" />
+                        <BsFillCaretDownFill className="ml-1 text-xs transition-transform ui-not-open:rotate-0 ui-open:rotate-180" />
                       </Menu.Button>
                       <Transition
                         enter="transition ease-out duration-150"
@@ -248,31 +250,26 @@ export default function Navbar({
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="w-40 m-auto mt-2 divide-y rounded-md shadow-lg bg-background-150 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="w-full m-auto mt-2 divide-y rounded-md shadow-lg focus:outline-none">
                           <div className="px-1 py-1 ">
                             {moreMenuNavigation.map((item) => (
-                              <Disclosure.Button
-                                key={item.name}
-                                className="block w-full"
-                              >
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <button
-                                      className={`${
-                                        active &&
-                                        "bg-background-100 dark:bg-background-600"
-                                      } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
-                                      onClick={() => {
-                                        item.external
-                                          ? window.open(item.href, "_blank")
-                                          : navigate(item.href);
-                                      }}
-                                    >
-                                      {item.name}
-                                    </button>
-                                  )}
-                                </Menu.Item>
-                              </Disclosure.Button>
+                              <Menu.Item key={item.name}>
+                                {({ active }) => (
+                                  <button
+                                    className={`${
+                                      active &&
+                                      "bg-background-100 dark:bg-background-700"
+                                    } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                                    onClick={() => {
+                                      item.external
+                                        ? window.open(item.href, "_blank")
+                                        : navigate(item.href);
+                                    }}
+                                  >
+                                    {item.name}
+                                  </button>
+                                )}
+                              </Menu.Item>
                             ))}
                           </div>
                         </Menu.Items>
