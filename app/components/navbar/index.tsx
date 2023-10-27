@@ -236,7 +236,10 @@ export default function Navbar({
                       as="div"
                       className="block w-full text-base font-medium text-gray-700 dark:text-gray-300"
                     >
-                      <Menu.Button className="flex items-center justify-center w-full px-3 py-2 rounded-md hover:bg-background-100 dark:hover:bg-background-700">
+                      <Menu.Button
+                        className="flex items-center justify-center w-full px-3 py-2 rounded-md hover:bg-background-100 dark:hover:bg-background-700"
+                        onClick={() => playSound()}
+                      >
                         Mais
                         <BsFillCaretDownFill className="ml-1 text-xs transition-transform ui-not-open:rotate-0 ui-open:rotate-180" />
                       </Menu.Button>
