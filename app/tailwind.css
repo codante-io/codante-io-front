@@ -9,29 +9,26 @@
   background-clip: text;
 }
 
-.scrollbar-thumb {
-  scrollbar-color: #bfdbfe #f7fafc;
-}
-
-.overflow-scrollbar {
-  scrollbar-width: 1px;
-}
-
+/* WebKit */
 .overflow-scrollbar::-webkit-scrollbar {
   height: 3px;
+  background-color: lightgray;
 }
 
 .overflow-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #bfdbfe;
+  background-color: #3b82f6;
 }
 
-.overflow-scrollbar::-moz-scrollbar-thumb {
-  background-color: #bfdbfe;
+/* Firefox */
+.overflow-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 transparent;
 }
 
 :root {
   font-family: "Inter", sans-serif;
 }
+
 @supports (font-variation-settings: normal) {
   :root {
     font-family: "Inter var", sans-serif;

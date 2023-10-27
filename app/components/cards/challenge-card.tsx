@@ -55,7 +55,7 @@ export default function ChallengeCard({
         )}
         <div className="flex flex-col justify-between p-6 pt-3">
           <div>
-            <div className="mb-4 card-header">
+            <div className="mb-2 card-header">
               <CardItemDifficulty
                 className="mb-3"
                 difficulty={challenge?.difficulty}
@@ -64,7 +64,7 @@ export default function ChallengeCard({
                 {challenge?.name}
               </h2>
               {/* <div className="break-all tags"> */}
-              <div className="w-full pb-1 overflow-x-auto tags">
+              <div className="pb-1 overflow-x-auto overflow-scrollbar scrollbar-thumb tags">
                 {challenge?.tags?.map((tag) => (
                   <CardItemTag
                     key={tag.id ?? tag.name}
