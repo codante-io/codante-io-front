@@ -12,7 +12,7 @@ type Submission = {
 };
 
 type SubmissionUser = {
-  is_pro: 0 | 1;
+  is_pro: boolean;
   avatar_url?: string;
   name: string;
 };
