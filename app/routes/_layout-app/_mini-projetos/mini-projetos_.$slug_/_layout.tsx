@@ -38,6 +38,8 @@ import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import type { User } from "~/models/user.server";
 
 export const meta: MetaFunction = ({ data, params }) => {
   // para não quebrar se não houver challenge ainda.
@@ -115,7 +117,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     return abort404();
   }
 
-  const user = await getUser({ request });
+  const user = (await getUser({ request })) as User | null;
 
   let challengeUser;
   if (user) {
@@ -266,14 +268,42 @@ export default function ChallengeSlug() {
                   className="inline mr-2 text-blue-300 dark:text-blue-900"
                 />
                 <span className="inline font-extralight">Projeto</span>{" "}
-                <span className="inline font-bold underline decoration-solid first-letter:lowercase">
-                  {challenge?.name}
-                </span>
+                <span className="inline font-bold">{challenge?.name}</span>
               </span>
             </h1>
+
             <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
               {challenge?.short_description}
             </p>
+            {challengeUser && (
+              <div
+                className={`mb inline-flex items-center gap-x-1.5 rounded-xl px-3 border py-1.5 xl:text-xs text-[0.65rem] shadow-sm font-light text-gray-600 dark:text-gray-300 ${
+                  challengeUser.pivot?.completed
+                    ? "border-green-500"
+                    : "border-amber-500"
+                }`}
+              >
+                {challengeUser.pivot?.completed ? (
+                  <CheckIcon className="w-3 h-3 text-green-500 dark:text-green-300" />
+                ) : (
+                  <svg
+                    className={`h-1.5 w-1.5 ${
+                      challengeUser.pivot?.completed
+                        ? "fill-brand-500"
+                        : "animate-pulse fill-amber-400"
+                    }`}
+                    viewBox="0 0 6 6"
+                    aria-hidden="true"
+                  >
+                    <circle cx={3} cy={3} r={3} />
+                  </svg>
+                )}
+
+                {challengeUser.pivot?.completed
+                  ? "Projeto concluído!"
+                  : "Participando"}
+              </div>
+            )}
             <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
           </div>
         </div>
