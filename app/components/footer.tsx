@@ -98,6 +98,12 @@ export default function Footer() {
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
           <Link
+            to={"/termos-de-uso"}
+            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
+          >
+            Termos de Uso
+          </Link>
+          <Link
             to={"/politica-de-privacidade"}
             className="block text-xs leading-5 text-center text-gray-500 hover:underline"
           >
@@ -111,7 +117,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <div className="p-2 text-sm font-light text-center text-gray-400 bg-background-950">
+      <div className="p-2 text-sm font-light text-center text-gray-700 dark:text-gray-400 dark:bg-background-950 bg-background-150">
         © {new Date().getFullYear()} Codante Educação Ltda CNPJ:
         26.607.049/0001-09
       </div>
