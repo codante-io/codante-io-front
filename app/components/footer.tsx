@@ -2,22 +2,18 @@ import { Link } from "@remix-run/react";
 
 export default function Footer() {
   const navigation = [
-    // {
-    //   name: "Email",
-    //   href: "mailto:contato@gmail.com",
-    //   icon: (props: any) => (
-    //     <svg
-    //       viewBox="0 0 24 24"
-    //       fill="currentColor"
-    //       {...props}
-    //     >
-    //       <path
-    //         fillRule="evenodd"
-    //         d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5l-8-5V6l8 5l8-5v2z"
-    //       />
-    //     </svg>
-    //   ),
-    // },
+    {
+      name: "Email",
+      href: "mailto:contato@gmail.com",
+      icon: (props: any) => (
+        <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+          <path
+            fillRule="evenodd"
+            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5l-8-5V6l8 5l8-5v2z"
+          />
+        </svg>
+      ),
+    },
     {
       name: "Linkedin",
       href: "https://www.linkedin.com/company/codante/",
@@ -101,10 +97,6 @@ export default function Footer() {
           ))}
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
-          <p className="text-xs leading-5 text-gray-500">
-            &copy; {new Date().getFullYear()} Codante.io
-          </p>
-
           <Link
             to={"/politica-de-privacidade"}
             className="block text-xs leading-5 text-center text-gray-500 hover:underline"
@@ -118,6 +110,10 @@ export default function Footer() {
             Changelog do Codante
           </a>
         </div>
+      </div>
+      <div className="p-2 text-sm font-light text-center text-gray-400 bg-background-950">
+        © {new Date().getFullYear()} Codante Educação Ltda CNPJ:
+        26.607.049/0001-09
       </div>
     </footer>
   );
