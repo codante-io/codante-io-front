@@ -3,18 +3,18 @@ import TooltipWrapper from "../tooltip";
 export default function UserAvatar({
   avatarUrl,
   className = "w-7 h-7 m-[2px]",
-  isPro = 0,
+  isPro = false,
   showTooltip = true,
   cursor = "cursor-default",
 }: {
   key?: number;
   avatarUrl?: string;
   className?: string;
-  isPro?: 0 | 1;
+  isPro?: boolean;
   showTooltip?: boolean;
   cursor?: string;
 }) {
-  if (isPro === 1) {
+  if (isPro) {
     return (
       <>
         {showTooltip ? (

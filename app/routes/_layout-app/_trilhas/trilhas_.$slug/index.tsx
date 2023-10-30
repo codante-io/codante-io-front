@@ -6,7 +6,10 @@ import CardItemDifficulty from "~/components/cards/card-item-difficulty";
 import { getTrack } from "~/models/track.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 import ChallengeCard from "~/components/cards/challenge-card";
-import type { Challenge } from "~/models/challenge.server";
+import type {
+  ChallengeCard as ChallengeCardType,
+  Challenge,
+} from "~/models/challenge.server";
 import type { Workshop } from "~/models/workshop.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
@@ -54,7 +57,7 @@ export default function TrackSlug() {
             {track.name}
           </h1>
         </div>
-        <p className="max-w-3xl dark:text-gray-50 text-gray-600">
+        <p className="max-w-3xl text-gray-600 dark:text-gray-50">
           {track.short_description}
         </p>
         <div className="inline-flex w-full gap-6 px-2 py-4 mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-200 dark:bg-background-800 rounded-xl">
@@ -73,7 +76,9 @@ export default function TrackSlug() {
                 ) ? (
                   <WorkshopCard workshop={workshopOrChallenge as Workshop} />
                 ) : (
-                  <ChallengeCard challenge={workshopOrChallenge as Challenge} />
+                  <ChallengeCard
+                    challenge={workshopOrChallenge as ChallengeCardType}
+                  />
                 )}
                 {track.trackables &&
                   index !== track?.trackables?.length - 1 && (

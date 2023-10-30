@@ -110,7 +110,7 @@ export default function Account() {
         <span className="hidden ml-3 text-base font-light md:inline dark:text-gray-300">
           {user.name}
         </span>
-        {user.is_pro === 1 && <ProBadge />}
+        {user.is_pro && <ProBadge />}
       </h2>
 
       <AuthCard className="max-w-xl mt-6">

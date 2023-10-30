@@ -8,7 +8,7 @@ export type User = {
   created_at?: string;
   is_admin?: boolean;
   updated_at?: string;
-  is_pro: 0 | 1;
+  is_pro: boolean;
 };
 
 export type ChallengeUser = User & {
@@ -20,5 +20,6 @@ export type ChallengeUser = User & {
     joined_discord: boolean;
     submission_url: string;
     submission_image_url: string;
+    id?: string;
   };
 };

@@ -19,13 +19,19 @@ export default function Overview({
   return (
     <div className="container grid grid-cols-3 gap-10">
       <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">
-        {challenge.video_url && (
+        {challenge.video_url ? (
           <div>
             {/* <h1 className="flex items-center text-2xl font-semibold font-lexend text-brand">Intro</h1> */}
             <section className="relative mb-8">
               <VimeoPlayer vimeoUrl={challenge.video_url} />
             </section>
           </div>
+        ) : (
+          <img
+            src={challenge.image_url}
+            alt="Project preview"
+            className="rounded-lg bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500"
+          />
         )}
         <div>
           <MarkdownRenderer markdown={challenge?.description} />
@@ -33,26 +39,7 @@ export default function Overview({
       </div>
       <div className="col-span-3 space-y-10 lg:space-y-12 lg:col-span-1">
         <div>
-          <div className="flex flex-wrap items-center justify-between mb-4 xl:flex-nowrap">
-            <h1 className="text-2xl font-semibold font-lexend">
-              {challengeUser ? "Progresso" : "Participe"}
-            </h1>
-            {challengeUser && (
-              <div className="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-1.5 py-0.5 xl:text-xs text-[0.65rem] font-medium text-green-700 shadow-sm">
-                <svg
-                  className={"h-1.5 w-1.5 animate-pulse fill-green-500"}
-                  viewBox="0 0 6 6"
-                  aria-hidden="true"
-                >
-                  <circle cx={3} cy={3} r={3} />
-                </svg>
-
-                {challengeUser.pivot?.completed
-                  ? "Projeto concluído!"
-                  : "Você está participando!"}
-              </div>
-            )}
-          </div>
+          <div className="flex flex-wrap items-center justify-between xl:flex-nowrap"></div>
           <JoinChallengeSection
             initialSteps={initialSteps}
             slug={challenge?.slug}

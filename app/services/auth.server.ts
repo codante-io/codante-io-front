@@ -1,3 +1,4 @@
+import type { TypedResponse } from "@remix-run/node";
 import {
   createCookie,
   createCookieSessionStorage,
@@ -170,7 +171,7 @@ export async function user({
 }: {
   request: Request;
   params?: any;
-}) {
+}): Promise<User | null | TypedResponse<any>> {
   let response;
   let token = await currentToken({ request });
 
