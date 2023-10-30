@@ -13,7 +13,7 @@ export default function ParticipantsSection({
   participants: ChallengeParticipants;
   userAvatar?: string;
   currentUserIsEnrolled: boolean;
-  currentUserIsPro: 0 | 1;
+  currentUserIsPro?: boolean;
 }) {
   return (
     <article className={`${className} relative w-full p-4 pt-3 font-inter`}>

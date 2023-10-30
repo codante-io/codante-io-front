@@ -25,6 +25,7 @@ export type Challenge = {
   users?: { avatar_url: string }[];
   pivot?: {
     trackable_type: string;
+    completed?: boolean;
   };
   current_user_is_enrolled: boolean;
   resources: {
@@ -32,6 +33,9 @@ export type Challenge = {
     type: string;
     url: string;
   }[];
+  weekly_featured_start_date: string | null;
+  solution_publish_date: string | null;
+  is_weekly_featured?: boolean;
 };
 
 export type ChallengeCard = {
@@ -44,7 +48,7 @@ export type ChallengeCard = {
   difficulty: 1 | 2 | 3;
   tags: Tag[];
   has_solution: boolean;
-  users?: { avatar_url: string; is_pro: 0 | 1 }[];
+  users?: { avatar_url: string; is_pro: boolean }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
   weekly_featured_start_date: string | null;
@@ -54,7 +58,7 @@ export type ChallengeCard = {
 
 export type ChallengeParticipants = {
   count: number;
-  avatars: { avatar_url: string; is_pro: 0 | 1 }[];
+  avatars: { avatar_url: string; is_pro: boolean }[];
 };
 
 export type ChallengeSubmission = {
@@ -66,7 +70,7 @@ export type ChallengeSubmission = {
   submission_url: string;
   submission_image_url: string;
   reactions: Reactions;
-  is_pro: 0 | 1;
+  is_pro: boolean;
 };
 
 export async function getChallenges(
