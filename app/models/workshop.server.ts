@@ -9,13 +9,14 @@ export type Workshop = {
   name: string;
   slug: string;
   short_description: string;
-  status: "draft" | "published" | "soon" | "archived";
+  status: "draft" | "published" | "soon" | "archived" | "streaming";
   description: string;
   image_url?: string;
   video_url?: string;
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
   published_at?: string;
+  streaming_url?: string | null;
   resources: {
     name: string;
     type: string;

@@ -3,7 +3,7 @@ import axios from "axios";
 type UserPoints = {
   name: string;
   avatar_url: string;
-  is_pro: 0 | 1;
+  is_pro: boolean;
   points: string;
   completed_challenge_count: string;
   received_reaction_count: string;
