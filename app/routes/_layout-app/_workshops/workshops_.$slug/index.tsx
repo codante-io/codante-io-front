@@ -78,16 +78,32 @@ export default function WorkshopSlug() {
     workshop.published_at
   );
 
+  function workshopHasHappened() {
+    if (!workshop.published_at) return false;
+    const now = new Date();
+    const date = new Date(workshop.published_at);
+
+    return now.toISOString() > date.toISOString();
+  }
+
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
         <BannerAlertInfo
-          title="Ei! Esse workshop ainda não aconteceu!"
-          subtitle={`Você poderá assisti-lo ao vivo${
-            publishedDate ? ` no dia ${publishedDate}` : " em breve"
-          }${
-            publishedTime ? ` às ${publishedTime}` : ""
-          }. Se preferir, será disponibilizada também a versão editada.`}
+          title={`${
+            workshopHasHappened()
+              ? `Esse workshop aconteceu recentemente!`
+              : "Ei! Esse workshop ainda não aconteceu!"
+          }`}
+          subtitle={`${
+            workshopHasHappened()
+              ? "Aguarde que em breve estará disponível na plataforma."
+              : `Você poderá assisti-lo ao vivo ${
+                  publishedDate
+                    ? `no dia ${publishedDate} às ${publishedTime}. Se preferir, será disponibilizada também a versão editada.`
+                    : " em breve."
+                }`
+          }`}
         />
       )}
 
