@@ -20,5 +20,6 @@ export type ChallengeUser = User & {
     joined_discord: boolean;
     submission_url: string;
     submission_image_url: string;
+    id?: string;
   };
 };
