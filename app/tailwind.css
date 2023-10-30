@@ -11,12 +11,14 @@
 
 /* WebKit */
 .overflow-scrollbar::-webkit-scrollbar {
-  height: 3px;
+  height: 6px;
   background-color: lightgray;
+  border-radius: 10px;
 }
 
 .overflow-scrollbar::-webkit-scrollbar-thumb {
   background-color: #3b82f6;
+  border-radius: 10px;
 }
 
 /* Firefox */
