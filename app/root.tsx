@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -21,7 +21,6 @@ import { getOgGeneratorUrl } from "./utils/path-utils";
 import NotFound from "./components/errors/not-found";
 import { Error500 } from "./components/errors/500";
 import type { User } from "./models/user.server";
-import { metaV1 } from "@remix-run/v1-meta";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -30,27 +29,25 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg" },
 ];
 
-export function meta(args: any) {
-  return metaV1(args, {
-    charset: "utf-8",
-    title: "Codante - Cursos e Projetos Online de Programação",
-    viewport: "width=device-width,initial-scale=1",
-    description:
-      "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
+export const meta: MetaFunction = () => ({
+  charset: "utf-8",
+  title: "Codante - Cursos e Projetos Online de Programação",
+  viewport: "width=device-width,initial-scale=1",
+  description:
+    "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
 
-    "og:title": "Codante - Cursos e Projetos Online de Programação",
-    "og:description": "Codante - Cursos e Projetos Online de Programação",
-    "og:image": getOgGeneratorUrl("Codante"),
-    "og:type": "website",
+  "og:title": "Codante - Cursos e Projetos Online de Programação",
+  "og:description": "Codante - Cursos e Projetos Online de Programação",
+  "og:image": getOgGeneratorUrl("Codante"),
+  "og:type": "website",
 
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:title": "Codante - Cursos e Projetos Online de Programação",
-    "twitter:description": "Codante - Cursos e Projetos Online de Programação",
-    "twitter:image": getOgGeneratorUrl("Codante"),
-    "twitter:image:alt": "Codante",
-  });
-}
+  "twitter:card": "summary_large_image",
+  "twitter:domain": "codante.io",
+  "twitter:title": "Codante - Cursos e Projetos Online de Programação",
+  "twitter:description": "Codante - Cursos e Projetos Online de Programação",
+  "twitter:image": getOgGeneratorUrl("Codante"),
+  "twitter:image:alt": "Codante",
+});
 
 export function loader({ request }: { request: Request }) {
   return user({ request });

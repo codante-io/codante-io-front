@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Link,
@@ -41,38 +41,33 @@ import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { User } from "~/models/user.server";
 
-export const meta = ({ data, params }: any) => {
+export const meta: MetaFunction = ({ data, params }) => {
   // para não quebrar se não houver challenge ainda.
   if (!data?.challenge) {
-    return [{}];
+    return {};
   }
 
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
   const description = data.challenge.short_description;
   const imageUrl = getOgGeneratorUrl(data.challenge.name, "Mini Projeto");
 
-  return [
-    { title },
-    { name: "description", content: description },
-    { property: "og:title", content: title },
-    { property: "og:description", content: description },
-    { property: "og:image", content: imageUrl },
-    { property: "og:type", content: "website" },
-    {
-      property: "og:url",
-      content: `https://codante.io/mini-projetos/${params.slug}`,
-    },
-    { property: "twitter:card", content: "summary_large_image" },
-    { property: "twitter:domain", content: "codante.io" },
-    {
-      property: "twitter:url",
-      content: `https://codante.io/mini-projetos/${params.slug}`,
-    },
-    { property: "twitter:title", content: title },
-    { property: "twitter:description", content: description },
-    { property: "twitter:image", content: imageUrl },
-    { property: "twitter:image:alt", content: data.challenge.name },
-  ];
+  return {
+    title: title,
+    description: description,
+    "og:title": title,
+    "og:description": description,
+    "og:image": imageUrl,
+    "og:type": "website",
+    "og:url": `https://codante.io/mini-projetos/${params.slug}`,
+
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:url": `https://codante.io/mini-projetos/${params.slug}`,
+    "twitter:title": title,
+    "twitter:description": description,
+    "twitter:image": imageUrl,
+    "twitter:image:alt": data.challenge.name,
+  };
 };
 
 export async function action({ request }: { request: Request }) {
@@ -109,7 +104,7 @@ export async function action({ request }: { request: Request }) {
   }
 }
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+export const loader = async ({ params, request }: LoaderArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const [challenge, participants, challengeSubmissions] = await Promise.all([
@@ -162,18 +157,18 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
-  const actionData = useActionData<any>();
+  const actionData = useActionData();
   // const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
   const hasSolution = Boolean(
-    challenge?.workshop?.id && challenge.workshop.status === "published",
+    challenge?.workshop?.id && challenge.workshop.status === "published"
   );
 
   const hasSubmissions = Boolean(
-    challengeSubmissions?.length && challengeSubmissions.length > 0,
+    challengeSubmissions?.length && challengeSubmissions.length > 0
   );
 
   const isUserParticipating = Boolean(challengeUser?.id);
@@ -354,7 +349,7 @@ export default function ChallengeSlug() {
                         tab.current
                           ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
                           : "text-gray-500 hover:text-gray-700",
-                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
+                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2"
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >

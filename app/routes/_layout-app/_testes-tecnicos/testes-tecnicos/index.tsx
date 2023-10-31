@@ -6,15 +6,14 @@ import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AssessmentCard from "./components/assessment-card";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
-import { metaV1 } from "@remix-run/v1-meta";
 
-export function meta(args: any) {
+export function meta() {
   const title = "Testes técnicos | Codante.io";
   const description =
     "Testes técnicos de programação utilizados em grandes empresas. Se prepare para ser aprovado no processo seletivo da sua empresa dos sonhos.";
   const imageUrl = getOgGeneratorUrl("Testes tecnicos");
 
-  return metaV1(args, {
+  return {
     title: title,
     description: description,
     "og:title": title,
@@ -30,7 +29,7 @@ export function meta(args: any) {
     "twitter:description": description,
     "twitter:image": imageUrl,
     "twitter:image:alt": "Testes técnicos Codante",
-  });
+  };
 }
 
 export const loader = async ({ request }: { request: Request }) => {
@@ -96,7 +95,7 @@ export default function TestesTecnicosPage() {
       const updatedStackParams = stackParams.filter((param) => param !== stack);
       searchParams.delete("stack");
       updatedStackParams.forEach((param) =>
-        searchParams.append("stack", param),
+        searchParams.append("stack", param)
       );
       setSearchParams(searchParams);
     }

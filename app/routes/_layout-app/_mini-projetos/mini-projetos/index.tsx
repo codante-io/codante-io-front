@@ -8,15 +8,14 @@ import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import Button from "~/components/form/button";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
-import { metaV1 } from "@remix-run/v1-meta";
 
-export function meta(args: any) {
+export function meta() {
   const title = "Mini Projetos | Codante.io";
   const description =
     "Mini Projetos de programação para você aprender praticando. Escolha um Mini Projeto para você se desafiar e aprender ainda mais.";
   const imageUrl = getOgGeneratorUrl("Mini Projetos");
 
-  return metaV1(args, {
+  return {
     title: title,
     description: description,
     "og:title": title,
@@ -32,7 +31,7 @@ export function meta(args: any) {
     "twitter:description": description,
     "twitter:image": imageUrl,
     "twitter:image:alt": "Mini Projetos Codante",
-  });
+  };
 }
 
 export async function loader({ request }: { request: Request }) {
@@ -52,11 +51,11 @@ export default function Projects() {
   const user = useUserFromOutletContext();
 
   const featuredChallenge = challenges.find(
-    (challenge) => challenge.is_weekly_featured === true,
+    (challenge) => challenge.is_weekly_featured === true
   );
 
   const challengesWithoutFeatured = challenges.filter(
-    (challenge) => challenge.is_weekly_featured !== true,
+    (challenge) => challenge.is_weekly_featured !== true
   );
 
   return (
@@ -88,9 +87,9 @@ export default function Projects() {
                   }).format(
                     new Date(
                       Date.parse(
-                        featuredChallenge.solution_publish_date as string,
-                      ),
-                    ),
+                        featuredChallenge.solution_publish_date as string
+                      )
+                    )
                   )}
                 </strong>
               </span>{" "}
@@ -150,7 +149,7 @@ function Countdown({
   if (remainingTime) {
     days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
     hours = Math.floor(
-      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     )
       .toString()
       .padStart(2, "0");
@@ -168,7 +167,7 @@ function Countdown({
         const now = new Date().getTime();
         const distance =
           new Date(
-            featuredChallenge?.solution_publish_date as string,
+            featuredChallenge?.solution_publish_date as string
           ).getTime() - now;
         setRemainingTime(distance);
       }, 1000);

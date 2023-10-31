@@ -3,16 +3,14 @@ import type { BlogPost } from "~/models/blog-post.server";
 import { getPosts } from "~/models/blog-post.server";
 import BlogPostCard from "./components/blog-post-card";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { metaV1 } from "@remix-run/v1-meta";
-import type { LoaderFunctionArgs } from "@remix-run/node";
 
-export function meta(args: any) {
+export function meta() {
   const title = "Blog | Codante.io";
   const description =
     "Blog do Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.";
   const imageUrl = getOgGeneratorUrl("Blog do Codante");
 
-  return metaV1(args, {
+  return {
     title: title,
     description: description,
     "og:title": title,
@@ -28,16 +26,16 @@ export function meta(args: any) {
     "twitter:description": description,
     "twitter:image": imageUrl,
     "twitter:image:alt": "Blog do Codante",
-  });
+  };
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: { request: Request }) {
   const blogPosts = await getPosts(request);
 
   return { blogPosts };
 }
 export default function Blog() {
-  const { blogPosts } = useLoaderData<typeof loader>();
+  const { blogPosts } = useLoaderData();
   return (
     <div className="container mx-auto ">
       <h1 className="mb-10 text-4xl text-center font-lexend">
