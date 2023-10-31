@@ -23,7 +23,7 @@ export async function action({
   let formData = await request.formData();
   let submissionUrl = formData.get("submission_url") as string;
   const metadata = getMetadataFromFormData(formData);
-
+  console.log('fui chamado aqui')
   return submitChallenge(request, params.slug, submissionUrl, metadata);
 }
 

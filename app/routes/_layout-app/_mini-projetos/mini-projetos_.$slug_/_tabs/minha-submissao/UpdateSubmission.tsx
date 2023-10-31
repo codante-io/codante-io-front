@@ -1,18 +1,18 @@
 import { Form, useActionData, useNavigation } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
+import { updateChallengeSubmission, type Challenge } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import { RinhaFormFields } from ".";
 import LoadingButton from "~/components/form/loading-button";
 
-// function getMetadataFromFormData(formData: FormData) {
-//   const metadata: { [key: string]: string } = {};
+function getMetadataFromFormData(formData: FormData) {
+  const metadata: { [key: string]: string } = {};
 
-//   for (let [key, value] of formData.entries()) {
-//     metadata[key] = value as string;
-//   }
+  for (let [key, value] of formData.entries()) {
+    metadata[key] = value as string;
+  }
 
-//   return metadata;
-// }
+  return metadata;
+}
 
 export async function action({
   request,
@@ -21,10 +21,11 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  // let formData = await request.formData();
-  // let submissionUrl = formData.get("submission_url") as string;
-  // const metadata = getMetadataFromFormData(formData);
-  // return submitChallenge(request, params.slug, submissionUrl, metadata);
+  let formData = await request.formData();
+  console.log('AQUIIIII <<<<<<<<<<<<')
+  let submissionUrl = formData.get("submission_url") as string;
+  const metadata = getMetadataFromFormData(formData);
+  return updateChallengeSubmission(request, params.slug, submissionUrl, metadata);
 }
 
 export default function UpdateSubmission({
