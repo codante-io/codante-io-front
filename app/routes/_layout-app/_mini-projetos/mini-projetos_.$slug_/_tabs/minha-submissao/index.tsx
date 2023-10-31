@@ -10,6 +10,7 @@ import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
 import { submitChallenge } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
+import UpdateSubmission from "./UpdateSubmission";
 
 //action submit challenge
 export async function action({
@@ -106,11 +107,14 @@ export default function MySubmission() {
           </div>
         </Form>
       )}
+      {challenge.slug !== "rinha-frontend" && userSubmission && (
+        <UpdateSubmission challengeUser={challengeUser} challenge={challenge} />
+      )}
     </div>
   );
 }
 
-function RinhaFormFields() {
+export function RinhaFormFields() {
   return (
     <>
       <label
