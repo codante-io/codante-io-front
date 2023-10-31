@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -14,28 +14,33 @@ import type { Workshop } from "~/models/workshop.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 
-export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta = ({ data, params }: any) => {
   const title = `Trilha: ${data.track?.name} | Codante.io`;
   const description = data.track?.short_description ?? "";
   const imageUrl = getOgGeneratorUrl(data.track?.name ?? "Codante", "Trilha");
 
-  return {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/trilhas/${params.slug}`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/trilhas/${params.slug}`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": data.track?.name,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/trilhas/${params.slug}`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/trilhas/${params.slug}`,
+    },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: data.track?.name },
+  ];
 };
 
 export const loader = async ({ params }: LoaderArgs) => {
@@ -72,7 +77,7 @@ export default function TrackSlug() {
             (workshopOrChallenge: Challenge | Workshop, index: number) => (
               <div className="flex flex-col items-center" key={index}>
                 {workshopOrChallenge?.pivot?.trackable_type.includes(
-                  "Workshop"
+                  "Workshop",
                 ) ? (
                   <WorkshopCard workshop={workshopOrChallenge as Workshop} />
                 ) : (
@@ -85,7 +90,7 @@ export default function TrackSlug() {
                     <div className="w-[1.5px] h-24 dark:bg-background-600 bg-background-200 mb-2" />
                   )}
               </div>
-            )
+            ),
           )}
       </div>
     </section>

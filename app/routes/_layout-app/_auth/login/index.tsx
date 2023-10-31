@@ -15,6 +15,7 @@ import { login } from "~/services/auth.server";
 import AuthCard from "../auth-card";
 import { authenticator } from "~/services/github-auth.server";
 import LoadingButton from "~/components/form/loading-button";
+import { metaV1 } from "@remix-run/v1-meta";
 
 export function links() {
   return [
@@ -25,12 +26,12 @@ export function links() {
   ];
 }
 
-export function meta() {
-  return {
+export function meta(args: any) {
+  return metaV1(args, {
     title: "Login | Codante.io",
     description:
       "Entre para ter acesso a todas as funcionalidades da plataforma.",
-  };
+  });
 }
 
 export async function action({ request }: { request: Request }) {
@@ -157,7 +158,7 @@ export default function Login() {
               navigator(
                 opened
                   ? `?redirectTo=${redirectTo}`
-                  : `?opened=true&redirectTo=${redirectTo}`
+                  : `?opened=true&redirectTo=${redirectTo}`,
               );
             }}
           >

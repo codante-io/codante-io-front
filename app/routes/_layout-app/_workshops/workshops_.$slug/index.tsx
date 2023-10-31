@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
@@ -31,32 +31,37 @@ import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 import BannerAlertInfo from "~/components/banner-alert/banner-alert-info";
 import YoutubePlayer from "~/components/youtube-player";
 
-export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
   const title = `Workshop: ${data.workshop?.name} | Codante.io`;
   const description = data.workshop?.short_description ?? "";
   const imageUrl = getOgGeneratorUrl(
     data.workshop?.name ?? "Codante",
-    "Workshop"
+    "Workshop",
   );
 
-  return {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/workshops/${params.slug}`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/workshops/${params.slug}`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": data.workshop?.name,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/workshops/${params.slug}`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/workshops/${params.slug}`,
+    },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: data.workshop?.name },
+  ];
 };
 
 export const loader = async ({ params, request }: LoaderArgs) => {
@@ -75,7 +80,7 @@ export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
-    workshop.published_at
+    workshop.published_at,
   );
 
   function workshopHasHappened() {
@@ -149,8 +154,8 @@ export default function WorkshopSlug() {
               durationString={fromSecondsToTimeStringWithoutSeconds(
                 workshop?.lessons?.reduce(
                   (acc, lesson) => acc + lesson.duration_in_seconds,
-                  0
-                )
+                  0,
+                ),
               )}
             />
           </div>

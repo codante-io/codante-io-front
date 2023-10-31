@@ -6,14 +6,12 @@ module.exports = {
   future: {
     v2_routeConvention: true,
     v2_errorBoundary: true,
+    v2_headers: true,
+    v2_dev: true,
+    v2_meta: true, // não sei se é esse!
     unstable_tailwind: true,
   },
   routes: async (defineRoutes) => {
     return flatRoutes("routes", defineRoutes);
   },
-
-  // appDirectory: "app",
-  // assetsBuildDirectory: "public/build",
-  // serverBuildPath: "build/index.js",
-  // publicPath: "/build/",
 };
