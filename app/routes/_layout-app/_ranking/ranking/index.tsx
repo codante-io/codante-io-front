@@ -10,15 +10,14 @@ import {
 } from "~/components/ranking-badges";
 import classNames from "~/utils/class-names";
 import UserAvatar from "~/components/user-avatar";
-import { metaV1 } from "@remix-run/v1-meta";
 
 // meta function
-export function meta(args: any) {
-  return metaV1(args, {
+export function meta() {
+  return {
     title: "Ranking | Codante.io",
     description:
       "Veja o ranking dos usuários do Codante. Quem será que está no topo?",
-  });
+  };
 }
 
 export async function loader({ request }: { request: Request }) {
@@ -53,7 +52,7 @@ export default function RankingList() {
             searchParams.get("monthly") === null
               ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
               : "text-gray-500 hover:text-gray-700",
-            "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
+            "rounded-full px-3 py-2.5 text-sm flex items-center gap-2"
           )}
         >
           <span
@@ -69,7 +68,7 @@ export default function RankingList() {
             searchParams.get("monthly")
               ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
               : "text-gray-500 hover:text-gray-700",
-            "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
+            "rounded-full px-3 py-2.5 text-sm flex items-center gap-2"
           )}
         >
           <span className={searchParams.get("monthly") ? "text-brand" : ""}>
@@ -145,7 +144,7 @@ export default function RankingList() {
                 "absolute -z-0 inset-0 group/border scale-x-[1.5] blur before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-full before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible  before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg",
                 index === 0 && "before:from-amber-400",
                 index === 1 && "before:from-slate-300",
-                index === 2 && "before:from-amber-700",
+                index === 2 && "before:from-amber-700"
               )}
             ></span>
           </li>

@@ -2,14 +2,13 @@ import { json } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
 import { getTracks } from "../../../../models/track.server";
 import TrackCard from "~/components/cards/track-card";
-import { metaV1 } from "@remix-run/v1-meta";
 
-export function meta(args: any) {
-  return metaV1(args, {
+export function meta() {
+  return {
     title: "Trilhas | Codante.io",
     description:
       "Nas trilhas você tem a união de workshops e mini projetos para aprender temas específicos em programação.",
-  });
+  };
 }
 
 export const loader = async ({ request }: { request: Request }) => {

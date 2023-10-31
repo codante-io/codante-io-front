@@ -37,7 +37,7 @@ export default function ReactionsButton({
   className?: string;
   side?: "top" | "right";
 }) {
-  const fetcher = useFetcher<any>();
+  const fetcher = useFetcher();
   const toast = useToasterWithSound();
   const user = useUserFromOutletContext();
 
@@ -57,7 +57,7 @@ export default function ReactionsButton({
   }>({});
 
   const [localUserReacted, setLocalUserReacted] = useState<AllowedReaction[]>(
-    [],
+    []
   );
 
   const [popSound] = useSound(pop, { volume: 0.3 });
@@ -66,15 +66,15 @@ export default function ReactionsButton({
     setTotalReactions(
       Object.values(reactions.reaction_counts).reduce(
         (acc, curr) => acc + curr.count,
-        0,
-      ),
+        0
+      )
     );
 
     setLocalReactions(
       reactions.reaction_counts.reduce(
         (acc, { reaction, count }) => ({ ...acc, [reaction]: count || 0 }),
-        {},
-      ),
+        {}
+      )
     );
 
     setLocalUserReacted(reactions.user_reactions || []);
@@ -84,7 +84,7 @@ export default function ReactionsButton({
     if (localUserReacted.includes(reaction)) {
       setLocalUserReacted((prev) => {
         const existingReactionIndex = prev.findIndex(
-          (existingReaction) => existingReaction === reaction,
+          (existingReaction) => existingReaction === reaction
         );
 
         return [
@@ -114,7 +114,7 @@ export default function ReactionsButton({
 
     if (!user) {
       return toast.showErrorToast(
-        "Você precisa fazer login para reagir a um post.",
+        "Você precisa fazer login para reagir a um post."
       );
     }
 
@@ -126,7 +126,7 @@ export default function ReactionsButton({
       {
         method: "post",
         action: "/reactions?index",
-      },
+      }
     );
   };
 
@@ -153,7 +153,7 @@ export default function ReactionsButton({
         onClick={handleTotalReactionsClick}
         className={classNames(
           `flex items-center justify-center  gap-1 p-2 bg-transparent group ${className}`,
-          readOnly && "pointer-events-none",
+          readOnly && "pointer-events-none"
         )}
       >
         {localUserReacted.length > 0 ? (
@@ -191,7 +191,7 @@ export default function ReactionsButton({
                   "flex flex-row items-center gap-1 p-2 transition-colors border rounded-xl hover:bg-background-150 hover:dark:bg-background-700",
                   localUserReacted.includes(reaction)
                     ? "border-opacity-100 border-brand-500 bg-background-150 dark:bg-background-700"
-                    : "border-transparent border-opacity-0",
+                    : "border-transparent border-opacity-0"
                 )}
               >
                 <input type="hidden" name="reactable-type" value={reaction} />
