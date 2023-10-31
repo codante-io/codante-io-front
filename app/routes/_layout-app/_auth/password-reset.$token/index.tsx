@@ -17,7 +17,7 @@ export async function action({ request }: { request: Request }) {
   const password = formData.get("password") as string;
   const passwordConfirmation = formData.get("password_confirmation") as string;
 
-  const { errors, redirector } = await resetPassword({
+  const { errors } = await resetPassword({
     email,
     token,
     password,
@@ -45,7 +45,7 @@ export async function loader({
 
 export default function PasswordReset() {
   const { token, email } = useLoaderData<typeof loader>();
-  const errors = useActionData();
+  const errors = useActionData<string>();
   const transition = useNavigation();
 
   const status = transition.state;
@@ -89,7 +89,7 @@ export default function PasswordReset() {
           </div>
         </Form>
       ) : (
-        <div className="mt-8 text-sm font-light text-gray-500 text-gray-400">
+        <div className="mt-8 text-sm font-light text-gray-400 text-gray-500">
           Tudo certo! Você redefiniu uma nova senha. Agora, é só fazer o login
           normalmente.
         </div>
