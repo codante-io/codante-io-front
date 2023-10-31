@@ -6,7 +6,6 @@ import {
   FaRegFileCode,
 } from "react-icons/fa";
 import { HiUsers, HiMap } from "react-icons/hi";
-import type { MetaFunction } from "@remix-run/node";
 import type { Assessment } from "~/models/assessments.server";
 import { getAssessment } from "~/models/assessments.server";
 import {
@@ -26,33 +25,38 @@ import NotFound from "~/components/errors/not-found";
 import { Error500 } from "~/components/errors/500";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 
-export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver teste técnico ainda.
   if (!data?.assessment) {
-    return {};
+    return [{}];
   }
 
   const title = `Teste técnico: ${data.assessment.title} | Codante.io`;
   const description = `Teste técnico ${data.assessment.title}. Vaga ${data.assessment.type}`;
   const imageUrl = getOgGeneratorUrl(data.assessment.title, "Testes técnicos");
 
-  return {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/testes-tecnicos/${params.slug}`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/testes-tecnicos/${params.slug}`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": data.assessment.title,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/testes-tecnicos/${params.slug}`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/testes-tecnicos/${params.slug}`,
+    },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: data.assessment.title },
+  ];
 };
 
 export function ErrorBoundary() {

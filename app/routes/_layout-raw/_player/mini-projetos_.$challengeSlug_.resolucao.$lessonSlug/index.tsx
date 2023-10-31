@@ -15,38 +15,51 @@ import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
 import styles from "../styles.css";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
-import type { MetaFunction } from "@remix-run/node";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta = ({ data, params }: any) => {
   if (!data?.challenge) return {};
   const title = `${data.lesson?.name} | ${data.challenge?.name} | Codante.io`;
   const description = data.lesson.description ?? "";
   const imageUrl = getOgGeneratorUrl(
     data.lesson?.name ?? "Codante",
-    "Mini Projeto " + data.challenge?.name
+    "Mini Projeto " + data.challenge?.name,
   );
 
-  return {
-    title: title,
-    description: `${description} | Mini Projeto: ${data.challenge?.name}`,
-    "og:title": title,
-    "og:description": `${description} | Mini Projeto: ${data.challenge?.name}`,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/mini-projetos/${params.challengeSlug}/${params.lessonSlug}`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/mini-projetos/${params.challengeSlug}/${params.lessonSlug}`,
-    "twitter:title": title,
-    "twitter:description": `${description} | Workshop: ${data.challenge?.name}`,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": data.lesson?.name,
-  };
+  return [
+    { title },
+    {
+      name: "description",
+      content: `${description} | Mini Projeto: ${data.challenge?.name}`,
+    },
+    { property: "og:title", content: title },
+    {
+      property: "og:description",
+      content: `${description} | Mini Projeto: ${data.challenge?.name}`,
+    },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/mini-projetos/${params.challengeSlug}/${params.lessonSlug}`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/mini-projetos/${params.challengeSlug}/${params.lessonSlug}`,
+    },
+    { property: "twitter:title", content: title },
+    {
+      property: "twitter:description",
+      content: `${description} | Workshop: ${data.challenge?.name}`,
+    },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: data.lesson?.name },
+  ];
 };
 
 export async function loader({
@@ -63,7 +76,7 @@ export async function loader({
   }
 
   const lesson = workshop.lessons.find(
-    (lesson) => lesson.slug === params.lessonSlug
+    (lesson) => lesson.slug === params.lessonSlug,
   );
 
   if (!lesson) {
@@ -75,7 +88,7 @@ export async function loader({
     workshop: workshop,
     lesson: lesson,
     activeIndex: workshop.lessons.findIndex(
-      (lesson: Lesson) => lesson.slug === params.lessonSlug
+      (lesson: Lesson) => lesson.slug === params.lessonSlug,
     ),
   };
 }
@@ -95,7 +108,7 @@ export default function LessonIndex() {
     if (user) {
       fetcher.submit(
         { lessonId, markCompleted: "true" },
-        { method: "post", action: "/api/set-watched?index" }
+        { method: "post", action: "/api/set-watched?index" },
       );
     }
     if (nextLessonPath()) {

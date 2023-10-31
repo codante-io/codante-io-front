@@ -1,4 +1,4 @@
-import type { RouteMatch } from "@remix-run/react";
+import type { UIMatch } from "@remix-run/react";
 import slugify from "slugify";
 
 // export function slugify(str: string) {
@@ -21,17 +21,17 @@ export function getOgGeneratorUrl(title: string, subtitle = "") {
 
 /**
  * This function returns classes, if there is a path match.
- * @param {RouteMatch[]} mathes - This comes from Remix's useMatch hook.
+ * @param {MetaMatch[]} mathes - This comes from Remix's useMatch hook.
  * @param {string} path - The path you want to match.
  * @param {string} className - The classes you want to add.
  * @param {string} type - The type of match you want to do. Default is "exact".
  * @returns {string} The classes that you want to add.
  */
 export function setActiveClassForPath(
-  matches: RouteMatch[],
+  matches: UIMatch[],
   path: string,
   className: string,
-  type: "exact" | "startsWith" | "endsWith" | "includes" = "exact"
+  type: "exact" | "startsWith" | "endsWith" | "includes" = "exact",
 ) {
   const pathname = matches[matches.length - 1]?.pathname ?? "";
 

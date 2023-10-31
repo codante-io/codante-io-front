@@ -3,8 +3,8 @@ import ReactLoadingBar from "react-top-loading-bar";
 import type { LoadingBarRef } from "react-top-loading-bar";
 import { useNavigation } from "@remix-run/react";
 
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../tailwind.config.js";
+import resolveConfig from "tailwindcss/resolveConfig.js";
+import tailwindConfig from "../../../tailwind.config.cjs";
 
 const fullConfig = resolveConfig(tailwindConfig);
 
