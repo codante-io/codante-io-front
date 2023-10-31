@@ -11,8 +11,9 @@ module.exports = {
     v2_normalizeFormMethod: true,
     v2_dev: true,
     v2_meta: true, // não sei se é esse!
-    tailwind: true,
   },
+  tailwind: true,
+  serverDependenciesToBundle: ["axios"],
   routes: async (defineRoutes) => {
     return flatRoutes("routes", defineRoutes);
   },
