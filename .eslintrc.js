@@ -9,5 +9,7 @@ module.exports = {
   ignorePatterns: ["node_modules/", "dist/", "build/", "public/", ".husky/"],
   rules: {
     "no-console": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
   },
 };

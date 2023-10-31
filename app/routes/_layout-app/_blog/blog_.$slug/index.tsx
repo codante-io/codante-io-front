@@ -1,4 +1,5 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { MetaArgs } from "@remix-run/react";
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -11,7 +12,7 @@ import { getPost } from "~/models/blog-post.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
 
-export const meta = ({ data, params }: any) => {
+export const meta = ({ data, params }: MetaArgs<any>) => {
   // para não quebrar se não houver blogPost ainda.
   if (!data?.blogPost) {
     return [{}];
@@ -56,7 +57,7 @@ export function ErrorBoundary() {
   return <Error500 error={error} />;
 }
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const blogPost = await getPost(request, params.slug!);
   if (!blogPost) {
     return abort404();

@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -43,7 +43,7 @@ export const meta = ({ data, params }: any) => {
   ];
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
   return json({ slug: params.slug, track: await getTrack(params.slug) });
 };

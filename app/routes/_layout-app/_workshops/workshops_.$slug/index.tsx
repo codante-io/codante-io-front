@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
@@ -64,7 +64,7 @@ export const meta = ({ data, params }: any) => {
   ];
 };
 
-export const loader = async ({ params, request }: LoaderArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const workshop = await getWorkshop(params.slug, request);

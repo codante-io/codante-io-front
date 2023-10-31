@@ -16,6 +16,7 @@ import AuthCard from "../auth-card";
 import { authenticator } from "~/services/github-auth.server";
 import LoadingButton from "~/components/form/loading-button";
 import { metaV1 } from "@remix-run/v1-meta";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
 export function links() {
   return [
@@ -35,13 +36,13 @@ export function meta(args: any) {
 }
 
 export async function action({ request }: { request: Request }) {
-  let formData = await request.formData();
+  const formData = await request.formData();
 
-  let email = formData.get("email") as string;
-  let password = formData.get("password") as string;
-  let redirectTo = formData.get("redirectTo") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const redirectTo = formData.get("redirectTo") as string;
 
-  let { errors, redirector } = await login({
+  const { errors, redirector } = await login({
     request,
     email,
     password,
@@ -51,7 +52,7 @@ export async function action({ request }: { request: Request }) {
   return errors || redirector;
 }
 
-export async function loader({ request }: { request: Request }) {
+export async function loader({ request }: LoaderFunctionArgs) {
   await authenticator.isAuthenticated(request, {
     successRedirect: "/",
   });
@@ -62,7 +63,7 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export default function Login() {
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const transition = useNavigation();
 
   const status = transition.state;
@@ -70,14 +71,14 @@ export default function Login() {
   const navigator = useNavigate();
   const { colorMode } = useColorMode();
 
-  let initialOpened = Boolean(searchParams.get("opened") ?? false);
+  const initialOpened = Boolean(searchParams.get("opened") ?? false);
 
   const [opened, setOpened] = useState(initialOpened);
   const errors = useActionData();
 
   // vamos pegar o redirectTo da query string
   // para passar como parâmetro hidden para o form
-  const loaderData = useLoaderData();
+  const loaderData = useLoaderData<typeof loader>();
   const redirectTo = loaderData?.redirectTo ?? "/";
 
   return (

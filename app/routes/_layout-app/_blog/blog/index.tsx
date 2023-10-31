@@ -4,6 +4,7 @@ import { getPosts } from "~/models/blog-post.server";
 import BlogPostCard from "./components/blog-post-card";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { metaV1 } from "@remix-run/v1-meta";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
 export function meta(args: any) {
   const title = "Blog | Codante.io";
@@ -30,13 +31,13 @@ export function meta(args: any) {
   });
 }
 
-export async function loader({ request }: { request: Request }) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const blogPosts = await getPosts(request);
 
   return { blogPosts };
 }
 export default function Blog() {
-  const { blogPosts } = useLoaderData();
+  const { blogPosts } = useLoaderData<typeof loader>();
   return (
     <div className="container mx-auto ">
       <h1 className="mb-10 text-4xl text-center font-lexend">

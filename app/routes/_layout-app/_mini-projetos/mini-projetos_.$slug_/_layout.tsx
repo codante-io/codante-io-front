@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Link,
@@ -109,7 +109,7 @@ export async function action({ request }: { request: Request }) {
   }
 }
 
-export const loader = async ({ params, request }: LoaderArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const [challenge, participants, challengeSubmissions] = await Promise.all([
@@ -162,7 +162,7 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
-  const actionData = useActionData();
+  const actionData = useActionData<any>();
   // const user = useUserFromOutletContext();
 
   const navigate = useNavigate();

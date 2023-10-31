@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -56,7 +56,7 @@ export function ErrorBoundary() {
   return <Error500 error={error} />;
 }
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const page = await getPage(request, params.slug!);
   if (!page) {
     return abort404();

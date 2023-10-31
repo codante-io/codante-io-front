@@ -1,10 +1,10 @@
-import type { V2_MetaArgs } from "@remix-run/node";
+import type { MetaArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
 import { getWorkshops } from "../../../../models/workshop.server";
 import WorkshopCard from "~/components/cards/workshop-card";
 
-export function meta({ matches }: V2_MetaArgs) {
+export function meta({ matches }: MetaArgs) {
   const parentMeta = matches
     .flatMap((match) => match.meta ?? [])
     .filter((meta) => !("title" in meta))
