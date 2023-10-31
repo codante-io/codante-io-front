@@ -9,9 +9,28 @@
   background-clip: text;
 }
 
+/* WebKit */
+.overflow-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  background-color: lightgray;
+  border-radius: 10px;
+}
+
+.overflow-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3b82f6;
+  border-radius: 10px;
+}
+
+/* Firefox */
+.overflow-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 transparent;
+}
+
 :root {
   font-family: "Inter", sans-serif;
 }
+
 @supports (font-variation-settings: normal) {
   :root {
     font-family: "Inter var", sans-serif;
