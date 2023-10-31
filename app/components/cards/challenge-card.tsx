@@ -63,7 +63,6 @@ export default function ChallengeCard({
               <h2 className="mb-1 text-lg font-bold leading-tight text-gray-700 dark:text-gray-50">
                 {challenge?.name}
               </h2>
-              {/* <div className="break-all tags"> */}
               <div className="pb-1 overflow-x-auto overflow-scrollbar scrollbar-thumb tags">
                 {challenge?.tags?.map((tag) => (
                   <CardItemTag
