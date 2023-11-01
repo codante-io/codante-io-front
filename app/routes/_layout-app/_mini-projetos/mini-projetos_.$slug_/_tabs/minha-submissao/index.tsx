@@ -77,102 +77,65 @@ export default function MySubmission() {
           reactions={userSubmission?.reactions}
         />
       ) : (
-        <Form method="POST">
-          <div>
-            <label
-              htmlFor="submission_url"
-              className="block text-sm font-medium leading-6 text-gray-800 dark:text-white"
-            >
-              Submeta o link da sua aplicação funcionando
-              <br />
-              <span className="text-xs font-light text-gray-600 dark:text-gray-400">
-                Nós vamos tirar uma screenshot para colocar na nossa galeria
-              </span>
-            </label>
-            <div className="mt-2">
-              <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
-                <input
-                  type="text"
-                  name="submission_url"
-                  defaultValue={challengeUser?.pivot?.submission_url}
-                  id="submission_url"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                  placeholder="https://mp-example.vercel.app/"
-                />
-              </div>
-            </div>
-            {/* Rinha de frontend usou esses campos */}
-            {challenge.slug === "rinha-frontend" && <RinhaFormFields />}
-          </div>
-          <div className="mt-10">
-            <LoadingButton
-              type="submit"
-              className="relative transition duration-200"
-              status={status}
-              isSuccessfulSubmission={isSuccessfulSubmission}
-              name="intent"
-              value="create"
-            >
-              Enviar
-            </LoadingButton>
-          </div>
-        </Form>
+        <SubmissionForm
+          challengeUser={challengeUser}
+          status={status}
+          isSuccessfulSubmission={isSuccessfulSubmission}
+          challenge={challenge}
+        />
       )}
-      {challenge.slug !== "rinha-frontend" && userSubmission && (
-        <UpdateSubmission challengeUser={challengeUser} challenge={challenge} />
-      )}
+      <UpdateSubmission challengeUser={challengeUser} challenge={challenge} />
     </div>
   );
 }
 
-export function RinhaFormFields() {
+function SubmissionForm({
+  challengeUser,
+  status,
+  isSuccessfulSubmission,
+  challenge,
+}: {
+  challengeUser: ChallengeUser;
+  status: "idle" | "loading" | "submitting";
+  isSuccessfulSubmission: boolean;
+  challenge: Challenge;
+}) {
   return (
-    <>
-      <label
-        htmlFor="twitter_username"
-        className="block mt-6 text-sm font-medium leading-6 text-gray-800 dark:text-white"
-      >
-        Seu @ do Twitter/X
-      </label>
-      <div className="mt-2">
-        <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
-          <input
-            type="text"
-            name="twitter_username"
-            id="twitter_username"
-            className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-          />
+    <Form method="POST">
+      <div>
+        <label
+          htmlFor="submission_url"
+          className="block text-sm font-medium leading-6 text-gray-800 dark:text-white"
+        >
+          Submeta o link da sua aplicação funcionando
+          <br />
+          <span className="text-xs font-light text-gray-600 dark:text-gray-400">
+            Nós vamos tirar uma screenshot para colocar na nossa galeria
+          </span>
+        </label>
+        <div className="mt-2">
+          <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
+            <input
+              type="text"
+              name="submission_url"
+              defaultValue={challengeUser?.pivot?.submission_url}
+              id="submission_url"
+              className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              placeholder="https://mp-example.vercel.app/"
+            />
+          </div>
         </div>
       </div>
-      <label
-        htmlFor="rinha_largest_filename"
-        className="block mt-6 text-sm font-medium leading-6 text-gray-800 dark:text-white"
-      >
-        Qual o maior arquivo json que sua aplicação conseguiu carregar?
-        <br />
-        <span className="text-xs font-light text-gray-600 dark:text-gray-400">
-          Selecione o nome do maior arquivo que a aplicação carrega sem quebrar
-        </span>
-      </label>
-      <div className="mt-2">
-        <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
-          <select
-            name="rinha_largest_filename"
-            id="rinha_largest_filename"
-            className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-          >
-            <option value="alltypes.json">alltypes.json</option>
-            <option value="verysmall.json">verysmall.json</option>
-            <option value="small.json">small.json</option>
-            <option value="pokedex.json">pokedex.json</option>
-            <option value="startwitharray.json">startwitharray.json</option>
-            <option value="large.json">large.json</option>
-            <option value="giant.json">giant.json</option>
-            <option value="invalid.json">invalid.json</option>
-            <option value="nullreference.json">nullreference.json</option>
-          </select>
-        </div>
+      <div className="mt-10">
+        <LoadingButton
+          type="submit"
+          className="relative transition duration-200"
+          status={status}
+          isSuccessfulSubmission={isSuccessfulSubmission}
+        >
+          Enviar
+        </LoadingButton>
       </div>
-    </>
+    </Form>
   );
 }

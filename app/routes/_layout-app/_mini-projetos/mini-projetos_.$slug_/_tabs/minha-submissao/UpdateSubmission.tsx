@@ -1,31 +1,7 @@
 import { Form, useActionData, useNavigation } from "@remix-run/react";
-import { updateChallengeSubmission, type Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
-import { RinhaFormFields } from ".";
 import LoadingButton from "~/components/form/loading-button";
-
-function getMetadataFromFormData(formData: FormData) {
-  const metadata: { [key: string]: string } = {};
-
-  for (let [key, value] of formData.entries()) {
-    metadata[key] = value as string;
-  }
-
-  return metadata;
-}
-
-export async function action({
-  request,
-  params,
-}: {
-  request: Request;
-  params: { slug: string };
-}) {
-  let formData = await request.formData();
-  let submissionUrl = formData.get("submission_url") as string;
-  const metadata = getMetadataFromFormData(formData);
-  return updateChallengeSubmission(request, params.slug, submissionUrl, metadata);
-}
 
 export default function UpdateSubmission({
   challengeUser,
@@ -61,8 +37,6 @@ export default function UpdateSubmission({
             />
           </div>
         </div>
-        {/* Rinha de frontend usou esses campos */}
-        {challenge.slug === "rinha-frontend" && <RinhaFormFields />}
       </div>
       <div className="mt-10">
         <LoadingButton
