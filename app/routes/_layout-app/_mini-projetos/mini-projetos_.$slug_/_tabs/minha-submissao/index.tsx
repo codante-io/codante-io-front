@@ -7,7 +7,7 @@ import {
 import LoadingButton from "~/components/form/loading-button";
 
 import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
-import { submitChallenge } from "~/models/challenge.server";
+import { submitChallenge, updateChallengeSubmission } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
 import UpdateSubmission from "./UpdateSubmission";
@@ -23,7 +23,13 @@ export async function action({
   let formData = await request.formData();
   let submissionUrl = formData.get("submission_url") as string;
   const metadata = getMetadataFromFormData(formData);
-  console.log('fui chamado aqui')
+  const intent = formData.get("intent");
+  // switch (intent) {
+  //   case "create":
+  //     return submitChallenge(request, params.slug, submissionUrl, metadata);
+  //   case "update":
+  //     return updateChallengeSubmission(request, params.slug, submissionUrl, metadata);
+  // }
   return submitChallenge(request, params.slug, submissionUrl, metadata);
 }
 
@@ -101,6 +107,8 @@ export default function MySubmission() {
               className="relative transition duration-200"
               status={status}
               isSuccessfulSubmission={isSuccessfulSubmission}
+              name="intent"
+              value="create"
             >
               Enviar
             </LoadingButton>

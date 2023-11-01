@@ -22,7 +22,6 @@ export async function action({
   params: { slug: string };
 }) {
   let formData = await request.formData();
-  console.log('AQUIIIII <<<<<<<<<<<<')
   let submissionUrl = formData.get("submission_url") as string;
   const metadata = getMetadataFromFormData(formData);
   return updateChallengeSubmission(request, params.slug, submissionUrl, metadata);
@@ -71,6 +70,8 @@ export default function UpdateSubmission({
           className="relative transition duration-200"
           status={status}
           isSuccessfulSubmission={isSuccessfulSubmission}
+          name="intent"
+          value="update"
         >
           Enviar
         </LoadingButton>
