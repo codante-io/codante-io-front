@@ -23,7 +23,7 @@ export default function UpdateSubmission({
           htmlFor="submission_url"
           className="block text-sm font-medium leading-6 text-gray-800 dark:text-white"
         >
-          Submeta o link atualizado da sua aplicação funcionando.
+          Atualize o link da sua aplicação
         </label>
         <div className="mt-2">
           <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
@@ -38,14 +38,14 @@ export default function UpdateSubmission({
           </div>
         </div>
       </div>
-      <div className="mt-10">
+      <div className="mt-4">
         <LoadingButton
           type="submit"
           className="relative transition duration-200"
           status={status}
           isSuccessfulSubmission={isSuccessfulSubmission}
           name="intent"
-          value="update"
+          value="updateSubmission"
         >
           Enviar
         </LoadingButton>

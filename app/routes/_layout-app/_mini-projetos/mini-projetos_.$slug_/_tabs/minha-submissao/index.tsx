@@ -14,6 +14,8 @@ import {
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
 import UpdateSubmission from "./UpdateSubmission";
+import { useState } from "react";
+import { Transition } from "@headlessui/react";
 
 //action submit challenge
 export async function action({
@@ -28,9 +30,9 @@ export async function action({
   // const metadata = getMetadataFromFormData(formData);
   const intent = formData.get("intent");
   switch (intent) {
-    case "create":
+    case "createSubmission":
       return submitChallenge(request, params.slug, submissionUrl);
-    case "update":
+    case "updateSubmission":
       return updateChallengeSubmission(request, params.slug, submissionUrl);
   }
   // return submitChallenge(request, params.slug, submissionUrl, metadata);
@@ -48,6 +50,10 @@ export async function action({
 // }
 
 export default function MySubmission() {
+  const [showEditFormState, setShowEditFormState] = useState(false);
+  function toggleShowEditForm() {
+    setShowEditFormState(!showEditFormState);
+  }
   // get challengeUser from outlet context
   const { challengeUser, challenge, challengeSubmissions } = useOutletContext<{
     challengeUser: ChallengeUser;
@@ -75,6 +81,7 @@ export default function MySubmission() {
           submission={{ id: userSubmission.id, ...challengeUser.pivot }}
           user={challengeUser}
           reactions={userSubmission?.reactions}
+          showEditForm={toggleShowEditForm}
         />
       ) : (
         <SubmissionForm
@@ -84,7 +91,24 @@ export default function MySubmission() {
           challenge={challenge}
         />
       )}
-      <UpdateSubmission challengeUser={challengeUser} challenge={challenge} />
+      <section className="mt-5">
+        {
+          <Transition
+            show={showEditFormState}
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 transform scale-90"
+            enterTo="opacity-100 transform scale-100"
+            leave="transition ease-in duration-100"
+            leaveFrom="opacity-100 transform scale-100"
+            leaveTo="opacity-0 transform scale-90"
+          >
+            <UpdateSubmission
+              challengeUser={challengeUser}
+              challenge={challenge}
+            />
+          </Transition>
+        }
+      </section>
     </div>
   );
 }
@@ -132,6 +156,8 @@ function SubmissionForm({
           className="relative transition duration-200"
           status={status}
           isSuccessfulSubmission={isSuccessfulSubmission}
+          name="intent"
+          value="createSubmission"
         >
           Enviar
         </LoadingButton>
