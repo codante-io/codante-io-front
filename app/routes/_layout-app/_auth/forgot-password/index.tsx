@@ -5,7 +5,11 @@ import Input from "~/components/form/input";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 import LoadingButton from "~/components/form/loading-button";
 
-export async function action({ request }: { request: Request }) {
+export async function action({
+  request,
+}: {
+  request: Request;
+}): Promise<string | null> {
   const formData = await request.formData();
   const email = formData.get("email") as string;
 
@@ -15,7 +19,7 @@ export async function action({ request }: { request: Request }) {
 }
 
 export default function PasswordReset() {
-  const errors = useActionData();
+  const errors = useActionData<string>();
   const transition = useNavigation();
 
   const status = transition.state;

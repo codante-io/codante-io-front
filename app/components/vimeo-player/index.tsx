@@ -17,11 +17,12 @@ export default function VimeoPlayer({
   autoplay = false,
   thumbnailURL,
 }: VimeoPlayerProps) {
-  const playerRef = useRef<Vimeo | null>(null);
+  const playerRef = useRef(null);
 
   useEffect(() => {
     if (!vimeoUrl) return;
 
+    //@ts-ignore-next-line
     const player = new Vimeo(playerRef.current, {
       id: vimeoUrl,
       allowfullscreen: true,

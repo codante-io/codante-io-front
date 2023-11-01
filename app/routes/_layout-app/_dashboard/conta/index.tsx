@@ -14,6 +14,7 @@ import { authenticator } from "~/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
 import { changeName, changePassword } from "./services.server";
 import ProBadge from "~/components/pro-badge";
+import { json } from "@remix-run/node";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -33,7 +34,7 @@ export async function action({ request }: { request: Request }) {
   if (intent === "changePassword") {
     const password = formData.get("password") as string;
     const passwordConfirmation = formData.get(
-      "password_confirmation"
+      "password_confirmation",
     ) as string;
     const res = await changePassword({
       request,
@@ -60,7 +61,7 @@ export async function loader({ request }: { request: Request }) {
   const userData = await user({ request });
   const token = await currentToken({ request });
   const session = await getSession(request.headers.get("Cookie"));
-  return { user: userData, token, session };
+  return json({ user: userData, token, session });
 }
 
 export default function Account() {
@@ -74,15 +75,15 @@ export default function Account() {
       ? transition.state
       : "idle";
 
-  const { user } = useLoaderData();
-  const actionData = useActionData();
+  const { user } = useLoaderData<any>();
+  const actionData = useActionData<any>();
   const { showSuccessToast } = useToasterWithSound();
   const changePasswordErrors = actionData?.changePasswordErrors;
   const changeNameErrors = actionData?.changeNameErrors;
 
-  let isChangeNameSuccess =
+  const isChangeNameSuccess =
     actionData?.changeName && changeNameStatus === "idle";
-  let isChangePasswordSuccess =
+  const isChangePasswordSuccess =
     actionData?.changePassword && changePasswordStatus === "idle";
 
   useEffect(() => {
@@ -108,9 +109,9 @@ export default function Account() {
           &#8226;{" "}
         </span>
         <span className="hidden ml-3 text-base font-light md:inline dark:text-gray-300">
-          {user.name}
+          {user?.name}
         </span>
-        {!!user.is_pro && <ProBadge />}
+        {!!user?.is_pro && <ProBadge />}
       </h2>
 
       <AuthCard className="max-w-xl mt-6">
@@ -120,7 +121,6 @@ export default function Account() {
             name="name"
             label="Nome"
             type="text"
-            onChange={() => {}}
             defaultValue={user.name}
           />
           <div className="mt-6">
@@ -129,7 +129,6 @@ export default function Account() {
               name="email"
               label="Email"
               type="email"
-              onChange={() => {}}
               value={user.email}
               disabled
             />
