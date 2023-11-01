@@ -7,7 +7,10 @@ import {
 import LoadingButton from "~/components/form/loading-button";
 
 import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
-import { submitChallenge, updateChallengeSubmission } from "~/models/challenge.server";
+import {
+  submitChallenge,
+  updateChallengeSubmission,
+} from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
 import UpdateSubmission from "./UpdateSubmission";
@@ -22,27 +25,27 @@ export async function action({
 }) {
   let formData = await request.formData();
   let submissionUrl = formData.get("submission_url") as string;
-  const metadata = getMetadataFromFormData(formData);
+  // const metadata = getMetadataFromFormData(formData);
   const intent = formData.get("intent");
-  // switch (intent) {
-  //   case "create":
-  //     return submitChallenge(request, params.slug, submissionUrl, metadata);
-  //   case "update":
-  //     return updateChallengeSubmission(request, params.slug, submissionUrl, metadata);
-  // }
-  return submitChallenge(request, params.slug, submissionUrl, metadata);
+  switch (intent) {
+    case "create":
+      return submitChallenge(request, params.slug, submissionUrl);
+    case "update":
+      return updateChallengeSubmission(request, params.slug, submissionUrl);
+  }
+  // return submitChallenge(request, params.slug, submissionUrl, metadata);
 }
 
 // Método criando para adicionar campos de metadata (rinha de frontend usou)
-function getMetadataFromFormData(formData: FormData) {
-  const metadata: { [key: string]: string } = {};
+// function getMetadataFromFormData(formData: FormData) {
+//   const metadata: { [key: string]: string } = {};
 
-  for (let [key, value] of formData.entries()) {
-    metadata[key] = value as string;
-  }
+//   for (let [key, value] of formData.entries()) {
+//     metadata[key] = value as string;
+//   }
 
-  return metadata;
-}
+//   return metadata;
+// }
 
 export default function MySubmission() {
   // get challengeUser from outlet context
@@ -53,7 +56,7 @@ export default function MySubmission() {
   }>();
 
   const userSubmission = challengeSubmissions.find(
-    (submission) => submission.id === challengeUser.pivot.id
+    (submission) => submission.id === challengeUser.pivot.id,
   );
 
   const errors = useActionData();
