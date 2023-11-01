@@ -32,7 +32,7 @@ export default function UpdateSubmission({
               name="submission_url"
               defaultValue={challengeUser?.pivot?.submission_url}
               id="submission_url"
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              className="rounded block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="https://mp-example.vercel.app/"
             />
           </div>
