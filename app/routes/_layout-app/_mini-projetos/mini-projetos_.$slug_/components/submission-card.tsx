@@ -26,7 +26,9 @@ export default function SubmissionCard({
   reactions,
   size = "large",
   showEditForm,
+  isEditing,
 }: {
+  isEditing?: boolean;
   submission: Submission;
   user: SubmissionUser;
   reactions: Reactions;
@@ -99,7 +101,7 @@ export default function SubmissionCard({
               <FiEdit
                 onClick={handleEditSubmition}
                 className={`w-4 h-4 font-thin transition-all hover:text-brand-500 hover:scale-110 ${
-                  editSubmition
+                  isEditing
                     ? "text-brand-500 scale-110"
                     : "text-current scale-100"
                 }`}

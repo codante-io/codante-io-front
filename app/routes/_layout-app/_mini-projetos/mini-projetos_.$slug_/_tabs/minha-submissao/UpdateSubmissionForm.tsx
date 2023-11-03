@@ -1,17 +1,26 @@
 import { Form, useActionData, useNavigation } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import LoadingButton from "~/components/form/loading-button";
+import { useState } from "react";
+import Button from "~/components/form/button";
 
-export default function UpdateSubmission({
+export default function UpdateSubmissionForm({
   challengeUser,
-  challenge,
+  showEditForm,
 }: {
   challengeUser: ChallengeUser;
-  challenge: Challenge;
+  showEditForm?: () => void;
 }) {
+  const [cancelSubmition, setCancelSubmition] = useState(false);
   const errors = useActionData();
   const transition = useNavigation();
+
+  const handleCancelBtn = () => {
+    if (showEditForm) {
+      showEditForm();
+      setCancelSubmition(!cancelSubmition);
+    }
+  };
 
   const status = transition.state;
   let isSuccessfulSubmission = status === "idle" && errors === null;
@@ -38,7 +47,7 @@ export default function UpdateSubmission({
           </div>
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 flex gap-x-3">
         <LoadingButton
           type="submit"
           className="relative transition duration-200"
@@ -49,6 +58,9 @@ export default function UpdateSubmission({
         >
           Enviar
         </LoadingButton>
+        <Button type="button" onClick={handleCancelBtn}>
+          Cancelar
+        </Button>
       </div>
     </Form>
   );

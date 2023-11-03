@@ -13,9 +13,10 @@ import {
 } from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
-import UpdateSubmission from "./UpdateSubmission";
+import UpdateSubmissionForm from "./UpdateSubmissionForm";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
+import Button from "~/components/form/button";
 
 //action submit challenge
 export async function action({
@@ -51,9 +52,11 @@ export async function action({
 
 export default function MySubmission() {
   const [showEditFormState, setShowEditFormState] = useState(false);
+
   function toggleShowEditForm() {
     setShowEditFormState(!showEditFormState);
   }
+
   // get challengeUser from outlet context
   const { challengeUser, challenge, challengeSubmissions } = useOutletContext<{
     challengeUser: ChallengeUser;
@@ -82,6 +85,7 @@ export default function MySubmission() {
           user={challengeUser}
           reactions={userSubmission?.reactions}
           showEditForm={toggleShowEditForm}
+          isEditing={showEditFormState}
         />
       ) : (
         <SubmissionForm
@@ -91,24 +95,37 @@ export default function MySubmission() {
           challenge={challenge}
         />
       )}
-      <section className="mt-5">
-        {
+      {userSubmission && (
+        <section className="mt-5">
           <Transition
             show={showEditFormState}
             enter="transition ease-out duration-300"
             enterFrom="opacity-0 transform scale-90"
             enterTo="opacity-100 transform scale-100"
-            leave="transition ease-in duration-100"
+            leave="transition ease-in duration-300"
             leaveFrom="opacity-100 transform scale-100"
             leaveTo="opacity-0 transform scale-90"
           >
-            <UpdateSubmission
+            <UpdateSubmissionForm
               challengeUser={challengeUser}
-              challenge={challenge}
+              showEditForm={toggleShowEditForm}
             />
           </Transition>
-        }
-      </section>
+          <Transition
+            show={!showEditFormState}
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 transform scale-90"
+            enterTo="opacity-100 transform scale-100"
+            leave="transition ease-in duration-300"
+            leaveFrom="opacity-100 transform scale-100"
+            leaveTo="opacity-0 transform scale-90"
+          >
+            <Button onClick={toggleShowEditForm} type="button">
+              Editar submissão
+            </Button>
+          </Transition>
+        </section>
+      )}
     </div>
   );
 }
