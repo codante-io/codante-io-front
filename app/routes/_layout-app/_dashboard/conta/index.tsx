@@ -205,7 +205,7 @@ export default function Account() {
                     href={subscription.boleto_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-600 hover:text-white hover:underline dark:text-gray-400"
+                    className="flex items-center gap-2 text-gray-600 hover:text-white dark:hover:text-white hover:underline dark:text-gray-400"
                   >
                     Link do Boleto
                     <FiExternalLink />
