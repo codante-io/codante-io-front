@@ -34,6 +34,7 @@ export async function action({ request }: { request: Request }) {
       }
     );
 
+    // console.log(response)
     // Redirect to another page
     return new Response(JSON.stringify(response.data), {
       status: 302,

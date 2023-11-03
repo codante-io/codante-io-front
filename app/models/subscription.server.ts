@@ -1,0 +1,34 @@
+import axios from "axios";
+import { currentToken } from "~/services/auth.server";
+
+type Subscription = {
+  id: number;
+  plan_name: string | null;
+  status: "active" | "pending" | "expired" | "canceled";
+  translated_status: string;
+  payment_method: string | null;
+  boleto_url: string | null;
+  price_paid_in_cents: number | null;
+  acquisition_type: string;
+  starts_at: string;
+  ends_at: string;
+  canceled_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function getSubscription({ request }: { request: Request }) {
+  const token = await currentToken({ request });
+
+  let endpoint = `${process.env.API_HOST}/my-subscription`;
+
+  const data: Subscription | null = await axios
+    .get(endpoint, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => res.data.data);
+
+  return data;
+}
