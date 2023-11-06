@@ -131,7 +131,7 @@ export default function Navbar({
                               isActive
                                 ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 underline dark:text-white text-gray-700"
                                 : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
-                              "rounded-md px-3 py-2 text-sm font-medium"
+                              "rounded-md px-3 py-2 text-sm font-medium",
                             )
                           }
                         >
@@ -140,7 +140,7 @@ export default function Navbar({
                       ))}
                       <Menu
                         as="div"
-                        className="relative z-10 inline-block text-left"
+                        className="relative z-50 inline-block text-left"
                       >
                         <Menu.Button
                           className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
@@ -158,7 +158,7 @@ export default function Navbar({
                           leaveTo="transform opacity-0 scale-95"
                         >
                           <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <div className="px-1 py-1 ">
+                            <div className="px-1 py-1">
                               {moreMenuNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                   {({ active }) => (
@@ -224,7 +224,7 @@ export default function Navbar({
                         className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
                           matches,
                           item.href,
-                          "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline"
+                          "dark:bg-background-800 dark:text-white bg-white text-gray-700 underline",
                         )} `}
                         onClick={() => navigate(item.href)}
                       >
