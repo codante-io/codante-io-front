@@ -89,7 +89,7 @@ export default function PriceButton({
       amount: 58800,
       customerData: "true",
       createToken: "true",
-      paymentMethods: "credit_card,pix,boleto",
+      paymentMethods: "credit_card,boleto",
       maxInstallments: 12,
       items: [
         {

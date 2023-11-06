@@ -5,18 +5,16 @@ import {
   useNavigation,
 } from "@remix-run/react";
 import { useEffect } from "react";
-import { FiExternalLink } from "react-icons/fi";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import Input from "~/components/form/input";
 import LoadingButton from "~/components/form/loading-button";
 import ProBadge from "~/components/pro-badge";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { getSubscription } from "~/models/subscription.server";
 import { user } from "~/services/auth.server";
 import { authenticator } from "~/services/github-auth.server";
-import { toTitleCase } from "~/utils/string-utils";
 import AuthCard from "../../_auth/auth-card";
 import { changeName, changePassword } from "./services.server";
+import type { User } from "~/models/user.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -60,13 +58,12 @@ export async function loader({ request }: { request: Request }) {
     failureRedirect: "/login",
   });
 
-  const userData = await user({ request });
-  const subscription = await getSubscription({ request });
+  const userData: User | null = await user({ request });
 
-  return { user: userData, subscription };
+  return { user: userData };
 }
 
-export default function Account() {
+export default function Conta() {
   const transition = useNavigation();
   const changeNameStatus =
     transition.formData?.get("intent") === "changeName"
@@ -77,7 +74,7 @@ export default function Account() {
       ? transition.state
       : "idle";
 
-  const { user, subscription } = useLoaderData<typeof loader>();
+  const { user } = useLoaderData<typeof loader>();
   const actionData = useActionData();
   const { showSuccessToast } = useToasterWithSound();
   const changePasswordErrors = actionData?.changePasswordErrors;
@@ -100,7 +97,32 @@ export default function Account() {
 
   return (
     <div className="container mx-auto mb-16">
-      <h2 className="flex items-center text-xl">
+      <MyAccountSection
+        user={user}
+        changeNameErrors={changeNameErrors}
+        changeNameStatus={changeNameStatus}
+      />
+
+      <PasswordChangeSection
+        changePasswordStatus={changePasswordStatus}
+        changePasswordErrors={changePasswordErrors}
+      />
+    </div>
+  );
+}
+
+function MyAccountSection({
+  user,
+  changeNameErrors,
+  changeNameStatus,
+}: {
+  user?: User | null;
+  changeNameErrors?: string;
+  changeNameStatus: "idle" | "loading" | "submitting";
+}) {
+  return (
+    <>
+      <h2 className="flex items-center mt-12 text-xl">
         <MdKeyboardDoubleArrowRight
           size={24}
           className="inline-block mr-2 text-blue-300 dark:text-blue-800"
@@ -153,69 +175,19 @@ export default function Account() {
           </div>
         </Form>
       </AuthCard>
+    </>
+  );
+}
 
-      {subscription && (
-        <>
-          <h2 className="flex items-center mt-12 text-xl">
-            <MdKeyboardDoubleArrowRight
-              size={24}
-              className="inline-block mr-2 text-blue-300 dark:text-blue-800"
-            />{" "}
-            Minha Assinatura
-          </h2>
-
-          <AuthCard className="max-w-xl mt-6">
-            <p className="mb-6 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
-              Codante
-              <span className="px-1 mx-1 text-xs rounded py-0.5 bg-amber-400 text-background-50 dark:text-background-900">
-                PRO
-              </span>{" "}
-              - Vitalício
-            </p>
-            <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
-              Status:{" "}
-              <span
-                className={`${
-                  subscription.status === "active"
-                    ? "text-green-400"
-                    : "text-amber-500"
-                }`}
-              >
-                {subscription.translated_status}
-              </span>
-            </p>
-            <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
-              Início:{" "}
-              <span className="text-white">{subscription.starts_at}</span>{" "}
-            </p>
-            <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
-              Término: <span className="text-white">Vitalício</span>
-            </p>
-            <p className="mb-2 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
-              Forma de Pagamento:{" "}
-              <span className="text-white">
-                {toTitleCase(subscription.payment_method ?? "")}
-              </span>
-            </p>
-            {subscription.status !== "active" &&
-              subscription.payment_method?.toLowerCase() === "boleto" &&
-              subscription.boleto_url && (
-                <p className="mb-2 text-sm font-light text-inter">
-                  <a
-                    href={subscription.boleto_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-600 hover:text-white dark:hover:text-white hover:underline dark:text-gray-400"
-                  >
-                    Link do Boleto
-                    <FiExternalLink />
-                  </a>
-                </p>
-              )}
-          </AuthCard>
-        </>
-      )}
-
+function PasswordChangeSection({
+  changePasswordErrors,
+  changePasswordStatus,
+}: {
+  changePasswordErrors?: string;
+  changePasswordStatus: "idle" | "loading" | "submitting";
+}) {
+  return (
+    <>
       <h2 className="flex items-center mt-12 text-xl">
         <MdKeyboardDoubleArrowRight
           size={24}
@@ -258,6 +230,6 @@ export default function Account() {
           </div>
         </Form>
       </AuthCard>
-    </div>
+    </>
   );
 }

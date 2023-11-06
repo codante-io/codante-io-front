@@ -1,7 +1,7 @@
 import axios from "axios";
 import { currentToken } from "~/services/auth.server";
 
-type Subscription = {
+export type Subscription = {
   id: number;
   plan_name: string | null;
   status: "active" | "pending" | "expired" | "canceled";
