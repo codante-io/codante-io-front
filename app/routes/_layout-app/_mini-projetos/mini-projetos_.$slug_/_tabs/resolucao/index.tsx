@@ -1,5 +1,4 @@
-import { useOutletContext } from "@remix-run/react";
-import { useNavigate } from "@remix-run/react";
+import { useOutletContext, useNavigate } from "@remix-run/react";
 import MarkdownRenderer from "~/components/markdown-renderer";
 import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
