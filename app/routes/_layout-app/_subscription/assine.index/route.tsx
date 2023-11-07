@@ -35,7 +35,7 @@ export async function action({ request }: { request: Request }) {
       }
     );
 
-    // Redirect to another page
+    // Redirect to success page
     const subscription = response.data.data;
     const encodedSubscription = encodeURIComponent(
       JSON.stringify(subscription)

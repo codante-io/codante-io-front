@@ -18,7 +18,6 @@ import type { User } from "~/models/user.server";
 import { FiExternalLink } from "react-icons/fi";
 import type { Subscription } from "~/models/subscription.server";
 import { getSubscription } from "~/models/subscription.server";
-import { toTitleCase } from "~/utils/string-utils";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -112,7 +111,7 @@ export default function Conta() {
             Minha Conta
           </h1>
 
-          <span className="flex items-center">
+          <span className="flex items-center mt-2">
             <span className="hidden text-sm font-light md:inline dark:text-gray-300">
               {user?.name}
             </span>
@@ -295,7 +294,7 @@ function SubscriptionSection({ subscription }: { subscription: Subscription }) {
         <p className="mb-2 text-sm font-light text-gray-500 dark:text-gray-400 text-inter">
           Forma de Pagamento:{" "}
           <span className="text-gray-700 dark:text-white">
-            {toTitleCase(subscription.payment_method ?? "")}
+            {subscription.translated_payment_method ?? ''}
           </span>
         </p>
         {subscription.status !== "active" &&

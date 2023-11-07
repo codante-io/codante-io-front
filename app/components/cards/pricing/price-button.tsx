@@ -1,5 +1,6 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FiGithub } from "react-icons/fi";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import classNames from "~/utils/class-names";
@@ -12,6 +13,7 @@ export default function PriceButton({
   const user = useUserFromOutletContext();
   const navigate = useNavigate();
   const fetcher = useFetcher();
+  const isSubmitting = fetcher.state === "submitting";
 
   const [isHovering, setIsHovering] = useState(false);
 
@@ -26,48 +28,28 @@ export default function PriceButton({
     };
   }, []);
 
+  //useeffect for toast submitting
+  useEffect(() => {
+    if (isSubmitting) {
+      toast.loading("Aguarde...");
+    } else {
+      toast.dismiss();
+    }
+  }, [isSubmitting]);
+
   async function sendPaymentRequest(
     pagarmeToken: string,
     paymentMethod: string
   ) {
-    // const formData = new FormData();
-    // formData.append("pagarmeToken", pagarmeToken);
-    // formData.append("paymentMethod", paymentMethod);
-
     try {
       fetcher.submit(
         { pagarmeToken, paymentMethod },
         { method: "post", action: "/assine" }
       );
     } catch (error) {
-      // console.log(error);
+      // toast.error("Erro ao processar pagamento.")
+      console.log(error);
     }
-
-    //   const response = await fetch("/assine", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-
-    //   const data = await response.json();
-    //   console.log(response);
-    //   console.log(data);
-
-    //   if (!response.ok) {
-    //     toast.error(data.error);
-    //     toast.error(`Erro no pagamento, transação não realizada.`);
-    //   } else {
-    //     toast.success("Pagamento realizado com sucesso!", {
-    //       duration: 5000,
-    //       style: {
-    //         minWidth: "500px",
-    //         padding: "20px",
-    //         fontSize: "18px",
-    //       },
-    //     });
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
   }
 
   async function openModal() {
@@ -75,11 +57,12 @@ export default function PriceButton({
     var checkout = new PagarMeCheckout.Checkout({
       // @ts-ignore-next-line
       encryption_key: window.ENV.PAGARME_ENCRYPTION_KEY,
+
       success: async function (data: {
         token: string;
         payment_method: string;
       }) {
-        sendPaymentRequest(data.token, data.payment_method);
+        await sendPaymentRequest(data.token, data.payment_method);
       },
       error: function (err: any) {
         // console.log("Erro no Modal!");
@@ -90,6 +73,7 @@ export default function PriceButton({
       customerData: "true",
       createToken: "true",
       paymentMethods: "credit_card,boleto",
+      postbackUrl: "https://eorgzkrbdc3gnuq.m.pipedream.net",
       maxInstallments: 12,
       items: [
         {
@@ -140,6 +124,18 @@ export default function PriceButton({
   }
 
   if (user && plan === "Gratuito") {
+    return (
+      <button
+        disabled
+        className="w-full p-2 text-white border rounded-md cursor-not-allowed sm:py-2 md:py-4 bg-background-700 gap-x-2 border-background-600"
+      >
+        Você já tem esse plano
+      </button>
+    );
+  }
+
+  // if there is user and user.isPro === true
+  if (user && plan === "PRO (Vitalício)" && user.is_pro) {
     return (
       <button
         disabled

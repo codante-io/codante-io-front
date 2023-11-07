@@ -6,6 +6,7 @@ export type Subscription = {
   plan_name: string | null;
   status: "active" | "pending" | "expired" | "canceled";
   translated_status: string;
+  translated_payment_method: string;
   payment_method: string | null;
   boleto_url: string | null;
   price_paid_in_cents: number | null;
