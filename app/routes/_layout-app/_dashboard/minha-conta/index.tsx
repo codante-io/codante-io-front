@@ -251,11 +251,7 @@ function PasswordChangeSection({
   );
 }
 
-function SubscriptionSection({
-  subscription,
-}: {
-  subscription: Subscription | null;
-}) {
+function SubscriptionSection({ subscription }: { subscription: Subscription }) {
   return (
     <>
       <h2 className="flex items-center mt-12 text-xl">
