@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import { redirect, type LoaderArgs } from "@remix-run/node";
 import axios from "axios";
 import PriceCard from "~/components/cards/pricing/price-card";
 import {
@@ -7,6 +7,7 @@ import {
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/cards/pricing/pricing-data";
+import type { Subscription } from "~/models/subscription.server";
 import { currentToken } from "~/services/auth.server";
 
 export function loader({ request }: LoaderArgs) {
@@ -21,7 +22,7 @@ export async function action({ request }: { request: Request }) {
   let token = await currentToken({ request });
 
   try {
-    const response = await axios.post(
+    const response = await axios.post<{ data: Subscription }>(
       `${process.env.API_HOST}/subscribe`,
       {
         pagarmeToken,
@@ -34,22 +35,14 @@ export async function action({ request }: { request: Request }) {
       }
     );
 
-    // console.log(response)
     // Redirect to another page
-    return new Response(JSON.stringify(response.data), {
-      status: 302,
-      headers: { Location: "/assine/sucesso" },
-    });
+    const subscription = response.data.data;
+    const encodedSubscription = encodeURIComponent(
+      JSON.stringify(subscription)
+    );
 
-    // return new Response(JSON.stringify(response.data), {
-    //   status: 200,
-    //   headers: {
-    //     "Content-Type": "application/pdf",
-    //   },
-    // });
+    return redirect(`/assine/sucesso?subscription=${encodedSubscription}`);
   } catch (error: any) {
-    // console.log('errooooo')
-    // console.log(error)
     return new Response(
       JSON.stringify({ error: error.response.data.message }),
       {
