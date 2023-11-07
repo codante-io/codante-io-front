@@ -29,16 +29,11 @@ export default function SubmissionCard({
   size?: "medium" | "large";
 }) {
   function formatName(name: string) {
-    let splitName = name.trim().split(" ");
-    let firstName = splitName[0];
-    let lastName = splitName.length > 1 ? splitName[splitName.length - 1] : "";
-
-    firstName =
-      firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    lastName =
-      lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
-
-    return `${firstName} ${lastName}`.trim();
+    return name
+      .trim()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   }
 
   return (
@@ -85,12 +80,22 @@ export default function SubmissionCard({
             avatarUrl={user.avatar_url}
             className="w-10 h-10"
           />
-          <div className="">
+          <div
+            className={`${
+              size === "medium"
+                ? "max-w-[150px]"
+                : "lg:max-w-[600px] md:max-w-[350px] sm:max-w-[300px] max-w-[150px]"
+            }`}
+          >
             <h4 className="text-xs dark:text-gray-400 font-regular">
               Resolução de
             </h4>
-            <h3 className="font-semibold line-clamp-1">
+            <h3
+              className="font-semibold line-clamp-1 max-w-full"
+              title={formatName(user.name)}
+            >
               {formatName(user.name)}
+              {/* WWWW WWWW WWWW WWWW WWWW WWWW WWWW WWWW WWWW WWWW www www wwww wwwwww wwww */}
             </h3>
           </div>
         </div>
