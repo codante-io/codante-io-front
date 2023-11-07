@@ -83,7 +83,7 @@ export default function SubmissionCard({
           <div
             className={`${
               size === "medium"
-                ? "max-w-[150px]"
+                ? "max-w-[140px]"
                 : "lg:max-w-[600px] md:max-w-[350px] sm:max-w-[300px] max-w-[150px]"
             }`}
           >
@@ -91,7 +91,7 @@ export default function SubmissionCard({
               Resolução de
             </h4>
             <h3
-              className="font-semibold line-clamp-1 max-w-full"
+              className="font-semibold line-clamp-1 max-w-full overflow-ellipsis"
               title={formatName(user.name)}
             >
               {formatName(user.name)}
