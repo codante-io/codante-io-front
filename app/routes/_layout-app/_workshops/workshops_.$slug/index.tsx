@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/cards/card-item-difficulty";
@@ -24,40 +24,47 @@ import {
   getPublishedDateAndTime,
 } from "~/utils/interval";
 import MarkdownRenderer from "~/components/markdown-renderer";
-import { MdComputer } from "react-icons/md";
+import { MdComputer, MdLiveTv } from "react-icons/md";
 import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
+import BannerAlertInfo from "~/components/banner-alert/banner-alert-info";
+import YoutubePlayer from "~/components/youtube-player";
 
-export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
   const title = `Workshop: ${data.workshop?.name} | Codante.io`;
   const description = data.workshop?.short_description ?? "";
   const imageUrl = getOgGeneratorUrl(
     data.workshop?.name ?? "Codante",
-    "Workshop"
+    "Workshop",
   );
 
-  return {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/workshops/${params.slug}`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/workshops/${params.slug}`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": data.workshop?.name,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/workshops/${params.slug}`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/workshops/${params.slug}`,
+    },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: data.workshop?.name },
+  ];
 };
 
-export const loader = async ({ params, request }: LoaderArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const workshop = await getWorkshop(params.slug, request);
@@ -73,21 +80,59 @@ export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
-    workshop.published_at
+    workshop.published_at,
   );
+
+  function workshopHasHappened() {
+    if (!workshop.published_at) return false;
+    const now = new Date();
+    const date = new Date(workshop.published_at);
+
+    return now.toISOString() > date.toISOString();
+  }
 
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
-        <BannerAlert
-          title="Ei! Esse workshop ainda não aconteceu!"
-          subtitle={`Você poderá assisti-lo ao vivo${
-            publishedDate ? ` no dia ${publishedDate}` : " em breve"
-          }${
-            publishedTime ? ` às ${publishedTime}` : ""
-          }. Se preferir, será disponibilizada também a versão editada.`}
+        <BannerAlertInfo
+          title={`${
+            workshopHasHappened()
+              ? `Esse workshop aconteceu recentemente!`
+              : "Ei! Esse workshop ainda não aconteceu!"
+          }`}
+          subtitle={`${
+            workshopHasHappened()
+              ? "Aguarde que em breve estará disponível na plataforma."
+              : `Você poderá assisti-lo ao vivo ${
+                  publishedDate
+                    ? `no dia ${publishedDate} às ${publishedTime}. Se preferir, será disponibilizada também a versão editada.`
+                    : " em breve."
+                }`
+          }`}
         />
       )}
+
+      {workshop.status === "streaming" && (
+        <BannerAlert
+          bgColor="dark:bg-transparent bg-white"
+          borderColor="border-red-500"
+          className="w-full "
+        >
+          <MdLiveTv className="w-10 h-10 mb-4 text-red-500 fill-current dark:text-red-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
+          <div>
+            <BannerAlert.Title
+              textColor="dark:text-white text-gray-800"
+              className="mb-3 text-center md:text-left md:mb-0"
+            >
+              Esse workshop está acontecendo agora!
+            </BannerAlert.Title>
+            <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-center md:text-left">
+              Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥
+            </BannerAlert.Subtitle>
+          </div>
+        </BannerAlert>
+      )}
+
       {/* Header */}
       <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
@@ -98,6 +143,7 @@ export default function WorkshopSlug() {
           </h1>
         </div>
       </header>
+
       {/* layout */}
       <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
         {/* left Side */}
@@ -108,16 +154,20 @@ export default function WorkshopSlug() {
               durationString={fromSecondsToTimeStringWithoutSeconds(
                 workshop?.lessons?.reduce(
                   (acc, lesson) => acc + lesson.duration_in_seconds,
-                  0
-                )
+                  0,
+                ),
               )}
             />
           </div>
 
-          {/* Difficulty Card */}
-
           {/* Video */}
-          {workshop.video_url && <VimeoPlayer vimeoUrl={workshop.video_url} />}
+          {workshop.status === "streaming" && workshop.streaming_url && (
+            <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
+          )}
+          {workshop.video_url && workshop.status !== "streaming" && (
+            <VimeoPlayer vimeoUrl={workshop.video_url} />
+          )}
+
           <div className="mt-6 lg:mt-12">
             <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
             <Subtitle text="Sobre o Workshop" />

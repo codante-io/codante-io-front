@@ -10,16 +10,12 @@ import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id} className="flex justify-center lg:justify-start">
-      <Link
-        // onClick={(e) => workshop?.status === "soon" && e.preventDefault()}
-        to={`/workshops/${workshop?.slug}`}
-        className={
-          // workshop?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
-          ""
-        }
-      >
+      <Link to={`/workshops/${workshop?.slug}`}>
         <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow">
           {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
+          {workshop?.status === "streaming" && (
+            <CardItemRibbon type="live-now" text="Ao vivo agora 🔴" />
+          )}
 
           <div
             style={{
@@ -85,8 +81,8 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                     durationString={fromSecondsToTimeStringWithoutSeconds(
                       workshop?.lessons?.reduce(
                         (acc, lesson) => acc + lesson.duration_in_seconds,
-                        0
-                      )
+                        0,
+                      ),
                     )}
                   />
                 </>

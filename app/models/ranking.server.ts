@@ -3,7 +3,7 @@ import axios from "axios";
 type UserPoints = {
   name: string;
   avatar_url: string;
-  is_pro: 0 | 1;
+  is_pro: boolean;
   points: string;
   completed_challenge_count: string;
   received_reaction_count: string;
@@ -22,6 +22,6 @@ export async function getRanking(monthly: string | null): Promise<Ranking> {
   return ranking.filter(
     (user: UserPoints) =>
       user.completed_challenge_count !== "0" ||
-      user.received_reaction_count !== "0"
+      user.received_reaction_count !== "0",
   );
 }

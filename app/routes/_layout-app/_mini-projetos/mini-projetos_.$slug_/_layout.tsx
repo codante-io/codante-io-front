@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Link,
@@ -38,34 +38,41 @@ import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import type { User } from "~/models/user.server";
 
-export const meta: MetaFunction = ({ data, params }) => {
+export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
   if (!data?.challenge) {
-    return {};
+    return [{}];
   }
 
   const title = `Projeto: ${data.challenge.name} | Codante.io`;
   const description = data.challenge.short_description;
   const imageUrl = getOgGeneratorUrl(data.challenge.name, "Mini Projeto");
 
-  return {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/mini-projetos/${params.slug}`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/mini-projetos/${params.slug}`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": data.challenge.name,
-  };
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/mini-projetos/${params.slug}`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/mini-projetos/${params.slug}`,
+    },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: data.challenge.name },
+  ];
 };
 
 export async function action({ request }: { request: Request }) {
@@ -102,7 +109,7 @@ export async function action({ request }: { request: Request }) {
   }
 }
 
-export const loader = async ({ params, request }: LoaderArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
 
   const [challenge, participants, challengeSubmissions] = await Promise.all([
@@ -115,7 +122,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
     return abort404();
   }
 
-  const user = await getUser({ request });
+  const user = (await getUser({ request })) as User | null;
 
   let challengeUser;
   if (user) {
@@ -155,18 +162,18 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
-  const actionData = useActionData();
+  const actionData = useActionData<any>();
   // const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
   const hasSolution = Boolean(
-    challenge?.workshop?.id && challenge.workshop.status === "published"
+    challenge?.workshop?.id && challenge.workshop.status === "published",
   );
 
   const hasSubmissions = Boolean(
-    challengeSubmissions?.length && challengeSubmissions.length > 0
+    challengeSubmissions?.length && challengeSubmissions.length > 0,
   );
 
   const isUserParticipating = Boolean(challengeUser?.id);
@@ -266,14 +273,42 @@ export default function ChallengeSlug() {
                   className="inline mr-2 text-blue-300 dark:text-blue-900"
                 />
                 <span className="inline font-extralight">Projeto</span>{" "}
-                <span className="inline font-bold underline decoration-solid first-letter:lowercase">
-                  {challenge?.name}
-                </span>
+                <span className="inline font-bold">{challenge?.name}</span>
               </span>
             </h1>
+
             <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
               {challenge?.short_description}
             </p>
+            {challengeUser && (
+              <div
+                className={`mb inline-flex items-center gap-x-1.5 rounded-xl px-3 border py-1.5 xl:text-xs text-[0.65rem] shadow-sm font-light text-gray-600 dark:text-gray-300 ${
+                  challengeUser.pivot?.completed
+                    ? "border-green-500"
+                    : "border-amber-500"
+                }`}
+              >
+                {challengeUser.pivot?.completed ? (
+                  <CheckIcon className="w-3 h-3 text-green-500 dark:text-green-300" />
+                ) : (
+                  <svg
+                    className={`h-1.5 w-1.5 ${
+                      challengeUser.pivot?.completed
+                        ? "fill-brand-500"
+                        : "animate-pulse fill-amber-400"
+                    }`}
+                    viewBox="0 0 6 6"
+                    aria-hidden="true"
+                  >
+                    <circle cx={3} cy={3} r={3} />
+                  </svg>
+                )}
+
+                {challengeUser.pivot?.completed
+                  ? "Projeto concluído!"
+                  : "Participando"}
+              </div>
+            )}
             <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
           </div>
         </div>
@@ -319,7 +354,7 @@ export default function ChallengeSlug() {
                         tab.current
                           ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
                           : "text-gray-500 hover:text-gray-700",
-                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2"
+                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
                       )}
                       aria-current={tab.current ? "page" : undefined}
                     >

@@ -1,3 +1,4 @@
+import type { TypedResponse } from "@remix-run/node";
 import {
   createCookie,
   createCookieSessionStorage,
@@ -5,6 +6,7 @@ import {
 } from "@remix-run/node";
 import axios from "./axios.server";
 import type { AxiosResponse } from "axios";
+import type { User } from "~/models/user.server";
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -96,7 +98,7 @@ export async function logout({
   redirectTo?: string;
 }) {
   const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
+    request.headers.get("Cookie"),
   );
 
   let user = session.get("user");
@@ -110,7 +112,7 @@ export async function logout({
       headers: {
         Authorization: "Bearer " + user?.token,
       },
-    }
+    },
   );
 
   return redirect(redirectTo, {
@@ -128,7 +130,7 @@ export async function logoutWithRedirectAfterLogin({
   redirectTo?: string;
 }) {
   const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
+    request.headers.get("Cookie"),
   );
 
   let user = session.get("user");
@@ -142,7 +144,7 @@ export async function logoutWithRedirectAfterLogin({
       headers: {
         Authorization: "Bearer " + user?.token,
       },
-    }
+    },
   );
 
   return redirect(`/login?redirectTo=${redirectTo}`, {
@@ -154,7 +156,7 @@ export async function logoutWithRedirectAfterLogin({
 
 export async function currentToken({ request }: { request: Request }) {
   const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
+    request.headers.get("Cookie"),
   );
 
   if (session.has("user")) {
@@ -169,12 +171,12 @@ export async function user({
 }: {
   request: Request;
   params?: any;
-}) {
+}): Promise<User | null | TypedResponse<any>> {
   let response;
   let token = await currentToken({ request });
 
   try {
-    response = await axios.get("/api/user", {
+    response = await axios.get<User>("/api/user", {
       headers: {
         Authorization: "Bearer " + token,
       },

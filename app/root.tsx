@@ -1,4 +1,4 @@
-import { json, type LinksFunction, type MetaFunction } from "@remix-run/node";
+import { json, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -6,7 +6,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { Toaster } from "react-hot-toast";
 import LoadingBar from "~/components/loading-bar";
@@ -16,6 +18,10 @@ import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
 import { GoogleTagManager } from "./components/google-tag-manager";
 import { user } from "./services/auth.server";
 import { getOgGeneratorUrl } from "./utils/path-utils";
+import NotFound from "./components/errors/not-found";
+import { Error500 } from "./components/errors/500";
+import type { User } from "./models/user.server";
+import { metaV1 } from "@remix-run/v1-meta";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -24,28 +30,30 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg" },
 ];
 
-export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "Codante - Cursos e Projetos Online de Programação",
-  viewport: "width=device-width,initial-scale=1",
-  description:
-    "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
+export function meta(args: any) {
+  return metaV1(args, {
+    charset: "utf-8",
+    title: "Codante - Cursos e Projetos Online de Programação",
+    viewport: "width=device-width,initial-scale=1",
+    description:
+      "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
 
-  "og:title": "Codante - Cursos e Projetos Online de Programação",
-  "og:description": "Codante - Cursos e Projetos Online de Programação",
-  "og:image": getOgGeneratorUrl("Codante"),
-  "og:type": "website",
+    "og:title": "Codante - Cursos e Projetos Online de Programação",
+    "og:description": "Codante - Cursos e Projetos Online de Programação",
+    "og:image": getOgGeneratorUrl("Codante"),
+    "og:type": "website",
 
-  "twitter:card": "summary_large_image",
-  "twitter:domain": "codante.io",
-  "twitter:title": "Codante - Cursos e Projetos Online de Programação",
-  "twitter:description": "Codante - Cursos e Projetos Online de Programação",
-  "twitter:image": getOgGeneratorUrl("Codante"),
-  "twitter:image:alt": "Codante",
-});
+    "twitter:card": "summary_large_image",
+    "twitter:domain": "codante.io",
+    "twitter:title": "Codante - Cursos e Projetos Online de Programação",
+    "twitter:description": "Codante - Cursos e Projetos Online de Programação",
+    "twitter:image": getOgGeneratorUrl("Codante"),
+    "twitter:image:alt": "Codante",
+  });
+}
 
 export async function loader({ request }: { request: Request }) {
-  const userData = await user({ request });
+  const userData = (await user({ request })) as User | null;
   return json({
     user: userData,
     ENV: {
@@ -55,7 +63,7 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export default function App() {
-  const loaderData = useLoaderData();
+  const loaderData = useLoaderData<typeof loader>();
   const user = loaderData.user;
 
   return (
@@ -103,6 +111,41 @@ export default function App() {
             <span className="hidden 2xl:block">2xl</span>
           </div>
         )}
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  return (
+    <html>
+      <head>
+        <title>
+          {isRouteErrorResponse(error)
+            ? `Página não encontrada`
+            : "Ops... algum erro aconteceu!"}
+        </title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="text-gray-800 dark:bg-background-900 bg-background-50 dark:text-gray-50">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: DarkModeScriptInnerHtml,
+          }}
+        />
+        <ColorModeProvider>
+          <LoadingBar />
+
+          {isRouteErrorResponse(error) ? (
+            <NotFound />
+          ) : (
+            <Error500 error={error} />
+          )}
+        </ColorModeProvider>
+        <Scripts />
       </body>
     </html>
   );

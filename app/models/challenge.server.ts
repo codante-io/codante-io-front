@@ -25,6 +25,7 @@ export type Challenge = {
   users?: { avatar_url: string }[];
   pivot?: {
     trackable_type: string;
+    completed?: boolean;
   };
   current_user_is_enrolled: boolean;
   resources: {
@@ -32,6 +33,9 @@ export type Challenge = {
     type: string;
     url: string;
   }[];
+  weekly_featured_start_date: string | null;
+  solution_publish_date: string | null;
+  is_weekly_featured?: boolean;
 };
 
 export type ChallengeCard = {
@@ -43,8 +47,8 @@ export type ChallengeCard = {
   image_url: string;
   difficulty: 1 | 2 | 3;
   tags: Tag[];
-  has_workshop: boolean;
-  users?: { avatar_url: string; is_pro: 0 | 1 }[];
+  has_solution: boolean;
+  users?: { avatar_url: string; is_pro: boolean }[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
   weekly_featured_start_date: string | null;
@@ -54,7 +58,7 @@ export type ChallengeCard = {
 
 export type ChallengeParticipants = {
   count: number;
-  avatars: { avatar_url: string; is_pro: 0 | 1 }[];
+  avatars: { avatar_url: string; is_pro: boolean }[];
 };
 
 export type ChallengeSubmission = {
@@ -66,11 +70,11 @@ export type ChallengeSubmission = {
   submission_url: string;
   submission_image_url: string;
   reactions: Reactions;
-  is_pro: 0 | 1;
+  is_pro: boolean;
 };
 
 export async function getChallenges(
-  request: Request
+  request: Request,
 ): Promise<Array<ChallengeCard>> {
   const token = await currentToken({ request });
   const challenges = await axios
@@ -85,7 +89,7 @@ export async function getChallenges(
 
 export async function getChallenge(
   slug: string,
-  request: Request
+  request: Request,
 ): Promise<Challenge> {
   const token = await currentToken({ request });
 
@@ -106,7 +110,7 @@ export async function getChallenge(
 }
 
 export async function getChallengeParticipants(
-  slug: string
+  slug: string,
 ): Promise<ChallengeParticipants> {
   const challengeParticipants = await axios
     .get(`${process.env.API_HOST}/challenges/${slug}/participants`)
@@ -138,7 +142,7 @@ export async function joinChallenge({
           headers: {
             Authorization: "Bearer " + token,
           },
-        }
+        },
       )
       .then((res) => res.data);
     return { success: "Sua participação no mini projeto foi registrada." };
@@ -149,7 +153,7 @@ export async function joinChallenge({
 
 export async function userJoinedChallenge(
   slug: string,
-  request: Request
+  request: Request,
 ): Promise<Challenge> {
   let token = await currentToken({ request });
 
@@ -165,7 +169,7 @@ export async function userJoinedChallenge(
 
 export async function getUserFork(
   userGithubLogin: string,
-  challengeSlug: string
+  challengeSlug: string,
 ) {
   const repos = await axios
     .get(`https://api.github.com/repos/codante-io/${challengeSlug}/forks`, {
@@ -177,7 +181,8 @@ export async function getUserFork(
     .then((res) => res.data);
 
   const userFork = repos.find(
-    (repo: { owner: { login: string } }) => repo.owner.login === userGithubLogin
+    (repo: { owner: { login: string } }) =>
+      repo.owner.login === userGithubLogin,
   );
 
   return userFork;
@@ -278,7 +283,7 @@ export async function updateChallengeCompleted({
 
 export async function getChallengeSubmissions(
   request: Request,
-  slug: string
+  slug: string,
 ): Promise<ChallengeSubmission[]> {
   let token = await currentToken({ request });
 
@@ -302,7 +307,7 @@ export async function submitChallenge(
   request: Request,
   slug: string,
   submissionUrl: string,
-  metadata?: any
+  metadata?: any,
 ): Promise<{ success?: string; error?: string }> {
   let token = await currentToken({ request });
 
@@ -317,7 +322,7 @@ export async function submitChallenge(
         headers: {
           Authorization: "Bearer " + token,
         },
-      }
+      },
     )
     .then(() => ({ success: "Submissão registrada com sucesso." }))
     .catch((error) => {

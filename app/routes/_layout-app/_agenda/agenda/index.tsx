@@ -7,14 +7,15 @@ import WorkshopCard from "~/components/cards/workshop-card";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getUpcoming } from "~/models/upcoming.server";
 import { getPublishedDateAndTime } from "~/utils/interval";
+import { metaV1 } from "@remix-run/v1-meta";
 
 // meta function
-export function meta() {
-  return {
+export function meta(args: any) {
+  return metaV1(args, {
     title: "Agenda | Codante.io",
     description:
       "Acompanhe a agenda de workshops e mini projetos ao vivo do Codante.",
-  };
+  });
 }
 
 export async function loader() {
@@ -31,7 +32,7 @@ export default function Schedule() {
   const { colorMode } = useColorMode();
 
   const upcomingDates = Object.keys(upcomingData)?.filter(
-    (key) => key !== "soon"
+    (key) => key !== "soon",
   );
 
   return (
@@ -43,7 +44,7 @@ export default function Schedule() {
       <div>
         {upcomingDates.map((upcoming, i) => {
           const [, publishedTime] = getPublishedDateAndTime(
-            upcomingData[upcoming][0].published_at
+            upcomingData[upcoming][0].published_at,
           );
 
           let endTime = undefined;
@@ -73,7 +74,7 @@ export default function Schedule() {
               <div className="z-20 max-w-xs p-4 mb-0 text-center text-gray-800 bg-gray-100 rounded-lg shadow-lg lg:text-left dark:text-gray-300 lg:ml-4 dark:bg-gray-dark lg:mb-0">
                 <div className="text-7xl text-brand">
                   {Intl.DateTimeFormat("pt-BR", { day: "numeric" }).format(
-                    new Date(upcoming + "T00:00-0300") // esse timezone é necessário para a data funcionar corretamente
+                    new Date(upcoming + "T00:00-0300"), // esse timezone é necessário para a data funcionar corretamente
                   )}
                 </div>
                 <div className="text-4xl font-lexend">
@@ -86,7 +87,7 @@ export default function Schedule() {
                       .slice(1)}
                   /{""}
                   {Intl.DateTimeFormat("pt-BR", { year: "numeric" }).format(
-                    new Date(upcoming + "T00:00-0300")
+                    new Date(upcoming + "T00:00-0300"),
                   )}
                 </div>
                 <div className="mt-2 text-2xl font-light "></div>

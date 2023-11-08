@@ -18,36 +18,38 @@ import NotFound from "~/components/errors/not-found";
 import TitleIcon from "~/components/title-icon";
 import VimeoPlayer from "~/components/vimeo-player";
 import Wave from "~/components/wave";
-
 import type { User } from "~/models/user.server";
 import useMousePosition from "./useMousePosition";
 import transformElement from "./transformElement";
 import { faqs, supporters, techs, steps } from "./data";
-
 import { useColorMode } from "~/contexts/color-mode-context";
-import type { MetaFunction } from "@remix-run/node";
-import type { loader } from "~/root";
+import BannerAlert from "~/components/banner-alert";
 
-export const meta: MetaFunction<typeof loader> = () => {
-  return {
-    title: "Rinha de Frontend",
-    description: "A melhor rinha de frontend",
-    "og:title": "Rinha de Frontend",
-    "og:description": "A melhor rinha de frontend",
-    "og:image":
-      "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
-    "og:type": "website",
-    "og:url": `https://codante.io/rinha-frontend`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/rinha-frontend`,
-    "twitter:title": "Rinha de Frontend",
-    "twitter:description": "A melhor rinha de frontend",
-    "twitter:image":
-      "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
-    "twitter:image:alt": "Rinha de Frontend",
-  };
+export const meta = () => {
+  return [
+    { title: "Rinha de Frontend" },
+    { name: "description", content: "A melhor rinha de frontend" },
+    { property: "og:title", content: "Rinha de Frontend" },
+    { property: "og:description", content: "A melhor rinha de frontend" },
+    {
+      property: "og:image",
+      content:
+        "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
+    },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://codante.io/rinha-frontend" },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    { property: "twitter:url", content: "https://codante.io/rinha-frontend" },
+    { property: "twitter:title", content: "Rinha de Frontend" },
+    { property: "twitter:description", content: "A melhor rinha de frontend" },
+    {
+      property: "twitter:image",
+      content:
+        "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
+    },
+    { property: "twitter:image:alt", content: "Rinha de Frontend" },
+  ];
 };
 
 export default function HomePage() {
@@ -72,7 +74,7 @@ export default function HomePage() {
   function goToTwitter() {
     window?.open(
       "https://twitter.com/rinhafront?ref_src=twsrc%5Etfw",
-      "_blank"
+      "_blank",
     );
   }
 
@@ -80,6 +82,20 @@ export default function HomePage() {
     <AppLayout user={user} hideNavbarLinks={true}>
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50 scroll-smooth">
         <BackgroundBlur />
+
+        <BannerAlert className="w-full max-w-2xl mx-auto mt-4">
+          <BannerAlert.Icon />
+          <BannerAlert.Body>
+            <BannerAlert.Title>
+              As submissões da Rinha de Front-end finalizaram!
+            </BannerAlert.Title>
+            <BannerAlert.Subtitle>
+              Você poderá continuar submetendo sua resolução, mas a
+              classificação oficial somente valerá para as submissões feitas até
+              dia 31/10/2023
+            </BannerAlert.Subtitle>
+          </BannerAlert.Body>
+        </BannerAlert>
 
         <section
           id="headline"

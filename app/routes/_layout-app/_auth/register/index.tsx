@@ -14,6 +14,7 @@ export async function action({ request }: { request: Request }) {
   let name = formData.get("name") as string;
   let passwordConfirmation = formData.get("password_confirmation") as string;
 
+  // @ts-ignore-next-line
   let { errors, redirector } = await register({
     request,
     name,
@@ -26,7 +27,7 @@ export async function action({ request }: { request: Request }) {
 }
 
 export default function Register() {
-  let errors = useActionData();
+  let errors = useActionData<string>();
 
   const transition = useNavigation();
   const { colorMode } = useColorMode();
