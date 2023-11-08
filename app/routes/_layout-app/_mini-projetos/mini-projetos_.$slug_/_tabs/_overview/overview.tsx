@@ -30,7 +30,7 @@ export default function Overview({
           <img
             src={challenge.image_url}
             alt="Project preview"
-            className="bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500"
+            className="bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500 w-full max-h-96 object-scale-down"
           />
         )}
         <div>
