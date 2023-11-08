@@ -216,7 +216,7 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <div>
-        <NotFound />
+        <NotFound error={error} />
       </div>
     );
   }

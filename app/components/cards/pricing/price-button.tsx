@@ -47,7 +47,9 @@ export default function PriceButton({
         { method: "post", action: "/assine" }
       );
     } catch (error) {
-      // toast.error("Erro ao processar pagamento.")
+      // Acho que esse catch é inútil: https://github.com/remix-run/remix/discussions/4242
+      toast.error("Erro ao processar pagamento.");
+      //eslint-disable-next-line
       console.log(error);
     }
   }

@@ -1,4 +1,5 @@
 import { redirect, type LoaderArgs } from "@remix-run/node";
+import type { AxiosError } from "axios";
 import axios from "axios";
 import PriceCard from "~/components/cards/pricing/price-card";
 import {
@@ -43,13 +44,23 @@ export async function action({ request }: { request: Request }) {
 
     return redirect(`/assine/sucesso?subscription=${encodedSubscription}`);
   } catch (error: any) {
-    return new Response(
-      JSON.stringify({ error: error.response.data.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
+    // if it is an axios error
+    if (error.isAxiosError) {
+      const axiosError = error as AxiosError;
+
+      // if it is a 401 error
+      if (axiosError.response?.status === 401) {
+        // redirect to login page
+        return redirect("/login");
       }
-    );
+
+      const errorMessage = error.response.data.message;
+      const encodedErrorMessage = encodeURIComponent(errorMessage);
+
+      return redirect(`/assine/erro?error=${encodedErrorMessage}`);
+    }
+
+    return redirect(`/assine/erro`);
   }
 }
 
