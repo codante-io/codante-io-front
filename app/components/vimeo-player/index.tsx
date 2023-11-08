@@ -9,6 +9,7 @@ type VimeoPlayerProps = {
   onVideoEnded?: () => void;
   autoplay?: boolean;
   thumbnailURL?: string;
+  roundedClassName?: string;
 };
 
 export default function VimeoPlayer({
@@ -16,6 +17,7 @@ export default function VimeoPlayer({
   onVideoEnded,
   autoplay = false,
   thumbnailURL,
+  roundedClassName = "lg:rounded-xl",
 }: VimeoPlayerProps) {
   const playerRef = useRef(null);
 
@@ -59,11 +61,15 @@ export default function VimeoPlayer({
 
   return (
     <div className="relative aspect-video">
-      <div className="absolute top-0 z-10 w-full overflow-hidden opacity-1 lg:rounded-xl">
+      <div
+        className={`absolute top-0 z-10 w-full overflow-hidden opacity-1 ${roundedClassName} `}
+      >
         <div className="vimeo-full-width" ref={playerRef}></div>
       </div>
 
-      <div className="flex items-center justify-center h-full overflow-hidden lg:rounded-xl bg-background-200 dark:bg-background-800 ">
+      <div
+        className={`flex items-center justify-center h-full overflow-hidden ${roundedClassName} bg-background-200 dark:bg-background-800 `}
+      >
         {thumbnailURL && (
           <img
             key={thumbnailURL}
