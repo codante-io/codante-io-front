@@ -40,7 +40,7 @@ export default function RankingList() {
 
   return (
     <main className="container mx-auto text-center">
-      <h1 className="mb-10 text-4xl text-center font-lexend">
+      <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
         Ranking
         {searchParams.get("monthly") && <CurrentMonth />}
       </h1>

@@ -22,7 +22,7 @@ export default function AssineErro() {
           <Info className="text-red-500 dark:text-red-300 w-28 h-28" />
         </div>
         <div className="p-10 px-14">
-          <h2 className="mb-3 text-3xl font-bold font-lexend">
+          <h2 className="mb-3 text-2xl font-bold md:text-3xl font-lexend">
             Ops... algo deu errado.
           </h2>
           <hr className="mx-auto border-2 border-red-500 rounded-full dark:border-red-300 w-28" />

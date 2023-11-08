@@ -67,13 +67,13 @@ export async function action({ request }: { request: Request }) {
 export default function AssinePage() {
   return (
     <main className="container mx-auto ">
-      <h1 className="mb-10 text-4xl text-center font-lexend">
+      <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
         <span className="font-bold border-b-4 border-amber-400">Assine</span> o
         Codante
       </h1>
 
       <section>
-        <div className="container flex flex-col items-center">
+        <div className="flex flex-col items-center ">
           <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-3xl">
             Assine nosso{" "}
             <span className="text-brand-400">
@@ -98,7 +98,7 @@ export default function AssinePage() {
         </div>
       </section>
       <section className="mt-12">
-        <h2 className="mb-10 text-4xl text-center font-lexend">
+        <h2 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
           Perguntas{" "}
           <span className="font-bold border-b-4 border-amber-400">
             Frequentes

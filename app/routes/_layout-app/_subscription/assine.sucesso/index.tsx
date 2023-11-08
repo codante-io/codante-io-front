@@ -32,7 +32,7 @@ export default function AssineSucesso() {
   if (!subscription) return null;
 
   return (
-    <main className="container mx-auto mt-12 text-center">
+    <main className="container mx-auto mt-6 text-center lg:mt-12">
       <div className="max-w-2xl mx-auto dark:bg-background-700 rounded-xl dark:border-background-600 border-[1.5px] border-gray-300 shadow-lg">
         <div className="flex items-center justify-center p-10 bg-gray-200 dark:bg-background-900 rounded-t-xl">
           {subscriptionStatus === "active" ? (
@@ -42,7 +42,7 @@ export default function AssineSucesso() {
           )}
         </div>
         <div className="p-10 px-14">
-          <h2 className="mb-3 text-3xl font-bold font-lexend">
+          <h2 className="mb-3 text-2xl font-bold md:text-3xl font-lexend">
             {subscriptionStatus === "active"
               ? "Tudo Certo!"
               : "Aguardando Pagamento"}
@@ -73,7 +73,7 @@ export default function AssineSucesso() {
             )}
           </p>
           {subscriptionStatus !== "active" && paymentMethod === "boleto" && (
-            <div className="flex items-center justify-center gap-10 mt-12">
+            <div className="flex flex-col items-center justify-center gap-4 mt-12 md:gap-10 md:flex-row">
               <Button
                 onClick={copyBarcodeToClipboard}
                 type="button"
