@@ -74,7 +74,6 @@ export default function SubmissionCard({
       </section>
 
       <footer className="flex items-center justify-between gap-4 px-4 py-4 dark:bg-background-700">
-        {/* <div className="flex items-center gap-4 my-4 flex-1"> */}
         <div className="w-10 h-10 flex-none">
           <UserAvatar
             isPro={user.is_pro}
@@ -82,13 +81,7 @@ export default function SubmissionCard({
             className="w-10 h-10 flex-shrink-0"
           />
         </div>
-        <div
-          className={`${
-            size === "medium"
-              ? "w-full"
-              : "lg:max-w-[600px] sm:max-w-[350px] max-w-[150px]"
-          }`}
-        >
+        <div className="w-full">
           <h4 className="text-xs dark:text-gray-400 font-regular">
             Resolução de
           </h4>
@@ -99,7 +92,6 @@ export default function SubmissionCard({
             {formatName(user.name)}
           </h3>
         </div>
-        {/* </div> */}
         <ReactionsButton
           reactions={reactions}
           reactableId={submission.id}
