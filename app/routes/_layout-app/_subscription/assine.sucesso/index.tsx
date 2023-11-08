@@ -67,7 +67,7 @@ export default function AssineSucesso() {
             ) : (
               <>
                 Você assinou o Codante <ProSpanWrapper>PRO</ProSpanWrapper>
-                . <br /> Após o pagamento, aguarde até 2 dias úteis para seu
+                <br /> Após o pagamento, aguarde até 2 dias úteis para seu
                 pagamento ser reconhecido.
               </>
             )}
