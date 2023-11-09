@@ -8,7 +8,7 @@ import { useColorMode } from "~/contexts/color-mode-context";
 import { setActiveClassForPath } from "~/utils/path-utils";
 import LinkToLoginWithRedirect from "../link-to-login-with-redirect";
 import ProfileMenu from "./profile-menu";
-import switchSound from "./switch.mp3";
+import switchSound from "~/sounds/switch.mp3";
 import type { User } from "~/models/user.server";
 import { AiOutlineMenu } from "react-icons/ai";
 
@@ -212,7 +212,7 @@ function DesktopNavbar({
                   onClick={() => playSound()}
                 >
                   <AiOutlineMenu />
-                  <BsFillCaretDownFill className="w-[10px] h-[10px] p-0 m-0 ml-1 transition-transform ui-open:rotate-180" />
+                  <BsFillCaretDownFill className="w-[10px] h-[10px] p-0 m-0 ml-1 transition-transform ui-open:-rotate-180" />
                 </Menu.Button>
                 <Transition
                   enter="transition ease-out duration-150"
@@ -350,7 +350,7 @@ function MobileNavbar({
                   onClick={() => playSound()}
                 >
                   Mais
-                  <BsFillCaretDownFill className="ml-1 text-xs transition-transform ui-not-open:rotate-0 ui-open:rotate-180" />
+                  <BsFillCaretDownFill className="ml-1 text-xs transition-transform ui-not-open:rotate-0 ui-open:-rotate-180" />
                 </Menu.Button>
                 <Transition
                   enter="transition ease-out duration-150"

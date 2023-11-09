@@ -14,6 +14,9 @@ import faqQuestions from "../faq-questions";
 import { useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "framer-motion";
+import useSound from "use-sound";
+import switchSound from "~/sounds/switch.mp3";
+import classNames from "~/utils/class-names";
 
 export function loader({ request }: LoaderFunctionArgs) {
   return { request };
@@ -108,13 +111,15 @@ export default function AssinePage() {
             Frequentes
           </span>
         </h2>
-        {faqQuestions.map((question, index) => (
-          <FaqItem
-            key={index}
-            question={question.question}
-            answer={question.answer}
-          />
-        ))}
+        <section className="mt-14">
+          {faqQuestions.map((question, index) => (
+            <FaqItem
+              key={index}
+              question={question.question}
+              answer={question.answer}
+            />
+          ))}
+        </section>
       </section>
     </main>
   );
@@ -122,19 +127,26 @@ export default function AssinePage() {
 
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [playSound] = useSound(switchSound, { volume: 0.25 });
 
   return (
     <div
-      className={`cursor-pointer shadow mb-6 mx-24 border font-lexend rounded-lg ${
-        isVisible ? "border-brand-500" : "border-gray-600"
-      } bg-background-800 px-10 py-4`}
-      onClick={() => setIsVisible(!isVisible)}
+      className={classNames(
+        isVisible ? "border-brand-500" : "border-gray-300 dark:border-gray-600",
+        "cursor-pointer shadow mb-6 mx-2 lg:mx-24 border font-lexend rounded-lg bg-white dark:bg-background-800 px-4 md:px-10 py-4",
+      )}
+      onClick={() => {
+        setIsVisible(!isVisible);
+        playSound();
+      }}
     >
       <section className="flex justify-between items-center">
-        <h3 className={`py-8 text-xl font-bold`}>{question}</h3>
+        <h3 className={`py-4 md:py-6 text-lg md:text-xl font-bold`}>
+          {question}
+        </h3>
         <RiArrowDownSLine
-          className={`text-4xl  transition-transform ${
-            isVisible ? "rotate-180 text-brand-500" : "text-gray-400"
+          className={`text-3xl md:text-4xl transition-transform flex-shrink-0 ${
+            isVisible ? "-rotate-180 text-brand-500" : "text-gray-400"
           }`}
         />
       </section>
@@ -152,11 +164,9 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
             transition: { opacity: { duration: 0.1 } },
           }}
           key={isVisible ? "open" : "closed"}
-          className={`${
-            isVisible ? "visible" : "invisible"
-          } text-sm font-light text-gray-500 dark:text-gray-300 relative overflow-hidden`}
+          className={`${isVisible ? "visible" : "invisible"} `}
         >
-          <p className="font-light text-lg pb-4">{answer}</p>
+          <p className="font-light text-base md:text-lg pb-4">{answer}</p>
         </motion.p>
       </AnimatePresence>
     </div>
