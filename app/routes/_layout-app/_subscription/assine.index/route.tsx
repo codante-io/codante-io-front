@@ -16,51 +16,42 @@ export function loader({ request }: LoaderArgs) {
 }
 
 export async function action({ request }: { request: Request }) {
-  const formData = await request.formData();
-  const pagarmeToken = formData.get("pagarmeToken");
-  const paymentMethod = formData.get("paymentMethod");
-
   let token = await currentToken({ request });
 
   try {
-    const response = await axios.post<{ data: Subscription }>(
-      `${process.env.API_HOST}/subscribe`,
-      {
-        pagarmeToken,
-        paymentMethod,
+    const response = await axios.get<{
+        checkoutLink: string;
+        pagarmeOrderID: string;
+        subscription: Subscription;
+    }>(`${process.env.API_HOST}/api/pagarme/get-link`, {
+      headers: {
+        Authorization: "Bearer " + token,
       },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+    });
 
-    // Redirect to success page
-    const subscription = response.data.data;
-    const encodedSubscription = encodeURIComponent(
-      JSON.stringify(subscription)
-    );
+    return redirect(`${response.data.checkoutLink}`);
 
-    return redirect(`/assine/sucesso?subscription=${encodedSubscription}`);
   } catch (error: any) {
     // if it is an axios error
-    if (error.isAxiosError) {
-      const axiosError = error as AxiosError;
+    // if (error.isAxiosError) {
+    //   const axiosError = error as AxiosError;
 
-      // if it is a 401 error
-      if (axiosError.response?.status === 401) {
-        // redirect to login page
-        return redirect("/login");
-      }
+    // console.log(error)
 
-      const errorMessage = error.response.data.message;
-      const encodedErrorMessage = encodeURIComponent(errorMessage);
+    return 'errror'
+    //   // if it is a 401 error
+    //   if (axiosError.response?.status === 401) {
+    //     // redirect to login page
+    //     return redirect("/login");
+    //   }
 
-      return redirect(`/assine/erro?error=${encodedErrorMessage}`);
-    }
+    //   const errorMessage = error.response.data.message;
+    //   const encodedErrorMessage = encodeURIComponent(errorMessage);
 
-    return redirect(`/assine/erro`);
+    //   return redirect(`/assine/erro?error=${encodedErrorMessage}`);
+    // }
+
+    // return redirect(`/assine/erro`);
   }
 }
 

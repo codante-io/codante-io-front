@@ -1,8 +1,10 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { CgSpinner } from "react-icons/cg";
 import { FiGithub } from "react-icons/fi";
 import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+
 import classNames from "~/utils/class-names";
 
 export default function PriceButton({
@@ -13,38 +15,53 @@ export default function PriceButton({
   const user = useUserFromOutletContext();
   const navigate = useNavigate();
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state === "submitting";
+
 
   const [isHovering, setIsHovering] = useState(false);
 
-  useEffect(() => {
-    const scriptTag = document.createElement("script");
-    scriptTag.src = "https://assets.pagar.me/checkout/1.1.0/checkout.js";
-
-    document.body.appendChild(scriptTag);
-
-    return () => {
-      document.body.removeChild(scriptTag);
-    };
-  }, []);
-
   //useeffect for toast submitting
-  useEffect(() => {
-    if (isSubmitting) {
-      toast.loading("Aguarde...");
-    } else {
-      toast.dismiss();
-    }
-  }, [isSubmitting]);
+  // useEffect(() => {
+  //   if (isSubmitting) {
+  //     toast.loading("Aguarde...");
+  //   } else {
+  //     toast.dismiss();
+  //   }
+  // }, [isSubmitting]);
+
+  async function checkout() {
+    toast.custom(
+      () => (
+        <div className="flex flex-col items-center text-center justify-center bg-background-700 p-6 rounded-xl border border-background-500 max-w-xs">
+          <h3 className="text-xl font-bold flex items-center gap-3  ">
+            <CgSpinner className="animate-spin text-brand" />
+            Aguarde
+          </h3>
+          <p className="mt-2 text-gray-300 text-sm">
+            Você está sendo redirecionado para a página do provedor de pagamento...
+          </p>
+        </div>
+      ),
+      {
+        duration: 10000,
+      },
+    );
+
+    // wait 2 seconds to show the toast (wait promise)
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    setTimeout(() => {
+      fetcher.submit({}, { method: "post", action: "/assine" });
+    }, 2000);
+  }
 
   async function sendPaymentRequest(
     pagarmeToken: string,
-    paymentMethod: string
+    paymentMethod: string,
   ) {
     try {
       fetcher.submit(
         { pagarmeToken, paymentMethod },
-        { method: "post", action: "/assine" }
+        { method: "post", action: "/assine" },
       );
     } catch (error) {
       // Acho que esse catch é inútil: https://github.com/remix-run/remix/discussions/4242
@@ -115,7 +132,7 @@ export default function PriceButton({
         onClick={() => navigate("/login?redirectTo=/assine")}
         className={classNames(
           isHovering && "bg-opacity-50",
-          "w-full p-2 text-white bg-brand rounded-md sm:py-2 md:py-4 flex items-center justify-center gap-x-2"
+          "w-full p-2 text-white bg-brand rounded-md sm:py-2 md:py-4 flex items-center justify-center gap-x-2",
         )}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -149,11 +166,13 @@ export default function PriceButton({
   }
 
   return (
+    // <Form action="/assine" method="post">
     <button
-      onClick={openModal} // TODO - alterar para link de pagamento
+      onClick={checkout}
       className="w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand"
     >
       Assinar PRO
     </button>
+    // </Form>
   );
 }
