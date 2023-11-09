@@ -3,7 +3,7 @@ import type { MouseEvent } from "react";
 import { toast } from "react-hot-toast";
 import { BsSquare } from "react-icons/bs";
 import type { Lesson } from "~/models/lesson.server";
-import pop from "~/components/reactions-button/pop.wav";
+import pop from "~/sounds/pop.wav";
 import useSound from "use-sound";
 
 export default function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
@@ -13,7 +13,7 @@ export default function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
   function handleCheckClick(
     event: MouseEvent<HTMLButtonElement>,
     lessonId: string,
-    markCompleted: boolean
+    markCompleted: boolean,
   ) {
     event.preventDefault();
     try {
@@ -22,7 +22,7 @@ export default function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
         {
           method: "POST",
           action: "/api/set-watched?index",
-        }
+        },
       );
       popSound();
       if (markCompleted) {
