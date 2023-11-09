@@ -1,5 +1,5 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
 import { FiGithub } from "react-icons/fi";
@@ -15,18 +15,7 @@ export default function PriceButton({
   const user = useUserFromOutletContext();
   const navigate = useNavigate();
   const fetcher = useFetcher();
-
-
   const [isHovering, setIsHovering] = useState(false);
-
-  //useeffect for toast submitting
-  // useEffect(() => {
-  //   if (isSubmitting) {
-  //     toast.loading("Aguarde...");
-  //   } else {
-  //     toast.dismiss();
-  //   }
-  // }, [isSubmitting]);
 
   async function checkout() {
     toast.custom(
@@ -37,7 +26,8 @@ export default function PriceButton({
             Aguarde
           </h3>
           <p className="mt-2 text-gray-300 text-sm">
-            Você está sendo redirecionado para a página do provedor de pagamento...
+            Você está sendo redirecionado para a página do provedor de
+            pagamento...
           </p>
         </div>
       ),
@@ -47,63 +37,9 @@ export default function PriceButton({
     );
 
     // wait 2 seconds to show the toast (wait promise)
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-
     setTimeout(() => {
       fetcher.submit({}, { method: "post", action: "/assine" });
     }, 2000);
-  }
-
-  async function sendPaymentRequest(
-    pagarmeToken: string,
-    paymentMethod: string,
-  ) {
-    try {
-      fetcher.submit(
-        { pagarmeToken, paymentMethod },
-        { method: "post", action: "/assine" },
-      );
-    } catch (error) {
-      // Acho que esse catch é inútil: https://github.com/remix-run/remix/discussions/4242
-      toast.error("Erro ao processar pagamento.");
-      //eslint-disable-next-line
-      console.log(error);
-    }
-  }
-
-  async function openModal() {
-    // @ts-ignore-next-line
-    var checkout = new PagarMeCheckout.Checkout({
-      // @ts-ignore-next-line
-      encryption_key: window.ENV.PAGARME_ENCRYPTION_KEY,
-
-      success: async function (data: {
-        token: string;
-        payment_method: string;
-      }) {
-        await sendPaymentRequest(data.token, data.payment_method);
-      },
-      error: function (err: any) {
-        // console.log("Erro no Modal!");
-      },
-    });
-    checkout.open({
-      amount: 58800,
-      customerData: "true",
-      createToken: "true",
-      paymentMethods: "credit_card,boleto",
-      postbackUrl: "https://eorgzkrbdc3gnuq.m.pipedream.net",
-      maxInstallments: 12,
-      items: [
-        {
-          id: "1",
-          title: "Codante - Vitalício",
-          unit_price: 58800,
-          quantity: 1,
-          tangible: "false",
-        },
-      ],
-    });
   }
 
   const buttonText = isHovering ? (

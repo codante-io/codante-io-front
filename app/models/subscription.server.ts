@@ -33,3 +33,29 @@ export async function getSubscription({ request }: { request: Request }) {
 
   return data;
 }
+
+export async function getSubscriptionByPagarmeOrderId({
+  request,
+  pagarmeOrderId,
+}: {
+  request: Request;
+  pagarmeOrderId: string;
+}) {
+  const token = await currentToken({ request });
+
+  let endpoint = `${process.env.API_HOST}/api/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
+
+  try {
+    const data: Subscription | null = await axios
+      .get(endpoint, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => res.data.data);
+
+    return data;
+  } catch (e) {
+    return null;
+  }
+}

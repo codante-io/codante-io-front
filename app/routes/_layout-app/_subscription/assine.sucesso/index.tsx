@@ -1,20 +1,22 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import toast from "react-hot-toast";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
 import Button from "~/components/form/button";
 import ProSpanWrapper from "~/components/pro-span-wrapper";
-import type { Subscription } from "~/models/subscription.server";
+import { getSubscriptionByPagarmeOrderId } from "~/models/subscription.server";
 import BoletoIcon from "./boleto-icon";
 import ThumbIcon from "./thumb-icon";
 
-export function loader({ request }: { request: Request }) {
+export async function loader({ request }: { request: Request }) {
   const url = new URL(request.url);
-  const subscriptionString = url.searchParams.get("subscription");
+  const pagarmeOrderId = url.searchParams.get("order_id");
 
-  if (!subscriptionString) {
-    return { subscription: null };
-  }
-  const subscription: Subscription = JSON.parse(subscriptionString);
+  if (!pagarmeOrderId) return { subscription: null };
+
+  const subscription = await getSubscriptionByPagarmeOrderId({
+    request,
+    pagarmeOrderId,
+  });
+
   return { subscription };
 }
 
@@ -22,14 +24,6 @@ export default function AssineSucesso() {
   const { subscription } = useLoaderData<typeof loader>();
   const subscriptionStatus = subscription?.status;
   const paymentMethod = subscription?.payment_method;
-
-  function copyBarcodeToClipboard() {
-    if (!subscription?.boleto_url) return;
-    navigator.clipboard.writeText(subscription?.boleto_url);
-    toast.success("Código de barras copiado!");
-  }
-
-  if (!subscription) return null;
 
   return (
     <main className="container mx-auto mt-6 text-center lg:mt-12">

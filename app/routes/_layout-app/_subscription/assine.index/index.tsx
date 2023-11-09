@@ -1,5 +1,4 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
-import type { AxiosError } from "axios";
 import axios from "axios";
 import PriceCard from "~/components/cards/pricing/price-card";
 import {
@@ -27,9 +26,9 @@ export async function action({ request }: { request: Request }) {
 
   try {
     const response = await axios.get<{
-        checkoutLink: string;
-        pagarmeOrderID: string;
-        subscription: Subscription;
+      checkoutLink: string;
+      pagarmeOrderID: string;
+      subscription: Subscription;
     }>(`${process.env.API_HOST}/api/pagarme/get-link`, {
       headers: {
         Authorization: "Bearer " + token,
@@ -37,7 +36,6 @@ export async function action({ request }: { request: Request }) {
     });
 
     return redirect(`${response.data.checkoutLink}`);
-
   } catch (error: any) {
     // if it is an axios error
     // if (error.isAxiosError) {
@@ -45,7 +43,7 @@ export async function action({ request }: { request: Request }) {
 
     // console.log(error)
 
-    return 'errror'
+    return "errror";
     //   // if it is a 401 error
     //   if (axiosError.response?.status === 401) {
     //     // redirect to login page
@@ -132,7 +130,9 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
       }}
     >
       <section className="flex justify-between items-center">
-        <h3 className={`py-4 md:py-6 text-lg md:text-xl font-bold`}>
+        <h3
+          className={`py-4 md:py-6 text-lg md:text-xl font-bold text-gray-700 dark:text-white`}
+        >
           {question}
         </h3>
         <RiArrowDownSLine
@@ -142,7 +142,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         />
       </section>
       <AnimatePresence initial={false}>
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{
             opacity: isVisible ? 1 : 0,
@@ -157,8 +157,10 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           key={isVisible ? "open" : "closed"}
           className={`${isVisible ? "visible" : "invisible"} `}
         >
-          <p className="font-light text-base md:text-lg pb-4">{answer}</p>
-        </motion.p>
+          <p className="font-light dark:text-gray-300 text-gray-600 text-base md:text-lg pb-4">
+            {answer}
+          </p>
+        </motion.div>
       </AnimatePresence>
     </div>
   );
