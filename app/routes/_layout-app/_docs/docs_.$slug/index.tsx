@@ -4,6 +4,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import slugify from "slugify";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
 import Post from "~/components/post";
@@ -57,17 +58,15 @@ export function ErrorBoundary() {
 }
 
 function getHeadersFromMarkdown(markdown: string) {
-  const headers = markdown.match(/(?<=## )(.*?)(?=\n)/g);
+  const headers = markdown.match(/^(#{2,3})\s+(.*)$/gm);
   if (!headers) {
     return [];
   }
 
   return headers.map((header) => {
-    const slug = header
-      .toLowerCase()
-      .replace(/ /g, "-")
-      .replace(/[^\w-]+/g, "");
+    const slug = slugify(header, {lower: true});
 
+      console.log(slug, header)
     return {
       title: header,
       slug,
@@ -83,8 +82,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 
   // get all headers from the markdown file
   const headers = getHeadersFromMarkdown(page.content);
-  console.log(headers);
-  console.log(page.content)
+
   return { page, headers };
 }
 
