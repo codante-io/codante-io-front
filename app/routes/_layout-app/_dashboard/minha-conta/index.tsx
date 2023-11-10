@@ -15,9 +15,12 @@ import { authenticator } from "~/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
 import { changeName, changePassword } from "./services.server";
 import type { User } from "~/models/user.server";
-import { FiExternalLink } from "react-icons/fi";
+import { FiCopy, FiExternalLink } from "react-icons/fi";
 import type { Subscription } from "~/models/subscription.server";
 import { getSubscription } from "~/models/subscription.server";
+import { ChevronUpIcon } from "@heroicons/react/24/outline";
+import { Disclosure } from "@headlessui/react";
+import toast from "react-hot-toast";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -37,7 +40,7 @@ export async function action({ request }: { request: Request }) {
   if (intent === "changePassword") {
     const password = formData.get("password") as string;
     const passwordConfirmation = formData.get(
-      "password_confirmation"
+      "password_confirmation",
     ) as string;
     const res = await changePassword({
       request,
@@ -294,25 +297,101 @@ function SubscriptionSection({ subscription }: { subscription: Subscription }) {
         <p className="mb-2 text-sm font-light text-gray-500 dark:text-gray-400 text-inter">
           Forma de Pagamento:{" "}
           <span className="text-gray-700 dark:text-white">
-            {subscription.translated_payment_method ?? ''}
+            {subscription.translated_payment_method ?? ""}
           </span>
         </p>
         {subscription.status !== "active" &&
           subscription.payment_method?.toLowerCase() === "boleto" &&
           subscription.boleto_url && (
-            <p className="mb-2 text-sm font-light text-inter">
-              <a
-                href={subscription.boleto_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
-              >
-                Link do Boleto
-                <FiExternalLink />
-              </a>
-            </p>
+            <BoletoSubscriptionSection subscription={subscription} />
+          )}
+        {subscription.status !== "active" &&
+          subscription.payment_method?.toLowerCase() === "pix" &&
+          subscription.boleto_url && (
+            <PixSubscriptionSection subscription={subscription} />
           )}
       </AuthCard>
+    </>
+  );
+}
+
+function PixSubscriptionSection({
+  subscription,
+}: {
+  subscription: Subscription;
+}) {
+  function copyToClipboard() {
+    navigator.clipboard.writeText(subscription.boleto_barcode ?? "");
+    toast.success("Código Pix Copia e Cola copiado!");
+  }
+
+  return (
+    <>
+      <p className="mb-2 text-sm font-light text-inter">
+        <button
+          onClick={copyToClipboard}
+          className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
+        >
+          Código (Pix Copia e Cola)
+          <FiCopy />
+        </button>
+      </p>
+      <Disclosure>
+        {({ open }) => (
+          <>
+            <Disclosure.Button className="flex gap-2 w-full text-sm font-light text-gray-500 dark:text-gray-400 text-inter">
+              <span>QR Code do PIX</span>
+              <ChevronUpIcon
+                className={`${
+                  open ? "rotate-180 transform" : ""
+                } h-5 w-5 text-gray-500 dark:text-gray-400`}
+              />
+            </Disclosure.Button>
+            <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+              <img
+                src={subscription.boleto_url ?? ""}
+                alt="QR Code"
+                className="w-64"
+              />
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    </>
+  );
+}
+
+function BoletoSubscriptionSection({
+  subscription,
+}: {
+  subscription: Subscription;
+}) {
+  function copyToClipboard() {
+    navigator.clipboard.writeText(subscription.boleto_barcode ?? "");
+    toast.success("Código Pix Copia e Cola copiado!");
+  }
+  return (
+    <>
+      <p className="mb-2 text-sm font-light text-inter">
+        <button
+          onClick={copyToClipboard}
+          className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
+        >
+          Copiar Código de Barras
+          <FiCopy />
+        </button>
+      </p>
+      <p className="mb-2 text-sm font-light text-inter">
+        <a
+          href={subscription.boleto_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
+        >
+          Link do Boleto
+          <FiExternalLink />
+        </a>
+      </p>
     </>
   );
 }

@@ -9,6 +9,7 @@ export type Subscription = {
   translated_payment_method: string;
   payment_method: string | null;
   boleto_url: string | null;
+  boleto_barcode: string | null;
   price_paid_in_cents: number | null;
   acquisition_type: string;
   starts_at: string;
