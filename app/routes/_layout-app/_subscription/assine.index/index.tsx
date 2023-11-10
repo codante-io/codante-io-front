@@ -121,7 +121,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   return (
     <div
       className={classNames(
-        isVisible ? "border-brand-500" : "border-gray-300 dark:border-gray-600",
+        isVisible ? "border-brand-500" : "border-transparent hover:border-gray-300 hover:dark:border-gray-600",
         "cursor-pointer shadow mb-6 mx-2 lg:mx-24 border font-lexend rounded-lg bg-white dark:bg-background-800 px-4 md:px-10 py-4",
       )}
       onClick={() => {
@@ -131,7 +131,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
     >
       <section className="flex justify-between items-center">
         <h3
-          className={`py-4 md:py-6 text-lg md:text-xl font-bold text-gray-700 dark:text-white`}
+          className={`py-4 md:py-6 text-lg md:text-xl  font-light text-gray-700 dark:text-white`}
         >
           {question}
         </h3>
@@ -157,8 +157,8 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           key={isVisible ? "open" : "closed"}
           className={`${isVisible ? "visible" : "invisible"} `}
         >
-          <p className="font-light dark:text-gray-300 text-gray-600 text-base md:text-lg pb-4">
-            {answer}
+          <p className="font-extralight dark:text-gray-300 text-gray-600 pb-4 leading-relaxed">
+            {answer} 
           </p>
         </motion.div>
       </AnimatePresence>

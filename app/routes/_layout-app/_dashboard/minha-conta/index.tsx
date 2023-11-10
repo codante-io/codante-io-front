@@ -19,8 +19,9 @@ import { FiCopy, FiExternalLink } from "react-icons/fi";
 import type { Subscription } from "~/models/subscription.server";
 import { getSubscription } from "~/models/subscription.server";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
+import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -94,7 +95,7 @@ export default function Conta() {
 
   useEffect(() => {
     if (isChangeNameSuccess) {
-      showSuccessToast("Você alterou seu nome com sucesso");
+      showSuccessToast("Alterações salvas com sucesso");
     }
 
     if (isChangePasswordSuccess) {
@@ -154,7 +155,7 @@ function MyAccountSection({
           size={24}
           className="inline-block mr-2 text-blue-300 dark:text-blue-800"
         />
-        Dados
+        Perfil
       </h2>
 
       <AuthCard className="max-w-xl mt-6">
@@ -181,6 +182,31 @@ function MyAccountSection({
           <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
             {changeNameErrors}
           </div>
+
+          {/* switch para habilitar mostrar badge */}
+          <div className="mt-8">
+            <Switch.Group>
+              <Switch.Label className="block mb-2 text-sm font-light text-gray-500 dark:text-gray-400 text-inter">
+                Mostrar Badge PRO <span className="dark:text-gray-500 text-gray-400">(em breve)</span>
+              </Switch.Label>
+              <Switch
+                disabled
+                checked={false}
+                className={`${
+                  false ? "bg-blue-600" : "dark:bg-gray-800 bg-gray-200"
+                } relative inline-flex h-6 w-11 items-center rounded-full cursor-not-allowed`}
+              >
+                <span className="sr-only">
+                  Mostrar badge PRO
+                </span>
+                <span
+                  className={`${
+                    false ? "translate-x-6" : "translate-x-1"
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                />
+              </Switch>
+            </Switch.Group>
+          </div>
           <div className="mt-8 text-right">
             <LoadingButton
               status={changeNameStatus}
@@ -189,7 +215,7 @@ function MyAccountSection({
               value="changeName"
               type="submit"
             >
-              Alterar Nome
+              Salvar Alterações
             </LoadingButton>
           </div>
         </Form>
@@ -383,7 +409,7 @@ function BoletoSubscriptionSection({
       </p>
       <p className="mb-2 text-sm font-light text-inter">
         <a
-          href={subscription.boleto_url}
+          href={subscription.boleto_url ? ''}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
