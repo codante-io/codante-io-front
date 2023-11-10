@@ -56,26 +56,61 @@ export function ErrorBoundary() {
   return <Error500 error={error} />;
 }
 
+function getHeadersFromMarkdown(markdown: string) {
+  const headers = markdown.match(/(?<=## )(.*?)(?=\n)/g);
+  if (!headers) {
+    return [];
+  }
+
+  return headers.map((header) => {
+    const slug = header
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "");
+
+    return {
+      title: header,
+      slug,
+    };
+  });
+}
+
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const page = await getPage(request, params.slug!);
   if (!page) {
     return abort404();
   }
 
-  return { page };
+  // get all headers from the markdown file
+  const headers = getHeadersFromMarkdown(page.content);
+  console.log(headers);
+  console.log(page.content)
+  return { page, headers };
 }
 
 export default function PagePost() {
-  const { page } = useLoaderData<typeof loader>();
+  const { page, headers } = useLoaderData<typeof loader>();
 
   return (
     <main className="container mx-auto">
-      <Post
-        blogPost={page}
-        withBreadcrumbs={false}
-        withReactions={false}
-        withAuthor={false}
-      />
+      <section className="flex ">
+        <Post
+          blogPost={page}
+          withBreadcrumbs={false}
+          withReactions={false}
+          withAuthor={false}
+        />
+        <div className="toc">
+          <h3 className="text-xl font-bold">Conteúdo</h3>
+          <ul className="list-disc list-inside">
+            {headers.map((item) => (
+              <li key={item.slug}>
+                <a href={`#${item.slug}`}>{item.title}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
     </main>
   );
 }
