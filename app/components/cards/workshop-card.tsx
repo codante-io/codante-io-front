@@ -15,8 +15,8 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id} className="flex justify-center lg:justify-start">
-      <Link to={`/workshops/${workshop?.slug}`}>
-        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow">
+      <Link to={`/workshops/${workshop?.slug}`} className="w-full">
+        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ">
           {workshop?.status === "soon" && !hasHappened(workshop) && (
             <CardItemRibbon text="Em breve" />
           )}
@@ -37,48 +37,51 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             }}
             className="w-full md:w-56 lg:w-40 xl:w-56 h-40 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
           ></div>
-          <div className="flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
-            <CardItemDifficulty
-              difficulty={workshop.difficulty}
-              className="mb-2"
-            />
-            <div className="mb-8">
-              <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend">
-                {workshop?.name}
-              </h2>
-              <div className="min-h-[24px]">
-                {workshop.tags?.map((tag) => {
-                  return (
-                    <CardItemTag
-                      tagName={tag.name}
-                      key={tag.id}
-                      className="text-blue-900 bg-blue-200 dark:text-gray-300 dark:bg-blue-900"
-                    />
-                  );
-                })}
+          <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
+            <div>
+              <CardItemDifficulty
+                difficulty={workshop.difficulty}
+                className="mb-2"
+              />
+              <div className="mb-8">
+                <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend ">
+                  {workshop?.name}
+                </h2>
+                <div className="min-h-[24px]">
+                  {workshop.tags?.map((tag) => {
+                    return (
+                      <CardItemTag
+                        tagName={tag.name}
+                        key={tag.id}
+                        className="text-blue-900 bg-blue-200 dark:text-gray-300 dark:bg-blue-900"
+                      />
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <div className="flex mb-8">
-              {workshop?.instructor?.avatar_url && (
-                <img
-                  src={workshop?.instructor?.avatar_url}
-                  alt=""
-                  className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200"
-                />
-              )}
-              <div>
-                <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
-                  {workshop?.instructor?.name}
-                </p>
-                <p className="text-xs font-light text-gray-400 dark:text-gray-300">
-                  {workshop?.instructor?.company}
+              {/* Instrutor */}
+              <div className="flex mb-8">
+                {workshop?.instructor?.avatar_url && (
+                  <img
+                    src={workshop?.instructor?.avatar_url}
+                    alt=""
+                    className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200"
+                  />
+                )}
+                <div>
+                  <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
+                    {workshop?.instructor?.name}
+                  </p>
+                  <p className="text-xs font-light text-gray-400 dark:text-gray-300">
+                    {workshop?.instructor?.company}
+                  </p>
+                </div>
+              </div>
+              <div className="h-24 lg:mb-2">
+                <p className="w-full font-sans font-light text-[15px] text-gray-700 dark:text-gray-300 line-clamp-4">
+                  {workshop?.short_description}
                 </p>
               </div>
-            </div>
-            <div className="h-24 lg:mb-10">
-              <p className="w-full font-sans font-light text-gray-700 md:text-base dark:text-gray-300 line-clamp-4">
-                {workshop?.short_description}
-              </p>
             </div>
             <WorkshopCardFooter workshop={workshop} />
           </div>
@@ -95,7 +98,7 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
     workshop.published_at,
   );
   return (
-    <div className="h-10 mt-2">
+    <div className="mt-auto">
       {workshop.status === "published" && (
         <>
           <CardItemLessonsCount
@@ -113,17 +116,15 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
         </>
       )}
       {workshop.status === "soon" && !hasHappened(workshop) && (
-        <div className="pb-2 -mt-3">
-          <p className="inline-flex gap-2 items-center text-xs  text-brand-300 border border-brand-400 dark:border-brand-300 rounded-lg py-1 px-2 ">
-            <span className="font-bold ">
-              <CalendarIcon className="w-4 h-4 dark:text-brand-300 text-brand-400" />
-            </span>{" "}
-            <span className="dark:text-white text-gray-600">
-              {publishedDate}
-              {publishedTime ? ` às ${publishedTime}` : ""}
-            </span>
-          </p>
-        </div>
+        <p className="inline-flex gap-2 items-center text-xs  text-brand-300 border border-brand-400 dark:border-brand-300 rounded-lg py-1 px-2 ">
+          <span className="font-bold ">
+            <CalendarIcon className="w-4 h-4 dark:text-brand-300 text-brand-400" />
+          </span>{" "}
+          <span className="dark:text-white text-gray-600">
+            {publishedDate}
+            {publishedTime ? ` às ${publishedTime}` : ""}
+          </span>
+        </p>
       )}
     </div>
   );
