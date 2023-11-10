@@ -20,17 +20,15 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
     "Mini Projetos": [
       {
         title: "Acesso a todos os Mini Projetos",
-        info: "Acesse todos os mini projetos disponíveis",
         isAvailable: true,
       },
       {
         title: "Submeta sua resolução",
-        info: "Submeta sua resolução para o mini projeto",
         isAvailable: true,
       },
       {
         title: "Resolução Oficial com vídeo",
-        info: "Assista a resolução oficial do mini projeto em vídeo",
+        info: "Nós disponibilizamos resolução oficial dos Mini Projetos em vídeo para membros PRO",
         isAvailable: true,
       },
       {
@@ -44,7 +42,6 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
     Workshops: [
       {
         title: "Acesso a todos os workshops",
-        info: "Obtenha acesso a todos os workshops disponíveis",
         isAvailable: true,
       },
       {
@@ -58,17 +55,17 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
     "Outras vantagens": [
       {
         title: "Pro Badge",
-        info: "Obtenha um badge de PRO na comunidade",
+        info: "Obtenha um badge de PRO na comunidade e na plataforma. Você poderá desabilitar essa funcionalidade, se quiser.",
         isAvailable: true,
       },
       {
         title: "Canais PRO da Comunidade",
-        info: "Acesse os canais exclusivos da comunidade PRO",
+        info: "Acesse os canais exclusivos da comunidade PRO no Discord, com prioridade nas respostas",
         isAvailable: true,
       },
       {
         title: "Acesso ao Ranking Premiado",
-        info: "Participe do ranking premiado da comunidade",
+        info: "Em breve, você poderá participar do Ranking Premiado, onde os melhores colocados ganharão prêmios",
         isAvailable: true,
       },
       {
@@ -84,22 +81,18 @@ export const freePlanFeatures: PlanFeaturesByCategory = [
     "Mini Projetos": [
       {
         title: "Acesso a todos os Mini Projetos",
-        info: "Acesse todos os mini projetos disponíveis. lorem ipsum dolor sit amet consectetur adipisicing elit.",
         isAvailable: true,
       },
       {
         title: "Submeta sua resolução",
-        info: "Submeta sua resolução para o mini projeto",
         isAvailable: true,
       },
       {
         title: "Resolução Oficial com vídeo",
-        info: "Assista a resolução oficial do mini projeto em vídeo",
         isAvailable: false,
       },
       {
         title: "Certificado",
-        info: "Obtenha um certificado de conclusão do mini projeto",
         isAvailable: false,
       },
     ],
@@ -108,17 +101,15 @@ export const freePlanFeatures: PlanFeaturesByCategory = [
     Workshops: [
       {
         title: "Acesso limitado aos workshops",
-        info: "Obtenha um certificado de conclusão do mini projeto",
+        info: "Acesse os workshops gratuitos e aprenda com a gente!",
         isAvailable: true,
       },
       {
         title: "Acesso a todos os workshops",
-        info: "Obtenha um certificado de conclusão do mini projeto",
         isAvailable: false,
       },
       {
         title: "Certificado",
-        info: "Obtenha um certificado de conclusão do mini projeto",
         isAvailable: false,
       },
     ],
@@ -127,22 +118,19 @@ export const freePlanFeatures: PlanFeaturesByCategory = [
     "Outras Vantagens": [
       {
         title: "Acesso à Comunidade",
-        info: "Obtenha um certificado de conclusão do mini projeto",
+        info: "Acesso à nossa comunidade no Discord",
         isAvailable: true,
       },
       {
         title: "Canais PRO da Comunidade",
-        info: "Obtenha um certificado de conclusão do mini projeto",
         isAvailable: false,
       },
       {
         title: "Pro Badge",
-        info: "Obtenha um certificado de conclusão do mini projeto",
         isAvailable: false,
       },
       {
         title: "Acesso ao Ranking Premiado",
-        info: "Obtenha um certificado de conclusão do mini projeto",
         isAvailable: false,
       },
     ],
