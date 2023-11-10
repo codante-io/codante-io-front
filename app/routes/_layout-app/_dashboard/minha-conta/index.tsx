@@ -368,7 +368,7 @@ function BoletoSubscriptionSection({
 }) {
   function copyToClipboard() {
     navigator.clipboard.writeText(subscription.boleto_barcode ?? "");
-    toast.success("Código Pix Copia e Cola copiado!");
+    toast.success("Código de barras copiado!");
   }
   return (
     <>
