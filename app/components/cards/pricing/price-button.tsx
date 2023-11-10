@@ -1,5 +1,5 @@
 import { useFetcher, useNavigate } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { CgSpinner } from "react-icons/cg";
 import { FiGithub } from "react-icons/fi";
@@ -17,7 +17,22 @@ export default function PriceButton({
   const fetcher = useFetcher();
   const [isHovering, setIsHovering] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const isSubmittingOrLoading =
+    fetcher.state === "submitting" || fetcher.state === "loading";
+
+  // Use effect para manter o loading enquanto o fetcher estiver em submitting.
+  useEffect(() => {
+    if (isSubmittingOrLoading) {
+      setIsLoading(true);
+    }
+    if (!isSubmittingOrLoading) {
+      setIsLoading(false);
+    }
+  }, [isSubmittingOrLoading]);
+
   async function checkout() {
+    setIsLoading(true);
     toast.custom(
       () => (
         <div className="flex flex-col items-center text-center justify-center bg-background-700 p-6 rounded-xl border border-background-500 max-w-xs">
@@ -100,15 +115,22 @@ export default function PriceButton({
       </button>
     );
   }
-
   return (
-    // <Form action="/assine" method="post">
     <button
       onClick={checkout}
-      className="w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand"
+      disabled={isLoading}
+      className={classNames(
+        "w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand",
+        isLoading && "cursor-not-allowed",
+        isLoading && "bg-opacity-50 hover:bg-opacity-50",
+        !isLoading && "hover:bg-opacity-70",
+      )}
     >
-      Assinar PRO
+      {isLoading ? (
+        <CgSpinner className="animate-spin text-center inline-block h-5 w-5" />
+      ) : (
+        "Assinar Pro"
+      )}
     </button>
-    // </Form>
   );
 }
