@@ -105,7 +105,9 @@ export default function WorkshopSlug() {
               ? "Aguarde que em breve estará disponível na plataforma."
               : `Você poderá assisti-lo ao vivo ${
                   publishedDate
-                    ? `no dia ${publishedDate} às ${publishedTime}. Se preferir, será disponibilizada também a versão editada.`
+                    ? `no dia ${publishedDate}${
+                        publishedTime ? ` às ${publishedTime}` : ""
+                      }. Se preferir, será disponibilizada também a versão editada.`
                     : " em breve."
                 }`
           }`}

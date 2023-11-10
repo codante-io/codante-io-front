@@ -5,14 +5,24 @@ import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import CardItemLessonsCount from "./card-item-lessons-count";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
-import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
+import {
+  fromSecondsToTimeStringWithoutSeconds,
+  getPublishedDateAndTime,
+} from "~/utils/interval";
+import { hasHappened } from "~/utils/workshop-utils";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div key={workshop.id} className="flex justify-center lg:justify-start">
       <Link to={`/workshops/${workshop?.slug}`}>
         <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow">
-          {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
+          {workshop?.status === "soon" && !hasHappened(workshop) && (
+            <CardItemRibbon text="Em breve" />
+          )}
+          {workshop?.status === "soon" && hasHappened(workshop) && (
+            <CardItemRibbon text="Em Edição" />
+          )}
           {workshop?.status === "streaming" && (
             <CardItemRibbon type="live-now" text="Ao vivo agora 🔴" />
           )}
@@ -70,24 +80,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 {workshop?.short_description}
               </p>
             </div>
-            <div className="h-10 mt-2">
-              {workshop.status === "published" && (
-                <>
-                  <CardItemLessonsCount
-                    lessonsCount={workshop?.lessons?.length}
-                    className="mb-[0.2rem]"
-                  />
-                  <CardDurationItem
-                    durationString={fromSecondsToTimeStringWithoutSeconds(
-                      workshop?.lessons?.reduce(
-                        (acc, lesson) => acc + lesson.duration_in_seconds,
-                        0
-                      )
-                    )}
-                  />
-                </>
-              )}
-            </div>
+            <WorkshopCardFooter workshop={workshop} />
           </div>
         </article>
       </Link>
@@ -96,3 +89,42 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
 }
 
 export default WorkshopCard;
+
+function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
+  const [publishedDate, publishedTime] = getPublishedDateAndTime(
+    workshop.published_at,
+  );
+  return (
+    <div className="h-10 mt-2">
+      {workshop.status === "published" && (
+        <>
+          <CardItemLessonsCount
+            lessonsCount={workshop?.lessons?.length}
+            className="mb-[0.2rem]"
+          />
+          <CardDurationItem
+            durationString={fromSecondsToTimeStringWithoutSeconds(
+              workshop?.lessons?.reduce(
+                (acc, lesson) => acc + lesson.duration_in_seconds,
+                0,
+              ),
+            )}
+          />
+        </>
+      )}
+      {workshop.status === "soon" && !hasHappened(workshop) && (
+        <div className="pb-2 -mt-3">
+          <p className="inline-flex gap-2 items-center text-xs  text-brand-300 border border-brand-400 dark:border-brand-300 rounded-lg py-1 px-2 ">
+            <span className="font-bold ">
+              <CalendarIcon className="w-4 h-4 dark:text-brand-300 text-brand-400" />
+            </span>{" "}
+            <span className="dark:text-white text-gray-600">
+              {publishedDate}
+              {publishedTime ? ` às ${publishedTime}` : ""}
+            </span>
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
