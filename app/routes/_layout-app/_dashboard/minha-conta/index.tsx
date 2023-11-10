@@ -409,7 +409,7 @@ function BoletoSubscriptionSection({
       </p>
       <p className="mb-2 text-sm font-light text-inter">
         <a
-          href={subscription.boleto_url ? ''}
+          href={subscription.boleto_url ?? ''}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"

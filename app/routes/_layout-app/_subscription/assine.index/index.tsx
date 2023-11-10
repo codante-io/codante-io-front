@@ -157,7 +157,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           key={isVisible ? "open" : "closed"}
           className={`${isVisible ? "visible" : "invisible"} `}
         >
-          <p className="font-extralight dark:text-gray-300 text-gray-600 pb-4 leading-relaxed">
+          <p className="font-extralight dark:text-gray-300 text-gray-600 pb-4 md:leading-relaxed text-sm md:text-base">
             {answer} 
           </p>
         </motion.div>
