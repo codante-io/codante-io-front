@@ -43,6 +43,13 @@ export default function SubmissionCard({
       setEditSubmition(!editSubmition);
     }
   }
+  function formatName(name: string) {
+    return name
+      .trim()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  }
 
   return (
     <article
@@ -81,19 +88,24 @@ export default function SubmissionCard({
         />
       </section>
 
-      <footer className="flex items-center justify-between gap-4 px-4 dark:bg-background-700">
-        <div className="flex items-center gap-4 my-4">
+      <footer className="flex items-center justify-between gap-4 px-4 py-4 dark:bg-background-700">
+        <div className="w-10 h-10 flex-none">
           <UserAvatar
             isPro={user.is_pro}
             avatarUrl={user.avatar_url}
-            className="w-10 h-10"
+            className="w-10 h-10 flex-shrink-0"
           />
-          <div className="">
-            <h4 className="text-xs dark:text-gray-400 font-regular">
-              Resolução de
-            </h4>
-            <h3 className="font-semibold line-clamp-1">{user.name}</h3>
-          </div>
+        </div>
+        <div className="w-full">
+          <h4 className="text-xs dark:text-gray-400 font-regular">
+            Resolução de
+          </h4>
+          <h3
+            className="font-semibold line-clamp-1"
+            title={formatName(user.name)}
+          >
+            {formatName(user.name)}
+          </h3>
         </div>
         <div className="flex items-center gap-x-4">
           {showEditForm && (

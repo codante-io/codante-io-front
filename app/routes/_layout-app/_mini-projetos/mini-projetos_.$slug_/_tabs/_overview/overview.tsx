@@ -7,34 +7,34 @@ import ResourcesSection from "./components/resources-section";
 
 export default function Overview({
   challenge,
-  challengeUser,
   hasSolution,
   initialSteps,
 }: {
   challenge: any;
-  challengeUser: any;
   hasSolution: boolean;
   initialSteps: any;
 }) {
   return (
     <div className="container grid grid-cols-3 gap-10">
-      <div className="col-span-3 space-y-10 lg:space-y-20 lg:col-span-2">
+      <div className="col-span-3 space-y-10 overflow-hidden rounded-lg lg:space-y-20 lg:col-span-2 dark:md:bg-background-800 md:border-[1.5px] md:border-gray-300 dark:md:border-gray-600 shadow-md">
         {challenge.video_url ? (
           <div>
-            {/* <h1 className="flex items-center text-2xl font-semibold font-lexend text-brand">Intro</h1> */}
-            <section className="relative mb-8">
-              <VimeoPlayer vimeoUrl={challenge.video_url} />
+            <section className="relative">
+              <VimeoPlayer vimeoUrl={challenge.video_url} roundedClassName="" />
             </section>
           </div>
         ) : (
           <img
             src={challenge.image_url}
             alt="Project preview"
-            className="rounded-lg bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500"
+            className="object-scale-down w-full bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
           />
         )}
-        <div>
-          <MarkdownRenderer markdown={challenge?.description} />
+        <div className="!mt-6">
+          <MarkdownRenderer
+            markdown={challenge?.description}
+            wrapperClasses="mx-auto px-2 md:px-4 pb-12"
+          />
         </div>
       </div>
       <div className="col-span-3 space-y-10 lg:space-y-12 lg:col-span-1">

@@ -25,7 +25,7 @@ export default function ParticipantsSection({
           />
         </h1>
         <section className="p-2">
-          <div className="flex flex-wrap justify-center p-1 -space-x-3 overflow-hidden">
+          <div className="flex flex-wrap justify-center p-1 -space-x-3">
             {currentUserIsEnrolled && (
               <UserAvatar
                 avatarUrl={userAvatar}
