@@ -7,9 +7,16 @@ import {
 import LoadingButton from "~/components/form/loading-button";
 
 import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
-import { submitChallenge } from "~/models/challenge.server";
+import {
+  submitChallenge,
+  updateChallengeSubmission,
+} from "~/models/challenge.server";
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
+import UpdateSubmissionForm from "./UpdateSubmissionForm";
+import { useState } from "react";
+import { Transition } from "@headlessui/react";
+import Button from "~/components/form/button";
 
 //action submit challenge
 export async function action({
@@ -22,9 +29,14 @@ export async function action({
   let formData = await request.formData();
   let submissionUrl = formData.get("submission_url") as string;
   // const metadata = getMetadataFromFormData(formData);
-
+  const intent = formData.get("intent");
+  switch (intent) {
+    case "createSubmission":
+      return submitChallenge(request, params.slug, submissionUrl);
+    case "updateSubmission":
+      return updateChallengeSubmission(request, params.slug, submissionUrl);
+  }
   // return submitChallenge(request, params.slug, submissionUrl, metadata);
-  return submitChallenge(request, params.slug, submissionUrl);
 }
 
 // Método criando para adicionar campos de metadata (rinha de frontend usou)
@@ -39,6 +51,12 @@ export async function action({
 // }
 
 export default function MySubmission() {
+  const [showEditFormState, setShowEditFormState] = useState(false);
+
+  function toggleShowEditForm() {
+    setShowEditFormState(!showEditFormState);
+  }
+
   // get challengeUser from outlet context
   const { challengeUser, challenge, challengeSubmissions } = useOutletContext<{
     challengeUser: ChallengeUser;
@@ -66,6 +84,8 @@ export default function MySubmission() {
           submission={{ id: userSubmission.id, ...challengeUser.pivot }}
           user={challengeUser}
           reactions={userSubmission?.reactions}
+          showEditForm={toggleShowEditForm}
+          isEditing={showEditFormState}
         />
       ) : (
         <SubmissionForm
@@ -74,6 +94,37 @@ export default function MySubmission() {
           isSuccessfulSubmission={isSuccessfulSubmission}
           challenge={challenge}
         />
+      )}
+      {userSubmission && (
+        <section className="mt-5">
+          <Transition
+            show={showEditFormState}
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 transform scale-90"
+            enterTo="opacity-100 transform scale-100"
+            leave="transition ease-in duration-300"
+            leaveFrom="opacity-100 transform scale-100"
+            leaveTo="opacity-0 transform scale-90"
+          >
+            <UpdateSubmissionForm
+              challengeUser={challengeUser}
+              showEditForm={toggleShowEditForm}
+            />
+          </Transition>
+          <Transition
+            show={!showEditFormState}
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 transform scale-90"
+            enterTo="opacity-100 transform scale-100"
+            leave="transition ease-in duration-300"
+            leaveFrom="opacity-100 transform scale-100"
+            leaveTo="opacity-0 transform scale-90"
+          >
+            <Button onClick={toggleShowEditForm} type="button">
+              Editar submissão
+            </Button>
+          </Transition>
+        </section>
       )}
     </div>
   );
@@ -122,6 +173,8 @@ function SubmissionForm({
           className="relative transition duration-200"
           status={status}
           isSuccessfulSubmission={isSuccessfulSubmission}
+          name="intent"
+          value="createSubmission"
         >
           Enviar
         </LoadingButton>

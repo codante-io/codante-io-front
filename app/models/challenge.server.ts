@@ -332,3 +332,34 @@ export async function submitChallenge(
       };
     });
 }
+
+export async function updateChallengeSubmission(
+  request: Request,
+  slug: string,
+  submissionUrl: string,
+  metadata?: any
+): Promise<{ success?: string; error?: string }> {
+  let token = await currentToken({ request });
+
+  return axios
+    .put(
+      `${process.env.API_HOST}/challenges/${slug}/submit`,
+      {
+        submission_url: submissionUrl,
+        metadata,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+    .then(() => ({ success: "Submissão atualizada com sucesso." }))
+    .catch((error) => {
+      return {
+        error:
+          error?.response?.data?.message ||
+          "Não foi possível atualizar a sua submissão. Por favor, tente novamente.",
+      };
+    });
+}
