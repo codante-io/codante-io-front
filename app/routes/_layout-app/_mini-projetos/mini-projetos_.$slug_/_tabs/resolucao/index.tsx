@@ -26,7 +26,7 @@ export default function Resolution() {
         <div className="flex flex-wrap pb-16 lg:mt-0 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-6 lg:px-0">
           <section className="relative col-span-2 w-full mb-4">
             <VimeoPlayer vimeoUrl={lesson?.video_url ?? ""} />
-            <div className="mt-8 max-w-xl px-2 mx-auto lg:mx-0">
+            <div className="mt-8 max-w-full md:max-w-xl lg:max-w-none px-2 mx-auto lg:mx-0">
               <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend ">
                 {workshop?.lessons.find((lesson) => lesson.slug === slug)?.name}
               </h1>
