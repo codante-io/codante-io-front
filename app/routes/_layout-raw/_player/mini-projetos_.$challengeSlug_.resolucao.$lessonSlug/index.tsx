@@ -128,7 +128,7 @@ export default function LessonIndex() {
   const { colorMode } = useColorMode();
   return (
     <div
-      className={` min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 
+      className={`w-full min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 
       ${colorMode === "dark" ? "darkScroll" : "lightScroll"}
       $
 
@@ -145,7 +145,7 @@ export default function LessonIndex() {
       />
 
       <div
-        className={`pb-10 px-4 transition-opacity ${
+        className={`pb-10 w-full px-4 transition-opacity ${
           isSidebarOpen ? "opacity-30" : "opacity-100"
         }`}
       >
