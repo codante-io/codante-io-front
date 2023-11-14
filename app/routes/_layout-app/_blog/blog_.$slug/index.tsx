@@ -5,9 +5,12 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { useState } from "react";
+import slugify from "slugify";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
-import Post from "~/components/post";
+import Post, { BlogTableOfContents } from "~/components/post";
+import useIntersectionObserver from "~/hooks/useIntersectionObserver";
 import { getPost } from "~/models/blog-post.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
@@ -57,21 +60,48 @@ export function ErrorBoundary() {
   return <Error500 error={error} />;
 }
 
+function getHeadersFromMarkdown(markdown: string) {
+  const headers = markdown.match(/^(#{2,3})\s+(.*)$/gm);
+  if (!headers) {
+    return [];
+  }
+
+  return headers.map((header) => {
+    const slug = slugify(header, { lower: true });
+    const level = header.startsWith("###") ? 3 : 2;
+    const title = header.replace(/^(#{2,3})\s+(.*)$/, "$2");
+
+    return {
+      title,
+      slug,
+      level,
+    };
+  });
+}
+
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const blogPost = await getPost(request, params.slug!);
   if (!blogPost) {
     return abort404();
   }
 
-  return { blogPost };
+  const headers = getHeadersFromMarkdown(blogPost.content);
+
+  return { blogPost, headers };
 }
 
 export default function BlogPost() {
-  const { blogPost } = useLoaderData<typeof loader>();
+  const { blogPost, headers } = useLoaderData<typeof loader>();
+
+  const [activeId, setActiveId] = useState();
+  useIntersectionObserver(setActiveId);
 
   return (
     <main className="container mx-auto">
-      <Post blogPost={blogPost} withBreadcrumbs={true} withReactions={true} />
+      <section className="flex justify-between">
+        <Post blogPost={blogPost} withBreadcrumbs={true} withReactions={true} />
+        <BlogTableOfContents headers={headers} activeId={activeId} />
+      </section>
     </main>
   );
 }

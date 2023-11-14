@@ -4,10 +4,12 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { useState } from "react";
 import slugify from "slugify";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
-import Post from "~/components/post";
+import Post, { BlogTableOfContents } from "~/components/post";
+import useIntersectionObserver from "~/hooks/useIntersectionObserver";
 import { getPage } from "~/models/blog-post.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
@@ -64,12 +66,14 @@ function getHeadersFromMarkdown(markdown: string) {
   }
 
   return headers.map((header) => {
-    const slug = slugify(header, {lower: true});
+    const slug = slugify(header, { lower: true });
+    const level = header.startsWith("###") ? 3 : 2;
+    const title = header.replace(/^(#{2,3})\s+(.*)$/, "$2");
 
-      console.log(slug, header)
     return {
-      title: header,
+      title,
       slug,
+      level,
     };
   });
 }
@@ -89,25 +93,19 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 export default function PagePost() {
   const { page, headers } = useLoaderData<typeof loader>();
 
+  const [activeId, setActiveId] = useState();
+  useIntersectionObserver(setActiveId);
+
   return (
     <main className="container mx-auto">
-      <section className="flex ">
+      <section className="flex justify-between">
         <Post
           blogPost={page}
           withBreadcrumbs={false}
           withReactions={false}
           withAuthor={false}
         />
-        <div className="toc">
-          <h3 className="text-xl font-bold">Conteúdo</h3>
-          <ul className="list-disc list-inside">
-            {headers.map((item) => (
-              <li key={item.slug}>
-                <a href={`#${item.slug}`}>{item.title}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <BlogTableOfContents headers={headers} activeId={activeId} />
       </section>
     </main>
   );
