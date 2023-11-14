@@ -10,9 +10,9 @@ export type PlanFeaturesByCategory = {
 
 export type PlanDetails = {
   name: "Gratuito" | "PRO (Vitalício)";
-  price: number;
   installments: number;
   fullPrice?: number;
-  immediateSettlementAmount?: number;
+  monthlyPrice?: number;
+  totalPrice?: number;
   banner?: string;
 };

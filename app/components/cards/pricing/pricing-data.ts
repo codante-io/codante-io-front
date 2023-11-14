@@ -2,7 +2,7 @@ import type { PlanDetails, PlanFeaturesByCategory } from "./pricing-types";
 
 export const freePlanDetails: PlanDetails = {
   name: "Gratuito",
-  price: 0,
+  monthlyPrice: 0,
   installments: 0,
 };
 
@@ -10,8 +10,6 @@ export const proPlanDetails: PlanDetails = {
   name: "PRO (Vitalício)",
   fullPrice: 948,
   banner: "Oferta de lançamento",
-  immediateSettlementAmount: 588,
-  price: 49,
   installments: 12,
 };
 

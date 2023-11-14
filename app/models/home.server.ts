@@ -10,6 +10,12 @@ export type HomeInfo = {
   } | null;
   featured_workshops: Workshop[];
   featured_challenges: ChallengeCard[];
+  plan_info: {
+    id: number;
+    name: string;
+    price_in_cents: number;
+    slug: string;
+  };
 
   // @TODO: remove this when we have a proper type for featured tracks
   featured_tracks: any[];

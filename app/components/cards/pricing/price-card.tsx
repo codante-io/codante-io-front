@@ -20,7 +20,7 @@ export default function PriceCard({
         data?.name.startsWith("PRO")
           ? "border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white"
           : "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl",
-        "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full"
+        "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full",
       )}
     >
       {data?.banner && <CardItemRibbon text={data?.banner} />}
@@ -28,7 +28,7 @@ export default function PriceCard({
       <div className="mb-8 card-header">
         <h2
           className={classNames(
-            "mb-1 text-xl text-center"
+            "mb-1 text-xl text-center",
             // data?.name.startsWith('PRO') ? 'text-amber-400' : 'text-gray-700 dark:text-gray-50',
           )}
         >
@@ -61,12 +61,12 @@ export default function PriceCard({
           <span className="opacity-50">
             {data.installments > 1 && `${data.installments}x`}
           </span>{" "}
-          <span className="text-5xl font-semibold">R${data?.price}</span>
+          <span className="text-5xl font-semibold">R${data?.monthlyPrice}</span>
         </p>
 
         <p className="mb-12 text-sm text-center text-gray-900 font-extralight slate-600 dark:text-gray-50">
-          {data.immediateSettlementAmount && (
-            <span className="opacity-50">{`à vista R$ ${data.immediateSettlementAmount}`}</span>
+          {data.totalPrice && (
+            <span className="opacity-50">{`à vista R$ ${data.totalPrice}`}</span>
           )}
         </p>
       </div>

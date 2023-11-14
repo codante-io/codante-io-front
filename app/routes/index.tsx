@@ -51,6 +51,12 @@ export default function HomePage() {
     homeInfo.featured_challenges,
   );
 
+  const proPlanWithPrice = {
+    ...proPlanDetails,
+    monthlyPrice: Math.round(homeInfo.plan_info.price_in_cents / 100 / 12),
+    totalPrice: homeInfo.plan_info.price_in_cents / 100,
+  };
+
   return (
     <AppLayout user={user}>
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
@@ -228,7 +234,7 @@ export default function HomePage() {
                 data={freePlanDetails}
               />
               <PriceCard
-                data={proPlanDetails}
+                data={proPlanWithPrice}
                 featuresByCategory={proPlanFeatures}
               />
             </section>

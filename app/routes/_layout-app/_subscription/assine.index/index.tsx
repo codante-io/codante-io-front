@@ -1,4 +1,5 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
+import type { AxiosError } from "axios";
 import axios from "axios";
 import PriceCard from "~/components/cards/pricing/price-card";
 import {
@@ -16,9 +17,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
 import switchSound from "~/sounds/switch.mp3";
 import classNames from "~/utils/class-names";
+import type { Plan } from "~/models/plan.server";
+import { getPlanDetails } from "~/models/plan.server";
+import { useLoaderData } from "@remix-run/react";
 
-export function loader({ request }: LoaderFunctionArgs) {
-  return { request };
+export async function loader({ request }: LoaderFunctionArgs) {
+  const plan = await getPlanDetails();
+  return { request, plan };
 }
 
 export async function action({ request }: { request: Request }) {
@@ -38,29 +43,37 @@ export async function action({ request }: { request: Request }) {
     return redirect(`${response.data.checkoutLink}`);
   } catch (error: any) {
     // if it is an axios error
-    // if (error.isAxiosError) {
-    //   const axiosError = error as AxiosError;
+    if (error.isAxiosError) {
+      const axiosError = error as AxiosError;
 
-    // console.log(error)
+      // console.log(error);
 
-    return "errror";
-    //   // if it is a 401 error
-    //   if (axiosError.response?.status === 401) {
-    //     // redirect to login page
-    //     return redirect("/login");
-    //   }
+      // return "errror";
+      // if it is a 401 error
+      if (axiosError.response?.status === 401) {
+        // redirect to login page
+        return redirect("/login");
+      }
 
-    //   const errorMessage = error.response.data.message;
-    //   const encodedErrorMessage = encodeURIComponent(errorMessage);
+      const errorMessage = error.response.data.message;
+      const encodedErrorMessage = encodeURIComponent(errorMessage);
 
-    //   return redirect(`/assine/erro?error=${encodedErrorMessage}`);
-    // }
+      return redirect(`/assine/erro?error=${encodedErrorMessage}`);
+    }
 
-    // return redirect(`/assine/erro`);
+    return redirect(`/assine/erro`);
   }
 }
 
 export default function AssinePage() {
+  const loaderData = useLoaderData<typeof loader>();
+  const plan = loaderData.plan as Plan;
+
+  const proPlanWithPrice = {
+    ...proPlanDetails,
+    monthlyPrice: Math.round(plan?.price_in_cents / 100 / 12),
+    totalPrice: plan.price_in_cents / 100,
+  };
   return (
     <main className="container mx-auto ">
       <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
@@ -87,7 +100,7 @@ export default function AssinePage() {
               data={freePlanDetails}
             />
             <PriceCard
-              data={proPlanDetails}
+              data={proPlanWithPrice}
               featuresByCategory={proPlanFeatures}
             />
           </section>
@@ -121,7 +134,9 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   return (
     <div
       className={classNames(
-        isVisible ? "border-brand-500" : "border-transparent hover:border-gray-300 hover:dark:border-gray-600",
+        isVisible
+          ? "border-brand-500"
+          : "border-transparent hover:border-gray-300 hover:dark:border-gray-600",
         "cursor-pointer shadow mb-6 mx-2 lg:mx-24 border font-lexend rounded-lg bg-white dark:bg-background-800 px-4 md:px-10 py-4",
       )}
       onClick={() => {
@@ -158,7 +173,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
           className={`${isVisible ? "visible" : "invisible"} `}
         >
           <p className="font-extralight dark:text-gray-300 text-gray-600 pb-4 md:leading-relaxed text-sm md:text-base">
-            {answer} 
+            {answer}
           </p>
         </motion.div>
       </AnimatePresence>
