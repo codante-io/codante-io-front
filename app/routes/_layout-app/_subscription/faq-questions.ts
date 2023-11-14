@@ -1,59 +1,43 @@
 const faqQuestions = [
   {
-    question: "O que é o plano 'PRO (Vitalício)'?",
+    question: 'O que significa plano "vitalício" ?',
     answer:
-      "O plano PRO (Vitalício) é uma assinatura única que oferece acesso vitalício a todos os recursos e benefícios exclusivos do Codante.",
+      "O plano Vitalício do Codante é uma assinatura em que você paga uma única vez, mas tem acesso para sempre. Isso significa que, na prática, enquanto o Codante existir, você terá acesso aos recursos e benefícios exclusivos do plano PRO. Inclusive atualizações e novos conteúdos que forem adicionados no futuro.",
+  },
+  {
+    question: "Vou ter acesso a novos conteúdos que forem adicionados?",
+    answer:
+      "Sim! O plano Vitalício do Codante garante acesso a todos os novos conteúdos que forem adicionados no futuro, sem custo adicional.",
   },
   {
     question: "Quais são as vantagens de se tornar um assinante PRO?",
     answer:
-      "Como assinante PRO você poderá participar de todos os Mini Projetos, terá acesso às resoluções oficiais com vídeo, realizadas pela equipe Codante, e acesso total a todos os Workshops da plataforma. Os assinantes PRO também ficarão elegíveis a receberem certificados, além de outros benefícios como o Pro Badge, canais PRO na comunidade e acesso ao Ranking Premiado.",
+      "Como assinante PRO, além de participar de todos os Mini Projetos, poderá ter acesso às resoluções oficiais com vídeo, realizadas pela equipe Codante, e acesso total a todos os Workshops da plataforma. Os assinantes PRO também ficarão elegíveis a receberem certificados, além de outros benefícios como o Pro Badge, canais PRO na comunidade e acesso ao Ranking Premiado.",
   },
   {
-    question: "O que inclui o acesso a Mini Projetos?",
+    question: "Qual a frequência de novos conteúdos?",
     answer:
-      "O acesso a Mini Projetos permite que você participe de todos os Mini Projetos oferecidos pela plataforma, submeta sua própria resolução e tenha acesso à resolução oficial desenvolvida pela equipe Codante.",
+      "Temos como meta adicionar novos conteúdos semanalmente. Mas veja, ainda estamos no começo da jornada e isso poderá variar de acordo com a disponibilidade da nossa equipe.",
   },
   {
-    question: "Os assinantes gratuitos podem submeter resoluções de projetos?",
+    question: "Mas vocês não eram gratuitos/open-source?",
     answer:
-      "Sim, mesmo no plano gratuito, os usuários podem submeter suas soluções dos projetos.",
+      "O Codante sempre foi e sempre será Open Source. Isso significa que todo o código fonte da plataforma é aberto e disponível para qualquer pessoa. Outro compromisso nosso é sempre criar conteúdo gratuito de qualidade - e isso não irá mudar. Estamos oferecendo um plano PRO para quem quiser ter acesso a recursos e benefícios exclusivos, além de ajudar a manter o projeto.",
   },
   {
-    question: "O que significa 'Resolução Oficial com vídeo'?",
+    question: "É seguro colocar meu cartão de crédito?",
     answer:
-      "Isso indica que, como parte do plano PRO, o usuário terá acesso a vídeos explicativos mostrando a resolução oficial dos projetos propostos pela plataforma.",
+      "Totalmente. Todas as transações realizadas na nossa plataforma são processadas pelo provedor Pagar.me (Stone), que oferece um ambiente seguro e confiável para a realização de pagamentos online. Nós não armazenamos nenhum dado do seu cartão de crédito (e nem conseguiríamos porque não temos acesso).",
   },
   {
     question: "Posso obter um certificado no plano gratuito?",
     answer:
-      "Não, os certificados estão disponíveis apenas para assinantes do plano PRO.",
+      "Não, os certificados estão disponíveis apenas para assinantes do plano PRO. Fale com a gente no Discord sobre seus certificados! Temos um canal para isso!",
   },
   {
-    question: "Como funciona o acesso ilimitado aos Workshops?",
+    question: "Como acessar a comunidade VIP? Onde estão os canais exclusivos?",
     answer:
-      "No plano PRO, você pode acessar qualquer Workshop disponibilizado na plataforma sem restrições, enquanto no plano gratuito, o acesso é limitado.",
-  },
-  {
-    question: "O que é o Pro Badge?",
-    answer:
-      "O Pro Badge é um distintivo digital que identifica os usuários como assinantes PRO dentro da comunidade da plataforma.",
-  },
-  {
-    question:
-      "Qual é a diferença entre o plano gratuito e o plano PRO em termos de suporte da comunidade?",
-    answer:
-      "O plano PRO oferece acesso a canais exclusivos da comunidade no Discord, onde você poderá interagir diretamente com a equipe Codante e contar com o apoio de uma comunidade de desenvolvedores mais engajada.",
-  },
-  {
-    question: "O que é o 'Ranking Premiado'?",
-    answer:
-      "O Ranking Premiado é uma funcionalidade que, periodicamente, reconhece e premia os usuários mais ativos ou com melhor desempenho nas atividades da plataforma, exclusivo para assinantes PRO.",
-  },
-  {
-    question: "Como posso assinar o plano PRO?",
-    answer:
-      "Você pode assinar o plano PRO clicando no botão 'Assinar PRO' e seguindo o processo de pagamento que será indicado na tela. Toda compra realizada nesse canal é processada pela plataforma Pagar.me, que oferece um ambiente seguro e confiável para a realização de pagamentos online.",
+      "Assim que você assinar o Codante, nós iremos te incluir nos canais exclusivos da comunidade no Discord. Fale com a gente se houver alguma dúvida!",
   },
 ];
 
