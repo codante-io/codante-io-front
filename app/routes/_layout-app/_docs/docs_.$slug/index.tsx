@@ -4,9 +4,12 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { useState } from "react";
+import slugify from "slugify";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
-import Post from "~/components/post";
+import Post, { BlogTableOfContents } from "~/components/post";
+import useIntersectionObserver from "~/hooks/useIntersectionObserver";
 import { getPage } from "~/models/blog-post.server";
 import { getOgGeneratorUrl } from "~/utils/path-utils";
 import { abort404 } from "~/utils/responses.server";
@@ -56,26 +59,54 @@ export function ErrorBoundary() {
   return <Error500 error={error} />;
 }
 
+function getHeadersFromMarkdown(markdown: string) {
+  const headers = markdown.match(/^(#{2,3})\s+(.*)$/gm);
+  if (!headers) {
+    return [];
+  }
+
+  return headers.map((header) => {
+    const slug = slugify(header, { lower: true });
+    const level = header.startsWith("###") ? 3 : 2;
+    const title = header.replace(/^(#{2,3})\s+(.*)$/, "$2");
+
+    return {
+      title,
+      slug,
+      level,
+    };
+  });
+}
+
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const page = await getPage(request, params.slug!);
   if (!page) {
     return abort404();
   }
 
-  return { page };
+  // get all headers from the markdown file
+  const headers = getHeadersFromMarkdown(page.content);
+
+  return { page, headers };
 }
 
 export default function PagePost() {
-  const { page } = useLoaderData<typeof loader>();
+  const { page, headers } = useLoaderData<typeof loader>();
+
+  const [activeId, setActiveId] = useState();
+  useIntersectionObserver(setActiveId);
 
   return (
     <main className="container mx-auto">
-      <Post
-        blogPost={page}
-        withBreadcrumbs={false}
-        withReactions={false}
-        withAuthor={false}
-      />
+      <section className="flex justify-between">
+        <Post
+          blogPost={page}
+          withBreadcrumbs={false}
+          withReactions={false}
+          withAuthor={false}
+        />
+        <BlogTableOfContents headers={headers} activeId={activeId} />
+      </section>
     </main>
   );
 }

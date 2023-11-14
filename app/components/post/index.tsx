@@ -16,7 +16,7 @@ export default function Post({
   withAuthor?: boolean;
 }) {
   return (
-    <div className={`mx-auto max-w-3xl`}>
+    <div className={`max-w-3xl`}>
       {withBreadcrumbs && <BlogBreadcrumbs postTitle={blogPost.title} />}
       <div className={`prose lg:prose-lg dark:prose-invert`}>
         <h1>{blogPost.title}</h1>
@@ -74,5 +74,36 @@ function BlogBreadcrumbs({ postTitle }: { postTitle?: string }) {
         </div>
       </Link>
     </>
+  );
+}
+
+export function BlogTableOfContents({
+  headers,
+  activeId,
+}: {
+  headers: { title: string; slug: string; level: number }[];
+  activeId: string | undefined;
+}) {
+  return (
+    <div className="toc relative hidden md:block">
+      <div className="sticky top-2 max-w-xs w-52">
+        {/* <h3 className="mb-3">Conteúdo</h3> */}
+        <ul className="">
+          {headers.map((item) => (
+            <li
+              key={item.slug}
+              className={`text-sm py-1.5 px-1  ${
+                item.slug === activeId
+                  ? "dark:text-white font-bold"
+                  : "font-light text-gray-600 dark:text-gray-400"
+              }`}
+              style={{ marginLeft: `${item.level * 20 - 40}px` }}
+            >
+              <Link to={`#${item.slug}`}>{item.title}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

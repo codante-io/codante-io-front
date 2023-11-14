@@ -2,6 +2,7 @@
 import Markdown from "markdown-to-jsx";
 import { Highlight, themes } from "prism-react-renderer";
 import type { ReactElement } from "react";
+import slugify from "slugify";
 import { useColorMode } from "~/contexts/color-mode-context";
 import type { ColorMode } from "~/utils/dark-mode";
 
@@ -143,6 +144,7 @@ export default function MarkdownRenderer({
       <Markdown
         options={{
           overrides: generateClassOverrides(colorMode),
+          slugify: (text) => slugify(text, { lower: true }),
         }}
       >
         {markdown}
