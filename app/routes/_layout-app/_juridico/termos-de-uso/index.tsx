@@ -56,7 +56,9 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           A Plataforma se reserva o direito de modificar ou descontinuar
-          qualquer serviço a seu critério, sem aviso prévio.
+          qualquer serviço ou funcionalidade a seu critério, sem aviso prévio,
+          mesmo que, no momento da contratação dos serviços, esse serviço ou
+          funcionalidade estivesse disponível.
         </p>
         <h3>Planos, Pagamento, Arrependimento, Cancelamento e Reembolso</h3>
         <p>
@@ -79,9 +81,9 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           A Codante não é obrigada a reembolsar assinantes vitalícios ou
-          oferecer compensação no evento de descontinuação da Plataforma por
-          qualquer motivo, incluindo decisões dos sócios ou circunstâncias além
-          do controle da Codante.
+          oferecer compensação no evento de descontinuação da Plataforma (ou
+          qualquer funcionalidade) por qualquer motivo, incluindo decisões dos
+          sócios ou circunstâncias além do controle da Codante.
         </p>
         <p>
           A Codante se esforçará para manter a Plataforma ativa pelo maior

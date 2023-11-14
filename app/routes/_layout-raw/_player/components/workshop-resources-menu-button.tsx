@@ -60,7 +60,7 @@ export default function WorkshopResourcesMenuButton({
                     target="_blank"
                     className={classNames(
                       active ? "dark:bg-background-600 bg-background-150" : "",
-                      "inline-flex w-full items-center gap-2 px-4 py-2 text-sm   rounded-lg"
+                      "inline-flex w-full items-center gap-2 px-4 py-2 text-sm   rounded-lg",
                     )}
                   >
                     <span className="basis-5">

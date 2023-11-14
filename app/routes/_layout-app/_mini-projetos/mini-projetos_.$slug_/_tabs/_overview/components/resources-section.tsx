@@ -21,7 +21,7 @@ export default function ResourcesSection({
     (resource: Resource) =>
       resource.type === "figma" ||
       resource.type === "file" ||
-      resource.type === "github"
+      resource.type === "github",
   );
 
   // Por enquanto apenas aceitando recursos do tipo Figma, file e github

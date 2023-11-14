@@ -18,7 +18,7 @@ export default function BannerAlert({
         bgColor || "bg-brand-100 dark:bg-brand-950",
         borderColor || "border-brand",
         "px-4 py-3 mb-8 -mt-8 border rounded shadow-md",
-        className
+        className,
       )}
     >
       <div className="flex flex-col items-center md:flex-row">{children}</div>
@@ -54,7 +54,7 @@ BannerAlert.Title = function BannerAlertTitle({
       className={classNames(
         textColor || "text-brand-500 dark:text-brand-300",
         "font-bold",
-        className
+        className,
       )}
     >
       {children}
@@ -73,7 +73,7 @@ BannerAlert.Subtitle = function BannerAlertSubtitle({
     <div
       className={classNames(
         textColor || "text-brand-500 dark:text-brand-300",
-        "text-sm"
+        "text-sm",
       )}
     >
       {children}

@@ -6,11 +6,12 @@ import {
   useOutletContext,
   useRouteError,
 } from "@remix-run/react";
+import { FaCrown } from "react-icons/fa";
 import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
 import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/background-blur";
 import ChallengeCard from "~/components/cards/challenge-card";
-import PriceCard from "~/components/cards/price-card";
+import PriceCard from "~/components/cards/pricing/price-card";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
@@ -20,6 +21,12 @@ import Wave from "~/components/wave";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getHome } from "~/models/home.server";
 import type { User } from "~/models/user.server";
+import {
+  freePlanDetails,
+  freePlanFeatures,
+  proPlanDetails,
+  proPlanFeatures,
+} from "~/components/cards/pricing/pricing-data";
 import BannerAlert from "~/components/banner-alert";
 import { MdLiveTv } from "react-icons/md";
 
@@ -36,13 +43,19 @@ export default function HomePage() {
   function sortByEnrolledUsersCount(challengesList: ChallengeCardType[]) {
     if (!challengesList) return [];
     return challengesList.sort(
-      (a, b) => b.enrolled_users_count - a.enrolled_users_count
+      (a, b) => b.enrolled_users_count - a.enrolled_users_count,
     );
   }
 
   const orderedChallengeList = sortByEnrolledUsersCount(
-    homeInfo.featured_challenges
+    homeInfo.featured_challenges,
   );
+
+  const proPlanWithPrice = {
+    ...proPlanDetails,
+    monthlyPrice: Math.round(homeInfo.plan_info.price_in_cents / 100 / 12),
+    totalPrice: homeInfo.plan_info.price_in_cents / 100,
+  };
 
   return (
     <AppLayout user={user}>
@@ -97,6 +110,14 @@ export default function HomePage() {
 
             <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:justify-around md:flex-row">
               <>
+                {user && !user.is_pro && (
+                  <Link to="/assine">
+                    <button className="flex items-center px-4 py-2 text-gray-800 rounded-full bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
+                      <FaCrown className="mr-2 text-amber-400" /> Seja PRO
+                    </button>
+                  </Link>
+                )}
+
                 {!user && (
                   <Link to="/login">
                     <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-background-200">
@@ -109,7 +130,7 @@ export default function HomePage() {
                   href="https://discord.gg/fmVw468ZMR"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
                 >
                   <BsDiscord />
                   Entre na comunidade
@@ -184,80 +205,37 @@ export default function HomePage() {
             </section>
           </div>
         </section>
-        {/* <Wave position="bottom" />
-        <section
-          id="tracks"
-          className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50"
-        >
-          <div className="container relative mb-6 top-4">
-            <h1 className="flex items-center mb-4 text-3xl font-light font-lexend">
-              <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
-              Trilhas
-            </h1>
-            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
-              Obtenha a experiência de aprendizado completa unindo{" "}
-              <span className="italic font-bold">workshops</span> e{" "}
-              <span className="italic font-bold">mini projetos</span> para
-              aprender temas específicos em programação.
-            </p>
-            <section className="grid grid-cols-1 gap-4 mt-4 mb-6">
-              {homeInfo?.featured_tracks?.map((track) => (
-                <TrackCard key={track.id} track={track} />
-              ))}
-            </section>
-            <section className="flex justify-center w-full mt-2 mb-12">
-              <Link
-                to="/trilhas"
-                className="px-4 py-2 rounded-full bg-background-50 dark:bg-background-700 "
-              >
-                Ver todas
-              </Link>
-            </section>
-          </div>
-        </section> */}
 
         <section
           id="pricing"
           className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-background-900 dark:text-gray-50"
         >
           <div className="container flex flex-col items-center">
-            <h1 className="mt-16 text-3xl font-light font-lexend">Preços</h1>
-            <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-7xl">
-              Temos o compromisso de oferecer muito conteúdo{" "}
-              <span className="italic font-bold">gratuito</span> e de{" "}
-              <span className="italic font-bold">qualidade</span>. <br />{" "}
-              Considere se tornar um membro Premium para apoiar o projeto e ter
-              acesso a mais conteúdos exclusivos.
+            <h1 className="mt-16 text-3xl font-light font-lexend">
+              Seja{" "}
+              <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+                PRO
+              </span>
+            </h1>
+            <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+              No Codante sempre teremos muito conteúdo gratuito. Para uma
+              experiência completa, assine nosso{" "}
+              <span className="text-brand-400">
+                plano vitalício com valor promocional de lançamento
+              </span>{" "}
+              <span className="font-bold underline text-brand-400">
+                por tempo limitado
+              </span>
+              . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
             </p>
-            <section className="flex flex-col justify-center gap-20 mt-10 mb-20 md:flex-row">
+            <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
               <PriceCard
-                price={{
-                  name: "Gratuito",
-                  price: 0,
-                  features: {
-                    Comunidade: true,
-                    "Mini projetos": true,
-                    "Workshops gratuitos": true,
-                    "Área vip da comunidade": false,
-                    "Workshops premium": false,
-                    "Resoluções dos mini projetos": false,
-                  },
-                }}
+                featuresByCategory={freePlanFeatures}
+                data={freePlanDetails}
               />
               <PriceCard
-                price={{
-                  name: "Premium",
-                  banner: "Gratuito por tempo limitado",
-                  price: 0,
-                  features: {
-                    Comunidade: true,
-                    "Mini projetos": true,
-                    "Workshops gratuitos": true,
-                    "Área vip da comunidade": true,
-                    "Workshops premium": true,
-                    "Resoluções dos mini projetos": true,
-                  },
-                }}
+                data={proPlanWithPrice}
+                featuresByCategory={proPlanFeatures}
               />
             </section>
           </div>
@@ -273,7 +251,7 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <div>
-        <NotFound />
+        <NotFound error={error} />
       </div>
     );
   }

@@ -98,7 +98,7 @@ export async function logout({
   redirectTo?: string;
 }) {
   const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
+    request.headers.get("Cookie"),
   );
 
   let user = session.get("user");
@@ -112,7 +112,7 @@ export async function logout({
       headers: {
         Authorization: "Bearer " + user?.token,
       },
-    }
+    },
   );
 
   return redirect(redirectTo, {
@@ -130,7 +130,7 @@ export async function logoutWithRedirectAfterLogin({
   redirectTo?: string;
 }) {
   const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
+    request.headers.get("Cookie"),
   );
 
   let user = session.get("user");
@@ -144,7 +144,7 @@ export async function logoutWithRedirectAfterLogin({
       headers: {
         Authorization: "Bearer " + user?.token,
       },
-    }
+    },
   );
 
   return redirect(`/login?redirectTo=${redirectTo}`, {
@@ -156,7 +156,7 @@ export async function logoutWithRedirectAfterLogin({
 
 export async function currentToken({ request }: { request: Request }) {
   const session = await sessionStorage.getSession(
-    request.headers.get("Cookie")
+    request.headers.get("Cookie"),
   );
 
   if (session.has("user")) {

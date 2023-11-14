@@ -5,35 +5,49 @@ import CardItemDifficulty from "./card-item-difficulty";
 import CardItemTag from "./card-item-tag";
 import CardItemLessonsCount from "./card-item-lessons-count";
 import CardItemRibbon from "~/components/cards/card-item-ribbon";
-import { fromSecondsToTimeStringWithoutSeconds } from "~/utils/interval";
+import {
+  fromSecondsToTimeStringWithoutSeconds,
+  getPublishedDateAndTime,
+} from "~/utils/interval";
+import { hasHappened } from "~/utils/workshop-utils";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
-    <div key={workshop.id} className="flex justify-center lg:justify-start">
-      <Link to={`/workshops/${workshop?.slug}`}>
-        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow">
-          {workshop?.status === "soon" && <CardItemRibbon text="Em breve" />}
-          {workshop?.status === "streaming" && (
-            <CardItemRibbon type="live-now" text="Ao vivo agora 🔴" />
-          )}
+    <article className="w-full flex flex-col justify-center items-center">
+      <Link
+        to={`/workshops/${workshop?.slug}`}
+        className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
+      >
+        {workshop?.status === "soon" && !hasHappened(workshop) && (
+          <CardItemRibbon text="Em breve" />
+        )}
+        {workshop?.status === "soon" && hasHappened(workshop) && (
+          <CardItemRibbon text="Em Edição" />
+        )}
+        {workshop?.status === "streaming" && (
+          <CardItemRibbon type="live-now" text="Ao vivo agora 🔴" />
+        )}
 
-          <div
-            style={{
-              backgroundImage: `url(${
-                workshop.image_url || "/img/computer.jpg"
-              })`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            className="w-full md:w-56 lg:w-40 xl:w-56 h-40 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
-          ></div>
-          <div className="flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
+        <div
+          style={{
+            backgroundImage: `url(${
+              workshop.image_url || "/img/computer.jpg"
+            })`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          className="w-full md:w-56 lg:w-40 xl:w-56 md:h-auto h-40 rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
+        ></div>
+
+        <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
+          <div>
             <CardItemDifficulty
               difficulty={workshop.difficulty}
               className="mb-2"
             />
             <div className="mb-8">
-              <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend">
+              <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend ">
                 {workshop?.name}
               </h2>
               <div className="min-h-[24px]">
@@ -48,6 +62,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 })}
               </div>
             </div>
+            {/* Instrutor */}
             <div className="flex mb-8">
               {workshop?.instructor?.avatar_url && (
                 <img
@@ -65,34 +80,54 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
                 </p>
               </div>
             </div>
-            <div className="h-24 lg:mb-10">
-              <p className="w-full font-sans font-light text-gray-700 md:text-base dark:text-gray-300 line-clamp-4">
+            <div className="h-24 lg:mb-2">
+              <p className="w-full font-sans font-light text-[15px] text-gray-700 dark:text-gray-300 line-clamp-4">
                 {workshop?.short_description}
               </p>
             </div>
-            <div className="h-10 mt-2">
-              {workshop.status === "published" && (
-                <>
-                  <CardItemLessonsCount
-                    lessonsCount={workshop?.lessons?.length}
-                    className="mb-[0.2rem]"
-                  />
-                  <CardDurationItem
-                    durationString={fromSecondsToTimeStringWithoutSeconds(
-                      workshop?.lessons?.reduce(
-                        (acc, lesson) => acc + lesson.duration_in_seconds,
-                        0
-                      )
-                    )}
-                  />
-                </>
-              )}
-            </div>
           </div>
-        </article>
+          <WorkshopCardFooter workshop={workshop} />
+        </div>
       </Link>
-    </div>
+    </article>
   );
 }
 
 export default WorkshopCard;
+
+function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
+  const [publishedDate, publishedTime] = getPublishedDateAndTime(
+    workshop.published_at,
+  );
+  return (
+    <div className="mt-auto">
+      {workshop.status === "published" && (
+        <>
+          <CardItemLessonsCount
+            lessonsCount={workshop?.lessons?.length}
+            className="mb-[0.2rem]"
+          />
+          <CardDurationItem
+            durationString={fromSecondsToTimeStringWithoutSeconds(
+              workshop?.lessons?.reduce(
+                (acc, lesson) => acc + lesson.duration_in_seconds,
+                0,
+              ),
+            )}
+          />
+        </>
+      )}
+      {workshop.status === "soon" && !hasHappened(workshop) && (
+        <p className="inline-flex gap-2 items-center text-xs  text-brand-300 border border-brand-400 dark:border-brand-300 rounded-lg py-1 px-2 ">
+          <span className="font-bold ">
+            <CalendarIcon className="w-4 h-4 dark:text-brand-300 text-brand-400" />
+          </span>{" "}
+          <span className="dark:text-white text-gray-600">
+            {publishedDate}
+            {publishedTime ? ` às ${publishedTime}` : ""}
+          </span>
+        </p>
+      )}
+    </div>
+  );
+}

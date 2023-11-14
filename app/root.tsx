@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import { json, type LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -52,12 +52,19 @@ export function meta(args: any) {
   });
 }
 
-export function loader({ request }: { request: Request }) {
-  return user({ request });
+export async function loader({ request }: { request: Request }) {
+  const userData = (await user({ request })) as User | null;
+  return json({
+    user: userData,
+    ENV: {
+      PAGARME_ENCRYPTION_KEY: process.env.PAGARME_ENCRYPTION_KEY,
+    },
+  });
 }
 
 export default function App() {
-  const user = useLoaderData<User | null>();
+  const loaderData = useLoaderData<typeof loader>();
+  const user = loaderData.user;
 
   return (
     <html lang="en">
@@ -81,6 +88,12 @@ export default function App() {
           <Outlet context={{ user }} />
         </ColorModeProvider>
         <ScrollRestoration />
+        {/* Env pública: https://remix.run/docs/en/main/guides/envvars */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(loaderData.ENV)}`,
+          }}
+        />
         <Scripts />
         <LiveReload />
         <Toaster

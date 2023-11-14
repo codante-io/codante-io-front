@@ -37,7 +37,9 @@ export default function Schedule() {
 
   return (
     <main className="container mx-auto text-center">
-      <h1 className="mb-10 text-4xl text-center font-lexend">Agenda</h1>
+      <h1 className="mb-10 text-3xl text-center md:text-4xl font-lexend">
+        Agenda
+      </h1>
 
       <div>
         {upcomingDates.map((upcoming, i) => {
