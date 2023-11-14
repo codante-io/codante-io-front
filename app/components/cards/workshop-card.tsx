@@ -14,80 +14,82 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
-    <div key={workshop.id} className="flex justify-center lg:justify-start">
-      <Link to={`/workshops/${workshop?.slug}`} className="w-full">
-        <article className="relative flex-col flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ">
-          {workshop?.status === "soon" && !hasHappened(workshop) && (
-            <CardItemRibbon text="Em breve" />
-          )}
-          {workshop?.status === "soon" && hasHappened(workshop) && (
-            <CardItemRibbon text="Em Edição" />
-          )}
-          {workshop?.status === "streaming" && (
-            <CardItemRibbon type="live-now" text="Ao vivo agora 🔴" />
-          )}
+    <article className="w-full flex flex-col justify-center items-center">
+      <Link
+        to={`/workshops/${workshop?.slug}`}
+        className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
+      >
+        {workshop?.status === "soon" && !hasHappened(workshop) && (
+          <CardItemRibbon text="Em breve" />
+        )}
+        {workshop?.status === "soon" && hasHappened(workshop) && (
+          <CardItemRibbon text="Em Edição" />
+        )}
+        {workshop?.status === "streaming" && (
+          <CardItemRibbon type="live-now" text="Ao vivo agora 🔴" />
+        )}
 
-          <div
-            style={{
-              backgroundImage: `url(${
-                workshop.image_url || "/img/computer.jpg"
-              })`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            className="w-full md:w-56 lg:w-40 xl:w-56 h-40 md:h-auto min-h-full rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
-          ></div>
-          <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
-            <div>
-              <CardItemDifficulty
-                difficulty={workshop.difficulty}
-                className="mb-2"
-              />
-              <div className="mb-8">
-                <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend ">
-                  {workshop?.name}
-                </h2>
-                <div className="min-h-[24px]">
-                  {workshop.tags?.map((tag) => {
-                    return (
-                      <CardItemTag
-                        tagName={tag.name}
-                        key={tag.id}
-                        className="text-blue-900 bg-blue-200 dark:text-gray-300 dark:bg-blue-900"
-                      />
-                    );
-                  })}
-                </div>
+        <div
+          style={{
+            backgroundImage: `url(${
+              workshop.image_url || "/img/computer.jpg"
+            })`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          className="w-full md:w-56 lg:w-40 xl:w-56 md:h-auto h-40 rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
+        ></div>
+
+        <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
+          <div>
+            <CardItemDifficulty
+              difficulty={workshop.difficulty}
+              className="mb-2"
+            />
+            <div className="mb-8">
+              <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend ">
+                {workshop?.name}
+              </h2>
+              <div className="min-h-[24px]">
+                {workshop.tags?.map((tag) => {
+                  return (
+                    <CardItemTag
+                      tagName={tag.name}
+                      key={tag.id}
+                      className="text-blue-900 bg-blue-200 dark:text-gray-300 dark:bg-blue-900"
+                    />
+                  );
+                })}
               </div>
-              {/* Instrutor */}
-              <div className="flex mb-8">
-                {workshop?.instructor?.avatar_url && (
-                  <img
-                    src={workshop?.instructor?.avatar_url}
-                    alt=""
-                    className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200"
-                  />
-                )}
-                <div>
-                  <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
-                    {workshop?.instructor?.name}
-                  </p>
-                  <p className="text-xs font-light text-gray-400 dark:text-gray-300">
-                    {workshop?.instructor?.company}
-                  </p>
-                </div>
-              </div>
-              <div className="h-24 lg:mb-2">
-                <p className="w-full font-sans font-light text-[15px] text-gray-700 dark:text-gray-300 line-clamp-4">
-                  {workshop?.short_description}
+            </div>
+            {/* Instrutor */}
+            <div className="flex mb-8">
+              {workshop?.instructor?.avatar_url && (
+                <img
+                  src={workshop?.instructor?.avatar_url}
+                  alt=""
+                  className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200"
+                />
+              )}
+              <div>
+                <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
+                  {workshop?.instructor?.name}
+                </p>
+                <p className="text-xs font-light text-gray-400 dark:text-gray-300">
+                  {workshop?.instructor?.company}
                 </p>
               </div>
             </div>
-            <WorkshopCardFooter workshop={workshop} />
+            <div className="h-24 lg:mb-2">
+              <p className="w-full font-sans font-light text-[15px] text-gray-700 dark:text-gray-300 line-clamp-4">
+                {workshop?.short_description}
+              </p>
+            </div>
           </div>
-        </article>
+          <WorkshopCardFooter workshop={workshop} />
+        </div>
       </Link>
-    </div>
+    </article>
   );
 }
 
