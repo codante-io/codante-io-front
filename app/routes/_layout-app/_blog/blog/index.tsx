@@ -40,7 +40,7 @@ export default function Blog() {
   const { blogPosts } = useLoaderData<typeof loader>();
   return (
     <div className="container mx-auto ">
-      <h1 className="mb-10 text-4xl text-center font-lexend">
+      <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
         Blog do Codante
       </h1>
       <section className="grid justify-center grid-cols-1 gap-10 lg:grid-cols-3 md:grid-cols-2">

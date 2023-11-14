@@ -39,8 +39,8 @@ export default function WorkshopTitle({
         {fromSecondsToTimeString(
           workshop.lessons.reduce(
             (acc, lesson) => acc + lesson.duration_in_seconds,
-            0
-          )
+            0,
+          ),
         )}
       </span>
       {isLoggedIn && <ProgressBar lessons={workshop.lessons} />}

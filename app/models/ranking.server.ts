@@ -22,6 +22,6 @@ export async function getRanking(monthly: string | null): Promise<Ranking> {
   return ranking.filter(
     (user: UserPoints) =>
       user.completed_challenge_count !== "0" ||
-      user.received_reaction_count !== "0"
+      user.received_reaction_count !== "0",
   );
 }

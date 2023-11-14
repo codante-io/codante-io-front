@@ -25,7 +25,7 @@ export default function ChallengeCard({
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
       className={classNames(
-        challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer"
+        challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer",
       )}
     >
       <article
@@ -97,7 +97,7 @@ export default function ChallengeCard({
                 {challenge.current_user_is_enrolled
                   ? challenge?.users
                       ?.filter(
-                        (user) => user.avatar_url !== loggedUser?.avatar_url
+                        (user) => user.avatar_url !== loggedUser?.avatar_url,
                       )
                       .slice(0, 4)
                       .map((user, index) => (

@@ -40,7 +40,7 @@ export async function getWorkshops(): Promise<Array<Workshop>> {
 
 export async function getWorkshop(
   slug: string,
-  request: any
+  request: any,
 ): Promise<Workshop | null> {
   const token = await currentToken({ request });
   const workshop = await axios

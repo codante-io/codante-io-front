@@ -2,8 +2,8 @@ import toast from "react-hot-toast";
 import useSound from "use-sound";
 import { useCallback } from "react";
 
-import errorSound from "./error.wav";
-import successSound from "./success.mp3";
+import errorSound from "~/sounds/error.wav";
+import successSound from "~/sounds/success.mp3";
 
 export const useToasterWithSound = () => {
   const [playSuccess] = useSound(successSound);
@@ -14,7 +14,7 @@ export const useToasterWithSound = () => {
       playSuccess();
       toast.success(message);
     },
-    [playSuccess]
+    [playSuccess],
   );
 
   const showErrorToast = useCallback(
@@ -22,7 +22,7 @@ export const useToasterWithSound = () => {
       playError();
       toast.error(message);
     },
-    [playError]
+    [playError],
   );
 
   return {

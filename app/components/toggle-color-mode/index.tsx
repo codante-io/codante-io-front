@@ -4,11 +4,11 @@ import { TbSunFilled, TbMoonFilled } from "react-icons/tb";
 import React from "react";
 import useSound from "use-sound";
 
-import toggleSound from "./toggle.wav";
+import toggleSound from "~/sounds/toggle.wav";
 
 const SunIcon = React.forwardRef(function SunIcon(
   props: any,
-  ref: React.Ref<any>
+  ref: React.Ref<any>,
 ) {
   return (
     <div ref={ref}>
@@ -19,7 +19,7 @@ const SunIcon = React.forwardRef(function SunIcon(
 
 const MoonIcon = React.forwardRef(function MoonIcon(
   props: any,
-  ref: React.Ref<any>
+  ref: React.Ref<any>,
 ) {
   return (
     <div ref={ref}>

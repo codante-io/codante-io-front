@@ -10,6 +10,7 @@ export default function TooltipWrapper({
   bgColor,
   textColor,
   arrowColor,
+  maxWidth,
 }: {
   children: React.ReactNode;
   text: string;
@@ -19,6 +20,7 @@ export default function TooltipWrapper({
   bgColor?: string;
   textColor?: string;
   arrowColor?: string;
+  maxWidth?: string;
 }) {
   return (
     <Tooltip.Provider>
@@ -29,8 +31,10 @@ export default function TooltipWrapper({
             side={side}
             className={classNames(
               padding || "px-2 py-3",
-              bgColor || "bg-gray-200 dark:bg-gray-600",
+              bgColor ||
+                "bg-gray-50 dark:bg-background-800 border border-background-300 dark:border-background-600",
               textColor || "dark:text-white",
+              maxWidth || "max-w-xs",
               "z-10 text-xs rounded shadow-lg TooltipContent"
             )}
             sideOffset={5}
@@ -38,7 +42,7 @@ export default function TooltipWrapper({
             {text}
             <Tooltip.Arrow
               className={`${
-                arrowColor || "fill-gray-200 dark:fill-gray-600"
+                arrowColor || "dark:fill-background-600 fill-background-300"
               }  bg-opacity-90 TooltipArrow`}
             />
           </Tooltip.Content>
