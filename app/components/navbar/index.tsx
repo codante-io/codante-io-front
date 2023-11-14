@@ -276,7 +276,7 @@ function MobileNavbarButton({ open }: { open: boolean }) {
     <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
       {/* Mobile menu button*/}
       <Disclosure.Button
-        className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-gray-50 hover:bg-background-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-gray-50 dark:hover:bg-background-700 hover:bg-background-100 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-700 dark:focus:ring-white"
         onClick={() => playSound()}
       >
         <span className="sr-only">Open main menu</span>

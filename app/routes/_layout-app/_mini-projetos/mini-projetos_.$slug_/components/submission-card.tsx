@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { BsGithub, BsGlobe } from "react-icons/bs";
+import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/reactions-button";
+import TooltipWrapper from "~/components/tooltip";
 import UserAvatar from "~/components/user-avatar";
 import type { Reactions } from "~/models/reactions.server";
 import classNames from "~/utils/class-names";
@@ -22,12 +25,32 @@ export default function SubmissionCard({
   user,
   reactions,
   size = "large",
+  showEditForm,
+  isEditing,
 }: {
+  isEditing?: boolean;
   submission: Submission;
   user: SubmissionUser;
   reactions: Reactions;
   size?: "medium" | "large";
+  showEditForm?: () => void;
 }) {
+  const [editSubmition, setEditSubmition] = useState(false);
+
+  function handleEditSubmition() {
+    if (showEditForm) {
+      showEditForm();
+      setEditSubmition(!editSubmition);
+    }
+  }
+  function formatName(name: string) {
+    return name
+      .trim()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  }
+
   return (
     <article
       className={classNames(
@@ -65,25 +88,44 @@ export default function SubmissionCard({
         />
       </section>
 
-      <footer className="flex items-center justify-between gap-4 px-4 dark:bg-background-700">
-        <div className="flex items-center gap-4 my-4">
+      <footer className="flex items-center justify-between gap-4 px-4 py-4 dark:bg-background-700">
+        <div className="w-10 h-10 flex-none">
           <UserAvatar
             isPro={user.is_pro}
             avatarUrl={user.avatar_url}
-            className="w-10 h-10"
+            className="w-10 h-10 flex-shrink-0"
           />
-          <div className="">
-            <h4 className="text-xs dark:text-gray-400 font-regular">
-              Resolução de
-            </h4>
-            <h3 className="font-semibold line-clamp-1">{user.name}</h3>
-          </div>
         </div>
-        <ReactionsButton
-          reactions={reactions}
-          reactableId={submission.id}
-          reactableType="ChallengeUser"
-        />
+        <div className="w-full">
+          <h4 className="text-xs dark:text-gray-400 font-regular">
+            Resolução de
+          </h4>
+          <h3
+            className="font-semibold line-clamp-1"
+            title={formatName(user.name)}
+          >
+            {formatName(user.name)}
+          </h3>
+        </div>
+        <div className="flex items-center gap-x-4">
+          {showEditForm && (
+            <TooltipWrapper text="Editar" side="bottom">
+              <FiEdit
+                onClick={handleEditSubmition}
+                className={`w-4 h-4 font-thin transition-all hover:text-brand-500 hover:scale-110 ${
+                  isEditing
+                    ? "text-brand-500 scale-110"
+                    : "text-current scale-100"
+                }`}
+              />
+            </TooltipWrapper>
+          )}
+          <ReactionsButton
+            reactions={reactions}
+            reactableId={submission.id}
+            reactableType="ChallengeUser"
+          />
+        </div>
       </footer>
     </article>
   );
