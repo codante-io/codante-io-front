@@ -59,9 +59,11 @@ export default function UpdateSubmissionForm({
           Enviar
         </LoadingButton>
         <Button
-          className="bg-transparent border border-gray-300 hover:bg-red-700 dark:hover:bg-red-50 hover:bg-opacity-5 dark:hover:bg-opacity-5 dark:border-gray-600 text-gray dark:text-gray-300"
+          className=" border border-gray-300  dark:border-gray-600 hover:border-red-400 dark:hover:border-red-400"
           type="button"
           onClick={handleCancelBtn}
+          textColorClass="text-gray dark:text-gray-300"
+          bgClass="bg-transparent"
         >
           Cancelar
         </Button>
