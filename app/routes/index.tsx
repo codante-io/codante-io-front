@@ -29,6 +29,7 @@ import {
 } from "~/components/cards/pricing/pricing-data";
 import BannerAlert from "~/components/banner-alert";
 import { MdLiveTv } from "react-icons/md";
+import { useColorMode } from "~/contexts/color-mode-context";
 
 export const loader = async () => {
   return json({
@@ -39,6 +40,7 @@ export const loader = async () => {
 export default function HomePage() {
   const { user } = useOutletContext<{ user: User }>();
   const { homeInfo } = useLoaderData<typeof loader>();
+  const { colorMode } = useColorMode();
 
   function sortByEnrolledUsersCount(challengesList: ChallengeCardType[]) {
     if (!challengesList) return [];
@@ -64,7 +66,7 @@ export default function HomePage() {
 
         <section
           id="headline"
-          className="flex justify-center w-full md:min-h-screen"
+          className="flex flex-col items-center w-full md:min-h-screen"
         >
           <div className="container flex flex-col items-center">
             {/* Live Streaming Banner */}
@@ -94,50 +96,66 @@ export default function HomePage() {
                 </div>
               </BannerAlert>
             )}
-            <h1 className="text-3xl font-light text-center md:mt-16 font-lexend md:text-5xl">
-              Evolua na programação{" "}
-              <span className="pr-4 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+            <h1 className="text-5xl font-light text-center md:mt-10 font-lexend md:text-7xl">
+              Evolua na programação <br />
+              <span
+                className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text 
+"
+              >
                 front-end
+                <img
+                  src={`/img/pencil-stroke-${colorMode}.webp`}
+                  alt="Line stroke effect"
+                  className="absolute top-[55%] md:top-[55%] md:h-10 h-6 left-6 w-full md:left-10 -z-10"
+                />
               </span>
             </h1>
-            <p className="mt-6 font-light text-center lg:mt-16 font-inter text-md md:text-xl lg:w-7/12">
-              Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas{" "}
-              <span className="italic">skills</span> em programação com{" "}
-              <span className="italic font-bold">workshops</span> e{" "}
-              <span className="italic font-bold">mini projetos</span> ensinados
-              pelos melhores profissionais do mercado!
-            </p>
+          </div>
+          <div className="container flex mt-24 gap-6 lg:flex-row flex-col h-full md:h-[316px] xl:h-[386px] 2xl:h-[397px]">
+            <section className="flex flex-col basis-2/5 pr-10 justify-between">
+              <div>
+                <p className="font-light text-center lg:text-start font-inter text-lg">
+                  Nossos <span className="italic font-bold">Workshops</span> e{" "}
+                  <span className="italic font-bold">Mini Projetos</span> juntam
+                  teoria e prática para criar uma experiência{" "}
+                  <span className="italic">única</span> de aprendizagem.
+                </p>
 
-            <div className="flex flex-col items-center justify-center gap-4 mt-10 sm:justify-around md:flex-row">
-              <>
-                {user && !user.is_pro && (
-                  <Link to="/assine">
-                    <button className="flex items-center px-4 py-2 text-gray-800 rounded-full bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
-                      <FaCrown className="mr-2 text-amber-400" /> Seja PRO
-                    </button>
-                  </Link>
-                )}
+                <div className="flex flex-col justify-center gap-4 mt-4 sm:justify-start lg:flex-row lg:text-sm xl:text-lg">
+                  <>
+                    {user && !user.is_pro && (
+                      <Link to="/assine">
+                        <button className="flex items-center px-4 py-2 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
+                          <FaCrown className="mr-2 text-amber-400" /> Seja
+                          <b className="ml-1">PRO</b>
+                        </button>
+                      </Link>
+                    )}
 
-                {!user && (
-                  <Link to="/login">
-                    <button className="flex items-center px-4 py-2 text-gray-700 rounded-full bg-background-200">
-                      <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
-                      Cadastre-se
-                    </button>
-                  </Link>
-                )}
-                <a
-                  href="https://discord.gg/fmVw468ZMR"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
-                >
-                  <BsDiscord />
-                  Entre na comunidade
-                </a>
-              </>
-            </div>
-            <div className="relative flex-1 w-full max-w-4xl mt-4 lg:mt-10">
+                    {!user && (
+                      <Link to="/login">
+                        <button className="flex items-center px-4 py-2 text-gray-700 rounded-lg bg-background-200">
+                          <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
+                          Cadastre-se
+                        </button>
+                      </Link>
+                    )}
+                    <Link
+                      to="https://discord.gg/fmVw468ZMR"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
+                    >
+                      <BsDiscord />
+                      Entre na comunidade
+                    </Link>
+                  </>
+                </div>
+              </div>
+
+              <div className="flex w-full bg-background-200 dark:bg-background-800 h-40 rounded-xl"></div>
+            </section>
+            <div className="relative flex-1 basis-2/5">
               <VimeoPlayer vimeoUrl="https://player.vimeo.com/video/827298711" />
             </div>
           </div>
