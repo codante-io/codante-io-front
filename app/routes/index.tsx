@@ -30,6 +30,7 @@ import {
 import BannerAlert from "~/components/banner-alert";
 import { MdLiveTv } from "react-icons/md";
 import { useColorMode } from "~/contexts/color-mode-context";
+import UserAvatar from "~/components/user-avatar";
 
 export const loader = async () => {
   return json({
@@ -57,6 +58,75 @@ export default function HomePage() {
     ...proPlanDetails,
     monthlyPrice: Math.round(homeInfo.plan_info.price_in_cents / 100 / 12),
     totalPrice: homeInfo.plan_info.price_in_cents / 100,
+  };
+
+  const participants = {
+    avatars: [
+      {
+        avatar_url: "https://github.com/icaroharry.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/felipemuller20.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/robertotcestari.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/icaroharry.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/felipemuller20.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/robertotcestari.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/icaroharry.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/felipemuller20.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/robertotcestari.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/icaroharry.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/felipemuller20.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/robertotcestari.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/icaroharry.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/felipemuller20.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/robertotcestari.png",
+        is_pro: true,
+      },
+      {
+        avatar_url: "https://github.com/icaroharry.png",
+        is_pro: true,
+      },
+    ],
   };
 
   return (
@@ -96,7 +166,7 @@ export default function HomePage() {
                 </div>
               </BannerAlert>
             )}
-            <h1 className="text-5xl font-light text-center md:mt-10 font-lexend md:text-7xl">
+            <h1 className="text-4xl sm:text-5xl font-light text-center md:mt-10 font-lexend lg:text-7xl">
               Evolua na programação <br />
               <span
                 className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text 
@@ -111,8 +181,8 @@ export default function HomePage() {
               </span>
             </h1>
           </div>
-          <div className="container flex mt-24 gap-6 lg:flex-row flex-col h-full md:h-[316px] xl:h-[386px] 2xl:h-[397px]">
-            <section className="flex flex-col basis-2/5 pr-10 justify-between">
+          <div className="container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full md:h-[316px] xl:h-[386px] 2xl:h-[397px]">
+            <section className="flex flex-col basis-2/5 lg:pr-10 justify-between">
               <div>
                 <p className="font-light text-center lg:text-start font-inter text-lg">
                   Nossos <span className="italic font-bold">Workshops</span> e{" "}
@@ -121,7 +191,7 @@ export default function HomePage() {
                   <span className="italic">única</span> de aprendizagem.
                 </p>
 
-                <div className="flex flex-col justify-center gap-4 mt-4 sm:justify-start lg:flex-row lg:text-sm xl:text-lg">
+                <div className="flex flex-wrap w-full justify-center gap-4 mt-4 lg:justify-start flex-row lg:text-sm">
                   <>
                     {user && !user.is_pro && (
                       <Link to="/assine">
@@ -153,7 +223,45 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="flex w-full bg-background-200 dark:bg-background-800 h-40 rounded-xl"></div>
+              <div className="flex flex-col lg:self-auto self-center justify-between md:w-[28rem] lg:w-full bg-transparent h-full lg:h-28 xl:h-36 rounded-xl p-4 border-[1.5px] bg-background-200 dark:border-background-700 lg:mt-0 mt-16 lg:gap-0 gap-4">
+                <h3 className="text-center lg:text-start font-inter dark:text-gray-300 text-gray-800 xl:text-base text-sm sm:text-base lg:text-xs">
+                  Junte-se à nossa comunidade de{" "}
+                  <b className="italic dark:text-brand-400 text-brand-500">
+                    1613 devs
+                  </b>{" "}
+                  que estão evoluindo suas habilidades de front-end.
+                </h3>
+                <section>
+                  <div className="flex lg:justify-start justify-center flex-wrap -space-x-3">
+                    {/* {currentUserIsEnrolled && (
+                      <UserAvatar
+                        avatarUrl={userAvatar}
+                        className="w-16 h-16"
+                        isPro={currentUserIsPro}
+                      />
+                    )} */}
+                    {false
+                      ? participants?.avatars
+                          .filter((info) => info.avatar_url !== userAvatar)
+                          .map((info, index) => (
+                            <UserAvatar
+                              key={index}
+                              avatarUrl={info.avatar_url}
+                              className="xl:w-9 xl:h-9 h-6 w-6"
+                              isPro={info.is_pro}
+                            />
+                          ))
+                      : participants?.avatars.map((info, index) => (
+                          <UserAvatar
+                            key={index}
+                            avatarUrl={info.avatar_url}
+                            className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
+                            isPro={info.is_pro}
+                          />
+                        ))}
+                  </div>
+                </section>
+              </div>
             </section>
             <div className="relative flex-1 basis-2/5">
               <VimeoPlayer vimeoUrl="https://player.vimeo.com/video/827298711" />
