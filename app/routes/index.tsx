@@ -83,7 +83,7 @@ export default function HomePage() {
                     Existe um workshop acontecendo ao vivo agora!
                   </BannerAlert.Title>
                   <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-center md:text-left">
-                    Clique para assistir juntos o streaming do workshop:{" "}
+                    Clique para assistir o streaming do workshop:{" "}
                     <Link
                       to={`/workshops/${homeInfo.live_streaming_workshop.slug}`}
                       className="underline"
