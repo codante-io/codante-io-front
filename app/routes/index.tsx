@@ -15,7 +15,7 @@ import PriceCard from "~/components/cards/pricing/price-card";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
-import TitleIcon from "~/components/title-icon";
+// import TitleIcon from "~/components/title-icon";
 import VimeoPlayer from "~/components/vimeo-player";
 import Wave from "~/components/wave";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
@@ -31,6 +31,7 @@ import BannerAlert from "~/components/banner-alert";
 import { MdLiveTv } from "react-icons/md";
 import { useColorMode } from "~/contexts/color-mode-context";
 import UserAvatar from "~/components/user-avatar";
+import SubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
 
 export const loader = async () => {
   return json({
@@ -59,6 +60,349 @@ export default function HomePage() {
     monthlyPrice: Math.round(homeInfo.plan_info.price_in_cents / 100 / 12),
     totalPrice: homeInfo.plan_info.price_in_cents / 100,
   };
+
+  const submissions = [
+    {
+      id: 1132,
+      user_name: "André Lucas",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/66281231?v=4",
+      user_github_user: "andrelucca99",
+      submission_url: "https://mp-lista-de-paises-next-liard.vercel.app/",
+      fork_url: "https://github.com/andrelucca99/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/66281231.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 1,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 884,
+      user_name: "Wallace Barbosa",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/104037331?v=4",
+      user_github_user: "WallaceMuylaert",
+      submission_url: "https://mp-lista-de-paises-next-teal.vercel.app/",
+      fork_url: "https://github.com/WallaceMuylaert/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/104037331.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 1,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 732,
+      user_name: "Marcus Evandro Galvão Boni",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/115600640?v=4",
+      user_github_user: "Marcus-Boni",
+      submission_url: "https://api-list-of-countries.vercel.app/",
+      fork_url: "https://github.com/Marcus-Boni/API-List-of-Countries",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/115600640.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "rocket",
+            count: 1,
+          },
+          {
+            reaction: "like",
+            count: 2,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 693,
+      user_name: "Caio Silva",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/36521875?v=4",
+      user_github_user: "bladellano",
+      submission_url: "https://mp-lista-de-paises-next-chi.vercel.app/",
+      fork_url: "https://github.com/bladellano/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/36521875.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 2,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 712,
+      user_name: "Joseph",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/49536612?v=4",
+      user_github_user: "Khufos",
+      submission_url:
+        "https://mp-lista-de-paises-next-6b2f3gjq8-khufos.vercel.app/",
+      fork_url: "https://github.com/Khufos/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/49536612.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 2,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 700,
+      user_name: "schmaiske",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/38104901?v=4",
+      user_github_user: "schmaiske",
+      submission_url: "https://lista-de-paises-two.vercel.app/",
+      fork_url: "https://github.com/schmaiske/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/38104901.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 4,
+          },
+          {
+            reaction: "exploding-head",
+            count: 1,
+          },
+          {
+            reaction: "fire",
+            count: 1,
+          },
+          {
+            reaction: "rocket",
+            count: 1,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 550,
+      user_name: "THIAGO CREDICO",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/55001968?v=4",
+      user_github_user: "thiagocredico",
+      submission_url:
+        "https://mp-lista-de-paises-next-thiagocredico.vercel.app/",
+      fork_url: "https://github.com/thiagocredico/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/55001968.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 6,
+          },
+          {
+            reaction: "exploding-head",
+            count: 2,
+          },
+          {
+            reaction: "fire",
+            count: 2,
+          },
+          {
+            reaction: "rocket",
+            count: 2,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 658,
+      user_name: "Vinícius Teixeira",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/94622701?v=4",
+      user_github_user: "tex008",
+      submission_url:
+        "https://lista-de-paises-next-imntmmhz8-tex008.vercel.app/",
+      fork_url: "https://github.com/tex008/Lista-de-Paises-NextJS",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/94622701.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 3,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 627,
+      user_name: "Igor Montezuma ",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/85948415?v=4",
+      user_github_user: "IgorMontezuma20",
+      submission_url: "https://lista-de-paises-nextjs.vercel.app/",
+      fork_url: "https://github.com/IgorMontezuma20/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/85948415.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 4,
+          },
+          {
+            reaction: "exploding-head",
+            count: 3,
+          },
+          {
+            reaction: "fire",
+            count: 3,
+          },
+          {
+            reaction: "rocket",
+            count: 3,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 642,
+      user_name: "MaateusMDS",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/96087111?v=4",
+      user_github_user: "MaateusMDS",
+      submission_url: "https://codante-api-countries.vercel.app/",
+      fork_url: "https://github.com/MaateusMDS/codante-api-countries",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/96087111.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 5,
+          },
+          {
+            reaction: "exploding-head",
+            count: 2,
+          },
+          {
+            reaction: "fire",
+            count: 2,
+          },
+          {
+            reaction: "rocket",
+            count: 2,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 549,
+      user_name: "sumoyama",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/75846766?v=4",
+      user_github_user: "sumoyama",
+      submission_url: "https://mp-lista-de-paises-next-gamma.vercel.app/",
+      fork_url: "https://github.com/sumoyama/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/75846766.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 5,
+          },
+          {
+            reaction: "rocket",
+            count: 3,
+          },
+          {
+            reaction: "fire",
+            count: 3,
+          },
+          {
+            reaction: "exploding-head",
+            count: 3,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 559,
+      user_name: "Felipe Muller",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/78622334?v=4",
+      user_github_user: "felipemuller20",
+      submission_url: "https://paises-do-mundo-murex.vercel.app/",
+      fork_url: "https://github.com/felipemuller20/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/78622334.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 6,
+          },
+          {
+            reaction: "exploding-head",
+            count: 3,
+          },
+          {
+            reaction: "fire",
+            count: 3,
+          },
+          {
+            reaction: "rocket",
+            count: 3,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+    {
+      id: 560,
+      user_name: "Ícaro Harry",
+      user_avatar_url: "https://avatars.githubusercontent.com/u/6475893?v=4",
+      user_github_user: "icaroharry",
+      submission_url:
+        "https://mp-lista-de-paises-next-9elqot0sx-icaroharry.vercel.app/",
+      fork_url: "https://github.com/icaroharry/mp-lista-de-paises-next",
+      is_pro: 0,
+      submission_image_url:
+        "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/6475893.png",
+      reactions: {
+        reaction_counts: [
+          {
+            reaction: "like",
+            count: 6,
+          },
+        ],
+        user_reactions: [],
+      },
+    },
+  ];
 
   const participants = {
     avatars: [
@@ -134,10 +478,7 @@ export default function HomePage() {
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
         <BackgroundBlur />
 
-        <section
-          id="headline"
-          className="flex flex-col items-center w-full md:min-h-screen"
-        >
+        <section id="headline" className="flex flex-col items-center w-full">
           <div className="container flex flex-col items-center">
             {/* Live Streaming Banner */}
             {homeInfo.live_streaming_workshop && (
@@ -168,10 +509,7 @@ export default function HomePage() {
             )}
             <h1 className="text-5xl font-light text-center md:mt-10 font-lexend lg:text-7xl">
               Evolua na programação <br />
-              <span
-                className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text 
-"
-              >
+              <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
                 front-end
                 <img
                   src={`/img/pencil-stroke-${colorMode}.webp`}
@@ -181,7 +519,7 @@ export default function HomePage() {
               </span>
             </h1>
           </div>
-          <div className="container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full md:h-[316px] xl:h-[386px] 2xl:h-[397px]">
+          <div className="container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full">
             <section className="flex flex-col basis-2/5 lg:pr-10 justify-between">
               <div>
                 <p className="font-light text-center lg:text-start font-inter text-lg">
@@ -271,18 +609,18 @@ export default function HomePage() {
 
         <section
           id="workshops"
-          className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50"
+          className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50 mt-16 lg:mt-24"
         >
-          <div className="container mb-10">
-            <h1 className="flex items-center mt-8 mb-4 text-3xl font-light sm:mt-16 font-lexend">
-              <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" />{" "}
+          <div className="container mb-10 flex flex-col items-center justify-center border-t border-gray-700">
+            <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
               Workshops
             </h1>
-            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
+            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
               Aprenda de forma prática e objetiva com{" "}
-              <span className="italic font-bold">workshops</span> ensinados por
-              profissionais do mercado. Os workshops são gravados ao vivo e
-              posteriormente editados e disponibilizados na plataforma.
+              <span className="italic font-bold text-brand-400">workshops</span>{" "}
+              ensinados por profissionais do mercado. Os workshops são gravados
+              ao vivo e posteriormente editados e disponibilizados na
+              plataforma.
             </p>
             <section className="grid justify-center grid-cols-1 gap-4 px-0 lg:grid-cols-2">
               {homeInfo?.featured_workshops?.map((workshop) => (
@@ -304,15 +642,17 @@ export default function HomePage() {
           id="mini-projects"
           className="flex justify-center w-full text-gray-800 dark:bg-background-700 bg-background-100 dark:text-gray-50"
         >
-          <div className="container relative -top-12">
-            <h1 className="flex items-center mt-16 mb-4 text-3xl font-light font-lexend">
-              <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" /> Mini
-              projetos
+          <div className="container flex flex-col items-center w-full">
+            <h1 className="text-center mt-8 mb-8 text-4xl font-light font-lexend">
+              Mini projetos
             </h1>
-            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
+            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
               O melhor jeito de aprender é praticando! Melhore suas skills
-              fazendo <span className="italic font-bold">mini projetos</span> e
-              depois assista a resolução feita por profissionais do mercado.
+              fazendo{" "}
+              <span className="italic font-bold text-brand-400">
+                mini projetos
+              </span>{" "}
+              e depois assista a resolução feita por profissionais do mercado.
             </p>
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {orderedChallengeList.map((challenge) => (
@@ -321,13 +661,41 @@ export default function HomePage() {
                 </div>
               ))}
             </section>
-            <section className="flex justify-center w-full mt-10">
+            <section className="flex justify-center w-full mt-10 mb-10">
               <Link
                 to="/mini-projetos"
                 className="px-4 py-2 bg-white rounded-full dark:bg-background-800"
               >
                 Ver todos
               </Link>
+            </section>
+          </div>
+        </section>
+
+        <section id="community-submission" className="">
+          <div className="container flex flex-col items-center w-full overflow-auto scrollbar-hide flex-shrink-0 scroll-auto">
+            <h1 className="text-center mt-8 mb-8 text-4xl font-light font-lexend">
+              Veja o que a nossa comunidade está construindo
+            </h1>
+            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
+              Essas são algumas submissões realizadas nos nossos Mini Projetos
+            </p>
+            <section className="flex gap-8 scroll-auto post-list mb-10">
+              {submissions.map((submission) => (
+                <SubmissionCard
+                  key={submission.id}
+                  submission={submission}
+                  user={{
+                    is_pro: submission.is_pro,
+                    avatar_url: submission.user_avatar_url,
+                    name: submission.user_name,
+                  }}
+                  showReactions={false}
+                  // reactions={submission.reactions}
+                  size="medium"
+                  className="flex-shrink-0"
+                />
+              ))}
             </section>
           </div>
         </section>

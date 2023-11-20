@@ -27,13 +27,17 @@ export default function SubmissionCard({
   size = "large",
   showEditForm,
   isEditing,
+  showReactions = true,
+  className,
 }: {
+  showReactions?: boolean;
   isEditing?: boolean;
   submission: Submission;
   user: SubmissionUser;
   reactions: Reactions;
   size?: "medium" | "large";
   showEditForm?: () => void;
+  className?: string;
 }) {
   const [editSubmition, setEditSubmition] = useState(false);
 
@@ -56,6 +60,7 @@ export default function SubmissionCard({
       className={classNames(
         "relative overflow-hidden rounded-xl border-[1.5px] dark:border-background-600 border-background-200 shadow-sm text-gray-800 dark:text-white transition-shadow",
         size === "medium" && "max-w-[377px]",
+        className,
       )}
     >
       <section className="relative overflow-hidden group">
@@ -120,11 +125,13 @@ export default function SubmissionCard({
               />
             </TooltipWrapper>
           )}
-          <ReactionsButton
-            reactions={reactions}
-            reactableId={submission.id}
-            reactableType="ChallengeUser"
-          />
+          {showReactions && (
+            <ReactionsButton
+              reactions={reactions}
+              reactableId={submission.id}
+              reactableType="ChallengeUser"
+            />
+          )}
         </div>
       </footer>
     </article>
