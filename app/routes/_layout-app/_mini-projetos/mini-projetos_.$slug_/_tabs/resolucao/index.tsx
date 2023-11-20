@@ -4,6 +4,7 @@ import VimeoPlayer from "~/components/vimeo-player";
 import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import { type Challenge } from "~/models/challenge.server";
+import { LuCode2, LuVideo } from "react-icons/lu";
 
 export default function Resolution() {
   const context = useOutletContext<{ challenge: Challenge }>();
@@ -16,6 +17,7 @@ export default function Resolution() {
   if (!challenge?.has_solution) {
     return navigate(`/mini-projetos/${challenge?.slug}`);
   }
+  // console.log(lesson)
 
   return (
     <>
@@ -23,6 +25,32 @@ export default function Resolution() {
         <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
           Resolução do Mini Projeto
         </h1>
+        <section className="flex w-full lg:justify-around gap-4 items-center lg:flex-row flex-col bg-blue-500">
+          <div
+            className={`w-96 h-64 border bg-background-800 rounded-lg border-background-200 relative`}
+            onClick={() =>
+              navigate(`/mini-projetos/${challenge?.slug}/resolucao`)
+            }
+          >
+            <img
+              src={workshop?.image_url}
+              className="object-contain w-full h-full opacity-20"
+              alt="Workshop thumbnail"
+            />
+            <LuVideo className="absolute inset-0 m-auto text-5xl" />
+          </div>
+          <div
+            className={`w-96 h-64 border bg-background-800 rounded-lg border-background-200 relative`}
+          >
+            <img
+              src={workshop?.image_url}
+              className="object-contain w-full h-full opacity-20"
+              alt="Workshop thumbnail"
+            />
+            <LuCode2 className="absolute inset-0 m-auto text-5xl" />
+          </div>
+        </section>
+
         <div className="flex flex-wrap pb-16 lg:mt-0 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-6 lg:px-0">
           <section className="relative col-span-2 w-full mb-4">
             <VimeoPlayer vimeoUrl={lesson?.video_url ?? ""} />
