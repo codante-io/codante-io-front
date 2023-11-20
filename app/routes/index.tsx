@@ -166,7 +166,7 @@ export default function HomePage() {
                 </div>
               </BannerAlert>
             )}
-            <h1 className="text-4xl sm:text-5xl font-light text-center md:mt-10 font-lexend lg:text-7xl">
+            <h1 className="text-5xl font-light text-center md:mt-10 font-lexend lg:text-7xl">
               Evolua na programação <br />
               <span
                 className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text 
