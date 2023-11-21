@@ -15,7 +15,7 @@
 }
 
 .post-list {
-  animation: slide 60s linear infinite alternate;
+  animation: slide 120s linear infinite alternate;
 }
 
 @keyframes slide {
@@ -24,6 +24,19 @@
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+.post-list2 {
+  animation: slide2 120s linear infinite alternate;
+}
+
+@keyframes slide2 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 

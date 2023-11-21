@@ -707,16 +707,35 @@ function Submissions() {
 
   return (
     <section id="community-submission" className="">
-      <div className="container flex flex-col items-center w-full overflow-auto scrollbar-hide flex-shrink-0 scroll-auto">
+      <div className="flex flex-col items-center w-full overflow-auto scrollbar-hide flex-shrink-0 scroll-auto">
         <h1 className="text-center mt-20 mb-4 text-4xl font-light font-lexend">
           Veja o que a nossa comunidade está construindo
         </h1>
         <p className="mt-2 mb-20 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Essas são algumas submissões realizadas nos nossos Mini Projetos
         </p>
-        <section className="flex gap-8 scroll-auto post-list mb-20">
+        <section className="flex gap-4 scroll-auto post-list mb-4">
           {submissions.map((submission) => (
             <SubmissionCard
+              isHomePage
+              key={submission.id}
+              submission={submission}
+              user={{
+                is_pro: submission.is_pro,
+                avatar_url: submission.user_avatar_url,
+                name: submission.user_name,
+              }}
+              showReactions={false}
+              // reactions={submission.reactions}
+              size="medium"
+              className="flex-shrink-0"
+            />
+          ))}
+        </section>
+        <section className="flex gap-4 scroll-auto post-list2 mb-20">
+          {submissions.map((submission) => (
+            <SubmissionCard
+              isHomePage
               key={submission.id}
               submission={submission}
               user={{

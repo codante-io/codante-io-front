@@ -29,15 +29,17 @@ export default function SubmissionCard({
   isEditing,
   showReactions = true,
   className,
+  isHomePage = false,
 }: {
   showReactions?: boolean;
   isEditing?: boolean;
   submission: Submission;
   user: SubmissionUser;
-  reactions: Reactions;
+  reactions?: Reactions;
   size?: "medium" | "large";
   showEditForm?: () => void;
   className?: string;
+  isHomePage?: boolean;
 }) {
   const [editSubmition, setEditSubmition] = useState(false);
 
@@ -89,7 +91,12 @@ export default function SubmissionCard({
         <img
           src={submission.submission_image_url}
           alt="Screenshot da aplicação submetida"
-          className="w-full transition-all delay-75 opacity-40 aspect-video blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40"
+          className={classNames(
+            "w-full transition-all delay-75 aspect-video",
+            isHomePage
+              ? "opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100"
+              : "opacity-40 blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40",
+          )}
         />
       </section>
 
@@ -125,7 +132,7 @@ export default function SubmissionCard({
               />
             </TooltipWrapper>
           )}
-          {showReactions && (
+          {showReactions && reactions && (
             <ReactionsButton
               reactions={reactions}
               reactableId={submission.id}
