@@ -707,18 +707,18 @@ function Submissions() {
 
   return (
     <section id="community-submission" className="">
-      <div className="flex flex-col items-center w-full overflow-auto scrollbar-hide flex-shrink-0 scroll-auto">
+      <div className="max-w-[94vw] md:max-w-[98vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto">
         <h1 className="text-center mt-20 mb-4 text-4xl font-light font-lexend">
           Veja o que a nossa comunidade está construindo
         </h1>
         <p className="mt-2 mb-20 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Essas são algumas submissões realizadas nos nossos Mini Projetos
         </p>
-        <section className="flex gap-4 scroll-auto post-list mb-4">
-          {submissions.map((submission) => (
+        <section className="flex gap-4 post-list mb-4">
+          {submissions.map((submission, index) => (
             <SubmissionCard
+              key={index}
               isHomePage
-              key={submission.id}
               submission={submission}
               user={{
                 is_pro: submission.is_pro,
@@ -727,17 +727,21 @@ function Submissions() {
               }}
               showReactions={false}
               // reactions={submission.reactions}
-              size="medium"
+              size="small"
               className="flex-shrink-0"
             />
           ))}
         </section>
         <section className="flex gap-4 scroll-auto post-list2 mb-20">
-          {submissions.map((submission) => (
+          {submissions.map((submission, index) => (
             <SubmissionCard
               isHomePage
-              key={submission.id}
+              key={index}
               submission={submission}
+              // submission={{
+              //   submission_image_url: submission.submission_image_url,
+              // }}
+              // user={users}
               user={{
                 is_pro: submission.is_pro,
                 avatar_url: submission.user_avatar_url,
@@ -745,7 +749,7 @@ function Submissions() {
               }}
               showReactions={false}
               // reactions={submission.reactions}
-              size="medium"
+              size="small"
               className="flex-shrink-0"
             />
           ))}
