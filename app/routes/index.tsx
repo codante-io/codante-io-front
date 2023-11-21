@@ -15,9 +15,7 @@ import PriceCard from "~/components/cards/pricing/price-card";
 import WorkshopCard from "~/components/cards/workshop-card";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
-// import TitleIcon from "~/components/title-icon";
 import VimeoPlayer from "~/components/vimeo-player";
-import Wave from "~/components/wave";
 import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
 import { getHome } from "~/models/home.server";
 import type { User } from "~/models/user.server";
@@ -32,6 +30,7 @@ import { MdLiveTv } from "react-icons/md";
 import { useColorMode } from "~/contexts/color-mode-context";
 import UserAvatar from "~/components/user-avatar";
 import SubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
+import { useState } from "react";
 
 export const loader = async () => {
   return json({
@@ -48,9 +47,9 @@ export default function HomePage() {
         <BackgroundBlur />
         <Headline />
         <WorkShops />
-        <Wave position="top" />
         <Challenges />
         <Submissions />
+        <Testimony />
         <Pricing />
       </div>
     </AppLayout>
@@ -279,16 +278,24 @@ function Headline() {
 
 function WorkShops() {
   const { homeInfo } = useLoaderData<typeof loader>();
+  const { colorMode } = useColorMode();
 
   return (
     <section
       id="workshops"
       className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50 mt-16 lg:mt-24"
     >
-      <div className="container mb-10 flex flex-col items-center justify-center border-t border-gray-700">
-        <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
-          Workshops
-        </h1>
+      <div className="container mb-10 flex flex-col items-center justify-center border-t border-gray-300 dark:border-gray-700">
+        <div className="relative">
+          <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
+            Workshops
+          </h1>
+          <img
+            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+            alt="Line stroke effect"
+            className="absolute top-[85px] -z-10"
+          />
+        </div>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Aprenda de forma prática e objetiva com{" "}
           <span className="italic font-bold text-brand-400">workshops</span>{" "}
@@ -316,6 +323,7 @@ function WorkShops() {
 function Challenges() {
   const { user } = useOutletContext<{ user: User }>();
   const { homeInfo } = useLoaderData<typeof loader>();
+  const { colorMode } = useColorMode();
 
   function sortByEnrolledUsersCount(challengesList: ChallengeCardType[]) {
     if (!challengesList) return [];
@@ -324,18 +332,36 @@ function Challenges() {
     );
   }
 
+  <div className="relative">
+  <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
+    Workshops
+  </h1>
+  <img
+    src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+    alt="Line stroke effect"
+    className="absolute top-[85px] -z-10"
+  />
+</div>
+
   const orderedChallengeList = sortByEnrolledUsersCount(
     homeInfo.featured_challenges,
   );
   return (
     <section
       id="mini-projects"
-      className="flex justify-center w-full text-gray-800 dark:bg-background-700 bg-background-100 dark:text-gray-50"
+      className="flex justify-center w-full"
     >
-      <div className="container flex flex-col items-center w-full">
-        <h1 className="text-center mt-8 mb-8 text-4xl font-light font-lexend">
-          Mini projetos
-        </h1>
+      <div className="container flex flex-col items-center w-full border-t border-gray-300 dark:border-gray-700 mt-10">
+        <div className="relative">
+          <h1 className="text-center mt-20 mb-8 text-4xl font-light font-lexend">
+            Mini projetos
+          </h1>
+          <img
+            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+            alt="Line stroke effect"
+            className="absolute top-[109px] -z-10"
+          />
+        </div>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           O melhor jeito de aprender é praticando! Melhore suas skills fazendo{" "}
           <span className="italic font-bold text-brand-400">mini projetos</span>{" "}
@@ -707,11 +733,11 @@ function Submissions() {
 
   return (
     <section id="community-submission" className="">
-      <div className="max-w-[94vw] md:max-w-[98vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto">
+      <div className="max-w-[94vw] md:max-w-[98vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-300 dark:border-gray-700 mt-10">
         <h1 className="text-center mt-20 mb-4 text-4xl font-light font-lexend">
-          Veja o que a nossa comunidade está construindo
+          Veja o que a nossa <span className="text-brand-500 text-bold">comunidade</span> está construindo
         </h1>
-        <p className="mt-2 mb-20 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
+        <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Essas são algumas submissões realizadas nos nossos Mini Projetos
         </p>
         <section className="flex gap-4 post-list mb-4">
@@ -804,4 +830,123 @@ function Pricing() {
       </div>
     </section>
   );
+}
+
+function Testimony() {
+  const testimonials = [
+    {
+      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+      avatarUrl: "https://github.com/robertotcestari.png",
+      name: "Roberto Cestari",
+      socialMediaProfileName: "@robertotcestari",
+      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
+    },
+    {
+      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+      avatarUrl: "https://github.com/icaroharry.png",
+      name: "Icaro Harry",
+      socialMediaProfileName: "@icaroharry",
+      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
+    },
+    {
+      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+      avatarUrl: "https://github.com/felipemuller20.png",
+      name: "Felipe Muller",
+      socialMediaProfileName: "@felipemuller20",
+      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
+    },
+    {
+      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+      avatarUrl: "https://github.com/robertotcestari.png",
+      name: "Roberto Cestari",
+      socialMediaProfileName: "@robertotcestari",
+      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
+    },
+    {
+      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+      avatarUrl: "https://github.com/icaroharry.png",
+      name: "Icaro Harry",
+      socialMediaProfileName: "@icaroharry",
+      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
+    },
+    {
+      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
+      avatarUrl: "https://github.com/felipemuller20.png",
+      name: "Felipe Muller",
+      socialMediaProfileName: "@felipemuller20",
+      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
+    },
+  ]
+  const [current, setCurrent] = useState(0);
+
+  
+  const nextSlide = () => {
+    setCurrent((current + 1) % testimonials.length);
+  };
+  
+  const prevSlide = () => {
+    setCurrent(current === 0 ? testimonials.length - 1 : current - 1);
+  };
+  
+  const duplicatedTestimonials = [...testimonials, ...testimonials];
+
+  return (
+    <section className="flex justify-center w-full text-center mb-10">
+      <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-300 dark:border-gray-700">
+        <h1 className="mt-16 text-3xl font-light font-lexend">
+          Depoimentos
+        </h1>
+        <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+          Veja o que estão falando sobre o Codante
+        </p>
+        <section className="flex gap-5 p-20 rounded-lg overflow-hidden">
+          {
+            testimonials.map((testimonial, index) => (
+                <TestimonyCard
+                  key={index}
+                  testimony={testimonial.testimony}
+                  avatarUrl={testimonial.avatarUrl}
+                  name={testimonial.name}
+                  socialMediaProfileName={testimonial.socialMediaProfileName}
+                  socialMediaProfileUrl={testimonial.socialMediaProfileUrl}
+                />
+            ))
+          }
+        </section>
+      </div>
+    </section>
+  );
+}
+
+function TestimonyCard({
+  testimony, avatarUrl, name, socialMediaProfileName, socialMediaProfileUrl
+} : {
+  testimony: string,
+  avatarUrl: string,
+  name: string,
+  socialMediaProfileName: string,
+  socialMediaProfileUrl: string
+}) {
+  return (
+    <article className="flex flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
+    hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2">
+      <p className="text-start">{testimony}</p>
+      <div className="flex items-center gap-5">
+        <div>
+          <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full"/>
+        </div>
+        <div className="flex flex-col items-start">
+          <h3 className="text-brand-500 font-bold">{name}</h3>
+          <a
+            href={socialMediaProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {socialMediaProfileName}
+          </a>
+          
+        </div>
+      </div>
+    </article>
+  )
 }
