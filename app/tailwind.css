@@ -15,7 +15,7 @@
 }
 
 .post-list {
-  animation: slide 60s linear infinite;
+  animation: slide 60s linear infinite alternate;
 }
 
 @keyframes slide {
