@@ -76,7 +76,6 @@ function Headline() {
   const { user } = useOutletContext<{ user: User }>();
 
   const avatarSection = homeInfo.avatar_section;
-  console.log(homeInfo)
 
   return (
     <section id="headline" className="flex flex-col items-center w-full">
@@ -234,7 +233,7 @@ function WorkShops() {
           <img
             src={`/img/blue-smoke.svg`}
             alt="Smoke effect"
-            className="absolute top-0 w-full left-1/2 transform -translate-x-1/2"
+            className="absolute top-0 w-full left-1/2 transform translate-x-[-32%]"
           />
         </div>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
@@ -298,7 +297,7 @@ function Challenges() {
             className="absolute top-0 w-full left-1/2 transform -translate-x-1/2"
           />
         </div>
-        <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
+        <p className="mt-2 mb-16 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           O melhor jeito de aprender é praticando! Melhore suas skills fazendo{" "}
           <span className="italic font-bold text-brand-400">mini projetos</span>{" "}
           e depois assista a resolução feita por profissionais do mercado.
@@ -327,360 +326,17 @@ function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
 
   const submissions = homeInfo.featured_submissions;
-  // const submissions = [
-  //   {
-  //     id: 1132,
-  //     user_name: "André Lucas",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/66281231?v=4",
-  //     user_github_user: "andrelucca99",
-  //     submission_url: "https://mp-lista-de-paises-next-liard.vercel.app/",
-  //     fork_url: "https://github.com/andrelucca99/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/66281231.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 1,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 884,
-  //     user_name: "Wallace Barbosa",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/104037331?v=4",
-  //     user_github_user: "WallaceMuylaert",
-  //     submission_url: "https://mp-lista-de-paises-next-teal.vercel.app/",
-  //     fork_url: "https://github.com/WallaceMuylaert/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/104037331.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 1,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 732,
-  //     user_name: "Marcus Evandro Galvão Boni",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/115600640?v=4",
-  //     user_github_user: "Marcus-Boni",
-  //     submission_url: "https://api-list-of-countries.vercel.app/",
-  //     fork_url: "https://github.com/Marcus-Boni/API-List-of-Countries",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/115600640.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "rocket",
-  //           count: 1,
-  //         },
-  //         {
-  //           reaction: "like",
-  //           count: 2,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 693,
-  //     user_name: "Caio Silva",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/36521875?v=4",
-  //     user_github_user: "bladellano",
-  //     submission_url: "https://mp-lista-de-paises-next-chi.vercel.app/",
-  //     fork_url: "https://github.com/bladellano/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/36521875.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 2,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 712,
-  //     user_name: "Joseph",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/49536612?v=4",
-  //     user_github_user: "Khufos",
-  //     submission_url:
-  //       "https://mp-lista-de-paises-next-6b2f3gjq8-khufos.vercel.app/",
-  //     fork_url: "https://github.com/Khufos/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/49536612.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 2,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 700,
-  //     user_name: "schmaiske",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/38104901?v=4",
-  //     user_github_user: "schmaiske",
-  //     submission_url: "https://lista-de-paises-two.vercel.app/",
-  //     fork_url: "https://github.com/schmaiske/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/38104901.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 4,
-  //         },
-  //         {
-  //           reaction: "exploding-head",
-  //           count: 1,
-  //         },
-  //         {
-  //           reaction: "fire",
-  //           count: 1,
-  //         },
-  //         {
-  //           reaction: "rocket",
-  //           count: 1,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 550,
-  //     user_name: "THIAGO CREDICO",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/55001968?v=4",
-  //     user_github_user: "thiagocredico",
-  //     submission_url:
-  //       "https://mp-lista-de-paises-next-thiagocredico.vercel.app/",
-  //     fork_url: "https://github.com/thiagocredico/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/55001968.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 6,
-  //         },
-  //         {
-  //           reaction: "exploding-head",
-  //           count: 2,
-  //         },
-  //         {
-  //           reaction: "fire",
-  //           count: 2,
-  //         },
-  //         {
-  //           reaction: "rocket",
-  //           count: 2,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 658,
-  //     user_name: "Vinícius Teixeira",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/94622701?v=4",
-  //     user_github_user: "tex008",
-  //     submission_url:
-  //       "https://lista-de-paises-next-imntmmhz8-tex008.vercel.app/",
-  //     fork_url: "https://github.com/tex008/Lista-de-Paises-NextJS",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/94622701.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 3,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 627,
-  //     user_name: "Igor Montezuma ",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/85948415?v=4",
-  //     user_github_user: "IgorMontezuma20",
-  //     submission_url: "https://lista-de-paises-nextjs.vercel.app/",
-  //     fork_url: "https://github.com/IgorMontezuma20/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/85948415.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 4,
-  //         },
-  //         {
-  //           reaction: "exploding-head",
-  //           count: 3,
-  //         },
-  //         {
-  //           reaction: "fire",
-  //           count: 3,
-  //         },
-  //         {
-  //           reaction: "rocket",
-  //           count: 3,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 642,
-  //     user_name: "MaateusMDS",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/96087111?v=4",
-  //     user_github_user: "MaateusMDS",
-  //     submission_url: "https://codante-api-countries.vercel.app/",
-  //     fork_url: "https://github.com/MaateusMDS/codante-api-countries",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/96087111.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 5,
-  //         },
-  //         {
-  //           reaction: "exploding-head",
-  //           count: 2,
-  //         },
-  //         {
-  //           reaction: "fire",
-  //           count: 2,
-  //         },
-  //         {
-  //           reaction: "rocket",
-  //           count: 2,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-  //   {
-  //     id: 549,
-  //     user_name: "sumoyama",
-  //     user_avatar_url: "https://avatars.githubusercontent.com/u/75846766?v=4",
-  //     user_github_user: "sumoyama",
-  //     submission_url: "https://mp-lista-de-paises-next-gamma.vercel.app/",
-  //     fork_url: "https://github.com/sumoyama/mp-lista-de-paises-next",
-  //     is_pro: 0,
-  //     submission_image_url:
-  //       "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/75846766.png",
-  //     reactions: {
-  //       reaction_counts: [
-  //         {
-  //           reaction: "like",
-  //           count: 5,
-  //         },
-  //         {
-  //           reaction: "rocket",
-  //           count: 3,
-  //         },
-  //         {
-  //           reaction: "fire",
-  //           count: 3,
-  //         },
-  //         {
-  //           reaction: "exploding-head",
-  //           count: 3,
-  //         },
-  //       ],
-  //       user_reactions: [],
-  //     },
-  //   },
-    // {
-    //   id: 559,
-    //   user_name: "Felipe Muller",
-    //   user_avatar_url: "https://avatars.githubusercontent.com/u/78622334?v=4",
-    //   user_github_user: "felipemuller20",
-    //   submission_url: "https://paises-do-mundo-murex.vercel.app/",
-    //   fork_url: "https://github.com/felipemuller20/mp-lista-de-paises-next",
-    //   is_pro: 0,
-    //   submission_image_url:
-    //     "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/78622334.png",
-    //   reactions: {
-    //     reaction_counts: [
-    //       {
-    //         reaction: "like",
-    //         count: 6,
-    //       },
-    //       {
-    //         reaction: "exploding-head",
-    //         count: 3,
-    //       },
-    //       {
-    //         reaction: "fire",
-    //         count: 3,
-    //       },
-    //       {
-    //         reaction: "rocket",
-    //         count: 3,
-    //       },
-    //     ],
-    //     user_reactions: [],
-    //   },
-    // },
-    // {
-    //   id: 560,
-    //   user_name: "Ícaro Harry",
-    //   user_avatar_url: "https://avatars.githubusercontent.com/u/6475893?v=4",
-    //   user_github_user: "icaroharry",
-    //   submission_url:
-    //     "https://mp-lista-de-paises-next-9elqot0sx-icaroharry.vercel.app/",
-    //   fork_url: "https://github.com/icaroharry/mp-lista-de-paises-next",
-    //   is_pro: 0,
-    //   submission_image_url:
-    //     "https://s3-sa-east-1.amazonaws.com/codante/challenges/lista-de-paises-next/6475893.png",
-    //   reactions: {
-    //     reaction_counts: [
-    //       {
-    //         reaction: "like",
-    //         count: 6,
-    //       },
-    //     ],
-    //     user_reactions: [],
-    //   },
-    // },
-  // ];
 
   return (
     <section id="community-submission" className="">
-      <div className="max-w-[94vw] md:max-w-[98vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
+      <div className="max-w-[100vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
         <h1 className="text-center mt-20 mb-4 text-4xl font-light font-lexend">
           Veja o que a nossa <span className="text-brand-500 text-bold">comunidade</span> está construindo
         </h1>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Essas são algumas submissões realizadas nos nossos Mini Projetos
         </p>
-        <div className="w-full">
-
+        {/* <div className="w-full shadow-[10px_0_10px_yellow_inset,_-10px_0_10px_yellow_inset] overflow-hidden"> */}
         <section className="flex gap-4 upper-post-list mb-4">
           {submissions.slice(0, 10).map((submission, index) => (
             <SubmissionCard
@@ -698,7 +354,6 @@ function Submissions() {
             />
           ))}
         </section>
-        </div>
         <section className="flex gap-4 scroll-auto lower-post-list mb-20">
           {submissions.slice(10).map((submission, index) => (
             <SubmissionCard
@@ -716,7 +371,8 @@ function Submissions() {
             />
           ))}
         </section>
-      </div>
+        </div>
+      {/* </div> */}
     </section>
   );
 }
@@ -826,32 +482,32 @@ function Testimony() {
   
   const duplicatedTestimonials = [...testimonials, ...testimonials];
 
-  return (
-    <section className="flex justify-center w-full text-center mb-10">
-      <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
-        <h1 className="mt-16 text-3xl font-light font-lexend">
-          Depoimentos
-        </h1>
-        <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-          Veja o que estão falando sobre o Codante
-        </p>
-        <section className="flex gap-5 p-20 rounded-lg overflow-hidden">
-          {
-            testimonials.map((testimonial, index) => (
-                <TestimonyCard
-                  key={index}
-                  testimony={testimonial.testimony}
-                  avatarUrl={testimonial.avatarUrl}
-                  name={testimonial.name}
-                  socialMediaProfileName={testimonial.socialMediaProfileName}
-                  socialMediaProfileUrl={testimonial.socialMediaProfileUrl}
-                />
-            ))
-          }
-        </section>
-      </div>
-    </section>
-  );
+  // return (
+  //   <section className="flex justify-center w-full text-center mb-10">
+  //     <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
+  //       <h1 className="mt-16 text-3xl font-light font-lexend">
+  //         Depoimentos
+  //       </h1>
+  //       <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+  //         Veja o que estão falando sobre o Codante
+  //       </p>
+  //       <section className="flex gap-5 p-20 rounded-lg overflow-hidden">
+  //         {
+  //           testimonials.map((testimonial, index) => (
+  //               <TestimonyCard
+  //                 key={index}
+  //                 testimony={testimonial.testimony}
+  //                 avatarUrl={testimonial.avatarUrl}
+  //                 name={testimonial.name}
+  //                 socialMediaProfileName={testimonial.socialMediaProfileName}
+  //                 socialMediaProfileUrl={testimonial.socialMediaProfileUrl}
+  //               />
+  //           ))
+  //         }
+  //       </section>
+  //     </div>
+  //   </section>
+  // );
 }
 
 function TestimonyCard({

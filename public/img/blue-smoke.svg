@@ -1,17 +1,17 @@
-<svg width="2000" height="269" viewBox="0 0 2000 269" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_1500_1325)">
-<g filter="url(#filter0_f_1500_1325)">
-<path d="M665.346 50.875C833.984 50.875 970.693 28.2934 970.693 0.4375C970.693 -27.4184 833.984 -50 665.346 -50C496.708 -50 360 -27.4184 360 0.4375C360 28.2934 496.708 50.875 665.346 50.875Z" fill="#5282FF" fill-opacity="0.49"/>
+<svg width="814" height="317" viewBox="0 0 814 317" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1494_1163)">
+<g filter="url(#filter0_f_1494_1163)">
+<path d="M406.386 76.5549C478.03 76.5549 536.109 64.9691 536.109 50.6774C536.109 36.3856 478.03 24.7998 406.386 24.7998C334.741 24.7998 276.662 36.3856 276.662 50.6774C276.662 64.9691 334.741 76.5549 406.386 76.5549Z" fill="#B282FF" fill-opacity="0.49"/>
 </g>
 </g>
 <defs>
-<filter id="filter0_f_1500_1325" x="136" y="-274" width="2000" height="548.875" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_f_1494_1163" x="52.6621" y="-199.2" width="707.447" height="499.755" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-<feGaussianBlur stdDeviation="112" result="effect1_foregroundBlur_1500_1325"/>
+<feGaussianBlur stdDeviation="112" result="effect1_foregroundBlur_1494_1163"/>
 </filter>
-<clipPath id="clip0_1500_1325">
-<rect width="2000" height="269" fill="white"/>
+<clipPath id="clip0_1494_1163">
+<rect width="814" height="317" fill="white"/>
 </clipPath>
 </defs>
 </svg>
