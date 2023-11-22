@@ -341,6 +341,7 @@ function Submissions() {
         <section className="flex gap-4 upper-post-list mb-4">
           {submissions.slice(0, 10).map((submission, index) => (
             <SubmissionCard
+              footerPadding="px-2 py-2"
               key={index}
               isHomePage
               submission={{
@@ -362,6 +363,7 @@ function Submissions() {
         <section className="flex gap-4 scroll-auto lower-post-list mb-20">
           {submissions.slice(10).map((submission, index) => (
             <SubmissionCard
+              footerPadding="px-2 py-2"
               key={index}
               isHomePage
               submission={{

@@ -32,7 +32,9 @@ export default function SubmissionCard({
   showReactions = true,
   className,
   isHomePage = false,
+  footerPadding = "px-4 py-4",
 }: {
+  footerPadding?: string;
   showReactions?: boolean;
   isEditing?: boolean;
   submission: Submission;
@@ -114,7 +116,7 @@ export default function SubmissionCard({
         />
       </section>
 
-      <footer className="flex items-center justify-between gap-4 px-4 py-4 dark:bg-background-700">
+      <footer className={classNames(footerPadding, "flex items-center justify-between gap-4 dark:bg-background-700")}>
         <div className="w-10 h-10 flex-none">
           <UserAvatar
             isPro={user.is_pro}
