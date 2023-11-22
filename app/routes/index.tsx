@@ -364,7 +364,11 @@ function Submissions() {
             <SubmissionCard
               key={index}
               isHomePage
-              submission={{submission_image_url: submission.submission_image_url, id: submission.id}}
+              submission={{
+                submission_image_url: submission.submission_image_url,
+                id: submission.id,
+                slug: submission.challenge.slug,
+              }}
               user={{
                 is_pro: submission.user_avatar.is_pro,
                 avatar_url: submission.user_avatar.avatar_url,

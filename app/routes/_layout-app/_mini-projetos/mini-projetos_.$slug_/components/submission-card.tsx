@@ -70,8 +70,9 @@ export default function SubmissionCard({
         className,
       )}
       onClick={() => {
-        if (isHomePage && submission.slug)
+        if (isHomePage && submission.slug) {
           return navigate(`/mini-projetos/${submission.slug}`);
+        }
       }}
     >
       <section className="relative overflow-hidden group">
