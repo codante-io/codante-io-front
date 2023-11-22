@@ -49,7 +49,7 @@ export default function HomePage() {
         <WorkShops />
         <Challenges />
         <Submissions />
-        <Testimony />
+        {/* <Testimony /> */}
         <Pricing />
       </div>
     </AppLayout>
@@ -220,7 +220,7 @@ function WorkShops() {
       id="workshops"
       className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50 mt-16 lg:mt-24"
     >
-      <div className="container flex flex-col items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
+      <div className="container flex flex-col  overflow-hidden items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
         <div className="relative w-full">
           <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
             Workshops
@@ -233,7 +233,7 @@ function WorkShops() {
           <img
             src={`/img/blue-smoke.svg`}
             alt="Smoke effect"
-            className="absolute top-0 w-full left-1/2 transform translate-x-[-32%]"
+            className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
           />
         </div>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
@@ -324,13 +324,14 @@ function Challenges() {
 
 function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
+  console.log(homeInfo.featured_submissions)
 
   const submissions = homeInfo.featured_submissions;
 
   return (
     <section id="community-submission" className="">
       <div className="max-w-[100vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
-        <h1 className="text-center mt-20 mb-4 text-4xl font-light font-lexend">
+        <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
           Veja o que a nossa <span className="text-brand-500 text-bold">comunidade</span> está construindo
         </h1>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
@@ -342,7 +343,11 @@ function Submissions() {
             <SubmissionCard
               key={index}
               isHomePage
-              submission={{submission_image_url: submission.submission_image_url, id: submission.id}}
+              submission={{
+                submission_image_url: submission.submission_image_url,
+                id: submission.id,
+                slug: submission.challenge.slug,
+              }}
               user={{
                 is_pro: submission.user_avatar.is_pro,
                 avatar_url: submission.user_avatar.avatar_url,
