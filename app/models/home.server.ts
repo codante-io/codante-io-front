@@ -3,6 +3,26 @@ import type { Workshop } from "./workshop.server";
 import type { ChallengeCard } from "./challenge.server";
 
 export type HomeInfo = {
+  featured_submissions: {
+    id: string;
+    submission_image_url: string;
+    user_avatar: {
+      avatar_url: string;
+      is_pro: boolean;
+      name: string;
+    },
+    challenge: {
+      name?: string;
+      slug: string;
+    }
+  }[];
+  avatar_section: {
+    avatars: {
+      avatar_url: string;
+      is_pro: boolean;
+    }[];
+    user_count: number;
+  }
   live_streaming_workshop: {
     id: number;
     name: string;

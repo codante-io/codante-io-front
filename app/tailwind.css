@@ -14,26 +14,26 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.post-list {
-  animation: slide 120s linear infinite alternate;
+.lower-post-list {
+  animation: slide-to-right 120s linear infinite alternate;
 }
 
-@keyframes slide {
+@keyframes slide-to-right {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-75%);
+    transform: translateX(-65%);
   }
 }
 
-.post-list2 {
-  animation: slide2 120s linear infinite alternate;
+.upper-post-list {
+  animation: slide-to-left 120s linear infinite alternate;
 }
 
-@keyframes slide2 {
+@keyframes slide-to-left {
   0% {
-    transform: translateX(-75%);
+    transform: translateX(-65%);
   }
   100% {
     transform: translateX(0);
