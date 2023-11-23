@@ -69,7 +69,7 @@ export default function Sidebar({
       </div>
 
       <div
-        className="max-h-full pb-8 pr-4 lg:overflow-y-scroll lg:overscroll-contain"
+        className="max-h-full pb-8 px-2 lg:overflow-y-scroll lg:overscroll-contain"
         style={{}}
       >
         {workshop.lessons.length > 0 && (
