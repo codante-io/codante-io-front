@@ -12,6 +12,7 @@ export type Lesson = {
   created_at: string;
   updated_at: string;
   video_url?: string;
+  section?: string;
   thumbnail_url?: string;
   user_completed?: boolean;
   user_can_view?: boolean;
@@ -27,7 +28,7 @@ export async function getLesson(slug: string) {
 export async function setCompleted(
   lessonId: string,
   request: Request,
-  markCompleted = true
+  markCompleted = true,
 ) {
   const token = await currentToken({ request });
 
@@ -46,7 +47,7 @@ export async function setCompleted(
         headers: {
           Authorization: "Bearer " + token,
         },
-      }
+      },
     )
     .then((res) => res.data.data);
 
