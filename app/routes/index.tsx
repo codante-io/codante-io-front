@@ -31,6 +31,9 @@ import { useColorMode } from "~/contexts/color-mode-context";
 import UserAvatar from "~/components/user-avatar";
 import SubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
 import { useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 export const loader = async () => {
   return json({
@@ -178,27 +181,25 @@ function Headline() {
                     isPro={user.is_pro}
                   />
                 )}
-                {
-                  user ? (
-                    avatarSection.avatars.slice(0, 15).map((info, index) => (
+                {user
+                  ? avatarSection.avatars
+                      .slice(0, 15)
+                      .map((info, index) => (
+                        <UserAvatar
+                          key={index}
+                          avatarUrl={info.avatar_url}
+                          className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
+                          isPro={info.is_pro}
+                        />
+                      ))
+                  : avatarSection.avatars.map((info, index) => (
                       <UserAvatar
                         key={index}
                         avatarUrl={info.avatar_url}
                         className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
                         isPro={info.is_pro}
                       />
-                    ))
-                  ) : (
-                    avatarSection.avatars.map((info, index) => (
-                      <UserAvatar
-                        key={index}
-                        avatarUrl={info.avatar_url}
-                        className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                        isPro={info.is_pro}
-                      />
-                    ))
-                  )
-                }
+                    ))}
               </div>
             </section>
           </div>
@@ -277,10 +278,7 @@ function Challenges() {
   );
 
   return (
-    <section
-      id="mini-projects"
-      className="flex justify-center w-full"
-    >
+    <section id="mini-projects" className="flex justify-center w-full">
       <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
         <div className="relative w-full">
           <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
@@ -324,7 +322,6 @@ function Challenges() {
 
 function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
-  console.log(homeInfo.featured_submissions)
 
   const submissions = homeInfo.featured_submissions;
 
@@ -332,12 +329,13 @@ function Submissions() {
     <section id="community-submission" className="w-full">
       <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
         <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
-          Veja o que a nossa <span className="text-brand-500 text-bold">comunidade</span> está construindo
+          Veja o que a nossa{" "}
+          <span className="text-brand-500 text-bold">comunidade</span> está
+          construindo
         </h1>
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Essas são algumas submissões realizadas nos nossos Mini Projetos
         </p>
-        {/* <div className="w-full shadow-[10px_0_10px_yellow_inset,_-10px_0_10px_yellow_inset] overflow-hidden"> */}
         <section className="flex gap-4 upper-post-list mb-4">
           {submissions.slice(0, 10).map((submission, index) => (
             <SubmissionCard
@@ -382,8 +380,7 @@ function Submissions() {
             />
           ))}
         </section>
-        </div>
-      {/* </div> */}
+      </div>
     </section>
   );
 }
@@ -436,109 +433,114 @@ function Pricing() {
 }
 
 function Testimony() {
-  const testimonials = [
-    {
-      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
-      avatarUrl: "https://github.com/robertotcestari.png",
-      name: "Roberto Cestari",
-      socialMediaProfileName: "@robertotcestari",
-      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
-    },
-    {
-      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
-      avatarUrl: "https://github.com/icaroharry.png",
-      name: "Icaro Harry",
-      socialMediaProfileName: "@icaroharry",
-      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
-    },
-    {
-      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
-      avatarUrl: "https://github.com/felipemuller20.png",
-      name: "Felipe Muller",
-      socialMediaProfileName: "@felipemuller20",
-      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
-    },
-    {
-      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
-      avatarUrl: "https://github.com/robertotcestari.png",
-      name: "Roberto Cestari",
-      socialMediaProfileName: "@robertotcestari",
-      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
-    },
-    {
-      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
-      avatarUrl: "https://github.com/icaroharry.png",
-      name: "Icaro Harry",
-      socialMediaProfileName: "@icaroharry",
-      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
-    },
-    {
-      testimony: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
-      avatarUrl: "https://github.com/felipemuller20.png",
-      name: "Felipe Muller",
-      socialMediaProfileName: "@felipemuller20",
-      socialMediaProfileUrl: "https://www.linkedin.com/in/felipeavmuller",
-    },
-  ]
-  const [current, setCurrent] = useState(0);
+  const { homeInfo } = useLoaderData<typeof loader>();
+  const featuredTestimonials = homeInfo.featured_testimonials;
 
-  
-  const nextSlide = () => {
-    setCurrent((current + 1) % testimonials.length);
+  const [position, setPosition] = useState(2);
+  const controls = useAnimation();
+
+  const isLargeScreen = useMediaQuery({ minWidth: 1024 });
+  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
+
+  let slideWidth: number;
+  if (isLargeScreen) {
+    slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap
+  } else if (isMediumScreen) {
+    slideWidth = 308 + 2;
+  } else {
+    slideWidth = 0 + 2;
+  }
+
+  const nextSlide = async () => {
+    const newPosition = position - 308;
+    if (newPosition * -1 >= featuredTestimonials.length * 308 - slideWidth)
+      return;
+    setPosition(newPosition);
+    await controls.start({ x: newPosition, transition: { duration: 0.5 } });
   };
-  
-  const prevSlide = () => {
-    setCurrent(current === 0 ? testimonials.length - 1 : current - 1);
+
+  const prevSlide = async () => {
+    const newPosition = position + 308;
+    if (newPosition > 2) return;
+    setPosition(newPosition);
+    await controls.start({ x: newPosition, transition: { duration: 0.5 } });
   };
-  
-  const duplicatedTestimonials = [...testimonials, ...testimonials];
 
   return (
-    <section className="flex justify-center w-full text-center mb-10">
-      <div className="overflow-hidden mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
-        <h1 className="mt-16 text-3xl font-light font-lexend">
+    <section className="container flex justify-center w-full text-center mb-10">
+      <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
+        <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
           Depoimentos
         </h1>
-        <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-          Veja o que estão falando sobre o Codante
+        <p className="mb-10 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+          Veja o que estão falando sobre o{" "}
+          <span className="text-brand-500 font-bold">Codante</span>
         </p>
-        <section className="flex gap-5 py-16 rounded-lg overflow-hidden bg-blue-500">
-          {
-            testimonials.map((testimonial, index) => (
+        <div className="items-center flex">
+          <RiArrowLeftSLine
+            className="md:inline hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse"
+            onClick={() => prevSlide()}
+          />
+          <div className="overflow-hidden w-[308px] md:w-[616px] lg:w-[925px]">
+            <motion.section
+              className="rounded-lg flex gap-5 "
+              animate={controls}
+              initial={{ x: 2 }}
+            >
+              {featuredTestimonials.map((testimonial, index) => (
                 <TestimonyCard
                   key={index}
-                  testimony={testimonial.testimony}
-                  avatarUrl={testimonial.avatarUrl}
+                  testimony={testimonial.body}
+                  avatarUrl={testimonial.avatar_url}
                   name={testimonial.name}
-                  socialMediaProfileName={testimonial.socialMediaProfileName}
-                  socialMediaProfileUrl={testimonial.socialMediaProfileUrl}
+                  socialMediaProfileName={testimonial.social_media_nickname}
+                  socialMediaProfileUrl={testimonial.social_media_link}
                 />
-            ))
-          }
-        </section>
-          <button className=" bottom-7 right-24" onClick={() => nextSlide()}>Next</button>
-          <button className=" bottom-7 right-36" onClick={() => prevSlide()}>Prev</button>
+              ))}
+            </motion.section>
+          </div>
+          <RiArrowRightSLine
+            className="md:inline hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse"
+            onClick={() => nextSlide()}
+          />
+        </div>
+        <div className="flex gap-5 mt-5">
+          <RiArrowLeftSLine
+            className="inline md:hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
+            onClick={() => prevSlide()}
+          />
+          <RiArrowRightSLine
+            className="inline md:hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse"
+            onClick={() => nextSlide()}
+          />
+        </div>
       </div>
     </section>
   );
 }
 
 function TestimonyCard({
-  testimony, avatarUrl, name, socialMediaProfileName, socialMediaProfileUrl
-} : {
-  testimony: string,
-  avatarUrl: string,
-  name: string,
-  socialMediaProfileName: string,
-  socialMediaProfileUrl: string
+  testimony,
+  avatarUrl,
+  name,
+  socialMediaProfileName,
+  socialMediaProfileUrl,
+}: {
+  testimony: string;
+  avatarUrl: string;
+  name: string;
+  socialMediaProfileName: string;
+  socialMediaProfileUrl: string;
 }) {
   return (
-    <article className="flex flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
-    hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2">
+    <article
+      className="flex flex-shrink-0 flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
+    hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2"
+    >
       <p className="text-start">{testimony}</p>
       <div className="flex items-center gap-5">
         <div>
-          <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full"/>
+          <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />
         </div>
         <div className="flex flex-col items-start">
           <h3 className="text-brand-500 font-bold">{name}</h3>
@@ -546,11 +548,12 @@ function TestimonyCard({
             href={socialMediaProfileUrl}
             target="_blank"
             rel="noreferrer"
+            className="text-gray-500"
           >
             {socialMediaProfileName}
           </a>
         </div>
       </div>
     </article>
-  )
+  );
 }

@@ -3,6 +3,14 @@ import type { Workshop } from "./workshop.server";
 import type { ChallengeCard } from "./challenge.server";
 
 export type HomeInfo = {
+  featured_testimonials: {
+    avatar_url: string;
+    body: string;
+    name: string;
+    featured: string;
+    social_media_link: string;
+    social_media_nickname: string;
+  }[];
   featured_submissions: {
     id: string;
     submission_image_url: string;
@@ -10,11 +18,11 @@ export type HomeInfo = {
       avatar_url: string;
       is_pro: boolean;
       name: string;
-    },
+    };
     challenge: {
       name?: string;
       slug: string;
-    }
+    };
   }[];
   avatar_section: {
     avatars: {
@@ -22,7 +30,7 @@ export type HomeInfo = {
       is_pro: boolean;
     }[];
     user_count: number;
-  }
+  };
   live_streaming_workshop: {
     id: number;
     name: string;

@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function TitleIcon({ className = "" }) {
+export default function TitleIcon({
+  className = "",
+  onClick,
+}: {
+  className: string;
+  onClick?: () => void;
+}) {
   return (
     <svg
       width="50"
@@ -9,6 +15,7 @@ export default function TitleIcon({ className = "" }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      onClick={onClick}
     >
       <path
         fillRule="evenodd"
