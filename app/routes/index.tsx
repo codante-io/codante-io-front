@@ -444,7 +444,7 @@ function Testimony() {
 
   let slideWidth: number;
   if (isLargeScreen) {
-    slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap
+    slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap. (+2) é o posicionamento inicial
   } else if (isMediumScreen) {
     slideWidth = 308 + 2;
   } else {
@@ -452,7 +452,7 @@ function Testimony() {
   }
 
   const nextSlide = async () => {
-    const newPosition = position - 308;
+    const newPosition = position - 308; // 308 é o valor do card + gap
     if (newPosition * -1 >= featuredTestimonials.length * 308 - slideWidth)
       return;
     setPosition(newPosition);
@@ -478,7 +478,7 @@ function Testimony() {
         </p>
         <div className="items-center flex">
           <RiArrowLeftSLine
-            className="md:inline hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse"
+            className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
             onClick={() => prevSlide()}
           />
           <div className="overflow-hidden w-[308px] md:w-[616px] lg:w-[925px]">
@@ -500,17 +500,17 @@ function Testimony() {
             </motion.section>
           </div>
           <RiArrowRightSLine
-            className="md:inline hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse"
+            className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
             onClick={() => nextSlide()}
           />
         </div>
         <div className="flex gap-5 mt-5">
           <RiArrowLeftSLine
-            className="inline md:hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
+            className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
             onClick={() => prevSlide()}
           />
           <RiArrowRightSLine
-            className="inline md:hidden text-3xl text-brand-500 w-10 cursor-pointer hover:animate-pulse"
+            className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
             onClick={() => nextSlide()}
           />
         </div>
