@@ -49,7 +49,7 @@ export default function HomePage() {
         <WorkShops />
         <Challenges />
         <Submissions />
-        {/* <Testimony /> */}
+        <Testimony />
         <Pricing />
       </div>
     </AppLayout>
@@ -329,8 +329,8 @@ function Submissions() {
   const submissions = homeInfo.featured_submissions;
 
   return (
-    <section id="community-submission" className="">
-      <div className="max-w-[100vw] flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
+    <section id="community-submission" className="w-full">
+      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
         <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
           Veja o que a nossa <span className="text-brand-500 text-bold">comunidade</span> está construindo
         </h1>
@@ -493,32 +493,34 @@ function Testimony() {
   
   const duplicatedTestimonials = [...testimonials, ...testimonials];
 
-  // return (
-  //   <section className="flex justify-center w-full text-center mb-10">
-  //     <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
-  //       <h1 className="mt-16 text-3xl font-light font-lexend">
-  //         Depoimentos
-  //       </h1>
-  //       <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-  //         Veja o que estão falando sobre o Codante
-  //       </p>
-  //       <section className="flex gap-5 p-20 rounded-lg overflow-hidden">
-  //         {
-  //           testimonials.map((testimonial, index) => (
-  //               <TestimonyCard
-  //                 key={index}
-  //                 testimony={testimonial.testimony}
-  //                 avatarUrl={testimonial.avatarUrl}
-  //                 name={testimonial.name}
-  //                 socialMediaProfileName={testimonial.socialMediaProfileName}
-  //                 socialMediaProfileUrl={testimonial.socialMediaProfileUrl}
-  //               />
-  //           ))
-  //         }
-  //       </section>
-  //     </div>
-  //   </section>
-  // );
+  return (
+    <section className="flex justify-center w-full text-center mb-10">
+      <div className="overflow-hidden mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
+        <h1 className="mt-16 text-3xl font-light font-lexend">
+          Depoimentos
+        </h1>
+        <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+          Veja o que estão falando sobre o Codante
+        </p>
+        <section className="flex gap-5 py-16 rounded-lg overflow-hidden bg-blue-500">
+          {
+            testimonials.map((testimonial, index) => (
+                <TestimonyCard
+                  key={index}
+                  testimony={testimonial.testimony}
+                  avatarUrl={testimonial.avatarUrl}
+                  name={testimonial.name}
+                  socialMediaProfileName={testimonial.socialMediaProfileName}
+                  socialMediaProfileUrl={testimonial.socialMediaProfileUrl}
+                />
+            ))
+          }
+        </section>
+          <button className=" bottom-7 right-24" onClick={() => nextSlide()}>Next</button>
+          <button className=" bottom-7 right-36" onClick={() => prevSlide()}>Prev</button>
+      </div>
+    </section>
+  );
 }
 
 function TestimonyCard({
@@ -547,7 +549,6 @@ function TestimonyCard({
           >
             {socialMediaProfileName}
           </a>
-          
         </div>
       </div>
     </article>
