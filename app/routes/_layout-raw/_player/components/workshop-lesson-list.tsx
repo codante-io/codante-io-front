@@ -49,7 +49,7 @@ export default function WorkshopLessonList({
             </h3>
             <ol className="mt-2">
               {workshop.lessons
-                .filter((lesson) => lesson.section === section.name)
+                .filter((lesson) => section.lessons.includes(lesson.id))
                 .map((lesson: Lesson, id: number) => (
                   <WorkshopLessonListItem
                     key={lesson.id}
