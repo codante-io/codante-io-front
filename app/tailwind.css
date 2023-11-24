@@ -4,6 +4,42 @@
 @tailwind components;
 @tailwind utilities;
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.lower-post-list {
+  animation: slide-to-right 120s linear infinite alternate;
+}
+
+@keyframes slide-to-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-65%);
+  }
+}
+
+.upper-post-list {
+  animation: slide-to-left 120s linear infinite alternate;
+}
+
+@keyframes slide-to-left {
+  0% {
+    transform: translateX(-65%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .bg-clip-text {
   -webkit-background-clip: text;
   background-clip: text;
