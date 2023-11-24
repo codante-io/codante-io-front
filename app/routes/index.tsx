@@ -466,6 +466,8 @@ function Testimonial() {
     await controls.start({ x: newPosition, transition: { duration: 0.5 } });
   };
 
+  if (featuredTestimonials.length < 1) return null;
+
   return (
     <section className="container flex justify-center w-full text-center mb-10">
       <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
