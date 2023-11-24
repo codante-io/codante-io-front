@@ -116,7 +116,12 @@ export default function SubmissionCard({
         />
       </section>
 
-      <footer className={classNames(footerPadding, "flex items-center justify-between gap-4 dark:bg-background-700")}>
+      <footer
+        className={classNames(
+          footerPadding,
+          "flex items-center justify-between gap-4 dark:bg-background-700",
+        )}
+      >
         <div className="w-10 h-10 flex-none">
           <UserAvatar
             isPro={user.is_pro}
@@ -125,11 +130,11 @@ export default function SubmissionCard({
           />
         </div>
         <div className="w-full">
-          <h4 className="text-xs dark:text-gray-400 font-regular">
+          <h4 className="text-xs dark:text-gray-400 text-gray-500 font-regular">
             Resolução de
           </h4>
           <h3
-            className="font-semibold line-clamp-1"
+            className="font-semibold line-clamp-1 text-gray-700 dark:text-white"
             title={formatName(user.name)}
           >
             {formatName(user.name)}

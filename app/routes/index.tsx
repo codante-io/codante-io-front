@@ -324,9 +324,10 @@ function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
 
   const submissions = homeInfo.featured_submissions;
+  submissions.sort(() => Math.random() - 0.5);
 
   return (
-    <section id="community-submission" className="w-full">
+    <section id="community-submission" className="w-full max-w-[1920px]">
       <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 mt-10">
         <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
           Veja o que a nossa{" "}
@@ -336,50 +337,55 @@ function Submissions() {
         <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4">
           Essas são algumas submissões realizadas nos nossos Mini Projetos
         </p>
-        <section className="flex gap-4 upper-post-list mb-4">
-          {submissions.slice(0, 10).map((submission, index) => (
-            <SubmissionCard
-              footerPadding="px-2 py-2"
-              key={index}
-              isHomePage
-              submission={{
-                submission_image_url: submission.submission_image_url,
-                id: submission.id,
-                slug: submission.challenge.slug,
-              }}
-              user={{
-                is_pro: submission.user_avatar.is_pro,
-                avatar_url: submission.user_avatar.avatar_url,
-                name: submission.user_avatar.name,
-              }}
-              showReactions={false}
-              size="small"
-              className="flex-shrink-0"
-            />
-          ))}
-        </section>
-        <section className="flex gap-4 scroll-auto lower-post-list mb-20">
-          {submissions.slice(10).map((submission, index) => (
-            <SubmissionCard
-              footerPadding="px-2 py-2"
-              key={index}
-              isHomePage
-              submission={{
-                submission_image_url: submission.submission_image_url,
-                id: submission.id,
-                slug: submission.challenge.slug,
-              }}
-              user={{
-                is_pro: submission.user_avatar.is_pro,
-                avatar_url: submission.user_avatar.avatar_url,
-                name: submission.user_avatar.name,
-              }}
-              showReactions={false}
-              size="small"
-              className="flex-shrink-0"
-            />
-          ))}
-        </section>
+        <div className="relative mb-20">
+          <section className=" flex gap-4 upper-post-list mb-4">
+            {submissions.slice(0, 12).map((submission, index) => (
+              <SubmissionCard
+                footerPadding="px-2 py-2"
+                key={index}
+                isHomePage
+                submission={{
+                  submission_image_url: submission.submission_image_url,
+                  id: submission.id,
+                  slug: submission.challenge.slug,
+                }}
+                user={{
+                  is_pro: submission.user_avatar.is_pro,
+                  avatar_url: submission.user_avatar.avatar_url,
+                  name: submission.user_avatar.name,
+                }}
+                showReactions={false}
+                size="small"
+                className="flex-shrink-0"
+              />
+            ))}
+          </section>
+
+          <section className="flex gap-4 scroll-auto lower-post-list">
+            {submissions.slice(12).map((submission, index) => (
+              <SubmissionCard
+                footerPadding="px-2 py-2"
+                key={index}
+                isHomePage
+                submission={{
+                  submission_image_url: submission.submission_image_url,
+                  id: submission.id,
+                  slug: submission.challenge.slug,
+                }}
+                user={{
+                  is_pro: submission.user_avatar.is_pro,
+                  avatar_url: submission.user_avatar.avatar_url,
+                  name: submission.user_avatar.name,
+                }}
+                showReactions={false}
+                size="small"
+                className="flex-shrink-0"
+              />
+            ))}
+          </section>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
+        </div>
       </div>
     </section>
   );
