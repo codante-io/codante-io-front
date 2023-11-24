@@ -30,7 +30,8 @@ export async function getSubscription({ request }: { request: Request }) {
         Authorization: "Bearer " + token,
       },
     })
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch(() => null);
 
   return data;
 }
