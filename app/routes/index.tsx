@@ -324,7 +324,6 @@ function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
 
   const submissions = homeInfo.featured_submissions;
-  submissions.sort(() => Math.random() - 0.5);
 
   return (
     <section id="community-submission" className="w-full max-w-[1920px]">
