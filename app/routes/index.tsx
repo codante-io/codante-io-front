@@ -87,7 +87,7 @@ function Headline() {
       className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_64px)]"
     >
       {(!user || (user && !user.is_pro)) && (
-        <div className="bg-black w-full border-t border-b border-amber-400 px-20 py-10 ">
+        <div className="bg-black w-full border-t border-b border-amber-400 px-0  lg:px-20 py-10 mb-10 md:mb-0">
           <div className="container mx-auto text-white text-center">
             <h3 className="font-[Tourney] text-5xl mb-6">
               <span className="text-amber-400">{"<"}</span>
@@ -118,7 +118,7 @@ function Headline() {
                   Seja
                   <b className="ml-1">PRO </b> nessa{" "}
                   <span className=" border border-black p-1 px-2 rounded">
-                    <span className="font-bold text-black ">Black Friday</span>
+                    <span className="font-bold text-black">Black Friday</span>
                   </span>
                 </span>
               </button>
@@ -456,7 +456,7 @@ function Pricing() {
             PRO
           </span>{" "}
           nessa
-          <span className="bg-black border-white border font-white px-2 py-1 rounded-lg ml-2">
+          <span className="bg-black border-white border text-white px-2 py-1 rounded-lg ml-2 block md:inline mt-2">
             Black Friday
           </span>
         </h1>
