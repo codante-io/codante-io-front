@@ -31,8 +31,24 @@ export default function PriceButton({
     }
   }, [isSubmittingOrLoading]);
 
+  function sendToGoogleTagManager() {
+    //check if there is window
+    if (typeof window === "undefined") {
+      return;
+    }
+    window.dataLayer = window.dataLayer || [];
+
+    window.dataLayer.push({
+      event: "checkout",
+    });
+  }
+
   async function checkout() {
     setIsLoading(true);
+
+    sendToGoogleTagManager();
+    // send event to google tag manager
+
     toast.custom(
       () => (
         <div className="flex flex-col items-center text-center justify-center bg-background-700 p-6 rounded-xl border border-background-500 max-w-xs">
