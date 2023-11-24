@@ -1,5 +1,5 @@
 import { LockClosedIcon } from "@heroicons/react/24/solid";
-import { LockOpenIcon } from "@heroicons/react/24/outline";
+// import { LockOpenIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
 import type { Challenge } from "~/models/challenge.server";
 import type { Lesson } from "~/models/lesson.server";
@@ -108,8 +108,11 @@ function WorkshopLessonListItem({
     }
 
     if (!isLoggedIn && lesson.user_can_view) {
-      return <LockOpenIcon className="w-4 h-4 text-green-600 basis-5 ml-0.5" />;
+      return <span className="w-4 h-4 text-green-600 basis-5 ml-0.5" />;
     }
+    // if (!isLoggedIn && lesson.user_can_view) {
+    //   return <LockOpenIcon className="w-4 h-4 text-green-600 basis-5 ml-0.5" />;
+    // }
 
     return <LockClosedIcon className="w-4 h-4 text-gray-400 basis-5" />;
   }
