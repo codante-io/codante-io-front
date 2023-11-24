@@ -52,7 +52,7 @@ export default function HomePage() {
         <WorkShops />
         <Challenges />
         <Submissions />
-        <Testimony />
+        <Testimonial />
         <Pricing />
       </div>
     </AppLayout>
@@ -432,7 +432,7 @@ function Pricing() {
   );
 }
 
-function Testimony() {
+function Testimonial() {
   const { homeInfo } = useLoaderData<typeof loader>();
   const featuredTestimonials = homeInfo.featured_testimonials;
 
@@ -488,9 +488,9 @@ function Testimony() {
               initial={{ x: 2 }}
             >
               {featuredTestimonials.map((testimonial, index) => (
-                <TestimonyCard
+                <TestimonialCard
                   key={index}
-                  testimony={testimonial.body}
+                  testimonial={testimonial.body}
                   avatarUrl={testimonial.avatar_url}
                   name={testimonial.name}
                   socialMediaProfileName={testimonial.social_media_nickname}
@@ -519,14 +519,14 @@ function Testimony() {
   );
 }
 
-function TestimonyCard({
-  testimony,
+function TestimonialCard({
+  testimonial,
   avatarUrl,
   name,
   socialMediaProfileName,
   socialMediaProfileUrl,
 }: {
-  testimony: string;
+  testimonial: string;
   avatarUrl: string;
   name: string;
   socialMediaProfileName: string;
@@ -537,7 +537,7 @@ function TestimonyCard({
       className="flex flex-shrink-0 flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
     hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2"
     >
-      <p className="text-start">{testimony}</p>
+      <p className="text-start">{testimonial}</p>
       <div className="flex items-center gap-5">
         <div>
           <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />
