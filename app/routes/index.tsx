@@ -83,43 +83,46 @@ function Headline() {
 
   return (
     <section id="headline" className="flex flex-col items-center w-full">
-      <div className="bg-black w-full border-t border-b border-amber-400 px-20 py-10 ">
-        <div className="container mx-auto text-white text-center">
-          <h3 className="font-[Tourney] text-5xl mb-6">
-            <span className="text-amber-400">{"<"}</span>
-            {"Black Friday Codante"}
-            <span className="text-amber-400">{" />"}</span>
-          </h3>
-          <div className="mb-6">
-            <p className="font-light text-lg">
-              Aproveite essa Black Friday aprimorar seus conhecimentos em Front!{" "}
-            </p>
-            <p className="font-light text-lg ">
-              Assine o plano <ProSpanWrapper>PRO</ProSpanWrapper> por 12x de
-              R$49 com{" "}
-              <span className="decoration-brand font-bold underline">
-                acesso vitalício
-              </span>
-              .
-            </p>
-            <p className="text-gray-400 mt-4 text-sm">
-              Preço exclusivo para essa Black Friday!{" "}
-            </p>
-          </div>
-          <Link to="/assine">
-            <button className="mx-auto flex gap-1 items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
-              <FaCrown className="mr-2 text-amber-400" />
-              <span>
-                Seja
-                <b className="ml-1">PRO </b> nessa{" "}
-                <span className=" border border-black p-1 px-2 rounded">
-                  <span className="font-bold text-black ">Black Friday</span>
+      {(!user || (user && !user.is_pro)) && (
+        <div className="bg-black w-full border-t border-b border-amber-400 px-20 py-10 ">
+          <div className="container mx-auto text-white text-center">
+            <h3 className="font-[Tourney] text-5xl mb-6">
+              <span className="text-amber-400">{"<"}</span>
+              {"Black Friday Codante"}
+              <span className="text-amber-400">{" />"}</span>
+            </h3>
+            <div className="mb-6">
+              <p className="font-light text-lg">
+                Aproveite essa Black Friday aprimorar seus conhecimentos em
+                Front!{" "}
+              </p>
+              <p className="font-light text-lg ">
+                Assine o plano <ProSpanWrapper>PRO</ProSpanWrapper> por 12x de
+                R$49 com{" "}
+                <span className="decoration-brand font-bold underline">
+                  acesso vitalício
                 </span>
-              </span>
-            </button>
-          </Link>
+                .
+              </p>
+              <p className="text-gray-400 mt-4 text-sm">
+                Preço exclusivo para essa Black Friday!{" "}
+              </p>
+            </div>
+            <Link to="/assine">
+              <button className="mx-auto flex gap-1 items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
+                <FaCrown className="mr-2 text-amber-400" />
+                <span>
+                  Seja
+                  <b className="ml-1">PRO </b> nessa{" "}
+                  <span className=" border border-black p-1 px-2 rounded">
+                    <span className="font-bold text-black ">Black Friday</span>
+                  </span>
+                </span>
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
       <div className="container flex flex-col items-center">
         {/* Live Streaming Banner */}
         {homeInfo.live_streaming_workshop && (
