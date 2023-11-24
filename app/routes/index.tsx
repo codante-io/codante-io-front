@@ -81,7 +81,10 @@ function Headline() {
   const avatarSection = homeInfo.avatar_section;
 
   return (
-    <section id="headline" className="flex flex-col items-center w-full">
+    <section
+      id="headline"
+      className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_64px)]"
+    >
       <div className="container flex flex-col items-center">
         {/* Live Streaming Banner */}
         {homeInfo.live_streaming_workshop && (
@@ -122,7 +125,7 @@ function Headline() {
           </span>
         </h1>
       </div>
-      <div className="container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full">
+      <div className="mb-16 container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full">
         <section className="flex flex-col basis-2/5 lg:pr-10 justify-between">
           <div>
             <p className="font-light text-center lg:text-start font-inter text-lg">
@@ -219,7 +222,7 @@ function WorkShops() {
   return (
     <section
       id="workshops"
-      className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50 mt-16 lg:mt-24"
+      className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50"
     >
       <div className="container flex flex-col  overflow-hidden items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
         <div className="relative w-full">
