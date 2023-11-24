@@ -5,12 +5,26 @@ export default function CardItemRibbon({
 }: {
   text: string;
   className?: string;
-  type?: "default" | "live-now";
+  type?: "default" | "live-now" | "black-friday";
 }) {
-  const bgColorDark = type === "live-now" ? "bg-red-500" : "bg-blue-500";
-  const bgColorLight = type === "live-now" ? "bg-red-300" : "bg-blue-300";
+  const bgColorDark =
+    type === "live-now"
+      ? "bg-red-500"
+      : type === "black-friday"
+      ? "bg-black"
+      : "bg-blue-500";
+  const bgColorLight =
+    type === "live-now"
+      ? "bg-red-300"
+      : type === "black-friday"
+      ? "bg-black"
+      : "bg-blue-300";
   const textColor =
-    type === "live-now" ? "text-red-900" : "text-blue-900 hover:bg-blue-300";
+    type === "live-now"
+      ? "text-red-900"
+      : type === "black-friday"
+      ? "text-amber-400"
+      : "text-blue-900 hover:bg-blue-300";
 
   return (
     <div

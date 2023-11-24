@@ -20,6 +20,7 @@ import classNames from "~/utils/class-names";
 import type { Plan } from "~/models/plan.server";
 import { getPlanDetails } from "~/models/plan.server";
 import { useLoaderData } from "@remix-run/react";
+import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const plan = await getPlanDetails();
@@ -75,55 +76,82 @@ export default function AssinePage() {
     totalPrice: plan.price_in_cents / 100,
   };
   return (
-    <main className="container mx-auto ">
-      <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
-        <span className="font-bold border-b-4 border-amber-400">Assine</span> o
-        Codante
-      </h1>
-
-      <section>
-        <div className="flex flex-col items-center ">
-          <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-3xl">
-            Assine nosso{" "}
-            <span className="text-brand-400">
-              plano vitalício com valor promocional de lançamento
-            </span>{" "}
-            <span className="font-bold underline text-brand-400">
-              por tempo limitado
-            </span>
-            . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
-          </p>
-
-          <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row">
-            <PriceCard
-              featuresByCategory={freePlanFeatures}
-              data={freePlanDetails}
-            />
-            <PriceCard
-              data={proPlanWithPrice}
-              featuresByCategory={proPlanFeatures}
-            />
-          </section>
+    <>
+      <div className="bg-black w-full border-t border-b border-amber-400 px-20 py-10 mb-8 ">
+        <div className="container mx-auto text-white text-center">
+          <h3 className="font-[Tourney] text-5xl mb-6">
+            <span className="text-amber-400">{"<"}</span>
+            {"Black Friday Codante"}
+            <span className="text-amber-400">{" />"}</span>
+          </h3>
+          <div className="">
+            <p className="font-light text-lg">
+              Aproveite essa Black Friday aprimorar seus conhecimentos em Front!{" "}
+            </p>
+            <p className="font-light text-lg ">
+              Assine o plano <ProSpanWrapper>PRO</ProSpanWrapper> por 12x de
+              R$49 com{" "}
+              <span className="decoration-brand font-bold underline">
+                acesso vitalício
+              </span>
+              .
+            </p>
+            <p className="text-gray-400 mt-4 text-sm">
+              Preço exclusivo para essa Black Friday!{" "}
+            </p>
+          </div>
         </div>
-      </section>
-      <section className="mt-12">
-        <h2 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
-          Perguntas{" "}
-          <span className="font-bold border-b-4 border-amber-400">
-            Frequentes
-          </span>
-        </h2>
-        <section className="mt-14">
-          {faqQuestions.map((question, index) => (
-            <FaqItem
-              key={index}
-              question={question.question}
-              answer={question.answer}
-            />
-          ))}
+      </div>
+      <main className="container mx-auto ">
+        {/* <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
+          <span className="font-bold border-b-4 border-amber-400">Assine</span>{" "}
+          o Codante
+        </h1> */}
+
+        <section>
+          <div className="flex flex-col items-center ">
+            <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-3xl">
+              Assine nosso{" "}
+              <span className="text-brand-400">
+                plano vitalício com valor promocional de lançamento
+              </span>{" "}
+              <span className="font-bold underline text-brand-400">
+                por tempo limitado
+              </span>
+              . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
+            </p>
+
+            <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row">
+              <PriceCard
+                featuresByCategory={freePlanFeatures}
+                data={freePlanDetails}
+              />
+              <PriceCard
+                data={proPlanWithPrice}
+                featuresByCategory={proPlanFeatures}
+              />
+            </section>
+          </div>
         </section>
-      </section>
-    </main>
+        <section className="mt-12">
+          <h2 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
+            Perguntas{" "}
+            <span className="font-bold border-b-4 border-amber-400">
+              Frequentes
+            </span>
+          </h2>
+          <section className="mt-14">
+            {faqQuestions.map((question, index) => (
+              <FaqItem
+                key={index}
+                question={question.question}
+                answer={question.answer}
+              />
+            ))}
+          </section>
+        </section>
+      </main>
+    </>
   );
 }
 
