@@ -111,7 +111,7 @@ function Headline() {
                 Preço exclusivo para essa Black Friday!{" "}
               </p>
             </div>
-            <Link to="/assine">
+            <Link to="/assine" className="w-fit inline-block">
               <button className="mx-auto flex gap-1 items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
                 <FaCrown className="mr-2 text-amber-400" />
                 <span>
