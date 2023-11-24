@@ -87,7 +87,7 @@ function Headline() {
       className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_64px)]"
     >
       {(!user || (user && !user.is_pro)) && (
-        <div className="bg-black w-full border-t border-b border-amber-400 px-0  lg:px-20 py-10 mb-10 md:mb-0">
+        <div className="bg-black w-full border-t border-b border-amber-400 px-0 lg:px-20 py-10 mb-10 md:mb-0">
           <div className="container mx-auto text-white text-center">
             <h3 className="font-[Tourney] text-5xl mb-6">
               <span className="text-amber-400">{"<"}</span>
