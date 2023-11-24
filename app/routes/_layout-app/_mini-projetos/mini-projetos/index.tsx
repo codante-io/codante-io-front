@@ -51,6 +51,13 @@ export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
   const user = useUserFromOutletContext();
 
+  function isPastDate(dateString: string): boolean {
+    const date = new Date(dateString);
+    const now = new Date();
+    console.log(date < now)
+    return date < now;
+  }
+
   const featuredChallenge = challenges.find(
     (challenge) => challenge.is_weekly_featured === true,
   );
@@ -100,15 +107,22 @@ export default function Projects() {
                 </strong>
               </span>{" "}
             </p>
-
-            <p className="mt-2 mb-8 text-sm ">
-              <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
-                <ClockIcon className="inline w-4 h-4 " />
-                Faltam:
-                <Countdown featuredChallenge={featuredChallenge} />
-              </span>
-            </p>
-
+            {
+              !isPastDate(featuredChallenge.solution_publish_date as string) ? (
+                <p className="mt-2 mb-8 text-sm ">
+                  <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+                    <ClockIcon className="inline w-4 h-4 " />
+                    Faltam:
+                    <Countdown featuredChallenge={featuredChallenge} />
+                  </span>
+                </p>
+              ) :
+              <p className="mt-2 mb-8 text-xs ">
+                <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+                  Resolução será disponibilizada em breve
+                </span>
+              </p>
+            }
             <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
               <Button
                 type="button"
@@ -188,6 +202,6 @@ function Countdown({
       {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
       {hours}:{minutes}:{seconds}
     </strong>
+  )
     // )}
-  );
 }
