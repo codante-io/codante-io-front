@@ -83,6 +83,7 @@ export default function MainContent({
       <div className="mt-3">
         <VimeoPlayer
           vimeoUrl={lesson.video_url || ""}
+          available_to={lesson.available_to}
           onVideoEnded={() => handleVideoEnded(lesson.id)}
           thumbnailURL={lesson.thumbnail_url}
           autoplay={true}

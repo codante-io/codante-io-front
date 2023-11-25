@@ -16,6 +16,7 @@ export type Lesson = {
   thumbnail_url?: string;
   user_completed?: boolean;
   user_can_view?: boolean;
+  available_to?: "all" | "logged_in" | "pro";
 };
 
 export async function getLesson(slug: string) {
