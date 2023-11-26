@@ -7,6 +7,7 @@ import type { Workshop } from "~/models/workshop.server";
 import classNames from "~/utils/class-names";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import MarkCompletedButton from "./mark-completed-button";
+import React from "react";
 
 type WorkshopLessonListProps = {
   workshop: Workshop;
@@ -36,11 +37,8 @@ export default function WorkshopLessonList({
     <>
       {workshop.lesson_sections &&
         workshop.lesson_sections.map((section, id) => (
-          <>
-            <h3
-              key={id}
-              className="text-xs dark:text-gray-300 text-gray-800  border-b  dark:border-background-600 border-gray-300  px-4 py-3 mt-4"
-            >
+          <React.Fragment key={id}>
+            <h3 className="text-xs dark:text-gray-300 text-gray-800  border-b  dark:border-background-600 border-gray-300  px-4 py-3 mt-4">
               <span className="text-xs">
                 Seção {(id + 1).toString().padStart(2, "0")}
               </span>{" "}
@@ -63,7 +61,7 @@ export default function WorkshopLessonList({
                   ></WorkshopLessonListItem>
                 ))}
             </ol>
-          </>
+          </React.Fragment>
         ))}
       {!workshop.lesson_sections && (
         <ol className="mt-4">
