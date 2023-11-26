@@ -7,6 +7,7 @@ import type { Workshop } from "~/models/workshop.server";
 import classNames from "~/utils/class-names";
 import { fromSecondsToTimeString } from "~/utils/interval";
 import MarkCompletedButton from "./mark-completed-button";
+import React from "react";
 
 type WorkshopLessonListProps = {
   workshop: Workshop;
@@ -36,11 +37,8 @@ export default function WorkshopLessonList({
     <>
       {workshop.lesson_sections &&
         workshop.lesson_sections.map((section, id) => (
-          <>
-            <h3
-              key={id}
-              className="text-xs dark:text-gray-300 text-gray-800  border-b  dark:border-background-600 border-gray-300  px-4 py-3 mt-4"
-            >
+          <React.Fragment key={id}>
+            <h3 className="text-xs dark:text-gray-300 text-gray-800  border-b  dark:border-background-600 border-gray-300  px-4 py-3 mt-4">
               <span className="text-xs">
                 Seção {(id + 1).toString().padStart(2, "0")}
               </span>{" "}
@@ -63,7 +61,7 @@ export default function WorkshopLessonList({
                   ></WorkshopLessonListItem>
                 ))}
             </ol>
-          </>
+          </React.Fragment>
         ))}
       {!workshop.lesson_sections && (
         <ol className="mt-4">
@@ -103,12 +101,19 @@ function WorkshopLessonListItem({
   isLoggedIn: boolean;
 }) {
   function getLessonIconPrefix(lesson: Lesson) {
-    if (isLoggedIn && lesson.user_can_view) {
-      return <MarkCompletedButton lesson={lesson} />;
+    if (
+      (lesson.available_to === "pro" && !isLoggedIn) ||
+      (lesson.available_to === "pro" && !lesson.user_can_view)
+    ) {
+      return <LockClosedIcon className="w-4 h-4 text-gray-400 basis-5" />;
     }
 
-    if (!isLoggedIn && lesson.user_can_view) {
+    if (!isLoggedIn && lesson.available_to !== "pro") {
       return <span className="w-4 h-4 text-green-600 basis-5 ml-0.5" />;
+    }
+
+    if (isLoggedIn && lesson.user_can_view) {
+      return <MarkCompletedButton lesson={lesson} />;
     }
     // if (!isLoggedIn && lesson.user_can_view) {
     //   return <LockOpenIcon className="w-4 h-4 text-green-600 basis-5 ml-0.5" />;

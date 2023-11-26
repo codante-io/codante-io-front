@@ -3,6 +3,7 @@ export type ButtonProps = {
   type: "button" | "submit" | "reset";
   className?: string;
   textColorClass?: string;
+  textSizeClass?: string;
   bgClass?: string;
   disabled?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -12,6 +13,7 @@ export default function Button({
   type,
   className,
   textColorClass = "text-white",
+  textSizeClass = "text-sm",
   bgClass = "bg-brand hover:bg-opacity-90 disabled:bg-opacity-60",
   disabled,
   ...rest
@@ -21,7 +23,7 @@ export default function Button({
       type={type}
       disabled={disabled}
       className={`
-      rounded px-5 py-2 text-sm transition duration-200 disabled:cursor-not-allowed ${className} ${textColorClass} ${bgClass}`}
+      rounded px-5 py-2 transition duration-200 disabled:cursor-not-allowed ${className} ${textSizeClass} ${textColorClass} ${bgClass}`}
       {...rest}
     >
       {children}
