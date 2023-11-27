@@ -1,9 +1,5 @@
 import { useOutletContext, useNavigate } from "@remix-run/react";
-// import MarkdownRenderer from "~/components/markdown-renderer";
-// import VimeoPlayer from "~/components/vimeo-player";
-// import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
-// import WorkshopLessonsList from "~/components/workshop-lessons-list";
-import { type Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/models/challenge.server";
 import { LuCode2, LuVideo } from "react-icons/lu";
 
 export default function Resolution() {
@@ -48,6 +44,9 @@ export default function Resolution() {
           <div className="flex flex-col items-center justify-center">
             <article
               className={`w-80 h-48 lg:w-96 lg:h-56 group rounded-xl relative cursor-pointer dark:hover:shadow-brand-300 hover:shadow-brand-500 shadow transition`}
+              onClick={() =>
+                navigate(`/mini-projetos/${challenge?.slug}/resolucao-codigo`)
+              }
             >
               <img
                 src={workshop?.image_url}

@@ -375,7 +375,7 @@ export default function ChallengeSlug() {
             <>
               <Overview
                 challenge={challenge}
-                challengeUser={challengeUser}
+                // challengeUser={challengeUser}
                 hasSolution={hasSolution}
                 initialSteps={initialSteps}
               />
