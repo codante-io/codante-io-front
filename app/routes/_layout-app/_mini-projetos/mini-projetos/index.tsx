@@ -87,16 +87,21 @@ export default function Projects() {
                 <CalendarDaysIcon className="inline w-4 h-4 " />
                 Resolução:
                 <strong className="text-white dark:text-white ">
-                  {new Intl.DateTimeFormat("pt-BR", {
+                  {new Date(
+                    Date.parse(
+                      featuredChallenge.solution_publish_date as string,
+                    ),
+                  ).toLocaleDateString("pt-BR", {
                     dateStyle: "short",
-                    timeStyle: "short",
-                  }).format(
+                  }) +
+                    ", " +
                     new Date(
                       Date.parse(
                         featuredChallenge.solution_publish_date as string,
                       ),
-                    ),
-                  )}
+                    ).toLocaleTimeString("pt-BR", {
+                      timeStyle: "short",
+                    })}
                 </strong>
               </span>{" "}
             </p>
