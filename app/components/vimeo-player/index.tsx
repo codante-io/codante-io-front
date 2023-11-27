@@ -103,8 +103,12 @@ function NotAvailableOverlay({
     <div className="absolute z-20 p-3 bg-white border border-gray-200 max-w-md rounded-lg shadow-2xl shadow-background-700 dark:border- dark:bg-background-800 dark:border-background-600 md:p-10">
       <h3 className="font-bold md:text-2xl text-brand font-lexend">Ops... </h3>
       <p className="mt-2 mb-6 text-sm text-gray-500 dark:text-gray-300 md:text-base">
-        {available_to === "logged_in" &&
-          "Você precisa estar logado para acessar essa aula"}
+        {available_to === "logged_in" && (
+          <span>
+            Esta aula é <strong>aberta e gratuita</strong> 🎉. Para acessá-la,
+            você precisa fazer o login.
+          </span>
+        )}
         {available_to === "pro" && (
           <span>
             Você precisa ser um membro <ProSpanWrapper>PRO</ProSpanWrapper> para
