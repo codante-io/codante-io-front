@@ -51,13 +51,6 @@ export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
   const user = useUserFromOutletContext();
 
-  function isPastDate(dateString: string): boolean {
-    const date = new Date(dateString);
-    const now = new Date();
-    console.log(date < now)
-    return date < now;
-  }
-
   const featuredChallenge = challenges.find(
     (challenge) => challenge.is_weekly_featured === true,
   );
@@ -107,22 +100,8 @@ export default function Projects() {
                 </strong>
               </span>{" "}
             </p>
-            {
-              !isPastDate(featuredChallenge.solution_publish_date as string) ? (
-                <p className="mt-2 mb-8 text-sm ">
-                  <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
-                    <ClockIcon className="inline w-4 h-4 " />
-                    Faltam:
-                    <Countdown featuredChallenge={featuredChallenge} />
-                  </span>
-                </p>
-              ) :
-              <p className="mt-2 mb-8 text-xs ">
-                <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
-                  Resolução será disponibilizada em breve
-                </span>
-              </p>
-            }
+
+            <Countdown featuredChallenge={featuredChallenge} />
             <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
               <Button
                 type="button"
@@ -163,6 +142,7 @@ function Countdown({
   featuredChallenge: ChallengeCardType;
 }) {
   const [remainingTime, setRemainingTime] = useState<null | number>(null);
+  const [timerEnded, setTimerEnded] = useState(false);
 
   let days, hours, minutes, seconds;
 
@@ -190,18 +170,51 @@ function Countdown({
             featuredChallenge?.solution_publish_date as string,
           ).getTime() - now;
         setRemainingTime(distance);
+
+        if (distance < 0) {
+          clearInterval(intervalId);
+          setTimerEnded(true);
+        }
       }, 1000);
       return () => clearInterval(intervalId);
     }
   }, [featuredChallenge]);
 
-  if (!remainingTime) return null;
+  if (!remainingTime)
+    return (
+      <p className="mt-2 mb-8 text-sm h-10">
+        <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+          <ClockIcon className="inline w-4 h-4 " />
+          Faltam:
+        </span>
+      </p>
+    );
+  // return (
+  //   // {remainingTime && (
+  // <strong className="text-white dark:text-white">
+  //   {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
+  //   {hours}:{minutes}:{seconds}
+  // </strong>
+  // )
+
   return (
-    // {remainingTime && (
-    <strong className="text-white dark:text-white">
-      {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
-      {hours}:{minutes}:{seconds}
-    </strong>
-  )
-    // )}
+    <>
+      <p className="mt-2 mb-8 text-sm h-10">
+        {!timerEnded ? (
+          <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+            <ClockIcon className="inline w-4 h-4 " />
+            Faltam:
+            <strong className="text-white dark:text-white">
+              {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
+              {hours}:{minutes}:{seconds}
+            </strong>
+          </span>
+        ) : (
+          <strong className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 text-md">
+            Resolução será publicada em breve
+          </strong>
+        )}
+      </p>
+    </>
+  );
 }
