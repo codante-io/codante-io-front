@@ -1,8 +1,8 @@
 import { useOutletContext, useNavigate } from "@remix-run/react";
-import MarkdownRenderer from "~/components/markdown-renderer";
-import VimeoPlayer from "~/components/vimeo-player";
-import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
-import WorkshopLessonsList from "~/components/workshop-lessons-list";
+// import MarkdownRenderer from "~/components/markdown-renderer";
+// import VimeoPlayer from "~/components/vimeo-player";
+// import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
+// import WorkshopLessonsList from "~/components/workshop-lessons-list";
 import { type Challenge } from "~/models/challenge.server";
 import { LuCode2, LuVideo } from "react-icons/lu";
 
@@ -17,78 +17,50 @@ export default function Resolution() {
   if (!challenge?.has_solution) {
     return navigate(`/mini-projetos/${challenge?.slug}`);
   }
-  // console.log(lesson)
 
   return (
     <>
       <div className="container">
-        <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
+        {/* <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
           Resolução do Mini Projeto
-        </h1>
-        <section className="flex w-full lg:justify-around gap-4 items-center lg:flex-row flex-col bg-blue-500">
-          <div
-            className={`w-96 h-64 border bg-background-800 rounded-lg border-background-200 relative`}
-            onClick={() =>
-              navigate(`/mini-projetos/${challenge?.slug}/resolucao`)
-            }
-          >
-            <img
-              src={workshop?.image_url}
-              className="object-contain w-full h-full opacity-20"
-              alt="Workshop thumbnail"
-            />
-            <LuVideo className="absolute inset-0 m-auto text-5xl" />
+        </h1> */}
+        <section className="flex w-full lg:justify-around gap-8 justify-between items-center md:flex-row flex-col mt-10">
+          {/* Link para o vídeo */}
+          <div className="flex flex-col items-center justify-center">
+            <article
+              className={`w-80 h-48 lg:w-96 lg:h-56 group rounded-xl relative cursor-pointer dark:hover:shadow-brand-300 hover:shadow-brand-500 shadow transition`}
+              onClick={() =>
+                navigate(`/mini-projetos/${challenge?.slug}/resolucao/${slug}`)
+              }
+            >
+              <img
+                src={workshop?.image_url}
+                className="rounded-xl w-full h-full opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100 transition"
+                alt="Workshop thumbnail"
+              />
+              <LuVideo className="absolute group-hover:hidden transition-all inset-0 m-auto text-3xl dark:text-background-100 text-background-600" />
+            </article>
+            <span className="mt-3 font-lexend dark:text-background-100 text-background-600 text-sm font-semibold">
+              Assistir resolução em vídeo
+            </span>
           </div>
-          <div
-            className={`w-96 h-64 border bg-background-800 rounded-lg border-background-200 relative`}
-          >
-            <img
-              src={workshop?.image_url}
-              className="object-contain w-full h-full opacity-20"
-              alt="Workshop thumbnail"
-            />
-            <LuCode2 className="absolute inset-0 m-auto text-5xl" />
+          {/* Link para o código */}
+          <div className="flex flex-col items-center justify-center">
+            <article
+              className={`w-80 h-48 lg:w-96 lg:h-56 group rounded-xl relative cursor-pointer dark:hover:shadow-brand-300 hover:shadow-brand-500 shadow transition`}
+            >
+              <img
+                src={workshop?.image_url}
+                className="rounded-xl w-full h-full opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100 transition"
+                alt="Workshop thumbnail"
+              />
+              <LuCode2 className="absolute group-hover:hidden transition-all inset-0 m-auto text-3xl dark:text-background-100 text-background-600" />
+            </article>
+            <span className="mt-3 font-lexend dark:text-background-100 text-background-600 text-sm font-semibold">
+              Acessar código da resolução
+            </span>
           </div>
         </section>
-
-        <div className="flex flex-wrap pb-16 lg:mt-0 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-6 lg:px-0">
-          <section className="relative col-span-2 w-full mb-4">
-            <VimeoPlayer vimeoUrl={lesson?.video_url ?? ""} />
-            <div className="mt-8 max-w-full md:max-w-xl lg:max-w-none px-2 mx-auto lg:mx-0">
-              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend ">
-                {workshop?.lessons.find((lesson) => lesson.slug === slug)?.name}
-              </h1>
-              <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-gray-300 text-gray-500">
-                {
-                  workshop?.lessons.find((lesson) => lesson.slug === slug)
-                    ?.description
-                }
-              </p>
-              <MarkdownRenderer
-                markdown={
-                  workshop?.lessons.find((lesson) => lesson.slug === slug)
-                    ?.content || ""
-                }
-              />
-            </div>
-          </section>
-
-          <section className="mx-auto max-w-xl">
-            <div className="flex-shrink-0 mx-auto px-2 mb-8">
-              {workshop?.lessons?.length && workshop?.lessons?.length > 0 && (
-                <>
-                  <WorkshopLessonsHeader workshop={workshop} title="Vídeos" />
-                  <WorkshopLessonsList
-                    isChallengeResolution={true}
-                    challengeSlug={challenge.slug}
-                    workshop={workshop}
-                    activeIndex={0}
-                  />
-                </>
-              )}
-            </div>
-          </section>
-        </div>
       </div>
     </>
   );
