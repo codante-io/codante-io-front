@@ -87,28 +87,26 @@ export default function Projects() {
                 <CalendarDaysIcon className="inline w-4 h-4 " />
                 Resolução:
                 <strong className="text-white dark:text-white ">
-                  {new Intl.DateTimeFormat("pt-BR", {
+                  {new Date(
+                    Date.parse(
+                      featuredChallenge.solution_publish_date as string,
+                    ),
+                  ).toLocaleDateString("pt-BR", {
                     dateStyle: "short",
-                    timeStyle: "short",
-                  }).format(
+                  }) +
+                    ", " +
                     new Date(
                       Date.parse(
                         featuredChallenge.solution_publish_date as string,
                       ),
-                    ),
-                  )}
+                    ).toLocaleTimeString("pt-BR", {
+                      timeStyle: "short",
+                    })}
                 </strong>
               </span>{" "}
             </p>
 
-            <p className="mt-2 mb-8 text-sm ">
-              <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
-                <ClockIcon className="inline w-4 h-4 " />
-                Faltam:
-                <Countdown featuredChallenge={featuredChallenge} />
-              </span>
-            </p>
-
+            <Countdown featuredChallenge={featuredChallenge} />
             <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
               <Button
                 type="button"
@@ -149,6 +147,7 @@ function Countdown({
   featuredChallenge: ChallengeCardType;
 }) {
   const [remainingTime, setRemainingTime] = useState<null | number>(null);
+  const [timerEnded, setTimerEnded] = useState(false);
 
   let days, hours, minutes, seconds;
 
@@ -176,18 +175,51 @@ function Countdown({
             featuredChallenge?.solution_publish_date as string,
           ).getTime() - now;
         setRemainingTime(distance);
+
+        if (distance < 0) {
+          clearInterval(intervalId);
+          setTimerEnded(true);
+        }
       }, 1000);
       return () => clearInterval(intervalId);
     }
   }, [featuredChallenge]);
 
-  if (!remainingTime) return null;
+  if (!remainingTime)
+    return (
+      <p className="mt-2 mb-8 text-sm h-10">
+        <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+          <ClockIcon className="inline w-4 h-4 " />
+          Faltam:
+        </span>
+      </p>
+    );
+  // return (
+  //   // {remainingTime && (
+  // <strong className="text-white dark:text-white">
+  //   {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
+  //   {hours}:{minutes}:{seconds}
+  // </strong>
+  // )
+
   return (
-    // {remainingTime && (
-    <strong className="text-white dark:text-white">
-      {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
-      {hours}:{minutes}:{seconds}
-    </strong>
-    // )}
+    <>
+      <p className="mt-2 mb-8 text-sm h-10">
+        {!timerEnded ? (
+          <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+            <ClockIcon className="inline w-4 h-4 " />
+            Faltam:
+            <strong className="text-white dark:text-white">
+              {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
+              {hours}:{minutes}:{seconds}
+            </strong>
+          </span>
+        ) : (
+          <strong className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 text-md">
+            Resolução será publicada em breve
+          </strong>
+        )}
+      </p>
+    </>
   );
 }
