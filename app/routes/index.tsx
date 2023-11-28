@@ -228,6 +228,7 @@ function Headline() {
                 )}
                 {user
                   ? avatarSection.avatars
+                      .filter((info) => info.avatar_url !== user.avatar_url)
                       .slice(0, 15)
                       .map((info, index) => (
                         <UserAvatar
