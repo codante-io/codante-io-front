@@ -1,10 +1,11 @@
-import { useOutletContext, useNavigate, useLoaderData } from "@remix-run/react";
+import { useOutletContext, useNavigate, useLoaderData, Link } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { BsGithub, BsGlobe } from "react-icons/bs";
 import { useColorMode } from "~/contexts/color-mode-context";
 import { getResolutions, type Challenge } from "~/models/challenge.server";
-import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
-import Button from "~/components/form/button";
+import ProSpanWrapper from "~/components/pro-span-wrapper";
+import { FaCrown } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 // export async function loader({ request }: { request: Request }) {
 //   return json({
@@ -28,6 +29,17 @@ export default function ResolutionCode() {
   const githubOrganization = null;
   const githubRepo = "mp-lista-de-paises-next";
 
+  function handleClick(event: React.MouseEvent) {
+    if (!githubOrganization) {
+      event?.preventDefault();
+      toast((t) => (
+        <p>
+          Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem acessar essa resolução.
+        </p>
+      ));
+    }
+  }
+
   return (
     <section className="container">
       <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
@@ -47,16 +59,23 @@ export default function ResolutionCode() {
               <h3 className="font-bold md:text-2xl text-brand font-lexend">
                 Ops...{" "}
               </h3>
-              <p className="mt-2 mb-4 text-sm text-gray-500 md:text-base">
-                Apenas usuários PRO podem acessar essa resolução!
-              </p>
-              <LinkToLoginWithRedirect className="mt-4 text-gray-800 ">
-                <Button type="button">Entre com Github</Button>
-              </LinkToLoginWithRedirect>
-              {/* <LockClosedIcon className="w-20 h-20 text-brand" /> */}
+              <span>
+                Você precisa ser um membro <ProSpanWrapper>PRO</ProSpanWrapper> para
+                acessar essa aula
+              </span>
+              <Link to="/assine" className="w-full inline-block mt-4">
+                <button className="mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
+                  <FaCrown className="mr-2 text-amber-500" />
+                  <span>
+                    Seja
+                    <b className="ml-1">PRO </b>
+                  </span>
+                </button>
+              </Link>
             </div>
           )
         }
+
       </div>
       <div className="mt-10 w-full flex md:gap-8 gap-4">
         <a
@@ -64,6 +83,7 @@ export default function ResolutionCode() {
           href="https://codante.io"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(event) => handleClick(event)}
         >
           <p className="text-xs md:text-base lg:text-lg">
             Acessar o código no GitHub
@@ -76,6 +96,7 @@ export default function ResolutionCode() {
           href="https://codante.io"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(event) => handleClick(event)}
         >
           <p className="text-xs md:text-base lg:text-lg">
             Acessar o deploy da aplicação
