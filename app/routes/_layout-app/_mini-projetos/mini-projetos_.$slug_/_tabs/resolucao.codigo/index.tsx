@@ -1,9 +1,20 @@
-import { useOutletContext, useNavigate } from "@remix-run/react";
+import { useOutletContext, useNavigate, useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
 import { BsGithub, BsGlobe } from "react-icons/bs";
 import { useColorMode } from "~/contexts/color-mode-context";
-import type { Challenge } from "~/models/challenge.server";
+import { getResolutions, type Challenge } from "~/models/challenge.server";
+import LinkToLoginWithRedirect from "~/components/link-to-login-with-redirect";
+import Button from "~/components/form/button";
+
+// export async function loader({ request }: { request: Request }) {
+//   return json({
+//     resolutions: await getResolutions(request),
+//   });
+// }
 
 export default function ResolutionCode() {
+  // const { resolutions } = useLoaderData<typeof loader>();
+  // console.log(resolutions)
   const context = useOutletContext<{ challenge: Challenge }>();
   const navigate = useNavigate();
   const challenge = context?.challenge;
@@ -14,7 +25,7 @@ export default function ResolutionCode() {
     return navigate(`/mini-projetos/${challenge?.slug}`);
   }
 
-  const githubOrganization = "felipemuller20";
+  const githubOrganization = null;
   const githubRepo = "mp-lista-de-paises-next";
 
   return (
@@ -24,11 +35,28 @@ export default function ResolutionCode() {
       </h1>
       <div className="relative w-full h-[65vh] rounded-lg overflow-hidden">
         <div className="absolute inset-0 bg-cover lg:bg-fill bg-center bg-no-repeat blur-sm bg-[url('/img/cover-stackblitz-light.png')] dark:bg-[url('/img/cover-stackblitz-dark.png')]"></div>
-        <iframe
-          title="slug"
-          src={`https://stackblitz.com/github/${githubOrganization}/${githubRepo}?ctl=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`}
-          className="w-full h-full rounded-lg shadow blur-none relative z-10"
-        ></iframe>
+        {
+          githubOrganization ? (
+            <iframe
+              title="slug"
+              src={`https://stackblitz.com/github/${githubOrganization}/${githubRepo}?ctl=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`}
+              className="w-full h-full rounded-lg shadow blur-none relative z-10"
+            ></iframe>
+          ) : (
+            <div className="absolute z-20 p-3 bg-white border border-gray-200 rounded-lg shadow-2xl shadow-background-700 dark:border- dark:bg-background-800 dark:border-background-600 md:p-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <h3 className="font-bold md:text-2xl text-brand font-lexend">
+                Ops...{" "}
+              </h3>
+              <p className="mt-2 mb-4 text-sm text-gray-500 md:text-base">
+                Apenas usuários PRO podem acessar essa resolução!
+              </p>
+              <LinkToLoginWithRedirect className="mt-4 text-gray-800 ">
+                <Button type="button">Entre com Github</Button>
+              </LinkToLoginWithRedirect>
+              {/* <LockClosedIcon className="w-20 h-20 text-brand" /> */}
+            </div>
+          )
+        }
       </div>
       <div className="mt-10 w-full flex md:gap-8 gap-4">
         <a

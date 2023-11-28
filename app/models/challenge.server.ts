@@ -73,6 +73,13 @@ export type ChallengeSubmission = {
   is_pro: boolean;
 };
 
+export type ChallengeResolution = {
+  id: string;
+  fork_url: string;
+  submission_url: string;
+  challenge_id: string;
+}
+
 export async function getChallenges(
   request: Request,
 ): Promise<Array<ChallengeCard>> {
@@ -363,4 +370,18 @@ export async function updateChallengeSubmission(
           "Não foi possível atualizar a sua submissão. Por favor, tente novamente.",
       };
     });
+}
+
+export async function getResolutions(
+  request: Request,
+): Promise<Array<ChallengeResolution>> {
+  const token = await currentToken({ request });
+  const resolutions = await axios
+    .get(`${process.env.API_HOST}/challenge-resolutions`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => res.data.data);
+  return resolutions;
 }
