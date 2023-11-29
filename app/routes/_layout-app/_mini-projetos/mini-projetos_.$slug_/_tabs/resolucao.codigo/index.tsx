@@ -95,7 +95,6 @@ export default function SolutionCode() {
         <a
           className={`dark:bg-[#17212B] flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 justify-between dark:border-background-700 w-full rounded-lg p-5`}
           href={solutionSubmission?.submission_url}
-          // href="https://codante.io"
           target="_blank"
           rel="noopener noreferrer"
         >
