@@ -41,6 +41,23 @@ export default function SolutionCode() {
     }
   }
 
+  function getStackblitzUrl() {
+    if (
+      challenge.resources.find(
+        (resource) => resource.type === "stackblitz-embed",
+      )
+    ) {
+      return challenge.resources.find(
+        (resource) => resource.type === "stackblitz-embed",
+      )?.url;
+    } else {
+      return `https://stackblitz.com/github/${solutionSubmission?.fork_url.replace(
+        "https://github.com/",
+        "",
+      )}`;
+    }
+  }
+
   return (
     <section className="container">
       <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
@@ -51,10 +68,10 @@ export default function SolutionCode() {
         {user && user?.is_pro ? (
           <iframe
             title="slug"
-            src={`https://stackblitz.com/github/${solutionSubmission?.fork_url.replace(
-              "https://github.com/",
-              "",
-            )}?ctl=1&showSidebar=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`}
+            src={
+              getStackblitzUrl() +
+              `?ctl=1&showSidebar=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`
+            }
             className="w-full h-full rounded-lg shadow blur-none relative z-10"
           ></iframe>
         ) : (
