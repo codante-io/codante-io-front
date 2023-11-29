@@ -201,12 +201,17 @@ function SubmissionButton({
     if (link) navigate(link);
   }
 
+  const responsivePositionClass = classNames(
+    size === "medium" && position === "left" && `md:w-14 md:h-14 md:left-32`,
+    size === "medium" && position === "right" && `md:w-14 md:h-14 md:right-32`,
+    size === "large" && position === "left" && `md:w-28 md:h-24 md:left-44`,
+    size === "large" && position === "right" && `md:w-28 md:h-24 md:right-44`,
+  );
+
   return (
     <button
       className={classNames(
-        size === "medium"
-          ? `md:w-14 md:h-14 md:${position}-32`
-          : `md:w-28 md:h-24 md:${position}-44`,
+        responsivePositionClass,
         `absolute inset-0 ${position}-32 z-10 flex items-center justify-center w-20 h-16 p-6 m-auto transition-all shadow-lg opacity-100 md:w-14 md:h-14 md:p-4 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100`,
       )}
       onClick={handleRedirect}
