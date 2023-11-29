@@ -14,7 +14,7 @@ type Submission = {
   fork_url: string;
   submission_image_url: string;
   id: string;
-  is_resolution?: boolean;
+  is_solution?: boolean;
 };
 
 type SubmissionUser = {
@@ -30,7 +30,7 @@ export default function SubmissionCard({
   size = "large",
   showEditForm,
   isEditing,
-  slug,
+  challengeSlug,
 }: {
   isEditing?: boolean;
   submission: Submission;
@@ -38,7 +38,7 @@ export default function SubmissionCard({
   reactions: Reactions;
   size?: "medium" | "large";
   showEditForm?: () => void;
-  slug?: string;
+  challengeSlug?: string;
 }) {
   const [editSubmition, setEditSubmition] = useState(false);
 
@@ -56,13 +56,14 @@ export default function SubmissionCard({
       .join(" ");
   }
 
-  // console.log(submission)
   return (
     <article
       className={classNames(
         "relative overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow",
         size === "medium" && "max-w-[377px]",
-        submission.is_resolution ? "border-amber-400" : "dark:border-background-600 border-background-200",
+        submission.is_solution
+          ? "border-amber-400"
+          : "dark:border-background-600 border-background-200",
       )}
     >
       <section className="relative overflow-hidden group">
@@ -73,25 +74,23 @@ export default function SubmissionCard({
         >
           <BsGlobe className="text-4xl text-gray-800 dark:text-white" />
         </SubmissionButton>
-        {
-          submission.is_resolution ? (
-            <SubmissionButton
-              link={`/mini-projetos/${slug}/resolucao/codigo`}
-              size={size}
-              position="left"
-            >
-              <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
-            </SubmissionButton>
-          ) : (
-            <SubmissionButton
-              href={submission.fork_url}
-              size={size}
-              position="left"
-            >
-              <BsGithub className="text-4xl text-gray-800 dark:text-white" />
-            </SubmissionButton>
-          )
-        }
+        {submission.is_solution ? (
+          <SubmissionButton
+            link={`/mini-projetos/${challengeSlug}/resolucao/codigo`}
+            size={size}
+            position="left"
+          >
+            <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
+          </SubmissionButton>
+        ) : (
+          <SubmissionButton
+            href={submission.fork_url}
+            size={size}
+            position="left"
+          >
+            <BsGithub className="text-4xl text-gray-800 dark:text-white" />
+          </SubmissionButton>
+        )}
         <img
           src={submission.submission_image_url}
           alt="Screenshot da aplicação submetida"
@@ -109,10 +108,11 @@ export default function SubmissionCard({
         </div>
         <div className="w-full">
           <h4 className="text-xs dark:text-gray-400 font-regular">
-            {submission.is_resolution ? (
-              <span className="text-amber-400">Resolução <b className="text-amber-400">oficial</b> por</span>
-            ) : 
-            (
+            {submission.is_solution ? (
+              <span className="text-amber-400">
+                Resolução <b className="text-amber-400">oficial</b> de
+              </span>
+            ) : (
               <span>Resolução de</span>
             )}
           </h4>
@@ -148,19 +148,18 @@ export default function SubmissionCard({
 }
 
 function SubmissionButton({
-    size,
-    href,
-    children,
-    position,
-    link,
-  } : {
-    size: 'medium' | 'large';
-    href?: string;
-    link?: string;
-    children: React.ReactNode;
-    position: 'left' | 'right';
-  })
-{
+  size,
+  href,
+  children,
+  position,
+  link,
+}: {
+  size: "medium" | "large";
+  href?: string;
+  link?: string;
+  children: React.ReactNode;
+  position: "left" | "right";
+}) {
   const navigate = useNavigate();
 
   function handleRedirect() {
@@ -180,5 +179,5 @@ function SubmissionButton({
     >
       {children}
     </button>
-  )
+  );
 }

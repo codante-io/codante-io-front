@@ -16,18 +16,6 @@ export default function Submissions() {
         </h1>
       </div>
       <div className="container grid justify-center gap-10 lg:grid-cols-3 md:grid-cols-2">
-          <SubmissionCard
-            key={challengeSubmissions[0].id}
-            submission={{...challengeSubmissions[0], is_resolution: true}}
-            user={{
-              is_pro: challengeSubmissions[0].is_pro,
-              avatar_url: challengeSubmissions[0].user_avatar_url,
-              name: challengeSubmissions[0].user_name,
-            }}
-            reactions={challengeSubmissions[0].reactions}
-            size="medium"
-            slug={challenge.slug}
-          />
         {challengeSubmissions.map((submission) => (
           <SubmissionCard
             key={submission.id}
@@ -39,6 +27,7 @@ export default function Submissions() {
             }}
             reactions={submission.reactions}
             size="medium"
+            challengeSlug={challenge.slug}
           />
         ))}
       </div>
