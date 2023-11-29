@@ -81,7 +81,7 @@ export default function SolutionCode() {
       <div className="mt-10 w-full flex md:gap-8 gap-4">
         <a
           className={`dark:bg-[#17212B] flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 justify-between dark:border-background-700 w-full rounded-lg p-5 cursor-pointer`}
-          href={`${solutionSubmission.fork_url}/blob/main/README.md`}
+          href={solutionSubmission.fork_url}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(event) => handleClick(event)}
