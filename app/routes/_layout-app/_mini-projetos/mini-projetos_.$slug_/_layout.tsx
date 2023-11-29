@@ -256,7 +256,7 @@ export default function ChallengeSlug() {
 
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
-      <section className="flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
+      <section className="min-h-[calc(100vh_-_68px)] flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
         <div className="container">
           <div>
             <CardItemDifficulty
@@ -392,12 +392,12 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      <hr className="w-full container dark:border-background-700 border-background-200" />
+      <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
       <section
         id="mini-projects"
-        className="flex justify-center w-full text-gray-800 dark:text-gray-50"
+        className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
       >
-        <div className="container relative -top-12">
+        <div className="container mb-10">
           <ParticipantsSection
             currentUserIsEnrolled={challenge.current_user_is_enrolled}
             participants={participants}

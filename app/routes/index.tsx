@@ -84,7 +84,7 @@ function Headline() {
   return (
     <section
       id="headline"
-      className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_64px)]"
+      className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_68px)]"
     >
       {(!user || (user && !user.is_pro)) && (
         <div className="bg-black w-full border-t border-b border-amber-400 px-0 lg:px-20 py-10 mb-10 md:mb-0">

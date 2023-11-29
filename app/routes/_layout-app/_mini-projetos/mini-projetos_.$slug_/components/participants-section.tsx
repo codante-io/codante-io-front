@@ -18,7 +18,7 @@ export default function ParticipantsSection({
   return (
     <article className={`${className} relative w-full p-4 pt-3 font-inter`}>
       <>
-        <h1 className="flex justify-center mt-24 text-2xl font-light text-center font-lexend">
+        <h1 className="flex justify-center text-2xl font-light text-center font-lexend">
           <ParticipantsCounter
             currentUserIsEnrolled={currentUserIsEnrolled}
             participantsCount={participants?.count}
