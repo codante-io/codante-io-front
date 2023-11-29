@@ -70,7 +70,7 @@ export default function SolutionCode() {
             title="slug"
             src={
               getStackblitzUrl() +
-              `?ctl=1&showSidebar=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`
+              `?&showSidebar=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`
             }
             className="w-full h-full rounded-lg shadow blur-none relative z-10"
           ></iframe>
