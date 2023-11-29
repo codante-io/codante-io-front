@@ -346,7 +346,6 @@ export default function ChallengeSlug() {
                     <Link
                       key={tab.name}
                       to={tab.href}
-                      // reloadDocument={tab.href === "resolucao"}
                       className={classNames(
                         tab.current
                           ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
@@ -373,7 +372,6 @@ export default function ChallengeSlug() {
             <>
               <Overview
                 challenge={challenge}
-                // challengeUser={challengeUser}
                 hasSolution={hasSolution}
                 initialSteps={initialSteps}
               />
@@ -394,7 +392,6 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      {/* <Wave position="top" /> */}
       <hr className="w-full container dark:border-background-700 border-background-200" />
       <section
         id="mini-projects"
