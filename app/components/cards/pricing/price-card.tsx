@@ -23,7 +23,9 @@ export default function PriceCard({
         "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full",
       )}
     >
-      {data?.banner && <CardItemRibbon text={data?.banner} />}
+      {data?.banner && (
+        <CardItemRibbon text={data?.banner} type="black-friday" />
+      )}
 
       <div className="mb-8 card-header">
         <h2

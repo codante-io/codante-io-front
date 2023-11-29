@@ -10,8 +10,9 @@ import type { Reactions } from "~/models/reactions.server";
 import classNames from "~/utils/class-names";
 
 type Submission = {
-  submission_url: string;
-  fork_url: string;
+  submission_url?: string;
+  fork_url?: string;
+  slug?: string;
   submission_image_url: string;
   id: string;
   is_solution?: boolean;
@@ -31,16 +32,25 @@ export default function SubmissionCard({
   showEditForm,
   isEditing,
   challengeSlug,
+  showReactions = true,
+  className,
+  isHomePage = false,
+  footerPadding = "px-4 py-4",
 }: {
+  footerPadding?: string;
+  showReactions?: boolean;
   isEditing?: boolean;
   submission: Submission;
   user: SubmissionUser;
-  reactions: Reactions;
-  size?: "medium" | "large";
+  reactions?: Reactions;
+  size?: "medium" | "large" | "small";
   showEditForm?: () => void;
   challengeSlug?: string;
+  className?: string;
+  isHomePage?: boolean;
 }) {
   const [editSubmition, setEditSubmition] = useState(false);
+  const navigate = useNavigate();
 
   function handleEditSubmition() {
     if (showEditForm) {
@@ -64,41 +74,63 @@ export default function SubmissionCard({
         submission.is_solution
           ? "border-amber-400"
           : "dark:border-background-600 border-background-200",
+        size === "small" && "max-w-[275px]",
+        isHomePage && "cursor-pointer",
+        className,
       )}
+      onClick={() => {
+        if (isHomePage && submission.slug) {
+          return navigate(`/mini-projetos/${submission.slug}`);
+        }
+      }}
     >
       <section className="relative overflow-hidden group">
-        <SubmissionButton
-          href={submission.submission_url}
-          size={size}
-          position="right"
-        >
-          <BsGlobe className="text-4xl text-gray-800 dark:text-white" />
-        </SubmissionButton>
-        {submission.is_solution ? (
-          <SubmissionButton
-            link={`/mini-projetos/${challengeSlug}/resolucao/codigo`}
-            size={size}
-            position="left"
-          >
-            <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
-          </SubmissionButton>
-        ) : (
-          <SubmissionButton
-            href={submission.fork_url}
-            size={size}
-            position="left"
-          >
-            <BsGithub className="text-4xl text-gray-800 dark:text-white" />
-          </SubmissionButton>
+        {!isHomePage && (
+          <>
+            <SubmissionButton
+              href={submission.submission_url}
+              size={size}
+              position="right"
+            >
+              <BsGlobe className="text-4xl text-gray-800 dark:text-white" />
+            </SubmissionButton>
+            {submission.is_solution ? (
+              <SubmissionButton
+                link={`/mini-projetos/${challengeSlug}/resolucao/codigo`}
+                size={size}
+                position="left"
+              >
+                <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
+              </SubmissionButton>
+            ) : (
+              <SubmissionButton
+                href={submission.fork_url}
+                size={size}
+                position="left"
+              >
+                <BsGithub className="text-4xl text-gray-800 dark:text-white" />
+              </SubmissionButton>
+            )}
+          </>
         )}
         <img
           src={submission.submission_image_url}
           alt="Screenshot da aplicação submetida"
-          className="w-full transition-all delay-75 opacity-40 aspect-video blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40"
+          className={classNames(
+            "w-full transition-all delay-75 aspect-video",
+            isHomePage
+              ? "opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100"
+              : "opacity-40 blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40",
+          )}
         />
       </section>
 
-      <footer className="flex items-center justify-between gap-4 px-4 py-4 dark:bg-background-700">
+      <footer
+        className={classNames(
+          footerPadding,
+          "flex items-center justify-between gap-4 dark:bg-background-700",
+        )}
+      >
         <div className="w-10 h-10 flex-none">
           <UserAvatar
             isPro={user.is_pro}
@@ -117,7 +149,7 @@ export default function SubmissionCard({
             )}
           </h4>
           <h3
-            className="font-semibold line-clamp-1"
+            className="font-semibold line-clamp-1 text-gray-700 dark:text-white"
             title={formatName(user.name)}
           >
             {formatName(user.name)}
@@ -136,11 +168,13 @@ export default function SubmissionCard({
               />
             </TooltipWrapper>
           )}
-          <ReactionsButton
-            reactions={reactions}
-            reactableId={submission.id}
-            reactableType="ChallengeUser"
-          />
+          {showReactions && reactions && (
+            <ReactionsButton
+              reactions={reactions}
+              reactableId={submission.id}
+              reactableType="ChallengeUser"
+            />
+          )}
         </div>
       </footer>
     </article>
@@ -154,7 +188,7 @@ function SubmissionButton({
   position,
   link,
 }: {
-  size: "medium" | "large";
+  size: "medium" | "large" | "small";
   href?: string;
   link?: string;
   children: React.ReactNode;

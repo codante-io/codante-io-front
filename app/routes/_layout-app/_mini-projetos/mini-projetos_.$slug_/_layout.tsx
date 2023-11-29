@@ -161,7 +161,6 @@ export default function ChallengeSlug() {
   } = useLoaderData<typeof loader>();
 
   const actionData = useActionData<any>();
-  // const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
@@ -347,7 +346,7 @@ export default function ChallengeSlug() {
                     <Link
                       key={tab.name}
                       to={tab.href}
-                      reloadDocument={tab.href === "resolucao"}
+                      // reloadDocument={tab.href === "resolucao"}
                       className={classNames(
                         tab.current
                           ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"

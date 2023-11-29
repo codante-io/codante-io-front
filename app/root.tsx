@@ -54,6 +54,13 @@ export function meta(args: any) {
 
 export async function loader({ request }: { request: Request }) {
   const userData = (await user({ request })) as User | null;
+
+  // if user is a response, it means that the user is not authenticated
+  // we will return this response to destroy the session cookie
+  if (userData instanceof Response) {
+    return userData;
+  }
+
   return json({
     user: userData,
     ENV: {

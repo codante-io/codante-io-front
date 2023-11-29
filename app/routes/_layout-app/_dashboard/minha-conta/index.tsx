@@ -21,7 +21,7 @@ import { getSubscription } from "~/models/subscription.server";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
-import ProSpanWrapper from "~/components/pro-span-wrapper";
+// import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -61,11 +61,16 @@ export async function action({ request }: { request: Request }) {
 }
 
 export async function loader({ request }: { request: Request }) {
+  const userData = await user({ request });
+
+  if (userData instanceof Response) {
+    return userData;
+  }
+
   await authenticator.isAuthenticated(request, {
     failureRedirect: "/login",
   });
 
-  const userData: User | null = await user({ request });
   const subscription = await getSubscription({ request });
 
   return { user: userData, subscription };
@@ -83,15 +88,22 @@ export default function Conta() {
       : "idle";
 
   const { user, subscription } = useLoaderData<typeof loader>();
-  const actionData = useActionData();
+  const actionData = useActionData<typeof action>();
   const { showSuccessToast } = useToasterWithSound();
-  const changePasswordErrors = actionData?.changePasswordErrors;
-  const changeNameErrors = actionData?.changeNameErrors;
 
-  let isChangeNameSuccess =
-    actionData?.changeName && changeNameStatus === "idle";
-  let isChangePasswordSuccess =
-    actionData?.changePassword && changePasswordStatus === "idle";
+  let changePasswordErrors,
+    changeNameErrors,
+    isChangeNameSuccess,
+    isChangePasswordSuccess;
+
+  if (actionData) {
+    changePasswordErrors = actionData.changePasswordErrors;
+    changeNameErrors = actionData.changeNameErrors;
+
+    isChangeNameSuccess = actionData.changeName && changeNameStatus === "idle";
+    isChangePasswordSuccess =
+      actionData.changePassword && changePasswordStatus === "idle";
+  }
 
   useEffect(() => {
     if (isChangeNameSuccess) {
@@ -187,7 +199,10 @@ function MyAccountSection({
           <div className="mt-8">
             <Switch.Group>
               <Switch.Label className="block mb-2 text-sm font-light text-gray-500 dark:text-gray-400 text-inter">
-                Mostrar Badge PRO <span className="dark:text-gray-500 text-gray-400">(em breve)</span>
+                Mostrar Badge PRO{" "}
+                <span className="dark:text-gray-500 text-gray-400">
+                  (em breve)
+                </span>
               </Switch.Label>
               <Switch
                 disabled
@@ -196,9 +211,7 @@ function MyAccountSection({
                   false ? "bg-blue-600" : "dark:bg-gray-800 bg-gray-200"
                 } relative inline-flex h-6 w-11 items-center rounded-full cursor-not-allowed`}
               >
-                <span className="sr-only">
-                  Mostrar badge PRO
-                </span>
+                <span className="sr-only">Mostrar badge PRO</span>
                 <span
                   className={`${
                     false ? "translate-x-6" : "translate-x-1"
@@ -409,7 +422,7 @@ function BoletoSubscriptionSection({
       </p>
       <p className="mb-2 text-sm font-light text-inter">
         <a
-          href={subscription.boleto_url ?? ''}
+          href={subscription.boleto_url ?? ""}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"

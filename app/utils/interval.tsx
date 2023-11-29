@@ -4,12 +4,12 @@ export function fromSecondsToTimeString(seconds: number): string {
   const secondsLeft = seconds - hours * 3600 - minutes * 60;
 
   return `${hours ? String(hours).padStart(2, "0") + ":" : ""}${
-    minutes ? String(minutes).padStart(2, "0") + ":" : ""
+    minutes ? String(minutes).padStart(2, "0") + ":" : "00:"
   }${String(secondsLeft).padStart(2, "0")}`;
 }
 
 export function fromSecondsToTimeStringWithoutSeconds(
-  seconds: number
+  seconds: number,
 ): string | null {
   if (!seconds) return null;
   const fullString = fromSecondsToTimeString(seconds);
@@ -29,7 +29,7 @@ export function fromSecondsToTimeStringWithoutSeconds(
 }
 
 export function getPublishedDateAndTime(
-  dateString: string | undefined | null
+  dateString: string | undefined | null,
 ): [date: string | null, time: string | null] {
   if (!dateString) return [null, null];
   const date = new Date(dateString);

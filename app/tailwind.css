@@ -1,8 +1,45 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tourney&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.lower-post-list {
+  animation: slide-to-right 120s linear infinite alternate;
+}
+
+@keyframes slide-to-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-65%);
+  }
+}
+
+.upper-post-list {
+  animation: slide-to-left 120s linear infinite alternate;
+}
+
+@keyframes slide-to-left {
+  0% {
+    transform: translateX(-65%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 
 .bg-clip-text {
   -webkit-background-clip: text;
