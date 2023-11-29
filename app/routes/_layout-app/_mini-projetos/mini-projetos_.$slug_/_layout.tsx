@@ -20,7 +20,6 @@ import { BsCloudUpload, BsStars } from "react-icons/bs";
 import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
 import { Error500 } from "~/components/errors/500";
 import NotFound from "~/components/errors/not-found";
-import Wave from "~/components/wave";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 // import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
 import {
@@ -162,7 +161,6 @@ export default function ChallengeSlug() {
   } = useLoaderData<typeof loader>();
 
   const actionData = useActionData<any>();
-  // const user = useUserFromOutletContext();
 
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
@@ -348,7 +346,6 @@ export default function ChallengeSlug() {
                     <Link
                       key={tab.name}
                       to={tab.href}
-                      reloadDocument={tab.href === "resolucao"}
                       className={classNames(
                         tab.current
                           ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
@@ -375,7 +372,6 @@ export default function ChallengeSlug() {
             <>
               <Overview
                 challenge={challenge}
-                challengeUser={challengeUser}
                 hasSolution={hasSolution}
                 initialSteps={initialSteps}
               />
@@ -396,10 +392,10 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      <Wave position="top" />
+      <hr className="w-full container dark:border-background-700 border-background-200" />
       <section
         id="mini-projects"
-        className="flex justify-center w-full text-gray-800 dark:bg-background-700 bg-background-100 dark:text-gray-50"
+        className="flex justify-center w-full text-gray-800 dark:text-gray-50"
       >
         <div className="container relative -top-12">
           <ParticipantsSection

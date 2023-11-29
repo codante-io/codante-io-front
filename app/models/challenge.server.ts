@@ -71,6 +71,7 @@ export type ChallengeSubmission = {
   submission_image_url: string;
   reactions: Reactions;
   is_pro: boolean;
+  is_solution: boolean;
 };
 
 export async function getChallenges(
