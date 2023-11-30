@@ -41,7 +41,7 @@ export default function Resolution() {
           <article
             className={`w-full flex flex-col-reverse md:flex-row items-center justify-between cursor-pointer dark:bg-[#17212B] shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 dark:border-background-700 px-4 py-4 md:py-10 sm:px-10 rounded-2xl gap-4 md:gap-0`}
             onClick={() =>
-              navigate(`/mini-projetos/${challenge?.slug}/resolucao/codigo`)
+              navigate(`/mini-projetos/${challenge?.slug}/resolucao-codigo`)
             }
           >
             <p className="flex flex-col text-center md:text-left">

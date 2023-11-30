@@ -96,7 +96,7 @@ export default function SubmissionCard({
             </SubmissionButton>
             {submission.is_solution ? (
               <SubmissionButton
-                link={`/mini-projetos/${challengeSlug}/resolucao/codigo`}
+                link={`/mini-projetos/${challengeSlug}/resolucao-codigo`}
                 size={size}
                 position="left"
               >
