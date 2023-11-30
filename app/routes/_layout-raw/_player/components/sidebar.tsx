@@ -52,8 +52,6 @@ export default function Sidebar({
                 }`}
                 className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:flex lg:items-center hover:bg-gray-200 dark:hover:bg-background-700"
               >
-                {/* <TiArrowBackOutline className="text-gray-600 dark:text-gray-500 text-xl" /> */}
-
                 <span className="flex items-center gap-1 text-sm font-light text-gray-600 dark:text-gray-500 font-lexend">
                   <span className="text-lg">&larr;</span>
                   Voltar
