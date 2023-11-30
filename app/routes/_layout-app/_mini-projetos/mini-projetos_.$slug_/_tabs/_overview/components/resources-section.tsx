@@ -43,7 +43,7 @@ export default function ResourcesSection({
           target="_blank"
           rel="noreferrer"
         >
-          <article className="mt-4 group relative w-full bg-white dark:bg-background-800 shadow-md rounded-lg p-4 pt-3 font-inter border-[1.5px] border-gray-300 hover:border-brand-300 dark:hover:border-brand-300 dark:border-slate-600 transition-colors">
+          <article className="mt-4 group relative w-full bg-white dark:bg-background-800 shadow-md rounded-lg p-4 font-inter border-[1.5px] border-gray-300 hover:border-brand-300 dark:hover:border-brand-300 dark:border-slate-600 transition-colors">
             <section className="flex items-center">
               <Icon resource={resource} />
               <p className="flex items-center gap-2 font-extralight ">
