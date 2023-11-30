@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import Markdown from "markdown-to-jsx";
 import { Highlight, themes } from "prism-react-renderer";
-import type { ReactElement } from "react";
+import { type ReactElement } from "react";
 import slugify from "slugify";
 import { useColorMode } from "~/contexts/color-mode-context";
 import type { ColorMode } from "~/utils/dark-mode";
@@ -78,6 +78,14 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
     props: {
       className:
         "dark:bg-background-700 bg-background-200 p-4 rounded-lg my-10",
+    },
+  },
+
+  blockquote: {
+    props: {
+      style: {
+        quotes: "none",
+      },
     },
   },
 
