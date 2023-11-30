@@ -1,7 +1,6 @@
 import { useClickOutside } from "@mantine/hooks";
 import { Link } from "@remix-run/react";
 import { BsXLg } from "react-icons/bs";
-import { TiArrowBackOutline } from "react-icons/ti";
 import type { User } from "~/models/user.server";
 import type { Workshop } from "~/models/workshop.server";
 import CodanteLogoMinimal from "./codante-logo-minimal";
@@ -53,8 +52,10 @@ export default function Sidebar({
                 }`}
                 className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:flex lg:items-center hover:bg-gray-200 dark:hover:bg-background-700"
               >
-                <TiArrowBackOutline className="text-gray-600 dark:text-gray-500" />
-                <span className="text-sm text-gray-600 dark:text-gray-500 font-lexend">
+                {/* <TiArrowBackOutline className="text-gray-600 dark:text-gray-500 text-xl" /> */}
+
+                <span className="flex items-center gap-1 text-sm font-light text-gray-600 dark:text-gray-500 font-lexend">
+                  <span className="text-lg">&larr;</span>
                   Voltar
                 </span>
               </Link>
