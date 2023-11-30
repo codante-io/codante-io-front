@@ -49,11 +49,14 @@ export default function Sidebar({
             ) : (
               <Link
                 to={`/${isChallenge ? "mini-projetos" : "workshops"}/${
-                  isChallenge ? challenge?.slug : workshop.slug
+                  isChallenge ? `${challenge?.slug}/resolucao` : workshop.slug
                 }`}
-                className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:block hover:bg-gray-200 dark:hover:bg-background-700"
+                className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:flex lg:items-center hover:bg-gray-200 dark:hover:bg-background-700"
               >
                 <TiArrowBackOutline className="text-gray-600 dark:text-gray-500" />
+                <span className="text-sm text-gray-600 dark:text-gray-500 font-lexend">
+                  Voltar
+                </span>
               </Link>
             )}
           </div>
