@@ -108,7 +108,7 @@ function Headline() {
                 .
               </p>
               <p className="text-gray-400 mt-4 text-sm">
-                Preço exclusivo para essa Black Friday!{" "}
+                Preço exclusivo até essa sexta-feira 01/12!{" "}
               </p>
             </div>
             <Link to="/assine" className="w-fit inline-block">
