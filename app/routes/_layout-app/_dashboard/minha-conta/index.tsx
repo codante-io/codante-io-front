@@ -1,6 +1,7 @@
 import {
   Form,
   useActionData,
+  useFetcher,
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
@@ -10,10 +11,9 @@ import Input from "~/components/form/input";
 import LoadingButton from "~/components/form/loading-button";
 import ProBadge from "~/components/pro-badge";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { user } from "~/services/auth.server";
 import { authenticator } from "~/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
-import { changeName, changePassword } from "./services.server";
+import { changeName, changePassword, changeSettings } from "./services.server";
 import type { User } from "~/models/user.server";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
 import type { Subscription } from "~/models/subscription.server";
@@ -21,6 +21,7 @@ import { getSubscription } from "~/models/subscription.server";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
+import { user } from "~/services/auth.server";
 // import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export async function action({ request }: { request: Request }) {
@@ -55,6 +56,10 @@ export async function action({ request }: { request: Request }) {
     return {
       changePassword: true,
     };
+  }
+  if (intent === "showBadge") {
+    const showBadge = formData.get("showBadge") === "true";
+    await changeSettings({ request, showBadge });
   }
 
   return null;
@@ -156,10 +161,19 @@ function MyAccountSection({
   changeNameErrors,
   changeNameStatus,
 }: {
-  user?: User | null;
+  user: User;
   changeNameErrors?: string;
   changeNameStatus: "idle" | "loading" | "submitting";
 }) {
+  const fetcher = useFetcher();
+
+  function handleShowBadge(value: boolean) {
+    fetcher.submit(
+      { intent: "showBadge", showBadge: value },
+      { method: "post" },
+    );
+  }
+
   return (
     <>
       <h2 className="flex items-center mt-12 text-xl">
@@ -205,16 +219,21 @@ function MyAccountSection({
                 </span>
               </Switch.Label>
               <Switch
-                disabled
-                checked={false}
+                disabled={!user.is_pro}
+                checked={!!user.is_pro && !!user.avatar.badge}
+                onChange={(value) => handleShowBadge(value)}
                 className={`${
-                  false ? "bg-blue-600" : "dark:bg-gray-800 bg-gray-200"
-                } relative inline-flex h-6 w-11 items-center rounded-full cursor-not-allowed`}
+                  !!user.is_pro && !!user.avatar.badge
+                    ? "bg-brand-500"
+                    : "bg-gray-700"
+                } relative inline-flex h-6 w-11 items-center rounded-full`}
               >
-                <span className="sr-only">Mostrar badge PRO</span>
+                <span className="sr-only">Enable notifications</span>
                 <span
                   className={`${
-                    false ? "translate-x-6" : "translate-x-1"
+                    !!user.is_pro && !!user.avatar.badge
+                      ? "translate-x-6"
+                      : "translate-x-1"
                   } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                 />
               </Switch>

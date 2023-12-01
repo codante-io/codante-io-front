@@ -11,6 +11,11 @@ export type User = {
   updated_at?: string;
   is_pro: boolean;
   avatar: UserAvatar;
+  settings: UserSettings | null;
+};
+
+export type UserSettings = {
+  show_badge: boolean;
 };
 
 export type ChallengeUser = {
