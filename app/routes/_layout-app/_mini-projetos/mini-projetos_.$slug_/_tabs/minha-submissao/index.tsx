@@ -17,6 +17,7 @@ import UpdateSubmissionForm from "./UpdateSubmissionForm";
 import { useState } from "react";
 import { Transition } from "@headlessui/react";
 import Button from "~/components/form/button";
+import getUserRole from "~/utils/get-user-role";
 
 //action submit challenge
 export async function action({
@@ -82,7 +83,10 @@ export default function MySubmission() {
       {userSubmission ? (
         <SubmissionCard
           submission={{ id: userSubmission.id, ...challengeUser.pivot }}
-          user={challengeUser}
+          user={{
+            ...challengeUser,
+            role: getUserRole(challengeUser) as "pro" | "admin",
+          }}
           reactions={userSubmission?.reactions}
           showEditForm={toggleShowEditForm}
           isEditing={showEditFormState}

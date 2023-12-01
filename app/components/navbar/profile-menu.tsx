@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import type { User } from "~/models/user.server";
 import classNames from "~/utils/class-names";
 import UserAvatar from "../user-avatar";
+import getUserRole from "~/utils/get-user-role";
 
 export default function ProfileMenu({ user }: { user: User }) {
   return (
@@ -15,7 +16,7 @@ export default function ProfileMenu({ user }: { user: User }) {
           {user?.avatar_url ? (
             <UserAvatar
               avatarUrl={user?.avatar_url}
-              isPro={user?.is_pro}
+              role={getUserRole(user)}
               className="w-8 h-8"
               showTooltip={false}
             />
@@ -48,7 +49,7 @@ export default function ProfileMenu({ user }: { user: User }) {
                 to="/minha-conta"
                 className={classNames(
                   active ? "dark:bg-background-800/50 bg-background-50" : "",
-                  "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700"
+                  "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700",
                 )}
               >
                 Minha Conta
@@ -61,7 +62,7 @@ export default function ProfileMenu({ user }: { user: User }) {
                 <button
                   className={classNames(
                     active ? "dark:bg-background-800/50 bg-background-50" : "",
-                    "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700 w-full text-left"
+                    "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700 w-full text-left",
                   )}
                 >
                   Sair

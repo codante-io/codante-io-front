@@ -35,6 +35,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import ProSpanWrapper from "~/components/pro-span-wrapper";
+import getUserRole from "~/utils/get-user-role";
 
 export const loader = async () => {
   return json({
@@ -223,7 +224,7 @@ function Headline() {
                   <UserAvatar
                     avatarUrl={user.avatar_url}
                     className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                    isPro={user.is_pro}
+                    role={getUserRole(user)}
                   />
                 )}
                 {user
@@ -235,7 +236,7 @@ function Headline() {
                           key={index}
                           avatarUrl={info.avatar_url}
                           className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                          isPro={info.is_pro}
+                          role={getUserRole(info)}
                         />
                       ))
                   : avatarSection.avatars.map((info, index) => (
@@ -243,7 +244,7 @@ function Headline() {
                         key={index}
                         avatarUrl={info.avatar_url}
                         className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                        isPro={info.is_pro}
+                        role={getUserRole(info)}
                       />
                     ))}
               </div>

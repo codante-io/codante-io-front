@@ -11,6 +11,7 @@ import {
 import classNames from "~/utils/class-names";
 import UserAvatar from "~/components/user-avatar";
 import { metaV1 } from "@remix-run/v1-meta";
+import getUserRole from "~/utils/get-user-role";
 
 // meta function
 export function meta(args: any) {
@@ -103,7 +104,7 @@ export default function RankingList() {
                   <UserAvatar
                     avatarUrl={user.avatar_url}
                     className="w-10 h-10"
-                    isPro={user.is_pro}
+                    role={getUserRole(user)}
                   />
                   <span className="text-xl font-semibold text-gray-800 dark:text-white">
                     {user.name}

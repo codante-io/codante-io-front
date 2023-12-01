@@ -72,6 +72,7 @@ export type ChallengeSubmission = {
   reactions: Reactions;
   is_pro: boolean;
   is_solution: boolean;
+  is_admin: boolean;
 };
 
 export async function getChallenges(

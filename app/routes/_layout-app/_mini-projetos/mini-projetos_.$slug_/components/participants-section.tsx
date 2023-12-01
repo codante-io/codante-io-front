@@ -1,19 +1,20 @@
 import UserAvatar from "~/components/user-avatar";
 import type { ChallengeParticipants } from "~/models/challenge.server";
 import ParticipantsCounter from "./participants-counter";
+import getUserRole from "~/utils/get-user-role";
 
 export default function ParticipantsSection({
   className = "",
   participants,
   userAvatar,
   currentUserIsEnrolled,
-  currentUserIsPro,
+  currentUserRole,
 }: {
   className?: string;
   participants: ChallengeParticipants;
   userAvatar?: string;
   currentUserIsEnrolled: boolean;
-  currentUserIsPro?: boolean;
+  currentUserRole?: "pro" | "admin";
 }) {
   return (
     <article className={`${className} relative w-full p-4 pt-3 font-inter`}>
@@ -30,7 +31,7 @@ export default function ParticipantsSection({
               <UserAvatar
                 avatarUrl={userAvatar}
                 className="w-16 h-16"
-                isPro={currentUserIsPro}
+                role={currentUserRole}
               />
             )}
             {currentUserIsEnrolled
@@ -41,7 +42,7 @@ export default function ParticipantsSection({
                       key={index}
                       avatarUrl={info.avatar_url}
                       className="w-16 h-16"
-                      isPro={info.is_pro}
+                      role={getUserRole(info)}
                     />
                   ))
               : participants?.avatars.map((info, index) => (
@@ -49,7 +50,7 @@ export default function ParticipantsSection({
                     key={index}
                     avatarUrl={info.avatar_url}
                     className="w-16 h-16"
-                    isPro={info.is_pro}
+                    role={getUserRole(info)}
                   />
                 ))}
           </div>

@@ -39,6 +39,7 @@ import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { User } from "~/models/user.server";
+import getUserRole from "~/utils/get-user-role";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -402,7 +403,7 @@ export default function ChallengeSlug() {
             currentUserIsEnrolled={challenge.current_user_is_enrolled}
             participants={participants}
             userAvatar={user?.avatar_url}
-            currentUserIsPro={user?.is_pro}
+            currentUserRole={getUserRole(user)}
           />
         </div>
       </section>

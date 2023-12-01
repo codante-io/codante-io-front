@@ -19,7 +19,7 @@ type Submission = {
 };
 
 type SubmissionUser = {
-  is_pro: boolean;
+  role: "pro" | "admin";
   avatar_url?: string;
   name: string;
 };
@@ -133,7 +133,7 @@ export default function SubmissionCard({
       >
         <div className="w-10 h-10 flex-none">
           <UserAvatar
-            isPro={user.is_pro}
+            role={user.role}
             avatarUrl={user.avatar_url}
             className="w-10 h-10 flex-shrink-0"
           />

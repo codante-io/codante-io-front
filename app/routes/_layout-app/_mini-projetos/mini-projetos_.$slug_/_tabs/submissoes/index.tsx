@@ -1,6 +1,7 @@
 import { useOutletContext } from "@remix-run/react";
 import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
 import SubmissionCard from "../../components/submission-card";
+import getUserRole from "~/utils/get-user-role";
 
 export default function Submissions() {
   const { challengeSubmissions, challenge } = useOutletContext<{
@@ -21,7 +22,7 @@ export default function Submissions() {
             key={submission.id}
             submission={submission}
             user={{
-              is_pro: submission.is_pro,
+              role: getUserRole(submission) as "pro" | "admin",
               avatar_url: submission.user_avatar_url,
               name: submission.user_name,
             }}

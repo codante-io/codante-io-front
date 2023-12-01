@@ -8,6 +8,7 @@ import TooltipWrapper from "../tooltip";
 import type { User } from "~/models/user.server";
 import classNames from "~/utils/class-names";
 import UserAvatar from "../user-avatar";
+import getUserRole from "~/utils/get-user-role";
 
 export default function ChallengeCard({
   challenge,
@@ -90,7 +91,7 @@ export default function ChallengeCard({
                 {challenge.current_user_is_enrolled && loggedUser && (
                   <UserAvatar
                     avatarUrl={loggedUser.avatar_url}
-                    isPro={loggedUser.is_pro}
+                    role={getUserRole(loggedUser)}
                     cursor="cursor-pointer"
                   />
                 )}
@@ -102,7 +103,7 @@ export default function ChallengeCard({
                       .slice(0, 4)
                       .map((user, index) => (
                         <UserAvatar
-                          isPro={user.is_pro}
+                          role={getUserRole(user)}
                           key={index}
                           avatarUrl={user.avatar_url}
                           cursor="cursor-pointer"
@@ -110,7 +111,7 @@ export default function ChallengeCard({
                       ))
                   : challenge?.users?.map((user, index) => (
                       <UserAvatar
-                        isPro={user.is_pro}
+                        role={getUserRole(user)}
                         key={index}
                         avatarUrl={user.avatar_url}
                         cursor="cursor-pointer"
