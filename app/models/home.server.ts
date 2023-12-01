@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeCard } from "./challenge.server";
+import type { UserAvatar } from "./user.server";
 
 export type HomeInfo = {
   featured_testimonials: {
@@ -14,21 +15,14 @@ export type HomeInfo = {
   featured_submissions: {
     id: string;
     submission_image_url: string;
-    user_avatar: {
-      avatar_url: string;
-      is_pro: boolean;
-      name: string;
-    };
+    avatar: UserAvatar;
     challenge: {
       name?: string;
       slug: string;
     };
   }[];
   avatar_section: {
-    avatars: {
-      avatar_url: string;
-      is_pro: boolean;
-    }[];
+    avatars: UserAvatar[];
     user_count: number;
   };
   live_streaming_workshop: {

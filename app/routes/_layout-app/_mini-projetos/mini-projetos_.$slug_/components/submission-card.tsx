@@ -6,28 +6,19 @@ import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/reactions-button";
 import TooltipWrapper from "~/components/tooltip";
 import UserAvatar from "~/components/user-avatar";
-import type { Reactions } from "~/models/reactions.server";
+import type {
+  UserAvatar as UserAvatarType,
+  ChallengeUser,
+} from "~/models/user.server";
 import classNames from "~/utils/class-names";
 
-type Submission = {
-  submission_url?: string;
-  fork_url?: string;
-  slug?: string;
-  submission_image_url: string;
+type RequiredChallengeUserProps = {
+  avatar: UserAvatarType;
   id: string;
-  is_solution?: boolean;
-};
-
-type SubmissionUser = {
-  role: "pro" | "admin";
-  avatar_url?: string;
-  name: string;
 };
 
 export default function SubmissionCard({
-  submission,
-  user,
-  reactions,
+  challengeUser,
   size = "large",
   showEditForm,
   isEditing,
@@ -40,9 +31,7 @@ export default function SubmissionCard({
   footerPadding?: string;
   showReactions?: boolean;
   isEditing?: boolean;
-  submission: Submission;
-  user: SubmissionUser;
-  reactions?: Reactions;
+  challengeUser: RequiredChallengeUserProps & Partial<ChallengeUser>;
   size?: "medium" | "large" | "small";
   showEditForm?: () => void;
   challengeSlug?: string;
@@ -71,7 +60,7 @@ export default function SubmissionCard({
       className={classNames(
         "relative overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow",
         size === "medium" && "max-w-[377px]",
-        submission.is_solution
+        challengeUser.is_solution
           ? "border-amber-400"
           : "dark:border-background-600 border-background-200",
         size === "small" && "max-w-[275px]",
@@ -79,8 +68,8 @@ export default function SubmissionCard({
         className,
       )}
       onClick={() => {
-        if (isHomePage && submission.slug) {
-          return navigate(`/mini-projetos/${submission.slug}`);
+        if (isHomePage && challengeSlug) {
+          return navigate(`/mini-projetos/${challengeSlug}`);
         }
       }}
     >
@@ -88,13 +77,13 @@ export default function SubmissionCard({
         {!isHomePage && (
           <>
             <SubmissionButton
-              href={submission.submission_url}
+              href={challengeUser.submission_url}
               size={size}
               position="right"
             >
               <BsGlobe className="text-4xl text-gray-800 dark:text-white" />
             </SubmissionButton>
-            {submission.is_solution ? (
+            {challengeUser.is_solution ? (
               <SubmissionButton
                 link={`/mini-projetos/${challengeSlug}/resolucao-codigo`}
                 size={size}
@@ -104,7 +93,7 @@ export default function SubmissionCard({
               </SubmissionButton>
             ) : (
               <SubmissionButton
-                href={submission.fork_url}
+                href={challengeUser.fork_url ?? ""}
                 size={size}
                 position="left"
               >
@@ -114,7 +103,7 @@ export default function SubmissionCard({
           </>
         )}
         <img
-          src={submission.submission_image_url}
+          src={challengeUser.submission_image_url}
           alt="Screenshot da aplicação submetida"
           className={classNames(
             "w-full transition-all delay-75 aspect-video",
@@ -133,14 +122,13 @@ export default function SubmissionCard({
       >
         <div className="w-10 h-10 flex-none">
           <UserAvatar
-            role={user.role}
-            avatarUrl={user.avatar_url}
+            avatar={challengeUser.avatar}
             className="w-10 h-10 flex-shrink-0"
           />
         </div>
         <div className="w-full">
           <h4 className="text-xs dark:text-gray-400 font-regular">
-            {submission.is_solution ? (
+            {challengeUser.is_solution ? (
               <span className="text-amber-400">
                 Resolução <b className="text-amber-400">oficial</b> de
               </span>
@@ -150,9 +138,9 @@ export default function SubmissionCard({
           </h4>
           <h3
             className="font-semibold line-clamp-1 text-gray-700 dark:text-white"
-            title={formatName(user.name)}
+            title={formatName(challengeUser.avatar.name)}
           >
-            {formatName(user.name)}
+            {formatName(challengeUser.avatar.name)}
           </h3>
         </div>
         <div className="flex items-center gap-x-4">
@@ -168,10 +156,10 @@ export default function SubmissionCard({
               />
             </TooltipWrapper>
           )}
-          {showReactions && reactions && (
+          {showReactions && challengeUser.reactions && (
             <ReactionsButton
-              reactions={reactions}
-              reactableId={submission.id}
+              reactions={challengeUser.reactions}
+              reactableId={challengeUser.id}
               reactableType="ChallengeUser"
             />
           )}

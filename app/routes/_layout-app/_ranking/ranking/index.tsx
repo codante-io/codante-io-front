@@ -11,7 +11,6 @@ import {
 import classNames from "~/utils/class-names";
 import UserAvatar from "~/components/user-avatar";
 import { metaV1 } from "@remix-run/v1-meta";
-import getUserRole from "~/utils/get-user-role";
 
 // meta function
 export function meta(args: any) {
@@ -26,16 +25,16 @@ export async function loader({ request }: { request: Request }) {
   // get montly query parameter
   const monthly = new URL(request.url).searchParams.get("monthly");
 
-  const ranking = await getRanking(monthly);
+  const rankingUsers = await getRanking(monthly);
 
   return json({
-    ranking,
+    rankingUsers,
   });
 }
 
 export default function RankingList() {
   const loaderData = useLoaderData<typeof loader>();
-  const ranking = loaderData.ranking;
+  const rankingUsers = loaderData.rankingUsers;
   let [searchParams] = useSearchParams();
 
   // get search params
@@ -80,7 +79,7 @@ export default function RankingList() {
         </Link>
       </section>
       <ul className="flex flex-col gap-4">
-        {ranking?.map((user, index) => (
+        {rankingUsers?.map((rankingUser, index) => (
           <li
             key={index}
             className="relative w-full p-1 overflow-hidden min-h-[100px] h-64 md:h-auto group/border rounded-xl"
@@ -102,12 +101,11 @@ export default function RankingList() {
                 </div>
                 <div className="flex items-center gap-4">
                   <UserAvatar
-                    avatarUrl={user.avatar_url}
+                    avatar={rankingUser.avatar}
                     className="w-10 h-10"
-                    role={getUserRole(user)}
                   />
                   <span className="text-xl font-semibold text-gray-800 dark:text-white">
-                    {user.name}
+                    {rankingUser.avatar.name}
                   </span>
                 </div>
               </div>
@@ -115,7 +113,7 @@ export default function RankingList() {
                 <div className="flex flex-col items-end w-20 gap-1 line-clamp-2">
                   <span className="flex items-center text-xl">
                     <BsTools className="inline-block w-4 h-4 mr-2 text-brand-500" />
-                    {user.completed_challenge_count}
+                    {rankingUser.completed_challenge_count}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400 text-end">
                     mini-projetos concluídos
@@ -124,7 +122,7 @@ export default function RankingList() {
                 <div className="flex flex-col items-end w-20 gap-1 line-clamp-2">
                   <span className="flex items-center text-xl">
                     <BsFillHeartFill className="inline-block w-4 h-4 mr-2 text-brand-500" />
-                    {user.received_reaction_count}
+                    {rankingUser.received_reaction_count}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400 text-end">
                     reações recebidas
@@ -133,7 +131,7 @@ export default function RankingList() {
                 <div className="w-[0.5px] h-12 bg-gray-400 dark:bg-gray-700 mx-4"></div>
 
                 <div className="flex flex-col items-end justify-end gap-1">
-                  <span className="text-3xl">{user.points}</span>
+                  <span className="text-3xl">{rankingUser.points}</span>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
                     pontos
                   </span>

@@ -25,7 +25,7 @@ import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 import {
   getChallenge,
   getChallengeParticipants,
-  getChallengeSubmissions,
+  getChallengeUsers,
   joinChallenge,
   updateChallengeCompleted,
   updateUserJoinedDiscord,
@@ -39,7 +39,6 @@ import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { User } from "~/models/user.server";
-import getUserRole from "~/utils/get-user-role";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -112,10 +111,10 @@ export async function action({ request }: { request: Request }) {
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
 
-  const [challenge, participants, challengeSubmissions] = await Promise.all([
+  const [challenge, participants, challengeUsers] = await Promise.all([
     getChallenge(params.slug, request),
     getChallengeParticipants(params.slug),
-    getChallengeSubmissions(request, params.slug),
+    getChallengeUsers(request, params.slug),
   ]);
 
   if (!challenge) {
@@ -142,7 +141,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     participants,
 
     challengeUser,
-    challengeSubmissions,
+    challengeUsers,
     initialSteps: buildInitialSteps({
       user,
       challengeUser,
@@ -157,7 +156,7 @@ export default function ChallengeSlug() {
     participants,
     initialSteps,
     challengeUser,
-    challengeSubmissions,
+    challengeUsers,
     user,
   } = useLoaderData<typeof loader>();
 
@@ -171,7 +170,7 @@ export default function ChallengeSlug() {
   );
 
   const hasSubmissions = Boolean(
-    challengeSubmissions?.length && challengeSubmissions.length > 0,
+    challengeUsers?.length && challengeUsers.length > 0,
   );
 
   const isUserParticipating = Boolean(challengeUser?.id);
@@ -383,7 +382,7 @@ export default function ChallengeSlug() {
                 user,
                 challenge,
                 challengeUser,
-                challengeSubmissions,
+                challengeUsers,
                 participants,
                 initialSteps,
                 hasSolution,
@@ -402,8 +401,7 @@ export default function ChallengeSlug() {
           <ParticipantsSection
             currentUserIsEnrolled={challenge.current_user_is_enrolled}
             participants={participants}
-            userAvatar={user?.avatar_url}
-            currentUserRole={getUserRole(user)}
+            avatar={user?.avatar ?? null}
           />
         </div>
       </section>

@@ -5,7 +5,6 @@ import { Fragment } from "react";
 import type { User } from "~/models/user.server";
 import classNames from "~/utils/class-names";
 import UserAvatar from "../user-avatar";
-import getUserRole from "~/utils/get-user-role";
 
 export default function ProfileMenu({ user }: { user: User }) {
   return (
@@ -13,10 +12,9 @@ export default function ProfileMenu({ user }: { user: User }) {
       <div>
         <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
           <span className="sr-only">Open user menu</span>
-          {user?.avatar_url ? (
+          {user?.avatar.avatar_url ? (
             <UserAvatar
-              avatarUrl={user?.avatar_url}
-              role={getUserRole(user)}
+              avatar={user.avatar}
               className="w-8 h-8"
               showTooltip={false}
             />
