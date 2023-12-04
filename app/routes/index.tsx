@@ -221,29 +221,29 @@ function Headline() {
               <div className="flex lg:justify-start justify-center flex-wrap -space-x-3">
                 {user && (
                   <UserAvatar
-                    avatarUrl={user.avatar_url}
+                    avatar={user.avatar}
                     className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                    isPro={user.is_pro}
                   />
                 )}
                 {user
                   ? avatarSection.avatars
-                      .filter((info) => info.avatar_url !== user.avatar_url)
+                      .filter(
+                        (avatar) =>
+                          avatar.avatar_url !== user.avatar.avatar_url,
+                      )
                       .slice(0, 15)
-                      .map((info, index) => (
+                      .map((avatar, index) => (
                         <UserAvatar
                           key={index}
-                          avatarUrl={info.avatar_url}
+                          avatar={avatar}
                           className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                          isPro={info.is_pro}
                         />
                       ))
-                  : avatarSection.avatars.map((info, index) => (
+                  : avatarSection.avatars.map((avatar, index) => (
                       <UserAvatar
                         key={index}
-                        avatarUrl={info.avatar_url}
+                        avatar={avatar}
                         className="xl:w-9 xl:h-9 lg:h-[30px] lg:w-[30px] w-9 h-9"
-                        isPro={info.is_pro}
                       />
                     ))}
               </div>
@@ -389,16 +389,8 @@ function Submissions() {
                 footerPadding="px-2 py-2"
                 key={index}
                 isHomePage
-                submission={{
-                  submission_image_url: submission.submission_image_url,
-                  id: submission.id,
-                  slug: submission.challenge.slug,
-                }}
-                user={{
-                  is_pro: submission.user_avatar.is_pro,
-                  avatar_url: submission.user_avatar.avatar_url,
-                  name: submission.user_avatar.name,
-                }}
+                challengeUser={submission}
+                challengeSlug={submission.challenge.slug}
                 showReactions={false}
                 size="small"
                 className="flex-shrink-0"
@@ -412,16 +404,8 @@ function Submissions() {
                 footerPadding="px-2 py-2"
                 key={index}
                 isHomePage
-                submission={{
-                  submission_image_url: submission.submission_image_url,
-                  id: submission.id,
-                  slug: submission.challenge.slug,
-                }}
-                user={{
-                  is_pro: submission.user_avatar.is_pro,
-                  avatar_url: submission.user_avatar.avatar_url,
-                  name: submission.user_avatar.name,
-                }}
+                challengeUser={submission}
+                challengeSlug={submission.challenge.slug}
                 showReactions={false}
                 size="small"
                 className="flex-shrink-0"

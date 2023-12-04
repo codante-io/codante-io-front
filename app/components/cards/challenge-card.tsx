@@ -89,30 +89,28 @@ export default function ChallengeCard({
               <div className="flex -space-x-3 overflow-hidden">
                 {challenge.current_user_is_enrolled && loggedUser && (
                   <UserAvatar
-                    avatarUrl={loggedUser.avatar_url}
-                    isPro={loggedUser.is_pro}
+                    avatar={loggedUser.avatar}
                     cursor="cursor-pointer"
                   />
                 )}
                 {challenge.current_user_is_enrolled
-                  ? challenge?.users
+                  ? challenge?.avatars
                       ?.filter(
-                        (user) => user.avatar_url !== loggedUser?.avatar_url,
+                        (avatar) =>
+                          avatar.avatar_url !== loggedUser?.avatar.avatar_url,
                       )
                       .slice(0, 4)
-                      .map((user, index) => (
+                      .map((avatar, index) => (
                         <UserAvatar
-                          isPro={user.is_pro}
                           key={index}
-                          avatarUrl={user.avatar_url}
+                          avatar={avatar}
                           cursor="cursor-pointer"
                         />
                       ))
-                  : challenge?.users?.map((user, index) => (
+                  : challenge?.avatars?.map((avatar, index) => (
                       <UserAvatar
-                        isPro={user.is_pro}
                         key={index}
-                        avatarUrl={user.avatar_url}
+                        avatar={avatar}
                         cursor="cursor-pointer"
                       />
                     ))}

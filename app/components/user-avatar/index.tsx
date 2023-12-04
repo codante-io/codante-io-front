@@ -1,41 +1,48 @@
+import type { UserAvatar } from "~/models/user.server";
 import TooltipWrapper from "../tooltip";
 
 export default function UserAvatar({
-  avatarUrl,
+  avatar,
   className = "w-7 h-7 m-[2px]",
-  isPro = false,
   showTooltip = true,
   cursor = "cursor-default",
 }: {
   key?: number;
-  avatarUrl?: string;
+  avatar: UserAvatar;
   className?: string;
-  isPro?: boolean;
   showTooltip?: boolean;
   cursor?: string;
 }) {
-  if (isPro) {
+  if (avatar.badge) {
     return (
       <>
         {showTooltip ? (
           <TooltipWrapper
-            text="PRO"
+            text={avatar.badge === "pro" ? "PRO" : "Equipe"}
             side="bottom"
             cursor={cursor}
             padding="px-2 py-1"
-            bgColor="bg-gray-50 dark:bg-background-800 border border-amber-400"
-            arrowColor="fill-amber-400"
+            bgColor={`bg-gray-50 dark:bg-background-800 border ${
+              avatar.badge === "pro" ? "border-amber-400" : "border-brand-500"
+            }`}
+            arrowColor={`${
+              avatar.badge === "pro" ? "fill-amber-400" : "fill-brand-500"
+            }`}
           >
             <img
-              className={`${className} ring-amber-400 ring-2 rounded-full`}
-              src={avatarUrl || "https://source.boringavatars.com/"}
+              className={`${className} ${
+                avatar.badge === "pro" ? "ring-amber-400" : "ring-brand-500"
+              } ring-2 rounded-full`}
+              src={avatar.avatar_url || "https://source.boringavatars.com/"}
               alt="Avatar do usuário"
             />
           </TooltipWrapper>
         ) : (
           <img
-            className={`${className} ring-2 ring-amber-400 rounded-full`}
-            src={avatarUrl || "https://source.boringavatars.com/"}
+            className={`${className} ring-2 ${
+              avatar.badge === "pro" ? "ring-amber-400" : "ring-brand-500"
+            } rounded-full`}
+            src={avatar.avatar_url || "https://source.boringavatars.com/"}
             alt="Avatar do usuário"
           />
         )}
@@ -45,7 +52,7 @@ export default function UserAvatar({
   return (
     <img
       className={`${className} rounded-full ring-2 ring-white dark:ring-gray-800`}
-      src={avatarUrl || "https://source.boringavatars.com/"}
+      src={avatar.avatar_url || "https://source.boringavatars.com/"}
       alt="Avatar do usuário"
     />
   );

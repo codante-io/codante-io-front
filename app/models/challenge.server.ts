@@ -1,8 +1,8 @@
 import axios from "axios";
-import type { Reactions } from "~/models/reactions.server";
 import { currentToken } from "~/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
+import type { ChallengeUser, UserAvatar } from "./user.server";
 
 export type Challenge = {
   id: string;
@@ -48,7 +48,7 @@ export type ChallengeCard = {
   difficulty: 1 | 2 | 3;
   tags: Tag[];
   has_solution: boolean;
-  users?: { avatar_url: string; is_pro: boolean }[];
+  avatars: UserAvatar[];
   enrolled_users_count: number;
   current_user_is_enrolled: boolean;
   weekly_featured_start_date: string | null;
@@ -58,20 +58,7 @@ export type ChallengeCard = {
 
 export type ChallengeParticipants = {
   count: number;
-  avatars: { avatar_url: string; is_pro: boolean }[];
-};
-
-export type ChallengeSubmission = {
-  id: string;
-  user_name: string;
-  user_avatar_url: string;
-  fork_url: string;
-  user_github_user: string;
-  submission_url: string;
-  submission_image_url: string;
-  reactions: Reactions;
-  is_pro: boolean;
-  is_solution: boolean;
+  avatars: UserAvatar[];
 };
 
 export async function getChallenges(
@@ -282,10 +269,10 @@ export async function updateChallengeCompleted({
   }
 }
 
-export async function getChallengeSubmissions(
+export async function getChallengeUsers(
   request: Request,
   slug: string,
-): Promise<ChallengeSubmission[]> {
+): Promise<ChallengeUser[]> {
   let token = await currentToken({ request });
 
   const challenge = await axios

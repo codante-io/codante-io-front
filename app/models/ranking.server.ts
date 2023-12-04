@@ -1,9 +1,8 @@
 import axios from "axios";
+import type { UserAvatar } from "./user.server";
 
 type UserPoints = {
-  name: string;
-  avatar_url: string;
-  is_pro: boolean;
+  avatar: UserAvatar;
   points: string;
   completed_challenge_count: string;
   received_reaction_count: string;

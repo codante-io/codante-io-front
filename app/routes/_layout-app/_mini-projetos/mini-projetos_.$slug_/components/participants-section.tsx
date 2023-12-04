@@ -1,19 +1,18 @@
 import UserAvatar from "~/components/user-avatar";
 import type { ChallengeParticipants } from "~/models/challenge.server";
 import ParticipantsCounter from "./participants-counter";
+import type { UserAvatar as UserAvatarType } from "~/models/user.server";
 
 export default function ParticipantsSection({
   className = "",
   participants,
-  userAvatar,
+  avatar,
   currentUserIsEnrolled,
-  currentUserIsPro,
 }: {
+  avatar: UserAvatarType | null;
   className?: string;
   participants: ChallengeParticipants;
-  userAvatar?: string;
   currentUserIsEnrolled: boolean;
-  currentUserIsPro?: boolean;
 }) {
   return (
     <article className={`${className} relative w-full p-4 pt-3 font-inter`}>
@@ -26,30 +25,27 @@ export default function ParticipantsSection({
         </h1>
         <section className="p-2">
           <div className="flex flex-wrap justify-center p-1 -space-x-3">
-            {currentUserIsEnrolled && (
-              <UserAvatar
-                avatarUrl={userAvatar}
-                className="w-16 h-16"
-                isPro={currentUserIsPro}
-              />
+            {currentUserIsEnrolled && avatar && (
+              <UserAvatar className="w-16 h-16" avatar={avatar} />
             )}
-            {currentUserIsEnrolled
+            {currentUserIsEnrolled && avatar
               ? participants?.avatars
-                  .filter((info) => info.avatar_url !== userAvatar)
-                  .map((info, index) => (
+                  .filter(
+                    (participantsAvatar) =>
+                      participantsAvatar.avatar_url !== avatar.avatar_url,
+                  )
+                  .map((avatar, index) => (
                     <UserAvatar
                       key={index}
-                      avatarUrl={info.avatar_url}
+                      avatar={avatar}
                       className="w-16 h-16"
-                      isPro={info.is_pro}
                     />
                   ))
-              : participants?.avatars.map((info, index) => (
+              : participants?.avatars.map((avatar, index) => (
                   <UserAvatar
                     key={index}
-                    avatarUrl={info.avatar_url}
+                    avatar={avatar}
                     className="w-16 h-16"
-                    isPro={info.is_pro}
                   />
                 ))}
           </div>

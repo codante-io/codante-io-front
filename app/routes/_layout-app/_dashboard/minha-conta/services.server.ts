@@ -23,7 +23,7 @@ export async function changePassword({
     await axios.post(
       "/dashboard/change-password",
       { password, password_confirmation: passwordConfirmation },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${token}` } },
     );
   } catch (error: any) {
     return {
@@ -40,12 +40,32 @@ export async function changeName({ request, name }: changeNameParams) {
     await axios.post(
       "/dashboard/change-name",
       { name },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${token}` } },
     );
   } catch (error: any) {
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),
       message: error.response?.data?.message,
     };
+  }
+}
+
+export async function changeSettings({
+  request,
+  showBadge,
+}: {
+  request: Request;
+  showBadge: boolean;
+}) {
+  const token = await currentToken({ request });
+
+  try {
+    await axios.post(
+      "/dashboard/update-settings",
+      { show_badge: showBadge },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+  } catch (error: any) {
+    return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
 }
