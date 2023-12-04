@@ -6,7 +6,10 @@ import {
 } from "@remix-run/react";
 import LoadingButton from "~/components/form/loading-button";
 
-import type { Challenge, ChallengeSubmission } from "~/models/challenge.server";
+import { Transition } from "@headlessui/react";
+import { useState } from "react";
+import Button from "~/components/form/button";
+import type { Challenge } from "~/models/challenge.server";
 import {
   submitChallenge,
   updateChallengeSubmission,
@@ -14,9 +17,6 @@ import {
 import type { ChallengeUser } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
 import UpdateSubmissionForm from "./UpdateSubmissionForm";
-import { useState } from "react";
-import { Transition } from "@headlessui/react";
-import Button from "~/components/form/button";
 
 //action submit challenge
 export async function action({
@@ -58,14 +58,14 @@ export default function MySubmission() {
   }
 
   // get challengeUser from outlet context
-  const { challengeUser, challenge, challengeSubmissions } = useOutletContext<{
+  const { challengeUser, challenge, challengeUsers } = useOutletContext<{
     challengeUser: ChallengeUser;
     challenge: Challenge;
-    challengeSubmissions: ChallengeSubmission[];
+    challengeUsers: ChallengeUser[];
   }>();
 
-  const userSubmission = challengeSubmissions.find(
-    (submission) => submission.id === challengeUser.pivot.id,
+  const userSubmission = challengeUsers.find(
+    (submission) => submission.id === challengeUser.id,
   );
 
   const errors = useActionData();
@@ -81,9 +81,7 @@ export default function MySubmission() {
       </h1>
       {userSubmission ? (
         <SubmissionCard
-          submission={{ id: userSubmission.id, ...challengeUser.pivot }}
-          user={challengeUser}
-          reactions={userSubmission?.reactions}
+          challengeUser={challengeUser}
           showEditForm={toggleShowEditForm}
           isEditing={showEditFormState}
         />
@@ -159,7 +157,7 @@ function SubmissionForm({
             <input
               type="text"
               name="submission_url"
-              defaultValue={challengeUser?.pivot?.submission_url}
+              defaultValue={challengeUser?.submission_url}
               id="submission_url"
               className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="https://mp-example.vercel.app/"
