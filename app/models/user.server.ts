@@ -19,7 +19,8 @@ export type UserSettings = {
 };
 
 export type ChallengeUser = {
-  id: string;
+  id: number;
+  user_id: number;
   user_name: string;
   user_github_user: string;
   submission_url: string;

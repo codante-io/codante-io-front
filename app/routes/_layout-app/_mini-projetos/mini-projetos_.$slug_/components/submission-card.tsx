@@ -14,7 +14,7 @@ import classNames from "~/utils/class-names";
 
 type RequiredChallengeUserProps = {
   avatar: UserAvatarType;
-  id: string;
+  id: number;
 };
 
 export default function SubmissionCard({
