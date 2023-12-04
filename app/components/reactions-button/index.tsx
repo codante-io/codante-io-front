@@ -32,7 +32,7 @@ export default function ReactionsButton({
 }: {
   reactions: Reactions;
   reactableType: string;
-  reactableId: string;
+  reactableId: number;
   readOnly?: boolean;
   className?: string;
   side?: "top" | "right";

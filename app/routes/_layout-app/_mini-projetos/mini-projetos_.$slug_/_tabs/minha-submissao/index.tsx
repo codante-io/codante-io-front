@@ -14,7 +14,7 @@ import {
   submitChallenge,
   updateChallengeSubmission,
 } from "~/models/challenge.server";
-import type { ChallengeUser } from "~/models/user.server";
+import type { ChallengeUser, User } from "~/models/user.server";
 import SubmissionCard from "../../components/submission-card";
 import UpdateSubmissionForm from "./UpdateSubmissionForm";
 
@@ -58,14 +58,15 @@ export default function MySubmission() {
   }
 
   // get challengeUser from outlet context
-  const { challengeUser, challenge, challengeUsers } = useOutletContext<{
+  const { challengeUser, challenge, challengeUsers, user } = useOutletContext<{
     challengeUser: ChallengeUser;
     challenge: Challenge;
     challengeUsers: ChallengeUser[];
+    user: User;
   }>();
 
   const userSubmission = challengeUsers.find(
-    (submission) => submission.id === challengeUser.id,
+    (submission) => submission.user_id === user.id,
   );
 
   const errors = useActionData();
@@ -81,7 +82,7 @@ export default function MySubmission() {
       </h1>
       {userSubmission ? (
         <SubmissionCard
-          challengeUser={challengeUser}
+          challengeUser={userSubmission}
           showEditForm={toggleShowEditForm}
           isEditing={showEditFormState}
         />
