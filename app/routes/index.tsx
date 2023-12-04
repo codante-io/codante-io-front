@@ -34,7 +34,6 @@ import { useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export const loader = async () => {
   return json({
@@ -86,47 +85,6 @@ function Headline() {
       id="headline"
       className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_68px)]"
     >
-      {(!user || (user && !user.is_pro)) && (
-        <div className="bg-black w-full border-t border-b border-amber-400 px-0 lg:px-20 py-10 mb-10 md:mb-0">
-          <div className="container mx-auto text-white text-center">
-            <h3 className="font-[Tourney] text-5xl mb-6">
-              <span className="text-amber-400">{"<"}</span>
-              {"Black Friday Codante"}
-              <span className="text-amber-400">{" />"}</span>
-            </h3>
-            <div className="mb-6">
-              <p className="font-light text-lg">
-                Aproveite essa Black Friday aprimorar seus conhecimentos em
-                Front!{" "}
-              </p>
-              <p className="font-light text-lg ">
-                Assine o plano <ProSpanWrapper>PRO</ProSpanWrapper> por 12x de
-                R$49 com{" "}
-                <span className="decoration-brand font-bold underline">
-                  acesso vitalício
-                </span>
-                .
-              </p>
-              <p className="text-gray-400 mt-4 text-sm">
-                Preço exclusivo até essa sexta-feira 01/12!{" "}
-              </p>
-            </div>
-            <Link to="/assine" className="w-fit inline-block">
-              <button className="mx-auto flex gap-1 items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
-                <FaCrown className="mr-2 text-amber-400" />
-                <span>
-                  Seja
-                  <b className="ml-1">PRO </b> nessa{" "}
-                  <span className=" border border-black p-1 px-2 rounded">
-                    <span className="font-bold text-black">Black Friday</span>
-                  </span>
-                </span>
-              </button>
-            </Link>
-          </div>
-        </div>
-      )}
-
       <div className="container flex flex-col items-center">
         {/* Live Streaming Banner */}
         {homeInfo.live_streaming_workshop && (
@@ -439,10 +397,6 @@ function Pricing() {
           Seja{" "}
           <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
             PRO
-          </span>{" "}
-          nessa
-          <span className="bg-black border-white border text-white px-2 py-1 rounded-lg ml-2 block md:inline mt-2">
-            Black Friday
           </span>
         </h1>
         <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
