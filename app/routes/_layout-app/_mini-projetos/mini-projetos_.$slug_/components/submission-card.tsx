@@ -61,7 +61,7 @@ export default function SubmissionCard({
         "relative overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow",
         size === "medium" && "max-w-[377px]",
         challengeUser.is_solution
-          ? "border-amber-400"
+          ? "border-brand-500"
           : "dark:border-background-600 border-background-200",
         size === "small" && "max-w-[275px]",
         isHomePage && "cursor-pointer",
@@ -129,8 +129,8 @@ export default function SubmissionCard({
         <div className="w-full">
           <h4 className="text-xs dark:text-gray-400 font-regular">
             {challengeUser.is_solution ? (
-              <span className="text-amber-400">
-                Resolução <b className="text-amber-400">oficial</b> de
+              <span className="text-brand-500">
+                Resolução <b>oficial</b> de
               </span>
             ) : (
               <span>Resolução de</span>
