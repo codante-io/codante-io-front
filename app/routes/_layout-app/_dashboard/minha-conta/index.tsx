@@ -22,7 +22,6 @@ import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
 import { user } from "~/services/auth.server";
-// import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -166,7 +165,6 @@ function MyAccountSection({
   changeNameStatus: "idle" | "loading" | "submitting";
 }) {
   const fetcher = useFetcher();
-
   function handleShowBadge(value: boolean) {
     fetcher.submit(
       { intent: "showBadge", showBadge: value },
@@ -214,9 +212,6 @@ function MyAccountSection({
             <Switch.Group>
               <Switch.Label className="block mb-2 text-sm font-light text-gray-500 dark:text-gray-400 text-inter">
                 Mostrar Badge PRO{" "}
-                <span className="dark:text-gray-500 text-gray-400">
-                  (em breve)
-                </span>
               </Switch.Label>
               <Switch
                 disabled={!user.is_pro}
@@ -226,7 +221,9 @@ function MyAccountSection({
                   !!user.is_pro && !!user.avatar.badge
                     ? "bg-brand-500"
                     : "bg-gray-700"
-                } relative inline-flex h-6 w-11 items-center rounded-full`}
+                } relative inline-flex h-6 w-11 items-center rounded-full ${
+                  !user.is_pro && "cursor-not-allowed"
+                }`}
               >
                 <span className="sr-only">Enable notifications</span>
                 <span
