@@ -9,7 +9,7 @@ export const freePlanDetails: PlanDetails = {
 export const proPlanDetails: PlanDetails = {
   name: "PRO (Vitalício)",
   fullPrice: 948,
-  banner: "Black Friday - 2023",
+  banner: "Oferta de lançamento",
   installments: 12,
 };
 
