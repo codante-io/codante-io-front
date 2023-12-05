@@ -5,7 +5,7 @@ import type { Tag } from "./tag.server";
 import type { Instructor } from "./instructor.server";
 
 export type BlogPost = {
-  id: string;
+  id: number;
   title: string;
   slug: string;
   status: "draft" | "published" | "soon" | "archived";
