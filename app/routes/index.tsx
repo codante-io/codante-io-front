@@ -281,8 +281,6 @@ function Challenges() {
     homeInfo.featured_challenges,
   );
 
-  console.log(homeInfo.featured_challenges)
-
   return (
     <section id="mini-projects" className="flex justify-center w-full">
       <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">

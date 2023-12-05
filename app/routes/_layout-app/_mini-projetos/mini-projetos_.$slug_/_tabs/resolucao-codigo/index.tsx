@@ -42,6 +42,7 @@ export default function SolutionCode() {
   }
 
   function getStackblitzUrl() {
+    if (!solutionSubmission || !solutionSubmission.fork_url) return false;
     if (
       challenge.resources.find(
         (resource) => resource.type === "stackblitz-embed",
@@ -51,7 +52,7 @@ export default function SolutionCode() {
         (resource) => resource.type === "stackblitz-embed",
       )?.url;
     } else {
-      return `https://stackblitz.com/github/${solutionSubmission?.fork_url.replace(
+      return `https://stackblitz.com/github/${solutionSubmission.fork_url.replace(
         "https://github.com/",
         "",
       )}`;
