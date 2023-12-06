@@ -87,33 +87,13 @@ export default function ChallengeCard({
             </section>
             <section className="">
               <div className="flex -space-x-3 overflow-hidden">
-                {challenge.current_user_is_enrolled && loggedUser && (
+                {challenge?.avatars?.map((avatar, index) => (
                   <UserAvatar
-                    avatar={loggedUser.avatar}
+                    key={index}
+                    avatar={avatar}
                     cursor="cursor-pointer"
                   />
-                )}
-                {challenge.current_user_is_enrolled
-                  ? challenge?.avatars
-                      ?.filter(
-                        (avatar) =>
-                          avatar.avatar_url !== loggedUser?.avatar.avatar_url,
-                      )
-                      .slice(0, 4)
-                      .map((avatar, index) => (
-                        <UserAvatar
-                          key={index}
-                          avatar={avatar}
-                          cursor="cursor-pointer"
-                        />
-                      ))
-                  : challenge?.avatars?.map((avatar, index) => (
-                      <UserAvatar
-                        key={index}
-                        avatar={avatar}
-                        cursor="cursor-pointer"
-                      />
-                    ))}
+                ))}
                 {challenge.enrolled_users_count > 5 && (
                   <div className="relative w-7 h-7 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
                     +{challenge.enrolled_users_count - 5}

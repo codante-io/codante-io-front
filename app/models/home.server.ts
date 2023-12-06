@@ -13,7 +13,7 @@ export type HomeInfo = {
     social_media_nickname: string;
   }[];
   featured_submissions: {
-    id: string;
+    id: number;
     submission_image_url: string;
     avatar: UserAvatar;
     challenge: {

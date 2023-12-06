@@ -113,7 +113,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const [challenge, participants, challengeUsers] = await Promise.all([
     getChallenge(params.slug, request),
-    getChallengeParticipants(params.slug),
+    getChallengeParticipants(params.slug, request),
     getChallengeUsers(request, params.slug),
   ]);
 
@@ -401,7 +401,6 @@ export default function ChallengeSlug() {
           <ParticipantsSection
             currentUserIsEnrolled={challenge.current_user_is_enrolled}
             participants={participants}
-            avatar={user?.avatar ?? null}
           />
         </div>
       </section>

@@ -99,9 +99,16 @@ export async function getChallenge(
 
 export async function getChallengeParticipants(
   slug: string,
+  request: Request,
 ): Promise<ChallengeParticipants> {
+  const token = await currentToken({ request });
+
   const challengeParticipants = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/participants`)
+    .get(`${process.env.API_HOST}/challenges/${slug}/participants`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {
