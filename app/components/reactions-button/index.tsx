@@ -29,6 +29,7 @@ export default function ReactionsButton({
   readOnly,
   className = "",
   side = "top",
+  iconSize = "text-xl",
 }: {
   reactions: Reactions;
   reactableType: string;
@@ -36,6 +37,7 @@ export default function ReactionsButton({
   readOnly?: boolean;
   className?: string;
   side?: "top" | "right";
+  iconSize?: string;
 }) {
   const fetcher = useFetcher<any>();
   const toast = useToasterWithSound();
@@ -157,9 +159,9 @@ export default function ReactionsButton({
         )}
       >
         {localUserReacted.length > 0 ? (
-          <HeartIconFill className="text-xl transition-transform scale-90 fill-red-700" />
+          <HeartIconFill className={`${iconSize} transition-transform scale-90 fill-red-700`} />
         ) : (
-          <HeartIcon className="text-xl transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105" />
+          <HeartIcon className={`${iconSize} transition-all scale-90 group-hover:fill-red-700 group-hover:scale-105`} />
         )}
         <span className="inline-block w-2 h-4 text-xs">{totalReactions}</span>
       </Popover.Trigger>

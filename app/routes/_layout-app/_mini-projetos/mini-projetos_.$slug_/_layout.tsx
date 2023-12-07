@@ -257,7 +257,10 @@ export default function ChallengeSlug() {
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
       <section className="min-h-[calc(100vh_-_68px)] flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
-        <div className="container">
+        {
+          !location.pathname.includes("minha-submissao/") && (
+            <>
+               <div className="container">
           <div>
             <CardItemDifficulty
               difficulty={challenge?.difficulty}
@@ -364,6 +367,10 @@ export default function ChallengeSlug() {
             </div>
           </div>
         </div>
+            </>
+          )
+       
+        }
 
         {
           // if path is /mini-projetos/:slug, show the overview tab, otherwise show the content of the tab
@@ -392,18 +399,24 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
-      <section
-        id="mini-projects"
-        className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
-      >
-        <div className="container mb-10">
-          <ParticipantsSection
-            currentUserIsEnrolled={challenge.current_user_is_enrolled}
-            participants={participants}
-          />
-        </div>
-      </section>
+      {
+        !location.pathname.includes("minha-submissao/") && (
+          <>
+            <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
+            <section
+              id="mini-projects"
+              className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
+            >
+              <div className="container mb-10">
+                <ParticipantsSection
+                  currentUserIsEnrolled={challenge.current_user_is_enrolled}
+                  participants={participants}
+                />
+              </div>
+            </section>
+          </>
+        )
+      }
     </div>
   );
 }
