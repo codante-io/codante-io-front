@@ -11,6 +11,7 @@ import type {
   ChallengeUser,
 } from "~/models/user.server";
 import classNames from "~/utils/class-names";
+import { formatName } from "~/utils/format-name";
 
 type RequiredChallengeUserProps = {
   avatar: UserAvatarType;
@@ -46,13 +47,6 @@ export default function SubmissionCard({
       showEditForm();
       setEditSubmition(!editSubmition);
     }
-  }
-  function formatName(name: string) {
-    return name
-      .trim()
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
   }
 
   return (

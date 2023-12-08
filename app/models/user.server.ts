@@ -12,6 +12,7 @@ export type User = {
   is_pro: boolean;
   avatar: UserAvatar;
   settings: UserSettings | null;
+  linkedin_url?: string;
 };
 
 export type UserSettings = {
@@ -32,6 +33,7 @@ export type ChallengeUser = {
   is_solution: boolean;
   created_at: string;
   updated_at: string;
+  linkedin_url?: string;
 };
 
 export type UserAvatar = {
