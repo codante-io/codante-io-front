@@ -12,6 +12,11 @@ type changeNameParams = {
   name: string;
 };
 
+type changeLinkedinUrlParams = {
+  request: Request;
+  linkedin: string;
+};
+
 export async function changePassword({
   request,
   password,
@@ -67,5 +72,25 @@ export async function changeSettings({
     );
   } catch (error: any) {
     return { errors: Object.values(error?.response?.data?.errors).flat() };
+  }
+}
+
+export async function changeLinkedinUrl({
+  request,
+  linkedin,
+}: changeLinkedinUrlParams) {
+  const token = await currentToken({ request });
+
+  try {
+    await axios.post(
+      "/dashboard/change-linkedin-url",
+      { linkedin_url: linkedin },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
+  } catch (error: any) {
+    return {
+      errors: Object.values(error?.response?.data?.errors).flat(),
+      message: error.response?.data?.message,
+    };
   }
 }

@@ -13,7 +13,12 @@ import ProBadge from "~/components/pro-badge";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 import { authenticator } from "~/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
-import { changeName, changePassword, changeSettings } from "./services.server";
+import {
+  changeLinkedinUrl,
+  changeName,
+  changePassword,
+  changeSettings,
+} from "./services.server";
 import type { User } from "~/models/user.server";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
 import type { Subscription } from "~/models/subscription.server";
@@ -35,6 +40,17 @@ export async function action({ request }: { request: Request }) {
     }
     return {
       changeName: true,
+    };
+  }
+
+  if (intent === "changeLinkedinUrl") {
+    const linkedin = formData.get("linkedin") as string;
+    const res = await changeLinkedinUrl({ request, linkedin });
+    if (res?.errors) {
+      return { changeLinkedinUrlErrors: res.message };
+    }
+    return {
+      changeLinkedinUrl: true,
     };
   }
 
@@ -90,6 +106,10 @@ export default function Conta() {
     transition.formData?.get("intent") === "changePassword"
       ? transition.state
       : "idle";
+  const changeLinkedinUrlStatus =
+    transition.formData?.get("intent") === "changeLinkedinUrl"
+      ? transition.state
+      : "idle";
 
   const { user, subscription } = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
@@ -97,14 +117,19 @@ export default function Conta() {
 
   let changePasswordErrors,
     changeNameErrors,
+    changeLinkedinUrlErrors,
     isChangeNameSuccess,
-    isChangePasswordSuccess;
+    isChangePasswordSuccess,
+    isChangeLinkedinUrlSuccess;
 
   if (actionData) {
     changePasswordErrors = actionData.changePasswordErrors;
     changeNameErrors = actionData.changeNameErrors;
+    changeLinkedinUrlErrors = actionData.changeLinkedinUrlErrors;
 
     isChangeNameSuccess = actionData.changeName && changeNameStatus === "idle";
+    isChangeLinkedinUrlSuccess =
+      actionData.changeLinkedinUrl && changeLinkedinUrlStatus === "idle";
     isChangePasswordSuccess =
       actionData.changePassword && changePasswordStatus === "idle";
   }
@@ -117,7 +142,16 @@ export default function Conta() {
     if (isChangePasswordSuccess) {
       showSuccessToast("Você alterou sua senha com sucesso.");
     }
-  }, [isChangeNameSuccess, isChangePasswordSuccess, showSuccessToast]);
+
+    if (isChangeLinkedinUrlSuccess) {
+      showSuccessToast("Você alterou seu LinkedIn com sucesso.");
+    }
+  }, [
+    isChangeNameSuccess,
+    isChangePasswordSuccess,
+    isChangeLinkedinUrlSuccess,
+    showSuccessToast,
+  ]);
 
   return (
     <>
@@ -144,6 +178,12 @@ export default function Conta() {
           user={user}
           changeNameErrors={changeNameErrors}
           changeNameStatus={changeNameStatus}
+        />
+
+        <LinkedinSection
+          user={user}
+          changeLinkedinUrlErrors={changeLinkedinUrlErrors}
+          changeLinkedinUrlStatus={changeLinkedinUrlStatus}
         />
 
         <PasswordChangeSection
@@ -447,6 +487,56 @@ function BoletoSubscriptionSection({
           <FiExternalLink />
         </a>
       </p>
+    </>
+  );
+}
+
+function LinkedinSection({
+  user,
+  changeLinkedinUrlErrors,
+  changeLinkedinUrlStatus,
+}: {
+  user: User;
+  changeLinkedinUrlErrors?: string;
+  changeLinkedinUrlStatus: "idle" | "loading" | "submitting";
+}) {
+  return (
+    <>
+      <h2 className="flex items-center mt-12 text-xl">
+        <MdKeyboardDoubleArrowRight
+          size={24}
+          className="inline-block mr-2 text-blue-300 dark:text-blue-800"
+        />
+        LinkedIn
+      </h2>
+
+      <AuthCard className="max-w-xl mt-6">
+        <Form replace method="post">
+          <Input
+            id="linkedin"
+            name="linkedin"
+            label="Linkedin"
+            type="text"
+            onChange={() => {}}
+            defaultValue={user?.linkedin_url}
+          />
+          <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
+            {changeLinkedinUrlErrors}
+          </div>
+
+          <div className="mt-8 text-right">
+            <LoadingButton
+              status={changeLinkedinUrlStatus}
+              isSuccessfulSubmission={false}
+              name="intent"
+              value="changeLinkedinUrl"
+              type="submit"
+            >
+              Salvar Alterações
+            </LoadingButton>
+          </div>
+        </Form>
+      </AuthCard>
     </>
   );
 }
