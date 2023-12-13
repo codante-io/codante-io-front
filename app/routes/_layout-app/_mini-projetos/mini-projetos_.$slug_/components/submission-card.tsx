@@ -98,7 +98,10 @@ export default function SubmissionCard({
             "w-full transition-all delay-75 aspect-video",
             isHomePage
               ? "opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100"
-              : "opacity-40 blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40",
+              : "",
+            challengeUser.is_solution
+              ? "group-hover:opacity-40 group-hover:blur-sm"
+              : "",
           )}
         />
       </a>

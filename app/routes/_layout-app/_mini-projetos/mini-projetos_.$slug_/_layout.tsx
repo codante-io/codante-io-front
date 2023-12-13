@@ -160,6 +160,13 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
+  const userHasSubmitted = Boolean(
+    challengeUsers.find(
+      (submission) =>
+        submission.user_id === user?.id && submission.submission_url,
+    ),
+  );
+
   const actionData = useActionData<any>();
 
   const navigate = useNavigate();
@@ -242,7 +249,7 @@ export default function ChallengeSlug() {
       current: location.pathname.includes("submissoes"),
     },
     {
-      name: "Minha Submissão",
+      name: userHasSubmitted ? "Editar submissão" : "Submeter solução",
       href: "minha-submissao",
       isVisible: !!user && isUserParticipating,
       icon: <BsCloudUpload />,
@@ -399,7 +406,7 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      {!location.pathname.includes("minha-submissao/") && (
+      {!location.pathname.includes("submissoes/") && (
         <>
           <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
           <section

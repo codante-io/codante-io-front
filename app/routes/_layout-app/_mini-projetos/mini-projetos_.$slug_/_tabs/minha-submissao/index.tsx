@@ -5,17 +5,13 @@ import {
   useOutletContext,
 } from "@remix-run/react";
 import LoadingButton from "~/components/form/loading-button";
-
-import { Transition } from "@headlessui/react";
 import { useState } from "react";
-import Button from "~/components/form/button";
 import type { Challenge } from "~/models/challenge.server";
 import {
   submitChallenge,
   updateChallengeSubmission,
 } from "~/models/challenge.server";
 import type { ChallengeUser, User } from "~/models/user.server";
-import SubmissionCard from "../../components/submission-card";
 import UpdateSubmissionForm from "./UpdateSubmissionForm";
 
 //action submit challenge
@@ -77,14 +73,10 @@ export default function MySubmission() {
 
   return (
     <div className="container">
-      <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
-        Minha submissão
-      </h1>
       {userSubmission ? (
-        <SubmissionCard
-          challengeUser={userSubmission}
+        <UpdateSubmissionForm
+          challengeUser={challengeUser}
           showEditForm={toggleShowEditForm}
-          isEditing={showEditFormState}
         />
       ) : (
         <SubmissionForm
@@ -93,37 +85,6 @@ export default function MySubmission() {
           isSuccessfulSubmission={isSuccessfulSubmission}
           challenge={challenge}
         />
-      )}
-      {userSubmission && (
-        <section className="mt-5">
-          <Transition
-            show={showEditFormState}
-            enter="transition ease-out duration-300"
-            enterFrom="opacity-0 transform scale-90"
-            enterTo="opacity-100 transform scale-100"
-            leave="transition ease-in duration-300"
-            leaveFrom="opacity-100 transform scale-100"
-            leaveTo="opacity-0 transform scale-90"
-          >
-            <UpdateSubmissionForm
-              challengeUser={challengeUser}
-              showEditForm={toggleShowEditForm}
-            />
-          </Transition>
-          <Transition
-            show={!showEditFormState}
-            enter="transition ease-out duration-300"
-            enterFrom="opacity-0 transform scale-90"
-            enterTo="opacity-100 transform scale-100"
-            leave="transition ease-in duration-300"
-            leaveFrom="opacity-100 transform scale-100"
-            leaveTo="opacity-0 transform scale-90"
-          >
-            <Button onClick={toggleShowEditForm} type="button">
-              Editar submissão
-            </Button>
-          </Transition>
-        </section>
       )}
     </div>
   );
@@ -141,43 +102,48 @@ function SubmissionForm({
   challenge: Challenge;
 }) {
   return (
-    <Form method="POST">
-      <div>
-        <label
-          htmlFor="submission_url"
-          className="block text-sm font-medium leading-6 text-gray-800 dark:text-white"
-        >
-          Submeta o link da sua aplicação funcionando
-          <br />
-          <span className="text-xs font-light text-gray-600 dark:text-gray-400">
-            Nós vamos tirar uma screenshot para colocar na nossa galeria
-          </span>
-        </label>
-        <div className="mt-2">
-          <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
-            <input
-              type="text"
-              name="submission_url"
-              defaultValue={challengeUser?.submission_url}
-              id="submission_url"
-              className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-              placeholder="https://mp-example.vercel.app/"
-            />
+    <>
+      <h1 className="flex items-center mb-4 md:mb-10 text-2xl font-semibold font-lexend text-brand">
+        Submeter solução
+      </h1>
+      <Form method="POST">
+        <div>
+          <label
+            htmlFor="submission_url"
+            className="block text-sm font-medium leading-6 text-gray-800 dark:text-white"
+          >
+            Submeta o link da sua aplicação funcionando
+            <br />
+            <span className="text-xs font-light text-gray-600 dark:text-gray-400">
+              Nós vamos tirar uma screenshot para colocar na nossa galeria
+            </span>
+          </label>
+          <div className="mt-2">
+            <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
+              <input
+                type="text"
+                name="submission_url"
+                defaultValue={challengeUser?.submission_url}
+                id="submission_url"
+                className="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-400 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                placeholder="https://mp-example.vercel.app/"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mt-10">
-        <LoadingButton
-          type="submit"
-          className="relative transition duration-200"
-          status={status}
-          isSuccessfulSubmission={isSuccessfulSubmission}
-          name="intent"
-          value="createSubmission"
-        >
-          Enviar
-        </LoadingButton>
-      </div>
-    </Form>
+        <div className="mt-10">
+          <LoadingButton
+            type="submit"
+            className="relative transition duration-200"
+            status={status}
+            isSuccessfulSubmission={isSuccessfulSubmission}
+            name="intent"
+            value="createSubmission"
+          >
+            Enviar
+          </LoadingButton>
+        </div>
+      </Form>
+    </>
   );
 }
