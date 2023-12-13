@@ -518,9 +518,9 @@ function LinkedinSection({
             label="Linkedin"
             type="text"
             onChange={() => {}}
-            defaultValue={user?.linkedin_url}
+            defaultValue={user?.linkedin_url || "https://www.linkedin.com/in/"}
           />
-          <div className="mt-2 mb-3 text-xs text-red-400 min-h-4">
+          <div className="mt-2 mb-1 text-xs text-red-400 h-4">
             {changeLinkedinUrlErrors}
           </div>
 
