@@ -326,7 +326,6 @@ function Challenges() {
 
 function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
-
   const submissions = homeInfo.featured_submissions;
 
   return (

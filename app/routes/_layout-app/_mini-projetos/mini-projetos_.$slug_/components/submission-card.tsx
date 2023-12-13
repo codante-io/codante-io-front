@@ -1,7 +1,7 @@
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "@remix-run/react";
 import React, { useState } from "react";
-import { BsGithub, BsGlobe } from "react-icons/bs";
+import { BsGlobe } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/reactions-button";
 import TooltipWrapper from "~/components/tooltip";
@@ -40,7 +40,6 @@ export default function SubmissionCard({
   isHomePage?: boolean;
 }) {
   const [editSubmition, setEditSubmition] = useState(false);
-  const navigate = useNavigate();
 
   function handleEditSubmition() {
     if (showEditForm) {
@@ -58,17 +57,23 @@ export default function SubmissionCard({
           ? "border-brand-500"
           : "dark:border-background-600 border-background-200",
         size === "small" && "max-w-[275px]",
-        isHomePage && "cursor-pointer",
         className,
       )}
-      onClick={() => {
-        if (isHomePage && challengeSlug) {
-          return navigate(`/mini-projetos/${challengeSlug}`);
-        }
-      }}
     >
-      <section className="relative overflow-hidden group">
-        {!isHomePage && (
+      <a
+        className={classNames(
+          "overflow-hidden group relative",
+          !challengeUser.is_solution ? "cursor-pointer" : "cursor-default",
+        )}
+        onClick={(event) => {
+          if (!challengeUser.is_solution) return;
+          event.preventDefault();
+        }}
+        href={`/mini-projetos/${challengeSlug}/submissoes/${challengeUser.user_github_user}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {challengeUser.is_solution ? (
           <>
             <SubmissionButton
               href={challengeUser.submission_url}
@@ -77,25 +82,15 @@ export default function SubmissionCard({
             >
               <BsGlobe className="text-4xl text-gray-800 dark:text-white" />
             </SubmissionButton>
-            {challengeUser.is_solution ? (
-              <SubmissionButton
-                link={`/mini-projetos/${challengeSlug}/resolucao-codigo`}
-                size={size}
-                position="left"
-              >
-                <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
-              </SubmissionButton>
-            ) : (
-              <SubmissionButton
-                href={challengeUser.fork_url ?? ""}
-                size={size}
-                position="left"
-              >
-                <BsGithub className="text-4xl text-gray-800 dark:text-white" />
-              </SubmissionButton>
-            )}
+            <SubmissionButton
+              link={`/mini-projetos/${challengeSlug}/resolucao-codigo`}
+              size={size}
+              position="left"
+            >
+              <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
+            </SubmissionButton>
           </>
-        )}
+        ) : null}
         <img
           src={challengeUser.submission_image_url}
           alt="Screenshot da aplicação submetida"
@@ -106,7 +101,7 @@ export default function SubmissionCard({
               : "opacity-40 blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40",
           )}
         />
-      </section>
+      </a>
 
       <footer
         className={classNames(
