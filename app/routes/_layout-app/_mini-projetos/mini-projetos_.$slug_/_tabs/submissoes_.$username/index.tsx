@@ -20,7 +20,6 @@ import { formatName } from "~/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
 import { BsGithub } from "react-icons/bs";
-import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   return {
@@ -178,15 +177,9 @@ export default function MySolution() {
           className="flex items-center cursor-pointer gap-2 hover:opacity-70 border border-brand-500 px-2 py-1 rounded-md"
           onClick={() => {
             if (submissionUser.is_solution) {
-              if (user && user.is_pro)
-                return window.open(submissionUser.fork_url as string, "_blank");
-              return toast((t) => (
-                <p>
-                  Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem
-                  acessar essa resolução.
-                </p>
-              ));
+              return navigate(`/mini-projetos/${params.slug}/resolucao`);
             }
+            window.open(submissionUser.fork_url as string, "_blank");
           }}
         >
           <BsGithub />
