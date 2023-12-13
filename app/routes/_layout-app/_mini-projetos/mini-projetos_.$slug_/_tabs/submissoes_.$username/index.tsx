@@ -20,6 +20,7 @@ import { formatName } from "~/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
 import { BsGithub } from "react-icons/bs";
+import ProSpanWrapper from "~/components/pro-span-wrapper";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   return {
@@ -49,7 +50,7 @@ export default function MySolution() {
   const submissionUser = challengeUsers.find(
     (user) => user.user_github_user === params.username,
   );
-  // console.log(submissionUser)
+
   if (!submissionUser)
     return (
       <div className="flex flex-col items-start justify-center h-full container">
@@ -175,9 +176,18 @@ export default function MySolution() {
       <section className="flex justify-between mt-6">
         <div
           className="flex items-center cursor-pointer gap-2 hover:opacity-70 border border-brand-500 px-2 py-1 rounded-md"
-          onClick={() =>
-            window.open(submissionUser.fork_url as string, "_blank")
-          }
+          onClick={() => {
+            if (submissionUser.is_solution) {
+              if (user && user.is_pro)
+                return window.open(submissionUser.fork_url as string, "_blank");
+              return toast((t) => (
+                <p>
+                  Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem
+                  acessar essa resolução.
+                </p>
+              ));
+            }
+          }}
         >
           <BsGithub />
           <h3 className="font-light ">Acessar código no GitHub</h3>
