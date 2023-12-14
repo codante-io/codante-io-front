@@ -81,19 +81,11 @@ export async function changeLinkedinUrl({
 }: changeLinkedinUrlParams) {
   const token = await currentToken({ request });
 
-  if (
-    !linkedin.startsWith("https://www.linkedin.com/in/") ||
-    linkedin === "https://www.linkedin.com/in/"
-  ) {
-    return {
-      errors: ["Perfil inválido"],
-      message: "Perfil inválido. Deve iniciar com https://www.linkedin.com/in/",
-    };
-  }
+  const linkedin_url = `https://www.linkedin.com/in/${linkedin}`;
   try {
     await axios.post(
       "/dashboard/change-linkedin-url",
-      { linkedin_url: linkedin },
+      { linkedin_url },
       { headers: { Authorization: `Bearer ${token}` } },
     );
   } catch (error: any) {

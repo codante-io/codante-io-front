@@ -1,18 +1,18 @@
 import {
   Form,
   useActionData,
+  useNavigate,
   useNavigation,
   useOutletContext,
 } from "@remix-run/react";
 import LoadingButton from "~/components/form/loading-button";
-import { useState } from "react";
+import { useEffect } from "react";
 import type { Challenge } from "~/models/challenge.server";
 import {
   submitChallenge,
   updateChallengeSubmission,
 } from "~/models/challenge.server";
 import type { ChallengeUser, User } from "~/models/user.server";
-import UpdateSubmissionForm from "./UpdateSubmissionForm";
 
 //action submit challenge
 export async function action({
@@ -47,12 +47,6 @@ export async function action({
 // }
 
 export default function MySubmission() {
-  const [showEditFormState, setShowEditFormState] = useState(false);
-
-  function toggleShowEditForm() {
-    setShowEditFormState(!showEditFormState);
-  }
-
   // get challengeUser from outlet context
   const { challengeUser, challenge, challengeUsers, user } = useOutletContext<{
     challengeUser: ChallengeUser;
@@ -71,14 +65,19 @@ export default function MySubmission() {
   const status = transition.state;
   let isSuccessfulSubmission = status === "idle" && errors === null;
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userSubmission) {
+      navigate(
+        `/mini-projetos/${challenge.slug}/submissoes/${userSubmission.user_github_user}`,
+      );
+    }
+  }, [challenge.slug, navigate, userSubmission]);
+
   return (
     <div className="container">
-      {userSubmission ? (
-        <UpdateSubmissionForm
-          challengeUser={challengeUser}
-          showEditForm={toggleShowEditForm}
-        />
-      ) : (
+      {!userSubmission && (
         <SubmissionForm
           challengeUser={challengeUser}
           status={status}

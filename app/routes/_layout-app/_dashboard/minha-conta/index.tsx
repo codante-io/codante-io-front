@@ -500,6 +500,11 @@ function LinkedinSection({
   changeLinkedinUrlErrors?: string;
   changeLinkedinUrlStatus: "idle" | "loading" | "submitting";
 }) {
+  function getLinkedinUser(linkedinUrl: string | undefined) {
+    if (!linkedinUrl) return false;
+    const linkedin = linkedinUrl.split("/in/");
+    return linkedin[1];
+  }
   return (
     <>
       <h2 className="flex items-center mt-12 text-xl">
@@ -512,14 +517,31 @@ function LinkedinSection({
 
       <AuthCard className="max-w-xl mt-6">
         <Form replace method="post">
-          <Input
-            id="linkedin"
-            name="linkedin"
-            label="Linkedin"
-            type="text"
-            onChange={() => {}}
-            defaultValue={user?.linkedin_url || "https://www.linkedin.com/in/"}
-          />
+          <div className="relative">
+            <span className="absolute left-2 top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400">
+              https://www.linkedin.com/in/
+            </span>
+            <Input
+              id="linkedin"
+              name="linkedin"
+              label="Linkedin"
+              type="text"
+              onChange={() => {}}
+              defaultValue={getLinkedinUser(user?.linkedin_url) || ""}
+              className="pl-56" // Adicione um padding-left para evitar a sobreposição do texto com o span
+            />
+          </div>
+          {user?.linkedin_url && (
+            <a
+              href={user?.linkedin_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
+            >
+              Visualizar perfil cadastrado
+              <FiExternalLink />
+            </a>
+          )}
           <div className="mt-2 mb-1 text-xs text-red-400 h-4">
             {changeLinkedinUrlErrors}
           </div>

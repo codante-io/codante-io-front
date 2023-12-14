@@ -10,7 +10,7 @@ import {
   LinkedinShareButton,
   WhatsappShareButton,
 } from "react-share";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import {
   RiFacebookBoxLine,
   RiLinkedinBoxLine,
@@ -20,6 +20,28 @@ import { formatName } from "~/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
 import { BsGithub } from "react-icons/bs";
+import UpdateSubmissionForm from "../minha-submissao/UpdateSubmissionForm";
+import { Transition, Dialog } from "@headlessui/react";
+import { updateChallengeSubmission } from "~/models/challenge.server";
+import useSound from "use-sound";
+import pop from "~/sounds/pop.wav";
+
+export async function action({
+  request,
+  params,
+}: {
+  request: Request;
+  params: { slug: string };
+}) {
+  let formData = await request.formData();
+  let submissionUrl = formData.get("submission_url") as string;
+
+  const intent = formData.get("intent");
+  switch (intent) {
+    case "updateSubmission":
+      return updateChallengeSubmission(request, params.slug, submissionUrl);
+  }
+}
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   return {
@@ -76,7 +98,7 @@ export default function MySolution() {
           {formatName(submissionUser.user_name)}
         </span>
       </h2>
-
+      <EditSection submissionUser={submissionUser} user={user} />
       <ShareSection challenge={challenge} location={location} />
       <MainSection submissionUser={submissionUser} user={user} />
 
@@ -234,5 +256,84 @@ function Header({
         <span className="font-light md:text-base md:inline hidden text-sm">{`@${submissionUser.user_github_user}`}</span>
       </div>
     </header>
+  );
+}
+
+function EditSection({
+  submissionUser,
+  user,
+}: {
+  submissionUser: ChallengeUser;
+  user: User;
+}) {
+  const [showEditFormState, setShowEditFormState] = useState(false);
+  const [popSound] = useSound(pop, { volume: 0.3 });
+
+  function toggleShowEditForm() {
+    setShowEditFormState(!showEditFormState);
+    popSound();
+  }
+
+  return (
+    <>
+      {user && submissionUser.user_id === user.id && (
+        <section id="edit" className="text-left">
+          <button
+            className="border border-red-300 rounded-md shadow-sm bg-none p-2 text-red-100 hover:opacity-70 disabled:hover:opacity-none disabled:opacity-70 disabled:cursor-not-allowed"
+            onClick={toggleShowEditForm}
+            disabled={showEditFormState}
+          >
+            Editar submissão
+          </button>
+          <Transition appear show={showEditFormState}>
+            <Dialog
+              as="div"
+              className="relative z-10"
+              onClose={() => setShowEditFormState(false)}
+            >
+              <Transition.Child
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black/25" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-background-100 dark:bg-background-800 p-6 text-left align-middle shadow-xl transition-all">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 mb-6"
+                      >
+                        Editar submissão
+                      </Dialog.Title>
+                      <div className="mt-2">
+                        <UpdateSubmissionForm
+                          showEditForm={toggleShowEditForm}
+                          challengeUser={submissionUser}
+                        />
+                      </div>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
+        </section>
+      )}
+    </>
   );
 }
