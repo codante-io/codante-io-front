@@ -53,8 +53,6 @@ export default function MySolution() {
     user: User;
   }>();
 
-  // console.log(user)
-
   const [location, setLocation] = useState("");
 
   useEffect(() => {
@@ -101,19 +99,13 @@ function Headline({
 }) {
   const navigate = useNavigate();
 
-  function getLinkedinUsername(url: string) {
-    const prefix = "https://www.linkedin.com/in/";
-    if (url.startsWith(prefix)) {
-      return url.substring(prefix.length);
-    } else {
-      return null;
-    }
-  }
-
   function handleClickLinkedin() {
     if (!submissionUser) return false;
-    if (submissionUser?.linkedin_url)
-      return window.open(submissionUser.linkedin_url, "_blank");
+    if (submissionUser?.linkedin_user)
+      return window.open(
+        `https://www.linkedin.com/in/${submissionUser.linkedin_user}`,
+        "_blank",
+      );
     if (user && user.id === submissionUser?.user_id)
       return navigate("/minha-conta");
     return toast.error(
@@ -156,7 +148,7 @@ function Headline({
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               onClick={handleClickLinkedin}
             >
-              {!submissionUser.linkedin_url &&
+              {!submissionUser.linkedin_user &&
                 user &&
                 user.id === submissionUser.user_id && (
                   <>
@@ -166,16 +158,16 @@ function Headline({
                     </span>
                   </>
                 )}
-              {submissionUser.linkedin_url && (
+              {submissionUser.linkedin_user && (
                 <>
                   <FaLinkedin className="text-lg sm:text-xl" />
-                  <span className=" font-light sm:text-base sm:inline text-xs">{`${getLinkedinUsername(
-                    submissionUser.linkedin_url,
-                  )}`}</span>
+                  <span className=" font-light sm:text-base sm:inline text-xs">
+                    {submissionUser.linkedin_user}
+                  </span>
                 </>
               )}
             </div>
-            {submissionUser.linkedin_url && (
+            {submissionUser.linkedin_user && (
               <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
             )}
             <div

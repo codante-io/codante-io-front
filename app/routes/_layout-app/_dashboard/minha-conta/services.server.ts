@@ -81,11 +81,10 @@ export async function changeLinkedinUrl({
 }: changeLinkedinUrlParams) {
   const token = await currentToken({ request });
 
-  const linkedin_url = `https://www.linkedin.com/in/${linkedin}`;
   try {
     await axios.post(
       "/dashboard/change-linkedin-url",
-      { linkedin_url },
+      { linkedin_user: linkedin },
       { headers: { Authorization: `Bearer ${token}` } },
     );
   } catch (error: any) {

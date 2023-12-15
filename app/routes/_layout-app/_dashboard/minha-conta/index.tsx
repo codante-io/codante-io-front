@@ -500,11 +500,6 @@ function LinkedinSection({
   changeLinkedinUrlErrors?: string;
   changeLinkedinUrlStatus: "idle" | "loading" | "submitting";
 }) {
-  function getLinkedinUser(linkedinUrl: string | undefined) {
-    if (!linkedinUrl) return false;
-    const linkedin = linkedinUrl.split("/in/");
-    return linkedin[1];
-  }
   return (
     <>
       <h2 className="flex items-center mt-12 text-xl">
@@ -527,14 +522,14 @@ function LinkedinSection({
               label="Linkedin"
               type="text"
               onChange={() => {}}
-              defaultValue={getLinkedinUser(user?.linkedin_url) || ""}
+              defaultValue={user?.linkedin_user}
               required
               className="pl-56"
             />
           </div>
-          {user?.linkedin_url && (
+          {user?.linkedin_user && (
             <a
-              href={user?.linkedin_url}
+              href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
