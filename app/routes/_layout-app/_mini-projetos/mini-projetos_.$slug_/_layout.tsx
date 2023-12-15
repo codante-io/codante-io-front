@@ -249,7 +249,7 @@ export default function ChallengeSlug() {
       current: location.pathname.includes("submissoes"),
     },
     {
-      name: userHasSubmitted ? "Minha submissão" : "Submeter solução",
+      name: userHasSubmitted ? "Ver submissão" : "Submeter solução",
       href: "minha-submissao",
       isVisible: !!user && isUserParticipating,
       icon: <BsCloudUpload />,
