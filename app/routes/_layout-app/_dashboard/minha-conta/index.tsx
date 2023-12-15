@@ -529,7 +529,7 @@ function LinkedinSection({
               onChange={() => {}}
               defaultValue={getLinkedinUser(user?.linkedin_url) || ""}
               required
-              className="pl-56" // Adicione um padding-left para evitar a sobreposição do texto com o span
+              className="pl-56"
             />
           </div>
           {user?.linkedin_url && (
