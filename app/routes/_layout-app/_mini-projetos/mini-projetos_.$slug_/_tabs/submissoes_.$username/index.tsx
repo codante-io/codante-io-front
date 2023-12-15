@@ -102,9 +102,9 @@ function Headline({
   const navigate = useNavigate();
 
   function getLinkedinUsername(url: string) {
-    const prefixo = "https://www.linkedin.com/in/";
-    if (url.startsWith(prefixo)) {
-      return url.substring(prefixo.length);
+    const prefix = "https://www.linkedin.com/in/";
+    if (url.startsWith(prefix)) {
+      return url.substring(prefix.length);
     } else {
       return null;
     }
@@ -123,16 +123,19 @@ function Headline({
     );
   }
   return (
-    <section id="headline" className="flex items-center justify-start gap-5">
+    <section
+      id="headline"
+      className="flex items-center justify-start gap-5 flex-col sm:flex-row"
+    >
       <UserAvatar
         avatar={submissionUser.avatar}
         className="lg:w-32 lg:h-32 sm:w-24 sm:h-24 w-20 h-20"
         showTooltip={false}
       />
-      <div className="flex flex-col justify-center items-start gap-1 md:gap-4">
-        <div className="flex items-center gap-5">
+      <div className="flex flex-col justify-center items-center sm:items-start gap-1 md:gap-4">
+        <div className="flex items-center sm:gap-5">
           <h1
-            className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-lexend cursor-pointer hover:opacity-80 text-start"
+            className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-lexend cursor-pointer hover:opacity-80 sm:text-start text-center"
             onClick={() => navigate(`/mini-projetos/${challenge.slug}`)}
           >
             {challenge.name}
@@ -142,13 +145,13 @@ function Headline({
           )}
         </div>
         <section className="flex md:items-center gap-2 md:flex-row flex-col break-words">
-          <h2 className="text-md md:text-xl text-start">
+          <h2 className="text-sm md:text-xl sm:text-start text-center">
             Solução de{" "}
-            <span className="md:text-xl font-bold text-brand-500">
+            <span className="text-md md:text-xl font-bold text-brand-500">
               {formatName(submissionUser.user_name)}
             </span>
           </h2>
-          <div className="flex items-center gap-2 break-words flex-wrap">
+          <div className="flex items-center gap-4 sm:gap-2 break-words flex-wrap justify-center">
             <div
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               onClick={handleClickLinkedin}
@@ -157,23 +160,23 @@ function Headline({
                 user &&
                 user.id === submissionUser.user_id && (
                   <>
-                    <RiLinkedinBoxLine className="text-xl" />
-                    <span className="font-light md:text-base md:inline text-sm">
+                    <RiLinkedinBoxLine className="text-lg sm:text-xl" />
+                    <span className=" font-light sm:text-base sm:inline text-xs">
                       (Cadastrar!)
                     </span>
                   </>
                 )}
               {submissionUser.linkedin_url && (
                 <>
-                  <FaLinkedin className="text-xl" />
-                  <span className="font-light md:text-base md:inline text-sm">{`@${getLinkedinUsername(
+                  <FaLinkedin className="text-lg sm:text-xl" />
+                  <span className=" font-light sm:text-base sm:inline text-xs">{`${getLinkedinUsername(
                     submissionUser.linkedin_url,
                   )}`}</span>
                 </>
               )}
             </div>
             {submissionUser.linkedin_url && (
-              <div className="w-1 h-1 rounded-full bg-brand-500 sm:block hidden" />
+              <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
             )}
             <div
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
@@ -184,8 +187,8 @@ function Headline({
                 )
               }
             >
-              <FaGithub className="text-xl" />
-              <span className="font-light md:text-base md:inline text-sm">{`@${submissionUser.user_github_user}`}</span>
+              <FaGithub className="text-lg sm:text-xl" />
+              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user_github_user}`}</span>
             </div>
           </div>
         </section>
