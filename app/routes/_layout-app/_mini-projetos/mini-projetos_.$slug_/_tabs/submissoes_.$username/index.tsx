@@ -1,5 +1,12 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useNavigate, useOutletContext } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useOutletContext,
+} from "@remix-run/react";
 import type { Challenge } from "~/models/challenge.server";
 import type { ChallengeUser, User } from "~/models/user.server";
 import UserAvatar from "~/components/user-avatar";
@@ -11,7 +18,6 @@ import { RiLinkedinBoxLine, RiWhatsappLine } from "react-icons/ri";
 import { formatName } from "~/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
-import UpdateSubmissionForm from "../minha-submissao/UpdateSubmissionForm";
 import { Transition, Dialog } from "@headlessui/react";
 import { updateChallengeSubmission } from "~/models/challenge.server";
 import useSound from "use-sound";
@@ -19,6 +25,8 @@ import pop from "~/sounds/pop.wav";
 import { FiEdit } from "react-icons/fi";
 import classNames from "~/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
+import LoadingButton from "~/components/form/loading-button";
+import Button from "~/components/form/button";
 
 export async function action({
   request,
@@ -53,12 +61,6 @@ export default function MySolution() {
     user: User;
   }>();
 
-  const [location, setLocation] = useState("");
-
-  useEffect(() => {
-    setLocation(window.location.href);
-  }, []);
-
   const submissionUser = challengeUsers.find(
     (user) => user.user_github_user === params.username,
   );
@@ -75,6 +77,8 @@ export default function MySolution() {
       </div>
     );
   }
+
+  const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user_github_user}`;
 
   return (
     <div className="container text-center">
@@ -118,7 +122,7 @@ function Headline({
         "_blank",
       );
     if (user && user.id === submissionUser?.user_id)
-      return navigate("/minha-conta");
+      return navigate("/minha-conta#linkedin-section");
     return toast.error(
       `${formatName(
         submissionUser.user_name,
@@ -148,13 +152,22 @@ function Headline({
           )}
         </div>
         <section className="flex md:items-center gap-2 md:flex-row flex-col break-words">
-          <h2 className="text-sm md:text-xl sm:text-start text-center md:mr-4">
+          <h2 className="text-sm md:text-xl sm:text-start text-center md:mr-4 flex-1">
             Solução de{" "}
             <span className="text-md md:text-xl font-bold text-brand-500">
               {formatName(submissionUser.user_name)}
             </span>
           </h2>
           <div className="flex items-center gap-4 sm:gap-2 break-words flex-wrap justify-center">
+            <a
+              href={`https://www.github.com/${submissionUser.user_github_user}`}
+              target="_blank"
+              className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
+              rel="noreferrer"
+            >
+              <FaGithub className="text-lg sm:text-xl" />
+              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user_github_user}`}</span>
+            </a>
             <div
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               onClick={handleClickLinkedin}
@@ -163,9 +176,10 @@ function Headline({
                 user &&
                 user.id === submissionUser.user_id && (
                   <>
-                    <RiLinkedinBoxLine className="text-lg sm:text-xl" />
-                    <span className=" font-light sm:text-base sm:inline text-xs">
-                      (Cadastrar!)
+                    <FaLinkedin className="text-lg sm:text-xl" />
+                    <span className=" font-light sm:text-sm sm:inline text-xs flex items-center">
+                      cadastre{" "}
+                      <div className="inline-block w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
                     </span>
                   </>
                 )}
@@ -181,18 +195,6 @@ function Headline({
             {submissionUser.linkedin_user && (
               <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
             )}
-            <div
-              className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
-              onClick={() =>
-                window.open(
-                  `https://www.github.com/${submissionUser.user_github_user}`,
-                  "_blank",
-                )
-              }
-            >
-              <FaGithub className="text-lg sm:text-xl" />
-              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user_github_user}`}</span>
-            </div>
           </div>
         </section>
       </div>
@@ -298,10 +300,28 @@ function EditSection({
   const [isOpen, setIsOpen] = useState(false);
   const [popSound] = useSound(pop, { volume: 0.3 });
 
+  const actionData = useActionData<typeof action>();
+
+  const transition = useNavigation();
+  const status = transition.state;
+
+  let isSuccessfulSubmission =
+    status === "idle" && actionData && actionData?.error === undefined;
+
   function toggleDialog() {
     setIsOpen(!isOpen);
     popSound();
   }
+
+  useEffect(() => {
+    // console.log(status, "chamou useeffect");
+    if (isSuccessfulSubmission && isOpen) {
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessfulSubmission]);
 
   return (
     <section>
@@ -351,10 +371,49 @@ function EditSection({
                         Editar submissão
                       </Dialog.Title>
                       <div className="mt-2">
-                        <UpdateSubmissionForm
-                          toggleDialog={toggleDialog}
-                          challengeUser={submissionUser}
-                        />
+                        <Form method="PUT">
+                          <div>
+                            <label
+                              htmlFor="submission_url"
+                              className="block text-sm leading-6 text-gray-800 dark:text-white"
+                            >
+                              Atualize o link do deploy da sua aplicação
+                            </label>
+                            <div className="mt-2">
+                              <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
+                                <input
+                                  type="text"
+                                  name="submission_url"
+                                  defaultValue={submissionUser.submission_url}
+                                  id="submission_url"
+                                  className="rounded block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-200 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                  placeholder="https://mp-example.vercel.app/"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-8 flex gap-x-3">
+                            <LoadingButton
+                              type="submit"
+                              className="relative transition duration-200"
+                              status={status}
+                              isSuccessfulSubmission={isSuccessfulSubmission}
+                              name="intent"
+                              value="updateSubmission"
+                            >
+                              Enviar
+                            </LoadingButton>
+                            <Button
+                              className=" border border-gray-300  dark:border-gray-600 hover:border-brand dark:hover:border-brand"
+                              type="button"
+                              onClick={toggleDialog}
+                              textColorClass="text-gray dark:text-gray-300"
+                              bgClass="bg-transparent"
+                            >
+                              Cancelar
+                            </Button>
+                          </div>
+                        </Form>
                       </div>
                     </Dialog.Panel>
                   </Transition.Child>

@@ -8,10 +8,7 @@ import {
 import LoadingButton from "~/components/form/loading-button";
 import { useEffect } from "react";
 import type { Challenge } from "~/models/challenge.server";
-import {
-  submitChallenge,
-  updateChallengeSubmission,
-} from "~/models/challenge.server";
+import { submitChallenge } from "~/models/challenge.server";
 import type { ChallengeUser, User } from "~/models/user.server";
 
 //action submit challenge
@@ -29,22 +26,8 @@ export async function action({
   switch (intent) {
     case "createSubmission":
       return submitChallenge(request, params.slug, submissionUrl);
-    case "updateSubmission":
-      return updateChallengeSubmission(request, params.slug, submissionUrl);
   }
-  // return submitChallenge(request, params.slug, submissionUrl, metadata);
 }
-
-// Método criando para adicionar campos de metadata (rinha de frontend usou)
-// function getMetadataFromFormData(formData: FormData) {
-//   const metadata: { [key: string]: string } = {};
-
-//   for (let [key, value] of formData.entries()) {
-//     metadata[key] = value as string;
-//   }
-
-//   return metadata;
-// }
 
 export default function MySubmission() {
   // get challengeUser from outlet context

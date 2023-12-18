@@ -519,7 +519,7 @@ function LinkedinSection({
   }
   return (
     <>
-      <h2 className="flex items-center mt-12 text-xl">
+      <h2 className="flex items-center mt-8 text-xl pt-4" id="linkedin-section">
         <MdKeyboardDoubleArrowRight
           size={24}
           className="inline-block mr-2 text-blue-300 dark:text-blue-800"
@@ -530,9 +530,12 @@ function LinkedinSection({
       <AuthCard className="max-w-xl mt-6">
         <Form replace method="post">
           <div className="relative">
-            <span className="absolute left-2 top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400">
+            <label
+              htmlFor="linkedin"
+              className="absolute text-sm md:text-base left-2 top-[72%] md:top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400"
+            >
               https://www.linkedin.com/in/
-            </span>
+            </label>
             <Input
               id="linkedin"
               name="linkedin"
@@ -541,7 +544,7 @@ function LinkedinSection({
               onChange={(event) => setLinkedinUser(event.target.value)}
               defaultValue={user?.linkedin_user}
               required
-              className="pl-56"
+              className="md:pl-56 pl-[200px] text-sm md:text-base"
               onPaste={handlePaste}
               value={linkedinUser}
             />
