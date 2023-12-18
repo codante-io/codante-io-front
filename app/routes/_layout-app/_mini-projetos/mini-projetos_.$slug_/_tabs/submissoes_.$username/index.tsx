@@ -42,9 +42,12 @@ export function meta({ matches, params, data }: MetaArgs) {
     .filter((meta) => (meta as any).property !== "og:description")
     .filter((meta) => (meta as any).property !== "og:image")
     .filter((meta) => (meta as any).property !== "og:url")
+    .filter((meta) => (meta as any).property !== "og:type")
     .filter((meta) => (meta as any).name !== "twitter:title")
     .filter((meta) => (meta as any).name !== "twitter:description")
-    .filter((meta) => (meta as any).name !== "twitter:image");
+    .filter((meta) => (meta as any).name !== "twitter:image")
+    .filter((meta) => (meta as any).name !== "twitter:card")
+    .filter((meta) => (meta as any).name !== "twitter:domain");
 
   return [
     ...parentMeta,
@@ -72,6 +75,10 @@ export function meta({ matches, params, data }: MetaArgs) {
       content: `https://codante.io/mini-projetos/${params.slug}/submissoes/${params.username}`,
     },
     {
+      property: "og:type",
+      content: "website",
+    },
+    {
       name: "twitter:title",
       content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
     },
@@ -82,6 +89,14 @@ export function meta({ matches, params, data }: MetaArgs) {
     {
       name: "twitter:image",
       content: submissionData.submission_image_url,
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:domain",
+      content: `codante.io`,
     },
   ];
 }
