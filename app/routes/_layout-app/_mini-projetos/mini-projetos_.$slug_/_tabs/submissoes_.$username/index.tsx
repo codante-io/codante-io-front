@@ -304,7 +304,7 @@ function EditSection({
   }
 
   return (
-    <div>
+    <section>
       {user && submissionUser.user_id === user.id && (
         <section id="edit" className="text-left">
           <FiEdit
@@ -364,6 +364,6 @@ function EditSection({
           </Transition>
         </section>
       )}
-    </div>
+    </section>
   );
 }
