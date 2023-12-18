@@ -11,14 +11,14 @@ import { RiLinkedinBoxLine, RiWhatsappLine } from "react-icons/ri";
 import { formatName } from "~/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
-import { BsGithub } from "react-icons/bs";
 import UpdateSubmissionForm from "../minha-submissao/UpdateSubmissionForm";
 import { Transition, Dialog } from "@headlessui/react";
 import { updateChallengeSubmission } from "~/models/challenge.server";
 import useSound from "use-sound";
 import pop from "~/sounds/pop.wav";
 import { FiEdit } from "react-icons/fi";
-import { CiGlobe } from "react-icons/ci";
+import classNames from "~/utils/class-names";
+import SolutionButtonsSection from "../../components/solution-buttons-section";
 
 export async function action({
   request,
@@ -63,7 +63,7 @@ export default function MySolution() {
     (user) => user.user_github_user === params.username,
   );
 
-  if (!submissionUser)
+  if (!submissionUser) {
     return (
       <div className="flex flex-col items-start justify-center h-full container">
         <h1 className="mb-5 text-2xl font-bold dark:text-gray-300 text-gray-800">
@@ -74,6 +74,7 @@ export default function MySolution() {
         </p>
       </div>
     );
+  }
 
   return (
     <div className="container text-center">
@@ -83,7 +84,17 @@ export default function MySolution() {
         user={user}
       />
       <ShareSection challenge={challenge} location={location} />
-      <MainSection submissionUser={submissionUser} challenge={challenge} />
+      <MainSection
+        submissionUser={submissionUser}
+        challenge={challenge}
+        user={user}
+      />
+      <SolutionButtonsSection
+        challengeUser={submissionUser}
+        user={user}
+        challengeSlug={challenge.slug}
+        sendoToSolutionPage
+      />
     </div>
   );
 }
@@ -137,7 +148,7 @@ function Headline({
           )}
         </div>
         <section className="flex md:items-center gap-2 md:flex-row flex-col break-words">
-          <h2 className="text-sm md:text-xl sm:text-start text-center">
+          <h2 className="text-sm md:text-xl sm:text-start text-center md:mr-4">
             Solução de{" "}
             <span className="text-md md:text-xl font-bold text-brand-500">
               {formatName(submissionUser.user_name)}
@@ -231,12 +242,12 @@ function ShareSection({
 function MainSection({
   submissionUser,
   challenge,
+  user,
 }: {
   submissionUser: ChallengeUser;
   challenge: Challenge;
+  user: User;
 }) {
-  const navigate = useNavigate();
-
   return (
     <main className="overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow dark:border-background-600  border-background-200 w-full dark:bg-background-700">
       <div className="">
@@ -254,36 +265,12 @@ function MainSection({
           "flex items-center justify-between gap-4 dark:bg-background-700 px-4 y-2 sm:px-4 sm:py-4"
         }
       >
-        <section className="flex gap-8">
-          <div
-            className="flex items-center cursor-pointer gap-1 hover:opacity-70"
-            onClick={() => {
-              if (submissionUser.is_solution) {
-                return navigate(
-                  `/mini-projetos/${challenge.slug}/resolucao-codigo`,
-                );
-              }
-              window.open(submissionUser.fork_url as string, "_blank");
-            }}
-          >
-            <BsGithub className="text-lg" />
-            <h3 className="font-light sm:inline hidden">Código</h3>
-          </div>
-          <div
-            className="flex items-center cursor-pointer gap-1 hover:opacity-70"
-            onClick={() => {
-              if (submissionUser.is_solution) {
-                return navigate(
-                  `/mini-projetos/${challenge.slug}/resolucao-codigo`,
-                );
-              }
-              window.open(submissionUser.submission_url, "_blank");
-            }}
-          >
-            <CiGlobe className="text-lg" />
-            <h3 className="font-light sm:inline hidden">Deploy</h3>
-          </div>
-        </section>
+        <EditSection
+          submissionUser={submissionUser}
+          user={user}
+          visibility="sm:hidden inline"
+          size="text-lg"
+        />
         <div className="flex items-center">
           <ReactionsButton
             reactions={submissionUser.reactions}
@@ -300,9 +287,13 @@ function MainSection({
 function EditSection({
   submissionUser,
   user,
+  visibility = "hidden sm:inline",
+  size = "lg:text-2xl text-xl",
 }: {
   submissionUser: ChallengeUser;
   user: User;
+  visibility?: string;
+  size?: string;
 }) {
   const [showEditFormState, setShowEditFormState] = useState(false);
   const [popSound] = useSound(pop, { volume: 0.3 });
@@ -313,11 +304,15 @@ function EditSection({
   }
 
   return (
-    <>
+    <div>
       {user && submissionUser.user_id === user.id && (
         <section id="edit" className="text-left">
           <FiEdit
-            className="text-gray-400 dark:text-gray-500 hover:opacity-70 cursor-pointer sm:inline hidden"
+            className={classNames(
+              "text-gray-300 dark:text-gray-600 dark:hover:text-gray-500 hover:text-gray-400 cursor-pointer",
+              visibility,
+              size,
+            )}
             onClick={toggleShowEditForm}
           />
           <Transition appear show={showEditFormState}>
@@ -369,6 +364,6 @@ function EditSection({
           </Transition>
         </section>
       )}
-    </>
+    </div>
   );
 }
