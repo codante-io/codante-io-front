@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import Input from "~/components/form/input";
 import LoadingButton from "~/components/form/loading-button";
@@ -13,7 +13,12 @@ import ProBadge from "~/components/pro-badge";
 import { useToasterWithSound } from "~/hooks/useToasterWithSound";
 import { authenticator } from "~/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
-import { changeName, changePassword, changeSettings } from "./services.server";
+import {
+  changeLinkedinUrl,
+  changeName,
+  changePassword,
+  changeSettings,
+} from "./services.server";
 import type { User } from "~/models/user.server";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
 import type { Subscription } from "~/models/subscription.server";
@@ -35,6 +40,17 @@ export async function action({ request }: { request: Request }) {
     }
     return {
       changeName: true,
+    };
+  }
+
+  if (intent === "changeLinkedinUrl") {
+    const linkedin = formData.get("linkedin") as string;
+    const res = await changeLinkedinUrl({ request, linkedin });
+    if (res?.errors) {
+      return { changeLinkedinUrlErrors: res.message };
+    }
+    return {
+      changeLinkedinUrl: true,
     };
   }
 
@@ -90,6 +106,10 @@ export default function Conta() {
     transition.formData?.get("intent") === "changePassword"
       ? transition.state
       : "idle";
+  const changeLinkedinUrlStatus =
+    transition.formData?.get("intent") === "changeLinkedinUrl"
+      ? transition.state
+      : "idle";
 
   const { user, subscription } = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
@@ -97,14 +117,19 @@ export default function Conta() {
 
   let changePasswordErrors,
     changeNameErrors,
+    changeLinkedinUrlErrors,
     isChangeNameSuccess,
-    isChangePasswordSuccess;
+    isChangePasswordSuccess,
+    isChangeLinkedinUrlSuccess;
 
   if (actionData) {
     changePasswordErrors = actionData.changePasswordErrors;
     changeNameErrors = actionData.changeNameErrors;
+    changeLinkedinUrlErrors = actionData.changeLinkedinUrlErrors;
 
     isChangeNameSuccess = actionData.changeName && changeNameStatus === "idle";
+    isChangeLinkedinUrlSuccess =
+      actionData.changeLinkedinUrl && changeLinkedinUrlStatus === "idle";
     isChangePasswordSuccess =
       actionData.changePassword && changePasswordStatus === "idle";
   }
@@ -117,7 +142,16 @@ export default function Conta() {
     if (isChangePasswordSuccess) {
       showSuccessToast("Você alterou sua senha com sucesso.");
     }
-  }, [isChangeNameSuccess, isChangePasswordSuccess, showSuccessToast]);
+
+    if (isChangeLinkedinUrlSuccess) {
+      showSuccessToast("Você alterou seu LinkedIn com sucesso.");
+    }
+  }, [
+    isChangeNameSuccess,
+    isChangePasswordSuccess,
+    isChangeLinkedinUrlSuccess,
+    showSuccessToast,
+  ]);
 
   return (
     <>
@@ -144,6 +178,12 @@ export default function Conta() {
           user={user}
           changeNameErrors={changeNameErrors}
           changeNameStatus={changeNameStatus}
+        />
+
+        <LinkedinSection
+          user={user}
+          changeLinkedinUrlErrors={changeLinkedinUrlErrors}
+          changeLinkedinUrlStatus={changeLinkedinUrlStatus}
         />
 
         <PasswordChangeSection
@@ -447,6 +487,96 @@ function BoletoSubscriptionSection({
           <FiExternalLink />
         </a>
       </p>
+    </>
+  );
+}
+
+function LinkedinSection({
+  user,
+  changeLinkedinUrlErrors,
+  changeLinkedinUrlStatus,
+}: {
+  user: User;
+  changeLinkedinUrlErrors?: string;
+  changeLinkedinUrlStatus: "idle" | "loading" | "submitting";
+}) {
+  const [linkedinUser, setLinkedinUser] = useState(user?.linkedin_user || "");
+
+  function getLinkedinUserFromURL(url: string) {
+    const partes = url.split("/in/");
+    if (partes.length > 1) {
+      return partes[1];
+    } else {
+      return url;
+    }
+  }
+
+  function handlePaste(event: React.ClipboardEvent) {
+    event.preventDefault();
+    const pastedText = event.clipboardData.getData("text");
+    const linkedinUser = getLinkedinUserFromURL(pastedText);
+    setLinkedinUser(linkedinUser);
+  }
+  return (
+    <>
+      <h2 className="flex items-center mt-8 text-xl pt-4" id="linkedin-section">
+        <MdKeyboardDoubleArrowRight
+          size={24}
+          className="inline-block mr-2 text-blue-300 dark:text-blue-800"
+        />
+        LinkedIn
+      </h2>
+
+      <AuthCard className="max-w-xl mt-6">
+        <Form replace method="post">
+          <div className="relative">
+            <label
+              htmlFor="linkedin"
+              className="absolute text-sm md:text-base left-2 top-[72%] md:top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400"
+            >
+              https://www.linkedin.com/in/
+            </label>
+            <Input
+              id="linkedin"
+              name="linkedin"
+              label="Linkedin"
+              type="text"
+              onChange={(event) => setLinkedinUser(event.target.value)}
+              defaultValue={user?.linkedin_user}
+              required
+              className="md:pl-56 pl-[200px] text-sm md:text-base"
+              onPaste={handlePaste}
+              value={linkedinUser}
+            />
+          </div>
+          {user?.linkedin_user && (
+            <a
+              href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
+            >
+              Visualizar perfil cadastrado
+              <FiExternalLink />
+            </a>
+          )}
+          <div className="mt-2 mb-1 text-xs text-red-400 h-4">
+            {changeLinkedinUrlErrors}
+          </div>
+
+          <div className="mt-8 text-right">
+            <LoadingButton
+              status={changeLinkedinUrlStatus}
+              isSuccessfulSubmission={false}
+              name="intent"
+              value="changeLinkedinUrl"
+              type="submit"
+            >
+              Salvar Alterações
+            </LoadingButton>
+          </div>
+        </Form>
+      </AuthCard>
     </>
   );
 }

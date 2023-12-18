@@ -160,6 +160,13 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
+  const userHasSubmitted = Boolean(
+    challengeUsers.find(
+      (submission) =>
+        submission.user_id === user?.id && submission.submission_url,
+    ),
+  );
+
   const actionData = useActionData<any>();
 
   const navigate = useNavigate();
@@ -242,7 +249,7 @@ export default function ChallengeSlug() {
       current: location.pathname.includes("submissoes"),
     },
     {
-      name: "Minha Submissão",
+      name: userHasSubmitted ? "Ver submissão" : "Submeter solução",
       href: "minha-submissao",
       isVisible: !!user && isUserParticipating,
       icon: <BsCloudUpload />,
@@ -257,113 +264,120 @@ export default function ChallengeSlug() {
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
       <section className="min-h-[calc(100vh_-_68px)] flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
-        <div className="container">
-          <div>
-            <CardItemDifficulty
-              difficulty={challenge?.difficulty}
-              className="mb-2"
-            />
-            <h1 className="flex items-center justify-between text-2xl font-light lg:text-3xl font-lexend">
-              <span>
-                <MdKeyboardDoubleArrowRight
-                  size={24}
-                  className="inline mr-2 text-blue-300 dark:text-blue-900"
+        {!location.pathname.includes("submissoes/") && (
+          <>
+            <div className="container">
+              <div>
+                <CardItemDifficulty
+                  difficulty={challenge?.difficulty}
+                  className="mb-2"
                 />
-                <span className="inline font-extralight">Projeto</span>{" "}
-                <span className="inline font-bold">{challenge?.name}</span>
-              </span>
-            </h1>
+                <h1 className="flex items-center justify-between text-2xl font-light lg:text-3xl font-lexend">
+                  <span>
+                    <MdKeyboardDoubleArrowRight
+                      size={24}
+                      className="inline mr-2 text-blue-300 dark:text-blue-900"
+                    />
+                    <span className="inline font-extralight">Projeto</span>{" "}
+                    <span className="inline font-bold">{challenge?.name}</span>
+                  </span>
+                </h1>
 
-            <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
-              {challenge?.short_description}
-            </p>
-            {challengeUser && (
-              <div
-                className={`mb inline-flex items-center gap-x-1.5 rounded-xl px-3 border py-1.5 xl:text-xs text-[0.65rem] shadow-sm font-light text-gray-600 dark:text-gray-300 ${
-                  challengeUser.pivot?.completed
-                    ? "border-green-500"
-                    : "border-amber-500"
-                }`}
-              >
-                {challengeUser.pivot?.completed ? (
-                  <CheckIcon className="w-3 h-3 text-green-500 dark:text-green-300" />
-                ) : (
-                  <svg
-                    className={`h-1.5 w-1.5 ${
+                <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
+                  {challenge?.short_description}
+                </p>
+                {challengeUser && (
+                  <div
+                    className={`mb inline-flex items-center gap-x-1.5 rounded-xl px-3 border py-1.5 xl:text-xs text-[0.65rem] shadow-sm font-light text-gray-600 dark:text-gray-300 ${
                       challengeUser.pivot?.completed
-                        ? "fill-brand-500"
-                        : "animate-pulse fill-amber-400"
+                        ? "border-green-500"
+                        : "border-amber-500"
                     }`}
-                    viewBox="0 0 6 6"
-                    aria-hidden="true"
                   >
-                    <circle cx={3} cy={3} r={3} />
-                  </svg>
+                    {challengeUser.pivot?.completed ? (
+                      <CheckIcon className="w-3 h-3 text-green-500 dark:text-green-300" />
+                    ) : (
+                      <svg
+                        className={`h-1.5 w-1.5 ${
+                          challengeUser.pivot?.completed
+                            ? "fill-brand-500"
+                            : "animate-pulse fill-amber-400"
+                        }`}
+                        viewBox="0 0 6 6"
+                        aria-hidden="true"
+                      >
+                        <circle cx={3} cy={3} r={3} />
+                      </svg>
+                    )}
+
+                    {challengeUser.pivot?.completed
+                      ? "Projeto concluído!"
+                      : "Participando"}
+                  </div>
                 )}
-
-                {challengeUser.pivot?.completed
-                  ? "Projeto concluído!"
-                  : "Participando"}
+                <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
               </div>
-            )}
-            <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
-          </div>
-        </div>
+            </div>
 
-        <div className="container mt-4 mb-8 lg:mt-8 lg:mb-12">
-          <div>
-            <div className="sm:hidden">
-              <label htmlFor="tabs" className="sr-only">
-                Select a tab
-              </label>
-              <select
-                onChange={(e) => {
-                  const tab = tabs.find((t) => t.name === e.target.value);
-                  if (tab) {
-                    navigate(`/mini-projetos/${challenge?.slug}/${tab.href}`);
-                  }
-                }}
-                id="tabs"
-                name="tabs"
-                className="block w-full rounded-md dark:border-gray-600 dark:bg-background-800 focus:border-indigo-500 focus:ring-indigo-500"
-                defaultValue={
-                  tabs.filter((t) => t.isVisible).find((tab) => tab?.current)
-                    ?.name
-                }
-              >
-                {tabs
-                  .filter((t) => t.isVisible)
-                  .map((tab) => (
-                    <option key={tab.name}>{tab.name}</option>
-                  ))}
-              </select>
+            <div className="container mt-4 mb-8 lg:mt-8 lg:mb-12">
+              <div>
+                <div className="sm:hidden">
+                  <label htmlFor="tabs" className="sr-only">
+                    Select a tab
+                  </label>
+                  <select
+                    onChange={(e) => {
+                      const tab = tabs.find((t) => t.name === e.target.value);
+                      if (tab) {
+                        navigate(
+                          `/mini-projetos/${challenge?.slug}/${tab.href}`,
+                        );
+                      }
+                    }}
+                    id="tabs"
+                    name="tabs"
+                    className="block w-full rounded-md dark:border-gray-600 dark:bg-background-800 focus:border-indigo-500 focus:ring-indigo-500"
+                    defaultValue={
+                      tabs
+                        .filter((t) => t.isVisible)
+                        .find((tab) => tab?.current)?.name
+                    }
+                  >
+                    {tabs
+                      .filter((t) => t.isVisible)
+                      .map((tab) => (
+                        <option key={tab.name}>{tab.name}</option>
+                      ))}
+                  </select>
+                </div>
+                <div className="hidden sm:block">
+                  <nav className="flex space-x-4" aria-label="Tabs">
+                    {tabs
+                      .filter((t) => t.isVisible)
+                      .map((tab) => (
+                        <Link
+                          key={tab.name}
+                          to={tab.href}
+                          className={classNames(
+                            tab.current
+                              ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
+                              : "text-gray-500 hover:text-gray-700",
+                            "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
+                          )}
+                          aria-current={tab.current ? "page" : undefined}
+                        >
+                          <span className={tab.current ? "text-brand" : ""}>
+                            {tab.icon}
+                          </span>
+                          {tab.name}
+                        </Link>
+                      ))}
+                  </nav>
+                </div>
+              </div>
             </div>
-            <div className="hidden sm:block">
-              <nav className="flex space-x-4" aria-label="Tabs">
-                {tabs
-                  .filter((t) => t.isVisible)
-                  .map((tab) => (
-                    <Link
-                      key={tab.name}
-                      to={tab.href}
-                      className={classNames(
-                        tab.current
-                          ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
-                          : "text-gray-500 hover:text-gray-700",
-                        "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
-                      )}
-                      aria-current={tab.current ? "page" : undefined}
-                    >
-                      <span className={tab.current ? "text-brand" : ""}>
-                        {tab.icon}
-                      </span>
-                      {tab.name}
-                    </Link>
-                  ))}
-              </nav>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
 
         {
           // if path is /mini-projetos/:slug, show the overview tab, otherwise show the content of the tab
@@ -392,18 +406,22 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
-      <section
-        id="mini-projects"
-        className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
-      >
-        <div className="container mb-10">
-          <ParticipantsSection
-            currentUserIsEnrolled={challenge.current_user_is_enrolled}
-            participants={participants}
-          />
-        </div>
-      </section>
+      {!location.pathname.includes("submissoes/") && (
+        <>
+          <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
+          <section
+            id="mini-projects"
+            className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
+          >
+            <div className="container mb-10">
+              <ParticipantsSection
+                currentUserIsEnrolled={challenge.current_user_is_enrolled}
+                participants={participants}
+              />
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }

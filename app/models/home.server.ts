@@ -20,6 +20,7 @@ export type HomeInfo = {
       name?: string;
       slug: string;
     };
+    user_github_user: string;
   }[];
   avatar_section: {
     avatars: UserAvatar[];
