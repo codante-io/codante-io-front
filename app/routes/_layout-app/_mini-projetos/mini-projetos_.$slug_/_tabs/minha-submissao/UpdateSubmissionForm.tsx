@@ -1,29 +1,37 @@
-import { Form, useActionData, useNavigation } from "@remix-run/react";
+import { Form, useActionData, useFetcher, useNavigation } from "@remix-run/react";
 import type { ChallengeUser } from "~/models/user.server";
 import LoadingButton from "~/components/form/loading-button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/form/button";
 
 export default function UpdateSubmissionForm({
   challengeUser,
-  showEditForm,
+  toggleDialog,
 }: {
   challengeUser: ChallengeUser;
-  showEditForm?: () => void;
+  toggleDialog: () => void;
 }) {
-  const [cancelSubmition, setCancelSubmition] = useState(false);
   const errors = useActionData();
   const transition = useNavigation();
 
-  const handleCancelBtn = () => {
-    if (showEditForm) {
-      showEditForm();
-      setCancelSubmition(!cancelSubmition);
-    }
-  };
+  // const handleCancelBtn = () => {
+  //   if (toggleDialog) {
+  //     toggleDialog();
+  //   }
+  // };
+
+  // const fetcher = useFetcher();
 
   const status = transition.state;
   let isSuccessfulSubmission = status === "idle" && errors === null;
+
+  useEffect(() => {
+    console.log(status, errors, 'chamou useeffect')
+    if (isSuccessfulSubmission) {
+      toggleDialog();
+      console.log('foi sucesso')
+    }
+  }, [isSuccessfulSubmission, toggleDialog])
 
   return (
     <Form method="PUT">
@@ -61,7 +69,7 @@ export default function UpdateSubmissionForm({
         <Button
           className=" border border-gray-300  dark:border-gray-600 hover:border-red-400 dark:hover:border-red-400"
           type="button"
-          onClick={handleCancelBtn}
+          onClick={toggleDialog}
           textColorClass="text-gray dark:text-gray-300"
           bgClass="bg-transparent"
         >

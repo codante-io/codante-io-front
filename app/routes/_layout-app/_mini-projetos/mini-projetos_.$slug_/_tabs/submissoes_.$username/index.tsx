@@ -295,11 +295,11 @@ function EditSection({
   visibility?: string;
   size?: string;
 }) {
-  const [showEditFormState, setShowEditFormState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [popSound] = useSound(pop, { volume: 0.3 });
 
-  function toggleShowEditForm() {
-    setShowEditFormState(!showEditFormState);
+  function toggleDialog() {
+    setIsOpen(!isOpen);
     popSound();
   }
 
@@ -313,13 +313,13 @@ function EditSection({
               visibility,
               size,
             )}
-            onClick={toggleShowEditForm}
+            onClick={toggleDialog}
           />
-          <Transition appear show={showEditFormState}>
+          <Transition appear show={isOpen}>
             <Dialog
               as="div"
               className="relative z-10"
-              onClose={() => setShowEditFormState(false)}
+              onClose={() => setIsOpen(false)}
             >
               <Transition.Child
                 enter="ease-out duration-300"
@@ -352,7 +352,7 @@ function EditSection({
                       </Dialog.Title>
                       <div className="mt-2">
                         <UpdateSubmissionForm
-                          showEditForm={toggleShowEditForm}
+                          toggleDialog={toggleDialog}
                           challengeUser={submissionUser}
                         />
                       </div>
