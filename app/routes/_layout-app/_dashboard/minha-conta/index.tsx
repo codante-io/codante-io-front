@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import Input from "~/components/form/input";
 import LoadingButton from "~/components/form/loading-button";
@@ -500,6 +500,23 @@ function LinkedinSection({
   changeLinkedinUrlErrors?: string;
   changeLinkedinUrlStatus: "idle" | "loading" | "submitting";
 }) {
+  const [linkedinUser, setLinkedinUser] = useState(user?.linkedin_user || "");
+
+  function getLinkedinUserFromURL(url: string) {
+    const partes = url.split("/in/");
+    if (partes.length > 1) {
+      return partes[1];
+    } else {
+      return url;
+    }
+  }
+
+  function handlePaste(event: React.ClipboardEvent) {
+    event.preventDefault();
+    const pastedText = event.clipboardData.getData("text");
+    const linkedinUser = getLinkedinUserFromURL(pastedText);
+    setLinkedinUser(linkedinUser);
+  }
   return (
     <>
       <h2 className="flex items-center mt-12 text-xl">
@@ -521,10 +538,12 @@ function LinkedinSection({
               name="linkedin"
               label="Linkedin"
               type="text"
-              onChange={() => {}}
+              onChange={(event) => setLinkedinUser(event.target.value)}
               defaultValue={user?.linkedin_user}
               required
               className="pl-56"
+              onPaste={handlePaste}
+              value={linkedinUser}
             />
           </div>
           {user?.linkedin_user && (
