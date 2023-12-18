@@ -19,8 +19,9 @@ export default function Resolution() {
       <div className="container">
         <section className="flex w-full gap-4 md:gap-8 items-start md:justify-start md:items-center md:flex-row mt-10">
           {/* Link para o vídeo */}
+
           <article
-            className={`w-full flex flex-col-reverse md:flex-row items-center justify-between cursor-pointer dark:bg-[#17212B] shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 dark:border-background-700 px-4 py-4 md:py-10 sm:px-10 rounded-2xl gap-4 md:gap-0`}
+            className={`w-full flex flex-col-reverse md:flex-row items-center justify-between cursor-pointer transition-colors dark:bg-background-800/50 hover:dark:bg-background-800/100 shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 dark:border-background-700 px-4 py-4 md:py-10 sm:px-10 rounded-2xl gap-4 md:gap-0`}
             onClick={() =>
               navigate(`/mini-projetos/${challenge?.slug}/resolucao/${slug}`)
             }
@@ -35,11 +36,11 @@ export default function Resolution() {
                 </span>
               </span>
             </p>
-            <VideoCameraIcon className="md:w-10 w-8 group-hover:text-brand-500 text-background-200 dark:text-background-600" />
+            <VideoCameraIcon className="md:w-10 w-8 group-hover:text-brand-500 text-background-200 dark:text-background-600 transition-colors" />
           </article>
           {/* Link para o código */}
           <article
-            className={`w-full flex flex-col-reverse md:flex-row items-center justify-between cursor-pointer dark:bg-[#17212B] shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 dark:border-background-700 px-4 py-4 md:py-10 sm:px-10 rounded-2xl gap-4 md:gap-0`}
+            className={`w-full flex flex-col-reverse md:flex-row transition-colors items-center justify-between cursor-pointer dark:bg-background-800/50 hover:dark:bg-background-800/100 shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 dark:border-background-700 px-4 py-4 md:py-10 sm:px-10 rounded-2xl gap-4 md:gap-0`}
             onClick={() =>
               navigate(`/mini-projetos/${challenge?.slug}/resolucao-codigo`)
             }
@@ -54,7 +55,7 @@ export default function Resolution() {
                 </span>
               </span>
             </p>
-            <CodeBracketIcon className="md:w-10 w-8 group-hover:text-brand-500 text-background-200 dark:text-background-600" />
+            <CodeBracketIcon className="md:w-10 w-8 group-hover:text-brand-500 text-background-200 dark:text-background-600 transition-colors" />
           </article>
         </section>
       </div>

@@ -30,7 +30,7 @@ export default function SolutionButtonsSection({
   return (
     <div className="mt-10 w-full flex md:gap-8 gap-4">
       <a
-        className={`dark:bg-[#17212B] flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 justify-between dark:border-background-700 w-full rounded-lg p-5 cursor-pointer`}
+        className={`dark:bg-background-800/50 hover:dark:bg-background-800/100 transition-colors flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 justify-between dark:border-background-700 w-full rounded-lg p-5 cursor-pointer`}
         href={challengeUser.fork_url ?? ""}
         target="_blank"
         rel="noopener noreferrer"
@@ -39,11 +39,11 @@ export default function SolutionButtonsSection({
         <p className="text-xs md:text-base lg:text-lg">
           Acessar o código no GitHub
         </p>
-        <BsGithub className="text-3xl group-hover:text-brand-500 text-background-200 dark:text-background-600" />
+        <BsGithub className="text-3xl group-hover:text-brand-500 text-background-200 dark:text-background-600 transition-colors" />
       </a>
 
       <a
-        className={`dark:bg-[#17212B] flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 justify-between dark:border-background-700 w-full rounded-lg p-5`}
+        className={`dark:bg-background-800/50 hover:dark:bg-background-800/100 transition-colors flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 border-background-200 justify-between dark:border-background-700 w-full rounded-lg p-5`}
         href={challengeUser?.submission_url}
         target="_blank"
         rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export default function SolutionButtonsSection({
         <p className="text-xs md:text-base lg:text-lg">
           Acessar o deploy da aplicação
         </p>
-        <BsGlobe className="text-3xl group-hover:text-brand-500 text-background-200 dark:text-background-600" />
+        <BsGlobe className="text-3xl group-hover:text-brand-500 text-background-200 dark:text-background-600 transition-colors" />
       </a>
     </div>
   );
