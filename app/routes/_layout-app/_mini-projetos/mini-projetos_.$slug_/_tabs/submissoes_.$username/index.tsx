@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -19,7 +19,10 @@ import { formatName } from "~/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
 import { Transition, Dialog } from "@headlessui/react";
-import { updateChallengeSubmission } from "~/models/challenge.server";
+import {
+  getSubmissionFromGithubUser,
+  updateChallengeSubmission,
+} from "~/models/challenge.server";
 import useSound from "use-sound";
 import pop from "~/sounds/pop.wav";
 import { FiEdit } from "react-icons/fi";
@@ -27,6 +30,61 @@ import classNames from "~/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/form/loading-button";
 import Button from "~/components/form/button";
+import invariant from "tiny-invariant";
+
+export function meta({ matches, params, data }: MetaArgs) {
+  const { submissionData } = data as any;
+  const parentMeta = matches
+    .flatMap((match) => match.meta ?? [])
+    .filter((meta) => !("title" in meta))
+    .filter((meta) => (meta as any).name !== "description")
+    .filter((meta) => (meta as any).property !== "og:title")
+    .filter((meta) => (meta as any).property !== "og:description")
+    .filter((meta) => (meta as any).property !== "og:image")
+    .filter((meta) => (meta as any).property !== "og:url")
+    .filter((meta) => (meta as any).name !== "twitter:title")
+    .filter((meta) => (meta as any).name !== "twitter:description")
+    .filter((meta) => (meta as any).name !== "twitter:image");
+
+  return [
+    ...parentMeta,
+    {
+      title: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+    },
+    {
+      name: "description",
+      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+    },
+    {
+      property: "og:title",
+      content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+    },
+    {
+      property: "og:description",
+      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+    },
+    {
+      property: "og:image",
+      content: submissionData.submission_image_url,
+    },
+    {
+      property: "og:url",
+      content: `https://codante.io/mini-projetos/${params.slug}/submissoes/${params.username}`,
+    },
+    {
+      name: "twitter:title",
+      content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+    },
+    {
+      name: "twitter:description",
+      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+    },
+    {
+      name: "twitter:image",
+      content: submissionData.submission_image_url,
+    },
+  ];
+}
 
 export async function action({
   request,
@@ -45,8 +103,16 @@ export async function action({
   }
 }
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  invariant(params.slug, `params.slug is required`);
+  invariant(params.username, `params.username is required`);
+
+  const submissionData = await getSubmissionFromGithubUser(
+    params.slug,
+    params.username,
+  );
   return {
+    submissionData,
     params,
   };
 };
@@ -168,6 +234,9 @@ function Headline({
               <FaGithub className="text-lg sm:text-xl" />
               <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user_github_user}`}</span>
             </a>
+            {submissionUser.linkedin_user && (
+              <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
+            )}
             <div
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               onClick={handleClickLinkedin}
@@ -192,9 +261,6 @@ function Headline({
                 </>
               )}
             </div>
-            {submissionUser.linkedin_user && (
-              <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
-            )}
           </div>
         </section>
       </div>
