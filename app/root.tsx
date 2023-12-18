@@ -22,6 +22,8 @@ import NotFound from "./components/errors/not-found";
 import { Error500 } from "./components/errors/500";
 import type { User } from "./models/user.server";
 import { metaV1 } from "@remix-run/v1-meta";
+import { environment } from "./models/environment.server";
+import PublicEnv from "./components/public-env";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -64,7 +66,7 @@ export async function loader({ request }: { request: Request }) {
   return json({
     user: userData,
     ENV: {
-      PAGARME_ENCRYPTION_KEY: process.env.PAGARME_ENCRYPTION_KEY,
+      BASE_URL: environment().BASE_URL,
     },
   });
 }
@@ -96,12 +98,8 @@ export default function App() {
           <Outlet context={{ user }} />
         </ColorModeProvider>
         <ScrollRestoration />
-        {/* Env pública: https://remix.run/docs/en/main/guides/envvars */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(loaderData.ENV)}`,
-          }}
-        />
+        {/* Env pública: https://remix.run/docs/en/main/guides/envvars | https://dev.to/remix-run-br/type-safe-environment-variables-on-both-client-and-server-with-remix-54l5 */}
+        <PublicEnv {...loaderData.ENV} />
         <Scripts />
         <LiveReload />
         <Toaster
