@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import { getPublicEnv } from "~/components/public-env";
 
 export default function NotFound({ error }: { error?: any }) {
   return (
@@ -10,7 +11,7 @@ export default function NotFound({ error }: { error?: any }) {
       <p className="mb-10 dark:text-gray-400">
         Desculpe, não encontramos nada por aqui...
       </p>
-      {process.env.NODE_ENV !== "production" ? (
+      {getPublicEnv('NODE_ENV') !== "production" ? (
         <pre className="p-4 mb-10 text-xs rounded-lg bg-background-200 dark:bg-background-800">
           {JSON.stringify(error ?? "")}
         </pre>

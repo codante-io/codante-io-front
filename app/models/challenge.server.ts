@@ -3,6 +3,7 @@ import { currentToken } from "~/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
+import { environment } from "./environment.server";
 
 export type Challenge = {
   id: string;
@@ -66,7 +67,7 @@ export async function getChallenges(
 ): Promise<Array<ChallengeCard>> {
   const token = await currentToken({ request });
   const challenges = await axios
-    .get(`${process.env.API_HOST}/challenges`, {
+    .get(`${environment().API_HOST}/challenges`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -82,7 +83,7 @@ export async function getChallenge(
   const token = await currentToken({ request });
 
   const challenge = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}`, {
+    .get(`${environment().API_HOST}/challenges/${slug}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -104,7 +105,7 @@ export async function getChallengeParticipants(
   const token = await currentToken({ request });
 
   const challengeParticipants = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/participants`, {
+    .get(`${environment().API_HOST}/challenges/${slug}/participants`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -128,7 +129,7 @@ export async function getSubmissionFromGithubUser(
   submission_image_url: string;
 }> {
   const submission = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/submissions/${githubUser}`)
+    .get(`${environment().API_HOST}/challenges/${slug}/submissions/${githubUser}`)
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -151,7 +152,7 @@ export async function joinChallenge({
 
     await axios
       .post(
-        `${process.env.API_HOST}/challenges/${slug}/join`,
+        `${environment().API_HOST}/challenges/${slug}/join`,
         {},
         {
           headers: {
@@ -173,7 +174,7 @@ export async function userJoinedChallenge(
   let token = await currentToken({ request });
 
   const challengeUser = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/joined`, {
+    .get(`${environment().API_HOST}/challenges/${slug}/joined`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -189,7 +190,7 @@ export async function getUserFork(
   const repos = await axios
     .get(`https://api.github.com/repos/codante-io/${challengeSlug}/forks`, {
       headers: {
-        Authorization: `BEARER ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
+        Authorization: `BEARER ${environment().GITHUB_PERSONAL_ACCESS_TOKEN}`,
       },
     })
     // .get(`https://api.github.com/repos/miniprojects-io/countdown-timer/forks`)
@@ -215,7 +216,7 @@ export async function updateChallengeUser({
   let token = await currentToken({ request });
 
   const challengeUser = await axios
-    .put(`${process.env.API_HOST}/challenges/${slug}`, body, {
+    .put(`${environment().API_HOST}/challenges/${slug}`, body, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -234,7 +235,7 @@ export async function verifyAndUpdateForkURL({
   let token = await currentToken({ request });
 
   const hasForked = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/forked`, {
+    .get(`${environment().API_HOST}/challenges/${slug}/forked`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -303,7 +304,7 @@ export async function getChallengeUsers(
   let token = await currentToken({ request });
 
   const challenge = await axios
-    .get(`${process.env.API_HOST}/challenges/${slug}/submissions`, {
+    .get(`${environment().API_HOST}/challenges/${slug}/submissions`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -328,7 +329,7 @@ export async function submitChallenge(
 
   return axios
     .post(
-      `${process.env.API_HOST}/challenges/${slug}/submit`,
+      `${environment().API_HOST}/challenges/${slug}/submit`,
       {
         submission_url: submissionUrl,
         metadata,
@@ -359,7 +360,7 @@ export async function updateChallengeSubmission(
 
   return axios
     .put(
-      `${process.env.API_HOST}/challenges/${slug}/submit`,
+      `${environment().API_HOST}/challenges/${slug}/submit`,
       {
         submission_url: submissionUrl,
         metadata,

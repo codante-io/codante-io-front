@@ -1,5 +1,6 @@
 import axios from "axios";
 import { currentToken } from "~/services/auth.server";
+import { environment } from "./environment.server";
 
 export type Lesson = {
   id: string;
@@ -23,7 +24,7 @@ export type AvailableTo = "all" | "logged_in" | "pro";
 
 export async function getLesson(slug: string) {
   const lesson = await axios
-    .get(`${process.env.API_HOST}/lessons/${slug}`)
+    .get(`${environment().API_HOST}/lessons/${slug}`)
     .then((res) => res.data.data);
   return lesson;
 }
@@ -35,7 +36,7 @@ export async function setCompleted(
 ) {
   const token = await currentToken({ request });
 
-  let endpoint = `${process.env.API_HOST}/lessons/${lessonId}/`;
+  let endpoint = `${environment().API_HOST}/lessons/${lessonId}/`;
   if (markCompleted) {
     endpoint += "completed";
   } else {

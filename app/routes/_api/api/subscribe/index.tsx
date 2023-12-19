@@ -1,4 +1,5 @@
 import axios from "axios";
+import { environment } from "~/models/environment.server";
 import { currentToken } from "~/services/auth.server";
 
 export async function action({ request }: { request: Request }) {
@@ -10,7 +11,7 @@ export async function action({ request }: { request: Request }) {
 
   try {
     const response = await axios.post(
-      `${process.env.API_HOST}/subscribe`,
+      `${environment().API_HOST}/subscribe`,
       {
         pagarmeToken,
         paymentMethod,

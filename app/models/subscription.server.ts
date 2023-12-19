@@ -1,5 +1,6 @@
 import axios from "axios";
 import { currentToken } from "~/services/auth.server";
+import { environment } from "./environment.server";
 
 export type Subscription = {
   id: number;
@@ -22,7 +23,7 @@ export type Subscription = {
 export async function getSubscription({ request }: { request: Request }) {
   const token = await currentToken({ request });
 
-  let endpoint = `${process.env.API_HOST}/my-subscription`;
+  let endpoint = `${environment().API_HOST}/my-subscription`;
 
   const data: Subscription | null = await axios
     .get(endpoint, {
@@ -45,7 +46,7 @@ export async function getSubscriptionByPagarmeOrderId({
 }) {
   const token = await currentToken({ request });
 
-  let endpoint = `${process.env.API_HOST}/api/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
+  let endpoint = `${environment().API_HOST}/api/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
 
   try {
     const data: Subscription | null = await axios

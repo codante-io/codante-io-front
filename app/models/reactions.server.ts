@@ -1,6 +1,7 @@
 import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { currentToken } from "~/services/auth.server";
+import { environment } from "./environment.server";
 
 export type AllowedReaction = "like" | "exploding-head" | "rocket" | "fire";
 
@@ -24,7 +25,7 @@ export async function react(
 
   return axios
     .post(
-      `${process.env.API_HOST}/reactions`,
+      `${environment().API_HOST}/reactions`,
       {
         reactable_id: reactableId,
         reactable_type: reactableType,

@@ -3,6 +3,7 @@ import { currentToken } from "~/services/auth.server";
 import type { Reactions } from "./reactions.server";
 import type { Tag } from "./tag.server";
 import type { Instructor } from "./instructor.server";
+import { environment } from "./environment.server";
 
 export type BlogPost = {
   id: number;
@@ -20,7 +21,7 @@ export type BlogPost = {
 export async function getPosts(request: Request) {
   const token = await currentToken({ request });
   const blogPosts: BlogPost[] = await axios
-    .get(`${process.env.API_HOST}/blog-posts`, {
+    .get(`${environment().API_HOST}/blog-posts`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -32,7 +33,7 @@ export async function getPosts(request: Request) {
 export async function getPost(request: Request, slug: string) {
   const token = await currentToken({ request });
   const blogPost: BlogPost = await axios
-    .get(`${process.env.API_HOST}/blog-posts/${slug}`, {
+    .get(`${environment().API_HOST}/blog-posts/${slug}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -49,7 +50,7 @@ export async function getPost(request: Request, slug: string) {
 export async function getPage(request: Request, slug: string) {
   const token = await currentToken({ request });
   const page: BlogPost = await axios
-    .get(`${process.env.API_HOST}/pages/${slug}`, {
+    .get(`${environment().API_HOST}/pages/${slug}`, {
       headers: {
         Authorization: "Bearer " + token,
       },

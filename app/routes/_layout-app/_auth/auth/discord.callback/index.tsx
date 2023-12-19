@@ -4,9 +4,8 @@ import { environment } from "~/models/environment.server";
 import { currentToken } from "~/services/auth.server";
 
 async function getToken(code: string) {
-  console.log("BASE_URL", process.env.BASE_URL);
-  const clientId = process.env.DISCORD_APP_CLIENT_ID as string;
-  const clientSecret = process.env.DISCORD_APP_SECRET as string;
+  const clientId = environment().DISCORD_APP_CLIENT_ID as string;
+  const clientSecret = environment().DISCORD_APP_SECRET as string;
 
   const tokenUrl = "https://discord.com/api/oauth2/token";
   const tokenBody = new URLSearchParams({
@@ -14,7 +13,7 @@ async function getToken(code: string) {
     client_secret: clientSecret,
     grant_type: "authorization_code",
     code,
-    redirect_uri: `${process.env.BASE_URL}/auth/discord/callback`,
+    redirect_uri: `${environment().BASE_URL}/auth/discord/callback`,
     scope: "identify email guilds.join",
   });
 
@@ -105,7 +104,7 @@ export async function loader({ request }: ActionFunctionArgs) {
   //   body: joinServerBody,
   //   headers: {
   //     "Content-Type": "application/json",
-  //     Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+  //     Authorization: `Bot ${environment().DISCORD_BOT_TOKEN}`,
   //   },
   // });
 
@@ -113,7 +112,7 @@ export async function loader({ request }: ActionFunctionArgs) {
 
   // console.log(tokenData.access_token);
   // // console.log('joinServerData', joinServerData)
-  // console.log(process.env.DISCORD_BOT_TOKEN);
+  // console.log(environment().DISCORD_BOT_TOKEN);
 
   // redirect to discord server invitation
   return {
