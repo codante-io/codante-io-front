@@ -119,6 +119,26 @@ export async function getChallengeParticipants(
   return challengeParticipants;
 }
 
+export async function getSubmissionFromGithubUser(
+  slug: string,
+  githubUser: string,
+): Promise<{
+  challenge_name: string;
+  user_name: string;
+  submission_image_url: string;
+}> {
+  const submission = await axios
+    .get(`${process.env.API_HOST}/challenges/${slug}/submissions/${githubUser}`)
+    .then((res) => res.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+      throw new Error("Erro ao buscar submissão pelo usuário do GitHub");
+    });
+  return submission;
+}
+
 export async function joinChallenge({
   slug,
   request,

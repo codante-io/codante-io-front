@@ -1,7 +1,5 @@
-import { CodeBracketIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "@remix-run/react";
 import React, { useState } from "react";
-import { BsGithub, BsGlobe } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/reactions-button";
 import TooltipWrapper from "~/components/tooltip";
@@ -11,6 +9,7 @@ import type {
   ChallengeUser,
 } from "~/models/user.server";
 import classNames from "~/utils/class-names";
+import { formatName } from "~/utils/format-name";
 
 type RequiredChallengeUserProps = {
   avatar: UserAvatarType;
@@ -39,7 +38,6 @@ export default function SubmissionCard({
   isHomePage?: boolean;
 }) {
   const [editSubmition, setEditSubmition] = useState(false);
-  const navigate = useNavigate();
 
   function handleEditSubmition() {
     if (showEditForm) {
@@ -47,13 +45,7 @@ export default function SubmissionCard({
       setEditSubmition(!editSubmition);
     }
   }
-  function formatName(name: string) {
-    return name
-      .trim()
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-  }
+  const navigate = useNavigate();
 
   return (
     <article
@@ -64,44 +56,22 @@ export default function SubmissionCard({
           ? "border-brand-500"
           : "dark:border-background-600 border-background-200",
         size === "small" && "max-w-[275px]",
-        isHomePage && "cursor-pointer",
         className,
       )}
-      onClick={() => {
-        if (isHomePage && challengeSlug) {
-          return navigate(`/mini-projetos/${challengeSlug}`);
-        }
-      }}
     >
-      <section className="relative overflow-hidden group">
-        {!isHomePage && (
-          <>
-            <SubmissionButton
-              href={challengeUser.submission_url}
-              size={size}
-              position="right"
-            >
-              <BsGlobe className="text-4xl text-gray-800 dark:text-white" />
-            </SubmissionButton>
-            {challengeUser.is_solution ? (
-              <SubmissionButton
-                link={`/mini-projetos/${challengeSlug}/resolucao-codigo`}
-                size={size}
-                position="left"
-              >
-                <CodeBracketIcon className="w-10 text-gray-800 dark:text-white" />
-              </SubmissionButton>
-            ) : (
-              <SubmissionButton
-                href={challengeUser.fork_url ?? ""}
-                size={size}
-                position="left"
-              >
-                <BsGithub className="text-4xl text-gray-800 dark:text-white" />
-              </SubmissionButton>
-            )}
-          </>
+      <a
+        className={classNames(
+          "overflow-hidden group relative hover:opacity-80",
         )}
+        onClick={(event) => {
+          if (!challengeUser.is_solution) return;
+          event.preventDefault();
+          navigate(`/mini-projetos/${challengeSlug}/resolucao-codigo`);
+        }}
+        href={`/mini-projetos/${challengeSlug}/submissoes/${challengeUser.user_github_user}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img
           src={challengeUser.submission_image_url}
           alt="Screenshot da aplicação submetida"
@@ -109,10 +79,10 @@ export default function SubmissionCard({
             "w-full transition-all delay-75 aspect-video",
             isHomePage
               ? "opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100"
-              : "opacity-40 blur-xs md:blur-none md:group-hover:blur-sm md:opacity-100 md:group-hover:opacity-40",
+              : "",
           )}
         />
-      </section>
+      </a>
 
       <footer
         className={classNames(
@@ -166,45 +136,5 @@ export default function SubmissionCard({
         </div>
       </footer>
     </article>
-  );
-}
-
-function SubmissionButton({
-  size,
-  href,
-  children,
-  position,
-  link,
-}: {
-  size: "medium" | "large" | "small";
-  href?: string;
-  link?: string;
-  children: React.ReactNode;
-  position: "left" | "right";
-}) {
-  const navigate = useNavigate();
-
-  function handleRedirect() {
-    if (href) window.open(href, "_blank");
-    if (link) navigate(link);
-  }
-
-  const responsivePositionClass = classNames(
-    size === "medium" && position === "left" && `md:w-14 md:h-14 md:left-32`,
-    size === "medium" && position === "right" && `md:w-14 md:h-14 md:right-32`,
-    size === "large" && position === "left" && `md:w-28 md:h-24 md:left-44`,
-    size === "large" && position === "right" && `md:w-28 md:h-24 md:right-44`,
-  );
-
-  return (
-    <button
-      className={classNames(
-        responsivePositionClass,
-        `absolute inset-0 ${position}-32 z-10 flex items-center justify-center w-20 h-16 p-6 m-auto transition-all shadow-lg opacity-100 md:w-14 md:h-14 md:p-4 bg-background-100 rounded-xl dark:bg-background-700 md:opacity-0 md:group-hover:opacity-100`,
-      )}
-      onClick={handleRedirect}
-    >
-      {children}
-    </button>
   );
 }
