@@ -27,6 +27,8 @@ import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
 import { user } from "~/services/auth.server";
+import DiscordButton from "~/components/discord-button";
+import { BsGithub } from "react-icons/bs";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -517,18 +519,75 @@ function LinkedinSection({
     const linkedinUser = getLinkedinUserFromURL(pastedText);
     setLinkedinUser(linkedinUser);
   }
+
   return (
     <>
-      <h2 className="flex items-center mt-8 text-xl pt-4" id="linkedin-section">
+      <h2 className="flex items-center mt-8 text-xl pt-4" id="social-section">
         <MdKeyboardDoubleArrowRight
           size={24}
           className="inline-block mr-2 text-blue-300 dark:text-blue-800"
         />
-        LinkedIn
+        Contas Sociais
       </h2>
 
       <AuthCard className="max-w-xl mt-6">
-        <Form replace method="post">
+        <div className="mt-6">
+          {/* <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">Github</p> */}
+
+          {/* logout({ request, redirectTo: `/login?redirectTo=${redirectTo}` }) */}
+
+          {user?.github_user ? (
+            <Input
+              id="github"
+              name="github"
+              label="Github"
+              type="text"
+              defaultValue={`https://github.com/${user?.github_user}`}
+              disabled
+            />
+          ) : (
+            <div>
+              <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
+                Github
+              </p>
+              <Form>
+                <button
+                  name="intent"
+                  value="connectGithub"
+                  type="submit"
+                  className="flex items-center space-x-2 px-4 py-2 bg-brand-500 text-background-50 rounded-md hover:bg-brand-600"
+                >
+                  <BsGithub className="w-4 h-4" />
+                  <span>Conectar Github</span>
+                </button>
+              </Form>
+            </div>
+          )}
+        </div>
+
+        {user?.discord_user && (
+          <div className="mt-6">
+            <Input
+              id="discord"
+              name="discord"
+              label="Discord User"
+              type="text"
+              defaultValue={user?.discord_user}
+              disabled
+            />
+          </div>
+        )}
+
+        {!user?.discord_user && (
+          <div className="mt-6">
+            <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
+              Discord
+            </p>
+            <DiscordButton />
+          </div>
+        )}
+
+        <Form replace method="post" className="mt-6">
           <div className="relative">
             <label
               htmlFor="linkedin"

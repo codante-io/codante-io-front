@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useRouteError } from "@remix-run/react";
 
 export function Error500({ error = null }: { error?: any }) {
   return (
