@@ -26,7 +26,7 @@ import { getSubscription } from "~/models/subscription.server";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
-import { user } from "~/services/auth.server";
+import { logoutWithRedirectAfterLogin, user } from "~/services/auth.server";
 import DiscordButton from "~/components/discord-button";
 import { BsGithub } from "react-icons/bs";
 
@@ -77,6 +77,13 @@ export async function action({ request }: { request: Request }) {
   if (intent === "showBadge") {
     const showBadge = formData.get("showBadge") === "true";
     await changeSettings({ request, showBadge });
+  }
+
+  if (intent === "connectGithub") {
+    return logoutWithRedirectAfterLogin({
+      request,
+      redirectTo: `/minha-conta#social-section`,
+    });
   }
 
   return null;
@@ -555,6 +562,7 @@ function LinkedinSection({
                   name="intent"
                   value="connectGithub"
                   type="submit"
+                  formMethod="post"
                   className="flex items-center space-x-2 px-4 py-2 bg-brand-500 text-background-50 rounded-md hover:bg-brand-600"
                 >
                   <BsGithub className="w-4 h-4" />
@@ -570,7 +578,7 @@ function LinkedinSection({
             <Input
               id="discord"
               name="discord"
-              label="Discord User"
+              label="Discord"
               type="text"
               defaultValue={user?.discord_user}
               disabled
@@ -613,9 +621,9 @@ function LinkedinSection({
               href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
+              className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400 text-sm"
             >
-              Visualizar perfil cadastrado
+              Visualizar perfil
               <FiExternalLink />
             </a>
           )}
