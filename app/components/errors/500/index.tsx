@@ -14,6 +14,8 @@ export function Error500({ error = null }: { error?: any }) {
       {process.env.NODE_ENV !== "production" ? (
         <pre className="p-4 mb-10 text-xs rounded-lg bg-background-200 dark:bg-background-800">
           {JSON.stringify(error.message ?? "")}
+          <br />
+          {JSON.stringify(error.stack ?? "")}
         </pre>
       ) : null}
       <Link className="text-sm font-medium text-brand" to="/">
