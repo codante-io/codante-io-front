@@ -124,21 +124,39 @@ export default function Conta() {
   const actionData = useActionData<typeof action>();
   const { showSuccessToast } = useToasterWithSound();
 
-  let changePasswordErrors,
-    changeNameErrors,
-    changeLinkedinUrlErrors,
-    isChangeNameSuccess,
-    isChangePasswordSuccess,
-    isChangeLinkedinUrlSuccess;
+  let changePasswordErrors;
+  let changeNameErrors;
+  let changeLinkedinUrlErrors;
+  let isChangeNameSuccess: boolean = false;
+  let isChangePasswordSuccess: boolean = false;
+  let isChangeLinkedinUrlSuccess: boolean = false;
 
-  if (actionData) {
-    changePasswordErrors = actionData.changePasswordErrors;
-    changeNameErrors = actionData.changeNameErrors;
-    changeLinkedinUrlErrors = actionData.changeLinkedinUrlErrors;
+  if (actionData && "changePasswordErrors" in actionData) {
+    changePasswordErrors = actionData.changePasswordErrors ?? "";
+  }
 
+  if (actionData && "changePasswordErrors" in actionData) {
+    changePasswordErrors = actionData.changePasswordErrors ?? "";
+  }
+
+  if (actionData && "changeNameErrors" in actionData) {
+    changeNameErrors = actionData.changeNameErrors ?? "";
+  }
+
+  if (actionData && "changeLinkedinUrlErrors" in actionData) {
+    changeLinkedinUrlErrors = actionData.changeLinkedinUrlErrors ?? "";
+  }
+
+  if (actionData && "changeName" in actionData) {
     isChangeNameSuccess = actionData.changeName && changeNameStatus === "idle";
+  }
+
+  if (actionData && "changeLinkedinUrl" in actionData) {
     isChangeLinkedinUrlSuccess =
       actionData.changeLinkedinUrl && changeLinkedinUrlStatus === "idle";
+  }
+
+  if (actionData && "changePassword" in actionData) {
     isChangePasswordSuccess =
       actionData.changePassword && changePasswordStatus === "idle";
   }
@@ -538,11 +556,7 @@ function LinkedinSection({
       </h2>
 
       <AuthCard className="max-w-xl mt-6">
-        <div className="mt-6">
-          {/* <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">Github</p> */}
-
-          {/* logout({ request, redirectTo: `/login?redirectTo=${redirectTo}` }) */}
-
+        <div className="mt-6" id="social-github">
           {user?.github_user ? (
             <Input
               id="github"
@@ -573,8 +587,8 @@ function LinkedinSection({
           )}
         </div>
 
-        {user?.discord_user && (
-          <div className="mt-6">
+        <div className="mt-6" id="social-discord">
+          {user?.discord_user && (
             <Input
               id="discord"
               name="discord"
@@ -583,66 +597,67 @@ function LinkedinSection({
               defaultValue={user?.discord_user}
               disabled
             />
-          </div>
-        )}
-
-        {!user?.discord_user && (
-          <div className="mt-6">
-            <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
-              Discord
-            </p>
-            <DiscordButton />
-          </div>
-        )}
-
-        <Form replace method="post" className="mt-6">
-          <div className="relative">
-            <label
-              htmlFor="linkedin"
-              className="absolute text-sm md:text-base left-2 top-[72%] md:top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400"
-            >
-              https://www.linkedin.com/in/
-            </label>
-            <Input
-              id="linkedin"
-              name="linkedin"
-              label="Linkedin"
-              type="text"
-              onChange={(event) => setLinkedinUser(event.target.value)}
-              defaultValue={user?.linkedin_user}
-              required
-              className="md:pl-56 pl-[200px] text-sm md:text-base"
-              onPaste={handlePaste}
-              value={linkedinUser}
-            />
-          </div>
-          {user?.linkedin_user && (
-            <a
-              href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400 text-xs"
-            >
-              Visualizar perfil
-              <FiExternalLink />
-            </a>
           )}
-          <div className="mt-2 mb-1 text-xs text-red-400 h-4">
-            {changeLinkedinUrlErrors}
-          </div>
 
-          <div className="mt-8 text-right">
-            <LoadingButton
-              status={changeLinkedinUrlStatus}
-              isSuccessfulSubmission={false}
-              name="intent"
-              value="changeLinkedinUrl"
-              type="submit"
-            >
-              Salvar Alterações
-            </LoadingButton>
-          </div>
-        </Form>
+          {!user?.discord_user && (
+            <>
+              <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
+                Discord
+              </p>
+              <DiscordButton />
+            </>
+          )}
+        </div>
+
+        <div className="mt-6" id="social-linkedin">
+          <Form replace method="post" className="mt-6">
+            <div className="relative">
+              <label
+                htmlFor="linkedin"
+                className="absolute text-sm md:text-base left-2 top-[72%] md:top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400"
+              >
+                https://www.linkedin.com/in/
+              </label>
+              <Input
+                id="linkedin"
+                name="linkedin"
+                label="Linkedin"
+                type="text"
+                onChange={(event) => setLinkedinUser(event.target.value)}
+                required
+                className="md:pl-56 pl-[200px] text-sm md:text-base"
+                onPaste={handlePaste}
+                value={linkedinUser}
+              />
+            </div>
+            {user?.linkedin_user && (
+              <a
+                href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400 text-xs"
+              >
+                Visualizar perfil
+                <FiExternalLink />
+              </a>
+            )}
+            <div className="mt-2 mb-1 text-xs text-red-400 h-4">
+              {changeLinkedinUrlErrors}
+            </div>
+
+            <div className="mt-8 text-right">
+              <LoadingButton
+                status={changeLinkedinUrlStatus}
+                isSuccessfulSubmission={false}
+                name="intent"
+                value="changeLinkedinUrl"
+                type="submit"
+              >
+                Salvar Alterações
+              </LoadingButton>
+            </div>
+          </Form>
+        </div>
       </AuthCard>
     </>
   );
