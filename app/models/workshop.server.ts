@@ -3,6 +3,7 @@ import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
 import { currentToken } from "~/services/auth.server";
+import { environment } from "./environment.server";
 
 export type Workshop = {
   id: string;
@@ -37,7 +38,7 @@ export type Workshop = {
 
 export async function getWorkshops(): Promise<Array<Workshop>> {
   const workshops = await axios
-    .get(`${process.env.API_HOST}/workshops`)
+    .get(`${environment().API_HOST}/workshops`)
     .then((res) => res.data.data);
   return workshops;
 }
@@ -48,7 +49,7 @@ export async function getWorkshop(
 ): Promise<Workshop | null> {
   const token = await currentToken({ request });
   const workshop = await axios
-    .get(`${process.env.API_HOST}/workshops/${slug}`, {
+    .get(`${environment().API_HOST}/workshops/${slug}`, {
       headers: {
         Authorization: "Bearer " + token,
       },

@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { environment } from "~/models/environment.server";
 import {
   commitSession,
   getSession,
@@ -40,7 +41,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (userData.is_new_signup) {
     // Se o usuário é novo, vamos fazer append do parâmetro `is_new_signup` na query string.
     // Vamos fazer isso para que o analytics consiga saber quando um login é de um novo signup.
-    const url = new URL(redirectTo, process.env.BASE_URL);
+    const url = new URL(redirectTo, environment().BASE_URL);
     url.searchParams.append("new-signup", "true");
     return redirect(url.toString(), { headers });
   } else {

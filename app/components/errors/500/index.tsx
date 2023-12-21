@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useRouteError } from "@remix-run/react";
 
 export function Error500({ error = null }: { error?: any }) {
   return (
@@ -13,8 +12,10 @@ export function Error500({ error = null }: { error?: any }) {
         Se o erro persistir, entra em contato com a gente!
       </p>
       {process.env.NODE_ENV !== "production" ? (
-        <pre className="p-4 mb-10 text-xs rounded-lg bg-background-200 dark:bg-background-800">
+        <pre className="p-4 mb-10 text-xs rounded-lg bg-background-200 dark:bg-background-800 whitespace-normal">
           {JSON.stringify(error.message ?? "")}
+          <br />
+          {JSON.stringify(error.stack ?? "")}
         </pre>
       ) : null}
       <Link className="text-sm font-medium text-brand" to="/">

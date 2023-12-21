@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { UserAvatar } from "./user.server";
+import { environment } from "./environment.server";
 
 type UserPoints = {
   avatar: UserAvatar;
@@ -11,7 +12,7 @@ type UserPoints = {
 export type Ranking = UserPoints[];
 
 export async function getRanking(monthly: string | null): Promise<Ranking> {
-  let url = `${process.env.API_HOST}/ranking`;
+  let url = `${environment().API_HOST}/ranking`;
 
   if (monthly) {
     url += `?monthly=${monthly}`;

@@ -13,6 +13,8 @@ export type User = {
   avatar: UserAvatar;
   settings: UserSettings | null;
   linkedin_user?: string;
+  discord_user?: string;
+  github_user?: string;
 };
 
 export type UserSettings = {

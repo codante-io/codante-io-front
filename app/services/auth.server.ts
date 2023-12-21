@@ -7,12 +7,13 @@ import {
 import axios from "./axios.server";
 import type { AxiosResponse } from "axios";
 import type { User } from "~/models/user.server";
+import { environment } from "~/models/environment.server";
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "codante_session",
-    secure: process.env.NODE_ENV === "production",
-    secrets: [process.env.SESSION_SECRET as string],
+    secure: environment().NODE_ENV === "production",
+    secrets: [environment().SESSION_SECRET as string],
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
@@ -252,5 +253,5 @@ export let redirectToCookie = createCookie("redirect-to", {
   httpOnly: true,
   sameSite: "lax",
   maxAge: 60, // 1 minute because it makes no sense to keep it for a long time
-  secure: process.env.NODE_ENV === "production",
+  secure: environment().NODE_ENV === "production",
 });
