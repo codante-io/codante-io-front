@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import {
   Form,
   useActionData,
+  useFetcher,
   useLoaderData,
   useNavigate,
   useNavigation,
@@ -39,6 +40,8 @@ import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/form/loading-button";
 import Button from "~/components/form/button";
 import invariant from "tiny-invariant";
+import type { Certificate} from "~/models/certificates.server";
+import { requestCertificate } from "~/models/certificates.server";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -116,13 +119,21 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  let formData = await request.formData();
-  let submissionUrl = formData.get("submission_url") as string;
-
+  const formData = await request.formData();
+  
   const intent = formData.get("intent");
   switch (intent) {
     case "updateSubmission":
+      let submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
+    case "requestCertificate":
+      const user_id = formData.get("user_id");
+      const source_type = formData.get("source_type");
+      const source_id = formData.get("source_id");
+      const certificateInfo = {user_id, source_type, source_id} as Certificate;
+      return requestCertificate(request, certificateInfo);
+    default:
+      return null;
   }
 }
 
@@ -141,6 +152,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 
 export default function MySolution() {
+  const fetcher = useFetcher();
   const { params } = useLoaderData<typeof loader>();
 
   const { challenge, challengeUsers, user } = useOutletContext<{
@@ -169,6 +181,17 @@ export default function MySolution() {
 
   const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user_github_user}`;
 
+  async function handleSubmitCertificate() {
+    if (submissionUser) {
+      const user_id = submissionUser.user_id;
+      const source_type = 'challenge';
+      const source_id = challenge.id;
+      fetcher.submit(
+        { intent: "requestCertificate", user_id, source_type, source_id },
+        { method: "post" },
+      );
+    }
+  }
   return (
     <div className="container text-center">
       <Headline
@@ -188,6 +211,15 @@ export default function MySolution() {
         challengeSlug={challenge.slug}
         sendoToSolutionPage
       />
+      <Form replace method="post">
+        <button
+          className="p-2 bg-blue-500"
+          onClick={handleSubmitCertificate}
+          type="submit"
+        >
+          Solicitar certificado
+        </button>
+      </Form>
     </div>
   );
 }
