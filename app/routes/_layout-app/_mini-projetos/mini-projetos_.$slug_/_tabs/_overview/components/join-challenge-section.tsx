@@ -1,6 +1,7 @@
 import { Form, useLocation, useNavigation } from "@remix-run/react";
 import { AiOutlineCheck } from "react-icons/ai";
 import LoadingButton from "~/components/form/loading-button";
+import type { Step } from "../../../build-steps.server";
 
 export default function JoinChallengeSection({
   className = "",
@@ -29,13 +30,7 @@ export default function JoinChallengeSection({
           <ol className="overflow-hidden">
             {initialSteps?.map(
               (
-                step: {
-                  name: string;
-                  status: string;
-                  description: string;
-                  intent: string;
-                  button: string;
-                },
+                step: Step,
                 stepIndex: number
               ) => (
                 <li
@@ -121,6 +116,17 @@ export default function JoinChallengeSection({
                             >
                               {step.button}
                             </LoadingButton>
+                            {step.secondaryButton && (
+                              <LoadingButton
+                              status={navigation.state}
+                              type="submit"
+                              className="my-4"
+                              name="intent"
+                              value={step.secondaryIntent}
+                            >
+                              {step.secondaryButton}
+                            </LoadingButton>
+                            )}
                           </Form>
                         </span>
                       </div>

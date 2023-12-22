@@ -38,7 +38,7 @@ import { abort404 } from "~/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import type { User } from "~/models/user.server";
+import type { ChallengeUser, User } from "~/models/user.server";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -105,6 +105,12 @@ export async function action({ request }: { request: Request }) {
         completed: true,
         request,
       });
+    case "skip-discord":
+      return updateUserJoinedDiscord({
+        slug,
+        joinedDiscord: false,
+        request,
+      });
   }
 }
 
@@ -123,13 +129,13 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const user = (await getUser({ request })) as User | null;
 
-  let challengeUser;
+  let challengeUser: ChallengeUser | undefined = undefined;
   if (user) {
     try {
       challengeUser = await userJoinedChallenge(params.slug, request);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
-        if (err?.response?.status) challengeUser = null;
+        if (err?.response?.status) challengeUser = undefined;
       }
     }
   }

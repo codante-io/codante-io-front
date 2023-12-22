@@ -57,6 +57,17 @@ export type ChallengeCard = {
   is_weekly_featured: boolean;
 };
 
+export type ChallengeSummary = {
+  id: string;
+  name: string;
+  slug: string;
+  short_description: string;
+  image_url: string;
+  status: "draft" | "published" | "soon" | "archived";
+  difficulty: 1 | 2 | 3;
+};
+
+
 export type ChallengeParticipants = {
   count: number;
   avatars: UserAvatar[];
@@ -170,11 +181,11 @@ export async function joinChallenge({
 export async function userJoinedChallenge(
   slug: string,
   request: Request,
-): Promise<Challenge> {
+): Promise<ChallengeUser> {
   let token = await currentToken({ request });
 
   const challengeUser = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}/joined`, {
+    .get<ChallengeUser>(`${environment().API_HOST}/challenges/${slug}/joined`, {
       headers: {
         Authorization: "Bearer " + token,
       },

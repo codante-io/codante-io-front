@@ -68,7 +68,7 @@ export default function SubmissionCard({
           event.preventDefault();
           navigate(`/mini-projetos/${challengeSlug}/resolucao-codigo`);
         }}
-        href={`/mini-projetos/${challengeSlug}/submissoes/${challengeUser.user_github_user}`}
+        href={`/mini-projetos/${challengeSlug}/submissoes/${challengeUser.user?.github_user}`}
         target="_blank"
         rel="noopener noreferrer"
       >
