@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { Tag } from "./tag.server";
+import { environment } from "./environment.server";
 
 export type Assessment = {
   id: string;
@@ -30,14 +31,14 @@ export type Assessment = {
 
 export async function getAssessments(): Promise<Array<Assessment>> {
   const assessments: Assessment[] = await axios
-    .get(`${process.env.API_HOST}/technical-assessments`)
+    .get(`${environment().API_HOST}/technical-assessments`)
     .then((res) => res.data.data);
   return assessments;
 }
 
 export async function getAssessment(slug: string): Promise<Assessment> {
   const assessment: Assessment = await axios
-    .get(`${process.env.API_HOST}/technical-assessments/${slug}`)
+    .get(`${environment().API_HOST}/technical-assessments/${slug}`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {

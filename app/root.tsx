@@ -22,6 +22,8 @@ import NotFound from "./components/errors/not-found";
 import { Error500 } from "./components/errors/500";
 import type { User } from "./models/user.server";
 import { metaV1 } from "@remix-run/v1-meta";
+import { environment } from "./models/environment.server";
+import PublicEnv, { getPublicEnv } from "./components/public-env";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -64,7 +66,8 @@ export async function loader({ request }: { request: Request }) {
   return json({
     user: userData,
     ENV: {
-      PAGARME_ENCRYPTION_KEY: process.env.PAGARME_ENCRYPTION_KEY,
+      BASE_URL: environment().BASE_URL,
+      NODE_ENV: environment().NODE_ENV,
     },
   });
 }
@@ -96,12 +99,8 @@ export default function App() {
           <Outlet context={{ user }} />
         </ColorModeProvider>
         <ScrollRestoration />
-        {/* Env pública: https://remix.run/docs/en/main/guides/envvars */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(loaderData.ENV)}`,
-          }}
-        />
+        {/* Env pública: https://remix.run/docs/en/main/guides/envvars | https://dev.to/remix-run-br/type-safe-environment-variables-on-both-client-and-server-with-remix-54l5 */}
+        <PublicEnv {...loaderData.ENV} />
         <Scripts />
         <LiveReload />
         <Toaster
@@ -110,7 +109,7 @@ export default function App() {
               "bg-background-50 dark:bg-background-800 dark:text-gray-50",
           }}
         />
-        {process.env.NODE_ENV !== "production" && (
+        {getPublicEnv('NODE_ENV') !== "production" && (
           <div className="fixed z-50 w-20 py-2 font-bold text-center text-blue-700 bg-blue-100 rounded-full bottom-2 left-2">
             <span className="block md:hidden">sm</span>
             <span className="hidden md:block lg:hidden">md</span>

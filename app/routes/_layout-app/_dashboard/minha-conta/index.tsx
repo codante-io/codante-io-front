@@ -26,7 +26,9 @@ import { getSubscription } from "~/models/subscription.server";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
-import { user } from "~/services/auth.server";
+import { logoutWithRedirectAfterLogin, user } from "~/services/auth.server";
+import DiscordButton from "~/components/discord-button";
+import { BsGithub } from "react-icons/bs";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -77,6 +79,13 @@ export async function action({ request }: { request: Request }) {
     await changeSettings({ request, showBadge });
   }
 
+  if (intent === "connectGithub") {
+    return logoutWithRedirectAfterLogin({
+      request,
+      redirectTo: `/minha-conta#social-section`,
+    });
+  }
+
   return null;
 }
 
@@ -115,21 +124,39 @@ export default function Conta() {
   const actionData = useActionData<typeof action>();
   const { showSuccessToast } = useToasterWithSound();
 
-  let changePasswordErrors,
-    changeNameErrors,
-    changeLinkedinUrlErrors,
-    isChangeNameSuccess,
-    isChangePasswordSuccess,
-    isChangeLinkedinUrlSuccess;
+  let changePasswordErrors;
+  let changeNameErrors;
+  let changeLinkedinUrlErrors;
+  let isChangeNameSuccess: boolean = false;
+  let isChangePasswordSuccess: boolean = false;
+  let isChangeLinkedinUrlSuccess: boolean = false;
 
-  if (actionData) {
-    changePasswordErrors = actionData.changePasswordErrors;
-    changeNameErrors = actionData.changeNameErrors;
-    changeLinkedinUrlErrors = actionData.changeLinkedinUrlErrors;
+  if (actionData && "changePasswordErrors" in actionData) {
+    changePasswordErrors = actionData.changePasswordErrors ?? "";
+  }
 
+  if (actionData && "changePasswordErrors" in actionData) {
+    changePasswordErrors = actionData.changePasswordErrors ?? "";
+  }
+
+  if (actionData && "changeNameErrors" in actionData) {
+    changeNameErrors = actionData.changeNameErrors ?? "";
+  }
+
+  if (actionData && "changeLinkedinUrlErrors" in actionData) {
+    changeLinkedinUrlErrors = actionData.changeLinkedinUrlErrors ?? "";
+  }
+
+  if (actionData && "changeName" in actionData) {
     isChangeNameSuccess = actionData.changeName && changeNameStatus === "idle";
+  }
+
+  if (actionData && "changeLinkedinUrl" in actionData) {
     isChangeLinkedinUrlSuccess =
       actionData.changeLinkedinUrl && changeLinkedinUrlStatus === "idle";
+  }
+
+  if (actionData && "changePassword" in actionData) {
     isChangePasswordSuccess =
       actionData.changePassword && changePasswordStatus === "idle";
   }
@@ -517,65 +544,120 @@ function LinkedinSection({
     const linkedinUser = getLinkedinUserFromURL(pastedText);
     setLinkedinUser(linkedinUser);
   }
+
   return (
     <>
-      <h2 className="flex items-center mt-8 text-xl pt-4" id="linkedin-section">
+      <h2 className="flex items-center mt-8 text-xl pt-4" id="social-section">
         <MdKeyboardDoubleArrowRight
           size={24}
           className="inline-block mr-2 text-blue-300 dark:text-blue-800"
         />
-        LinkedIn
+        Contas Sociais
       </h2>
 
       <AuthCard className="max-w-xl mt-6">
-        <Form replace method="post">
-          <div className="relative">
-            <label
-              htmlFor="linkedin"
-              className="absolute text-sm md:text-base left-2 top-[72%] md:top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400"
-            >
-              https://www.linkedin.com/in/
-            </label>
+        <div className="mt-6" id="social-github">
+          {user?.github_user ? (
             <Input
-              id="linkedin"
-              name="linkedin"
-              label="Linkedin"
+              id="github"
+              name="github"
+              label="Github"
               type="text"
-              onChange={(event) => setLinkedinUser(event.target.value)}
-              defaultValue={user?.linkedin_user}
-              required
-              className="md:pl-56 pl-[200px] text-sm md:text-base"
-              onPaste={handlePaste}
-              value={linkedinUser}
+              defaultValue={`https://github.com/${user?.github_user}`}
+              disabled
             />
-          </div>
-          {user?.linkedin_user && (
-            <a
-              href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400"
-            >
-              Visualizar perfil cadastrado
-              <FiExternalLink />
-            </a>
+          ) : (
+            <div>
+              <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
+                Github
+              </p>
+              <Form>
+                <button
+                  name="intent"
+                  value="connectGithub"
+                  type="submit"
+                  formMethod="post"
+                  className="flex items-center space-x-2 px-4 py-2 bg-brand-500 text-background-50 rounded-md hover:bg-brand-600"
+                >
+                  <BsGithub className="w-4 h-4" />
+                  <span>Conectar Github</span>
+                </button>
+              </Form>
+            </div>
           )}
-          <div className="mt-2 mb-1 text-xs text-red-400 h-4">
-            {changeLinkedinUrlErrors}
-          </div>
+        </div>
 
-          <div className="mt-8 text-right">
-            <LoadingButton
-              status={changeLinkedinUrlStatus}
-              isSuccessfulSubmission={false}
-              name="intent"
-              value="changeLinkedinUrl"
-              type="submit"
-            >
-              Salvar Alterações
-            </LoadingButton>
-          </div>
-        </Form>
+        <div className="mt-6" id="social-discord">
+          {user?.discord_user && (
+            <Input
+              id="discord"
+              name="discord"
+              label="Discord"
+              type="text"
+              defaultValue={user?.discord_user}
+              disabled
+            />
+          )}
+
+          {!user?.discord_user && (
+            <>
+              <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
+                Discord
+              </p>
+              <DiscordButton />
+            </>
+          )}
+        </div>
+
+        <div className="mt-6" id="social-linkedin">
+          <Form replace method="post" className="mt-6">
+            <div className="relative">
+              <label
+                htmlFor="linkedin"
+                className="absolute text-sm md:text-base left-2 top-[72%] md:top-[70%] transform -translate-y-1/2 dark:text-gray-500 text-gray-400"
+              >
+                https://www.linkedin.com/in/
+              </label>
+              <Input
+                id="linkedin"
+                name="linkedin"
+                label="Linkedin"
+                type="text"
+                onChange={(event) => setLinkedinUser(event.target.value)}
+                required
+                className="md:pl-56 pl-[200px] text-sm md:text-base"
+                onPaste={handlePaste}
+                value={linkedinUser}
+              />
+            </div>
+            {user?.linkedin_user && (
+              <a
+                href={`https://www.linkedin.com/in/${user?.linkedin_user}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 w-fit flex items-center gap-2 text-gray-500 hover:text-gray-700 dark:hover:text-white hover:underline dark:text-gray-400 text-xs"
+              >
+                Visualizar perfil
+                <FiExternalLink />
+              </a>
+            )}
+            <div className="mt-2 mb-1 text-xs text-red-400 h-4">
+              {changeLinkedinUrlErrors}
+            </div>
+
+            <div className="mt-8 text-right">
+              <LoadingButton
+                status={changeLinkedinUrlStatus}
+                isSuccessfulSubmission={false}
+                name="intent"
+                value="changeLinkedinUrl"
+                type="submit"
+              >
+                Salvar Alterações
+              </LoadingButton>
+            </div>
+          </Form>
+        </div>
       </AuthCard>
     </>
   );

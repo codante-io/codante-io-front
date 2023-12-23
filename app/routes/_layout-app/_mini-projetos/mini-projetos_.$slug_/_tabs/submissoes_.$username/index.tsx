@@ -243,7 +243,7 @@ function Headline({
         "_blank",
       );
     if (user && user.id === submissionUser?.user_id)
-      return navigate("/minha-conta#linkedin-section");
+      return navigate("/minha-conta#social-section");
     return toast.error(
       `${formatName(
         submissionUser.user_name,

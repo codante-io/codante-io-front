@@ -2,6 +2,7 @@ import axios from "axios";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeCard } from "./challenge.server";
 import type { UserAvatar } from "./user.server";
+import { environment } from "./environment.server";
 
 export type HomeInfo = {
   featured_testimonials: {
@@ -46,7 +47,7 @@ export type HomeInfo = {
 
 export async function getHome(): Promise<HomeInfo> {
   const homeInfo = await axios
-    .get(`${process.env.API_HOST}/home`)
+    .get(`${environment().API_HOST}/home`)
     .then((res) => res.data);
   return homeInfo;
 }

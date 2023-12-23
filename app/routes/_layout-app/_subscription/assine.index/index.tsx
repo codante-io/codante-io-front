@@ -20,6 +20,7 @@ import classNames from "~/utils/class-names";
 import type { Plan } from "~/models/plan.server";
 import { getPlanDetails } from "~/models/plan.server";
 import { useLoaderData } from "@remix-run/react";
+import { environment } from "~/models/environment.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const plan = await getPlanDetails();
@@ -34,7 +35,7 @@ export async function action({ request }: { request: Request }) {
       checkoutLink: string;
       pagarmeOrderID: string;
       subscription: Subscription;
-    }>(`${process.env.API_HOST}/api/pagarme/get-link`, {
+    }>(`${environment().API_HOST}/api/pagarme/get-link`, {
       headers: {
         Authorization: "Bearer " + token,
       },
