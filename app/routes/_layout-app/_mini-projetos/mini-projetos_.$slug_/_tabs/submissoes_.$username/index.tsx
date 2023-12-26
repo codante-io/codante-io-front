@@ -40,7 +40,7 @@ import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/form/loading-button";
 import Button from "~/components/form/button";
 import invariant from "tiny-invariant";
-import type { Certificate} from "~/models/certificates.server";
+import type { Certificate } from "~/models/certificates.server";
 import { requestCertificate } from "~/models/certificates.server";
 
 export function meta({ matches, params, data }: MetaArgs) {
@@ -120,7 +120,7 @@ export async function action({
   params: { slug: string };
 }) {
   const formData = await request.formData();
-  
+
   const intent = formData.get("intent");
   switch (intent) {
     case "updateSubmission":
@@ -130,7 +130,11 @@ export async function action({
       const user_id = formData.get("user_id");
       const source_type = formData.get("source_type");
       const source_id = formData.get("source_id");
-      const certificateInfo = {user_id, source_type, source_id} as Certificate;
+      const certificateInfo = {
+        user_id,
+        source_type,
+        source_id,
+      } as Certificate;
       return requestCertificate(request, certificateInfo);
     default:
       return null;
@@ -184,7 +188,7 @@ export default function MySolution() {
   async function handleSubmitCertificate() {
     if (submissionUser) {
       const user_id = submissionUser.user_id;
-      const source_type = 'challenge';
+      const source_type = "challenge";
       const source_id = challenge.id;
       fetcher.submit(
         { intent: "requestCertificate", user_id, source_type, source_id },
@@ -192,6 +196,7 @@ export default function MySolution() {
       );
     }
   }
+
   return (
     <div className="container text-center">
       <Headline
