@@ -121,48 +121,10 @@ export function buildInitialSteps({
     currentStepIndex = index + 1;
   }
 
+  // Vamos marcar o index + 1 como current
   if (steps[currentStepIndex]) {
     steps[currentStepIndex].status = "current";
   }
-
-  // // O índice do passo atual é o inicial
-  // let currentIndex = 0;
-
-  // // Vamos setar o status do último passo completo de acordo com o estado do usuário
-  // let condition: string;
-
-  // if (challengeUser?.completed) {
-  //   condition = "finish-challenge";
-  // } else if (challengeUser?.submission_url) {
-  //   condition = "submit-challenge";
-  // } else if (challengeUser?.fork_url) {
-  //   condition = "verify-fork";
-  // } else if (challengeUser && user?.discord_user) {
-  //   condition = "join-discord";
-  // } else if (challengeUser) {
-  //   condition = "join-challenge";
-  // } else if (user?.github_user) {
-  //   condition = "connect-github";
-  // } else {
-  //   condition = "start";
-  // }
-
-  // console.log("condition", condition);
-  // currentIndex = steps.findIndex((step) => step.intent === condition);
-
-  // console.log("currentIndex", currentIndex);
-  // // Se o passo é verify fork, vamos atualizar para adicionar o link do repositório
-  // if (condition === "verify-fork") {
-  //   steps[
-  //     currentIndex
-  //   ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="https://github.com/codante-io/${repositorySlug}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
-  // }
-
-  // // Vamos marcar os passos anteriores e o atual como "complete"
-  // for (let i = 0; i <= currentIndex; i++) steps[i].status = "completed";
-
-  // // vamos marcar o próximo passo como "current"
-  // if (steps[currentIndex + 1]) steps[currentIndex + 1].status = "current";
 
   return steps;
 }
