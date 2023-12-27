@@ -6,7 +6,6 @@ export type Certificate = {
   user_id: string;
   source_type: "workshop" | "challenge";
   source_id: string;
-  metadata?: string;
   status?: string;
 };
 
@@ -19,7 +18,6 @@ export async function requestCertificate(
     user_id,
     source_type,
     source_id,
-    metadata = undefined,
     status = undefined,
   } = certificateInfo;
 
@@ -30,7 +28,6 @@ export async function requestCertificate(
         user_id,
         source_type,
         source_id,
-        metadata,
         status,
       },
       {
