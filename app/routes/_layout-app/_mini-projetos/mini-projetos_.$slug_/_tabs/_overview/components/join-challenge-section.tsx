@@ -4,6 +4,7 @@ import LoadingButton from "~/components/form/loading-button";
 import type { Step } from "../../../build-steps.server";
 import DiscordButton from "~/components/discord-button";
 import Button from "~/components/form/button";
+import { BsDiscord } from "react-icons/bs";
 
 export default function JoinChallengeSection({
   className = "",
@@ -104,9 +105,12 @@ export default function JoinChallengeSection({
                           />
                           <input type="hidden" name="user" value={user} />
                           {step.intent === "join-discord" ? (
-                            <div className="mt-3">
-                              <DiscordButton textSizeClass="text-sm" />
-                            </div>
+                            <span className="mt-3 mr-2">
+                              <DiscordButton textSizeClass="text-sm">
+                                <BsDiscord className="w-3 h-3" />
+                                <span>Entrar</span>
+                              </DiscordButton>
+                            </span>
                           ) : (
                             <LoadingButton
                               status={navigation.state}

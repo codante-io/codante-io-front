@@ -22,7 +22,7 @@ const stepsTemplate: Step[] = [
     button: "Comunidade",
     status: "upcoming",
     intent: "join-discord",
-    secondaryButton: "Pular",
+    secondaryButton: "Pronto",
     secondaryIntent: "skip-discord",
   },
   {
