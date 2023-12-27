@@ -67,7 +67,6 @@ export type ChallengeSummary = {
   difficulty: 1 | 2 | 3;
 };
 
-
 export type ChallengeParticipants = {
   count: number;
   avatars: UserAvatar[];
@@ -140,7 +139,9 @@ export async function getSubmissionFromGithubUser(
   submission_image_url: string;
 }> {
   const submission = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}/submissions/${githubUser}`)
+    .get(
+      `${environment().API_HOST}/challenges/${slug}/submissions/${githubUser}`,
+    )
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -185,12 +186,15 @@ export async function userJoinedChallenge(
   let token = await currentToken({ request });
 
   const challengeUser = await axios
-    .get<ChallengeUser>(`${environment().API_HOST}/challenges/${slug}/joined`, {
-      headers: {
-        Authorization: "Bearer " + token,
+    .get<{ data: ChallengeUser }>(
+      `${environment().API_HOST}/challenges/${slug}/joined`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       },
-    })
-    .then((res) => res.data);
+    )
+    .then((res) => res.data.data);
   return challengeUser;
 }
 

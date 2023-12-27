@@ -39,6 +39,7 @@ import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { ChallengeUser, User } from "~/models/user.server";
+import { getDiscordOAuthURL } from "~/models/discord.server";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -92,11 +93,16 @@ export async function action({ request }: { request: Request }) {
         request,
       });
     case "join-discord":
-      return updateUserJoinedDiscord({
-        slug,
-        joinedDiscord: true,
-        request,
-      });
+      const discordUrl = getDiscordOAuthURL();
+
+      // redirect in a new tab  to the url
+      window.open(discordUrl, "_blank");
+
+    // return updateUserJoinedDiscord({
+    //   slug,
+    //   joinedDiscord: true,
+    //   request,
+    // });
     case "submit-challenge":
       return redirect(`/mini-projetos/${slug}/minha-submissao`);
     case "finish-challenge":
@@ -108,7 +114,7 @@ export async function action({ request }: { request: Request }) {
     case "skip-discord":
       return updateUserJoinedDiscord({
         slug,
-        joinedDiscord: false,
+        joinedDiscord: true,
         request,
       });
   }
