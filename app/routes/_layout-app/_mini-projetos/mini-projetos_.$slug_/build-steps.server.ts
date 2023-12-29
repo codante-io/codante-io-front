@@ -1,8 +1,9 @@
-const initialSteps = [
+import type { ChallengeUser, User } from "~/models/user.server";
+
+const stepsTemplate: Step[] = [
   {
     name: "Conecte o seu GitHub",
-    description:
-      "Para participar do Mini Projeto você precisa conectar a sua conta do GitHub.",
+    description: "Para participar é necessário conectar com o GitHub.",
     button: "Conectar GitHub",
     status: "upcoming",
     intent: "connect-github",
@@ -15,6 +16,16 @@ const initialSteps = [
     intent: "join-challenge",
   },
   {
+    name: "Participe da nossa comunidade",
+    description:
+      "Tire dúvidas e conecte-se com outras pessoas que estão fazendo esse Mini Projeto.",
+    button: "Comunidade",
+    status: "upcoming",
+    intent: "join-discord",
+    secondaryButton: "Pronto",
+    secondaryIntent: "skip-discord",
+  },
+  {
     name: "Faça o fork do repositório",
     description:
       'Acesse o link do repositório, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!',
@@ -22,14 +33,7 @@ const initialSteps = [
     status: "upcoming",
     intent: "verify-fork",
   },
-  {
-    name: "Participe da nossa comunidade",
-    description:
-      "Acesse nossa comunidade do Discord para tirar dúvidas e se conectar com outras pessoas que estão fazendo o Mini Projeto.",
-    button: "Feito!",
-    status: "upcoming",
-    intent: "join-discord",
-  },
+
   {
     name: "Submeta sua resolução",
     description:
@@ -40,57 +44,87 @@ const initialSteps = [
   },
   {
     name: "Finalizar projeto",
-    description: "Quando acabar o seu Mini Projeto é só marcar como concluído.",
+    description:
+      "Quando acabar o seu Mini Projeto é só marcar aqui como concluído.",
     button: "Marcar como concluído",
     status: "upcoming",
     intent: "finish-challenge",
   },
 ];
 
-const DISCORD_INVITE_URL = "https://discord.com/invite/fmVw468ZMR";
+export type Step = {
+  name: string;
+  description: string;
+  button: string;
+  status: "upcoming" | "current" | "completed";
+  intent: string;
+  secondaryButton?: string;
+  secondaryIntent?: string;
+};
 
 export function buildInitialSteps({
   user,
   challengeUser,
   repositorySlug,
 }: {
-  user?: any;
-  challengeUser?: any;
+  user: User | null;
+  challengeUser?: ChallengeUser;
   repositorySlug?: string;
 }) {
-  const initialStepsClone = structuredClone(initialSteps);
+  const steps = structuredClone(stepsTemplate);
 
-  let index = 0;
-
+  // Se o usuário não estiver logado, o primeiro passo é conectar o GitHub.
+  // Vamos retornar os passos com o primeiro passo como "current"
   if (!user) {
-    initialStepsClone[index].status = "current";
-    return initialStepsClone;
+    steps[0].status = "current";
+    return steps;
   }
 
-  if (challengeUser?.pivot.completed) {
-    index = 6;
-  } else if (challengeUser?.pivot.submission_url) {
-    index = 5;
-  } else if (challengeUser?.pivot.joined_discord) {
-    index = 4;
-  } else if (challengeUser?.pivot.fork_url?.length > 0) {
-    index = 3;
-    initialStepsClone[
-      index
-    ].description = `Acesse <a class="dark:text-blue-200 text-blue-600 font-bold" href="${DISCORD_INVITE_URL}" target="_blank">nossa comunidade no Discord</a> para tirar dúvidas e se conectar com outras pessoas que estão fazendo o Mini Projeto.`;
-  } else if (challengeUser) {
-    index = 2;
-    initialStepsClone[
-      index
-    ].description = `Acesse o <a class="dark:text-blue-200 text-blue-600 font-bold" href="https://github.com/codante-io/${repositorySlug}" target="_blank">link do repositório</a>, faça um fork e clique em "Verificar". Depois disso é só baixar o seu fork e começar a codar!`;
-  } else if (user?.github_id?.length > 0) {
-    index = 1;
-  } else {
-    index = 0;
+  let currentStepIndex = 0;
+
+  if (user.github_user) {
+    let index = steps.findIndex((step) => step.intent === "connect-github");
+    steps[index].status = "completed";
+    currentStepIndex = index + 1;
   }
 
-  for (let i = 0; i < index; i++) initialStepsClone[i].status = "complete";
-  if (index < 6) initialStepsClone[index].status = "current";
+  if (challengeUser) {
+    let index = steps.findIndex((step) => step.intent === "join-challenge");
+    steps[index].status = "completed";
+    currentStepIndex = index + 1;
+  }
 
-  return initialStepsClone;
+  if (user.discord_user || challengeUser?.joined_discord) {
+    // só vamos marcar concluída essa etapa quando o usuário já tiver participado do mini projeto
+    if (challengeUser) {
+      let index = steps.findIndex((step) => step.intent === "join-discord");
+      steps[index].status = "completed";
+      currentStepIndex = index + 1;
+    }
+  }
+
+  if (challengeUser?.fork_url) {
+    let index = steps.findIndex((step) => step.intent === "verify-fork");
+    steps[index].status = "completed";
+    currentStepIndex = index + 1;
+  }
+
+  if (challengeUser?.submission_url) {
+    let index = steps.findIndex((step) => step.intent === "submit-challenge");
+    steps[index].status = "completed";
+    currentStepIndex = index + 1;
+  }
+
+  if (challengeUser?.completed) {
+    let index = steps.findIndex((step) => step.intent === "finish-challenge");
+    steps[index].status = "completed";
+    currentStepIndex = index + 1;
+  }
+
+  // Vamos marcar o index + 1 como current
+  if (steps[currentStepIndex]) {
+    steps[currentStepIndex].status = "current";
+  }
+
+  return steps;
 }

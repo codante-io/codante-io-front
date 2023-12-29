@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Workshop } from "./workshop.server";
-import type { ChallengeCard } from "./challenge.server";
+import type { ChallengeCard, ChallengeSummary } from "./challenge.server";
 import type { UserAvatar } from "./user.server";
 import { environment } from "./environment.server";
 
@@ -17,11 +17,7 @@ export type HomeInfo = {
     id: number;
     submission_image_url: string;
     avatar: UserAvatar;
-    challenge: {
-      name?: string;
-      slug: string;
-    };
-    user_github_user: string;
+    challenge: ChallengeSummary;
   }[];
   avatar_section: {
     avatars: UserAvatar[];

@@ -60,19 +60,19 @@ export function meta({ matches, params, data }: MetaArgs) {
   return [
     ...parentMeta,
     {
-      title: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+      title: `${formatName(submissionData.user_name)}: Solução de ${submissionData.challenge_name}`,
     },
     {
       name: "description",
-      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(submissionData.user_name)} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       property: "og:title",
-      content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+      content: `${formatName(submissionData.user_name)}: Solução de ${submissionData.challenge_name}`,
     },
     {
       property: "og:description",
-      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(submissionData.user_name)} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       property: "og:image",
@@ -88,11 +88,11 @@ export function meta({ matches, params, data }: MetaArgs) {
     },
     {
       name: "twitter:title",
-      content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+      content: `${formatName(submissionData.user_name)}: Solução de ${submissionData.challenge_name}`,
     },
     {
       name: "twitter:description",
-      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(submissionData.user_name)} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       name: "twitter:image",
@@ -151,7 +151,7 @@ export default function MySolution() {
   }>();
 
   const submissionUser = challengeUsers.find(
-    (user) => user.user_github_user === params.username,
+    (challengeUser) => challengeUser.user.github_user === params.username,
   );
 
   if (!submissionUser) {
@@ -167,7 +167,7 @@ export default function MySolution() {
     );
   }
 
-  const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user_github_user}`;
+  const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user.github_user}`;
 
   return (
     <div className="container text-center">
@@ -205,16 +205,16 @@ function Headline({
 
   function handleClickLinkedin() {
     if (!submissionUser) return false;
-    if (submissionUser?.linkedin_user)
+    if (submissionUser?.user.linkedin_user)
       return window.open(
-        `https://www.linkedin.com/in/${submissionUser.linkedin_user}`,
+        `https://www.linkedin.com/in/${submissionUser.user.linkedin_user}`,
         "_blank",
       );
-    if (user && user.id === submissionUser?.user_id)
+    if (user && user.id === submissionUser?.user.id)
       return navigate("/minha-conta#social-section");
     return toast.error(
       `${formatName(
-        submissionUser.user_name,
+        submissionUser.user.name,
       )} não vinculou sua conta do LinkedIn.`,
     );
   }
@@ -236,7 +236,7 @@ function Headline({
           >
             {challenge.name}
           </h1>
-          {user && user.id === submissionUser.user_id && (
+          {user && user.id === submissionUser.user.id && (
             <EditSection submissionUser={submissionUser} user={user} />
           )}
         </div>
@@ -244,29 +244,29 @@ function Headline({
           <h2 className="text-sm md:text-xl sm:text-start text-center md:mr-4 flex-1">
             Solução de{" "}
             <span className="text-md md:text-xl font-bold text-brand-500">
-              {formatName(submissionUser.user_name)}
+              {formatName(submissionUser.user.name)}
             </span>
           </h2>
           <div className="flex items-center gap-4 sm:gap-2 break-words flex-wrap justify-center">
             <a
-              href={`https://www.github.com/${submissionUser.user_github_user}`}
+              href={`https://www.github.com/${submissionUser.user.github_user}`}
               target="_blank"
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               rel="noreferrer"
             >
               <FaGithub className="text-lg sm:text-xl" />
-              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user_github_user}`}</span>
+              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user.github_user}`}</span>
             </a>
-            {submissionUser.linkedin_user && (
+            {submissionUser.user.linkedin_user && (
               <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
             )}
             <div
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               onClick={handleClickLinkedin}
             >
-              {!submissionUser.linkedin_user &&
+              {!submissionUser.user.linkedin_user &&
                 user &&
-                user.id === submissionUser.user_id && (
+                user.id === submissionUser.user.id && (
                   <>
                     <FaLinkedin className="text-lg sm:text-xl" />
                     <span className=" font-light sm:text-sm sm:inline text-xs flex items-center">
@@ -275,11 +275,11 @@ function Headline({
                     </span>
                   </>
                 )}
-              {submissionUser.linkedin_user && (
+              {submissionUser.user.linkedin_user && (
                 <>
                   <FaLinkedin className="text-lg sm:text-xl" />
                   <span className=" font-light sm:text-base sm:inline text-xs">
-                    {submissionUser.linkedin_user}
+                    {submissionUser.user.linkedin_user}
                   </span>
                 </>
               )}
@@ -351,7 +351,7 @@ function MainSection({
           className="cursor-pointer"
           src={submissionUser.submission_image_url}
           alt={`Print Screen da submissão de ${formatName(
-            submissionUser.user_name,
+            submissionUser.user.name,
           )}`}
           onClick={() => window.open(submissionUser.submission_url, "_blank")}
         />
@@ -419,7 +419,7 @@ function EditSection({
 
   return (
     <section>
-      {user && submissionUser.user_id === user.id && (
+      {user && submissionUser.user.id === user.id && (
         <section id="edit" className="text-left">
           <FiEdit
             className={classNames(

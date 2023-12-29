@@ -1,7 +1,23 @@
 import { BsDiscord } from "react-icons/bs";
 import { getPublicEnv } from "../public-env";
+import React from "react";
 
-export default function DiscordButton() {
+type Props = {
+  className?: string;
+  textSizeClass?: string;
+  children?: React.ReactNode;
+};
+
+export default function DiscordButton({
+  className = "",
+  textSizeClass = "text-base",
+  children = (
+    <React.Fragment>
+      <BsDiscord className="w-4 h-4" />
+      <span>Entrar na Comunidade</span>
+    </React.Fragment>
+  ),
+}: Props) {
   const clientId = "1185302801178439780";
   const redirectUri = `${getPublicEnv("BASE_URL")}/auth/discord/callback`;
   const encodedUrl = encodeURIComponent(redirectUri);
@@ -10,9 +26,10 @@ export default function DiscordButton() {
 
   return (
     <a href={discordUrl} target="_blank" rel="noreferrer" className="">
-      <span className="inline-flex items-center space-x-2 px-4 py-2 bg-brand-500 text-background-50 rounded-md hover:bg-brand-600">
-        <BsDiscord className="w-4 h-4" />
-        <span>Entrar na Comunidade</span>
+      <span
+        className={`inline-flex items-center space-x-2 px-4 py-2 bg-brand-500 text-background-50 rounded-md hover:bg-brand-600  ${textSizeClass} ${className}`}
+      >
+        {children}
       </span>
     </a>
   );

@@ -39,7 +39,7 @@ export default function MySubmission() {
   }>();
 
   const userSubmission = challengeUsers.find(
-    (submission) => submission.user_id === user.id,
+    (submission) => submission.user.id === user.id,
   );
 
   const errors = useActionData();
@@ -53,7 +53,7 @@ export default function MySubmission() {
   useEffect(() => {
     if (userSubmission) {
       navigate(
-        `/mini-projetos/${challenge.slug}/submissoes/${userSubmission.user_github_user}`,
+        `/mini-projetos/${challenge.slug}/submissoes/${userSubmission.user.github_user}`,
       );
     }
   }, [challenge.slug, navigate, userSubmission]);

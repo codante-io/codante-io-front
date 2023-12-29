@@ -1,3 +1,4 @@
+import type { ChallengeSummary } from "./challenge.server";
 import type { Reactions } from "./reactions.server";
 
 export type User = {
@@ -23,20 +24,22 @@ export type UserSettings = {
 
 export type ChallengeUser = {
   id: number;
-  user_id: number;
-  user_name: string;
-  user_github_user: string;
+  user: User;
+  challenge: ChallengeSummary;
+  joined_discord: boolean;
+  completed: boolean;
+  completed_at: string;
   submission_url: string;
   fork_url: string | null;
-  is_pro: boolean;
   submission_image_url: string;
   reactions: Reactions;
   avatar: UserAvatar;
   is_solution: boolean;
   created_at: string;
   updated_at: string;
-  linkedin_user?: string;
 };
+
+
 
 export type UserAvatar = {
   badge: "pro" | "admin" | null;
