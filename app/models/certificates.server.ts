@@ -6,7 +6,6 @@ export type Certificate = {
   user_id: string;
   source_type: "workshop" | "challenge";
   source_id: string;
-  status?: string;
 };
 
 export async function requestCertificate(
@@ -14,12 +13,7 @@ export async function requestCertificate(
   certificateInfo: Certificate,
 ) {
   const token = await currentToken({ request });
-  const {
-    user_id,
-    source_type,
-    source_id,
-    status = undefined,
-  } = certificateInfo;
+  const { user_id, source_type, source_id } = certificateInfo;
 
   return axios
     .post(
@@ -28,7 +22,6 @@ export async function requestCertificate(
         user_id,
         source_type,
         source_id,
-        status,
       },
       {
         headers: {
