@@ -34,6 +34,7 @@ import { useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import DiscordButton from "~/components/discord-button";
 
 export const loader = async () => {
   return json({
@@ -154,15 +155,22 @@ function Headline() {
                     </button>
                   </Link>
                 )}
-                <Link
-                  to="https://discord.gg/fmVw468ZMR"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
-                >
-                  <BsDiscord />
-                  Entre na comunidade
-                </Link>
+                {user ? (
+                  <DiscordButton>
+                    <BsDiscord className="mr-2" />
+                    Entre na Comunidade
+                  </DiscordButton>
+                ) : (
+                  <Link
+                    to="https://discord.gg/fmVw468ZMR"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
+                  >
+                    <BsDiscord />
+                    Entre na comunidade
+                  </Link>
+                )}
               </>
             </div>
           </div>
