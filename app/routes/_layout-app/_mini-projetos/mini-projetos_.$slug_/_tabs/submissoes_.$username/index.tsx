@@ -37,8 +37,9 @@ import { FiEdit } from "react-icons/fi";
 import classNames from "~/lib/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/features/form/loading-button";
-import Button from "~/components/ui/button";
 import invariant from "tiny-invariant";
+import { NewButton } from "~/components/ui/new-button";
+import { SaveIcon } from "lucide-react";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -501,23 +502,24 @@ function EditSection({
                           <div className="mt-8 flex gap-x-3">
                             <LoadingButton
                               type="submit"
-                              className="relative transition duration-200"
+                              className="transition duration-200"
                               status={status}
                               isSuccessfulSubmission={isSuccessfulSubmission}
                               name="intent"
                               value="updateSubmission"
                             >
-                              Enviar
+                              <span className="flex items-center">
+                                <SaveIcon className="mr-2 h-4 w-4" />
+                                Salvar
+                              </span>
                             </LoadingButton>
-                            <Button
-                              className=" border border-gray-300  dark:border-gray-600 hover:border-brand dark:hover:border-brand"
+                            <NewButton
                               type="button"
+                              variant={"outline-ghost"}
                               onClick={toggleDialog}
-                              textColorClass="text-gray dark:text-gray-300"
-                              bgClass="bg-transparent"
                             >
                               Cancelar
-                            </Button>
+                            </NewButton>
                           </div>
                         </Form>
                       </div>

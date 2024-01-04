@@ -1,6 +1,7 @@
 import { BsDiscord } from "react-icons/bs";
 import { getPublicEnv } from "../../../_layouts/public-env";
 import React from "react";
+import { buttonVariants } from "~/components/ui/new-button";
 
 type Props = {
   className?: string;
@@ -13,7 +14,7 @@ export default function DiscordButton({
   textSizeClass = "text-base",
   children = (
     <React.Fragment>
-      <BsDiscord className="w-4 h-4" />
+      <BsDiscord className="w-4 h-4 mr-2" />
       <span>Entrar na Comunidade</span>
     </React.Fragment>
   ),
@@ -25,12 +26,13 @@ export default function DiscordButton({
   const discordUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodedUrl}&response_type=code&scope=identify+guilds.join+email`;
 
   return (
-    <a href={discordUrl} target="_blank" rel="noreferrer" className="">
-      <span
-        className={`inline-flex items-center space-x-2 px-4 py-2 bg-brand-500 text-background-50 rounded-md hover:bg-brand-600  ${textSizeClass} ${className}`}
-      >
-        {children}
-      </span>
+    <a
+      href={discordUrl}
+      target="_blank"
+      rel="noreferrer"
+      className={buttonVariants()}
+    >
+      {children}
     </a>
   );
 }

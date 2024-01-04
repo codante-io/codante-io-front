@@ -1,36 +1,37 @@
 import { CgSpinner } from "react-icons/cg";
 import type { ButtonProps } from "../../../ui/button";
-import Button from "../../../ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { NewButton } from "~/components/ui/new-button";
 
 type LoadingButtonProps = {
   children: React.ReactNode;
   status: "idle" | "loading" | "submitting";
   isSuccessfulSubmission?: boolean;
+  size?: "default" | "sm" | "lg" | "xl" | "icon";
 } & ButtonProps;
 
 export default function LoadingButton({
   children,
-  type,
   className,
+  size = "default",
   status,
   isSuccessfulSubmission = false,
   ...rest
 }: LoadingButtonProps) {
   return (
-    <Button
+    <NewButton
       disabled={status !== "idle" || isSuccessfulSubmission}
-      type={type}
+      size={size}
       className={`relative ${className}`}
       {...rest}
     >
       {(status === "submitting" || status === "loading") && (
-        <div className="absolute inset-0 flex justify-center py-2">
+        <div className="absolute inset-0 flex justify-center items-center py-2">
           <CgSpinner className="w-5 h-5 animate-spin" />
         </div>
       )}
       {isSuccessfulSubmission && (
-        <div className="absolute inset-0 flex justify-center py-2">
+        <div className="absolute inset-0 flex justify-center items-center py-2">
           <CheckIcon className="w-5" />
         </div>
       )}
@@ -41,6 +42,6 @@ export default function LoadingButton({
       >
         {children}
       </span>
-    </Button>
+    </NewButton>
   );
 }

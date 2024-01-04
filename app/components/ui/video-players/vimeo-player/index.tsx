@@ -2,11 +2,11 @@ import { PlayCircleIcon } from "@heroicons/react/24/solid";
 import Vimeo from "@vimeo/player";
 import { useEffect, useRef } from "react";
 import LinkToLoginWithRedirect from "../../../features/link-to-login-with-redirect";
-import Button from "../../button";
 import ProSpanWrapper from "../../pro-span-wrapper";
 import { Link } from "@remix-run/react";
 import { FaCrown } from "react-icons/fa";
 import type { AvailableTo } from "~/lib/models/lesson.server";
+import { NewButton } from "~/components/ui/new-button";
 
 type VimeoPlayerProps = {
   vimeoUrl: string;
@@ -119,14 +119,14 @@ function NotAvailableOverlay({
       </p>
       {available_to === "logged_in" && (
         <LinkToLoginWithRedirect className="mt-6 text-gray-800 ">
-          <Button
+          <NewButton
             type="button"
-            textSizeClass="text-base"
-            className="flex justify-center items-center gap-2 px-4 py-4 w-full"
+            // textSizeClass="text-base"
+            className="flex justify-center items-center gap-2 px-4 py-7 w-full"
           >
             <img src="/img/github-logo.svg" alt="" />
             Entre com Github
-          </Button>
+          </NewButton>
         </LinkToLoginWithRedirect>
       )}
       {available_to === "pro" && (
