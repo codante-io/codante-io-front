@@ -1,8 +1,8 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
-import Button from "~/components/form/button";
-import ProSpanWrapper from "~/components/pro-span-wrapper";
-import { getSubscriptionByPagarmeOrderId } from "~/models/subscription.server";
+import Button from "~/components/features/form/button";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import { getSubscriptionByPagarmeOrderId } from "~/lib/models/subscription.server";
 import BoletoIcon from "./boleto-icon";
 import ThumbIcon from "./thumb-icon";
 

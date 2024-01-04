@@ -7,13 +7,13 @@ import {
 } from "@remix-run/react";
 import { useState } from "react";
 import slugify from "slugify";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import Post, { BlogTableOfContents } from "~/components/post";
-import useIntersectionObserver from "~/hooks/useIntersectionObserver";
-import { getPost } from "~/models/blog-post.server";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { abort404 } from "~/utils/responses.server";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import Post, { BlogTableOfContents } from "~/components/features/blog/post";
+import useIntersectionObserver from "~/lib/hooks/useIntersectionObserver";
+import { getPost } from "~/lib/models/blog-post.server";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import { abort404 } from "~/lib/utils/responses.server";
 
 export const meta = ({ data, params }: MetaArgs<any>) => {
   // para não quebrar se não houver blogPost ainda.

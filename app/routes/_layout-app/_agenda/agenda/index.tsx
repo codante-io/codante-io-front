@@ -2,11 +2,11 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { AddToCalendarButton } from "add-to-calendar-button-react";
 import { motion } from "framer-motion";
-import ChallengeCard from "~/components/cards/challenge-card";
-import WorkshopCard from "~/components/cards/workshop-card";
-import { useColorMode } from "~/contexts/color-mode-context";
-import { getUpcoming } from "~/models/upcoming.server";
-import { getPublishedDateAndTime } from "~/utils/interval";
+import ChallengeCard from "~/components/ui/cards/challenge-card";
+import WorkshopCard from "~/components/ui/cards/workshop-card";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { getUpcoming } from "~/lib/models/upcoming.server";
+import { getPublishedDateAndTime } from "~/lib/utils/interval";
 import { metaV1 } from "@remix-run/v1-meta";
 
 // meta function

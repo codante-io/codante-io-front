@@ -1,9 +1,9 @@
 import { Form, useLocation, useNavigation } from "@remix-run/react";
 import { AiOutlineCheck } from "react-icons/ai";
-import LoadingButton from "~/components/form/loading-button";
+import LoadingButton from "~/components/features/form/loading-button";
 import type { Step } from "../../../build-steps.server";
-import DiscordButton from "~/components/discord-button";
-import Button from "~/components/form/button";
+import DiscordButton from "~/components/features/auth/discord-button";
+import Button from "~/components/features/form/button";
 import { BsDiscord } from "react-icons/bs";
 
 export default function JoinChallengeSection({

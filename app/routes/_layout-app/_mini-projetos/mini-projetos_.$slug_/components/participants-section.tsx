@@ -1,5 +1,5 @@
-import UserAvatar from "~/components/user-avatar";
-import type { ChallengeParticipants } from "~/models/challenge.server";
+import UserAvatar from "~/components/ui/user-avatar";
+import type { ChallengeParticipants } from "~/lib/models/challenge.server";
 import ParticipantsCounter from "./participants-counter";
 
 export default function ParticipantsSection({

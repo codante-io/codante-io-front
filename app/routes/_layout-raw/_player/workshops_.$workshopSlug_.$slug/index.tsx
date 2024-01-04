@@ -5,16 +5,16 @@ import {
   useOutletContext,
 } from "@remix-run/react";
 import { useState } from "react";
-import { useColorMode } from "~/contexts/color-mode-context";
-import type { Lesson } from "~/models/lesson.server";
-import type { User } from "~/models/user.server";
-import type { Workshop } from "~/models/workshop.server";
-import { getWorkshop } from "~/models/workshop.server";
-import { abort404 } from "~/utils/responses.server";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import type { Lesson } from "~/lib/models/lesson.server";
+import type { User } from "~/lib/models/user.server";
+import type { Workshop } from "~/lib/models/workshop.server";
+import { getWorkshop } from "~/lib/models/workshop.server";
+import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
 import styles from "../styles.css";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];

@@ -1,4 +1,4 @@
-import type { ChallengeUser, User } from "~/models/user.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 const stepsTemplate: Step[] = [
   {

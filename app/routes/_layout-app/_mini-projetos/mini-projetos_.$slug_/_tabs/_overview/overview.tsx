@@ -1,5 +1,5 @@
-import MarkdownRenderer from "~/components/markdown-renderer";
-import VimeoPlayer from "~/components/vimeo-player";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
+import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import RepositoryInfoSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/repository-info-section";
 import JoinChallengeSection from "./components/join-challenge-section";
 import ResolutionSection from "./components/resolution-section";

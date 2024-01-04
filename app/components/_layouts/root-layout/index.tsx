@@ -1,6 +1,6 @@
-import Footer from "~/components/footer";
-import Navbar from "~/components/navbar";
-import type { User } from "~/models/user.server";
+import Footer from "~/components/_layouts/footer";
+import Navbar from "~/components/_layouts/navbar";
+import type { User } from "~/lib/models/user.server";
 
 type AppLayoutProps = {
   children: React.ReactNode;

@@ -1,26 +1,26 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import type { AxiosError } from "axios";
 import axios from "axios";
-import PriceCard from "~/components/cards/pricing/price-card";
+import PriceCard from "~/components/ui/cards/pricing/price-card";
 import {
   freePlanDetails,
   freePlanFeatures,
   proPlanDetails,
   proPlanFeatures,
-} from "~/components/cards/pricing/pricing-data";
-import type { Subscription } from "~/models/subscription.server";
-import { currentToken } from "~/services/auth.server";
+} from "~/components/ui/cards/pricing/pricing-data";
+import type { Subscription } from "~/lib/models/subscription.server";
+import { currentToken } from "~/lib/services/auth.server";
 import faqQuestions from "../faq-questions";
 import { useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
-import switchSound from "~/sounds/switch.mp3";
-import classNames from "~/utils/class-names";
-import type { Plan } from "~/models/plan.server";
-import { getPlanDetails } from "~/models/plan.server";
+import switchSound from "~/lib/sounds/switch.mp3";
+import classNames from "~/lib/utils/class-names";
+import type { Plan } from "~/lib/models/plan.server";
+import { getPlanDetails } from "~/lib/models/plan.server";
 import { useLoaderData } from "@remix-run/react";
-import { environment } from "~/models/environment.server";
+import { environment } from "~/lib/models/environment.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const plan = await getPlanDetails();

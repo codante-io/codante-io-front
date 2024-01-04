@@ -1,7 +1,7 @@
 import { useOutletContext } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/lib/models/challenge.server";
 import SubmissionCard from "../../components/submission-card";
-import type { ChallengeUser } from "~/models/user.server";
+import type { ChallengeUser } from "~/lib/models/user.server";
 
 export default function Submissions() {
   const { challengeUsers, challenge } = useOutletContext<{

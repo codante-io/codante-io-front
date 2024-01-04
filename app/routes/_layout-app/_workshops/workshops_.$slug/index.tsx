@@ -1,35 +1,35 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import CardItemDuration from "~/components/cards/card-item-duration";
-import TitleIcon from "~/components/title-icon";
-import { getWorkshop } from "~/models/workshop.server";
+import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
+import CardItemDuration from "~/components/ui/cards/card-item-duration";
+import TitleIcon from "~/components/ui/title-icon";
+import { getWorkshop } from "~/lib/models/workshop.server";
 import {
   AiFillGithub,
   AiFillLinkedin,
   AiFillTwitterCircle,
 } from "react-icons/ai";
 import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import type { Instructor } from "~/models/instructor.server";
+import type { Instructor } from "~/lib/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import BannerAlert from "~/components/banner-alert";
-import WorkshopLessonsList from "~/components/workshop-lessons-list";
-import WorkshopLessonsHeader from "~/components/workshop-lessons-header";
-import { abort404 } from "~/utils/responses.server";
-import VimeoPlayer from "~/components/vimeo-player";
+import BannerAlert from "~/components/ui/banner-alert";
+import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
+import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
+import { abort404 } from "~/lib/utils/responses.server";
+import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import {
   fromSecondsToTimeStringWithoutSeconds,
   getPublishedDateAndTime,
-} from "~/utils/interval";
-import MarkdownRenderer from "~/components/markdown-renderer";
+} from "~/lib/utils/interval";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { MdComputer, MdLiveTv } from "react-icons/md";
 import type { IconType } from "react-icons";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
-import BannerAlertInfo from "~/components/banner-alert/banner-alert-info";
-import YoutubePlayer from "~/components/youtube-player";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
+import BannerAlertInfo from "~/components/ui/banner-alert/banner-alert-info";
+import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};

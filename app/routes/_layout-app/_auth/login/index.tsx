@@ -8,13 +8,13 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
-import Button from "~/components/form/button";
-import Input from "~/components/form/input";
-import { useColorMode } from "~/contexts/color-mode-context";
-import { login } from "~/services/auth.server";
+import Button from "~/components/features/form/button";
+import Input from "~/components/features/form/input";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { login } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import { authenticator } from "~/services/github-auth.server";
-import LoadingButton from "~/components/form/loading-button";
+import { authenticator } from "~/lib/services/github-auth.server";
+import LoadingButton from "~/components/features/form/loading-button";
 import { metaV1 } from "@remix-run/v1-meta";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 

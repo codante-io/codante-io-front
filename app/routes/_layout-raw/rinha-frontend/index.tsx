@@ -12,18 +12,18 @@ import {
 } from "react-icons/bs";
 
 import AppLayout from "~/components/_layouts/root-layout";
-import BackgroundBlur from "~/components/background-blur";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import TitleIcon from "~/components/title-icon";
-import VimeoPlayer from "~/components/vimeo-player";
-import Wave from "~/components/wave";
-import type { User } from "~/models/user.server";
+import BackgroundBlur from "~/components/_layouts/background-blur";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import TitleIcon from "~/components/ui/title-icon";
+import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
+import Wave from "~/components/_layouts/wave";
+import type { User } from "~/lib/models/user.server";
 import useMousePosition from "./useMousePosition";
 import transformElement from "./transformElement";
 import { faqs, supporters, techs, steps } from "./data";
-import { useColorMode } from "~/contexts/color-mode-context";
-import BannerAlert from "~/components/banner-alert";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import BannerAlert from "~/components/ui/banner-alert";
 
 export const meta = () => {
   return [

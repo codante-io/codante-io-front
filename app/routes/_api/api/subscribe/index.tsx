@@ -1,6 +1,6 @@
 import axios from "axios";
-import { environment } from "~/models/environment.server";
-import { currentToken } from "~/services/auth.server";
+import { environment } from "~/lib/models/environment.server";
+import { currentToken } from "~/lib/services/auth.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -20,7 +20,7 @@ export async function action({ request }: { request: Request }) {
         headers: {
           Authorization: "Bearer " + token,
         },
-      }
+      },
     );
 
     return new Response(JSON.stringify(response.data), {
@@ -35,7 +35,7 @@ export async function action({ request }: { request: Request }) {
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   }
 }

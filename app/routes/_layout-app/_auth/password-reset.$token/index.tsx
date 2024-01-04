@@ -4,11 +4,11 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import { resetPassword } from "~/services/auth.server";
+import { resetPassword } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import Input from "~/components/form/input";
+import Input from "~/components/features/form/input";
 
-import LoadingButton from "~/components/form/loading-button";
+import LoadingButton from "~/components/features/form/loading-button";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();

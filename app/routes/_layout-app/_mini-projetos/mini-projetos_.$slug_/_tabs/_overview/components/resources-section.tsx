@@ -5,7 +5,7 @@ import {
   FiGithub,
   FiGlobe,
 } from "react-icons/fi";
-import type { Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/lib/models/challenge.server";
 
 export default function ResourcesSection({
   challenge,
