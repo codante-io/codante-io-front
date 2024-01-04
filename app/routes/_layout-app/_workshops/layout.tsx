@@ -4,9 +4,9 @@ import {
   useOutletContext,
   useRouteError,
 } from "@remix-run/react";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import type { User } from "~/models/user.server";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import type { User } from "~/lib/models/user.server";
 
 export default function WorkshopLayout() {
   const { user } = useOutletContext<{ user: User | null }>();

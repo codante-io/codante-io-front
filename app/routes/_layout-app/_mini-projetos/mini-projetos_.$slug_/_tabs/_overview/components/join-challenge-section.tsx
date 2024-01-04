@@ -1,10 +1,10 @@
 import { Form, useLocation, useNavigation } from "@remix-run/react";
 import { AiOutlineCheck } from "react-icons/ai";
-import LoadingButton from "~/components/form/loading-button";
+import LoadingButton from "~/components/features/form/loading-button";
 import type { Step } from "../../../build-steps.server";
-import DiscordButton from "~/components/discord-button";
-import Button from "~/components/form/button";
+import DiscordButton from "~/components/features/auth/discord-button";
 import { BsDiscord } from "react-icons/bs";
+import { NewButton } from "~/components/ui/new-button";
 
 export default function JoinChallengeSection({
   className = "",
@@ -106,8 +106,8 @@ export default function JoinChallengeSection({
                           <input type="hidden" name="user" value={user} />
                           {step.intent === "join-discord" ? (
                             <span className="mt-3 mr-2">
-                              <DiscordButton textSizeClass="text-sm">
-                                <BsDiscord className="w-3 h-3" />
+                              <DiscordButton>
+                                <BsDiscord className="w-3 h-3 mr-2" />
                                 <span>Entrar</span>
                               </DiscordButton>
                             </span>
@@ -123,14 +123,15 @@ export default function JoinChallengeSection({
                             </LoadingButton>
                           )}
                           {step.secondaryButton && (
-                            <Button
+                            <NewButton
                               type="submit"
-                              className="my-4 bg-transparent border-2 border-background-600 hover:bg-background-700"
+                              variant="outline"
+                              className="mt-4"
                               name="intent"
                               value={step.secondaryIntent}
                             >
                               {step.secondaryButton}
-                            </Button>
+                            </NewButton>
                           )}
                         </Form>
                       </span>

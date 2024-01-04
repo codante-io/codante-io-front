@@ -1,12 +1,12 @@
 import { useClickOutside } from "@mantine/hooks";
 import { Link } from "@remix-run/react";
 import { BsXLg } from "react-icons/bs";
-import type { User } from "~/models/user.server";
-import type { Workshop } from "~/models/workshop.server";
+import type { User } from "~/lib/models/user.server";
+import type { Workshop } from "~/lib/models/workshop.server";
 import CodanteLogoMinimal from "./codante-logo-minimal";
 import WorkshopTitle from "./workshop-title";
 import WorkshopLessonList from "./workshop-lesson-list";
-import type { Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/lib/models/challenge.server";
 
 export default function Sidebar({
   workshop,

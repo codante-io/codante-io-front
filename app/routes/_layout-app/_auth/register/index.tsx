@@ -1,10 +1,10 @@
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
-import Input from "~/components/form/input";
-import { useColorMode } from "~/contexts/color-mode-context";
-import { register } from "~/services/auth.server";
+import Input from "~/components/features/form/input";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { register } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
 
-import LoadingButton from "~/components/form/loading-button";
+import LoadingButton from "~/components/features/form/loading-button";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();

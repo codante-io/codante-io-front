@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import ReactionsButton from "~/components/reactions-button";
-import type { BlogPost } from "~/models/blog-post.server";
+import ReactionsButton from "~/components/features/reactions/reactions-button";
+import type { BlogPost } from "~/lib/models/blog-post.server";
 
 export default function BlogPostCard({ blogPost }: { blogPost: BlogPost }) {
   return (

@@ -1,9 +1,9 @@
-import { sendPasswordLink } from "~/services/auth.server";
+import { sendPasswordLink } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import Input from "~/components/form/input";
+import Input from "~/components/features/form/input";
 
 import { Form, useActionData, useNavigation } from "@remix-run/react";
-import LoadingButton from "~/components/form/loading-button";
+import LoadingButton from "~/components/features/form/loading-button";
 
 export async function action({
   request,

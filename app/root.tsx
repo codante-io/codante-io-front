@@ -11,19 +11,19 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { Toaster } from "react-hot-toast";
-import LoadingBar from "~/components/loading-bar";
-import { ColorModeProvider } from "~/contexts/color-mode-context";
+import LoadingBar from "~/components/ui/loading-bar";
+import { ColorModeProvider } from "~/lib/contexts/color-mode-context";
 import stylesheet from "~/tailwind.css";
-import { DarkModeScriptInnerHtml } from "~/utils/dark-mode";
-import { GoogleTagManager } from "./components/google-tag-manager";
-import { user } from "./services/auth.server";
-import { getOgGeneratorUrl } from "./utils/path-utils";
-import NotFound from "./components/errors/not-found";
-import { Error500 } from "./components/errors/500";
-import type { User } from "./models/user.server";
+import { DarkModeScriptInnerHtml } from "~/lib/utils/dark-mode";
+import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
+import { user } from "./lib/services/auth.server";
+import { getOgGeneratorUrl } from "./lib/utils/path-utils";
+import NotFound from "./components/features/error-handling/not-found";
+import { Error500 } from "./components/features/error-handling/500";
+import type { User } from "./lib/models/user.server";
 import { metaV1 } from "@remix-run/v1-meta";
-import { environment } from "./models/environment.server";
-import PublicEnv, { getPublicEnv } from "./components/public-env";
+import { environment } from "./lib/models/environment.server";
+import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -109,7 +109,7 @@ export default function App() {
               "bg-background-50 dark:bg-background-800 dark:text-gray-50",
           }}
         />
-        {getPublicEnv('NODE_ENV') !== "production" && (
+        {getPublicEnv("NODE_ENV") !== "production" && (
           <div className="fixed z-50 w-20 py-2 font-bold text-center text-blue-700 bg-blue-100 rounded-full bottom-2 left-2">
             <span className="block md:hidden">sm</span>
             <span className="hidden md:block lg:hidden">md</span>

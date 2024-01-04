@@ -1,6 +1,6 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { redirectToCookie } from "~/services/auth.server";
-import { authenticator } from "~/services/github-auth.server";
+import { redirectToCookie } from "~/lib/services/auth.server";
+import { authenticator } from "~/lib/services/github-auth.server";
 
 export async function loader({ request }: ActionFunctionArgs) {
   const url = new URL(request.url);

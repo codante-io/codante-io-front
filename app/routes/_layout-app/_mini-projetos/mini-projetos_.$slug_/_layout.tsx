@@ -12,15 +12,15 @@ import {
 } from "@remix-run/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
-import CardItemDifficulty from "~/components/cards/card-item-difficulty";
+import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
 import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
 import { BsCloudUpload, BsStars } from "react-icons/bs";
-import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import { useToasterWithSound } from "~/hooks/useToasterWithSound";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import {
   getChallenge,
   getChallengeParticipants,
@@ -30,14 +30,14 @@ import {
   updateUserJoinedDiscord,
   userJoinedChallenge,
   verifyAndUpdateForkURL,
-} from "~/models/challenge.server";
-import { user as getUser, logout } from "~/services/auth.server";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { abort404 } from "~/utils/responses.server";
+} from "~/lib/models/challenge.server";
+import { user as getUser, logout } from "~/lib/services/auth.server";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import { abort404 } from "~/lib/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import type { ChallengeUser, User } from "~/models/user.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.

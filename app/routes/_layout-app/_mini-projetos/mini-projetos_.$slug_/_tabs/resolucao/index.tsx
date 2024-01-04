@@ -1,5 +1,5 @@
 import { useOutletContext, useNavigate } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/lib/models/challenge.server";
 import { CodeBracketIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
 
 export default function Resolution() {

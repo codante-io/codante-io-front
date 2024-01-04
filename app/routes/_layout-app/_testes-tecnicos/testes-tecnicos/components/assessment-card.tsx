@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import IconsAside from "./icons-aside";
-import type { Assessment } from "~/models/assessments.server";
-import { useColorMode } from "~/contexts/color-mode-context";
+import type { Assessment } from "~/lib/models/assessments.server";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
 
 function borderColor(type: string) {
   switch (type) {

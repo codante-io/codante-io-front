@@ -1,8 +1,8 @@
 import { Link } from "@remix-run/react";
-import type { Workshop } from "~/models/workshop.server";
-import { fromSecondsToTimeString } from "~/utils/interval";
+import type { Workshop } from "~/lib/models/workshop.server";
+import { fromSecondsToTimeString } from "~/lib/utils/interval";
 import ProgressBar from "./progress-bar";
-import type { Challenge } from "~/models/challenge.server";
+import type { Challenge } from "~/lib/models/challenge.server";
 
 export default function WorkshopTitle({
   workshop,

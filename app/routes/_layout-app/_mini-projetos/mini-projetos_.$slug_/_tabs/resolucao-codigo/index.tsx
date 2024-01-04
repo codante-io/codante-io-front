@@ -1,10 +1,10 @@
 import { Link, useOutletContext } from "@remix-run/react";
 import { Navigate } from "react-router-dom";
 import { FaCrown } from "react-icons/fa";
-import ProSpanWrapper from "~/components/pro-span-wrapper";
-import { useColorMode } from "~/contexts/color-mode-context";
-import type { Challenge } from "~/models/challenge.server";
-import type { ChallengeUser, User } from "~/models/user.server";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
 
 export default function SolutionCode() {

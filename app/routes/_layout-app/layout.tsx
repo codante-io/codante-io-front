@@ -1,5 +1,5 @@
 import { Outlet, useOutletContext } from "@remix-run/react";
-import type { User } from "~/models/user.server";
+import type { User } from "~/lib/models/user.server";
 import AppLayoutComponent from "~/components/_layouts/root-layout";
 
 type AppLayoutProps = {

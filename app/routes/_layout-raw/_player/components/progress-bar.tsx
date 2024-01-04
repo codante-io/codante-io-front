@@ -1,4 +1,4 @@
-import type { Lesson } from "~/models/lesson.server";
+import type { Lesson } from "~/lib/models/lesson.server";
 
 export default function ProgressBar({ lessons }: { lessons: Lesson[] }) {
   return (

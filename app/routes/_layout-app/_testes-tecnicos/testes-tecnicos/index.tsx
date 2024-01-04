@@ -1,8 +1,8 @@
-import TitleIcon from "~/components/title-icon";
+import TitleIcon from "~/components/ui/title-icon";
 import { json } from "@remix-run/node";
-import { getAssessments } from "~/models/assessments.server";
+import { getAssessments } from "~/lib/models/assessments.server";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AssessmentCard from "./components/assessment-card";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";

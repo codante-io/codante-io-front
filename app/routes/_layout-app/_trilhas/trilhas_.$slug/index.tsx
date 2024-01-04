@@ -2,17 +2,17 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import CardItemDifficulty from "~/components/cards/card-item-difficulty";
-import { getTrack } from "~/models/track.server";
-import WorkshopCard from "~/components/cards/workshop-card";
-import ChallengeCard from "~/components/cards/challenge-card";
+import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
+import { getTrack } from "~/lib/models/track.server";
+import WorkshopCard from "~/components/ui/cards/workshop-card";
+import ChallengeCard from "~/components/ui/cards/challenge-card";
 import type {
   ChallengeCard as ChallengeCardType,
   Challenge,
-} from "~/models/challenge.server";
-import type { Workshop } from "~/models/workshop.server";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
+} from "~/lib/models/challenge.server";
+import type { Workshop } from "~/lib/models/workshop.server";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 
 export const meta = ({ data, params }: any) => {
   const title = `Trilha: ${data.track?.name} | Codante.io`;

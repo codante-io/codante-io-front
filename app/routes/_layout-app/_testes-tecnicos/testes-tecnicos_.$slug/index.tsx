@@ -1,4 +1,4 @@
-import TitleIcon from "~/components/title-icon";
+import TitleIcon from "~/components/ui/title-icon";
 import {
   FaGithub,
   FaLinkedinIn,
@@ -6,8 +6,8 @@ import {
   FaRegFileCode,
 } from "react-icons/fa";
 import { HiUsers, HiMap } from "react-icons/hi";
-import type { Assessment } from "~/models/assessments.server";
-import { getAssessment } from "~/models/assessments.server";
+import type { Assessment } from "~/lib/models/assessments.server";
+import { getAssessment } from "~/lib/models/assessments.server";
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -15,14 +15,14 @@ import {
 } from "@remix-run/react";
 import { MdLocationCity } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
-import MarkdownRenderer from "~/components/markdown-renderer";
-import { useColorMode } from "~/contexts/color-mode-context";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { FiDownload, FiExternalLink } from "react-icons/fi";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
-import { abort404 } from "~/utils/responses.server";
-import NotFound from "~/components/errors/not-found";
-import { Error500 } from "~/components/errors/500";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
+import { abort404 } from "~/lib/utils/responses.server";
+import NotFound from "~/components/features/error-handling/not-found";
+import { Error500 } from "~/components/features/error-handling/500";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 
 export const meta = ({ data, params }: any) => {

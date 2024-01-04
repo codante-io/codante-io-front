@@ -8,15 +8,15 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
-import Button from "~/components/form/button";
-import Input from "~/components/form/input";
-import { useColorMode } from "~/contexts/color-mode-context";
-import { login } from "~/services/auth.server";
+import Input from "~/components/features/form/input";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { login } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import { authenticator } from "~/services/github-auth.server";
-import LoadingButton from "~/components/form/loading-button";
+import { authenticator } from "~/lib/services/github-auth.server";
+import LoadingButton from "~/components/features/form/loading-button";
 import { metaV1 } from "@remix-run/v1-meta";
 import type { LoaderFunctionArgs } from "@remix-run/node";
+import { NewButton } from "~/components/ui/new-button";
 
 export function links() {
   return [
@@ -97,6 +97,7 @@ export default function Login() {
             <LoadingButton
               status={status}
               type="submit"
+              size="xl"
               className="relative w-full text-white transition duration-200  rounded-lg [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>*]:w-full [&>*]:gap-4 [&>*]:p-2 [&>*]:text-white [&>*]:transition [&>*]:duration-200 [&>*]:text-lg hover:bg-opacity-90 bg-background-700 "
             >
               <img src="/img/github-logo.svg" alt="" />
@@ -144,7 +145,7 @@ export default function Login() {
               {errors as any}
             </div>
             <div className="text-right">
-              <Button type="submit">Login</Button>
+              <NewButton type="submit">Login</NewButton>
             </div>
           </Form>
         </AuthCard>

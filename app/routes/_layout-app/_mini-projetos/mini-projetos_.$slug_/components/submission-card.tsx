@@ -1,15 +1,15 @@
 import { useNavigate } from "@remix-run/react";
 import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
-import ReactionsButton from "~/components/reactions-button";
-import TooltipWrapper from "~/components/tooltip";
-import UserAvatar from "~/components/user-avatar";
+import ReactionsButton from "~/components/features/reactions/reactions-button";
+import TooltipWrapper from "~/components/ui/tooltip";
+import UserAvatar from "~/components/ui/user-avatar";
 import type {
   UserAvatar as UserAvatarType,
   ChallengeUser,
-} from "~/models/user.server";
-import classNames from "~/utils/class-names";
-import { formatName } from "~/utils/format-name";
+} from "~/lib/models/user.server";
+import classNames from "~/lib/utils/class-names";
+import { formatName } from "~/lib/utils/format-name";
 
 type RequiredChallengeUserProps = {
   avatar: UserAvatarType;

@@ -7,11 +7,11 @@ import {
   useNavigation,
   useOutletContext,
 } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
-import type { ChallengeUser, User } from "~/models/user.server";
-import UserAvatar from "~/components/user-avatar";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
+import UserAvatar from "~/components/ui/user-avatar";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import ReactionsButton from "~/components/reactions-button";
+import ReactionsButton from "~/components/features/reactions/reactions-button";
 import {
   LinkedinShareButton,
   TwitterShareButton,
@@ -23,22 +23,23 @@ import {
   RiTwitterXLine,
   RiWhatsappLine,
 } from "react-icons/ri";
-import { formatName } from "~/utils/format-name";
+import { formatName } from "~/lib/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
 import { Transition, Dialog } from "@headlessui/react";
 import {
   getSubmissionFromGithubUser,
   updateChallengeSubmission,
-} from "~/models/challenge.server";
+} from "~/lib/models/challenge.server";
 import useSound from "use-sound";
-import pop from "~/sounds/pop.wav";
+import pop from "~/lib/sounds/pop.wav";
 import { FiEdit } from "react-icons/fi";
-import classNames from "~/utils/class-names";
+import classNames from "~/lib/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
-import LoadingButton from "~/components/form/loading-button";
-import Button from "~/components/form/button";
+import LoadingButton from "~/components/features/form/loading-button";
 import invariant from "tiny-invariant";
+import { NewButton } from "~/components/ui/new-button";
+import { SaveIcon } from "lucide-react";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -60,19 +61,27 @@ export function meta({ matches, params, data }: MetaArgs) {
   return [
     ...parentMeta,
     {
-      title: `${formatName(submissionData.user_name)}: Solução de ${submissionData.challenge_name}`,
+      title: `${formatName(submissionData.user_name)}: Solução de ${
+        submissionData.challenge_name
+      }`,
     },
     {
       name: "description",
-      content: `Essa é a solução proposta por ${formatName(submissionData.user_name)} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(
+        submissionData.user_name,
+      )} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       property: "og:title",
-      content: `${formatName(submissionData.user_name)}: Solução de ${submissionData.challenge_name}`,
+      content: `${formatName(submissionData.user_name)}: Solução de ${
+        submissionData.challenge_name
+      }`,
     },
     {
       property: "og:description",
-      content: `Essa é a solução proposta por ${formatName(submissionData.user_name)} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(
+        submissionData.user_name,
+      )} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       property: "og:image",
@@ -88,11 +97,15 @@ export function meta({ matches, params, data }: MetaArgs) {
     },
     {
       name: "twitter:title",
-      content: `${formatName(submissionData.user_name)}: Solução de ${submissionData.challenge_name}`,
+      content: `${formatName(submissionData.user_name)}: Solução de ${
+        submissionData.challenge_name
+      }`,
     },
     {
       name: "twitter:description",
-      content: `Essa é a solução proposta por ${formatName(submissionData.user_name)} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(
+        submissionData.user_name,
+      )} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       name: "twitter:image",
@@ -489,23 +502,24 @@ function EditSection({
                           <div className="mt-8 flex gap-x-3">
                             <LoadingButton
                               type="submit"
-                              className="relative transition duration-200"
+                              className="transition duration-200"
                               status={status}
                               isSuccessfulSubmission={isSuccessfulSubmission}
                               name="intent"
                               value="updateSubmission"
                             >
-                              Enviar
+                              <span className="flex items-center">
+                                <SaveIcon className="mr-2 h-4 w-4" />
+                                Salvar
+                              </span>
                             </LoadingButton>
-                            <Button
-                              className=" border border-gray-300  dark:border-gray-600 hover:border-brand dark:hover:border-brand"
+                            <NewButton
                               type="button"
+                              variant={"outline-ghost"}
                               onClick={toggleDialog}
-                              textColorClass="text-gray dark:text-gray-300"
-                              bgClass="bg-transparent"
                             >
                               Cancelar
-                            </Button>
+                            </NewButton>
                           </div>
                         </Form>
                       </div>

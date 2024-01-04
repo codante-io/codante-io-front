@@ -1,8 +1,8 @@
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import { setCompleted } from "~/models/lesson.server";
-import { abort404 } from "~/utils/responses.server";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import { setCompleted } from "~/lib/models/lesson.server";
+import { abort404 } from "~/lib/utils/responses.server";
 
 export async function action({ request }: { request: any }) {
   // const lessonId = params.lessonId;
