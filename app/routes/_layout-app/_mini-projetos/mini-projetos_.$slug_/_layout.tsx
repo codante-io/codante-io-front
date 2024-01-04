@@ -39,6 +39,7 @@ import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { User } from "~/models/user.server";
+import { PiCertificate } from "react-icons/pi";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -254,6 +255,13 @@ export default function ChallengeSlug() {
       isVisible: !!user && isUserParticipating,
       icon: <BsCloudUpload />,
       current: location.pathname.includes("minha-submissao"),
+    },
+    {
+      name: "Certificado",
+      href: "certificado",
+      isVisible: true,
+      icon: <PiCertificate />,
+      current: location.pathname.includes("certificado"),
     },
   ];
 

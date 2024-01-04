@@ -39,9 +39,6 @@ import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/form/loading-button";
 import Button from "~/components/form/button";
 import invariant from "tiny-invariant";
-import type { Certificate } from "~/models/certificates.server";
-import { requestCertificate } from "~/models/certificates.server";
-import RequestCertificateButton from "~/components/request-certificate-button";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -119,25 +116,13 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  const formData = await request.formData();
+  let formData = await request.formData();
+  let submissionUrl = formData.get("submission_url") as string;
 
   const intent = formData.get("intent");
   switch (intent) {
     case "updateSubmission":
-      let submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
-    case "requestCertificate":
-      const user_id = formData.get("user_id");
-      const source_type = formData.get("source_type");
-      const source_id = formData.get("source_id");
-      const certificateInfo = {
-        user_id,
-        source_type,
-        source_id,
-      } as Certificate;
-      return requestCertificate(request, certificateInfo);
-    default:
-      return null;
   }
 }
 
@@ -202,11 +187,6 @@ export default function MySolution() {
         user={user}
         challengeSlug={challenge.slug}
         sendoToSolutionPage
-      />
-      <RequestCertificateButton
-        challengeUser={submissionUser}
-        sourceType="challenge"
-        sourceId={challenge.id}
       />
     </div>
   );
