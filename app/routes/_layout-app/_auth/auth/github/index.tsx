@@ -8,7 +8,7 @@ export async function loader({ request }: ActionFunctionArgs) {
 
   try {
     return await authenticator.authenticate("github", request, {
-      successRedirect: redirectTo ?? "/conta",
+      successRedirect: redirectTo ?? "/minha-conta",
       failureRedirect: "/",
     });
   } catch (error) {
