@@ -5,7 +5,7 @@ import { getChallenges } from "~/lib/models/challenge.server";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
-import Button from "~/components/features/form/button";
+import Button from "~/components/ui/button";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { metaV1 } from "@remix-run/v1-meta";

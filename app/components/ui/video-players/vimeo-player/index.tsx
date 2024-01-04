@@ -2,7 +2,7 @@ import { PlayCircleIcon } from "@heroicons/react/24/solid";
 import Vimeo from "@vimeo/player";
 import { useEffect, useRef } from "react";
 import LinkToLoginWithRedirect from "../../../features/link-to-login-with-redirect";
-import Button from "../../../features/form/button";
+import Button from "../../button";
 import ProSpanWrapper from "../../pro-span-wrapper";
 import { Link } from "@remix-run/react";
 import { FaCrown } from "react-icons/fa";

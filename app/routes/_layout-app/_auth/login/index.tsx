@@ -8,7 +8,7 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
-import Button from "~/components/features/form/button";
+import Button from "~/components/ui/button";
 import Input from "~/components/features/form/input";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { login } from "~/lib/services/auth.server";

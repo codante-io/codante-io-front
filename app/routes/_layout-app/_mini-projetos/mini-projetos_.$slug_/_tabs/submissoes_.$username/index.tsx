@@ -37,7 +37,7 @@ import { FiEdit } from "react-icons/fi";
 import classNames from "~/lib/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/features/form/loading-button";
-import Button from "~/components/features/form/button";
+import Button from "~/components/ui/button";
 import invariant from "tiny-invariant";
 
 export function meta({ matches, params, data }: MetaArgs) {

@@ -1,6 +1,6 @@
 import { CgSpinner } from "react-icons/cg";
-import type { ButtonProps } from "../button";
-import Button from "../button";
+import type { ButtonProps } from "../../../ui/button";
+import Button from "../../../ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
 
 type LoadingButtonProps = {

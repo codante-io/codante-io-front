@@ -3,7 +3,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import LoadingButton from "~/components/features/form/loading-button";
 import type { Step } from "../../../build-steps.server";
 import DiscordButton from "~/components/features/auth/discord-button";
-import Button from "~/components/features/form/button";
+import Button from "~/components/ui/button";
 import { BsDiscord } from "react-icons/bs";
 
 export default function JoinChallengeSection({
