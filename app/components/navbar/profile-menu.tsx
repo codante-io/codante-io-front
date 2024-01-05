@@ -57,7 +57,7 @@ export default function ProfileMenu({ user }: { user: User }) {
           <Menu.Item>
             {({ active }) => (
               <Link
-                to="/certificado"
+                to="/certificados"
                 className={classNames(
                   active ? "dark:bg-background-800/50 bg-background-50" : "",
                   "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700",
