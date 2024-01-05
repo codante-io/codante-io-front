@@ -3,13 +3,13 @@ import { FaCrown } from "react-icons/fa";
 import { PiCertificate } from "react-icons/pi";
 import { Link, json, useActionData, useNavigation } from "react-router-dom";
 import RequestCertificateButton from "~/components/request-certificate-button";
-import type { Certificate } from "~/models/certificates.server";
 import {
+  type Certificate,
   getCertificatesBySlug,
   requestCertificate,
-} from "~/models/certificates.server";
-import type { Challenge } from "~/models/challenge.server";
-import type { ChallengeUser, User } from "~/models/user.server";
+} from "~/lib/models/certificates.server";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -39,7 +39,11 @@ export async function loader({
   params: { slug: string };
 }) {
   return json({
-    certificates: await getCertificatesBySlug(request, "challenge", params.slug),
+    certificates: await getCertificatesBySlug(
+      request,
+      "challenge",
+      params.slug,
+    ),
   });
 }
 
@@ -55,7 +59,7 @@ export default function Certificate() {
 
   if (user) {
     submissionUser = challengeUsers.find(
-      (submissionUser) => submissionUser.user_github_user === user.github_user,
+      (submissionUser) => submissionUser.user.github_user === user.github_user,
     );
   }
 
@@ -110,7 +114,11 @@ function RequestCertificate({
 
     if (publishedCertificate) {
       return (
-        <a href={`/certificados/${publishedCertificate.id}`} target="_blank" rel="noopener noreferrer">
+        <a
+          href={`/certificados/${publishedCertificate.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="flex items-center px-4 py-2 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
             <PiCertificate className="mr-2 text-gray-700" /> Ver meu Certificado
           </button>
@@ -134,13 +142,13 @@ function RequestCertificate({
             <span>Solicitar certificado</span>
           )}
         </RequestCertificateButton>
-        {
-          pendingCertificate && (
-            <p className="text-center text-gray-400 dark:text-gray-500">
-              A submissão está em análise e, assim que verificada, o certificado estará disponível. O prazo de analise é de até <span className="text-brand-500">3 dias úteis</span>.
-            </p>
-          )
-        }
+        {pendingCertificate && (
+          <p className="text-center text-gray-400 dark:text-gray-500">
+            A submissão está em análise e, assim que verificada, o certificado
+            estará disponível. O prazo de analise é de até{" "}
+            <span className="text-brand-500">3 dias úteis</span>.
+          </p>
+        )}
       </>
     );
   }

@@ -1,7 +1,7 @@
 import { Form } from "@remix-run/react";
 import { useFetcher } from "react-router-dom";
-import type { ChallengeUser } from "~/models/user.server";
-import LoadingButton from "../form/loading-button";
+import type { ChallengeUser } from "~/lib/models/user.server";
+import LoadingButton from "../features/form/loading-button";
 
 export default function RequestCertificateButton({
   challengeUser,
