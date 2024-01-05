@@ -7,11 +7,11 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import Input from "~/components/form/input";
-import LoadingButton from "~/components/form/loading-button";
-import ProBadge from "~/components/pro-badge";
-import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-import { authenticator } from "~/services/github-auth.server";
+import Input from "~/components/features/form/input";
+import LoadingButton from "~/components/features/form/loading-button";
+import ProBadge from "~/components/ui/pro-badge";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
+import { authenticator } from "~/lib/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
 import {
   changeLinkedinUrl,
@@ -19,15 +19,15 @@ import {
   changePassword,
   changeSettings,
 } from "./services.server";
-import type { User } from "~/models/user.server";
+import type { User } from "~/lib/models/user.server";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
-import type { Subscription } from "~/models/subscription.server";
-import { getSubscription } from "~/models/subscription.server";
+import type { Subscription } from "~/lib/models/subscription.server";
+import { getSubscription } from "~/lib/models/subscription.server";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Disclosure, Switch } from "@headlessui/react";
 import toast from "react-hot-toast";
-import { logoutWithRedirectAfterLogin, user } from "~/services/auth.server";
-import DiscordButton from "~/components/discord-button";
+import { logoutWithRedirectAfterLogin, user } from "~/lib/services/auth.server";
+import DiscordButton from "~/components/features/auth/discord-button";
 import { BsGithub } from "react-icons/bs";
 
 export async function action({ request }: { request: Request }) {

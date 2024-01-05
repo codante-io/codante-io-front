@@ -1,8 +1,8 @@
 import { Outlet, isRouteErrorResponse, useRouteError } from "@remix-run/react";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import Navbar from "~/components/navbar";
-import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import Navbar from "~/components/_layouts/navbar";
+import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 
 export default function ChallengeLayout() {
   const user = useUserFromOutletContext();

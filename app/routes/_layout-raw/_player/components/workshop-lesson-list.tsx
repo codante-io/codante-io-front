@@ -1,11 +1,11 @@
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 // import { LockOpenIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
-import type { Lesson } from "~/models/lesson.server";
-import type { Workshop } from "~/models/workshop.server";
-import classNames from "~/utils/class-names";
-import { fromSecondsToTimeString } from "~/utils/interval";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { Lesson } from "~/lib/models/lesson.server";
+import type { Workshop } from "~/lib/models/workshop.server";
+import classNames from "~/lib/utils/class-names";
+import { fromSecondsToTimeString } from "~/lib/utils/interval";
 import MarkCompletedButton from "./mark-completed-button";
 import React from "react";
 

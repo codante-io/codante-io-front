@@ -1,8 +1,8 @@
 import type { MetaArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Outlet } from "@remix-run/react";
-import { getWorkshops } from "../../../../models/workshop.server";
-import WorkshopCard from "~/components/cards/workshop-card";
+import WorkshopCard from "~/components/ui/cards/workshop-card";
+import { getWorkshops } from "~/lib/models/workshop.server";
 
 export function meta({ matches }: MetaArgs) {
   const parentMeta = matches

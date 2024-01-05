@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getCertificates } from "~/models/certificates.server";
+import { getCertificates } from "~/lib/models/certificates.server";
 
 export async function loader({
   request,

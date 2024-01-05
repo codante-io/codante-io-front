@@ -2,14 +2,14 @@ import { json } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { BsFillHeartFill, BsTools } from "react-icons/bs";
 import { FaMedal, FaCalendar } from "react-icons/fa";
-import { getRanking } from "~/models/ranking.server";
+import { getRanking } from "~/lib/models/ranking.server";
 import {
   FirstPlace,
   SecondPlace,
   ThirdPlace,
-} from "~/components/ranking-badges";
-import classNames from "~/utils/class-names";
-import UserAvatar from "~/components/user-avatar";
+} from "~/components/features/ranking/ranking-badges";
+import classNames from "~/lib/utils/class-names";
+import UserAvatar from "~/components/ui/user-avatar";
 import { metaV1 } from "@remix-run/v1-meta";
 
 // meta function

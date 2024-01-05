@@ -7,11 +7,11 @@ import {
   useNavigation,
   useOutletContext,
 } from "@remix-run/react";
-import type { Challenge } from "~/models/challenge.server";
-import type { ChallengeUser, User } from "~/models/user.server";
-import UserAvatar from "~/components/user-avatar";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
+import UserAvatar from "~/components/ui/user-avatar";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import ReactionsButton from "~/components/reactions-button";
+import ReactionsButton from "~/components/features/reactions/reactions-button";
 import {
   LinkedinShareButton,
   TwitterShareButton,
@@ -23,22 +23,23 @@ import {
   RiTwitterXLine,
   RiWhatsappLine,
 } from "react-icons/ri";
-import { formatName } from "~/utils/format-name";
+import { formatName } from "~/lib/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
 import { Transition, Dialog } from "@headlessui/react";
 import {
   getSubmissionFromGithubUser,
   updateChallengeSubmission,
-} from "~/models/challenge.server";
+} from "~/lib/models/challenge.server";
 import useSound from "use-sound";
-import pop from "~/sounds/pop.wav";
+import pop from "~/lib/sounds/pop.wav";
 import { FiEdit } from "react-icons/fi";
-import classNames from "~/utils/class-names";
+import classNames from "~/lib/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
-import LoadingButton from "~/components/form/loading-button";
-import Button from "~/components/form/button";
+import LoadingButton from "~/components/features/form/loading-button";
 import invariant from "tiny-invariant";
+import { NewButton } from "~/components/ui/new-button";
+import { SaveIcon } from "lucide-react";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -60,19 +61,27 @@ export function meta({ matches, params, data }: MetaArgs) {
   return [
     ...parentMeta,
     {
-      title: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+      title: `${formatName(submissionData.user_name)}: Solução de ${
+        submissionData.challenge_name
+      }`,
     },
     {
       name: "description",
-      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(
+        submissionData.user_name,
+      )} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       property: "og:title",
-      content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+      content: `${formatName(submissionData.user_name)}: Solução de ${
+        submissionData.challenge_name
+      }`,
     },
     {
       property: "og:description",
-      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(
+        submissionData.user_name,
+      )} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       property: "og:image",
@@ -88,11 +97,15 @@ export function meta({ matches, params, data }: MetaArgs) {
     },
     {
       name: "twitter:title",
-      content: `${submissionData.user_name}: Solução de ${submissionData.challenge_name}`,
+      content: `${formatName(submissionData.user_name)}: Solução de ${
+        submissionData.challenge_name
+      }`,
     },
     {
       name: "twitter:description",
-      content: `Essa é a solução proposta por ${submissionData.user_name} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: `Essa é a solução proposta por ${formatName(
+        submissionData.user_name,
+      )} para o Mini Projeto ${submissionData.challenge_name}.`,
     },
     {
       name: "twitter:image",
@@ -151,7 +164,7 @@ export default function MySolution() {
   }>();
 
   const submissionUser = challengeUsers.find(
-    (user) => user.user_github_user === params.username,
+    (challengeUser) => challengeUser.user.github_user === params.username,
   );
 
   if (!submissionUser) {
@@ -167,7 +180,7 @@ export default function MySolution() {
     );
   }
 
-  const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user_github_user}`;
+  const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user.github_user}`;
 
   return (
     <div className="container text-center">
@@ -205,16 +218,16 @@ function Headline({
 
   function handleClickLinkedin() {
     if (!submissionUser) return false;
-    if (submissionUser?.linkedin_user)
+    if (submissionUser?.user.linkedin_user)
       return window.open(
-        `https://www.linkedin.com/in/${submissionUser.linkedin_user}`,
+        `https://www.linkedin.com/in/${submissionUser.user.linkedin_user}`,
         "_blank",
       );
-    if (user && user.id === submissionUser?.user_id)
+    if (user && user.id === submissionUser?.user.id)
       return navigate("/minha-conta#social-section");
     return toast.error(
       `${formatName(
-        submissionUser.user_name,
+        submissionUser.user.name,
       )} não vinculou sua conta do LinkedIn.`,
     );
   }
@@ -236,7 +249,7 @@ function Headline({
           >
             {challenge.name}
           </h1>
-          {user && user.id === submissionUser.user_id && (
+          {user && user.id === submissionUser.user.id && (
             <EditSection submissionUser={submissionUser} user={user} />
           )}
         </div>
@@ -244,29 +257,29 @@ function Headline({
           <h2 className="text-sm md:text-xl sm:text-start text-center md:mr-4 flex-1">
             Solução de{" "}
             <span className="text-md md:text-xl font-bold text-brand-500">
-              {formatName(submissionUser.user_name)}
+              {formatName(submissionUser.user.name)}
             </span>
           </h2>
           <div className="flex items-center gap-4 sm:gap-2 break-words flex-wrap justify-center">
             <a
-              href={`https://www.github.com/${submissionUser.user_github_user}`}
+              href={`https://www.github.com/${submissionUser.user.github_user}`}
               target="_blank"
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               rel="noreferrer"
             >
               <FaGithub className="text-lg sm:text-xl" />
-              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user_github_user}`}</span>
+              <span className="font-light sm:text-base sm:inline text-xs">{`${submissionUser.user.github_user}`}</span>
             </a>
-            {submissionUser.linkedin_user && (
+            {submissionUser.user.linkedin_user && (
               <div className="w-1 h-1 rounded-full bg-brand-500 sm:block" />
             )}
             <div
               className="flex items-center justify-center gap-1 cursor-pointer hover:text-gray-500 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
               onClick={handleClickLinkedin}
             >
-              {!submissionUser.linkedin_user &&
+              {!submissionUser.user.linkedin_user &&
                 user &&
-                user.id === submissionUser.user_id && (
+                user.id === submissionUser.user.id && (
                   <>
                     <FaLinkedin className="text-lg sm:text-xl" />
                     <span className=" font-light sm:text-sm sm:inline text-xs flex items-center">
@@ -275,11 +288,11 @@ function Headline({
                     </span>
                   </>
                 )}
-              {submissionUser.linkedin_user && (
+              {submissionUser.user.linkedin_user && (
                 <>
                   <FaLinkedin className="text-lg sm:text-xl" />
                   <span className=" font-light sm:text-base sm:inline text-xs">
-                    {submissionUser.linkedin_user}
+                    {submissionUser.user.linkedin_user}
                   </span>
                 </>
               )}
@@ -351,7 +364,7 @@ function MainSection({
           className="cursor-pointer"
           src={submissionUser.submission_image_url}
           alt={`Print Screen da submissão de ${formatName(
-            submissionUser.user_name,
+            submissionUser.user.name,
           )}`}
           onClick={() => window.open(submissionUser.submission_url, "_blank")}
         />
@@ -419,7 +432,7 @@ function EditSection({
 
   return (
     <section>
-      {user && submissionUser.user_id === user.id && (
+      {user && submissionUser.user.id === user.id && (
         <section id="edit" className="text-left">
           <FiEdit
             className={classNames(
@@ -489,23 +502,24 @@ function EditSection({
                           <div className="mt-8 flex gap-x-3">
                             <LoadingButton
                               type="submit"
-                              className="relative transition duration-200"
+                              className="transition duration-200"
                               status={status}
                               isSuccessfulSubmission={isSuccessfulSubmission}
                               name="intent"
                               value="updateSubmission"
                             >
-                              Enviar
+                              <span className="flex items-center">
+                                <SaveIcon className="mr-2 h-4 w-4" />
+                                Salvar
+                              </span>
                             </LoadingButton>
-                            <Button
-                              className=" border border-gray-300  dark:border-gray-600 hover:border-brand dark:hover:border-brand"
+                            <NewButton
                               type="button"
+                              variant={"outline-ghost"}
                               onClick={toggleDialog}
-                              textColorClass="text-gray dark:text-gray-300"
-                              bgClass="bg-transparent"
                             >
                               Cancelar
-                            </Button>
+                            </NewButton>
                           </div>
                         </Form>
                       </div>

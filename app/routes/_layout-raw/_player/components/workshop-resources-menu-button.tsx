@@ -3,7 +3,7 @@ import { FolderArrowDownIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
 import { Fragment } from "react";
 import { FiDownload, FiFigma, FiGithub, FiGlobe } from "react-icons/fi";
-import classNames from "~/utils/class-names";
+import classNames from "~/lib/utils/class-names";
 
 export default function WorkshopResourcesMenuButton({
   resources,

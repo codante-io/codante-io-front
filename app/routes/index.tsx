@@ -9,31 +9,32 @@ import {
 import { FaCrown } from "react-icons/fa";
 import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
 import AppLayout from "~/components/_layouts/root-layout";
-import BackgroundBlur from "~/components/background-blur";
-import ChallengeCard from "~/components/cards/challenge-card";
-import PriceCard from "~/components/cards/pricing/price-card";
-import WorkshopCard from "~/components/cards/workshop-card";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import VimeoPlayer from "~/components/vimeo-player";
-import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
-import { getHome } from "~/models/home.server";
-import type { User } from "~/models/user.server";
+import BackgroundBlur from "~/components/_layouts/background-blur";
+import ChallengeCard from "~/components/ui/cards/challenge-card";
+import PriceCard from "~/components/ui/cards/pricing/price-card";
+import WorkshopCard from "~/components/ui/cards/workshop-card";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
+import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
+import { getHome } from "~/lib/models/home.server";
+import type { User } from "~/lib/models/user.server";
 import {
   freePlanDetails,
   freePlanFeatures,
   proPlanDetails,
   proPlanFeatures,
-} from "~/components/cards/pricing/pricing-data";
-import BannerAlert from "~/components/banner-alert";
+} from "~/components/ui/cards/pricing/pricing-data";
+import BannerAlert from "~/components/ui/banner-alert";
 import { MdLiveTv } from "react-icons/md";
-import { useColorMode } from "~/contexts/color-mode-context";
-import UserAvatar from "~/components/user-avatar";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import UserAvatar from "~/components/ui/user-avatar";
 import SubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
 import { useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import DiscordButton from "~/components/features/auth/discord-button";
 
 export const loader = async () => {
   return json({
@@ -154,15 +155,22 @@ function Headline() {
                     </button>
                   </Link>
                 )}
-                <Link
-                  to="https://discord.gg/fmVw468ZMR"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
-                >
-                  <BsDiscord />
-                  Entre na comunidade
-                </Link>
+                {user ? (
+                  <DiscordButton>
+                    <BsDiscord className="mr-2" />
+                    Entre na Comunidade
+                  </DiscordButton>
+                ) : (
+                  <Link
+                    to="https://discord.gg/fmVw468ZMR"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
+                  >
+                    <BsDiscord />
+                    Entre na comunidade
+                  </Link>
+                )}
               </>
             </div>
           </div>

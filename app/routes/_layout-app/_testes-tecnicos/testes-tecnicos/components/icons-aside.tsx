@@ -1,8 +1,8 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { LuFileCheck } from "react-icons/lu";
 import { TbSquareRoundedLetterB, TbSquareRoundedLetterF } from "react-icons/tb";
-import TooltipWrapper from "~/components/tooltip";
-import type { Assessment } from "~/models/assessments.server";
+import TooltipWrapper from "~/components/ui/tooltip";
+import type { Assessment } from "~/lib/models/assessments.server";
 
 export default function IconsAside({ assessment }: { assessment: Assessment }) {
   return (

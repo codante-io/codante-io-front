@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import type { Lesson } from "~/models/lesson.server";
-import type { Workshop } from "~/models/workshop.server";
+import type { Lesson } from "~/lib/models/lesson.server";
+import type { Workshop } from "~/lib/models/workshop.server";
 
 export default function Breadcrumbs({
   workshop,

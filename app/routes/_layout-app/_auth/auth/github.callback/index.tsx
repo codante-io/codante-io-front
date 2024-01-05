@@ -1,12 +1,12 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { environment } from "~/models/environment.server";
+import { environment } from "~/lib/models/environment.server";
 import {
   commitSession,
   getSession,
   redirectToCookie,
-} from "~/services/auth.server";
-import { authenticator } from "~/services/github-auth.server";
+} from "~/lib/services/auth.server";
+import { authenticator } from "~/lib/services/github-auth.server";
 
 // Essa função é chamada quando o usuário é redirecionado para o GitHub para
 // autenticação. O GitHub irá redirecionar o usuário de volta para o Remix com

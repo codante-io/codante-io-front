@@ -5,11 +5,11 @@ import {
   useNavigation,
   useOutletContext,
 } from "@remix-run/react";
-import LoadingButton from "~/components/form/loading-button";
+import LoadingButton from "~/components/features/form/loading-button";
 import { useEffect } from "react";
-import type { Challenge } from "~/models/challenge.server";
-import { submitChallenge } from "~/models/challenge.server";
-import type { ChallengeUser, User } from "~/models/user.server";
+import type { Challenge } from "~/lib/models/challenge.server";
+import { submitChallenge } from "~/lib/models/challenge.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 //action submit challenge
 export async function action({
@@ -39,7 +39,7 @@ export default function MySubmission() {
   }>();
 
   const userSubmission = challengeUsers.find(
-    (submission) => submission.user_id === user.id,
+    (submission) => submission.user.id === user.id,
   );
 
   const errors = useActionData();
@@ -53,7 +53,7 @@ export default function MySubmission() {
   useEffect(() => {
     if (userSubmission) {
       navigate(
-        `/mini-projetos/${challenge.slug}/submissoes/${userSubmission.user_github_user}`,
+        `/mini-projetos/${challenge.slug}/submissoes/${userSubmission.user.github_user}`,
       );
     }
   }, [challenge.slug, navigate, userSubmission]);

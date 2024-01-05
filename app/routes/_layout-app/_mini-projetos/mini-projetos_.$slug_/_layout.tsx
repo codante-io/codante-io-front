@@ -12,16 +12,15 @@ import {
 } from "@remix-run/react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import invariant from "tiny-invariant";
-import CardItemDifficulty from "~/components/cards/card-item-difficulty";
+import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
 import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
 import { BsCloudUpload, BsStars } from "react-icons/bs";
-import AdminEditButton from "~/components/admin-edit-button/AdminEditButton";
-import { Error500 } from "~/components/errors/500";
-import NotFound from "~/components/errors/not-found";
-import { useToasterWithSound } from "~/hooks/useToasterWithSound";
-// import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import {
   getChallenge,
   getChallengeParticipants,
@@ -31,15 +30,15 @@ import {
   updateUserJoinedDiscord,
   userJoinedChallenge,
   verifyAndUpdateForkURL,
-} from "~/models/challenge.server";
-import { user as getUser, logout } from "~/services/auth.server";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { abort404 } from "~/utils/responses.server";
+} from "~/lib/models/challenge.server";
+import { user as getUser, logout } from "~/lib/services/auth.server";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import { abort404 } from "~/lib/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import type { User } from "~/models/user.server";
 import { PiCertificate } from "react-icons/pi";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -93,17 +92,19 @@ export async function action({ request }: { request: Request }) {
         request,
       });
     case "join-discord":
-      return updateUserJoinedDiscord({
-        slug,
-        joinedDiscord: true,
-        request,
-      });
+      break;
     case "submit-challenge":
       return redirect(`/mini-projetos/${slug}/minha-submissao`);
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
         completed: true,
+        request,
+      });
+    case "skip-discord":
+      return updateUserJoinedDiscord({
+        slug,
+        joinedDiscord: true,
         request,
       });
   }
@@ -124,13 +125,13 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const user = (await getUser({ request })) as User | null;
 
-  let challengeUser;
+  let challengeUser: ChallengeUser | undefined = undefined;
   if (user) {
     try {
       challengeUser = await userJoinedChallenge(params.slug, request);
     } catch (err: any) {
       if (axios.isAxiosError(err)) {
-        if (err?.response?.status) challengeUser = null;
+        if (err?.response?.status) challengeUser = undefined;
       }
     }
   }
@@ -164,7 +165,7 @@ export default function ChallengeSlug() {
   const userHasSubmitted = Boolean(
     challengeUsers.find(
       (submission) =>
-        submission.user_id === user?.id && submission.submission_url,
+        submission.user.id === user?.id && submission.submission_url,
     ),
   );
 
@@ -297,17 +298,17 @@ export default function ChallengeSlug() {
                 {challengeUser && (
                   <div
                     className={`mb inline-flex items-center gap-x-1.5 rounded-xl px-3 border py-1.5 xl:text-xs text-[0.65rem] shadow-sm font-light text-gray-600 dark:text-gray-300 ${
-                      challengeUser.pivot?.completed
+                      challengeUser?.completed
                         ? "border-green-500"
                         : "border-amber-500"
                     }`}
                   >
-                    {challengeUser.pivot?.completed ? (
+                    {challengeUser?.completed ? (
                       <CheckIcon className="w-3 h-3 text-green-500 dark:text-green-300" />
                     ) : (
                       <svg
                         className={`h-1.5 w-1.5 ${
-                          challengeUser.pivot?.completed
+                          challengeUser?.completed
                             ? "fill-brand-500"
                             : "animate-pulse fill-amber-400"
                         }`}
@@ -318,7 +319,7 @@ export default function ChallengeSlug() {
                       </svg>
                     )}
 
-                    {challengeUser.pivot?.completed
+                    {challengeUser?.completed
                       ? "Projeto concluído!"
                       : "Participando"}
                   </div>

@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import {
   FiDownload,
   FiExternalLink,
@@ -5,7 +6,8 @@ import {
   FiGithub,
   FiGlobe,
 } from "react-icons/fi";
-import type { Challenge } from "~/models/challenge.server";
+import { cardVariants } from "~/components/ui/cards/card";
+import type { Challenge } from "~/lib/models/challenge.server";
 
 export default function ResourcesSection({
   challenge,
@@ -37,26 +39,27 @@ export default function ResourcesSection({
       </h1>
 
       {resources.map((resource) => (
-        <a
-          href={resource.url}
+        <Link
+          to={resource.url}
           key={resource.url}
           target="_blank"
-          rel="noreferrer"
+          className={cardVariants({
+            hover: "brand-light",
+            className: "block text-left relative w-full p-4 pt-3 group",
+          })}
         >
-          <article className="mt-4 group relative w-full bg-white dark:bg-background-800 shadow-md rounded-lg p-4 font-inter border-[1.5px] border-gray-300 hover:border-brand-300 dark:hover:border-brand-300 dark:border-slate-600 transition-colors">
-            <section className="flex items-center">
-              <Icon resource={resource} />
-              <p className="flex items-center gap-2 font-extralight ">
-                {resource.name}
-                {resource.type !== "file" && (
-                  <span className="text-sm text-gray-400">
-                    <FiExternalLink />
-                  </span>
-                )}
-              </p>
-            </section>
-          </article>
-        </a>
+          <section className="flex items-center">
+            <Icon resource={resource} />
+            <p className="flex items-center gap-2 font-extralight ">
+              {resource.name}
+              {resource.type !== "file" && (
+                <span className="text-sm text-gray-400">
+                  <FiExternalLink />
+                </span>
+              )}
+            </p>
+          </section>
+        </Link>
       ))}
     </div>
   );

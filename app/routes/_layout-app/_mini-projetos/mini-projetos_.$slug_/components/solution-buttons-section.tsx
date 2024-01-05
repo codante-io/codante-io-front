@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { BsGithub, BsGlobe } from "react-icons/bs";
-import ProSpanWrapper from "~/components/pro-span-wrapper";
-import type { ChallengeUser, User } from "~/models/user.server";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 export default function SolutionButtonsSection({
   challengeUser,

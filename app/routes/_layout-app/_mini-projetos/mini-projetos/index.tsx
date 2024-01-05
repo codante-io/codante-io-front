@@ -1,14 +1,15 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import ChallengeCard from "~/components/cards/challenge-card";
-import { getChallenges } from "~/models/challenge.server";
-import type { ChallengeCard as ChallengeCardType } from "~/models/challenge.server";
-import { getOgGeneratorUrl } from "~/utils/path-utils";
-import { useUserFromOutletContext } from "~/hooks/useUserFromOutletContext";
-import Button from "~/components/form/button";
+import ChallengeCard from "~/components/ui/cards/challenge-card";
+import { getChallenges } from "~/lib/models/challenge.server";
+import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
+
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { metaV1 } from "@remix-run/v1-meta";
+import { NewButton } from "~/components/ui/new-button";
 
 export function meta(args: any) {
   const title = "Mini Projetos | Codante.io";
@@ -108,12 +109,12 @@ export default function Projects() {
 
             <Countdown featuredChallenge={featuredChallenge} />
             <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
-              <Button
+              <NewButton
                 type="button"
                 className="hidden text-white bg-transparent border-2 border-yellow-400 md:block hover:bg-blue-600 "
               >
                 Participe do Mini Projeto
-              </Button>
+              </NewButton>
             </Link>
           </div>
 
