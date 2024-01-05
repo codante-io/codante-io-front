@@ -2,7 +2,7 @@ import { useLoaderData, useOutletContext } from "@remix-run/react";
 import { FaCrown } from "react-icons/fa";
 import { PiCertificate } from "react-icons/pi";
 import { Link, json, useActionData, useNavigation } from "react-router-dom";
-import RequestCertificateButton from "~/components/request-certificate-button";
+import RequestCertificateButton from "~/components/features/request-certificate-button";
 import {
   type Certificate,
   getCertificatesBySlug,
@@ -126,7 +126,7 @@ function RequestCertificate({
       );
     }
     return (
-      <>
+      <div className="text-center">
         <RequestCertificateButton
           isSuccessfulSubmission={isSuccessfulSubmission}
           status={status}
@@ -143,13 +143,13 @@ function RequestCertificate({
           )}
         </RequestCertificateButton>
         {pendingCertificate && (
-          <p className="text-center text-gray-400 dark:text-gray-500">
+          <p className="text-center text-gray-400 dark:text-gray-500 mt-5">
             A submissão está em análise e, assim que verificada, o certificado
             estará disponível. O prazo de analise é de até{" "}
             <span className="text-brand-500">3 dias úteis</span>.
           </p>
         )}
-      </>
+      </div>
     );
   }
 

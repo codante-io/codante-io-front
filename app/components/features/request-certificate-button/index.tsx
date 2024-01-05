@@ -1,7 +1,7 @@
 import { Form } from "@remix-run/react";
 import { useFetcher } from "react-router-dom";
 import type { ChallengeUser } from "~/lib/models/user.server";
-import LoadingButton from "../features/form/loading-button";
+import LoadingButton from "../form/loading-button";
 
 export default function RequestCertificateButton({
   challengeUser,
@@ -26,7 +26,7 @@ export default function RequestCertificateButton({
 
   async function handleSubmitCertificate() {
     if (challengeUser) {
-      const user_id = challengeUser.user_id;
+      const user_id = challengeUser.user.id;
       const source_type = sourceType;
       const source_id = sourceId;
       fetcher.submit(
