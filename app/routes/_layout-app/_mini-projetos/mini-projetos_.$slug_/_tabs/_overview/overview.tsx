@@ -18,7 +18,7 @@ export default function Overview({
   return (
     <div className="container grid grid-cols-3 gap-10">
       <Card
-        border={"bright"}
+        border={"default"}
         className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2"
       >
         {challenge.video_url ? (
