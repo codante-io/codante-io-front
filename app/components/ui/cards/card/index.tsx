@@ -6,16 +6,30 @@ import * as React from "react";
 import { cn } from "~/lib/utils";
 
 const cardVariants = cva(
-  "rounded-lg border-[1.5px] dark:bg-background-800 dark:text-white shadow-md",
+  "border-[1.5px] dark:bg-background-800 dark:text-white transition-colors",
   {
     variants: {
       border: {
-        default: "dark:border-background-700 border-gray-200",
-        bright: "dark:border-background-600 border-gray-300",
+        default: "dark:border-gray-700 border-gray-300 dark:shadow-md shadow",
+        bright: "dark:border-gray-600 border-gray-300 shadow-md", // mais brilhante
+        dull: "dark:border-background-700 border-gray-100 shadow", // mais discreto
+      },
+      hover: {
+        default: "",
+        "brand-light":
+          "hover:shadow-md hover:border-brand-300 dark:hover:border-brand-300",
+        brand:
+          "hover:shadow-md hover:border-brand-400 dark:hover:border-brand-400",
+      },
+      rounded: {
+        default: "rounded-lg",
+        "2xl": "rounded-2xl",
       },
     },
     defaultVariants: {
       border: "default",
+      hover: "default",
+      rounded: "default",
     },
   },
 );
@@ -24,21 +38,35 @@ export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {
   asChild?: boolean;
+  as?: string;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, asChild = false, border, ...props }, ref) => {
-    const Comp = asChild ? Slot : "div";
+  (
+    {
+      className,
+      as = "div",
+      asChild = false,
+      border,
+      hover,
+      rounded,
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : as;
     return (
       <Comp
         ref={ref}
-        className={cn(cardVariants({ border, className }))}
+        className={cn(cardVariants({ border, hover, rounded, className }))}
         {...props}
       />
     );
   },
 );
 Card.displayName = "Card";
+
+// Other Components
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -59,7 +87,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
+      "text-2xl font-semibold leading-none tracking-tight font-lexend",
       className,
     )}
     {...props}
@@ -73,7 +101,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-gray-500 dark:text-gray-400", className)}
     {...props}
   />
 ));
@@ -100,6 +128,7 @@ const CardFooter = React.forwardRef<
 CardFooter.displayName = "CardFooter";
 
 export {
+  cardVariants,
   Card,
   CardHeader,
   CardFooter,
