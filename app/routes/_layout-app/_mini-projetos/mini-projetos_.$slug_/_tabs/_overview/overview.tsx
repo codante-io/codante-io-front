@@ -4,6 +4,7 @@ import RepositoryInfoSection from "~/routes/_layout-app/_mini-projetos/mini-proj
 import JoinChallengeSection from "./components/join-challenge-section";
 import ResolutionSection from "./components/resolution-section";
 import ResourcesSection from "./components/resources-section";
+import { Card } from "~/components/ui/cards/card";
 
 export default function Overview({
   challenge,
@@ -16,7 +17,10 @@ export default function Overview({
 }) {
   return (
     <div className="container grid grid-cols-3 gap-10">
-      <div className="col-span-3 space-y-10 overflow-hidden rounded-lg lg:space-y-20 lg:col-span-2 dark:md:bg-background-800 md:border-[1.5px] md:border-gray-300 dark:md:border-gray-600 shadow-md">
+      <Card
+        border={"bright"}
+        className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2"
+      >
         {challenge.video_url ? (
           <div>
             <section className="relative">
@@ -36,7 +40,8 @@ export default function Overview({
             wrapperClasses="mx-auto px-2 md:px-4 pb-12"
           />
         </div>
-      </div>
+      </Card>
+
       <div className="col-span-3 space-y-10 lg:space-y-12 lg:col-span-1">
         <div>
           <div className="flex flex-wrap items-center justify-between xl:flex-nowrap"></div>
