@@ -21,11 +21,11 @@ export default function Submissions() {
 
   return (
     <>
-      <div className="container">
+      {/* <div className="container">
         <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
           Galeria de Submissões
         </h1>
-      </div>
+      </div> */}
 
       <div className="container grid justify-center xl:gap-10 gap-6 lg:grid-cols-3 md:grid-cols-2">
         {/* If user joined challenge */}

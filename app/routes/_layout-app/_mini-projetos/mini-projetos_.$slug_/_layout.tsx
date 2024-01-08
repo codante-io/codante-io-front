@@ -312,7 +312,7 @@ export default function ChallengeSlug() {
               </div>
             </div>
 
-            <div className="container mt-4 mb-8 lg:mt-8 lg:mb-12">
+            <div className="container mt-4 mb-8 lg:mb-12 lg:mt-16 ">
               <div>
                 <div className="sm:hidden">
                   <label htmlFor="tabs" className="sr-only">
