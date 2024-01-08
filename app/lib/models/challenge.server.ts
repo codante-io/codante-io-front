@@ -29,6 +29,14 @@ export type Challenge = {
     completed?: boolean;
   };
   current_user_is_enrolled: boolean;
+  current_user_status:
+    | null
+    | "not-joined"
+    | "joined"
+    | "forked"
+    | "joined-discord"
+    | "submitted"
+    | "completed";
   resources: {
     name: string;
     type: string;
