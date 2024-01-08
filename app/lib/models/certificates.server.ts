@@ -19,7 +19,7 @@ export async function requestCertificate(
 
   return axios
     .post(
-      `${environment().API_HOST}/certificate`,
+      `${environment().API_HOST}/certificates`,
       {
         user_id,
         source_type,
@@ -60,7 +60,7 @@ export async function getCertificates(request: Request) {
   return certificate;
 }
 
-export async function getCertificatesBySlug(
+export async function getCertificateBySlug(
   request: Request,
   source: "challenge" | "workshop",
   slug: string,
@@ -83,13 +83,10 @@ export async function getCertificatesBySlug(
   return certificate;
 }
 
-export async function getCertificateById(
-  request: Request,
-  id: string,
-) {
+export async function getCertificateById(request: Request, id: string) {
   const token = await currentToken({ request });
   const certificate = await axios
-    .get(`${environment().API_HOST}/certificate/${id}`, {
+    .get(`${environment().API_HOST}/certificates/${id}`, {
       headers: {
         Authorization: "Bearer " + token,
       },

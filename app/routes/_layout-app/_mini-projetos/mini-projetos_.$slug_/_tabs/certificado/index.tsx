@@ -5,7 +5,7 @@ import { Link, json, useActionData, useNavigation } from "react-router-dom";
 import RequestCertificateButton from "~/components/features/request-certificate-button";
 import {
   type Certificate,
-  getCertificatesBySlug,
+  getCertificateBySlug,
   requestCertificate,
 } from "~/lib/models/certificates.server";
 import type { Challenge } from "~/lib/models/challenge.server";
@@ -39,16 +39,12 @@ export async function loader({
   params: { slug: string };
 }) {
   return json({
-    certificates: await getCertificatesBySlug(
-      request,
-      "challenge",
-      params.slug,
-    ),
+    certificate: await getCertificateBySlug(request, "challenge", params.slug),
   });
 }
 
 export default function Certificate() {
-  const { certificates } = useLoaderData<typeof loader>();
+  const { certificate } = useLoaderData<typeof loader>();
   const { challenge, challengeUsers, user } = useOutletContext<{
     challenge: Challenge;
     challengeUsers: ChallengeUser[];
@@ -78,7 +74,7 @@ export default function Certificate() {
       </section>
       <section className="w-fit mt-10 mx-auto">
         <RequestCertificate
-          certificates={certificates}
+          certificate={certificate}
           user={user}
           submissionUser={submissionUser}
           challenge={challenge}
@@ -92,12 +88,12 @@ function RequestCertificate({
   user,
   submissionUser,
   challenge,
-  certificates,
+  certificate,
 }: {
   user: User;
   submissionUser?: ChallengeUser; // pode vir undefined
   challenge: Challenge;
-  certificates: Certificate[];
+  certificate: Certificate;
 }) {
   const actionData = useActionData();
   const transition = useNavigation();
@@ -105,17 +101,10 @@ function RequestCertificate({
   let isSuccessfulSubmission = status === "idle" && actionData === null;
 
   if (user && user.is_pro && submissionUser?.submission_url) {
-    const pendingCertificate = certificates.find(
-      (certificate) => certificate.status === "pending",
-    );
-    const publishedCertificate = certificates.find(
-      (certificate) => certificate.status === "published",
-    );
-
-    if (publishedCertificate) {
+    if (certificate.status === "published") {
       return (
         <a
-          href={`/certificados/${publishedCertificate.id}`}
+          href={`/certificados/${certificate.id}`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -134,15 +123,15 @@ function RequestCertificate({
           challengeUser={submissionUser}
           sourceType="challenge"
           sourceId={challenge.id}
-          disabled={pendingCertificate ? true : false}
+          disabled={certificate.status === "pending"}
         >
-          {pendingCertificate ? (
+          {certificate.status === "pending" ? (
             <span>Certificado solicitado</span>
           ) : (
             <span>Solicitar certificado</span>
           )}
         </RequestCertificateButton>
-        {pendingCertificate && (
+        {certificate.status === "pending" && (
           <p className="text-center text-gray-400 dark:text-gray-500 mt-5">
             A submissão está em análise e, assim que verificada, o certificado
             estará disponível. O prazo de analise é de até{" "}
