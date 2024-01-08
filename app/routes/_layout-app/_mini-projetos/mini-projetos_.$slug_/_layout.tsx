@@ -38,8 +38,8 @@ import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { cn } from "~/lib/utils/cn";
+import TitleIcon from "~/components/ui/title-icon";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -266,13 +266,14 @@ export default function ChallengeSlug() {
                   className="mb-2"
                 />
                 <h1 className="flex items-center justify-between text-2xl font-light lg:text-3xl font-lexend">
-                  <span>
-                    <MdKeyboardDoubleArrowRight
-                      size={24}
-                      className="inline mr-2 text-blue-300 dark:text-blue-900"
-                    />
-                    <span className="inline font-extralight">Projeto</span>{" "}
-                    <span className="inline font-bold">{challenge?.name}</span>
+                  <span className="flex items-center">
+                    <TitleIcon className="h-4 w-4 inline mr-2 text-blue-300 dark:text-blue-900" />
+                    <span>
+                      <span className="inline font-extralight">Projeto</span>{" "}
+                      <span className="inline font-bold">
+                        {challenge?.name}
+                      </span>
+                    </span>
                   </span>
                 </h1>
 

@@ -56,13 +56,15 @@ function WaitingSubmissionBanner({
 }) {
   return (
     <Card className="flex flex-col justify-between">
-      <CardContent className="flex flex-1 pt-6 items-center justify-center">
+      <CardContent className="flex flex-1 pt-6 items-center justify-center bg-gray-100 dark:bg-transparent">
         <div className="flex-1">
           <WaitingIcon />
         </div>
         <div className="w-3/5">
-          <h3 className="font-extrabold text-gray-400">Psiu...</h3>
-          <p className="text-sm text-gray-400 mt-2">
+          <h3 className="font-extrabold text-gray-600 dark:text-gray-400">
+            Psiu...
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
             Estamos aguardando a sua submissão 👀
           </p>
           <NewButton asChild size="sm" className="mt-4">
