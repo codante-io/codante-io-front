@@ -5,8 +5,6 @@ import LoadingButton from "../form/loading-button";
 
 export default function RequestCertificateButton({
   challengeUser,
-  sourceType,
-  sourceId,
   children,
   btnClass,
   status,
@@ -14,8 +12,6 @@ export default function RequestCertificateButton({
   disabled = false,
 }: {
   challengeUser: ChallengeUser;
-  sourceType: "challenge" | "workshop";
-  sourceId: string;
   children: React.ReactNode;
   btnClass?: string;
   status: "idle" | "loading" | "submitting";
@@ -26,11 +22,9 @@ export default function RequestCertificateButton({
 
   async function handleSubmitCertificate() {
     if (challengeUser) {
-      const user_id = challengeUser.user.id;
-      const source_type = sourceType;
-      const source_id = sourceId;
+      const certifiable_id = challengeUser.id;
       fetcher.submit(
-        { intent: "requestCertificate", user_id, source_type, source_id },
+        { intent: "requestCertificate", certifiable_id },
         { method: "post" },
       );
     }

@@ -8,7 +8,6 @@ import {
   getCertificateBySlug,
   requestCertificate,
 } from "~/lib/models/certificates.server";
-import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 export async function action({ request }: { request: Request }) {
@@ -17,15 +16,8 @@ export async function action({ request }: { request: Request }) {
   const intent = formData.get("intent");
   switch (intent) {
     case "requestCertificate":
-      const user_id = formData.get("user_id");
-      const source_type = formData.get("source_type");
-      const source_id = formData.get("source_id");
-      const certificateInfo = {
-        user_id,
-        source_type,
-        source_id,
-      } as Certificate;
-      return requestCertificate(request, certificateInfo);
+      const certifiableId = formData.get("certifiable_id") as string;
+      return requestCertificate(request, "ChallengeUser", certifiableId);
     default:
       return null;
   }
@@ -39,14 +31,13 @@ export async function loader({
   params: { slug: string };
 }) {
   return json({
-    certificate: await getCertificateBySlug(request, "challenge", params.slug),
+    certificate: await getCertificateBySlug(request, params.slug),
   });
 }
 
 export default function Certificate() {
   const { certificate } = useLoaderData<typeof loader>();
-  const { challenge, challengeUsers, user } = useOutletContext<{
-    challenge: Challenge;
+  const { challengeUsers, user } = useOutletContext<{
     challengeUsers: ChallengeUser[];
     user: User;
   }>();
@@ -77,7 +68,6 @@ export default function Certificate() {
           certificate={certificate}
           user={user}
           submissionUser={submissionUser}
-          challenge={challenge}
         />
       </section>
     </div>
@@ -87,12 +77,10 @@ export default function Certificate() {
 function RequestCertificate({
   user,
   submissionUser,
-  challenge,
   certificate,
 }: {
   user: User;
   submissionUser?: ChallengeUser; // pode vir undefined
-  challenge: Challenge;
   certificate: Certificate;
 }) {
   const actionData = useActionData();
@@ -121,8 +109,6 @@ function RequestCertificate({
           status={status}
           btnClass="mt-10 mb-2 text-lg"
           challengeUser={submissionUser}
-          sourceType="challenge"
-          sourceId={challenge.id}
           disabled={certificate.status === "pending"}
         >
           {certificate.status === "pending" ? (
