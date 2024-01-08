@@ -83,7 +83,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="text-gray-800 bg-white dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-gray-50">
+      <body className="text-gray-800 bg-white dark:bg-gray-dark dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-gray-50">
         <script
           dangerouslySetInnerHTML={{
             __html: DarkModeScriptInnerHtml,

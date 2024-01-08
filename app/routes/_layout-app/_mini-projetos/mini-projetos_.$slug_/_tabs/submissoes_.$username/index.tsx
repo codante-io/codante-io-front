@@ -421,7 +421,6 @@ function EditSection({
   }
 
   useEffect(() => {
-    // console.log(status, "chamou useeffect");
     if (isSuccessfulSubmission && isOpen) {
       setTimeout(() => {
         setIsOpen(false);

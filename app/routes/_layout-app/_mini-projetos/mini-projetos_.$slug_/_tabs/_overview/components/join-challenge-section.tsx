@@ -6,6 +6,7 @@ import DiscordButton from "~/components/features/auth/discord-button";
 import { BsDiscord } from "react-icons/bs";
 import { NewButton } from "~/components/ui/new-button";
 import { Card } from "~/components/ui/cards/card";
+import { NewInput } from "~/components/ui/new-input";
 
 export default function JoinChallengeSection({
   className = "",
@@ -18,9 +19,6 @@ export default function JoinChallengeSection({
   user?: any;
   slug: string;
 }) {
-  const location = useLocation();
-  const navigation = useNavigation();
-
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
@@ -30,7 +28,7 @@ export default function JoinChallengeSection({
       as="aside"
       className={`${className} relative w-full rounded-lg p-4 pt-3 font-inter`}
     >
-      <nav aria-label="Progress" className="m-4">
+      <nav aria-label="Progress" className="my-4 mx-1">
         <ol className="overflow-hidden">
           {initialSteps?.map((step: Step, stepIndex: number) => (
             <li
@@ -83,7 +81,9 @@ export default function JoinChallengeSection({
                       </span>
                     </span>
                     <span className="flex flex-col min-w-0 ml-4">
-                      <span className="text-sm font-bold">{step.name}</span>
+                      <span className="text-sm font-bold" id={step.intent}>
+                        {step.name}
+                      </span>
                       <span className="mt-1 text-xs text-gray-500 dark:text-gray-300">
                         <span
                           dangerouslySetInnerHTML={{
@@ -91,47 +91,7 @@ export default function JoinChallengeSection({
                           }}
                         ></span>
                       </span>
-                      <Form
-                        method="post"
-                        action={`/mini-projetos/${slug}`}
-                        preventScrollReset
-                      >
-                        <input
-                          type="hidden"
-                          name="redirectTo"
-                          value={location.pathname}
-                        />
-                        <input type="hidden" name="user" value={user} />
-                        {step.intent === "join-discord" ? (
-                          <span className="mt-3 mr-2">
-                            <DiscordButton>
-                              <BsDiscord className="w-3 h-3 mr-2" />
-                              <span>Entrar</span>
-                            </DiscordButton>
-                          </span>
-                        ) : (
-                          <LoadingButton
-                            status={navigation.state}
-                            type="submit"
-                            className="my-4"
-                            name="intent"
-                            value={step.intent}
-                          >
-                            {step.button}
-                          </LoadingButton>
-                        )}
-                        {step.secondaryButton && (
-                          <NewButton
-                            type="submit"
-                            variant="outline"
-                            className="mt-4"
-                            name="intent"
-                            value={step.secondaryIntent}
-                          >
-                            {step.secondaryButton}
-                          </NewButton>
-                        )}
-                      </Form>
+                      <StepForm slug={slug} step={step} user={user} />
                     </span>
                   </div>
                 </>
@@ -166,5 +126,92 @@ export default function JoinChallengeSection({
         </ol>
       </nav>
     </Card>
+  );
+}
+
+function StepForm({
+  step,
+  slug,
+  user,
+}: {
+  step: Step;
+  slug: string;
+  user: string;
+}) {
+  const navigation = useNavigation();
+  const location = useLocation();
+
+  function getButton() {
+    if (step.intent === "join-discord") {
+      return (
+        <DiscordButton>
+          <BsDiscord className="w-3 h-3 mr-2" />
+          <span>Entrar</span>
+        </DiscordButton>
+      );
+    }
+
+    if (step.intent === "submit-challenge") {
+      return (
+        <div className="mt-4 pr-1">
+          <NewInput
+            placeholder="URL do seu deploy"
+            name="submission-url"
+            id="submission-url"
+            className=""
+          />
+
+          <LoadingButton
+            size="sm"
+            status={navigation.state}
+            type="submit"
+            className="mt-3"
+            name="intent"
+            value={step.intent}
+          >
+            {step.button}
+          </LoadingButton>
+        </div>
+      );
+    }
+
+    return (
+      <LoadingButton
+        size="sm"
+        status={navigation.state}
+        type="submit"
+        className="mt-4"
+        name="intent"
+        value={step.intent}
+      >
+        {step.button}
+      </LoadingButton>
+    );
+  }
+
+  // some steps have secondary buttons
+  function getSecondaryButton() {
+    return (
+      step.secondaryButton && (
+        <NewButton
+          type="submit"
+          variant="outline"
+          className="mt-4"
+          name="intent"
+          value={step.secondaryIntent}
+        >
+          {step.secondaryButton}
+        </NewButton>
+      )
+    );
+  }
+
+  return (
+    <Form method="post" action={`/mini-projetos/${slug}`} preventScrollReset>
+      <input type="hidden" name="redirectTo" value={location.pathname} />
+      <input type="hidden" name="user" value={user} />
+      {getButton()}
+      {getSecondaryButton()}
+    </Form>
   );
 }

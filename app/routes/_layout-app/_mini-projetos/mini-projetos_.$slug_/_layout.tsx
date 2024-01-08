@@ -1,5 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Link,
   Outlet,
@@ -10,13 +9,13 @@ import {
   useNavigate,
   useRouteError,
 } from "@remix-run/react";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
 import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
-import { BsCloudUpload, BsStars } from "react-icons/bs";
+import { BsStars } from "react-icons/bs";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
@@ -26,6 +25,7 @@ import {
   getChallengeParticipants,
   getChallengeUsers,
   joinChallenge,
+  submitChallenge,
   updateChallengeCompleted,
   updateUserJoinedDiscord,
   userJoinedChallenge,
@@ -38,6 +38,8 @@ import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { cn } from "~/lib/utils/cn";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -73,12 +75,13 @@ export const meta = ({ data, params }: any) => {
   ];
 };
 
-export async function action({ request }: { request: Request }) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
+  const url = new URL(request.url);
 
   const intent = formData.get("intent") as string;
   const redirectTo = formData.get("redirectTo") as string;
-  const slug = redirectTo.split("/")[2];
+  const slug = url.pathname.split("/")[2] ?? "";
 
   switch (intent) {
     case "connect-github":
@@ -93,7 +96,9 @@ export async function action({ request }: { request: Request }) {
     case "join-discord":
       break;
     case "submit-challenge":
-      return redirect(`/mini-projetos/${slug}/minha-submissao`);
+      // get the url from the form
+      const submissionUrl = formData.get("submission-url") as string;
+      return submitChallenge(request, slug, submissionUrl);
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
@@ -161,13 +166,6 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
-  const userHasSubmitted = Boolean(
-    challengeUsers.find(
-      (submission) =>
-        submission.user.id === user?.id && submission.submission_url,
-    ),
-  );
-
   const actionData = useActionData<any>();
 
   const navigate = useNavigate();
@@ -180,8 +178,6 @@ export default function ChallengeSlug() {
   const hasSubmissions = Boolean(
     challengeUsers?.length && challengeUsers.length > 0,
   );
-
-  const isUserParticipating = Boolean(challengeUser?.id);
 
   const location = useLocation();
 
@@ -249,18 +245,14 @@ export default function ChallengeSlug() {
       icon: <BsStars />,
       current: location.pathname.includes("submissoes"),
     },
-    {
-      name: userHasSubmitted ? "Ver submissão" : "Submeter solução",
-      href: "minha-submissao",
-      isVisible: !!user && isUserParticipating,
-      icon: <BsCloudUpload />,
-      current: location.pathname.includes("minha-submissao"),
-    },
+    // {
+    //   name: userHasSubmitted ? "Ver submissão" : "Submeter solução",
+    //   href: "minha-submissao",
+    //   isVisible: !!user && isUserParticipating,
+    //   icon: <BsCloudUpload />,
+    //   current: location.pathname.includes("minha-submissao"),
+    // },
   ];
-
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   return (
     <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
@@ -359,7 +351,7 @@ export default function ChallengeSlug() {
                         <Link
                           key={tab.name}
                           to={tab.href}
-                          className={classNames(
+                          className={cn(
                             tab.current
                               ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
                               : "text-gray-500 hover:text-gray-700",
