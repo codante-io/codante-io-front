@@ -1,6 +1,5 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import MyDocument from "~/components/_layouts/certificate";
 import { getCertificateById } from "~/lib/models/certificates.server";
 import { pdf } from '@react-pdf/renderer';
 import { useEffect, useState } from "react";
@@ -24,15 +23,23 @@ export default function CertificadoId() {
       console.log(certificate)
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
-  const generatePdf = async () => {
-    const blob = await pdf(<CertificatePDF username={certificate.username} />).toBlob();
-    const url = URL.createObjectURL(blob);
-    setPdfUrl(url);
-  };
-
   useEffect(() => {
+    async function generatePdf() {
+      if (!pdfUrl) {
+        const blob = await pdf(
+          <CertificatePDF
+            username={certificate.username}
+            tags={certificate.metadata[0].tags}
+            title={certificate.metadata[0].source_name}
+            date={certificate.metadata[0].conclusion_date}
+          />)
+          .toBlob();
+        const url = URL.createObjectURL(blob);
+        setPdfUrl(url);
+      }
+    };
     generatePdf();
-  }, []);
+  }, [pdfUrl, certificate]);
 
   const handleButtonClick = () => {
     if (pdfUrl) {
