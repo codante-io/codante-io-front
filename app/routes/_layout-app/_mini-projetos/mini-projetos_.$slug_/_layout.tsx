@@ -245,13 +245,6 @@ export default function ChallengeSlug() {
       icon: <BsStars />,
       current: location.pathname.includes("submissoes"),
     },
-    // {
-    //   name: userHasSubmitted ? "Ver submissão" : "Submeter solução",
-    //   href: "minha-submissao",
-    //   isVisible: !!user && isUserParticipating,
-    //   icon: <BsCloudUpload />,
-    //   current: location.pathname.includes("minha-submissao"),
-    // },
   ];
 
   return (

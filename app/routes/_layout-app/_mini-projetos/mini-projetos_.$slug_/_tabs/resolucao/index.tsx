@@ -18,7 +18,7 @@ export default function Resolution() {
   return (
     <>
       <div className="container">
-        <section className="flex w-full gap-4 md:gap-8 items-start md:justify-start md:items-center md:flex-row mt-10">
+        <section className="flex w-full gap-4 md:gap-8 items-start md:justify-start md:items-center md:flex-row ">
           <CardButton
             name="Vídeo"
             icon={
