@@ -13,7 +13,7 @@ export async function loader({ request }: ActionFunctionArgs) {
 
   // chamada backend para salvar dados
   await axios.post(
-    `${environment().API_HOST}/api/user/discord`,
+    `${environment().API_HOST}/user/discord`,
     JSON.stringify(tokenData),
     {
       method: "POST",
