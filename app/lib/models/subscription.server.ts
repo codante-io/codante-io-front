@@ -48,7 +48,7 @@ export async function getSubscriptionByPagarmeOrderId({
 
   let endpoint = `${
     environment().API_HOST
-  }/api/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
+  }/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
 
   try {
     const data: Subscription | null = await axios

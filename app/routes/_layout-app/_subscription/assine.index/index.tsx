@@ -30,7 +30,7 @@ export async function action({ request }: { request: Request }) {
       checkoutLink: string;
       pagarmeOrderID: string;
       subscription: Subscription;
-    }>(`${environment().API_HOST}/api/pagarme/get-link`, {
+    }>(`${environment().API_HOST}/pagarme/get-link`, {
       headers: {
         Authorization: "Bearer " + token,
       },
