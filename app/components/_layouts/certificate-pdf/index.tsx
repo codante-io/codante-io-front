@@ -1,4 +1,5 @@
 import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
+import { formatDate } from "~/lib/utils/format-date";
 
 Font.register({
   family: "Alex Brush",
@@ -41,14 +42,6 @@ export default function CertificatePDF({
   tags: string[];
   title: string;
 }) {
-  function formatDate(date: string) {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  }
   return (
     <Document>
       <Page
@@ -107,7 +100,7 @@ export default function CertificatePDF({
                 marginTop: "40px",
               }}
             >
-              Este certificado é concedido para
+              O presente certificado é conferido a
             </Text>
             <View
               style={{

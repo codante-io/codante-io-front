@@ -22,6 +22,8 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter var", "sans-serif"],
+        alexbrush: ["Alex Brush", "cursive"],
+        robotocondensed: ["Roboto Condensed", "sans-serif"],
       },
       colors: {
         gray: {
