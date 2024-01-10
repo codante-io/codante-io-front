@@ -5,15 +5,19 @@ import JoinChallengeSection from "./components/join-challenge-section";
 import ResolutionSection from "./components/resolution-section";
 import ResourcesSection from "./components/resources-section";
 import { Card } from "~/components/ui/cards/card";
+import CurrentStatus from "./components/current-status";
+import type { ChallengeUser } from "~/lib/models/user.server";
 
 export default function Overview({
   challenge,
   hasSolution,
   initialSteps,
+  challengeUser,
 }: {
   challenge: any;
   hasSolution: boolean;
   initialSteps: any;
+  challengeUser: ChallengeUser;
 }) {
   return (
     <div className="container grid grid-cols-3 gap-10">
@@ -43,6 +47,7 @@ export default function Overview({
       </Card>
 
       <div className="col-span-3 space-y-10 lg:space-y-12 lg:col-span-1">
+        {challengeUser && <CurrentStatus challengeUser={challengeUser} />}
         <div>
           <div className="flex flex-wrap items-center justify-between xl:flex-nowrap"></div>
           <JoinChallengeSection

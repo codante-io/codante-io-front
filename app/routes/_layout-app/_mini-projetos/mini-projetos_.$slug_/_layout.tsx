@@ -41,6 +41,7 @@ import { PiCertificate } from "react-icons/pi";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { cn } from "~/lib/utils/cn";
 import TitleIcon from "~/components/ui/title-icon";
+import { requestCertificate } from "~/lib/models/certificates.server";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -112,6 +113,11 @@ export async function action({ request }: ActionFunctionArgs) {
         joinedDiscord: true,
         request,
       });
+    case "requestCertificate":
+      const certifiableId = formData.get("certifiable_id") as string;
+      return requestCertificate(request, "ChallengeUser", certifiableId);
+    default:
+      return null;
   }
 }
 
@@ -167,6 +173,7 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
+  console.log(challengeUser);
   const actionData = useActionData<any>();
 
   const navigate = useNavigate();
@@ -383,6 +390,7 @@ export default function ChallengeSlug() {
                 challenge={challenge}
                 hasSolution={hasSolution}
                 initialSteps={initialSteps}
+                challengeUser={challengeUser as ChallengeUser}
               />
             </>
           ) : (
