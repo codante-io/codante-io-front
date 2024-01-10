@@ -177,7 +177,7 @@ export async function user({
   let token = await currentToken({ request });
 
   try {
-    response = await axios.get<User>("/api/user", {
+    response = await axios.get<User>("/user", {
       headers: {
         Authorization: "Bearer " + token,
       },
