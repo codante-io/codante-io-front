@@ -9,6 +9,7 @@ declare global {
 type Props = {
   BASE_URL: string;
   NODE_ENV: string;
+  MSW_RUNNING: string;
 };
 
 export function getPublicEnv<T extends keyof Props>(key: T): Props[T] {

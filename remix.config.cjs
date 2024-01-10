@@ -9,4 +9,5 @@ module.exports = {
   routes: async (defineRoutes) => {
     return flatRoutes("routes", defineRoutes);
   },
+  watchPaths: ["./mocks"],
 };

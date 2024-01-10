@@ -9,6 +9,9 @@
     "typecheck": "tsc",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "playwright": "npm run playwright:prepare && playwright test &&  lsof -t -i:3000 && kill -9 $( lsof -i:3000 -t )",
+    "playwright:visualize": "npm run playwright:prepare && PWDEBUG=1 playwright test --headed && lsof -t -i:3000 && kill -9 $( lsof -i:3000 -t )",
+    "playwright:prepare": "./__playwright__/scripts/setup-playwright-test.sh",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -16,6 +19,7 @@
     "@headlessui/tailwindcss": "^0.2.0",
     "@heroicons/react": "^2.0.18",
     "@mantine/hooks": "^7.1.7",
+    "@playwright/test": "^1.40.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.7",
@@ -37,6 +41,8 @@
     "isbot": "^3.7.0",
     "lucide-react": "^0.304.0",
     "markdown-to-jsx": "^7.3.2",
+    "msw": "^2.0.13",
+    "playwright": "^1.40.1",
     "prism-react-renderer": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -83,5 +89,8 @@
     "**/*.{js,jsx,ts,tsx}": [
       "eslint --fix --max-warnings=0"
     ]
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

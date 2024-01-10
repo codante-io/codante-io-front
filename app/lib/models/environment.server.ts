@@ -16,6 +16,7 @@ const environmentSchema = z.object({
   GITHUB_PERSONAL_ACCESS_TOKEN: z.string().min(1),
   DISCORD_APP_CLIENT_ID: z.string().min(1),
   DISCORD_APP_SECRET: z.string().min(1),
+  MSW_RUNNING: z.string().default("false"),
 });
 
 const environment = () => environmentSchema.parse(process.env);
