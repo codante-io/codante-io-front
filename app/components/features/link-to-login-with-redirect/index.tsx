@@ -10,7 +10,13 @@ export default function LinkToLoginWithRedirect({
   [key: string]: any;
 }) {
   const location = useLocation();
-  const redirectTo = redirectPath ?? location.pathname;
+  let redirectTo = redirectPath ?? location.pathname;
+
+  // if redirect path contains password-reset, we will redirect to home page after login
+  // this is to prevent user from being stuck on password reset page after login
+  if (redirectTo.includes("password-reset")) {
+    redirectTo = "/";
+  }
 
   return (
     <Link to={`/login?redirectTo=${redirectTo}`} {...rest}>
