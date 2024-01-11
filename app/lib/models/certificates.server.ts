@@ -14,6 +14,7 @@ export type Certificate = {
     end_date: string;
     start_date: string;
     certifiable_source_name: string;
+    certifiable_slug: string;
   };
 };
 
