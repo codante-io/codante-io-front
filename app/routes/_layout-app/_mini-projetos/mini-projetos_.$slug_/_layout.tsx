@@ -37,7 +37,6 @@ import { abort404 } from "~/lib/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { PiCertificate } from "react-icons/pi";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { cn } from "~/lib/utils/cn";
 import TitleIcon from "~/components/ui/title-icon";
@@ -173,7 +172,6 @@ export default function ChallengeSlug() {
     user,
   } = useLoaderData<typeof loader>();
 
-  console.log(challengeUser);
   const actionData = useActionData<any>();
 
   const navigate = useNavigate();
@@ -252,13 +250,6 @@ export default function ChallengeSlug() {
       isVisible: hasSubmissions,
       icon: <BsStars />,
       current: location.pathname.includes("submissoes"),
-    },
-    {
-      name: "Certificado",
-      href: "certificado",
-      isVisible: true,
-      icon: <PiCertificate />,
-      current: location.pathname.includes("certificado"),
     },
   ];
 

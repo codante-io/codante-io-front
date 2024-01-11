@@ -47,8 +47,10 @@ export default function Overview({
       </Card>
 
       <div className="col-span-3 space-y-10 lg:space-y-12 lg:col-span-1">
-        {challengeUser && <CurrentStatus challengeUser={challengeUser} />}
         <div>
+          {challengeUser && (
+            <CurrentStatus className="mb-5" challengeUser={challengeUser} />
+          )}
           <div className="flex flex-wrap items-center justify-between xl:flex-nowrap"></div>
           <JoinChallengeSection
             initialSteps={initialSteps}

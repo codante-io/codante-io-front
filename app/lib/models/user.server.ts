@@ -1,3 +1,4 @@
+import type { Certificate } from "./certificates.server";
 import type { ChallengeSummary } from "./challenge.server";
 import type { Reactions } from "./reactions.server";
 
@@ -37,6 +38,7 @@ export type ChallengeUser = {
   is_solution: boolean;
   created_at: string;
   updated_at: string;
+  certificate: Certificate | null;
 };
 
 export type UserAvatar = {
