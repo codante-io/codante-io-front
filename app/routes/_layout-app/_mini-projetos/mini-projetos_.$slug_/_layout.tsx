@@ -36,7 +36,6 @@ import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { buildInitialSteps } from "./build-steps.server";
-import { CheckIcon } from "@heroicons/react/24/outline";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { cn } from "~/lib/utils/cn";
 import TitleIcon from "~/components/ui/title-icon";
@@ -279,35 +278,6 @@ export default function ChallengeSlug() {
                 <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
                   {challenge?.short_description}
                 </p>
-                {challengeUser && (
-                  <div
-                    className={`mb inline-flex items-center gap-x-1.5 rounded-xl px-3 border py-1.5 xl:text-xs text-[0.65rem] shadow-sm font-light text-gray-600 dark:text-gray-300 ${
-                      challengeUser?.completed
-                        ? "border-green-500"
-                        : "border-amber-500"
-                    }`}
-                  >
-                    {challengeUser?.completed ? (
-                      <CheckIcon className="w-3 h-3 text-green-500 dark:text-green-300" />
-                    ) : (
-                      <svg
-                        className={`h-1.5 w-1.5 ${
-                          challengeUser?.completed
-                            ? "fill-brand-500"
-                            : "animate-pulse fill-amber-400"
-                        }`}
-                        viewBox="0 0 6 6"
-                        aria-hidden="true"
-                      >
-                        <circle cx={3} cy={3} r={3} />
-                      </svg>
-                    )}
-
-                    {challengeUser?.completed
-                      ? "Projeto concluído!"
-                      : "Participando"}
-                  </div>
-                )}
                 <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
               </div>
             </div>

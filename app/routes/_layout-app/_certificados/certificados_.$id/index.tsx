@@ -43,7 +43,7 @@ export default function CertificadoId() {
     generatePdf();
   }, [pdfUrl, certificate]);
 
-  if (!certificate.certifiable_id) {
+  if (!certificate.certifiable_id || certificate.status !== "published") {
     return (
       <div className="container">
         <h1 className="mt-10 text-brand-500 font-bold text-xl mb-10 text-center sm:text-start">
