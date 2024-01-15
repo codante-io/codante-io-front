@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import {
   Form,
+  Link,
   useActionData,
   useLoaderData,
   useNavigate,
@@ -10,7 +11,7 @@ import {
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import UserAvatar from "~/components/ui/user-avatar";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaArrowLeft, FaGithub, FaLinkedin } from "react-icons/fa";
 import ReactionsButton from "~/components/features/reactions/reactions-button";
 import {
   LinkedinShareButton,
@@ -61,31 +62,39 @@ export function meta({ matches, params, data }: MetaArgs) {
   return [
     ...parentMeta,
     {
-      title: `${formatName(submissionData.user_name)}: Solução de ${
-        submissionData.challenge_name
-      }`,
+      title: submissionData
+        ? `${formatName(submissionData.user_name)}: Solução de ${
+            submissionData.challenge_name
+          }`
+        : `Submissão não encontrada`,
     },
     {
       name: "description",
-      content: `Essa é a solução proposta por ${formatName(
-        submissionData.user_name,
-      )} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: submissionData
+        ? `Essa é a solução proposta por ${formatName(
+            submissionData.user_name,
+          )} para o Mini Projeto ${submissionData.challenge_name}.`
+        : `Página de submissão não encontrada`,
     },
     {
       property: "og:title",
-      content: `${formatName(submissionData.user_name)}: Solução de ${
-        submissionData.challenge_name
-      }`,
+      content: submissionData
+        ? `${formatName(submissionData.user_name)}: Solução de ${
+            submissionData.challenge_name
+          }`
+        : `Submissão não encontrada`,
     },
     {
       property: "og:description",
-      content: `Essa é a solução proposta por ${formatName(
-        submissionData.user_name,
-      )} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: submissionData
+        ? `Essa é a solução proposta por ${formatName(
+            submissionData.user_name,
+          )} para o Mini Projeto ${submissionData.challenge_name}.`
+        : `Página de submissão não encontrada`,
     },
     {
       property: "og:image",
-      content: submissionData.submission_image_url,
+      content: submissionData ? submissionData.submission_image_url : null,
     },
     {
       property: "og:url",
@@ -97,19 +106,23 @@ export function meta({ matches, params, data }: MetaArgs) {
     },
     {
       name: "twitter:title",
-      content: `${formatName(submissionData.user_name)}: Solução de ${
-        submissionData.challenge_name
-      }`,
+      content: submissionData
+        ? `${formatName(submissionData.user_name)}: Solução de ${
+            submissionData.challenge_name
+          }`
+        : `Submissão não encontrada`,
     },
     {
       name: "twitter:description",
-      content: `Essa é a solução proposta por ${formatName(
-        submissionData.user_name,
-      )} para o Mini Projeto ${submissionData.challenge_name}.`,
+      content: submissionData
+        ? `Essa é a solução proposta por ${formatName(
+            submissionData.user_name,
+          )} para o Mini Projeto ${submissionData.challenge_name}.`
+        : `Página de submissão não encontrada`,
     },
     {
       name: "twitter:image",
-      content: submissionData.submission_image_url,
+      content: submissionData ? submissionData.submission_image_url : null,
     },
     {
       name: "twitter:card",
@@ -176,6 +189,13 @@ export default function MySolution() {
         <p className="text-gray-600 dark:text-gray-500">
           Esse usuário ainda não submeteu uma solução para este Mini Projeto.
         </p>
+        <Link
+          to={`/mini-projetos/${challenge.slug}/submissoes`}
+          className="text-gray-600 dark:text-gray-500 flex items-center gap-1 hover:opacity-70"
+        >
+          <FaArrowLeft className="text-sm" />
+          <span className="hover:underline">Voltar</span>
+        </Link>
       </div>
     );
   }
