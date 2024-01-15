@@ -167,7 +167,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 
 export default function MySolution() {
-  const { params } = useLoaderData<typeof loader>();
+  const { params, submissionData } = useLoaderData<typeof loader>();
 
   const { challenge, challengeUsers, user } = useOutletContext<{
     challengeUser: ChallengeUser;
@@ -179,6 +179,28 @@ export default function MySolution() {
   const submissionUser = challengeUsers.find(
     (challengeUser) => challengeUser.user.github_user === params.username,
   );
+
+  if (!submissionData) {
+    return (
+      <div className="flex flex-col items-start justify-center h-full container">
+        <h1 className="mb-5 text-2xl font-bold dark:text-gray-300 text-gray-800">
+          Usuário não encontrado
+        </h1>
+        <p className="text-gray-600 dark:text-gray-500">
+          Não encontramos o usuário{" "}
+          <span className="text-brand">{params.username}</span> na nossa base de
+          dados.
+        </p>
+        <Link
+          to={`/mini-projetos/${challenge.slug}/submissoes`}
+          className="text-gray-600 dark:text-gray-500 flex items-center gap-1 hover:opacity-70"
+        >
+          <FaArrowLeft className="text-sm" />
+          <span className="hover:underline">Voltar</span>
+        </Link>
+      </div>
+    );
+  }
 
   if (!submissionUser) {
     return (
