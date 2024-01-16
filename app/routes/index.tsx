@@ -35,6 +35,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import DiscordButton from "~/components/features/auth/discord-button";
+import { buttonVariants } from "~/components/ui/new-button";
 
 export const loader = async () => {
   return json({
@@ -140,7 +141,13 @@ function Headline() {
               <>
                 {user && !user.is_pro && (
                   <Link to="/assine">
-                    <button className="flex items-center px-4 py-2 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-100 via-amber-200 to-amber-400">
+                    <button
+                      className={`${buttonVariants({
+                        size: "sm",
+                        variant: "pro",
+                      })}
+                    flex items-center px-4 py-2 rounded-lg`}
+                    >
                       <FaCrown className="mr-2 text-amber-400" /> Seja
                       <b className="ml-1">PRO</b>
                     </button>
@@ -149,7 +156,13 @@ function Headline() {
 
                 {!user && (
                   <Link to="/login">
-                    <button className="flex items-center px-4 py-2 text-gray-700 rounded-lg bg-background-200">
+                    <button
+                      className={`${buttonVariants({
+                        size: "sm",
+                        variant: "register",
+                      })}
+                    flex items-center px-4 py-2 text-gray-700 rounded-lg bg-background-200`}
+                    >
                       <BsFillPersonFill className="mr-2" color="#5282FF" />{" "}
                       Cadastre-se
                     </button>
@@ -165,7 +178,9 @@ function Headline() {
                     to="https://discord.gg/fmVw468ZMR"
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
+                    className={`${buttonVariants({
+                      size: "sm",
+                    })} flex items-center gap-2 px-4 py-2 text-white rounded-lg animate-bg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700`}
                   >
                     <BsDiscord />
                     Entre na comunidade
