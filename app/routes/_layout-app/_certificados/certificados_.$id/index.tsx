@@ -85,16 +85,9 @@ export default function CertificadoId() {
   }
   return (
     <div className="mx-auto flex flex-col items-center mt-10 container">
-      <div className="flex items-end justify-end bg-blue-500 w-full"></div>
-      <Card
-        className="px-8 mx-5 py-5 flex flex-col w-96"
-        border="dull"
-        rounded="2xl"
-      >
-        <h1 className="text-lg text-gray-700 dark:text-gray-50 mb-2">
-          {certificate.metadata.certifiable_source_name}
-        </h1>
-        <div className="flex items-center justify-end w-full gap-1">
+      <h1>Certificado</h1>
+      <div className="flex flex-col items-end justify-end w-fit">
+        <div className="flex items-center justify-end w-full gap-1 mx-2">
           <TwitterShareButton hashtags={["codante", "front"]} url={location}>
             <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
               <RiTwitterXLine
@@ -108,10 +101,12 @@ export default function CertificadoId() {
             title={certificate.metadata.certifiable_source_name}
             className=""
           >
-            <RiLinkedinBoxLine
-              title="Linkedin"
-              className="text-base text-gray-500"
-            />
+            <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
+              <RiLinkedinBoxLine
+                title="Linkedin"
+                className="text-base text-gray-500"
+              />
+            </div>
           </LinkedinShareButton>
           <WhatsappShareButton url={location}>
             <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
@@ -122,39 +117,78 @@ export default function CertificadoId() {
             </div>
           </WhatsappShareButton>
         </div>
-        <p className="text-gray-500 sm:text-base text-sm mb-2">
-          Conferido a:{" "}
-          <span className="text-gray-600 dark:text-gray-400">
-            {certificate.user.name}
-          </span>
-        </p>
-        <p className="text-gray-500 sm:text-base text-sm mb-2">
-          Finalizado em:{" "}
-          <span className="text-gray-600 dark:text-gray-400">
-            {formatDate(certificate.metadata.end_date)}
-          </span>
-        </p>
-        <p className="text-gray-500 sm:text-base text-sm mb-2 gap-1 flex">
-          Verificador:{" "}
-          <span className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-            {certificate.id}
-            <IoCopySharp
-              className="text-xs cursor-pointer text-gray-400 dark:text-gray-700"
-              onClick={copyToClipboard}
-            />
-          </span>
-        </p>
-        <Link
-          className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
-          to={`/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`}
+        <Card
+          className="px-8 mx-2 py-5 flex flex-col w-full sm:w-96"
+          border="dull"
+          rounded="2xl"
         >
-          Ver submissão
-        </Link>
+          <h1 className="text-lg text-gray-700 dark:text-gray-50 mb-2">
+            {certificate.metadata.certifiable_source_name}
+          </h1>
+          {/* <div className="flex items-center justify-end w-full gap-1">
+            <TwitterShareButton hashtags={["codante", "front"]} url={location}>
+              <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
+                <RiTwitterXLine
+                  title="Twitter"
+                  className="text-base text-gray-500"
+                />
+              </div>
+            </TwitterShareButton>
+            <LinkedinShareButton
+              url={location}
+              title={certificate.metadata.certifiable_source_name}
+              className=""
+            >
+              <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
+                <RiLinkedinBoxLine
+                  title="Linkedin"
+                  className="text-base text-gray-500"
+                />
+              </div>
+            </LinkedinShareButton>
+            <WhatsappShareButton url={location}>
+              <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
+                <RiWhatsappLine
+                  title="WhatsApp"
+                  className="text-base text-gray-500"
+                />
+              </div>
+            </WhatsappShareButton>
+          </div> */}
+          <p className="text-gray-500 sm:text-base text-sm mb-2">
+            Conferido a:{" "}
+            <span className="text-gray-600 dark:text-gray-400">
+              {certificate.user.name}
+            </span>
+          </p>
+          <p className="text-gray-500 sm:text-base text-sm mb-2">
+            Finalizado em:{" "}
+            <span className="text-gray-600 dark:text-gray-400">
+              {formatDate(certificate.metadata.end_date)}
+            </span>
+          </p>
+          <p className="text-gray-500 sm:text-base text-sm mb-2 gap-1 flex">
+            Verificador:{" "}
+            <span className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
+              {certificate.id}
+              <IoCopySharp
+                className="text-xs cursor-pointer text-gray-400 dark:text-gray-700"
+                onClick={copyToClipboard}
+              />
+            </span>
+          </p>
+          <Link
+            className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
+            to={`/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`}
+          >
+            Ver submissão
+          </Link>
 
-        <Button type="button" onClick={handleButtonClick} className="mt-3">
-          {pdfUrl ? "Baixar certificado" : "Preparando download"}
-        </Button>
-      </Card>
+          <Button type="button" onClick={handleButtonClick} className="mt-3">
+            {pdfUrl ? "Baixar certificado" : "Preparando download"}
+          </Button>
+        </Card>
+      </div>
     </div>
   );
 }

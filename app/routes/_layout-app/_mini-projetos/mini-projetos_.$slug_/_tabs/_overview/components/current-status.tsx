@@ -28,12 +28,7 @@ export default function CurrentStatus({
           { method: "post" },
         );
         setTimeout(() => {
-          return toast.success("Certificado solicitado.", {
-            iconTheme: {
-              primary: "#713200",
-              secondary: "#FFFAEE",
-            },
-          });
+          return toast.success("Certificado solicitado.");
         }, 1000);
       } else {
         toast((t) => (
