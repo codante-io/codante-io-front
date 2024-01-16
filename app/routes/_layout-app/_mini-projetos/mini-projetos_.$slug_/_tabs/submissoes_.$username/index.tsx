@@ -1,7 +1,6 @@
-import type { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
+import { type LoaderFunctionArgs, type MetaArgs } from "@remix-run/node";
 import {
   Form,
-  Link,
   useActionData,
   useLoaderData,
   useNavigate,
@@ -11,7 +10,7 @@ import {
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import UserAvatar from "~/components/ui/user-avatar";
-import { FaArrowLeft, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import ReactionsButton from "~/components/features/reactions/reactions-button";
 import {
   LinkedinShareButton,
@@ -41,6 +40,7 @@ import LoadingButton from "~/components/features/form/loading-button";
 import invariant from "tiny-invariant";
 import { NewButton } from "~/components/ui/new-button";
 import { SaveIcon } from "lucide-react";
+import { abort404 } from "~/lib/utils/responses.server";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -160,6 +160,9 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     params.slug,
     params.username,
   );
+
+  if (!submissionData) return abort404();
+
   return {
     submissionData,
     params,
@@ -167,7 +170,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 };
 
 export default function MySolution() {
-  const { params, submissionData } = useLoaderData<typeof loader>();
+  const { params } = useLoaderData<typeof loader>();
 
   const { challenge, challengeUsers, user } = useOutletContext<{
     challengeUser: ChallengeUser;
@@ -180,47 +183,7 @@ export default function MySolution() {
     (challengeUser) => challengeUser.user.github_user === params.username,
   );
 
-  if (!submissionData) {
-    return (
-      <div className="flex flex-col items-start justify-center h-full container">
-        <h1 className="mb-5 text-2xl font-bold dark:text-gray-300 text-gray-800">
-          Usuário não encontrado
-        </h1>
-        <p className="text-gray-600 dark:text-gray-500">
-          Não encontramos o usuário{" "}
-          <span className="text-brand">{params.username}</span> na nossa base de
-          dados.
-        </p>
-        <Link
-          to={`/mini-projetos/${challenge.slug}/submissoes`}
-          className="text-gray-600 dark:text-gray-500 flex items-center gap-1 hover:opacity-70"
-        >
-          <FaArrowLeft className="text-sm" />
-          <span className="hover:underline">Voltar</span>
-        </Link>
-      </div>
-    );
-  }
-
-  if (!submissionUser) {
-    return (
-      <div className="flex flex-col items-start justify-center h-full container">
-        <h1 className="mb-5 text-2xl font-bold dark:text-gray-300 text-gray-800">
-          Nenhuma submissão encontrada
-        </h1>
-        <p className="text-gray-600 dark:text-gray-500">
-          Esse usuário ainda não submeteu uma solução para este Mini Projeto.
-        </p>
-        <Link
-          to={`/mini-projetos/${challenge.slug}/submissoes`}
-          className="text-gray-600 dark:text-gray-500 flex items-center gap-1 hover:opacity-70"
-        >
-          <FaArrowLeft className="text-sm" />
-          <span className="hover:underline">Voltar</span>
-        </Link>
-      </div>
-    );
-  }
+  if (!submissionUser) return null;
 
   const location = `https://codante.io/mini-projetos/${challenge.slug}/submissoes/${submissionUser.user.github_user}`;
 
