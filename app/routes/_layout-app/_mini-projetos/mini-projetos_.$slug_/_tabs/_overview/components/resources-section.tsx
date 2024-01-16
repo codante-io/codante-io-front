@@ -38,29 +38,31 @@ export default function ResourcesSection({
         Recursos
       </h1>
 
-      {resources.map((resource) => (
-        <Link
-          to={resource.url}
-          key={resource.url}
-          target="_blank"
-          className={cardVariants({
-            hover: "brand-light",
-            className: "block text-left relative w-full p-4 pt-3 group",
-          })}
-        >
-          <section className="flex items-center">
-            <Icon resource={resource} />
-            <p className="flex items-center gap-2 font-extralight ">
-              {resource.name}
-              {resource.type !== "file" && (
-                <span className="text-sm text-gray-400">
-                  <FiExternalLink />
-                </span>
-              )}
-            </p>
-          </section>
-        </Link>
-      ))}
+      <div className="flex flex-col items-center justify-center gap-2">
+        {resources.map((resource) => (
+          <Link
+            to={resource.url}
+            key={resource.url}
+            target="_blank"
+            className={cardVariants({
+              hover: "brand-light",
+              className: "block text-left relative w-full p-4 group",
+            })}
+          >
+            <section className="flex items-center">
+              <Icon resource={resource} />
+              <p className="flex items-center gap-2 font-extralight ">
+                {resource.name}
+                {resource.type !== "file" && (
+                  <span className="text-sm text-gray-400">
+                    <FiExternalLink />
+                  </span>
+                )}
+              </p>
+            </section>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
