@@ -213,6 +213,14 @@ export async function requireAuth({ request }: { request: Request }) {
   }
 }
 
+export async function requireAdmin({ request }: { request: Request }) {
+  let userData = await user({ request });
+
+  if (!(userData as User)?.is_admin) {
+    throw redirect("/login");
+  }
+}
+
 export async function resetPassword({
   token,
   email,
