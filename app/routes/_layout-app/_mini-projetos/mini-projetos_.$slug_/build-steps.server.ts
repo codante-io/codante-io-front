@@ -103,7 +103,7 @@ export function buildInitialSteps({
     }
   }
 
-  if (challengeUser?.fork_url) {
+  if (challengeUser?.fork_url || challengeUser?.is_solution) {
     let index = steps.findIndex((step) => step.intent === "verify-fork");
     steps[index].status = "completed";
     currentStepIndex = index + 1;
