@@ -49,7 +49,7 @@ function WaitingSubmissionBanner({
   challenge: Challenge;
 }) {
   return (
-    <Card className="flex flex-col justify-between">
+    <Card className="flex flex-col justify-between max-w-[377px]">
       <CardContent className="flex flex-1 pt-6 items-center justify-center bg-gray-100 dark:bg-transparent">
         <div className="flex-1">
           <WaitingIcon />

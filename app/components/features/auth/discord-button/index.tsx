@@ -30,7 +30,7 @@ export default function DiscordButton({
       href={discordUrl}
       target="_blank"
       rel="noreferrer"
-      className={buttonVariants()}
+      className={buttonVariants({ size: "sm" })}
     >
       {children}
     </a>
