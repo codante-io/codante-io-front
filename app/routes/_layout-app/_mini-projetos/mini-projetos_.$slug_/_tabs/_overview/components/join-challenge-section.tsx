@@ -196,7 +196,7 @@ function StepForm({
         <NewButton
           type="submit"
           variant="outline"
-          className="mt-4"
+          className=""
           name="intent"
           value={step.secondaryIntent}
         >
@@ -210,8 +210,10 @@ function StepForm({
     <Form method="post" action={`/mini-projetos/${slug}`} preventScrollReset>
       <input type="hidden" name="redirectTo" value={location.pathname} />
       <input type="hidden" name="user" value={user} />
-      {getButton()}
-      {getSecondaryButton()}
+      <section className="flex gap-2 items-center mt-2">
+        {getButton()}
+        {getSecondaryButton()}
+      </section>
     </Form>
   );
 }
