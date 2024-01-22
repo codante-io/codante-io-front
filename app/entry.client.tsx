@@ -8,14 +8,27 @@ import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { ColorModeProvider } from "./lib/contexts/color-mode-context";
+import { getPublicEnv } from "./components/_layouts/public-env";
 
-startTransition(() => {
-  hydrateRoot(
-    document,
-    <StrictMode>
-      <ColorModeProvider>
-        <RemixBrowser />
-      </ColorModeProvider>
-    </StrictMode>,
-  );
-});
+async function prepareApp() {
+  // Start the mocking service worker
+  if (process.env.NODE_ENV === "development" && getPublicEnv('MSW_RUNNING') === "true") {
+    const { worker } = require("../mocks/browser");
+    await worker.start();
+  }
+
+
+  // Then render the app
+  startTransition(() => {
+    hydrateRoot(
+      document,
+      <StrictMode>
+        <ColorModeProvider>
+          <RemixBrowser />
+        </ColorModeProvider>
+      </StrictMode>,
+    );
+  });
+}
+
+prepareApp();

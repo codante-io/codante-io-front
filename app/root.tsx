@@ -68,6 +68,7 @@ export async function loader({ request }: { request: Request }) {
     ENV: {
       BASE_URL: environment().BASE_URL,
       NODE_ENV: environment().NODE_ENV,
+      MSW_RUNNING: environment().MSW_RUNNING,
     },
   });
 }
