@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
 import {
   Form,
   useActionData,
+  useFetcher,
   useLoaderData,
   useNavigate,
   useNavigation,
@@ -17,7 +18,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from "react-share";
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, useRef } from "react";
 import {
   RiLinkedinBoxLine,
   RiTwitterXLine,
@@ -33,7 +34,7 @@ import {
 } from "~/lib/models/challenge.server";
 import useSound from "use-sound";
 import pop from "~/lib/sounds/pop.wav";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiSend } from "react-icons/fi";
 import classNames from "~/lib/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/features/form/loading-button";
@@ -41,6 +42,7 @@ import invariant from "tiny-invariant";
 import { NewButton } from "~/components/ui/new-button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
+import { createComment } from "~/lib/models/comments.server";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -130,13 +132,17 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  let formData = await request.formData();
-  let submissionUrl = formData.get("submission_url") as string;
+  const formData = await request.formData();
 
   const intent = formData.get("intent");
   switch (intent) {
     case "updateSubmission":
+      const submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
+    case "comment":
+      const commentableId = formData.get("commentableId") as string;
+      const comment = formData.get("comment") as string;
+      return createComment(request, commentableId, "ChallengeUser", comment);
   }
 }
 
@@ -193,6 +199,10 @@ export default function MySolution() {
         user={user}
         challengeSlug={challenge.slug}
         sendoToSolutionPage
+      />
+      <Comments
+        comments={submissionUser.comments}
+        commentableId={submissionUser.id}
       />
     </div>
   );
@@ -523,6 +533,58 @@ function EditSection({
           </Transition>
         </section>
       )}
+    </section>
+  );
+}
+
+function Comments({
+  comments,
+  commentableId,
+}: {
+  comments: Comment[];
+  commentableId: number;
+}) {
+  console.log(comments);
+  const { user } = useOutletContext<{
+    user: User;
+  }>();
+  const fetcher = useFetcher();
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+
+  function handleCommentButton(event: React.MouseEvent<HTMLButtonElement>) {
+    event?.preventDefault();
+    const comment = commentRef.current?.value;
+    if (comment) {
+      fetcher.submit(
+        { intent: "comment", commentableId, comment },
+        { method: "post" },
+      );
+    }
+  }
+
+  return (
+    <section className="text-start">
+      <h1 className="text-gray-200 pt-10 text-lg">Comentários</h1>
+      <Form>
+        <div className="flex h-16 items-center bg-background-800 rounded-lg border-background-700">
+          <UserAvatar avatar={user.avatar} className="w-10 m-2" />
+          <textarea
+            name="comment"
+            className="focus:ring-0 resize-none flex-grow border-none h-10 bg-background-800 rounded-lg border-background-700"
+            placeholder="Digite um comentário..."
+            ref={commentRef}
+          />
+          <button
+            type="submit"
+            name="intent"
+            value="comment"
+            onClick={(event) => handleCommentButton(event)}
+            className="m-2"
+          >
+            <FiSend className="text-brand-500 hover:opacity-70" />
+          </button>
+        </div>
+      </Form>
     </section>
   );
 }

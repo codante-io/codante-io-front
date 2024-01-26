@@ -37,6 +37,7 @@ export type ChallengeUser = {
   is_solution: boolean;
   created_at: string;
   updated_at: string;
+  comments: Comment[];
 };
 
 export type UserAvatar = {
