@@ -1,4 +1,5 @@
 import type { ChallengeSummary } from "./challenge.server";
+import type { Comment } from "./comments.server";
 import type { Reactions } from "./reactions.server";
 
 export type User = {

@@ -4,7 +4,7 @@ import { currentToken } from "~/lib/services/auth.server";
 import { environment } from "./environment.server";
 import type { User } from "./user.server";
 
-export type Comments = {
+export type Comment = {
   id: string;
   user: User;
   comment: string;
