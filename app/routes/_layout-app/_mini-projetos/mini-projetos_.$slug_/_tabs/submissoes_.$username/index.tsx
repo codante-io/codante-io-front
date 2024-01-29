@@ -41,7 +41,7 @@ import invariant from "tiny-invariant";
 import { NewButton } from "~/components/ui/new-button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
-import { createComment } from "~/lib/models/comments.server";
+import { createComment, deleteComment } from "~/lib/models/comments.server";
 import CommentSection from "~/components/features/comments/comment-section";
 
 export function meta({ matches, params, data }: MetaArgs) {
@@ -142,7 +142,17 @@ export async function action({
     case "comment":
       const commentableId = formData.get("commentableId") as string;
       const comment = formData.get("comment") as string;
-      return createComment(request, commentableId, "ChallengeUser", comment);
+      const replyingTo = formData.get("replyingTo") as string | null;
+      return createComment(
+        request,
+        commentableId,
+        "ChallengeUser",
+        comment,
+        replyingTo,
+      );
+    case "delete-comment":
+      const commentId = formData.get("commentId") as string;
+      return deleteComment(request, commentId);
   }
 }
 

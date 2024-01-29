@@ -9,6 +9,8 @@ export type Comment = {
   user: User;
   comment: string;
   replying_to?: string;
+  commentable_id: string;
+  commentable_type: string;
 };
 
 export async function createComment(
@@ -27,7 +29,7 @@ export async function createComment(
         commentable_id: commentableId,
         commentable_type: commentableType,
         comment,
-        replyingTo,
+        replying_to: replyingTo,
       },
       {
         headers: {
@@ -82,17 +84,14 @@ export async function deleteComment(
   let token = await currentToken({ request });
 
   return axios
-    .put(
-      `${environment().API_HOST}/comments`,
-      {
+    .delete(`${environment().API_HOST}/comments`, {
+      data: {
         comment_id: commentId,
       },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+      headers: {
+        Authorization: "Bearer " + token,
       },
-    )
+    })
     .then((res) => res.data)
     .catch((error) => {
       return {
