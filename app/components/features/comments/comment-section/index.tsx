@@ -148,7 +148,7 @@ function CommentCard({
   return (
     <main className="border p-2 border-background-700 rounded-lg shadow-lg">
       <div>
-        <section className="flex items-center gap-2">
+        <section className="flex items-start gap-2">
           <div className="flex-shrink-0">
             <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
           </div>
@@ -189,7 +189,7 @@ function CommentCard({
         <div className="flex flex-col gap-2 mt-4 ml-8 sm:ml-16">
           {replies.map((reply) => (
             <div key={reply.id}>
-              <section className="flex items-center gap-2">
+              <section className="flex items-start gap-2">
                 <div className="flex-shrink-0">
                   <UserAvatar avatar={reply.user.avatar} className="w-8 m-2" />
                 </div>
