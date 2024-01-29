@@ -149,8 +149,10 @@ function CommentCard({
     <main className="border p-2 border-background-700 rounded-lg shadow-lg">
       <div>
         <section className="flex items-center gap-2">
-          <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
-          <div className="flex flex-col">
+          <div className="flex-shrink-0">
+            <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
+          </div>
+          <div className="flex flex-col min-w-0">
             <span className="text-gray-500 text-base">
               {formatName(comment.user.name)}
             </span>
@@ -159,14 +161,22 @@ function CommentCard({
         </section>
         <section className="text-xs text-brand-500 flex gap-2 ml-16">
           {user && (
-            <button onClick={() => setShowReplyInput(true)}>Responder</button>
+            <button
+              className="hover:opacity-70"
+              onClick={() => setShowReplyInput(true)}
+            >
+              Responder
+            </button>
           )}
-          {user.id === comment.user.id && <button>Editar</button>}
+          {user.id === comment.user.id && (
+            <button className="hover:opacity-70">Editar</button>
+          )}
           {user.id === comment.user.id && (
             <button
               onClick={() =>
                 setDeleteModal({ isOpen: true, commentId: comment.id })
               }
+              className="hover:text-red-500"
             >
               Deletar
             </button>
@@ -176,11 +186,13 @@ function CommentCard({
 
       {/* Replies */}
       {replies.length > 0 && (
-        <div className="flex flex-col gap-2 mt-4 ml-16">
+        <div className="flex flex-col gap-2 mt-4 ml-8 sm:ml-16">
           {replies.map((reply) => (
             <div key={reply.id}>
               <section className="flex items-center gap-2">
-                <UserAvatar avatar={reply.user.avatar} className="w-8 m-2" />
+                <div className="flex-shrink-0">
+                  <UserAvatar avatar={reply.user.avatar} className="w-8 m-2" />
+                </div>
                 <div className="flex flex-col">
                   <span className="text-gray-500 text-sm">
                     {formatName(reply.user.name)}
@@ -190,13 +202,19 @@ function CommentCard({
               </section>
               <section className="text-xs text-brand-500 flex gap-2 ml-14">
                 {user && (
-                  <button onClick={() => setShowReplyInput(true)}>
+                  <button
+                    onClick={() => setShowReplyInput(true)}
+                    className="hover:opacity-70"
+                  >
                     Responder
                   </button>
                 )}
-                {user.id === reply.user.id && <button>Editar</button>}
+                {user.id === reply.user.id && (
+                  <button className="hover:opacity-70">Editar</button>
+                )}
                 {user.id === reply.user.id && (
                   <button
+                    className="hover:text-red-500"
                     onClick={() =>
                       setDeleteModal({ isOpen: true, commentId: reply.id })
                     }
