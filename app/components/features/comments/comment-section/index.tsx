@@ -152,7 +152,7 @@ function CommentCard({
           <div className="flex-shrink-0">
             <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
           </div>
-          <div className="flex flex-col min-w-0">
+          <div className="flex flex-col">
             <span className="text-gray-500 text-base">
               {formatName(comment.user.name)}
             </span>
