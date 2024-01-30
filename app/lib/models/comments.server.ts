@@ -11,6 +11,7 @@ export type Comment = {
   replying_to?: string;
   commentable_id: string;
   commentable_type: string;
+  created_at_human: string;
 };
 
 export async function createComment(

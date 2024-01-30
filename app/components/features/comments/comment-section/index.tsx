@@ -44,7 +44,7 @@ export default function CommentSection({
       <h1 className="text-gray-800 dark:text-gray-200 mt-10 mb-6 text-lg">
         Comentários
       </h1>
-      <main className="flex flex-col gap-2">
+      <section className="flex flex-col gap-4">
         {comments
           .filter((comment) => !comment.replying_to)
           .map((comment) => (
@@ -56,7 +56,7 @@ export default function CommentSection({
               key={comment.id}
             />
           ))}
-      </main>
+      </section>
 
       {user ? (
         <Form className="mt-6 sm:mx-8 md:mx-10">
@@ -186,90 +186,101 @@ function CommentCard({
   }
 
   return (
-    <main className="border px-6 py-5 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent sm:mx-8 md:mx-10">
+    <article
+      id={`comment-${comment.id}`}
+      className="border px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent sm:mx-8 md:mx-10"
+    >
       <div>
-        <section className="flex items-start gap-2">
-          <div className="flex-shrink-0">
-            <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
+        <section className="flex flex-col items-start h-fit">
+          <div className="items-start gap-2 flex w-full">
+            <div className="flex-shrink-0">
+              <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
+            </div>
+            <div className="flex flex-col w-full">
+              <span className="text-gray-500 text-base">
+                {formatName(comment.user.name)}
+              </span>
+              <span className="text-xs dark:text-gray-600 text-gray-400 mb-2">
+                {comment.created_at_human}
+              </span>
+              {editSettings.isEditing &&
+              editSettings.commentId === comment.id ? (
+                <Form method="PUT" className="w-full">
+                  <div className="mt-2 w-full">
+                    <textarea
+                      ref={editInputRef}
+                      name="edit-comment"
+                      className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+                      placeholder="Edite o comentário..."
+                      defaultValue={comment.comment}
+                      onInput={disableEditButton}
+                    />
+                  </div>
+                  <div className="mt-1 flex gap-x-3">
+                    <button
+                      onClick={() =>
+                        setEditSettings({ isEditing: false, commentId: null })
+                      }
+                      className="text-sm text-brand-500 hover:opacity-70"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={handleEditButton}
+                      className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
+                      disabled={isEditButtonDisabled}
+                    >
+                      Salvar
+                    </button>
+                  </div>
+                </Form>
+              ) : (
+                <p className="dark:text-gray-300 text-gray-700 text-sm">
+                  {comment.comment}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="flex flex-col w-full">
-            <span className="text-gray-500 text-base">
-              {formatName(comment.user.name)}
-            </span>
-            {editSettings.isEditing && editSettings.commentId === comment.id ? (
-              <Form method="PUT" className="w-full">
-                <div className="mt-2">
-                  <textarea
-                    ref={editInputRef}
-                    name="edit-comment"
-                    className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-                    placeholder="Edite o comentário..."
-                    defaultValue={comment.comment}
-                    onInput={disableEditButton}
-                  />
-                </div>
-                <div className="mt-1 flex gap-x-3">
-                  <button
-                    onClick={() =>
-                      setEditSettings({ isEditing: false, commentId: null })
-                    }
-                    className="text-sm text-brand-500 hover:opacity-70"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={handleEditButton}
-                    className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
-                    disabled={isEditButtonDisabled}
-                  >
-                    Salvar
-                  </button>
-                </div>
-              </Form>
-            ) : (
-              <p className="dark:text-gray-300 text-gray-700 text-sm">
-                {comment.comment}
-              </p>
-            )}
-          </div>
+          {!(
+            editSettings.isEditing && editSettings.commentId === comment.id
+          ) && (
+            <section className="text-xs text-brand-500 flex gap-2 ml-16 mt-1">
+              {user && (
+                <button
+                  className="hover:opacity-70"
+                  onClick={() => setShowReplyInput(true)}
+                >
+                  Responder
+                </button>
+              )}
+              {user && user.id === comment.user.id && (
+                <button
+                  className="hover:opacity-70"
+                  onClick={() =>
+                    setEditSettings({ isEditing: true, commentId: comment.id })
+                  }
+                >
+                  Editar
+                </button>
+              )}
+              {user && user.id === comment.user.id && (
+                <button
+                  onClick={() =>
+                    setDeleteModal({ isOpen: true, commentId: comment.id })
+                  }
+                  className="hover:text-red-500"
+                >
+                  Deletar
+                </button>
+              )}
+            </section>
+          )}
         </section>
-        {!(editSettings.isEditing && editSettings.commentId === comment.id) && (
-          <section className="text-xs text-brand-500 flex gap-2 ml-16 mt-1">
-            {user && (
-              <button
-                className="hover:opacity-70"
-                onClick={() => setShowReplyInput(true)}
-              >
-                Responder
-              </button>
-            )}
-            {user && user.id === comment.user.id && (
-              <button
-                className="hover:opacity-70"
-                onClick={() =>
-                  setEditSettings({ isEditing: true, commentId: comment.id })
-                }
-              >
-                Editar
-              </button>
-            )}
-            {user && user.id === comment.user.id && (
-              <button
-                onClick={() =>
-                  setDeleteModal({ isOpen: true, commentId: comment.id })
-                }
-                className="hover:text-red-500"
-              >
-                Deletar
-              </button>
-            )}
-          </section>
-        )}
       </div>
 
       {/* Replies */}
       {replies.length > 0 && (
-        <div className="flex flex-col gap-2 mt-4 sm:ml-16 border-l border-dotted border-brand-500 pl-4">
+        <div className="flex flex-col gap-2 mt-4 sm:ml-16 border-l border-dotted border-gray-300 dark:border-gray-700 pl-4">
           {replies.map((reply) => (
             <div key={reply.id}>
               <section className="flex items-start gap-2">
@@ -279,6 +290,9 @@ function CommentCard({
                 <div className="flex flex-col w-full">
                   <span className="text-gray-500 text-sm">
                     {formatName(reply.user.name)}
+                  </span>
+                  <span className="text-xs dark:text-gray-600 text-gray-400 mb-2">
+                    {reply.created_at_human}
                   </span>
                   {editSettings.isEditing &&
                   editSettings.commentId === reply.id ? (
@@ -394,7 +408,6 @@ function CommentCard({
           </div>
         </Form>
       )}
-
       {/* Delete Modal */}
       <Transition appear show={deleteModal.isOpen}>
         <Dialog
@@ -468,6 +481,6 @@ function CommentCard({
           </div>
         </Dialog>
       </Transition>
-    </main>
+    </article>
   );
 }
