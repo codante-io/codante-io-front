@@ -26,7 +26,7 @@ export default function CommentSection({
   const fetcher = useFetcher();
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
-  function handleCommentButton(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleCommentButton(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
     const comment = commentRef.current?.value;
     if (comment) {
@@ -35,8 +35,9 @@ export default function CommentSection({
         { method: "post" },
       );
     }
+    if (commentRef.current) commentRef.current.value = "";
   }
-  // console.log(comments[0].user.avatar);
+
   const navigate = useNavigate();
   return (
     <section className="text-start">
@@ -66,6 +67,12 @@ export default function CommentSection({
               className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
               placeholder="Digite um comentário..."
               ref={commentRef}
+              onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+                if (event.key === "Enter" && event.metaKey) {
+                  event.preventDefault();
+                  handleCommentButton(event);
+                }
+              }}
             />
             <button
               type="submit"
@@ -126,9 +133,12 @@ function CommentCard({
     if (showReplyInput && replyInputRef.current) {
       replyInputRef.current.focus();
     }
-  }, [showReplyInput]);
+    if (editSettings.isEditing) {
+      editInputRef.current?.focus();
+    }
+  }, [showReplyInput, editSettings.isEditing]);
 
-  function replyComment(event: React.MouseEvent<HTMLButtonElement>) {
+  function replyComment(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
     const inputedComment = replyInputRef.current?.value;
     if (inputedComment) {
@@ -259,7 +269,7 @@ function CommentCard({
 
       {/* Replies */}
       {replies.length > 0 && (
-        <div className="flex flex-col gap-2 mt-4 ml-8 sm:ml-16">
+        <div className="flex flex-col gap-2 mt-4 sm:ml-16 border-l border-dotted border-brand-500 pl-4">
           {replies.map((reply) => (
             <div key={reply.id}>
               <section className="flex items-start gap-2">
@@ -365,6 +375,12 @@ function CommentCard({
               placeholder="Digite uma resposta..."
               ref={replyInputRef}
               defaultValue=""
+              onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+                if (event.key === "Enter" && event.metaKey) {
+                  event.preventDefault();
+                  replyComment(event);
+                }
+              }}
             />
             <button
               type="submit"
