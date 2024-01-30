@@ -41,7 +41,11 @@ import invariant from "tiny-invariant";
 import { NewButton } from "~/components/ui/new-button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
-import { createComment, deleteComment } from "~/lib/models/comments.server";
+import {
+  createComment,
+  deleteComment,
+  updateComment,
+} from "~/lib/models/comments.server";
 import CommentSection from "~/components/features/comments/comment-section";
 
 export function meta({ matches, params, data }: MetaArgs) {
@@ -153,6 +157,10 @@ export async function action({
     case "delete-comment":
       const commentId = formData.get("commentId") as string;
       return deleteComment(request, commentId);
+    case "edit-comment":
+      const editId = formData.get("commentId") as string;
+      const editComment = formData.get("comment") as string;
+      return updateComment(request, editId, editComment);
   }
 }
 
