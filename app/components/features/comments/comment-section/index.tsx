@@ -58,8 +58,8 @@ export default function CommentSection({
       </main>
 
       {user ? (
-        <Form className="mt-6">
-          <div className="flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
+        <Form className="mt-6 sm:mx-8 md:mx-10">
+          <div className="px-6 py-10 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
             <UserAvatar avatar={user.avatar} className="w-10 m-2" />
             <textarea
               name="comment"
@@ -176,7 +176,7 @@ function CommentCard({
   }
 
   return (
-    <main className="border p-2 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent sm:mx-10">
+    <main className="border px-6 py-5 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent sm:mx-8 md:mx-10">
       <div>
         <section className="flex items-start gap-2">
           <div className="flex-shrink-0">
@@ -285,6 +285,13 @@ function CommentCard({
                       </div>
                       <div className="mt-1 flex gap-x-3">
                         <button
+                          onClick={handleEditButton}
+                          className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
+                          disabled={isEditButtonDisabled}
+                        >
+                          Salvar
+                        </button>
+                        <button
                           onClick={() =>
                             setEditSettings({
                               isEditing: false,
@@ -294,13 +301,6 @@ function CommentCard({
                           className="text-sm text-brand-500 hover:opacity-70"
                         >
                           Cancelar
-                        </button>
-                        <button
-                          onClick={handleEditButton}
-                          className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
-                          disabled={isEditButtonDisabled}
-                        >
-                          Salvar
                         </button>
                       </div>
                     </Form>
@@ -314,7 +314,7 @@ function CommentCard({
               {!(
                 editSettings.isEditing && editSettings.commentId === reply.id
               ) && (
-                <section className="text-xs text-brand-500 flex gap-2 ml-16 mt-1">
+                <section className="text-xs text-brand-500 flex gap-2 ml-14 mt-1">
                   {user && (
                     <button
                       className="hover:opacity-70"
@@ -356,8 +356,8 @@ function CommentCard({
         </div>
       )}
       {showReplyInput && (
-        <Form className="mt-6 mx-2">
-          <div className="flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
+        <Form className="mt-6 ml-16">
+          <div className="flex py-8 px-6 h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
             <UserAvatar avatar={user.avatar} className="w-8 m-4" />
             <textarea
               name="comment"
@@ -423,7 +423,7 @@ function CommentCard({
                           comentário também serão deletadas.
                         </h1>
                         <div className="mt-2">
-                          <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md"></div>
+                          <div className="flex rounded-lg shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md"></div>
                         </div>
                       </div>
                       <div className="mt-8 flex gap-x-3">
