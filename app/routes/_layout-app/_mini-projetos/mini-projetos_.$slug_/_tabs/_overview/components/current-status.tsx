@@ -1,5 +1,5 @@
 import { Form, Link } from "@remix-run/react";
-import { Check } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useFetcher } from "react-router-dom";
@@ -7,6 +7,7 @@ import { Card } from "~/components/ui/cards/card";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import type { ChallengeUser } from "~/lib/models/user.server";
 import { PiCertificateLight } from "react-icons/pi";
+import { NewButton } from "~/components/ui/new-button";
 
 export default function CurrentStatus({
   challengeUser,
@@ -81,41 +82,51 @@ export default function CurrentStatus({
         as="aside"
         className={`${className} relative w-full rounded-lg font-inter`}
       >
-        <div className="border-l-[10px] border-green-400 h-full w-full p-4 flex gap-5">
+        <div className="border-l-8 border-green-400 h-full w-full p-4 py-6 flex gap-5">
           <img src="/img/trophy.svg" alt="Projeto concluído" />
           <section className="flex flex-col gap-1">
-            <p className="text-green-400 text-lg">Finalizado</p>
-            <p className="text-sm text-gray-500 dark:text-gray-300">
-              Você completou esse Mini Projeto
+            <p className="text-green-400 font-bold">Finalizado</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Você completou esse Mini Projeto!
             </p>
             {!challengeUser.certificate && (
               <Form replace method="post">
-                <button
+                <NewButton
                   onClick={handleSubmitButton}
                   type="submit"
+                  variant={"link"}
                   disabled={isLoading}
-                  className={`w-fit mt-2 text-sm underline dark:text-gray-500 text-gray-400 cursor-pointer hover:opacity-80 ${
+                  className={`text-xs dark:text-gray-500 text-gray-400 pl-0 mt-2 h-fit ${
                     isLoading ? "cursor-wait" : ""
                   }`}
                 >
                   Solicitar certificado
-                </button>
+                </NewButton>
               </Form>
             )}
             {challengeUser.certificate && (
-              <Link
-                to={`/certificados/${challengeUser.certificate.id}`}
-                className="flex items-center gap-2 w-fit mt-2 text-sm underline dark:text-gray-500 text-gray-400 cursor-pointer hover:opacity-80"
-                onClick={(event) => handleLinkClick(event)}
+              <NewButton
+                asChild
+                className="text-xs inline dark:text-gray-500 text-gray-400 pl-0 mt-2 h-fit"
+                variant={"link"}
               >
-                {challengeUser.certificate.status === "published" ? (
-                  <>
-                    <PiCertificateLight className="text-lg" /> Certificado
-                  </>
-                ) : (
-                  "Certificado solicitado"
-                )}
-              </Link>
+                <Link
+                  to={`/certificados/${challengeUser.certificate.id}`}
+                  onClick={(event) => handleLinkClick(event)}
+                >
+                  {challengeUser.certificate.status === "published" ? (
+                    <span className="flex items-center gap-2">
+                      <PiCertificateLight className="text-lg" />
+                      Certificado
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Clock className="w-3 h-3 inline" /> Certificado
+                      solicitado
+                    </span>
+                  )}
+                </Link>
+              </NewButton>
             )}
           </section>
         </div>
@@ -128,11 +139,11 @@ export default function CurrentStatus({
       as="aside"
       className={`${className} relative w-full rounded-lg font-inter`}
     >
-      <div className="border-l-[10px] border-amber-400 h-full w-full p-4 flex gap-5">
+      <div className="border-l-8 border-amber-400 h-full w-full p-4 py-6 flex gap-5">
         <img src="/img/wip.svg" alt="Projeto em andamento" />
         <section className="flex flex-col gap-1">
-          <p className="text-amber-400 text-lg">Em andamento</p>
-          <p className="text-sm text-gray-500 dark:text-gray-300">
+          <p className="text-amber-400 font-bold">Em andamento</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Você ainda não finalizou esse projeto
           </p>
         </section>
