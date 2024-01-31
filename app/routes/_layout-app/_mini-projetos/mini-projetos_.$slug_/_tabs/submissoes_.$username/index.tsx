@@ -221,6 +221,7 @@ export default function MySolution() {
       <CommentSection
         comments={submissionUser.comments}
         commentableId={submissionUser.id}
+        redirectTo={location.split("https://codante.io")[1]}
       />
     </div>
   );

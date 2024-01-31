@@ -16,9 +16,11 @@ import { Dialog, Transition } from "@headlessui/react";
 export default function CommentSection({
   comments,
   commentableId,
+  redirectTo,
 }: {
   comments: Comment[];
   commentableId: number;
+  redirectTo: string;
 }) {
   const { user } = useOutletContext<{
     user: User;
@@ -39,6 +41,7 @@ export default function CommentSection({
   }
 
   const navigate = useNavigate();
+
   return (
     <section className="text-start">
       <h1 className="text-gray-800 dark:text-gray-200 mt-10 mb-6 text-lg">
@@ -88,7 +91,7 @@ export default function CommentSection({
       ) : (
         <div className="mt-6">
           <NewButton
-            onClick={() => navigate("/login?redirectTo=/assine")}
+            onClick={() => navigate("/login?redirectTo=" + redirectTo)}
             className={buttonVariants({ variant: "outline" })}
           >
             Faça login para comentar
@@ -482,5 +485,43 @@ function CommentCard({
         </Dialog>
       </Transition>
     </article>
+  );
+}
+
+function CommentInput({
+  ref,
+  commentFunction,
+}: {
+  ref: React.RefObject<HTMLTextAreaElement>;
+  commentFunction: (event: React.MouseEvent | React.KeyboardEvent) => void;
+}) {
+  const { user } = useOutletContext<{ user: User }>();
+  return (
+    <Form className="mt-6 sm:mx-8 md:mx-10">
+      <div className="px-6 py-10 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
+        <UserAvatar avatar={user.avatar} className="w-10 m-2" />
+        <textarea
+          name="comment"
+          className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+          placeholder="Digite um comentário..."
+          ref={ref}
+          onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+            if (event.key === "Enter" && event.metaKey) {
+              event.preventDefault();
+              commentFunction(event);
+            }
+          }}
+        />
+        <button
+          type="submit"
+          name="intent"
+          value="comment"
+          onClick={(event) => commentFunction(event)}
+          className="m-2"
+        >
+          <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
+        </button>
+      </div>
+    </Form>
   );
 }
