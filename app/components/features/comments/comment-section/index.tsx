@@ -12,6 +12,8 @@ import UserAvatar from "~/components/ui/user-avatar";
 import { FiSend } from "react-icons/fi";
 import { NewButton, buttonVariants } from "~/components/ui/new-button";
 import { Dialog, Transition } from "@headlessui/react";
+import { useOnClickOutside } from "~/lib/hooks/useOnClickOutside";
+import { Card } from "~/components/ui/cards/card";
 
 export default function CommentSection({
   comments,
@@ -208,9 +210,10 @@ function CommentCard({
         <CommentInput
           formClass="mt-6 ml-16"
           avatarSize="w-8 m-4"
-          padding="px-6 py-6"
+          padding="px-6 py-2"
           ref={replyInputRef}
           commentFunction={replyComment}
+          setShowReplyInput={setShowReplyInput}
         />
       )}
       <DeleteModal
@@ -229,6 +232,7 @@ const CommentInput = React.forwardRef<
     formClass: string;
     avatarSize?: string;
     padding?: string;
+    setShowReplyInput?: React.Dispatch<React.SetStateAction<boolean>>;
   } // prop types
 >(
   (
@@ -236,15 +240,25 @@ const CommentInput = React.forwardRef<
       commentFunction,
       formClass,
       avatarSize = "w-10 m-2",
-      padding = "px-6 py-10",
+      padding = "px-6 py-6",
+      setShowReplyInput,
     },
     ref,
   ) => {
     const { user } = useOutletContext<{ user: User }>();
+    const formRef = useRef<HTMLFormElement>(null);
+
+    function handleClickOutside() {
+      if (setShowReplyInput) setShowReplyInput(false);
+    }
+
+    useOnClickOutside(formRef, handleClickOutside);
+
     return (
-      <Form className={`${formClass}`}>
-        <div
-          className={`${padding} group hover:dark:border-background-600 hover:border-background-600 focus-within:dark:border-background-600 focus-within:border-background-600 focus-within:dark:border-[2px] flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50`}
+      <Form ref={formRef} className={`${formClass}`}>
+        <Card
+          hover="brand-light"
+          className={`${padding} group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
         >
           <UserAvatar avatar={user.avatar} className={avatarSize} />
           <textarea
@@ -268,7 +282,10 @@ const CommentInput = React.forwardRef<
           >
             <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
           </button>
-        </div>
+        </Card>
+        {/* <div
+          className={`${padding} group hover:dark:border-background-600 hover:border-background-600 focus-within:dark:border-background-600 focus-within:border-background-600 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50`}
+        ></div> */}
       </Form>
     );
   },
