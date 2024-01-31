@@ -4,7 +4,7 @@ import {
   useNavigate,
   useOutletContext,
 } from "@remix-run/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import type { Comment } from "~/lib/models/comments.server";
 import type { User } from "~/lib/models/user.server";
 import { formatName } from "~/lib/utils/format-name";
@@ -62,32 +62,11 @@ export default function CommentSection({
       </section>
 
       {user ? (
-        <Form className="mt-6 sm:mx-8 md:mx-10">
-          <div className="px-6 py-10 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
-            <UserAvatar avatar={user.avatar} className="w-10 m-2" />
-            <textarea
-              name="comment"
-              className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-              placeholder="Digite um comentário..."
-              ref={commentRef}
-              onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-                if (event.key === "Enter" && event.metaKey) {
-                  event.preventDefault();
-                  handleCommentButton(event);
-                }
-              }}
-            />
-            <button
-              type="submit"
-              name="intent"
-              value="comment"
-              onClick={(event) => handleCommentButton(event)}
-              className="m-2"
-            >
-              <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
-            </button>
-          </div>
-        </Form>
+        <CommentInput
+          formClass="sm:mx-8 md:mx-10 mt-6"
+          ref={commentRef}
+          commentFunction={handleCommentButton}
+        />
       ) : (
         <div className="mt-6">
           <NewButton
@@ -383,33 +362,12 @@ function CommentCard({
         </div>
       )}
       {showReplyInput && (
-        <Form className="mt-6 ml-16">
-          <div className="flex py-8 px-6 h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
-            <UserAvatar avatar={user.avatar} className="w-8 m-4" />
-            <textarea
-              name="comment"
-              className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-              placeholder="Digite uma resposta..."
-              ref={replyInputRef}
-              defaultValue=""
-              onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-                if (event.key === "Enter" && event.metaKey) {
-                  event.preventDefault();
-                  replyComment(event);
-                }
-              }}
-            />
-            <button
-              type="submit"
-              name="intent"
-              value="reply-comment"
-              onClick={(event) => replyComment(event)}
-              className="m-2"
-            >
-              <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
-            </button>
-          </div>
-        </Form>
+        <CommentInput
+          formClass="mt-6 ml-16"
+          avatarSize="w-8 m-4"
+          ref={replyInputRef}
+          commentFunction={replyComment}
+        />
       )}
       {/* Delete Modal */}
       <Transition appear show={deleteModal.isOpen}>
@@ -488,18 +446,19 @@ function CommentCard({
   );
 }
 
-function CommentInput({
-  ref,
-  commentFunction,
-}: {
-  ref: React.RefObject<HTMLTextAreaElement>;
-  commentFunction: (event: React.MouseEvent | React.KeyboardEvent) => void;
-}) {
+const CommentInput = React.forwardRef<
+  HTMLTextAreaElement,
+  {
+    commentFunction: (event: React.MouseEvent | React.KeyboardEvent) => void;
+    formClass: string;
+    avatarSize?: string;
+  } // prop types
+>(({ commentFunction, formClass, avatarSize = "w-10 m-2" }, ref) => {
   const { user } = useOutletContext<{ user: User }>();
   return (
-    <Form className="mt-6 sm:mx-8 md:mx-10">
+    <Form className={`${formClass}`}>
       <div className="px-6 py-10 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
-        <UserAvatar avatar={user.avatar} className="w-10 m-2" />
+        <UserAvatar avatar={user.avatar} className={avatarSize} />
         <textarea
           name="comment"
           className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
@@ -524,4 +483,6 @@ function CommentInput({
       </div>
     </Form>
   );
-}
+});
+
+CommentInput.displayName = "CommentInput";
