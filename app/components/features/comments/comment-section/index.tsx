@@ -104,9 +104,7 @@ function CommentCard({
     isOpen: false,
     commentId: null,
   });
-  const { user } = useOutletContext<{
-    user: User;
-  }>();
+
   const replyInputRef = useRef<HTMLTextAreaElement>(null);
   const editInputRef = useRef<HTMLTextAreaElement>(null);
   const fetcher = useFetcher();
@@ -173,190 +171,35 @@ function CommentCard({
       className="border px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent sm:mx-8 md:mx-10"
     >
       <div>
-        <section className="flex flex-col items-start h-fit">
-          <div className="items-start gap-2 flex w-full">
-            <div className="flex-shrink-0">
-              <UserAvatar avatar={comment.user.avatar} className="w-10 m-2" />
-            </div>
-            <div className="flex flex-col w-full">
-              <span className="text-gray-500 text-base">
-                {formatName(comment.user.name)}
-              </span>
-              <span className="text-xs dark:text-gray-600 text-gray-400 mb-2">
-                {comment.created_at_human}
-              </span>
-              {editSettings.isEditing &&
-              editSettings.commentId === comment.id ? (
-                <Form method="PUT" className="w-full">
-                  <div className="mt-2 w-full">
-                    <textarea
-                      ref={editInputRef}
-                      name="edit-comment"
-                      className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-                      placeholder="Edite o comentário..."
-                      defaultValue={comment.comment}
-                      onInput={disableEditButton}
-                    />
-                  </div>
-                  <div className="mt-1 flex gap-x-3">
-                    <button
-                      onClick={() =>
-                        setEditSettings({ isEditing: false, commentId: null })
-                      }
-                      className="text-sm text-brand-500 hover:opacity-70"
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      onClick={handleEditButton}
-                      className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
-                      disabled={isEditButtonDisabled}
-                    >
-                      Salvar
-                    </button>
-                  </div>
-                </Form>
-              ) : (
-                <p className="dark:text-gray-300 text-gray-700 text-sm">
-                  {comment.comment}
-                </p>
-              )}
-            </div>
-          </div>
-          {!(
-            editSettings.isEditing && editSettings.commentId === comment.id
-          ) && (
-            <section className="text-xs text-brand-500 flex gap-2 ml-16 mt-1">
-              {user && (
-                <button
-                  className="hover:opacity-70"
-                  onClick={() => setShowReplyInput(true)}
-                >
-                  Responder
-                </button>
-              )}
-              {user && user.id === comment.user.id && (
-                <button
-                  className="hover:opacity-70"
-                  onClick={() =>
-                    setEditSettings({ isEditing: true, commentId: comment.id })
-                  }
-                >
-                  Editar
-                </button>
-              )}
-              {user && user.id === comment.user.id && (
-                <button
-                  onClick={() =>
-                    setDeleteModal({ isOpen: true, commentId: comment.id })
-                  }
-                  className="hover:text-red-500"
-                >
-                  Deletar
-                </button>
-              )}
-            </section>
-          )}
-        </section>
+        <CommentInfo
+          ref={editInputRef}
+          comment={comment}
+          editSettings={editSettings}
+          setEditSettings={setEditSettings}
+          disableEditButtonFunction={disableEditButton}
+          handleEditButton={handleEditButton}
+          editButtonIsDisabled={isEditButtonDisabled}
+          setShowReplyInput={setShowReplyInput}
+          setDeleteModal={setDeleteModal}
+        />
       </div>
 
-      {/* Replies */}
       {replies.length > 0 && (
         <div className="flex flex-col gap-2 mt-4 sm:ml-16 border-l border-dotted border-gray-300 dark:border-gray-700 pl-4">
           {replies.map((reply) => (
             <div key={reply.id}>
-              <section className="flex items-start gap-2">
-                <div className="flex-shrink-0">
-                  <UserAvatar avatar={reply.user.avatar} className="w-8 m-2" />
-                </div>
-                <div className="flex flex-col w-full">
-                  <span className="text-gray-500 text-sm">
-                    {formatName(reply.user.name)}
-                  </span>
-                  <span className="text-xs dark:text-gray-600 text-gray-400 mb-2">
-                    {reply.created_at_human}
-                  </span>
-                  {editSettings.isEditing &&
-                  editSettings.commentId === reply.id ? (
-                    <Form method="PUT" className="w-full">
-                      <div className="mt-2">
-                        <textarea
-                          ref={editInputRef}
-                          name="edit-comment"
-                          className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-                          placeholder="Edite o comentário..."
-                          defaultValue={reply.comment}
-                          onInput={disableEditButton}
-                        />
-                      </div>
-                      <div className="mt-1 flex gap-x-3">
-                        <button
-                          onClick={handleEditButton}
-                          className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
-                          disabled={isEditButtonDisabled}
-                        >
-                          Salvar
-                        </button>
-                        <button
-                          onClick={() =>
-                            setEditSettings({
-                              isEditing: false,
-                              commentId: null,
-                            })
-                          }
-                          className="text-sm text-brand-500 hover:opacity-70"
-                        >
-                          Cancelar
-                        </button>
-                      </div>
-                    </Form>
-                  ) : (
-                    <p className="dark:text-gray-300 text-gray-700 text-sm">
-                      {reply.comment}
-                    </p>
-                  )}
-                </div>
-              </section>
-              {!(
-                editSettings.isEditing && editSettings.commentId === reply.id
-              ) && (
-                <section className="text-xs text-brand-500 flex gap-2 ml-14 mt-1">
-                  {user && (
-                    <button
-                      className="hover:opacity-70"
-                      onClick={() => setShowReplyInput(true)}
-                    >
-                      Responder
-                    </button>
-                  )}
-                  {user && user.id === reply.user.id && (
-                    <button
-                      className="hover:opacity-70"
-                      onClick={() =>
-                        setEditSettings({
-                          isEditing: true,
-                          commentId: reply.id,
-                        })
-                      }
-                    >
-                      Editar
-                    </button>
-                  )}
-                  {user && user.id === reply.user.id && (
-                    <button
-                      onClick={() =>
-                        setDeleteModal({
-                          isOpen: true,
-                          commentId: reply.id,
-                        })
-                      }
-                      className="hover:text-red-500"
-                    >
-                      Deletar
-                    </button>
-                  )}
-                </section>
-              )}
+              <CommentInfo
+                ref={editInputRef}
+                comment={reply}
+                editSettings={editSettings}
+                setEditSettings={setEditSettings}
+                disableEditButtonFunction={disableEditButton}
+                handleEditButton={handleEditButton}
+                editButtonIsDisabled={isEditButtonDisabled}
+                setShowReplyInput={setShowReplyInput}
+                setDeleteModal={setDeleteModal}
+                avatarSize="w-8 m-4"
+              />
             </div>
           ))}
         </div>
@@ -365,83 +208,16 @@ function CommentCard({
         <CommentInput
           formClass="mt-6 ml-16"
           avatarSize="w-8 m-4"
+          padding="px-6 py-6"
           ref={replyInputRef}
           commentFunction={replyComment}
         />
       )}
-      {/* Delete Modal */}
-      <Transition appear show={deleteModal.isOpen}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setDeleteModal({ ...deleteModal, isOpen: false })}
-        >
-          <Transition.Child
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-background-100 dark:bg-background-800 p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 mb-6"
-                  >
-                    Deletar comentário
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <Form method="PUT">
-                      <div>
-                        <h1 className="block text-sm leading-6 text-gray-800 dark:text-white">
-                          Ao confirmar, todas as respostas feitas a este
-                          comentário também serão deletadas.
-                        </h1>
-                        <div className="mt-2">
-                          <div className="flex rounded-lg shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md"></div>
-                        </div>
-                      </div>
-                      <div className="mt-8 flex gap-x-3">
-                        <NewButton
-                          type="button"
-                          variant={"destructive"}
-                          onClick={handleDelete}
-                        >
-                          Deletar
-                        </NewButton>
-                        <NewButton
-                          type="button"
-                          variant={"outline-ghost"}
-                          onClick={() =>
-                            setDeleteModal({ ...deleteModal, isOpen: false })
-                          }
-                        >
-                          Cancelar
-                        </NewButton>
-                      </div>
-                    </Form>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+      <DeleteModal
+        setDeleteModal={setDeleteModal}
+        deleteModal={deleteModal}
+        handleDelete={handleDelete}
+      />
     </article>
   );
 }
@@ -452,37 +228,265 @@ const CommentInput = React.forwardRef<
     commentFunction: (event: React.MouseEvent | React.KeyboardEvent) => void;
     formClass: string;
     avatarSize?: string;
+    padding?: string;
   } // prop types
->(({ commentFunction, formClass, avatarSize = "w-10 m-2" }, ref) => {
-  const { user } = useOutletContext<{ user: User }>();
-  return (
-    <Form className={`${formClass}`}>
-      <div className="px-6 py-10 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50">
-        <UserAvatar avatar={user.avatar} className={avatarSize} />
-        <textarea
-          name="comment"
-          className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-          placeholder="Digite um comentário..."
-          ref={ref}
-          onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-            if (event.key === "Enter" && event.metaKey) {
-              event.preventDefault();
-              commentFunction(event);
-            }
-          }}
-        />
-        <button
-          type="submit"
-          name="intent"
-          value="comment"
-          onClick={(event) => commentFunction(event)}
-          className="m-2"
+>(
+  (
+    {
+      commentFunction,
+      formClass,
+      avatarSize = "w-10 m-2",
+      padding = "px-6 py-10",
+    },
+    ref,
+  ) => {
+    const { user } = useOutletContext<{ user: User }>();
+    return (
+      <Form className={`${formClass}`}>
+        <div
+          className={`${padding} group hover:dark:border-background-600 hover:border-background-600 focus-within:dark:border-background-600 focus-within:border-background-600 focus-within:dark:border-[2px] flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50`}
         >
-          <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
-        </button>
-      </div>
-    </Form>
-  );
-});
+          <UserAvatar avatar={user.avatar} className={avatarSize} />
+          <textarea
+            name="comment"
+            className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+            placeholder="Digite um comentário..."
+            ref={ref}
+            onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+              if (event.key === "Enter" && event.metaKey) {
+                event.preventDefault();
+                commentFunction(event);
+              }
+            }}
+          />
+          <button
+            type="submit"
+            name="intent"
+            value="comment"
+            onClick={(event) => commentFunction(event)}
+            className="m-2"
+          >
+            <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
+          </button>
+        </div>
+      </Form>
+    );
+  },
+);
 
 CommentInput.displayName = "CommentInput";
+
+const CommentInfo = React.forwardRef<
+  HTMLTextAreaElement,
+  {
+    comment: Comment;
+    editSettings: {
+      isEditing: boolean;
+      commentId: string | null;
+    };
+    setEditSettings: (value: {
+      isEditing: boolean;
+      commentId: string | null;
+    }) => void;
+    disableEditButtonFunction: () => void;
+    handleEditButton: () => void;
+    editButtonIsDisabled: boolean;
+    setShowReplyInput: (value: boolean) => void;
+    setDeleteModal: (value: {
+      isOpen: boolean;
+      commentId: string | null;
+    }) => void;
+    avatarSize?: string;
+  } // prop types
+>(
+  (
+    {
+      comment,
+      editSettings,
+      setEditSettings,
+      disableEditButtonFunction,
+      handleEditButton,
+      editButtonIsDisabled,
+      setShowReplyInput,
+      setDeleteModal,
+      avatarSize = "w-10 m-2",
+    },
+    ref,
+  ) => {
+    const { user } = useOutletContext<{ user: User }>();
+    return (
+      <section className="flex flex-col items-start h-fit">
+        <div className="items-start gap-2 flex w-full">
+          <div className="flex-shrink-0">
+            <UserAvatar avatar={comment.user.avatar} className={avatarSize} />
+          </div>
+          <div className="flex flex-col w-full">
+            <span className="text-gray-500 text-base">
+              {formatName(comment.user.name)}
+            </span>
+            <span className="text-xs dark:text-gray-600 text-gray-400 mb-2">
+              {comment.created_at_human}
+            </span>
+            {editSettings.isEditing && editSettings.commentId === comment.id ? (
+              <Form method="PUT" className="w-full">
+                <div className="mt-2 w-full">
+                  <textarea
+                    ref={ref}
+                    name="edit-comment"
+                    className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+                    placeholder="Edite o comentário..."
+                    defaultValue={comment.comment}
+                    onInput={disableEditButtonFunction}
+                  />
+                </div>
+                <div className="mt-1 flex gap-x-3">
+                  <button
+                    onClick={() =>
+                      setEditSettings({ isEditing: false, commentId: null })
+                    }
+                    className="text-sm text-brand-500 hover:opacity-70"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleEditButton}
+                    className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
+                    disabled={editButtonIsDisabled}
+                  >
+                    Salvar
+                  </button>
+                </div>
+              </Form>
+            ) : (
+              <p className="dark:text-gray-300 text-gray-700 text-sm">
+                {comment.comment}
+              </p>
+            )}
+          </div>
+        </div>
+        {!(editSettings.isEditing && editSettings.commentId === comment.id) && (
+          <section className="text-xs text-brand-500 flex gap-2 ml-16 mt-1">
+            {user && (
+              <button
+                className="hover:opacity-70"
+                onClick={() => setShowReplyInput(true)}
+              >
+                Responder
+              </button>
+            )}
+            {user && user.id === comment.user.id && (
+              <button
+                className="hover:opacity-70"
+                onClick={() =>
+                  setEditSettings({ isEditing: true, commentId: comment.id })
+                }
+              >
+                Editar
+              </button>
+            )}
+            {user && user.id === comment.user.id && (
+              <button
+                onClick={() =>
+                  setDeleteModal({ isOpen: true, commentId: comment.id })
+                }
+                className="hover:text-red-500"
+              >
+                Deletar
+              </button>
+            )}
+          </section>
+        )}
+      </section>
+    );
+  },
+);
+
+CommentInfo.displayName = "CommentInfo";
+
+function DeleteModal({
+  setDeleteModal,
+  deleteModal,
+  handleDelete,
+}: {
+  setDeleteModal: (value: {
+    isOpen: boolean;
+    commentId: string | null;
+  }) => void;
+  deleteModal: { isOpen: boolean; commentId: string | null };
+  handleDelete: () => void;
+}) {
+  return (
+    <Transition appear show={deleteModal.isOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => setDeleteModal({ ...deleteModal, isOpen: false })}
+      >
+        <Transition.Child
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black/25" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-background-100 dark:bg-background-800 p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium leading-6 mb-6"
+                >
+                  Deletar comentário
+                </Dialog.Title>
+                <div className="mt-2">
+                  <Form method="PUT">
+                    <div>
+                      <h1 className="block text-sm leading-6 text-gray-800 dark:text-white">
+                        Ao confirmar, todas as respostas feitas a este
+                        comentário também serão deletadas.
+                      </h1>
+                      <div className="mt-2">
+                        <div className="flex rounded-lg shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md"></div>
+                      </div>
+                    </div>
+                    <div className="mt-8 flex gap-x-3">
+                      <NewButton
+                        type="button"
+                        variant={"destructive"}
+                        onClick={handleDelete}
+                      >
+                        Deletar
+                      </NewButton>
+                      <NewButton
+                        type="button"
+                        variant={"outline-ghost"}
+                        onClick={() =>
+                          setDeleteModal({ ...deleteModal, isOpen: false })
+                        }
+                      >
+                        Cancelar
+                      </NewButton>
+                    </div>
+                  </Form>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition>
+  );
+}
