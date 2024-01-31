@@ -116,7 +116,14 @@ function CommentCard({
       replyInputRef.current.focus();
     }
     if (editSettings.isEditing) {
-      editInputRef.current?.focus();
+      const input = editInputRef.current;
+      if (input) {
+        input.focus();
+        const inputLength = input.value.length;
+        input.selectionStart = inputLength;
+        input.selectionEnd = inputLength; // cursor no final do texto
+        input.scrollTop = input.scrollHeight; // scroll para o final do texto
+      }
     }
   }, [showReplyInput, editSettings.isEditing]);
 
@@ -367,19 +374,19 @@ const CommentInfo = React.forwardRef<
                 </div>
                 <div className="mt-1 flex gap-x-3">
                   <button
+                    onClick={handleEditButton}
+                    className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
+                    disabled={editButtonIsDisabled}
+                  >
+                    Salvar
+                  </button>
+                  <button
                     onClick={() =>
                       setEditSettings({ isEditing: false, commentId: null })
                     }
                     className="text-sm text-brand-500 hover:opacity-70"
                   >
                     Cancelar
-                  </button>
-                  <button
-                    onClick={handleEditButton}
-                    className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
-                    disabled={editButtonIsDisabled}
-                  >
-                    Salvar
                   </button>
                 </div>
               </Form>
