@@ -270,6 +270,8 @@ const CommentInput = React.forwardRef<
               if (event.key === "Enter" && event.metaKey) {
                 event.preventDefault();
                 commentFunction(event);
+              } else if (event.key === "Escape") {
+                handleClickOutside();
               }
             }}
           />
@@ -283,9 +285,6 @@ const CommentInput = React.forwardRef<
             <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
           </button>
         </Card>
-        {/* <div
-          className={`${padding} group hover:dark:border-background-600 hover:border-background-600 focus-within:dark:border-background-600 focus-within:border-background-600 flex h-16 items-center dark:bg-background-800 rounded-lg dark:border-background-700 border border-gray-200 bg-background-50`}
-        ></div> */}
       </Form>
     );
   },
@@ -354,6 +353,16 @@ const CommentInfo = React.forwardRef<
                     placeholder="Edite o comentário..."
                     defaultValue={comment.comment}
                     onInput={disableEditButtonFunction}
+                    onKeyDown={(
+                      event: React.KeyboardEvent<HTMLTextAreaElement>,
+                    ) => {
+                      if (event.key === "Enter" && event.metaKey) {
+                        event.preventDefault();
+                        handleEditButton();
+                      } else if (event.key === "Escape") {
+                        setEditSettings({ isEditing: false, commentId: null });
+                      }
+                    }}
                   />
                 </div>
                 <div className="mt-1 flex gap-x-3">
