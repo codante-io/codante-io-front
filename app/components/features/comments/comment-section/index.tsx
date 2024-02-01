@@ -36,12 +36,16 @@ export default function CommentSection({
   function handleCommentButton(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
     const comment = commentRef.current?.value;
-    if (comment) {
-      fetcher.submit(
-        { intent: "comment", commentableId, comment },
-        { method: "post" },
-      );
+
+    if (!comment || comment.trim() === "") {
+      return;
     }
+
+    fetcher.submit(
+      { intent: "comment", commentableId, comment },
+      { method: "post" },
+    );
+
     if (commentRef.current) commentRef.current.value = "";
   }
 
