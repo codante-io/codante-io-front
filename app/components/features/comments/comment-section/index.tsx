@@ -15,6 +15,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useOnClickOutside } from "~/lib/hooks/useOnClickOutside";
 import { Card } from "~/components/ui/cards/card";
 import TitleIcon from "~/components/ui/title-icon";
+import TextareaAutosize from "react-textarea-autosize";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
 
 export default function CommentSection({
   comments,
@@ -47,7 +49,7 @@ export default function CommentSection({
 
   return (
     <section className="text-start">
-      <section className="flex items-center gap-2 mt-8">
+      <section className="flex items-center gap-2 my-8">
         <TitleIcon className="w-5 h-5"></TitleIcon>
         <h3 className="text-2xl text-gray-700 dark:text-gray-50">
           Comentários
@@ -219,7 +221,7 @@ function CommentCard({
       )}
       {showReplyInput && (
         <CommentInput
-          formClass="mt-6 ml-16"
+          formClass="mt-6 sm:ml-16"
           avatarSize="w-8 m-4"
           padding="px-6 py-2"
           ref={replyInputRef}
@@ -251,7 +253,7 @@ const CommentInput = React.forwardRef<
       commentFunction,
       formClass,
       avatarSize = "w-10 m-2",
-      padding = "px-6 py-6",
+      padding = "px-6 py-4",
       setShowReplyInput,
     },
     ref,
@@ -271,10 +273,14 @@ const CommentInput = React.forwardRef<
           hover="brand-light"
           className={`${padding} group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
         >
-          <UserAvatar avatar={user.avatar} className={avatarSize} />
-          <textarea
+          {
+            <div className="hidden sm:block">
+              <UserAvatar avatar={user.avatar} className={avatarSize} />
+            </div>
+          }
+          <TextareaAutosize
             name="comment"
-            className="focus:ring-0 resize-none flex-grow border-none h-10 dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+            className="focus:ring-0 resize-none text-sm sm:text-base flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
             placeholder="Digite um comentário..."
             ref={ref}
             onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -286,7 +292,8 @@ const CommentInput = React.forwardRef<
               }
             }}
           />
-          <button
+          <NewButton
+            variant="ghost"
             type="submit"
             name="intent"
             value="comment"
@@ -294,7 +301,7 @@ const CommentInput = React.forwardRef<
             className="m-2"
           >
             <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
-          </button>
+          </NewButton>
         </Card>
       </Form>
     );
@@ -343,66 +350,69 @@ const CommentInfo = React.forwardRef<
     const { user } = useOutletContext<{ user: User }>();
     return (
       <section className="flex flex-col items-start h-fit">
-        <div className="items-start gap-2 flex w-full">
+        <div className="items-center gap-2 flex w-full">
           <div className="flex-shrink-0">
             <UserAvatar avatar={comment.user.avatar} className={avatarSize} />
           </div>
           <div className="flex flex-col w-full">
-            <span className="text-gray-500 text-base">
+            <span className="text-gray-500 text-sm sm:text-base">
               {formatName(comment.user.name)}
             </span>
-            <span className="text-xs dark:text-gray-600 text-gray-400 mb-2">
+            <span className="text-xs sm:text-xs dark:text-gray-600 text-gray-400 mb-2">
               {comment.created_at_human}
             </span>
-            {editSettings.isEditing && editSettings.commentId === comment.id ? (
-              <Form method="PUT" className="w-full">
-                <div className="mt-2 w-full">
-                  <textarea
-                    ref={ref}
-                    name="edit-comment"
-                    className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-                    placeholder="Edite o comentário..."
-                    defaultValue={comment.comment}
-                    onInput={disableEditButtonFunction}
-                    onKeyDown={(
-                      event: React.KeyboardEvent<HTMLTextAreaElement>,
-                    ) => {
-                      if (event.key === "Enter" && event.metaKey) {
-                        event.preventDefault();
-                        handleEditButton();
-                      } else if (event.key === "Escape") {
-                        setEditSettings({ isEditing: false, commentId: null });
-                      }
-                    }}
-                  />
-                </div>
-                <div className="mt-1 flex gap-x-3">
-                  <button
-                    onClick={handleEditButton}
-                    className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
-                    disabled={editButtonIsDisabled}
-                  >
-                    Salvar
-                  </button>
-                  <button
-                    onClick={() =>
-                      setEditSettings({ isEditing: false, commentId: null })
-                    }
-                    className="text-sm text-brand-500 hover:opacity-70"
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </Form>
-            ) : (
-              <p className="dark:text-gray-300 text-gray-700 text-sm">
-                {comment.comment}
-              </p>
-            )}
           </div>
         </div>
+        <section className="w-full sm:pl-16 overflow-auto break-words">
+          {editSettings.isEditing && editSettings.commentId === comment.id ? (
+            <Form method="PUT" className="w-full">
+              <div className="mt-2 w-full">
+                <textarea
+                  ref={ref}
+                  name="edit-comment"
+                  className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+                  placeholder="Edite o comentário..."
+                  defaultValue={comment.comment}
+                  onInput={disableEditButtonFunction}
+                  onKeyDown={(
+                    event: React.KeyboardEvent<HTMLTextAreaElement>,
+                  ) => {
+                    if (event.key === "Enter" && event.metaKey) {
+                      event.preventDefault();
+                      handleEditButton();
+                    } else if (event.key === "Escape") {
+                      setEditSettings({
+                        isEditing: false,
+                        commentId: null,
+                      });
+                    }
+                  }}
+                />
+              </div>
+              <div className="mt-1 flex gap-x-3">
+                <button
+                  onClick={handleEditButton}
+                  className="text-sm text-brand-500 hover:text-green-400 disabled:hover:opacity-50"
+                  disabled={editButtonIsDisabled}
+                >
+                  Salvar
+                </button>
+                <button
+                  onClick={() =>
+                    setEditSettings({ isEditing: false, commentId: null })
+                  }
+                  className="text-sm text-brand-500 hover:opacity-70"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </Form>
+          ) : (
+            <MarkdownRenderer fontSize="small" markdown={comment.comment} />
+          )}
+        </section>
         {!(editSettings.isEditing && editSettings.commentId === comment.id) && (
-          <section className="text-xs text-brand-500 flex gap-2 ml-16 mt-1">
+          <section className="text-xs text-brand-500 flex gap-2 sm:ml-16 mt-1">
             {user && (
               <button
                 className="hover:opacity-70"
