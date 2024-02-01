@@ -17,6 +17,7 @@ import { Card } from "~/components/ui/cards/card";
 import TitleIcon from "~/components/ui/title-icon";
 import TextareaAutosize from "react-textarea-autosize";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
+import toast from "react-hot-toast";
 
 export default function CommentSection({
   comments,
@@ -32,6 +33,20 @@ export default function CommentSection({
   }>();
   const fetcher = useFetcher();
   const commentRef = useRef<HTMLTextAreaElement>(null);
+  const isSubmittingOrLoading =
+    fetcher.state === "submitting" || fetcher.state === "loading";
+  const [toastId, setToastId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isSubmittingOrLoading && toastId === null) {
+      const id = toast.loading("Enviando comentário...");
+      setToastId(id);
+    } else if (!isSubmittingOrLoading && toastId !== null) {
+      toast.dismiss(toastId);
+      toast.success("Comentário enviado!");
+      setToastId(null);
+    }
+  }, [isSubmittingOrLoading, toastId]);
 
   function handleCommentButton(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
@@ -121,6 +136,10 @@ function CommentCard({
   const editInputRef = useRef<HTMLTextAreaElement>(null);
   const fetcher = useFetcher();
 
+  const [toastId, setToastId] = useState<string | null>(null);
+  const isSubmittingOrLoading =
+    fetcher.state === "submitting" || fetcher.state === "loading";
+
   useEffect(() => {
     if (showReplyInput && replyInputRef.current) {
       replyInputRef.current.focus();
@@ -135,7 +154,30 @@ function CommentCard({
         input.scrollTop = input.scrollHeight; // scroll para o final do texto
       }
     }
-  }, [showReplyInput, editSettings.isEditing]);
+
+    if (isSubmittingOrLoading && toastId === null) {
+      if (fetcher.formMethod === "PUT") {
+        const id = toast.loading("Editando comentário...");
+        setToastId(id);
+      } else if (fetcher.formMethod === "DELETE") {
+        const id = toast.loading("Deletando comentário...");
+        setToastId(id);
+      } else {
+        const id = toast.loading("Enviando comentário...");
+        setToastId(id);
+      }
+    } else if (!isSubmittingOrLoading && toastId !== null) {
+      toast.dismiss(toastId);
+      toast.success("Comentário enviado!");
+      setToastId(null);
+    }
+  }, [
+    showReplyInput,
+    editSettings.isEditing,
+    isSubmittingOrLoading,
+    toastId,
+    fetcher.formMethod,
+  ]);
 
   function replyComment(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
