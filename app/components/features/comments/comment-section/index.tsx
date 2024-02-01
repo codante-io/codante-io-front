@@ -14,6 +14,7 @@ import { NewButton, buttonVariants } from "~/components/ui/new-button";
 import { Dialog, Transition } from "@headlessui/react";
 import { useOnClickOutside } from "~/lib/hooks/useOnClickOutside";
 import { Card } from "~/components/ui/cards/card";
+import TitleIcon from "~/components/ui/title-icon";
 
 export default function CommentSection({
   comments,
@@ -46,9 +47,12 @@ export default function CommentSection({
 
   return (
     <section className="text-start">
-      <h1 className="text-gray-800 dark:text-gray-200 mt-10 mb-6 text-lg">
-        Comentários
-      </h1>
+      <section className="flex items-center gap-2 mt-8">
+        <TitleIcon className="w-5 h-5"></TitleIcon>
+        <h3 className="text-2xl text-gray-700 dark:text-gray-50">
+          Comentários
+        </h3>
+      </section>
       <section className="flex flex-col gap-4">
         {comments
           .filter((comment) => !comment.replying_to)
