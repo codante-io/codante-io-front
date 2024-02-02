@@ -90,7 +90,7 @@ export default function CommentSection({
 
       {user ? (
         <CommentInput
-          formClass="sm:mx-8 md:mx-10 mt-6"
+          formClass=" mt-6"
           ref={commentRef}
           commentFunction={handleCommentButton}
           disabled={isSubmittingOrLoading}
@@ -230,7 +230,7 @@ function CommentCard({
   return (
     <article
       id={`comment-${comment.id}`}
-      className="border px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent sm:mx-8 md:mx-10"
+      className="border px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent "
     >
       <div>
         <CommentInfo
