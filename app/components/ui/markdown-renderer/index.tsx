@@ -65,7 +65,7 @@ function H2WithDivider({
   );
 }
 
-const generateClassOverrides = (colorMode: ColorMode) => ({
+const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   h1: {
     component: H1WithDivider,
     props: {
@@ -111,7 +111,7 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
 
   p: {
     props: {
-      className: "my-4 font-light",
+      className: `${fontSize === "small" ? "text-sm" : ""} my-4 font-light`,
     },
   },
 
@@ -132,26 +132,34 @@ const generateClassOverrides = (colorMode: ColorMode) => ({
       className: "text-blue-500 no-underline hover:underline break-words",
     },
   },
+
+  span: {
+    props: {
+      className: fontSize === "small" ? "text-sm" : "",
+    },
+  },
 });
 
 export default function MarkdownRenderer({
   markdown,
   wrapperClasses = undefined,
+  fontSize,
 }: {
   markdown: string;
   wrapperClasses?: string;
+  fontSize?: "small";
 }) {
   const { colorMode } = useColorMode();
 
   return (
     <div
-      className={`prose lg:prose-lg dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
+      className={`prose  dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
         wrapperClasses ?? ""
-      }`}
+      } ${fontSize === "small" ? "lg:prose-base" : "lg:prose-lg"}`}
     >
       <Markdown
         options={{
-          overrides: generateClassOverrides(colorMode),
+          overrides: generateClassOverrides(colorMode, fontSize),
           slugify: (text) => slugify(text, { lower: true }),
         }}
       >

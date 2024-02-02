@@ -1,4 +1,5 @@
 import type { ChallengeSummary } from "./challenge.server";
+import type { Comment } from "./comments.server";
 import type { Reactions } from "./reactions.server";
 
 export type User = {
@@ -37,6 +38,7 @@ export type ChallengeUser = {
   is_solution: boolean;
   created_at: string;
   updated_at: string;
+  comments: Comment[];
 };
 
 export type UserAvatar = {
