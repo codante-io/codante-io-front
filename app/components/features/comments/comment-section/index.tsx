@@ -320,14 +320,15 @@ const CommentInput = React.forwardRef<
           className={`${padding} group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
         >
           {
-            <div className="hidden sm:block">
+            <div className="hidden sm:block self-start">
               <UserAvatar avatar={user.avatar} className={avatarSize} />
             </div>
           }
           <TextareaAutosize
             name="comment"
             className="focus:ring-0 resize-none text-sm sm:text-base flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
-            placeholder="Digite um comentário..."
+            placeholder="Escreva um comentário..."
+            title="Experimente utilizar markdown para formatar seu comentário."
             ref={ref}
             onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
               if (event.key === "Enter" && event.metaKey) {
