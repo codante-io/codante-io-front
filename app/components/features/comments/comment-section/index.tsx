@@ -93,6 +93,7 @@ export default function CommentSection({
           formClass="sm:mx-8 md:mx-10 mt-6"
           ref={commentRef}
           commentFunction={handleCommentButton}
+          disabled={isSubmittingOrLoading}
         />
       ) : (
         <div className="mt-6">
@@ -267,6 +268,7 @@ function CommentCard({
       )}
       {showReplyInput && (
         <CommentInput
+          disabled={isSubmittingOrLoading}
           formClass="mt-6 sm:ml-16"
           avatarSize="w-8 m-4"
           padding="px-6 py-2"
@@ -292,7 +294,7 @@ const CommentInput = React.forwardRef<
     avatarSize?: string;
     padding?: string;
     setShowReplyInput?: React.Dispatch<React.SetStateAction<boolean>>;
-  } // prop types
+  } & React.ComponentPropsWithRef<typeof TextareaAutosize>
 >(
   (
     {
@@ -301,6 +303,7 @@ const CommentInput = React.forwardRef<
       avatarSize = "w-10 m-2",
       padding = "px-6 py-4",
       setShowReplyInput,
+      ...props
     },
     ref,
   ) => {
@@ -325,6 +328,7 @@ const CommentInput = React.forwardRef<
             </div>
           }
           <TextareaAutosize
+            {...props}
             name="comment"
             className="focus:ring-0 resize-none text-sm sm:text-base flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
             placeholder="Escreva um comentário..."
@@ -345,9 +349,9 @@ const CommentInput = React.forwardRef<
             name="intent"
             value="comment"
             onClick={(event) => commentFunction(event)}
-            className="m-2"
+            className="m-2 hover:opacity-70"
           >
-            <FiSend className="text-brand-500 hover:opacity-70 text-xl" />
+            <FiSend className="text-brand-500  text-xl" />
           </NewButton>
         </Card>
       </Form>
@@ -414,7 +418,7 @@ const CommentInfo = React.forwardRef<
           {editSettings.isEditing && editSettings.commentId === comment.id ? (
             <Form method="PUT" className="w-full">
               <div className="mt-2 w-full">
-                <textarea
+                <TextareaAutosize
                   ref={ref}
                   name="edit-comment"
                   className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"

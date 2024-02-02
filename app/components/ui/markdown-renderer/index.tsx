@@ -155,7 +155,7 @@ export default function MarkdownRenderer({
     <div
       className={`prose  dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
         wrapperClasses ?? ""
-      } ${fontSize === "small" ? "lg:prose-xs" : "lg:prose-lg"}`}
+      } ${fontSize === "small" ? "lg:prose-base" : "lg:prose-lg"}`}
     >
       <Markdown
         options={{
