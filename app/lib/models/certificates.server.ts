@@ -67,14 +67,16 @@ export async function getCertificateBySlug(request: Request, slug: string) {
   return certificate;
 }
 
-export async function getCertificateById(
-  request: Request,
-  id: string,
-): Promise<Certificate> {
+export async function getCertificateById(id: string): Promise<Certificate> {
+  // console.log(id);
   const certificate = await axios
     .get(`${environment().API_HOST}/certificates/${id}`)
-    .then((res) => res.data.data)
+    .then((res) => {
+      // console.log(res);
+      return res.data.data;
+    })
     .catch((error) => {
+      // console.log(error);
       return {
         error:
           error?.response?.data?.message ||

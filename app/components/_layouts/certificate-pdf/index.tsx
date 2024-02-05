@@ -1,33 +1,14 @@
 import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
 import { formatDate } from "~/lib/utils/format-date";
+import { formatName } from "~/lib/utils/format-name";
 
 Font.register({
-  family: "Alex Brush",
-  src: "/fonts/alexbrush-cursive.ttf",
-  fontStyle: "normal",
-  fontWeight: "normal",
-});
-
-Font.register({
-  family: "Roboto Condensed",
-  src: "/fonts/roboto-condensed.ttf",
-  fontStyle: "normal",
-  fontWeight: "normal",
-});
-
-Font.register({
-  family: "Istok Web",
+  family: "Roboto",
   fonts: [
-    { src: "/fonts/IstokWeb-Regular.ttf" }, // font-style: normal, font-weight: normal
-    { src: "/fonts/IstokWeb-Bold.ttf", fontWeight: "bold" },
+    { src: "/fonts/Roboto-Regular.ttf" }, // font-style: normal, font-weight: normal
+    { src: "/fonts/Roboto-Light.ttf", fontWeight: "light" },
+    { src: "/fonts/Roboto-Medium.ttf", fontWeight: "medium" },
   ],
-});
-
-Font.register({
-  family: "Rubik",
-  src: "/fonts/rubik-regular.ttf",
-  fontStyle: "normal",
-  fontWeight: "normal",
 });
 
 // Create Document Component
@@ -36,173 +17,162 @@ export default function CertificatePDF({
   date,
   tags,
   title,
+  validationLink,
+  submissionLink,
 }: {
   username: string;
   date: string;
   tags: string[];
   title: string;
+  validationLink: string;
+  submissionLink: string;
 }) {
   return (
     <Document>
-      <Page
-        orientation="landscape"
-        size="A4"
-        style={{ fontFamily: "Istok Web" }}
-      >
+      <Page orientation="landscape" size="A4" style={{ fontFamily: "Roboto" }}>
         <View
           style={{
             width: "100%",
             height: "100%",
-            border: "1px solid black",
-            backgroundColor: "#1E2B38",
-            position: "relative",
+            backgroundColor: "white",
+            color: "#666666",
           }}
         >
-          <Image
-            src="/img/logobackground.png"
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "absolute",
-            }}
-          />
           <View
             style={{
               height: "100%",
-              margin: "25px",
+              margin: "35px",
               backgroundColor: "white",
-              borderRadius: "5px",
+              border: "2px solid #D6D6D6",
+              padding: "35px",
             }}
           >
-            <Image
-              src="/img/codante-certificado-logo.png"
-              style={{
-                width: "150px",
-                height: "auto",
-                margin: "10px",
-              }}
-            />
-            <Text
-              style={{
-                marginTop: "20px",
-                textAlign: "center",
-                fontSize: "48px",
-                fontFamily: "Alex Brush",
-              }}
-            >
-              Certificado de conclusão
-            </Text>
-            <Text
-              style={{
-                textAlign: "left",
-                marginHorizontal: "20px",
-                fontSize: "14px",
-                marginTop: "40px",
-              }}
-            >
-              O presente certificado é conferido a
-            </Text>
-            <View
-              style={{
-                textAlign: "center",
-                borderBottom: "1px solid black",
-                width: "50%",
-                margin: "0 auto",
-                marginVertical: "20px",
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontSize: "18px",
-                  fontFamily: "Roboto Condensed",
-                  textTransform: "uppercase",
-                  marginTop: "16px",
-                }}
-              >
-                {username}
-              </Text>
-            </View>
-            <View
-              style={{
-                fontSize: "14px",
-                display: "flex",
-                flexWrap: "wrap",
-                flexDirection: "row",
-                marginHorizontal: "20px",
-                marginTop: "20px",
-                lineHeight: "2",
-              }}
-            >
-              <Text>Em reconhecimento pela conclusão </Text>
-              <Text>do projeto </Text>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  color: "#5282FF",
-                }}
-              >
-                {title}{" "}
-              </Text>
-              <Text>que abordou, </Text>
-              <Text>de forma prática, </Text>
-              <Text>
-                {tags.length > 1 ? "as tecnologias " : "a tecnologia "}
-              </Text>
-              {tags.map((tag, index) => (
-                <Text key={index} style={{ fontWeight: "semibold" }}>
-                  {tag}
-                  {index === tags.length - 2
-                    ? " e "
-                    : index < tags.length - 1
-                    ? ", "
-                    : "."}
-                </Text>
-              ))}
-            </View>
             <View
               style={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginHorizontal: "100px",
-                marginTop: "100px",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: "15px",
               }}
             >
-              <View
+              <Text
                 style={{
-                  borderTop: "1px solid black",
-                  width: "200px",
-                  textAlign: "center",
-                  fontFamily: "Rubik",
-                  fontSize: "12px",
-                  paddingTop: "10px",
+                  fontSize: "52px",
+                  fontWeight: "light",
                 }}
               >
-                <Text>Icaro Harry</Text>
+                Certificado
+              </Text>
+              <Image
+                src="/img/codante-certificado-logo.png"
+                style={{
+                  width: "172px",
+                  height: "auto",
+                }}
+              />
+            </View>
+            <View
+              style={{
+                marginTop: "20px",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <View>
+                <Text style={{ fontSize: "11px" }}>Certificamos que</Text>
+                <Text
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "medium",
+                    marginVertical: "8px",
+                  }}
+                >
+                  {formatName(username)}
+                </Text>
+                <Text style={{ fontSize: "11px" }}>
+                  participou, completou e submeteu
+                </Text>
+                <Text style={{ fontSize: "14px", marginVertical: "5px" }}>
+                  {`O Projeto `}
+                  <Text
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: "medium",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {title}
+                  </Text>
+                </Text>
+                <Text
+                  style={{
+                    fontSize: "12px",
+                    maxWidth: "55%",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {`oferecido e organizado pela CODANTE EDUCAÇÃO LTDA (Codante.io)
+                  na modalidade online. A submissão final do projeto ocorreu em ${formatDate(
+                    date,
+                  )} e os principais conteúdos abordados nesse projeto foram:`}
+                </Text>
+                {tags.map((tag) => (
+                  <View
+                    key={tag}
+                    style={{
+                      flexDirection: "row",
+                      fontSize: "12px",
+                      fontWeight: "medium",
+                    }}
+                  >
+                    <Text style={{ marginRight: 8 }}>•</Text>
+                    <Text>{tag}</Text>
+                  </View>
+                ))}
               </View>
               <View
                 style={{
-                  borderTop: "1px solid black",
-                  width: "200px",
-                  textAlign: "center",
-                  fontFamily: "Rubik",
-                  fontSize: "12px",
-                  paddingTop: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
                 }}
               >
-                <Text>Roberto Cestari</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                    gap: "5px",
+                  }}
+                >
+                  <Text style={{ fontSize: "8px" }}>Link da submissão:</Text>
+                  <Image
+                    style={{ width: "75px", height: "auto" }}
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${submissionLink}`}
+                  />
+                </View>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    alignItems: "flex-end",
+                    gap: "5px",
+                  }}
+                >
+                  <Text style={{ fontSize: "8px" }}>Link de validação</Text>
+                  <Image
+                    style={{ width: "75px", height: "auto" }}
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${validationLink}`}
+                  />
+                </View>
               </View>
             </View>
-            <Text
-              style={{
-                textAlign: "center",
-                marginTop: "50px",
-                fontSize: "12px",
-              }}
-            >
-              {formatDate(date)}
-            </Text>
           </View>
         </View>
       </Page>
