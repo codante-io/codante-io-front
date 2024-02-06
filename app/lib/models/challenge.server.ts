@@ -337,6 +337,7 @@ export async function getChallengeUsers(
       if (e.response.status === 404) {
         return null;
       }
+      console.error(e); // eslint-disable-line
       throw new Error("Erro ao buscar as submissões do mini-projeto");
     });
   return challenge;
