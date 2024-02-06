@@ -112,7 +112,7 @@ export default function CertificadoId() {
             </span>
           </p>
 
-          <p className="text-gray-500 sm:text-base text-sm mb-2 gap-1 flex">
+          <div className="text-gray-500 sm:text-base text-sm mb-2 gap-1 flex">
             Compartilhar:{" "}
             <div className="flex items-center justify-start w-full gap-1">
               <TwitterShareButton
@@ -147,7 +147,7 @@ export default function CertificadoId() {
                 </div>
               </WhatsappShareButton>
             </div>
-          </p>
+          </div>
 
           <Link
             className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
