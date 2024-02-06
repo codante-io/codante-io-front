@@ -1,4 +1,12 @@
-import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  Image,
+  Font,
+  Link,
+} from "@react-pdf/renderer";
 import { formatDate } from "~/lib/utils/format-date";
 import { formatName } from "~/lib/utils/format-name";
 import cestari from "./assets/cestari.png";
@@ -67,6 +75,7 @@ export default function CertificatePDF({
                 style={{
                   fontSize: "52px",
                   fontWeight: "light",
+                  marginLeft: "-4.5px",
                 }}
               >
                 Certificado
@@ -102,7 +111,7 @@ export default function CertificatePDF({
                 <Text style={{ fontSize: "11px" }}>
                   participou, completou e submeteu
                 </Text>
-                <Text style={{ fontSize: "14px", marginVertical: "5px" }}>
+                <Text style={{ fontSize: "14px", marginVertical: "15px" }}>
                   {`O Projeto `}
                   <Text
                     style={{
@@ -116,21 +125,25 @@ export default function CertificatePDF({
                 </Text>
                 <Text
                   style={{
-                    marginTop: "10px",
                     fontSize: "12px",
                     maxWidth: "55%",
-                    marginBottom: "10px",
                     lineHeight: "1.5",
                   }}
                 >
                   {`oferecido e organizado pela CODANTE EDUCAÇÃO LTDA (Codante.io)
                   na modalidade online. A submissão final do projeto ocorreu em `}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: "12px",
+                    maxWidth: "55%",
+                    lineHeight: "1.5",
+                    marginBottom: "15px",
+                  }}
+                >
                   <Text
                     style={{
-                      fontSize: "12px",
                       fontWeight: "medium",
-                      maxWidth: "55%",
-                      marginBottom: "10px",
                     }}
                   >
                     {formatDate(date)}
@@ -167,7 +180,12 @@ export default function CertificatePDF({
                     gap: "5px",
                   }}
                 >
-                  <Text style={{ fontSize: "8px" }}>Link da submissão:</Text>
+                  <Link
+                    src={submissionLink}
+                    style={{ fontSize: "8px", color: "#666666" }}
+                  >
+                    Link da submissão:
+                  </Link>
                   <Image
                     style={{ width: "75px", height: "auto" }}
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${submissionLink}`}
@@ -182,7 +200,12 @@ export default function CertificatePDF({
                     gap: "5px",
                   }}
                 >
-                  <Text style={{ fontSize: "8px" }}>Link de validação:</Text>
+                  <Link
+                    src={validationLink}
+                    style={{ fontSize: "8px", color: "#666666" }}
+                  >
+                    Link de validação:
+                  </Link>
                   <Image
                     style={{ width: "75px", height: "auto" }}
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${validationLink}`}
