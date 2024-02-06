@@ -41,6 +41,12 @@ import invariant from "tiny-invariant";
 import { NewButton } from "~/components/ui/new-button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
+import {
+  createComment,
+  deleteComment,
+  updateComment,
+} from "~/lib/models/comments.server";
+import CommentSection from "~/components/features/comments/comment-section";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -130,13 +136,31 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  let formData = await request.formData();
-  let submissionUrl = formData.get("submission_url") as string;
+  const formData = await request.formData();
 
   const intent = formData.get("intent");
   switch (intent) {
     case "updateSubmission":
+      const submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
+    case "comment":
+      const commentableId = formData.get("commentableId") as string;
+      const comment = formData.get("comment") as string;
+      const replyingTo = formData.get("replyingTo") as string | null;
+      return createComment(
+        request,
+        commentableId,
+        "ChallengeUser",
+        comment,
+        replyingTo,
+      );
+    case "delete-comment":
+      const commentId = formData.get("commentId") as string;
+      return deleteComment(request, commentId);
+    case "edit-comment":
+      const editId = formData.get("commentId") as string;
+      const editComment = formData.get("comment") as string;
+      return updateComment(request, editId, editComment);
   }
 }
 
@@ -193,6 +217,11 @@ export default function MySolution() {
         user={user}
         challengeSlug={challenge.slug}
         sendoToSolutionPage
+      />
+      <CommentSection
+        comments={submissionUser.comments}
+        commentableId={submissionUser.id}
+        redirectTo={location.split("https://codante.io")[1]}
       />
     </div>
   );

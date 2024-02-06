@@ -1,5 +1,6 @@
 import type { Certificate } from "./certificates.server";
 import type { ChallengeSummary } from "./challenge.server";
+import type { Comment } from "./comments.server";
 import type { Reactions } from "./reactions.server";
 
 export type User = {
@@ -39,6 +40,7 @@ export type ChallengeUser = {
   created_at: string;
   updated_at: string;
   certificate: Certificate | null;
+  comments: Comment[];
 };
 
 export type UserAvatar = {

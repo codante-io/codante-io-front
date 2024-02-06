@@ -45,6 +45,7 @@
     "react-icons": "^4.11.0",
     "react-responsive": "^9.0.2",
     "react-share": "^5.0.3",
+    "react-textarea-autosize": "^8.5.3",
     "react-top-loading-bar": "^2.3.1",
     "remix-auth": "^3.6.0",
     "remix-auth-github": "^1.6.0",
