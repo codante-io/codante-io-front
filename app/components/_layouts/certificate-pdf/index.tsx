@@ -1,6 +1,8 @@
 import { Page, Text, View, Document, Image, Font } from "@react-pdf/renderer";
 import { formatDate } from "~/lib/utils/format-date";
 import { formatName } from "~/lib/utils/format-name";
+import cestari from "./assets/cestari.png";
+import icaro from "./assets/icaro.png";
 
 Font.register({
   family: "Roboto",
@@ -19,6 +21,8 @@ export default function CertificatePDF({
   title,
   validationLink,
   submissionLink,
+  createdAt,
+  id,
 }: {
   username: string;
   date: string;
@@ -26,6 +30,8 @@ export default function CertificatePDF({
   title: string;
   validationLink: string;
   submissionLink: string;
+  createdAt: string;
+  id: string;
 }) {
   return (
     <Document>
@@ -110,15 +116,26 @@ export default function CertificatePDF({
                 </Text>
                 <Text
                   style={{
+                    marginTop: "10px",
                     fontSize: "12px",
                     maxWidth: "55%",
                     marginBottom: "10px",
+                    lineHeight: "1.5",
                   }}
                 >
                   {`oferecido e organizado pela CODANTE EDUCAÇÃO LTDA (Codante.io)
-                  na modalidade online. A submissão final do projeto ocorreu em ${formatDate(
-                    date,
-                  )} e os principais conteúdos abordados nesse projeto foram:`}
+                  na modalidade online. A submissão final do projeto ocorreu em `}
+                  <Text
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "medium",
+                      maxWidth: "55%",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {formatDate(date)}
+                  </Text>
+                  {` e os principais conteúdos abordados nesse projeto foram:`}
                 </Text>
                 {tags.map((tag) => (
                   <View
@@ -165,7 +182,7 @@ export default function CertificatePDF({
                     gap: "5px",
                   }}
                 >
-                  <Text style={{ fontSize: "8px" }}>Link de validação</Text>
+                  <Text style={{ fontSize: "8px" }}>Link de validação:</Text>
                   <Image
                     style={{ width: "75px", height: "auto" }}
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${validationLink}`}
@@ -173,6 +190,71 @@ export default function CertificatePDF({
                 </View>
               </View>
             </View>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                fontSize: "10px",
+                marginTop: "100px",
+                gap: "125px",
+              }}
+            >
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "150px",
+                }}
+              >
+                <Image
+                  style={{
+                    marginBottom: "-20px",
+                    width: "145px",
+                    height: "auto",
+                  }}
+                  src={icaro}
+                />
+                <Text style={{ fontWeight: "medium", textAlign: "center" }}>
+                  Prof. Ícaro Pinto Coelho Harry
+                </Text>
+                <Text style={{ textAlign: "center" }}>
+                  Coordenador e Diretor Acadêmico do Codante.io
+                </Text>
+              </View>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "150px",
+                }}
+              >
+                <Image style={{ marginBottom: "-20px" }} src={cestari} />
+                <Text style={{ fontWeight: "medium", textAlign: "center" }}>
+                  Prof. Roberto Tagliari Cestari
+                </Text>
+                <Text style={{ textAlign: "center" }}>
+                  Coordenador e Diretor Acadêmico do Codante.io
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "8px",
+              marginTop: "-25px",
+              marginBottom: "15px",
+            }}
+          >
+            <Text>{`Certificado emitido em: ${formatDate(createdAt)}`} </Text>
+            <Text>
+              {`Código de validação: `}
+              <Text style={{ fontWeight: "medium" }}>{id}</Text>
+            </Text>
           </View>
         </View>
       </Page>

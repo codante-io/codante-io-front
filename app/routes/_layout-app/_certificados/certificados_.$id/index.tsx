@@ -37,11 +37,11 @@ export default function CertificadoId() {
   const { certificate } = useLoaderData<typeof loader>();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const location = `https://codante.io/certificados/${certificate.id}`;
-  const submissionLink = `/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`;
 
   useEffect(() => {
     async function generatePdf() {
       if (!pdfUrl) {
+        const submissionLink = `https://codante.io/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`;
         const blob = await pdf(
           <CertificatePDF
             username={certificate.user.name}
@@ -50,6 +50,8 @@ export default function CertificadoId() {
             date={certificate.metadata.end_date}
             validationLink={location}
             submissionLink={submissionLink}
+            createdAt={certificate.created_at}
+            id={certificate.id}
           />,
         ).toBlob();
         const url = URL.createObjectURL(blob);
@@ -57,7 +59,7 @@ export default function CertificadoId() {
       }
     }
     generatePdf();
-  }, [pdfUrl, certificate, location, submissionLink]);
+  }, [pdfUrl, certificate, location]);
 
   if (!certificate.certifiable_id || certificate.status !== "published") {
     return (
@@ -149,7 +151,7 @@ export default function CertificadoId() {
 
           <Link
             className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
-            to={submissionLink}
+            to={`/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`}
           >
             Ver submissão
           </Link>
@@ -158,9 +160,6 @@ export default function CertificadoId() {
             {pdfUrl ? "Baixar certificado" : "Preparando download"}
           </Button>
         </Card>
-        {/* <img
-        src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${location}`}
-      /> */}
       </div>
     </div>
   );

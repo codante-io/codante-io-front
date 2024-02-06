@@ -16,6 +16,7 @@ export type Certificate = {
     certifiable_source_name: string;
     certifiable_slug: string;
   };
+  created_at: string;
 };
 
 export async function requestCertificate(
