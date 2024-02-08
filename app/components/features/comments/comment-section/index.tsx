@@ -1,9 +1,4 @@
-import {
-  Form,
-  useFetcher,
-  useNavigate,
-  useOutletContext,
-} from "@remix-run/react";
+import { useFetcher, useNavigate, useOutletContext } from "@remix-run/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import type { Comment } from "~/lib/models/comments.server";
 import type { User } from "~/lib/models/user.server";
@@ -58,7 +53,10 @@ export default function CommentSection({
 
     fetcher.submit(
       { intent: "comment", commentableId, comment },
-      { method: "post" },
+      {
+        method: "post",
+        action: "/comments?index",
+      },
     );
 
     if (commentRef.current) commentRef.current.value = "";
@@ -138,13 +136,14 @@ function CommentCard({
   const fetcher = useFetcher();
 
   const [toastId, setToastId] = useState<string | null>(null);
-  const isSubmittingOrLoading =
+  let isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
 
   useEffect(() => {
     if (showReplyInput && replyInputRef.current) {
       replyInputRef.current.focus();
     }
+
     if (editSettings.isEditing) {
       const input = editInputRef.current;
       if (input) {
@@ -191,7 +190,10 @@ function CommentCard({
           comment: inputedComment,
           replyingTo: comment.id,
         },
-        { method: "post" },
+        {
+          method: "post",
+          action: "/comments?index",
+        },
       );
       setShowReplyInput(false);
     }
@@ -203,7 +205,10 @@ function CommentCard({
         intent: "delete-comment",
         commentId: deleteModal.commentId,
       },
-      { method: "delete" },
+      {
+        method: "delete",
+        action: "/comments?index",
+      },
     );
     setDeleteModal({ ...deleteModal, isOpen: false });
   }
@@ -217,7 +222,10 @@ function CommentCard({
           commentId: editSettings.commentId,
           comment: inputedComment,
         },
-        { method: "put" },
+        {
+          method: "put",
+          action: "/comments?index",
+        },
       );
       setEditSettings({ isEditing: false, commentId: null });
     }
@@ -317,7 +325,7 @@ const CommentInput = React.forwardRef<
     useOnClickOutside(formRef, handleClickOutside);
 
     return (
-      <Form ref={formRef} className={`${formClass}`}>
+      <form ref={formRef} className={`${formClass}`}>
         <Card
           hover="brand-light"
           className={`${padding} group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
@@ -354,7 +362,7 @@ const CommentInput = React.forwardRef<
             <FiSend className="text-brand-500  text-xl" />
           </NewButton>
         </Card>
-      </Form>
+      </form>
     );
   },
 );
@@ -416,7 +424,7 @@ const CommentInfo = React.forwardRef<
         </div>
         <section className="w-full sm:pl-16 overflow-auto break-words">
           {editSettings.isEditing && editSettings.commentId === comment.id ? (
-            <Form method="PUT" className="w-full">
+            <form method="PUT" className="w-full">
               <div className="mt-2 w-full">
                 <TextareaAutosize
                   ref={ref}
@@ -457,7 +465,7 @@ const CommentInfo = React.forwardRef<
                   Cancelar
                 </button>
               </div>
-            </Form>
+            </form>
           ) : (
             <MarkdownRenderer fontSize="small" markdown={comment.comment} />
           )}
@@ -550,7 +558,7 @@ function DeleteModal({
                   Deletar comentário
                 </Dialog.Title>
                 <div className="mt-2">
-                  <Form method="PUT">
+                  <form method="PUT">
                     <div>
                       <h1 className="block text-sm leading-6 text-gray-800 dark:text-white">
                         Ao confirmar, todas as respostas feitas a este
@@ -578,7 +586,7 @@ function DeleteModal({
                         Cancelar
                       </NewButton>
                     </div>
-                  </Form>
+                  </form>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

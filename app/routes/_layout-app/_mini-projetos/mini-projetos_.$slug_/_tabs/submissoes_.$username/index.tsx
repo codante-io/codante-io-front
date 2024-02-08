@@ -41,11 +41,6 @@ import invariant from "tiny-invariant";
 import { NewButton } from "~/components/ui/new-button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
-import {
-  createComment,
-  deleteComment,
-  updateComment,
-} from "~/lib/models/comments.server";
 import CommentSection from "~/components/features/comments/comment-section";
 
 export function meta({ matches, params, data }: MetaArgs) {
@@ -143,24 +138,24 @@ export async function action({
     case "updateSubmission":
       const submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
-    case "comment":
-      const commentableId = formData.get("commentableId") as string;
-      const comment = formData.get("comment") as string;
-      const replyingTo = formData.get("replyingTo") as string | null;
-      return createComment(
-        request,
-        commentableId,
-        "ChallengeUser",
-        comment,
-        replyingTo,
-      );
-    case "delete-comment":
-      const commentId = formData.get("commentId") as string;
-      return deleteComment(request, commentId);
-    case "edit-comment":
-      const editId = formData.get("commentId") as string;
-      const editComment = formData.get("comment") as string;
-      return updateComment(request, editId, editComment);
+    // case "comment":
+    //   const commentableId = formData.get("commentableId") as string;
+    //   const comment = formData.get("comment") as string;
+    //   const replyingTo = formData.get("replyingTo") as string | null;
+    //   return createComment(
+    //     request,
+    //     commentableId,
+    //     "ChallengeUser",
+    //     comment,
+    //     replyingTo,
+    //   );
+    // case "delete-comment":
+    //   const commentId = formData.get("commentId") as string;
+    //   return deleteComment(request, commentId);
+    // case "edit-comment":
+    //   const editId = formData.get("commentId") as string;
+    //   const editComment = formData.get("comment") as string;
+    //   return updateComment(request, editId, editComment);
   }
 }
 
