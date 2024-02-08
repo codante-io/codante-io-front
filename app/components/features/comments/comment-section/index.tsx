@@ -18,10 +18,12 @@ export default function CommentSection({
   comments,
   commentableId,
   redirectTo,
+  commentableType,
 }: {
   comments: Comment[];
   commentableId: number;
   redirectTo: string;
+  commentableType: "ChallengeUser" | "Lesson";
 }) {
   const { user } = useOutletContext<{
     user: User;
@@ -52,7 +54,7 @@ export default function CommentSection({
     }
 
     fetcher.submit(
-      { intent: "comment", commentableId, comment },
+      { intent: "comment", commentableId, comment, commentableType },
       {
         method: "post",
         action: "/comments?index",
@@ -82,6 +84,7 @@ export default function CommentSection({
                 (reply) => reply.replying_to === comment.id,
               )}
               key={comment.id}
+              commentableType={commentableType}
             />
           ))}
       </section>
@@ -110,9 +113,11 @@ export default function CommentSection({
 function CommentCard({
   comment,
   replies,
+  commentableType,
 }: {
   comment: Comment;
   replies: Comment[];
+  commentableType: "ChallengeUser" | "Lesson";
 }) {
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [isEditButtonDisabled, setIsEditButtonDisabled] = useState(false);
@@ -189,6 +194,7 @@ function CommentCard({
           commentableId: comment.commentable_id,
           comment: inputedComment,
           replyingTo: comment.id,
+          commentableType,
         },
         {
           method: "post",

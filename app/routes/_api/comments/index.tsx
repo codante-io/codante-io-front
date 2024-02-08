@@ -14,6 +14,7 @@ export async function action({ request }: { request: Request }) {
 
   const commentId = formData.get("commentId") as string;
   const commentableId = formData.get("commentableId") as string;
+  const commentableType = formData.get("commentableType") as string;
   const comment = formData.get("comment") as string;
   const replyingTo = formData.get("replyingTo") as string | null;
   const editId = formData.get("commentId") as string;
@@ -24,7 +25,7 @@ export async function action({ request }: { request: Request }) {
       return createComment(
         request,
         commentableId,
-        "ChallengeUser",
+        commentableType,
         comment,
         replyingTo,
       );
