@@ -136,6 +136,7 @@ function CommentCard({
     commentId: null,
   });
 
+  const [successMessage, setSuccessMessage] = useState("");
   const replyInputRef = useRef<HTMLTextAreaElement>(null);
   const editInputRef = useRef<HTMLTextAreaElement>(null);
   const fetcher = useFetcher();
@@ -164,19 +165,23 @@ function CommentCard({
       if (fetcher.formMethod === "PUT") {
         const id = toast.loading("Editando comentário...");
         setToastId(id);
+        setSuccessMessage("Comentário editado!");
       } else if (fetcher.formMethod === "DELETE") {
         const id = toast.loading("Deletando comentário...");
         setToastId(id);
+        setSuccessMessage("Comentário deletado!");
       } else {
         const id = toast.loading("Enviando comentário...");
         setToastId(id);
+        setSuccessMessage("Comentário enviado!");
       }
     } else if (!isSubmittingOrLoading && toastId !== null) {
       toast.dismiss(toastId);
-      toast.success("Comentário enviado!");
+      toast.success(successMessage);
       setToastId(null);
     }
     return () => {
+      // quando for DELETE e nao for uma resposta.
       if (
         toastId &&
         isSubmittingOrLoading &&
@@ -184,7 +189,7 @@ function CommentCard({
         !replies.find((reply) => reply.replying_to === comment.id)
       ) {
         toast.dismiss(toastId);
-        toast.success("Comentário enviado!");
+        toast.success("Comentário deletado!");
         setToastId(null);
       }
     };
