@@ -47,6 +47,7 @@ export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
   const parentMeta = matches
     .flatMap((match) => match.meta ?? [])
+    .map((meta, index) => ({ ...meta, key: index }))
     .filter((meta) => !("title" in meta))
     .filter((meta) => (meta as any).name !== "description")
     .filter((meta) => (meta as any).property !== "og:title")
