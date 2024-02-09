@@ -21,7 +21,7 @@ export default function CommentSection({
   commentableType,
 }: {
   comments: Comment[];
-  commentableId: number;
+  commentableId: string | number;
   redirectTo: string;
   commentableType: "ChallengeUser" | "Lesson";
 }) {

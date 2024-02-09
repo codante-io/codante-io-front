@@ -12,6 +12,7 @@ import type { User } from "~/lib/models/user.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import Breadcrumbs from "./workshop-breadcrumbs";
 import WorkshopResourcesMenuButton from "./workshop-resources-menu-button";
+import CommentSection from "~/components/features/comments/comment-section";
 
 type MainContentProps = {
   setIsSidebarOpen: (value: boolean) => void;
@@ -100,6 +101,12 @@ export default function MainContent({
           <MarkdownRenderer markdown={lesson.content} />
         </div>
       )}
+      <CommentSection
+        comments={lesson.comments}
+        commentableId={lesson.id}
+        commentableType="Lesson"
+        redirectTo={`/workshops/${workshop.slug}/${lesson.slug}`}
+      />
     </section>
   );
 }

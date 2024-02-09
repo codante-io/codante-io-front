@@ -1,6 +1,7 @@
 import axios from "axios";
 import { currentToken } from "~/lib/services/auth.server";
 import { environment } from "./environment.server";
+import type { Comment } from "./comments.server";
 
 export type Lesson = {
   id: string;
@@ -18,6 +19,7 @@ export type Lesson = {
   user_completed?: boolean;
   user_can_view?: boolean;
   available_to?: AvailableTo;
+  comments: Comment[];
 };
 
 export type AvailableTo = "all" | "logged_in" | "pro";
