@@ -176,6 +176,19 @@ function CommentCard({
       toast.success("Comentário enviado!");
       setToastId(null);
     }
+    return () => {
+      if (
+        toastId &&
+        isSubmittingOrLoading &&
+        fetcher.formMethod === "DELETE" &&
+        !replies.find((reply) => reply.replying_to === comment.id)
+      ) {
+        toast.dismiss(toastId);
+        toast.success("Comentário enviado!");
+        setToastId(null);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     showReplyInput,
     editSettings.isEditing,
