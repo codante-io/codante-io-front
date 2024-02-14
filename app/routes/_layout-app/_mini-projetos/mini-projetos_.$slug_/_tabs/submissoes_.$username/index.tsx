@@ -139,24 +139,6 @@ export async function action({
     case "updateSubmission":
       const submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
-    // case "comment":
-    //   const commentableId = formData.get("commentableId") as string;
-    //   const comment = formData.get("comment") as string;
-    //   const replyingTo = formData.get("replyingTo") as string | null;
-    //   return createComment(
-    //     request,
-    //     commentableId,
-    //     "ChallengeUser",
-    //     comment,
-    //     replyingTo,
-    //   );
-    // case "delete-comment":
-    //   const commentId = formData.get("commentId") as string;
-    //   return deleteComment(request, commentId);
-    // case "edit-comment":
-    //   const editId = formData.get("commentId") as string;
-    //   const editComment = formData.get("comment") as string;
-    //   return updateComment(request, editId, editComment);
   }
 }
 
