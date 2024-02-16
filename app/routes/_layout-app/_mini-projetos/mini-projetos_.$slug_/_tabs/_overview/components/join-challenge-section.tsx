@@ -7,6 +7,7 @@ import { BsDiscord } from "react-icons/bs";
 import { NewButton } from "~/components/ui/new-button";
 import { Card } from "~/components/ui/cards/card";
 import { NewInput } from "~/components/ui/new-input";
+import party from "party-js";
 
 export default function JoinChallengeSection({
   className = "",
@@ -172,6 +173,26 @@ function StepForm({
             {step.button}
           </LoadingButton>
         </div>
+      );
+    }
+
+    if (step.intent === "finish-challenge") {
+      return (
+        <LoadingButton
+          size="sm"
+          status={navigation.state}
+          type="submit"
+          className="mt-4"
+          name="intent"
+          value={step.intent}
+          onClick={({ target }) =>
+            party.confetti(target as HTMLElement, {
+              count: party.variation.range(40, 250),
+            })
+          }
+        >
+          {step.button}
+        </LoadingButton>
       );
     }
 
