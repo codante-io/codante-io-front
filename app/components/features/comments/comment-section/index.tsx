@@ -73,6 +73,7 @@ export default function CommentSection({
         <h3 className="text-2xl text-gray-700 dark:text-gray-50">
           Comentários
         </h3>
+        <span className="self-end dark:text-gray-500 text-sm text-gray-300">{`(${comments.length})`}</span>
       </section>
       <section className="flex flex-col gap-4">
         {comments
