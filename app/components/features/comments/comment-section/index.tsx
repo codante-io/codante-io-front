@@ -73,6 +73,7 @@ export default function CommentSection({
         <h3 className="text-2xl text-gray-700 dark:text-gray-50">
           Comentários
         </h3>
+        <span className="text-lg self-end dark:text-gray-500 text-gray-400">{`(${comments.length})`}</span>
       </section>
       <section className="flex flex-col gap-4">
         {comments
@@ -260,9 +261,9 @@ function CommentCard({
   }
 
   return (
-    <article
+    <Card
       id={`comment-${comment.id}`}
-      className="border px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent "
+      className="px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent "
     >
       <div>
         <CommentInfo
@@ -314,7 +315,7 @@ function CommentCard({
         deleteModal={deleteModal}
         handleDelete={handleDelete}
       />
-    </article>
+    </Card>
   );
 }
 
@@ -352,7 +353,7 @@ const CommentInput = React.forwardRef<
       <form ref={formRef} className={`${formClass}`}>
         <Card
           hover="brand-light"
-          className={`${padding} group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
+          className={`${padding} dark:border-background-700 border-gray-300 group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
         >
           {
             <div className="hidden sm:block self-start">
