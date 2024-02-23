@@ -359,7 +359,7 @@ function MainSection({
   user: User;
 }) {
   return (
-    <main className="overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow dark:border-background-600  border-background-200 w-full dark:bg-background-700">
+    <main className="dark:border-background-700 border-gray-300 overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow w-full dark:bg-background-700">
       <div className="">
         <img
           className="cursor-pointer"
