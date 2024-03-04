@@ -38,18 +38,20 @@ export default function CertificadoId() {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const location = `https://codante.io/certificados/${certificate.id}`;
 
+  const source_type = certificate.certifiable_type.includes("WorkshopUser")
+    ? "WorkshopUser"
+    : "ChallengeUser";
+
   useEffect(() => {
     async function generatePdf() {
       if (!pdfUrl) {
-        const submissionLink = `https://codante.io/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`;
         const blob = await pdf(
           <CertificatePDF
             username={certificate.user.name}
-            tags={certificate.metadata.tags}
-            title={certificate.metadata.certifiable_source_name}
-            date={certificate.metadata.end_date}
+            metadata={certificate.metadata}
+            certifiableType={source_type}
+            certifiable={certificate.certifiable}
             validationLink={location}
-            submissionLink={submissionLink}
             createdAt={certificate.created_at}
             id={certificate.id}
           />,
@@ -59,7 +61,7 @@ export default function CertificadoId() {
       }
     }
     generatePdf();
-  }, [pdfUrl, certificate, location]);
+  }, [pdfUrl, certificate, location, source_type]);
 
   if (!certificate.certifiable_id || certificate.status !== "published") {
     return (
@@ -149,12 +151,23 @@ export default function CertificadoId() {
             </div>
           </div>
 
-          <Link
-            className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
-            to={`/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`}
-          >
-            Ver submissão
-          </Link>
+          {source_type === "WorkshopUser" && (
+            <Link
+              className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
+              to={`/workshops/${certificate.metadata.certifiable_slug}`}
+            >
+              Ver Workshop
+            </Link>
+          )}
+
+          {source_type === "ChallengeUser" && (
+            <Link
+              className="cursor-pointer underline sm:text-base text-sm hover:text-gray-600 dark:hover:text-gray-400 text-gray-500 dark:text-gray-500 mb-2 w-fit"
+              to={`/mini-projetos/${certificate.metadata.certifiable_slug}/submissoes/${certificate.user.github_user}`}
+            >
+              Ver submissão
+            </Link>
+          )}
 
           <Button type="button" onClick={handleButtonClick} className="mt-3">
             {pdfUrl ? "Baixar certificado" : "Preparando download"}

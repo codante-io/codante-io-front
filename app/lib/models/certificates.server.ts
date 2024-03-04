@@ -1,21 +1,36 @@
 import axios from "axios";
 import { environment } from "./environment.server";
 import { currentToken } from "../services/auth.server";
-import type { User } from "./user.server";
+import type { ChallengeUser, User } from "./user.server";
+import type { WorkshopUser } from "./workshop.server";
+
+export type ChallengeUserMetadata = {
+  tags: string[];
+  end_date: string;
+  start_date: string;
+  certifiable_source_name: string;
+  certifiable_slug: string;
+};
+
+export type WorkshopUserMetadata = {
+  end_date: string;
+  certifiable_slug: string;
+  duration_in_seconds: string;
+  certifiable_source_name: string;
+};
+
+export type CertificateMetadata = ChallengeUserMetadata | WorkshopUserMetadata;
+
+export type Certifiable = WorkshopUser | ChallengeUser;
 
 export type Certificate = {
   id: string;
   user: User;
-  certifiable_type: "ChallengeUser";
+  certifiable_type: "ChallengeUser" | "WorkshopUser";
   certifiable_id: string;
+  certifiable: Certifiable;
   status: "pending" | "published";
-  metadata: {
-    tags: string[];
-    end_date: string;
-    start_date: string;
-    certifiable_source_name: string;
-    certifiable_slug: string;
-  };
+  metadata: CertificateMetadata;
   created_at: string;
 };
 

@@ -4,6 +4,18 @@ import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
 import { currentToken } from "~/lib/services/auth.server";
 import { environment } from "./environment.server";
+import type { Certificate } from "./certificates.server";
+
+export type WorkshopUser = {
+  id: number;
+  workshop_id: number;
+  user_id: number;
+  status: "in-progress" | "completed";
+  completed_at: string;
+  created_at: string;
+  updated_at: string;
+  certificate: Certificate;
+};
 
 export type Workshop = {
   id: string;
@@ -34,6 +46,7 @@ export type Workshop = {
   pivot?: {
     trackable_type: string;
   };
+  workshop_user: WorkshopUser;
 };
 
 export async function getWorkshops(): Promise<Array<Workshop>> {
