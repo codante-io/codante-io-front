@@ -65,7 +65,7 @@ export default function ProgressBar({
               )}.`}
             {workshopUser?.certificate ? (
               <Link
-                className="flex gap-3 hover:opacity-80 items-center w-fit dark:text-gray-400 text-gray-600 text-base mt-2"
+                className="flex gap-2 hover:opacity-80 items-center w-fit dark:text-gray-400 text-gray-600 text-sm mt-2"
                 to={`/certificados/${workshopUser?.certificate.id}`}
                 onClick={(event) => {
                   if (!user.is_pro) {
@@ -75,7 +75,7 @@ export default function ProgressBar({
                 }}
               >
                 <PiCertificateLight className="text-lg" />
-                Ver certificado
+                Certificado
               </Link>
             ) : (
               <span className="">Você ainda não finalizou esse Workshop.</span>
