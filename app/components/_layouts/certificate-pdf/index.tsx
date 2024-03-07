@@ -412,7 +412,7 @@ export default function CertificatePDF({
                   >
                     {formatDate((metadata as WorkshopUserMetadata).end_date)}
                   </Text>
-                  {` com tempo de duração total de  `}
+                  {` com tempo de duração total de `}
                   <Text
                     style={{
                       fontWeight: "medium",

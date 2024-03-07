@@ -88,11 +88,9 @@ export async function getCertificateById(id: string): Promise<Certificate> {
   const certificate = await axios
     .get(`${environment().API_HOST}/certificates/${id}`)
     .then((res) => {
-      // console.log(res);
       return res.data.data;
     })
     .catch((error) => {
-      // console.log(error);
       return {
         error:
           error?.response?.data?.message ||

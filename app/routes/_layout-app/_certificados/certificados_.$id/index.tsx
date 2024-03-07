@@ -36,13 +36,16 @@ export async function loader({
 export default function CertificadoId() {
   const { certificate } = useLoaderData<typeof loader>();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-  const location = `https://codante.io/certificados/${certificate.id}`;
+  const location = certificate
+    ? `https://codante.io/certificados/${certificate.id}`
+    : "https://codante.io/certificados";
 
-  const source_type = certificate.certifiable_type.includes("WorkshopUser")
+  const source_type = certificate?.certifiable_type.includes("WorkshopUser")
     ? "WorkshopUser"
     : "ChallengeUser";
 
   useEffect(() => {
+    if (!certificate) return;
     async function generatePdf() {
       if (!pdfUrl) {
         const blob = await pdf(
@@ -63,7 +66,11 @@ export default function CertificadoId() {
     generatePdf();
   }, [pdfUrl, certificate, location, source_type]);
 
-  if (!certificate.certifiable_id || certificate.status !== "published") {
+  if (
+    !certificate ||
+    !certificate.certifiable_id ||
+    certificate.status !== "published"
+  ) {
     return (
       <div className="mx-auto flex justify-center mt-10">
         <SearchCertificate error />
