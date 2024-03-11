@@ -30,6 +30,7 @@ import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import BannerAlertInfo from "~/components/ui/banner-alert/banner-alert-info";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
+import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -79,6 +80,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
+
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     workshop.published_at,
   );
@@ -162,6 +164,8 @@ export default function WorkshopSlug() {
             />
           </div>
 
+          <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
+
           {/* Video */}
           {workshop.status === "streaming" && workshop.streaming_url && (
             <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
@@ -171,7 +175,6 @@ export default function WorkshopSlug() {
           )}
 
           <div className="mt-6 lg:mt-12">
-            <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
             <Subtitle text="Sobre o Workshop" />
             <div>
               <MarkdownRenderer markdown={workshop.description} />
@@ -180,9 +183,25 @@ export default function WorkshopSlug() {
         </div>
         {/* Right Side */}
         <div className="lg:w-3/5">
+          {/* Progress Bar & Certificate */}
+          {workshop.workshop_user && (
+            <div className="">
+              <div className="flex items-center">
+                <TitleIcon className="inline-block w-3 h-3 mr-2" />
+                <h3 className="inline-block mt-0 text-lg font-light">
+                  <span className="font-bold">Progresso</span>
+                </h3>
+              </div>
+              <ProgressBar
+                lessons={workshop.lessons}
+                showStatus={true}
+                workshopUser={workshop.workshop_user}
+              />
+            </div>
+          )}
           {/* Instrutor */}
           <div>
-            <div className="flex items-center">
+            <div className="flex items-center mt-12">
               <TitleIcon className="inline-block w-3 h-3 mr-2" />
               <h3 className="inline-block mt-0 text-lg font-light">
                 Seu <span className="font-bold">Instrutor</span>
@@ -190,6 +209,7 @@ export default function WorkshopSlug() {
             </div>
             <InstructorCard instructor={workshop.instructor} />
           </div>
+
           {/* Aulas */}
           <div className="mt-12">
             {workshop.lessons.length > 0 && (
