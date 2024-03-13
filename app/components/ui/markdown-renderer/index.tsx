@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import Markdown from "markdown-to-jsx";
 import { Highlight, themes } from "prism-react-renderer";
-import { type ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import slugify from "slugify";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { ColorMode } from "~/lib/utils/dark-mode";
@@ -65,6 +65,36 @@ function H2WithDivider({
   );
 }
 
+function isAlert(firstChild: React.ReactElement) {
+  if (firstChild.props.children[0].startsWith("Dica"))
+    return { color: "#22c55e", text: "Dica", imgPath: "/icons/bulb-icons.svg" };
+  if (firstChild.props.children[0].startsWith("Informação"))
+    return {
+      color: "#3b82f6",
+      text: "Informação",
+      imgPath: "/icons/info.svg",
+    };
+  if (firstChild.props.children[0].startsWith("Importante"))
+    return {
+      color: "#a855f7",
+      text: "Importante",
+      imgPath: "/icons/icon-important.svg",
+    };
+  if (firstChild.props.children[0].startsWith("Aviso"))
+    return {
+      color: "#fde047",
+      text: "Aviso",
+      imgPath: "/icons/warning.svg",
+    };
+  if (firstChild.props.children[0].startsWith("Cuidado"))
+    return {
+      color: "#ef4444",
+      text: "Cuidado",
+      imgPath: "/icons/caution.svg",
+    };
+  return false;
+}
+
 const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   h1: {
     component: H1WithDivider,
@@ -82,10 +112,48 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   },
 
   blockquote: {
-    props: {
-      style: {
-        quotes: "none",
-      },
+    component: ({ children }: { children: React.ReactElement }) => {
+      const firstChild = React.Children.toArray(
+        children,
+      )[0] as React.ReactElement;
+      const alertInfo = isAlert(firstChild as React.ReactElement);
+
+      if (alertInfo) {
+        const firstWord = firstChild.props.children[0];
+        const restOfText = firstChild.props.children.slice(1);
+
+        return (
+          <blockquote
+            style={{
+              quotes: "none",
+              borderLeft: `3px solid ${alertInfo.color}`,
+            }}
+          >
+            <div className="flex gap-2 items-center h-6">
+              <img
+                className="w-5 h-auto"
+                style={{ color: alertInfo.color }}
+                src={alertInfo.imgPath}
+                alt={alertInfo.text}
+              />
+              <span style={{ color: alertInfo.color }} className="">
+                {firstWord}
+              </span>
+            </div>
+            {restOfText}
+          </blockquote>
+        );
+      }
+
+      return (
+        <blockquote
+          style={{
+            quotes: "none",
+          }}
+        >
+          {children}
+        </blockquote>
+      );
     },
   },
 
@@ -140,6 +208,24 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   },
 });
 
+function processMarkdown(markdown: string): string {
+  const replacements = {
+    "\\[!Tip\\]": "Dica",
+    "\\[!Note\\]": "Informação",
+    "\\[!Important\\]": "Importante",
+    "\\[!Warning\\]": "Aviso",
+    "\\[!Caution\\]": "Cuidado",
+  };
+
+  let processedMarkdown = markdown;
+
+  for (const [key, value] of Object.entries(replacements)) {
+    processedMarkdown = processedMarkdown.replace(new RegExp(key, "g"), value);
+  }
+
+  return processedMarkdown;
+}
+
 export default function MarkdownRenderer({
   markdown,
   wrapperClasses = undefined,
@@ -150,7 +236,7 @@ export default function MarkdownRenderer({
   fontSize?: "small";
 }) {
   const { colorMode } = useColorMode();
-
+  const processedMarkdown = processMarkdown(markdown);
   return (
     <div
       className={`prose  dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
@@ -163,7 +249,7 @@ export default function MarkdownRenderer({
           slugify: (text) => slugify(text, { lower: true }),
         }}
       >
-        {markdown}
+        {processedMarkdown}
       </Markdown>
     </div>
   );
