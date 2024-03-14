@@ -2,10 +2,11 @@
   "private": true,
   "proxy": "http://127.0.0.1:8000",
   "sideEffects": false,
+  "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
-    "start": "dotenv -e .env.production remix-serve ./build/index.js",
+    "dev": "remix vite:dev",
+    "build": "remix vite:build",
+    "start": "dotenv -e .env.production remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
@@ -59,6 +60,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "^3.0.1",
     "@remix-run/dev": "^2.2",
     "@remix-run/eslint-config": "^2.2",
     "@tailwindcss/typography": "^0.5.10",
@@ -74,7 +76,9 @@
     "prettier": "3.0.3",
     "remix-flat-routes": "^0.6",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "engines": {
     "node": ">=14"
