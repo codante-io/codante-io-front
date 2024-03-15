@@ -3,7 +3,7 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import tailwindForm from "@tailwindcss/forms";
 import tailwindTypography from "@tailwindcss/typography";
-import headlessUi from "@headlessui/tailwindcss";
+// import headlessUi from "@headlessui/tailwindcss";
 
 // // require("@tailwindcss/forms"),
 // // require("@tailwindcss/typography"),
@@ -147,7 +147,9 @@ const config = {
   },
   safelist: [],
   plugins: [
-    tailwindForm, tailwindTypography, headlessUi,
+    tailwindForm,
+    tailwindTypography,
+    // headlessUi
   ],
 };
 

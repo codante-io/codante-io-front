@@ -14,20 +14,17 @@ export default defineConfig({
   },
   plugins: [
     // mdx(),
-    tsconfigPaths(),
+    
     remix({
-      browserNodeBuiltinsPolyfill: {
-        modules: {
-          events: true,
-        },
-      },
+ 
       ignoredRouteFiles: ["**/.*"],
-      serverModuleFormat: "cjs",
-      tailwind: true,
-      serverDependenciesToBundle: ["axios"],
+      serverModuleFormat: "esm",
+
+      // serverDependenciesToBundle: ["axios"],
       routes: async (defineRoutes) => {
         return flatRoutes("routes", defineRoutes);
       },
     }),
+    tsconfigPaths(),
   ],
 });

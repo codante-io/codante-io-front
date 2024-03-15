@@ -1,3 +1,4 @@
+// @ts-ignore
 import {
   RiHeartAddLine,
   RiHeartAddFill,
@@ -6,7 +7,8 @@ import {
 } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import useSound from "use-sound";
+// @ts-ignore
+import useSound from "~/lib/hooks/use-sound/use-sound";
 import pop from "~/lib/sounds/pop.wav";
 import classNames from "~/lib/utils/class-names";
 import { useFetcher } from "@remix-run/react";
