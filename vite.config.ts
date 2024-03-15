@@ -1,5 +1,5 @@
 /** @type {import('@remix-run/dev').AppConfig} */
-import mdx from "@mdx-js/rollup";
+// import mdx from "@mdx-js/rollup";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import { flatRoutes } from "remix-flat-routes";
@@ -13,7 +13,7 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [
-    mdx(),
+    // mdx(),
     tsconfigPaths(),
     remix({
       browserNodeBuiltinsPolyfill: {
