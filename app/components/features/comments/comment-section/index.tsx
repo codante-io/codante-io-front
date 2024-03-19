@@ -33,6 +33,7 @@ export default function CommentSection({
   const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
   const [toastId, setToastId] = useState<string | null>(null);
+  const [localComments, setLocalComments] = useState<Comment[]>(comments);
 
   useEffect(() => {
     if (isSubmittingOrLoading && toastId === null) {
@@ -52,6 +53,17 @@ export default function CommentSection({
     if (!comment || comment.trim() === "") {
       return;
     }
+
+    const newComment: Comment = {
+      id: Math.random().toString(),
+      commentable_id: commentableId.toString(),
+      commentable_type: commentableType,
+      user: user,
+      created_at_human: "agora",
+      comment,
+    };
+
+    setLocalComments([...localComments, newComment]);
 
     fetcher.submit(
       { intent: "comment", commentableId, comment, commentableType },
@@ -76,7 +88,7 @@ export default function CommentSection({
         <span className="text-lg self-end dark:text-gray-500 text-gray-400">{`(${comments.length})`}</span>
       </section>
       <section className="flex flex-col gap-4">
-        {comments
+        {localComments
           .filter((comment) => !comment.replying_to)
           .map((comment) => (
             <CommentCard
