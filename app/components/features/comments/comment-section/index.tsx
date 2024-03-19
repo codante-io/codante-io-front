@@ -33,7 +33,8 @@ export default function CommentSection({
   const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
   const [toastId, setToastId] = useState<string | null>(null);
-  const [localComments, setLocalComments] = useState<Comment[]>(comments);
+  const [optimisticComments, setOptimisticComment] =
+    useState<Comment[]>(comments);
 
   useEffect(() => {
     if (isSubmittingOrLoading && toastId === null) {
@@ -63,7 +64,7 @@ export default function CommentSection({
       comment,
     };
 
-    setLocalComments([...localComments, newComment]);
+    setOptimisticComment([...optimisticComments, newComment]);
 
     fetcher.submit(
       { intent: "comment", commentableId, comment, commentableType },
@@ -88,12 +89,12 @@ export default function CommentSection({
         <span className="text-lg self-end dark:text-gray-500 text-gray-400">{`(${comments.length})`}</span>
       </section>
       <section className="flex flex-col gap-4">
-        {localComments
+        {optimisticComments
           .filter((comment) => !comment.replying_to)
           .map((comment) => (
             <CommentCard
               comment={comment}
-              replies={comments.filter(
+              replies={optimisticComments.filter(
                 (reply) => reply.replying_to === comment.id,
               )}
               key={comment.id}
@@ -123,6 +124,10 @@ export default function CommentSection({
   );
 }
 
+interface EditedComment extends Comment {
+  isReply: boolean;
+}
+
 function CommentCard({
   comment,
   replies,
@@ -150,6 +155,9 @@ function CommentCard({
   });
 
   const [successMessage, setSuccessMessage] = useState("");
+  const [editedComment, setEditedComment] = useState<EditedComment | null>(
+    null,
+  );
   const replyInputRef = useRef<HTMLTextAreaElement>(null);
   const editInputRef = useRef<HTMLTextAreaElement>(null);
   const fetcher = useFetcher();
@@ -250,9 +258,23 @@ function CommentCard({
     setDeleteModal({ ...deleteModal, isOpen: false });
   }
 
-  function handleEditButton() {
+  function handleEditButton(isReply?: boolean) {
     const inputedComment = editInputRef.current?.value;
     if (inputedComment) {
+      if (!isReply) {
+        setEditedComment({
+          ...comment,
+          comment: inputedComment,
+          isReply: false,
+        });
+      } else {
+        setEditedComment({
+          ...replies.find((reply) => reply.id === editSettings.commentId),
+          comment: inputedComment,
+          isReply: true,
+        });
+      }
+
       fetcher.submit(
         {
           intent: "edit-comment",
@@ -280,7 +302,9 @@ function CommentCard({
       <div>
         <CommentInfo
           ref={editInputRef}
-          comment={comment}
+          comment={
+            editedComment && !editedComment.isReply ? editedComment : comment
+          }
           editSettings={editSettings}
           setEditSettings={setEditSettings}
           disableEditButtonFunction={disableEditButton}
@@ -297,11 +321,13 @@ function CommentCard({
             <div key={reply.id}>
               <CommentInfo
                 ref={editInputRef}
-                comment={reply}
+                comment={
+                  editedComment && editedComment.isReply ? editedComment : reply
+                }
                 editSettings={editSettings}
                 setEditSettings={setEditSettings}
                 disableEditButtonFunction={disableEditButton}
-                handleEditButton={handleEditButton}
+                handleEditButton={() => handleEditButton(true)}
                 editButtonIsDisabled={isEditButtonDisabled}
                 setShowReplyInput={setShowReplyInput}
                 setDeleteModal={setDeleteModal}
