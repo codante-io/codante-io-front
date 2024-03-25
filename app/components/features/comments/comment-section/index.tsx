@@ -1,4 +1,9 @@
-import { useFetcher, useNavigate, useOutletContext } from "@remix-run/react";
+import {
+  useFetcher,
+  useFetchers,
+  useNavigate,
+  useOutletContext,
+} from "@remix-run/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import type { Comment } from "~/lib/models/comments.server";
 import type { User } from "~/lib/models/user.server";
@@ -33,8 +38,55 @@ export default function CommentSection({
   const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
   const [toastId, setToastId] = useState<string | null>(null);
-  const [optimisticComments, setOptimisticComment] =
-    useState<Comment[]>(comments);
+  const fetchers = useFetchers();
+
+  const optmisticEntries = fetchers.reduce<Comment[]>((memo, f) => {
+    if (f.formData) {
+      const data = Object.fromEntries(f.formData);
+      if (data.intent === "edit-comment") {
+        memo = comments.map((comment) => {
+          if (comment.id == data.commentId) {
+            // console.log("tenho o mesmo id");
+            return {
+              ...comment,
+              comment: data.comment as string,
+            };
+          }
+          return comment;
+        });
+        // console.log(memo);
+      } else if (data.intent === "comment") {
+        memo.push({
+          ...data,
+          id: Math.floor(Math.random() * 100 + 1).toString(),
+          user,
+          comment: data.comment as string,
+          commentable_id: data.commentableId as string,
+          commentable_type: data.commentableType as string,
+          created_at_human: "agora",
+          replying_to: (data.replyingTo as string) || undefined,
+        });
+      }
+    }
+    // console.log("MEMO: ", memo);
+    return memo;
+  }, []);
+
+  // console.log("comments: ", comments);
+
+  // comments = [...comments, ...optmisticEntries];
+
+  const entriesMap = {} as { [key: string]: Comment };
+
+  comments.forEach((entry) => {
+    entriesMap[entry.id] = entry;
+  });
+
+  optmisticEntries.forEach((entry) => {
+    entriesMap[entry.id] = entry;
+  });
+
+  comments = Object.values(entriesMap);
 
   useEffect(() => {
     if (isSubmittingOrLoading && toastId === null) {
@@ -54,17 +106,6 @@ export default function CommentSection({
     if (!comment || comment.trim() === "") {
       return;
     }
-
-    const newComment: Comment = {
-      id: Math.random().toString(),
-      commentable_id: commentableId.toString(),
-      commentable_type: commentableType,
-      user: user,
-      created_at_human: "agora",
-      comment,
-    };
-
-    setOptimisticComment([...optimisticComments, newComment]);
 
     fetcher.submit(
       { intent: "comment", commentableId, comment, commentableType },
@@ -89,12 +130,12 @@ export default function CommentSection({
         <span className="text-lg self-end dark:text-gray-500 text-gray-400">{`(${comments.length})`}</span>
       </section>
       <section className="flex flex-col gap-4">
-        {optimisticComments
+        {comments
           .filter((comment) => !comment.replying_to)
           .map((comment) => (
             <CommentCard
               comment={comment}
-              replies={optimisticComments.filter(
+              replies={comments.filter(
                 (reply) => reply.replying_to === comment.id,
               )}
               key={comment.id}
@@ -124,10 +165,6 @@ export default function CommentSection({
   );
 }
 
-interface EditedComment extends Comment {
-  isReply: boolean;
-}
-
 function CommentCard({
   comment,
   replies,
@@ -155,9 +192,6 @@ function CommentCard({
   });
 
   const [successMessage, setSuccessMessage] = useState("");
-  const [editedComment, setEditedComment] = useState<EditedComment | null>(
-    null,
-  );
   const replyInputRef = useRef<HTMLTextAreaElement>(null);
   const editInputRef = useRef<HTMLTextAreaElement>(null);
   const fetcher = useFetcher();
@@ -226,6 +260,7 @@ function CommentCard({
   function replyComment(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
     const inputedComment = replyInputRef.current?.value;
+
     if (inputedComment) {
       fetcher.submit(
         {
@@ -261,19 +296,19 @@ function CommentCard({
   function handleEditButton(isReply?: boolean) {
     const inputedComment = editInputRef.current?.value;
     if (inputedComment) {
-      if (!isReply) {
-        setEditedComment({
-          ...comment,
-          comment: inputedComment,
-          isReply: false,
-        });
-      } else {
-        setEditedComment({
-          ...replies.find((reply) => reply.id === editSettings.commentId),
-          comment: inputedComment,
-          isReply: true,
-        });
-      }
+      // if (!isReply) {
+      //   setEditedComment({
+      //     ...comment,
+      //     comment: inputedComment,
+      //     isReply: false,
+      //   });
+      // } else {
+      //   setEditedComment({
+      //     ...replies.find((reply) => reply.id === editSettings.commentId),
+      //     comment: inputedComment,
+      //     isReply: true,
+      //   });
+      // }
 
       fetcher.submit(
         {
@@ -302,9 +337,10 @@ function CommentCard({
       <div>
         <CommentInfo
           ref={editInputRef}
-          comment={
-            editedComment && !editedComment.isReply ? editedComment : comment
-          }
+          // comment={
+          //   editedComment && !editedComment.isReply ? editedComment : comment
+          // }
+          comment={comment}
           editSettings={editSettings}
           setEditSettings={setEditSettings}
           disableEditButtonFunction={disableEditButton}
@@ -321,9 +357,10 @@ function CommentCard({
             <div key={reply.id}>
               <CommentInfo
                 ref={editInputRef}
-                comment={
-                  editedComment && editedComment.isReply ? editedComment : reply
-                }
+                // comment={
+                //   editedComment && editedComment.isReply ? editedComment : reply
+                // }
+                comment={reply}
                 editSettings={editSettings}
                 setEditSettings={setEditSettings}
                 disableEditButtonFunction={disableEditButton}
