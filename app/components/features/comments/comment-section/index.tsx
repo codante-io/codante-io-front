@@ -54,7 +54,6 @@ export default function CommentSection({
           }
           return comment;
         });
-        // console.log(memo);
       } else if (data.intent === "comment") {
         memo.push({
           ...data,
@@ -72,21 +71,45 @@ export default function CommentSection({
     return memo;
   }, []);
 
-  // console.log("comments: ", comments);
-
   // comments = [...comments, ...optmisticEntries];
 
-  const entriesMap = {} as { [key: string]: Comment };
+  // const entriesMap = [...comments, ...optmisticEntries].reduce(
+  //   (map, entry) => ({ ...map, [entry.id]: entry }),
+  //   {} as { [key: string]: Comment },
+  // );
 
-  comments.forEach((entry) => {
-    entriesMap[entry.id] = entry;
-  });
+  // comments = comments.map((comment) => entriesMap[comment.id]);
 
-  optmisticEntries.forEach((entry) => {
-    entriesMap[entry.id] = entry;
-  });
+  // const entriesMap = {} as { [key: string]: Comment };
 
-  comments = Object.values(entriesMap);
+  // comments.forEach((entry) => {
+  //   entriesMap[entry.id] = entry;
+  // });
+
+  // // console.log(optmisticEntries);
+
+  // optmisticEntries.forEach((entry) => {
+  //   // console.log(entry);
+  //   entriesMap[entry.id] = entry;
+  // });
+
+  // comments = Object.values(entriesMap);
+
+  // console.log(optmisticEntries);
+
+  // comments = [...comments, ...optmisticEntries];
+  const optimisticMap = optmisticEntries.reduce(
+    (map, entry) => ({ ...map, [entry.id]: entry }),
+    {} as { [key: string]: Comment },
+  );
+
+  comments = comments.map((comment) => optimisticMap[comment.id] || comment);
+
+  const newEntries = optmisticEntries.filter(
+    (entry) => !comments.some((comment) => comment.id === entry.id),
+  );
+
+  comments = [...comments, ...newEntries];
 
   useEffect(() => {
     if (isSubmittingOrLoading && toastId === null) {
