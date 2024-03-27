@@ -40,7 +40,7 @@ export default function CommentSection({
   const [toastId, setToastId] = useState<string | null>(null);
   const fetchers = useFetchers();
 
-  const optmisticEntries = fetchers.reduce<Comment[]>((memo, f) => {
+  const optimisticEntries = fetchers.reduce<Comment[]>((memo, f) => {
     if (f.formData) {
       const data = Object.fromEntries(f.formData);
       if (data.intent === "edit-comment") {
@@ -65,49 +65,39 @@ export default function CommentSection({
           created_at_human: "agora",
           replying_to: (data.replyingTo as string) || undefined,
         });
+      } else if (data.intent === "delete-comment") {
+        // memo = comments.filter((comment) => comment.id != data.commentId);
+        memo = comments.map((comment) => {
+          if (comment.id == data.commentId) {
+            // console.log("tenho o mesmo id");
+            return {
+              ...comment,
+              deleted: true,
+            };
+          }
+          return comment;
+        });
       }
     }
-    // console.log("MEMO: ", memo);
+
     return memo;
   }, []);
 
-  // comments = [...comments, ...optmisticEntries];
-
-  // const entriesMap = [...comments, ...optmisticEntries].reduce(
-  //   (map, entry) => ({ ...map, [entry.id]: entry }),
-  //   {} as { [key: string]: Comment },
-  // );
-
-  // comments = comments.map((comment) => entriesMap[comment.id]);
-
-  // const entriesMap = {} as { [key: string]: Comment };
-
-  // comments.forEach((entry) => {
-  //   entriesMap[entry.id] = entry;
-  // });
-
-  // // console.log(optmisticEntries);
-
-  // optmisticEntries.forEach((entry) => {
-  //   // console.log(entry);
-  //   entriesMap[entry.id] = entry;
-  // });
-
-  // comments = Object.values(entriesMap);
-
-  // console.log(optmisticEntries);
-
-  // comments = [...comments, ...optmisticEntries];
-  const optimisticMap = optmisticEntries.reduce(
-    (map, entry) => ({ ...map, [entry.id]: entry }),
+  // divide as entradas em um objeto
+  const optimisticMap = optimisticEntries.reduce(
+    (map, entry) => {
+      return { ...map, [entry.id]: entry };
+    },
     {} as { [key: string]: Comment },
   );
 
+  // adiciona os novos valores em comments, sem alterar ordem
   comments = comments.map((comment) => optimisticMap[comment.id] || comment);
 
-  const newEntries = optmisticEntries.filter(
-    (entry) => !comments.some((comment) => comment.id === entry.id),
-  );
+  // impede que o comentário editado vire um novo comentário
+  const newEntries = optimisticEntries.filter((entry) => {
+    return !comments.some((comment) => comment.id === entry.id);
+  });
 
   comments = [...comments, ...newEntries];
 
