@@ -13,7 +13,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import LoadingBar from "~/components/ui/loading-bar";
 import { ColorModeProvider } from "~/lib/contexts/color-mode-context";
-import stylesheet from "~/tailwind.css";
+import stylesheet from "~/tailwind.css?url";
 import { DarkModeScriptInnerHtml } from "~/lib/utils/dark-mode";
 import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
 import { user } from "./lib/services/auth.server";
@@ -22,7 +22,7 @@ import NotFound from "./components/features/error-handling/not-found";
 import { Error500 } from "./components/features/error-handling/500";
 import type { User } from "./lib/models/user.server";
 import { metaV1 } from "@remix-run/v1-meta";
-import { environment } from "./lib/models/environment.server";
+import { environment } from "./lib/models/environment";
 import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
 
 export const links: LinksFunction = () => [
@@ -72,14 +72,15 @@ export async function loader({ request }: { request: Request }) {
   });
 }
 
-export default function App() {
+export default function App({ children }: { children: React.ReactNode }) {
   const loaderData = useLoaderData<typeof loader>();
   const user = loaderData.user;
 
   return (
-    <html lang="en">
+    <html lang="pt" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="utf-8" />
         <Meta />
         <Links />
       </head>
@@ -127,7 +128,7 @@ export function ErrorBoundary() {
   const error = useRouteError();
 
   return (
-    <html>
+    <html lang="pt">
       <head>
         <title>
           {isRouteErrorResponse(error)
@@ -136,6 +137,7 @@ export function ErrorBoundary() {
         </title>
         <Meta />
         <Links />
+        <meta charSet="utf-8" />
       </head>
       <body className="text-gray-800 dark:bg-background-900 bg-background-50 dark:text-gray-50">
         <script

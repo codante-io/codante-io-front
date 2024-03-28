@@ -1,5 +1,12 @@
 {
-  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
+  ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
@@ -11,6 +18,8 @@
     "target": "ES2022",
     "strict": true,
     "allowJs": true,
+    "skipLibCheck": true,
+
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
@@ -18,7 +27,6 @@
     },
 
     // Remix takes care of building everything in `remix build`.
-    "noEmit": true,
-    "skipLibCheck": true
+    "noEmit": true
   }
 }

@@ -1,13 +1,9 @@
-/** @type {import('tailwindcss').Config} */
-// import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import tailwindForm from "@tailwindcss/forms";
 import tailwindTypography from "@tailwindcss/typography";
 // import headlessUi from "@headlessui/tailwindcss";
 
-// // require("@tailwindcss/forms"),
-// // require("@tailwindcss/typography"),
-// // require("@headlessui/tailwindcss"),
 const config = {
   darkMode: "class",
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
@@ -145,12 +141,11 @@ const config = {
       },
     },
   },
-  safelist: [],
   plugins: [
     tailwindForm,
     tailwindTypography,
     // headlessUi
   ],
-};
+} satisfies Config;
 
 export default config;

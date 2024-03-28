@@ -1,4 +1,4 @@
-import { environment } from "~/lib/models/environment.server";
+import { environment } from "~/lib/models/environment";
 
 // app/ui/public-env.tsx
 declare global {

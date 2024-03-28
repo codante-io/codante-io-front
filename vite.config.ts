@@ -14,13 +14,8 @@ export default defineConfig({
   },
   plugins: [
     // mdx(),
-    
-    remix({
- 
-      ignoredRouteFiles: ["**/.*"],
-      serverModuleFormat: "esm",
 
-      // serverDependenciesToBundle: ["axios"],
+    remix({
       routes: async (defineRoutes) => {
         return flatRoutes("routes", defineRoutes);
       },

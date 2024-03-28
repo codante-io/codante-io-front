@@ -14,7 +14,7 @@ import faqQuestions from "../faq-questions";
 import type { Plan } from "~/lib/models/plan.server";
 import { getPlanDetails } from "~/lib/models/plan.server";
 import { useLoaderData } from "@remix-run/react";
-import { environment } from "~/lib/models/environment.server";
+import { environment } from "~/lib/models/environment";
 import FaqItem from "~/components/ui/faq-item";
 
 export async function loader({ request }: LoaderFunctionArgs) {

@@ -7,7 +7,7 @@ import {
 import axios from "./axios.server";
 import type { AxiosResponse } from "axios";
 import type { User } from "~/lib/models/user.server";
-import { environment } from "~/lib/models/environment.server";
+import { environment } from "~/lib/models/environment";
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
