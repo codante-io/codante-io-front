@@ -63,7 +63,7 @@ export default function CommentSection({
           commentable_id: data.commentableId as string,
           commentable_type: data.commentableType as string,
           created_at_human: "agora",
-          replying_to: (data.replyingTo as string) || undefined,
+          replying_to: data.replyingTo ? Number(data.replyingTo) : undefined,
         });
       } else if (data.intent === "delete-comment") {
         // memo = comments.filter((comment) => comment.id != data.commentId);
@@ -99,6 +99,7 @@ export default function CommentSection({
     return !comments.some((comment) => comment.id === entry.id);
   });
 
+  // console.log(newEntries);
   comments = [...comments, ...newEntries];
 
   useEffect(() => {
