@@ -4,7 +4,6 @@ import ChallengeCard from "~/components/ui/cards/challenge-card";
 import { getChallenges } from "~/lib/models/challenge.server";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
@@ -50,7 +49,6 @@ export async function loader({ request }: { request: Request }) {
 
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
-  const user = useUserFromOutletContext();
 
   const featuredChallenge = challenges.find(
     (challenge) => challenge.is_weekly_featured === true,
@@ -127,15 +125,13 @@ export default function Projects() {
         </section>
       )}
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 ">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
         {challengesWithoutFeatured.map((challenge: ChallengeCardType) => (
-          <div key={challenge.slug} className="mx-auto">
-            <ChallengeCard
-              loggedUser={user ?? undefined}
-              challenge={challenge}
-              className=""
-            />
-          </div>
+          <ChallengeCard
+            key={challenge.id}
+            challenge={challenge}
+            className=""
+          />
         ))}
       </div>
     </main>

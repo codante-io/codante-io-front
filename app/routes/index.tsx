@@ -289,7 +289,6 @@ function WorkShops() {
 }
 
 function Challenges() {
-  const { user } = useOutletContext<{ user: User }>();
   const { homeInfo } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
 
@@ -327,10 +326,10 @@ function Challenges() {
           <span className="italic font-bold text-brand-400">mini projetos</span>{" "}
           e depois assista a resolução feita por profissionais do mercado.
         </p>
-        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {orderedChallengeList.map((challenge) => (
             <div key={challenge.slug} className="mx-auto">
-              <ChallengeCard loggedUser={user} challenge={challenge} />
+              <ChallengeCard challenge={challenge} />
             </div>
           ))}
         </section>

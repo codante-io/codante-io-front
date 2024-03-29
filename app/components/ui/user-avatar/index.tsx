@@ -32,7 +32,7 @@ export default function UserAvatar({
             <img
               className={`${className} ${
                 avatar.badge === "pro" ? "ring-amber-400" : "ring-brand-500"
-              } ring-2 rounded-full`}
+              } ring-2 rounded-full bg-background-400`}
               src={avatar.avatar_url || "https://source.boringavatars.com/"}
               alt="Avatar do usuário"
             />
@@ -41,7 +41,7 @@ export default function UserAvatar({
           <img
             className={`${className} ring-2 ${
               avatar.badge === "pro" ? "ring-amber-400" : "ring-brand-500"
-            } rounded-full`}
+            } rounded-full bg-background-400`}
             src={avatar.avatar_url || "https://source.boringavatars.com/"}
             alt="Avatar do usuário"
           />
@@ -51,7 +51,7 @@ export default function UserAvatar({
   }
   return (
     <img
-      className={`${className} rounded-full ring-2 ring-white dark:ring-gray-800`}
+      className={`${className} rounded-full ring-2 ring-white dark:ring-gray-800 bg-background-400`}
       src={avatar.avatar_url || "https://source.boringavatars.com/"}
       alt="Avatar do usuário"
     />
