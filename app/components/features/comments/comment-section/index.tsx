@@ -73,22 +73,21 @@ export default function CommentSection({
         <h3 className="text-2xl text-gray-700 dark:text-gray-50">
           Comentários
         </h3>
-        <span className="text-lg self-end dark:text-gray-500 text-gray-400">{`(${comments?.length})`}</span>
+        <span className="text-lg self-end dark:text-gray-500 text-gray-400">{`(${comments.length})`}</span>
       </section>
       <section className="flex flex-col gap-4">
-        {comments?.length > 0 &&
-          comments
-            .filter((comment) => !comment.replying_to)
-            .map((comment) => (
-              <CommentCard
-                comment={comment}
-                replies={comments.filter(
-                  (reply) => reply.replying_to === comment.id,
-                )}
-                key={comment.id}
-                commentableType={commentableType}
-              />
-            ))}
+        {comments
+          .filter((comment) => !comment.replying_to)
+          .map((comment) => (
+            <CommentCard
+              comment={comment}
+              replies={comments.filter(
+                (reply) => reply.replying_to === comment.id,
+              )}
+              key={comment.id}
+              commentableType={commentableType}
+            />
+          ))}
       </section>
 
       {user ? (

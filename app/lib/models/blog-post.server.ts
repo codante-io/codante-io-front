@@ -3,7 +3,7 @@ import { currentToken } from "~/lib/services/auth.server";
 import type { Reactions } from "./reactions.server";
 import type { Tag } from "./tag.server";
 import type { Instructor } from "./instructor.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 export type BlogPost = {
   id: number;

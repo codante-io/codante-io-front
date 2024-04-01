@@ -3,7 +3,7 @@ import { currentToken } from "~/lib/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 export type Challenge = {
   id: string;

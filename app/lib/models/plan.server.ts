@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 export type Plan = {
   id: number;

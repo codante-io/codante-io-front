@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeCard, ChallengeSummary } from "./challenge.server";
 import type { UserAvatar } from "./user.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 export type HomeInfo = {
   featured_testimonials: {

@@ -1,7 +1,7 @@
 import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 import type { User } from "./user.server";
 
 export type Comment = {

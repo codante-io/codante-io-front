@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { TbSunFilled, TbMoonFilled } from "react-icons/tb";
 import React from "react";
-import useSound from "~/lib/hooks/use-sound/use-sound";
+import useSound from "use-sound";
 
 import toggleSound from "~/lib/sounds/toggle.wav";
 

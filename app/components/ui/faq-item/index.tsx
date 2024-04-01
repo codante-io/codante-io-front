@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
-import useSound from "~/lib/hooks/use-sound/use-sound";
+import useSound from "use-sound";
 import switchSound from "~/lib/sounds/switch.mp3";
 import classNames from "~/lib/utils/class-names";
 

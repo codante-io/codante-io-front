@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 export async function getUpcoming() {
   const upcomingData: any = await axios

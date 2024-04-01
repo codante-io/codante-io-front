@@ -1,6 +1,6 @@
 import axios from "axios";
 import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 export type Subscription = {
   id: number;
