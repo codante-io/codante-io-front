@@ -29,5 +29,6 @@ jobs:
 
             cd /var/www/codante-io-front
             npm install
-            npm run build
+            # Increase memory to avoid vite build error
+            NODE_OPTIONS=--max_old_space_size=4096 npm run build
             pm2 restart codante-io-front
