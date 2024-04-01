@@ -140,7 +140,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
                 {firstWord}
               </span>
             </div>
-            {restOfText}
+            <div className="font-light text-base">{restOfText}</div>
           </blockquote>
         );
       }

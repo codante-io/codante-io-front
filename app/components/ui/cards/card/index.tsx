@@ -13,6 +13,7 @@ const cardVariants = cva(
         default: "dark:border-gray-700 border-gray-300 dark:shadow-md shadow",
         bright: "dark:border-gray-600 border-gray-300 shadow-md", // mais brilhante
         dull: "dark:border-background-700 border-gray-100 shadow", // mais discreto
+        none: "border-0 shadow",
       },
       hover: {
         default: "",
