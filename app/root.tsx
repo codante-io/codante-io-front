@@ -2,7 +2,6 @@ import React from "react";
 import { json, type LinksFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -29,7 +28,7 @@ import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
   { rel: "preconnect", href: "https://rsms.me" },
-  { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
+  { rel: "stylesheet", href: "https://rsms.me/inter/inter.css?url" },
   { rel: "icon", href: "/favicon.svg" },
 ];
 
@@ -104,7 +103,6 @@ export default function App({ children }: { children: React.ReactNode }) {
         {/* Env pública: https://remix.run/docs/en/main/guides/envvars | https://dev.to/remix-run-br/type-safe-environment-variables-on-both-client-and-server-with-remix-54l5 */}
         <PublicEnv {...loaderData.ENV} />
         <Scripts />
-        <LiveReload />
         <Toaster
           toastOptions={{
             className:
