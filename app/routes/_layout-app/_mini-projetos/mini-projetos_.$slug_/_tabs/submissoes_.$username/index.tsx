@@ -31,7 +31,7 @@ import {
   getSubmissionFromGithubUser,
   updateChallengeSubmission,
 } from "~/lib/models/challenge.server";
-import useSound from "~/lib/hooks/use-sound/use-sound";
+import useSound from "use-sound";
 import pop from "~/lib/sounds/pop.wav";
 import { FiEdit } from "react-icons/fi";
 import classNames from "~/lib/utils/class-names";

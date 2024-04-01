@@ -3,7 +3,7 @@ import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
 import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 import type { Certificate } from "./certificates.server";
 
 export type WorkshopUser = {

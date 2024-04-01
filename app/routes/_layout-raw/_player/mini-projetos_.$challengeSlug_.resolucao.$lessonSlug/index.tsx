@@ -13,7 +13,7 @@ import type { Workshop } from "~/lib/models/workshop.server";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
-import styles from "../styles.css?url";
+import styles from "../styles.css";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 
 export function links() {

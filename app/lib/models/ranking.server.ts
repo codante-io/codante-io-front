@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { UserAvatar } from "./user.server";
-import { environment } from "./environment";
+import { environment } from "./environment.server";
 
 type UserPoints = {
   avatar: UserAvatar;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment } from "~/lib/models/environment";
+import { environment } from "~/lib/models/environment.server";
 
 let client = axios.create({
   baseURL: environment().API_HOST,

@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import useSound from "~/lib/hooks/use-sound/use-sound";
+import useSound from "use-sound";
 import { useCallback } from "react";
 
 import errorSound from "~/lib/sounds/error.wav";

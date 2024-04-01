@@ -2,7 +2,7 @@ import axios from "./axios.server";
 import { Authenticator } from "remix-auth";
 import { sessionStorage } from "./auth.server";
 import { GitHubStrategy } from "remix-auth-github";
-import { environment } from "~/lib/models/environment";
+import { environment } from "~/lib/models/environment.server";
 
 export let authenticator = new Authenticator<any>(sessionStorage);
 
