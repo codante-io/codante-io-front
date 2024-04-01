@@ -37,7 +37,6 @@ export default function CommentSection({
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
-  const [toastId, setToastId] = useState<string | null>(null);
   const fetchers = useFetchers();
 
   const optimisticEntries = fetchers.reduce<Comment[]>((memo, f) => {
@@ -46,7 +45,6 @@ export default function CommentSection({
       if (data.intent === "edit-comment") {
         memo = comments.map((comment) => {
           if (comment.id == data.commentId) {
-            // console.log("tenho o mesmo id");
             return {
               ...comment,
               comment: data.comment as string,
@@ -63,13 +61,13 @@ export default function CommentSection({
           commentable_id: data.commentableId as string,
           commentable_type: data.commentableType as string,
           created_at_human: "agora",
-          replying_to: data.replyingTo ? Number(data.replyingTo) : undefined,
+          replying_to: data.replyingTo
+            ? (Number(data.replyingTo) as unknown as string)
+            : undefined,
         });
       } else if (data.intent === "delete-comment") {
-        // memo = comments.filter((comment) => comment.id != data.commentId);
         memo = comments.map((comment) => {
           if (comment.id == data.commentId) {
-            // console.log("tenho o mesmo id");
             return {
               ...comment,
               deleted: true,
@@ -99,19 +97,7 @@ export default function CommentSection({
     return !comments.some((comment) => comment.id === entry.id);
   });
 
-  // console.log(newEntries);
   comments = [...comments, ...newEntries];
-
-  useEffect(() => {
-    if (isSubmittingOrLoading && toastId === null) {
-      const id = toast.loading("Enviando comentário...");
-      setToastId(id);
-    } else if (!isSubmittingOrLoading && toastId !== null) {
-      toast.dismiss(toastId);
-      toast.success("Comentário enviado!");
-      setToastId(null);
-    }
-  }, [isSubmittingOrLoading, toastId]);
 
   function handleCommentButton(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
@@ -231,18 +217,10 @@ function CommentCard({
     }
 
     if (isSubmittingOrLoading && toastId === null) {
-      if (fetcher.formMethod === "PUT") {
-        const id = toast.loading("Editando comentário...");
-        setToastId(id);
-        setSuccessMessage("Comentário editado!");
-      } else if (fetcher.formMethod === "DELETE") {
+      if (fetcher.formMethod === "DELETE") {
         const id = toast.loading("Deletando comentário...");
         setToastId(id);
         setSuccessMessage("Comentário deletado!");
-      } else {
-        const id = toast.loading("Enviando comentário...");
-        setToastId(id);
-        setSuccessMessage("Comentário enviado!");
       }
     } else if (!isSubmittingOrLoading && toastId !== null) {
       toast.dismiss(toastId);
