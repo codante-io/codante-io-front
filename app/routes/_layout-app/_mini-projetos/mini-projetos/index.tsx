@@ -63,7 +63,7 @@ export default function Projects() {
   return (
     <main className="container mx-auto">
       <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
-        Mini Projetos
+        Todos os Mini Projetos
       </h1>
 
       {featuredChallenge && (
