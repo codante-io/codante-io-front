@@ -26,7 +26,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.2
         with:
           switches: -avzr --quiet --delete
-          path: public/
+          path: ./
           remote_path: /var/www/codante-io-front
           remote_host: ${{ secrets.HOST }}
           remote_user: ${{ secrets.USERNAME }}
