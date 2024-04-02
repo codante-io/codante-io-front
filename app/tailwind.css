@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -102,14 +103,4 @@ html {
   -webkit-text-fill-color: #dedede;
   transition: background-color 5000s ease-in-out 0s;
   box-shadow: inset 0 0 20px 20px #364c63ff;
-}
-
-@font-face {
-  font-family: "Alex Brush";
-  src: url("/fonts/alexbrush-cursive.ttf");
-}
-
-@font-face {
-  font-family: "Roboto Condensed";
-  src: url("/fonts/roboto-condensed.ttf");
 }

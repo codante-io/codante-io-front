@@ -2,7 +2,6 @@ import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import tailwindForm from "@tailwindcss/forms";
 import tailwindTypography from "@tailwindcss/typography";
-// import headlessUi from "@headlessui/tailwindcss";
 
 const config = {
   darkMode: "class",
@@ -25,8 +24,6 @@ const config = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter var", "sans-serif"],
-        alexbrush: ["Alex Brush", "cursive"],
-        robotocondensed: ["Roboto Condensed", "sans-serif"],
       },
       colors: {
         gray: {
@@ -141,11 +138,7 @@ const config = {
       },
     },
   },
-  plugins: [
-    tailwindForm,
-    tailwindTypography,
-    // headlessUi
-  ],
+  plugins: [tailwindForm, tailwindTypography],
 } satisfies Config;
 
 export default config;

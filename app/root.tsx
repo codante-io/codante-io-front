@@ -11,10 +11,10 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { Toaster } from "react-hot-toast";
-import LoadingBar from "~/components/ui/loading-bar";
-import { ColorModeProvider } from "~/lib/contexts/color-mode-context";
-import stylesheet from "~/tailwind.css?url";
-import { DarkModeScriptInnerHtml } from "~/lib/utils/dark-mode";
+import LoadingBar from "./components/ui/loading-bar";
+import { ColorModeProvider } from "./lib/contexts/color-mode-context";
+import stylesheet from "./tailwind.css?url";
+import { DarkModeScriptInnerHtml } from "./lib/utils/dark-mode";
 import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
 import { user } from "./lib/services/auth.server";
 import { getOgGeneratorUrl } from "./lib/utils/path-utils";
