@@ -1,38 +1,38 @@
-name: Deploy to production
+# name: Deploy to production
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy with pm2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            rm -rf /var/www/tmp
-            mkdir /var/www/tmp
-            cp /var/www/codante-io-front/.env.production /var/www/tmp/
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Deploy with pm2
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: ${{ secrets.USERNAME }}
+#           key: ${{ secrets.SSH_KEY }}
+#           script: |
+#             rm -rf /var/www/tmp
+#             mkdir /var/www/tmp
+#             cp /var/www/codante-io-front/.env.production /var/www/tmp/
 
-            rm -rf /var/www/codante-io-front
+#             rm -rf /var/www/codante-io-front
 
-            git clone --depth 1 git@github.com:codante-io/codante-io-front.git /var/www/codante-io-front
+#             git clone --depth 1 git@github.com:codante-io/codante-io-front.git /var/www/codante-io-front
 
-            cp /var/www/tmp/.env.production /var/www/codante-io-front/
-            rm -rf /var/www/tmp
+#             cp /var/www/tmp/.env.production /var/www/codante-io-front/
+#             rm -rf /var/www/tmp
 
-            cd /var/www/codante-io-front
+#             cd /var/www/codante-io-front
 
-            npm ci
+#             npm ci
 
-            # Increase memory to avoid vite build error
+#             # Increase memory to avoid vite build error
 
-            NODE_OPTIONS=--max_old_space_size=4096 npm run build
+#             NODE_OPTIONS=--max_old_space_size=4096 npm run build
 
-            pm2 restart codante-io-front
+#             pm2 restart codante-io-front
