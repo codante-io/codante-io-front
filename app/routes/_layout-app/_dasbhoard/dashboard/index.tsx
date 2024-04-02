@@ -25,6 +25,7 @@ export default function Dashboard() {
               Mini Projetos
             </Link>
             <Link to="#">Workshops</Link>
+            <Link to="#">Certificados</Link>
           </nav>
           <div className="grid gap-6">
             <Card>
