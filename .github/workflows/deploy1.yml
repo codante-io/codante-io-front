@@ -28,27 +28,27 @@ jobs:
           name: production-files
           path: ./
 
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+  # deploy:
+  #   name: Deploy
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: production-files
-          path: ./
+  #   steps:
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: production-files
+  #         path: ./
 
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "./"
-          target: "/var/www/codante-io-front"
+  #     - name: Deploy to VPS
+  #       uses: appleboy/ssh-action@scp-action@master
+  #       with:
+  #         host: ${{ secrets.HOST }}
+  #         username: ${{ secrets.USERNAME }}
+  #         key: ${{ secrets.SSH_KEY }}
+  #         source: "./"
+  #         target: "/var/www/codante-io-front"
 #  deploy:
 #     runs-on: ubuntu-latest
 #     steps:
