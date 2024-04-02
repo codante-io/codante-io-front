@@ -22,8 +22,8 @@ jobs:
       - name: Build Remix App
         run: npm run build
 
-      - name: Copy .env.production
-        run: echo {{secrets.ENV_PRODUCTION}} > .env.production
+      - name: Echo ENV_PRODUCTION to .env.production
+        run: echo ${{ secrets.ENV_PRODUCTION }} > .env.production
 
       - name: Deploy with rsync
         uses: burnett01/rsync-deployments@5.2
