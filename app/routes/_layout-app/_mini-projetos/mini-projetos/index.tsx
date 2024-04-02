@@ -50,13 +50,14 @@ export async function loader({ request }: { request: Request }) {
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
 
-  const featuredChallenge = challenges.find(
-    (challenge) => challenge.is_weekly_featured === true,
-  );
+  // const featuredChallenge = challenges.find(
+  //   (challenge) => challenge.is_weekly_featured === true,
+  // );
+  const featuredChallenge = null;
 
-  const challengesWithoutFeatured = challenges.filter(
-    (challenge) => challenge.is_weekly_featured !== true,
-  );
+  // const challengesWithoutFeatured = challenges.filter(
+  //   (challenge) => challenge.is_weekly_featured !== true,
+  // );
 
   return (
     <main className="container mx-auto">
@@ -125,15 +126,34 @@ export default function Projects() {
         </section>
       )}
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
-        {challengesWithoutFeatured.map((challenge: ChallengeCardType) => (
-          <ChallengeCard
-            key={challenge.id}
-            challenge={challenge}
-            className=""
-          />
+      <section className="mt-4 flex flex-col gap-20">
+        {Object.keys(challenges).map((technologyName, index) => (
+          <div key={technologyName}>
+            <h2 className="mb-8 text-3xl">
+              Projetos para aprender
+              <span className="font-bold">{" " + technologyName}</span>
+              {/* <CardItemMainTechnology
+                technologyName={technologyName}
+                technologyImgSrc={
+                  challenges[technologyName][0].main_technology?.image_url
+                }
+              /> */}
+            </h2>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
+              {challenges[technologyName].map(
+                (challenge: ChallengeCardType) => (
+                  <ChallengeCard
+                    key={challenge.id}
+                    challenge={challenge}
+                    className=""
+                  />
+                ),
+              )}
+            </div>
+          </div>
         ))}
-      </div>
+      </section>
     </main>
   );
 }

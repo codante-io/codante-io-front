@@ -97,7 +97,7 @@ export async function getChallenges(
 ): Promise<Array<ChallengeCard>> {
   const token = await currentToken({ request });
   const challenges = await axios
-    .get(`${environment().API_HOST}/challenges`, {
+    .get(`${environment().API_HOST}/challenges?groupedByTechnology=true`, {
       headers: {
         Authorization: "Bearer " + token,
       },

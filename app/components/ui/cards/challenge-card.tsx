@@ -39,7 +39,7 @@ export default function ChallengeCard({
           {challenge?.main_technology?.name && (
             <CardItemMainTechnology
               technologyName={challenge.main_technology?.name}
-              technologyImgSrc="/icons/nextjs.svg"
+              technologyImgSrc={challenge.main_technology?.image_url}
             />
           )}
           <div className="h-full w-full overflow-hidden flex justify-center items-center pt-4">
