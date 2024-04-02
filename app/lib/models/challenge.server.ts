@@ -3,7 +3,7 @@ import { currentToken } from "~/lib/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
-import { environment } from "./environment.server";
+import { environment } from "./environment";
 
 export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
 export type ChallengeEstimatedEffort = "1_day" | "2_days" | "1_week";

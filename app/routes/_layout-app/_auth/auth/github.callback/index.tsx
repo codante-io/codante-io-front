@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { environment } from "~/lib/models/environment.server";
+import { environment } from "~/lib/models/environment";
 import {
   commitSession,
   getSession,

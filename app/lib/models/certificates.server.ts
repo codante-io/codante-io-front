@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment } from "./environment.server";
+import { environment } from "./environment";
 import { currentToken } from "../services/auth.server";
 import type { ChallengeUser, User } from "./user.server";
 import type { WorkshopUser } from "./workshop.server";

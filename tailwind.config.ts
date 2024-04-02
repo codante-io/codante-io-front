@@ -1,7 +1,9 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
+import tailwindForm from "@tailwindcss/forms";
+import tailwindTypography from "@tailwindcss/typography";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   darkMode: "class",
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -22,8 +24,6 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter var", "sans-serif"],
-        alexbrush: ["Alex Brush", "cursive"],
-        robotocondensed: ["Roboto Condensed", "sans-serif"],
       },
       colors: {
         gray: {
@@ -127,21 +127,18 @@ module.exports = {
         },
         popover: {
           from: {
-            opacity: 0,
+            opacity: "0",
             transform: "translateY(4px)",
           },
           to: {
-            opacity: 1,
+            opacity: "1",
             transform: "translateY(0)",
           },
         },
       },
     },
   },
-  safelist: [],
-  plugins: [
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/typography"),
-    require("@headlessui/tailwindcss"),
-  ],
-};
+  plugins: [tailwindForm, tailwindTypography],
+} satisfies Config;
+
+export default config;

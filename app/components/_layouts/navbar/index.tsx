@@ -2,7 +2,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
-import useSound from "use-sound";
+import useSound from "~/lib/hooks/use-sound/use-sound";
 import ToggleColorMode from "~/components/ui/toggle-color-mode";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { setActiveClassForPath } from "~/lib/utils/path-utils";
