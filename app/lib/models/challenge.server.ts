@@ -5,6 +5,10 @@ import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
 import { environment } from "./environment";
 
+export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
+export type ChallengeEstimatedEffort = "1_day" | "2_days" | "1_week";
+export type ChallengeCategory = "frontend" | "fullstack";
+
 export type Challenge = {
   id: string;
   name: string;
@@ -17,7 +21,11 @@ export type Challenge = {
   description?: string;
   image_url: string;
   video_url?: string;
-  difficulty: 1 | 2 | 3;
+  difficulty: ChallengeDifficulty;
+  estimated_effort: ChallengeEstimatedEffort;
+  category: ChallengeCategory;
+  main_technology: Tag;
+  is_premium: boolean;
   duration_in_minutes: number;
   enrolled_users_count: number;
   has_solution: boolean;
@@ -54,7 +62,11 @@ export type ChallengeCard = {
   status: "draft" | "published" | "soon" | "archived";
   short_description: string;
   image_url: string;
-  difficulty: 1 | 2 | 3;
+  difficulty: ChallengeDifficulty;
+  estimated_effort: ChallengeEstimatedEffort;
+  category: ChallengeCategory;
+  main_technology: Tag;
+  is_premium: boolean;
   tags: Tag[];
   has_solution: boolean;
   avatars: UserAvatar[];
@@ -72,7 +84,7 @@ export type ChallengeSummary = {
   short_description: string;
   image_url: string;
   status: "draft" | "published" | "soon" | "archived";
-  difficulty: 1 | 2 | 3;
+  difficulty: ChallengeDifficulty;
 };
 
 export type ChallengeParticipants = {
@@ -80,12 +92,16 @@ export type ChallengeParticipants = {
   avatars: UserAvatar[];
 };
 
+export type ChallengesByCategory = {
+  featured?: ChallengeCard[];
+} & Record<string, ChallengeCard[]>;
+
 export async function getChallenges(
   request: Request,
-): Promise<Array<ChallengeCard>> {
+): Promise<ChallengesByCategory> {
   const token = await currentToken({ request });
   const challenges = await axios
-    .get(`${environment().API_HOST}/challenges`, {
+    .get(`${environment().API_HOST}/challenges?groupedByTechnology=true`, {
       headers: {
         Authorization: "Bearer " + token,
       },
