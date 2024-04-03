@@ -92,9 +92,13 @@ export type ChallengeParticipants = {
   avatars: UserAvatar[];
 };
 
+export type ChallengesByCategory = {
+  featured?: ChallengeCard[];
+} & Record<string, ChallengeCard[]>;
+
 export async function getChallenges(
   request: Request,
-): Promise<Array<ChallengeCard>> {
+): Promise<ChallengesByCategory> {
   const token = await currentToken({ request });
   const challenges = await axios
     .get(`${environment().API_HOST}/challenges?groupedByTechnology=true`, {
