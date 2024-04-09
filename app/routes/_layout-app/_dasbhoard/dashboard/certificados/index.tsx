@@ -3,12 +3,9 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/shadcn/card";
-import { Checkbox } from "~/components/ui/shadcn/checkbox";
-import { Input } from "~/components/ui/shadcn/input";
+} from "~/components/ui/cards/card";
 
 export default function CertificateDashboard() {
   return (
@@ -21,14 +18,7 @@ export default function CertificateDashboard() {
             Certificados de conclusão de Mini Projetos.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form>
-            <Input placeholder="Store Name" />
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
+        <CardContent>{/* todo   */}</CardContent>
       </Card>
       <Card>
         <CardHeader>
@@ -37,23 +27,7 @@ export default function CertificateDashboard() {
             Certificados de conclusão de Workshops.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form className="flex flex-col gap-4">
-            <Input placeholder="Project Name" defaultValue="/content/plugins" />
-            <div className="flex items-center space-x-2">
-              <Checkbox id="include" defaultChecked />
-              <label
-                htmlFor="include"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Allow administrators to change the directory.
-              </label>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
+        <CardContent>{/* todo */}</CardContent>
       </Card>
     </>
   );
