@@ -1,4 +1,4 @@
-name: Deploy to production
+name: Deploy v2
 
 on:
   push:
@@ -6,28 +6,40 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy with pm2
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Build Remix App
+        run: npm run build
+
+      - name: Echo ENV_PRODUCTION to .env.production
+        run: echo "${{ secrets.ENV_PRODUCTION }}" > .env.production
+
+      - name: Deploy with rsync
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: -avzr --quiet --delete
+          path: ./
+          remote_path: /var/www/codante-io-front
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USERNAME }}
+          remote_key: ${{ secrets.SSH_KEY }}
+
+      - name: Restart pm2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            rm -rf /var/www/tmp
-            mkdir /var/www/tmp
-            cp /var/www/codante-io-front/.env.production /var/www/tmp/
-
-            rm -rf /var/www/codante-io-front
-
-            git clone --depth 1 git@github.com:codante-io/codante-io-front.git /var/www/codante-io-front
-
-            cp /var/www/tmp/.env.production /var/www/codante-io-front/
-            rm -rf /var/www/tmp
-
-            cd /var/www/codante-io-front
-            npm install
-            npm run build
             pm2 restart codante-io-front

@@ -11,7 +11,6 @@ import {
 } from "@remix-run/react";
 
 import invariant from "tiny-invariant";
-import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
 import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
@@ -259,10 +258,6 @@ export default function ChallengeSlug() {
           <>
             <div className="container">
               <div>
-                <CardItemDifficulty
-                  difficulty={challenge?.difficulty}
-                  className="mb-2"
-                />
                 <h1 className="flex items-center justify-between text-2xl font-light lg:text-3xl font-lexend">
                   <span className="flex items-center">
                     <TitleIcon className="h-4 w-4 inline mr-2 text-blue-300 dark:text-blue-900" />

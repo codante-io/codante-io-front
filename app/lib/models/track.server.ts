@@ -3,7 +3,7 @@ import type { Challenge } from "~/lib/models/challenge.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
-import { environment } from "./environment.server";
+import { environment } from "./environment";
 
 export type Track = {
   id: string;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment } from "~/lib/models/environment.server";
+import { environment } from "~/lib/models/environment";
 import { currentToken } from "~/lib/services/auth.server";
 
 export async function action({ request }: { request: Request }) {

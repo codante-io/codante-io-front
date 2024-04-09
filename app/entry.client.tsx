@@ -5,9 +5,9 @@
  */
 
 import { RemixBrowser } from "@remix-run/react";
-import { startTransition, StrictMode } from "react";
-import { hydrateRoot } from "react-dom/client";
+import React, { startTransition, StrictMode } from "react";
 import { ColorModeProvider } from "./lib/contexts/color-mode-context";
+import { hydrateRoot } from "react-dom/client";
 
 startTransition(() => {
   hydrateRoot(

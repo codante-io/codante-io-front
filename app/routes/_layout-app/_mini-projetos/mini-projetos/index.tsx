@@ -4,12 +4,12 @@ import ChallengeCard from "~/components/ui/cards/challenge-card";
 import { getChallenges } from "~/lib/models/challenge.server";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { metaV1 } from "@remix-run/v1-meta";
 import { NewButton } from "~/components/ui/new-button";
+import { cn } from "~/lib/utils/cn";
 
 export function meta(args: any) {
   const title = "Mini Projetos | Codante.io";
@@ -42,36 +42,26 @@ export async function loader({ request }: { request: Request }) {
   });
 }
 
-// export function headers() {
-//   return {
-//     "Cache-Control": "s-maxage=1, stale-while-revalidate=59",
-//   };
-// }
-
 export default function Projects() {
   const { challenges } = useLoaderData<typeof loader>();
-  const user = useUserFromOutletContext();
 
-  const featuredChallenge = challenges.find(
-    (challenge) => challenge.is_weekly_featured === true,
-  );
+  const { featured, ...challengesByTechnology } = challenges;
 
-  const challengesWithoutFeatured = challenges.filter(
-    (challenge) => challenge.is_weekly_featured !== true,
-  );
+  const featuredChallenge =
+    featured && featured.length > 0 ? featured[0] : null;
 
   return (
     <main className="container mx-auto">
-      <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
-        Mini Projetos
+      <h1 className="mb-10 text-3xl lg:text-4xl font-lexend text-center">
+        Todos os{" "}
+        <span className="font-bold border-b-4 border-amber-400">
+          Mini Projetos
+        </span>
       </h1>
 
       {featuredChallenge && (
-        <section
-          className="md:relative md:h-[375px] lg:h-[350px] mb-32 mt-[80px] rounded-lg  p-10 md:pl-[380px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col
-        "
-        >
-          <div className="flex-col">
+        <section className="md:relative md:h-[500px] lg:h-[500px] mb-32 mt-[80px] rounded-lg md:pl-[420px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col">
+          <div className="flex-col px-6 pt-6">
             <h3 className="font-light text-yellow-400 ">
               Mini Projeto em destaque
             </h3>
@@ -118,26 +108,45 @@ export default function Projects() {
             </Link>
           </div>
 
-          <div className="flex justify-center md:absolute md:-top-[50px] md:left-10 md:shadow-xl rounded-2xl">
-            <ChallengeCard
-              className="shadow-[7px_7px_20px_0px_rgba(255,255,255,0.10)] dark:hover:shadow-[7px_7px_20px_0px_rgba(255,255,255,0.20)]"
-              challenge={featuredChallenge}
-            />
+          <div className="flex justify-center md:absolute md:-top-[50px] md:left-10">
+            <div className="w-96">
+              <ChallengeCard
+                className="shadow-[7px_7px_20px_0px_rgba(255,255,255,0.10)] dark:hover:shadow-[7px_7px_20px_0px_rgba(255,255,255,0.20)]"
+                animatedBackground={false}
+                challenge={featuredChallenge}
+              />
+            </div>
           </div>
         </section>
       )}
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 ">
-        {challengesWithoutFeatured.map((challenge: ChallengeCardType) => (
-          <div key={challenge.slug} className="mx-auto">
-            <ChallengeCard
-              loggedUser={user ?? undefined}
-              challenge={challenge}
-              className=""
-            />
+      <section className="mt-4 flex flex-col gap-20">
+        {Object.keys(challengesByTechnology).map((technologyName, index) => (
+          <div key={technologyName}>
+            <h2 className="my-4 lg:mb-8 text-2xl lg:text-3xl">
+              Projetos para aprender
+              <span
+                className={cn("font-bold border-b-2 border-amber-400 ml-2")}
+                style={{
+                  borderColor:
+                    challengesByTechnology[technologyName][0].main_technology
+                      ?.color,
+                }}
+              >
+                {technologyName}
+              </span>
+            </h2>
+
+            <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
+              {challengesByTechnology[technologyName].map(
+                (challenge: ChallengeCardType) => (
+                  <ChallengeCard key={challenge.id} challenge={challenge} />
+                ),
+              )}
+            </div>
           </div>
         ))}
-      </div>
+      </section>
     </main>
   );
 }
@@ -195,13 +204,6 @@ function Countdown({
         </span>
       </p>
     );
-  // return (
-  //   // {remainingTime && (
-  // <strong className="text-white dark:text-white">
-  //   {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
-  //   {hours}:{minutes}:{seconds}
-  // </strong>
-  // )
 
   return (
     <>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Tag } from "./tag.server";
-import { environment } from "./environment.server";
+import { environment } from "./environment";
 
 export type Assessment = {
   id: string;
