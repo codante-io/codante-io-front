@@ -7,7 +7,7 @@ export default function Dashboard() {
   const { user } = useOutletContext<{
     user: User;
   }>();
-  console.log(user.challenge_users);
+
   const location = useLocation();
   const tabs: {
     name: string;
@@ -37,7 +37,6 @@ export default function Dashboard() {
       name: "Workshops",
       href: "workshops",
       icon: <MdComputer />,
-
       current: location.pathname.includes("workshops"),
     },
     {
@@ -50,10 +49,10 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-        <div className="mx-auto grid w-full max-w-6xl gap-2">
+        <div className="mx-auto grid w-full gap-2">
           <h1 className="text-3xl font-semibold">Dashboard</h1>
         </div>
-        <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
+        <div className="mx-auto grid w-full items-start gap-2 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
           <nav className="grid gap-4 text-sm text-muted-foreground">
             {tabs.map((tab) => (
               <Link
@@ -72,7 +71,7 @@ export default function Dashboard() {
             ))}
           </nav>
           <div className="grid gap-6">
-            <Outlet />
+            <Outlet context={user.challenge_users} />
           </div>
         </div>
       </main>

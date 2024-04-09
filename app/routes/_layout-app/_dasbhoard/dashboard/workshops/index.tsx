@@ -1,57 +1,39 @@
-import { Button } from "~/components/ui/shadcn/button";
+import { useNavigate, useOutletContext } from "@remix-run/react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/shadcn/card";
-import { Checkbox } from "~/components/ui/shadcn/checkbox";
-import { Input } from "~/components/ui/shadcn/input";
+} from "~/components/ui/cards/card";
+import type { ChallengeUser } from "~/lib/models/user.server";
 
 export default function WorkshopsDashboard() {
+  const challengeUser: ChallengeUser = useOutletContext();
+  const navigate = useNavigate();
   return (
     <>
-      <h1 className="text-3xl font-semibold">Workshops</h1>
       <Card>
         <CardHeader>
-          <CardTitle>Concluídos</CardTitle>
+          <CardTitle>
+            Workshops{" "}
+            <span className="font-semibold text-brand-500">Concluídos</span>
+          </CardTitle>
           <CardDescription>Workshops que você já concluiu.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <form>
-            <Input placeholder="Store Name" />
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
+        <CardContent>{/* todo */}</CardContent>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Em execução</CardTitle>
+          <CardTitle>
+            Workshops{" "}
+            <span className="font-semibold text-brand-500">em execução</span>
+          </CardTitle>
           <CardDescription>
             Workshops que você iniciou mas não concluiu.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form className="flex flex-col gap-4">
-            <Input placeholder="Project Name" defaultValue="/content/plugins" />
-            <div className="flex items-center space-x-2">
-              <Checkbox id="include" defaultChecked />
-              <label
-                htmlFor="include"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Allow administrators to change the directory.
-              </label>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
+        <CardContent>{/* todo */}</CardContent>
       </Card>
     </>
   );
