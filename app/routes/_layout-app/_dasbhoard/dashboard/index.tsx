@@ -1,20 +1,50 @@
-import { Link, Outlet, useLocation, useOutletContext } from "@remix-run/react";
+import {
+  Link,
+  Outlet,
+  json,
+  useLoaderData,
+  useLocation,
+  useOutletContext,
+} from "@remix-run/react";
 import { PiCertificateLight } from "react-icons/pi";
 import { MdComputer } from "react-icons/md";
 import type { User } from "~/lib/models/user.server";
+import { getDashboardData } from "~/lib/models/dashboard.server";
+
+export async function loader({
+  request,
+  params,
+}: {
+  request: Request;
+  params: { id: string };
+}) {
+  return json({
+    dashboardData: await getDashboardData(request),
+  });
+}
 
 export default function Dashboard() {
   const { user } = useOutletContext<{
     user: User;
   }>();
+  const { dashboardData } = useLoaderData<typeof loader>();
+  console.log(dashboardData);
 
   const location = useLocation();
+
+  // console.log(user.workshop_users);
   const tabs: {
     name: string;
     icon: React.ReactNode;
     href: string;
     current: boolean;
   }[] = [
+    {
+      name: "Workshops",
+      href: "workshops",
+      icon: <MdComputer />,
+      current: location.pathname.includes("workshops"),
+    },
     {
       name: "Mini Projetos",
       icon: (
@@ -34,21 +64,16 @@ export default function Dashboard() {
       current: location.pathname.includes("mini-projetos"),
     },
     {
-      name: "Workshops",
-      href: "workshops",
-      icon: <MdComputer />,
-      current: location.pathname.includes("workshops"),
-    },
-    {
       name: "Certificados",
       href: "certificados",
       icon: <PiCertificateLight />,
       current: location.pathname.includes("certificados"),
     },
   ];
+  // console.log(user.workshop_users);
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-col gap-4 bg-muted/40 md:gap-8">
         <div className="mx-auto grid w-full gap-2">
           <h1 className="text-3xl font-semibold">Dashboard</h1>
         </div>
@@ -70,8 +95,8 @@ export default function Dashboard() {
               </Link>
             ))}
           </nav>
-          <div className="grid gap-6">
-            <Outlet context={user.challenge_users} />
+          <div className="grid gap-6 mt-5 md:mt-0">
+            <Outlet context={user} />
           </div>
         </div>
       </main>
