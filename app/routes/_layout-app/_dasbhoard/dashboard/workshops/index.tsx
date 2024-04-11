@@ -1,12 +1,19 @@
 import { Link, useOutletContext } from "@remix-run/react";
-import type { User } from "~/lib/models/user.server";
-
-import type { Workshop } from "~/lib/models/workshop.server";
+import type {
+  Dashboard,
+  WorkshopUserDashboard,
+} from "~/lib/models/dashboard.server";
 
 export default function WorkshopsDashboard() {
-  const user: User = useOutletContext();
-  const workshopUsers = user.workshop_users;
-  // console.log(workshopUsers);
+  const { workshop_users: workshopUsers }: Dashboard = useOutletContext();
+
+  const onGoingWorkshopUsers = workshopUsers.filter(
+    (workshopUser) => workshopUser.status !== "completed",
+  );
+  // const onGoingWorkshopUsers = [];
+  const completedWorkshopUsers = workshopUsers.filter(
+    (workshopUser) => workshopUser.status === "completed",
+  );
   return (
     <>
       <div className="">
@@ -15,13 +22,16 @@ export default function WorkshopsDashboard() {
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center">
-          {workshopUsers.length > 0
-            ? workshopUsers
-                .filter((workshopUser) => workshopUser.status !== "completed")
-                .map((workshopUser) => (
-                  <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
-                ))
-            : "não há"}
+          {onGoingWorkshopUsers.length > 0 ? (
+            onGoingWorkshopUsers.map((workshopUser) => (
+              <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
+            ))
+          ) : (
+            <h2 className="dark:text-gray-600 text-gray-400">
+              Você não possui{" "}
+              <span className="font-semibold">Workshops em andamento</span>
+            </h2>
+          )}
         </div>
 
         <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-10" />
@@ -30,24 +40,27 @@ export default function WorkshopsDashboard() {
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center">
-          {workshopUsers.length > 0
-            ? workshopUsers
-                .filter((workshopUser) => workshopUser.status === "completed")
-                .map((workshopUser) => (
-                  <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
-                ))
-            : "não há"}
+          {completedWorkshopUsers.length > 0 ? (
+            completedWorkshopUsers.map((workshopUser) => (
+              <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
+            ))
+          ) : (
+            <h2 className="dark:text-gray-600 text-gray-400">
+              Você não concluiu nenhum{" "}
+              <span className="font-semibold">Workshop</span>
+            </h2>
+          )}
         </div>
       </div>
     </>
   );
 }
 
-function WorkshopCard({ workshop }: { workshop: Workshop }) {
+function WorkshopCard({ workshop }: { workshop: WorkshopUserDashboard }) {
   return (
     <article className="w-full flex flex-col justify-center items-center xl:max-w-[292px] max-w-[298px]">
       <Link
-        to={`/workshops/${workshop.slug}`}
+        to={`/workshops/${workshop.workshop_slug}`}
         className="relative flex-col w-full flex-grow flex max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl overflow-hidden bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow sm:h-[225px]"
       >
         <div

@@ -1,11 +1,20 @@
-import { Link, useNavigate, useOutletContext } from "@remix-run/react";
-import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
-import type { ChallengeUser, User } from "~/lib/models/user.server";
+import { Link, useOutletContext } from "@remix-run/react";
+// import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
+import type {
+  ChallengeUserDashboard,
+  Dashboard,
+} from "~/lib/models/dashboard.server";
 
 export default function ChallengeDashboard() {
-  const user: User = useOutletContext();
-  const challengeUser = user.challenge_users;
-  const navigate = useNavigate();
+  const { challenge_users: challengeUsers }: Dashboard = useOutletContext();
+
+  const onGoingChallengeUsers = challengeUsers.filter(
+    (challengeUser) => !challengeUser.completed,
+  );
+
+  const completedChallengeUsers = challengeUsers.filter(
+    (challengeUser) => challengeUser.completed,
+  );
 
   return (
     <>
@@ -15,13 +24,16 @@ export default function ChallengeDashboard() {
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center">
-          {challengeUser.length > 0
-            ? challengeUser
-                .filter((challenge) => challenge.completed === 0)
-                .map((challenge) => (
-                  <ChallengeCard key={challenge.id} challenge={challenge} />
-                ))
-            : "não há"}
+          {onGoingChallengeUsers.length > 0 ? (
+            onGoingChallengeUsers.map((challengeUser) => (
+              <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
+            ))
+          ) : (
+            <h2 className="dark:text-gray-600 text-gray-400">
+              Você não possui{" "}
+              <span className="font-semibold">Mini Projetos</span> em andamento
+            </h2>
+          )}
         </div>
 
         <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-10" />
@@ -30,22 +42,28 @@ export default function ChallengeDashboard() {
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center">
-          {challengeUser.length > 0
-            ? challengeUser
-                .filter((challenge) => challenge.completed === 1)
-                .map((challenge) => (
-                  <ChallengeCard key={challenge.id} challenge={challenge} />
-                ))
-            : "não há"}
+          {completedChallengeUsers.length > 0 ? (
+            completedChallengeUsers.map((challengeUser) => (
+              <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
+            ))
+          ) : (
+            <h2 className="dark:text-gray-600 text-gray-400">
+              Você não concluiu nenhum{" "}
+              <span className="font-semibold">Mini Projeto</span>
+            </h2>
+          )}
         </div>
       </div>
     </>
   );
 }
 
-function ChallengeCard({ challenge }: { challenge: ChallengeUser }) {
+function ChallengeCard({ challenge }: { challenge: ChallengeUserDashboard }) {
   return (
-    <Link to={`/mini-projetos/${challenge.slug}`} className={"cursor-pointer"}>
+    <Link
+      to={`/mini-projetos/${challenge.challenge_slug}`}
+      className={"cursor-pointer"}
+    >
       <article
         className={`group
           relative xl:max-w-[292px] max-w-[298px] sm:h-[255px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl

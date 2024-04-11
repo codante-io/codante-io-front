@@ -4,11 +4,9 @@ import {
   json,
   useLoaderData,
   useLocation,
-  useOutletContext,
 } from "@remix-run/react";
 import { PiCertificateLight } from "react-icons/pi";
 import { MdComputer } from "react-icons/md";
-import type { User } from "~/lib/models/user.server";
 import { getDashboardData } from "~/lib/models/dashboard.server";
 
 export async function loader({
@@ -24,15 +22,11 @@ export async function loader({
 }
 
 export default function Dashboard() {
-  const { user } = useOutletContext<{
-    user: User;
-  }>();
   const { dashboardData } = useLoaderData<typeof loader>();
-  console.log(dashboardData);
+  // console.log(dashboardData);
 
   const location = useLocation();
 
-  // console.log(user.workshop_users);
   const tabs: {
     name: string;
     icon: React.ReactNode;
@@ -70,7 +64,7 @@ export default function Dashboard() {
       current: location.pathname.includes("certificados"),
     },
   ];
-  // console.log(user.workshop_users);
+
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-col gap-4 bg-muted/40 md:gap-8">
@@ -96,7 +90,7 @@ export default function Dashboard() {
             ))}
           </nav>
           <div className="grid gap-6 mt-5 md:mt-0">
-            <Outlet context={user} />
+            <Outlet context={dashboardData} />
           </div>
         </div>
       </main>
