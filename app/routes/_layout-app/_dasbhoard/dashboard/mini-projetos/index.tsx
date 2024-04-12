@@ -6,7 +6,8 @@ import type {
 } from "~/lib/models/dashboard.server";
 
 export default function ChallengeDashboard() {
-  const { challenge_users: challengeUsers }: Dashboard = useOutletContext();
+  const { dashboardData }: { dashboardData: Dashboard } = useOutletContext();
+  const challengeUsers = dashboardData.challenge_users;
 
   const onGoingChallengeUsers = challengeUsers.filter(
     (challengeUser) => !challengeUser.completed,
@@ -19,7 +20,7 @@ export default function ChallengeDashboard() {
   return (
     <>
       <div className="">
-        <h1 className="text-2xl mb-3">
+        <h1 className="text-2xl mb-8">
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
@@ -37,7 +38,7 @@ export default function ChallengeDashboard() {
         </div>
 
         <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-10" />
-        <h1 className="text-2xl mb-3">
+        <h1 className="text-2xl mb-8">
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>

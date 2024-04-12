@@ -5,11 +5,14 @@ import {
   useLoaderData,
   useLocation,
   useNavigate,
+  useOutletContext,
 } from "@remix-run/react";
 import { PiCertificateLight } from "react-icons/pi";
 import { MdComputer } from "react-icons/md";
 import { getDashboardData } from "~/lib/models/dashboard.server";
 import { useEffect } from "react";
+import type { User } from "~/lib/models/user.server";
+import NotFound from "~/components/features/error-handling/not-found";
 
 export async function loader({
   request,
@@ -25,6 +28,10 @@ export async function loader({
 
 export default function Dashboard() {
   const { dashboardData } = useLoaderData<typeof loader>();
+  const { user } = useOutletContext<{
+    user: User;
+  }>();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -68,12 +75,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (
-      location.pathname === "/dashboard" ||
-      location.pathname === "/dashboard/"
+      (location.pathname === "/dashboard" ||
+        location.pathname === "/dashboard/") &&
+      user
     ) {
       navigate("/dashboard/workshops");
     }
-  }, [location, navigate]);
+  }, [location, navigate, user]);
+
+  if (!user) return <NotFound />;
 
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
@@ -99,8 +109,8 @@ export default function Dashboard() {
               </Link>
             ))}
           </nav>
-          <div className="grid gap-6 mt-5 md:mt-0">
-            <Outlet context={dashboardData} />
+          <div className="">
+            <Outlet context={{ dashboardData, user }} />
           </div>
         </div>
       </main>

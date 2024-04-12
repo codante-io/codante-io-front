@@ -5,7 +5,8 @@ import type {
 } from "~/lib/models/dashboard.server";
 
 export default function WorkshopsDashboard() {
-  const { workshop_users: workshopUsers }: Dashboard = useOutletContext();
+  const { dashboardData }: { dashboardData: Dashboard } = useOutletContext();
+  const workshopUsers = dashboardData.workshop_users;
 
   const onGoingWorkshopUsers = workshopUsers.filter(
     (workshopUser) => workshopUser.status !== "completed",
@@ -17,7 +18,7 @@ export default function WorkshopsDashboard() {
   return (
     <>
       <div className="">
-        <h1 className="text-2xl mb-3">
+        <h1 className="text-2xl mb-8">
           Workshops{" "}
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
@@ -35,7 +36,7 @@ export default function WorkshopsDashboard() {
         </div>
 
         <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-10" />
-        <h1 className="text-2xl mb-3">
+        <h1 className="text-2xl mb-8">
           Workshops{" "}
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
