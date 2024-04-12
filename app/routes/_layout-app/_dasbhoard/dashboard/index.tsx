@@ -4,10 +4,12 @@ import {
   json,
   useLoaderData,
   useLocation,
+  useNavigate,
 } from "@remix-run/react";
 import { PiCertificateLight } from "react-icons/pi";
 import { MdComputer } from "react-icons/md";
 import { getDashboardData } from "~/lib/models/dashboard.server";
+import { useEffect } from "react";
 
 export async function loader({
   request,
@@ -23,8 +25,7 @@ export async function loader({
 
 export default function Dashboard() {
   const { dashboardData } = useLoaderData<typeof loader>();
-  // console.log(dashboardData);
-
+  const navigate = useNavigate();
   const location = useLocation();
 
   const tabs: {
@@ -64,6 +65,15 @@ export default function Dashboard() {
       current: location.pathname.includes("certificados"),
     },
   ];
+
+  useEffect(() => {
+    if (
+      location.pathname === "/dashboard" ||
+      location.pathname === "/dashboard/"
+    ) {
+      navigate("/dashboard/workshops");
+    }
+  }, [location, navigate]);
 
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
