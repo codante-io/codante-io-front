@@ -3,6 +3,7 @@ import { currentToken } from "~/lib/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
+import type { TrackablePivot } from "~/lib/models/track.server";
 import { environment } from "./environment";
 
 export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
@@ -32,10 +33,8 @@ export type Challenge = {
   tags: Tag[];
   workshop?: Workshop;
   users?: { avatar_url: string }[];
-  pivot?: {
-    trackable_type: string;
-    completed?: boolean;
-  };
+  pivot?: TrackablePivot;
+  completed?: boolean;
   current_user_is_enrolled: boolean;
   current_user_status:
     | null
@@ -68,6 +67,7 @@ export type ChallengeCard = {
   main_technology: Tag;
   is_premium: boolean;
   tags: Tag[];
+  pivot?: TrackablePivot;
   has_solution: boolean;
   avatars: UserAvatar[];
   enrolled_users_count: number;

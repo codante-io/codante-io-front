@@ -17,6 +17,10 @@ function classNames(...classes: any) {
 }
 
 const navigation = [
+  // {
+  //   name: "Trilhas",
+  //   href: "/trilhas",
+  // },
   {
     name: "Workshops",
     href: "/workshops",
