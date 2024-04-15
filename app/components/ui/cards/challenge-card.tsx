@@ -9,6 +9,7 @@ import CardItemEffort from "~/components/ui/cards/card-item-effort";
 import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
 
 export default function ChallengeCard({
   challenge,
@@ -117,15 +118,7 @@ export default function ChallengeCard({
                 <span className="text-xs text-gray-600 dark:text-gray-400">
                   O que você vai aprender:
                 </span>
-                <div className="pb-1 overflow-x-auto overflow-scrollbar scrollbar-thumb tags">
-                  {challenge?.tags?.map((tag, index) => (
-                    <span key={tag.id} className="inline-block text-xs mr-1">
-                      <span className="font-bold">{tag.name}</span>
-                      {index === challenge?.tags.length - 2 && " e"}
-                      {index < challenge?.tags.length - 2 && ", "}
-                    </span>
-                  ))}
-                </div>
+                <CardItemTagsText tags={challenge?.tags} />
               </div>
             </div>
             <p className="text-sm font-light text-gray-600 line-clamp-3 slate-600 dark:text-gray-300">

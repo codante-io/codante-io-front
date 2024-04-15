@@ -2,9 +2,10 @@ import axios from "axios";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
+import type { Certificate } from "./certificates.server";
+import type { TrackablePivot } from "~/lib/models/track.server";
 import { currentToken } from "~/lib/services/auth.server";
 import { environment } from "./environment";
-import type { Certificate } from "./certificates.server";
 
 export type WorkshopUser = {
   id: number;
@@ -43,10 +44,10 @@ export type Workshop = {
   }[];
   lessons: Lesson[];
   tags: Tag[];
-  pivot?: {
-    trackable_type: string;
-  };
+
   workshop_user: WorkshopUser;
+  pivot?: TrackablePivot;
+  completed?: boolean;
 };
 
 export async function getWorkshops(): Promise<Array<Workshop>> {

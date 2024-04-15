@@ -6,13 +6,17 @@ import * as React from "react";
 import { cn } from "~/lib/utils/cn";
 
 const cardVariants = cva(
-  "border-[1.5px] dark:bg-background-800 dark:text-white transition-colors overflow-hidden",
+  "border-[1.5px] bg-background-50 dark:bg-background-800 dark:text-white transition-colors overflow-hidden",
   {
     variants: {
       border: {
-        default: "dark:border-gray-700 border-gray-300 dark:shadow-md shadow",
-        bright: "dark:border-gray-600 border-gray-300 shadow-md", // mais brilhante
-        dull: "dark:border-background-700 border-gray-100 shadow", // mais discreto
+        default:
+          "dark:border-background-700 border-background-200 dark:shadow-md shadow",
+        bright: "dark:border-background-600 border-background-200 shadow-md", // mais brilhante
+        dull: "dark:border-background-700 border-background-100 shadow", // mais discreto
+        brand: "border-brand-500 dark:border-brand-500 shadow-md",
+        "brand-l":
+          "dark:border-background-600 border-background-200 border-l-brand-500 dark:border-l-brand-500 dark:border-l-4 border-l-4 shadow-md",
         none: "border-0 shadow",
       },
       hover: {
