@@ -139,9 +139,8 @@ export default function TrackSlug() {
                             onChange={handleCheckboxChange}
                             error={actionData}
                             userIsPro={userIsPro}
-                            showBlockedCheckbox={
-                              index === 0 && sectionIndex === 0
-                            }
+                            userIsLoggedIn={!!user}
+                            isFree={!trackable?.is_premium}
                           />
 
                           <div

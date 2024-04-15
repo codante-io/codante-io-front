@@ -44,6 +44,7 @@ export type TrackItem = {
   status: "draft" | "published" | "soon" | "archived";
   pivot?: TrackablePivot;
   completed?: boolean;
+  is_premium?: boolean;
 };
 
 export type TrackablePivot = {

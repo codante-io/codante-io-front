@@ -48,6 +48,7 @@ export type Workshop = {
   workshop_user: WorkshopUser;
   pivot?: TrackablePivot;
   completed?: boolean;
+  is_premium?: boolean;
 };
 
 export async function getWorkshops(): Promise<Array<Workshop>> {

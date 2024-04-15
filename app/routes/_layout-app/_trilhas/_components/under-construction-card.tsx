@@ -5,20 +5,20 @@ function UnderConstructionCard() {
   return (
     <Card
       border="bright"
-      className="relative overflow-visible text-start border-l-8 mb-12 dark:border-l-pink-400 border-l-pink-400"
+      className="relative overflow-visible text-start border-l-8 mb-12 dark:border-amber-400 border-amber-400"
     >
       <div className="flex flex-col justify-between px-8 py-4 h-full flex-grow">
         <div>
           <div className="mb-2 card-header">
-            <div className="flex gap-4 items-center">
-              <div className="h-full text-pink-400">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <div className="h-full text-amber-400">
                 <LuConstruction className="w-full h-10" />
               </div>
               <div>
                 <h2 className="text-xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
                   Essa trilha está em construção
                 </h2>
-                <span className="text-sm text-gray-600 dark:text-gray-400 border-b border-pink-400">
+                <span className="text-sm text-gray-600 dark:text-gray-400 border-b border-amber-400">
                   Estamos preparando muita coisa boa!
                 </span>
               </div>

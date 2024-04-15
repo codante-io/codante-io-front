@@ -1,7 +1,12 @@
 import React from "react";
 import useOnMount from "./use-on-mount";
 
-import { HookOptions, PlayOptions, PlayFunction, ReturnedValue } from "./types";
+import type {
+  HookOptions,
+  PlayOptions,
+  PlayFunction,
+  ReturnedValue,
+} from "./types";
 
 export default function useSound<T = any>(
   src: string | string[],
