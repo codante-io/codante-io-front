@@ -1,4 +1,5 @@
 import { Link, useOutletContext } from "@remix-run/react";
+import { Separator } from "~/components/ui/separator";
 // import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
 import type {
   ChallengeUserDashboard,
@@ -20,7 +21,7 @@ export default function ChallengeDashboard() {
   return (
     <>
       <div className="">
-        <h1 className="text-2xl mb-8">
+        <h1 className="text-2xl mb-8 mt-8 md:mt-0">
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
@@ -37,7 +38,7 @@ export default function ChallengeDashboard() {
           )}
         </div>
 
-        <div className="w-full h-[1px] bg-background-100 dark:bg-background-700 my-10" />
+        <Separator orientation="horizontal" className="my-5" />
         <h1 className="text-2xl mb-8">
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">concluídos</span>

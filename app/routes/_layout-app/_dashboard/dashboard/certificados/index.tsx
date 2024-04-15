@@ -12,6 +12,7 @@ import type { User } from "~/lib/models/user.server";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { FaCrown } from "react-icons/fa";
 import { Card } from "~/components/ui/cards/card";
+import { Separator } from "~/components/ui/separator";
 
 export default function CertificateDashboard() {
   const { dashboardData, user }: { dashboardData: Dashboard; user: User } =
@@ -28,13 +29,13 @@ export default function CertificateDashboard() {
   if (!user.is_pro)
     return (
       <>
-        <h1 className="text-2xl mb-8">Certificados </h1>
+        <h1 className="text-2xl mb-8 mt-8 md:mt-0">Certificados </h1>
         <ProBanner />
       </>
     );
   return (
     <>
-      <h1 className="text-2xl mb-8">
+      <h1 className="text-2xl mb-8 mt-8 md:mt-0">
         Certificados{" "}
         <span className="text-brand-400 font-semibold">publicados</span>
       </h1>
@@ -54,7 +55,7 @@ export default function CertificateDashboard() {
       {pendingCertificates.length > 0 &&
         pendingCertificates.map((certificate) => (
           <>
-            <div className="w-full h-[1px] bg-background-100 dark:bg-background-700 my-10" />
+            <Separator orientation="horizontal" className="my-5" />
             <h1 className="text-2xl mb-3">
               Certificados{" "}
               <span className="text-brand-400 font-semibold">pendentes</span>

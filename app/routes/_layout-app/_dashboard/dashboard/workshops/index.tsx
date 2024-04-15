@@ -1,3 +1,4 @@
+import { Separator } from "~/components/ui/separator";
 import { Link, useOutletContext } from "@remix-run/react";
 import type {
   Dashboard,
@@ -18,7 +19,7 @@ export default function WorkshopsDashboard() {
   return (
     <>
       <div className="">
-        <h1 className="text-2xl mb-8">
+        <h1 className="text-2xl mb-8 mt-8 md:mt-0">
           Workshops{" "}
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
@@ -35,7 +36,7 @@ export default function WorkshopsDashboard() {
           )}
         </div>
 
-        <div className="w-full h-[1px] bg-background-100 dark:bg-background-700 my-10" />
+        <Separator orientation="horizontal" className="my-5" />
         <h1 className="text-2xl mb-8">
           Workshops{" "}
           <span className="font-semibold text-brand-400">concluídos</span>
