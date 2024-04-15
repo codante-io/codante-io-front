@@ -1,11 +1,12 @@
 import { LockClosedIcon } from "@heroicons/react/24/outline";
-import { Form } from "@remix-run/react";
+import { Form, useLocation } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import { cn } from "~/lib/utils/cn";
 import BecomeProCard from "./become-pro-card";
-import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
+import SignInDialog from "~/routes/_layout-app/_trilhas/_components/sign-in-dialog";
+
 
 interface TrackItemCheckboxProps {
   trackableId: string | number;
@@ -20,7 +21,8 @@ interface TrackItemCheckboxProps {
     trackableId: string | number;
   };
   userIsPro: boolean;
-  showBlockedCheckbox: boolean;
+  userIsLoggedIn: boolean;
+  isFree: boolean;
 }
 
 function TrackItemCheckbox({
@@ -32,9 +34,11 @@ function TrackItemCheckbox({
   onChange,
   error,
   userIsPro,
-  showBlockedCheckbox,
+  userIsLoggedIn,
+  isFree,
 }: TrackItemCheckboxProps) {
   const [checked, setChecked] = useState(completed);
+  const location = useLocation();
 
   useEffect(() => {
     if (error?.timestamp && error?.trackableId == trackableId) {
@@ -57,16 +61,15 @@ function TrackItemCheckbox({
             )}
           />
           <input type="hidden" name="trackableId" value={trackableId} />
-          {userIsPro ? (
-            <input
-              type="checkbox"
-              onChange={() => setChecked((prev) => !prev)}
-              checked={checked}
-              className="cursor-pointer w-8 h-8 dark:bg-background-700 dark:border-background-600 dark:checked:bg-green-600 text-green-600 dark:text-green-600 bg-background-100 border-background-200 rounded-full focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-background-800 focus:ring-2 transition-all"
-            />
-          ) : (
-            <BlockedCheckbox showBlockedCheckbox={showBlockedCheckbox} />
-          )}
+
+          <Checkbox
+            isPro={userIsPro}
+            isFree={isFree}
+            isLoggedIn={userIsLoggedIn}
+            checked={!!checked}
+            onChange={() => setChecked((prev) => !prev)}
+            pathname={location.pathname}
+          />
 
           <div
             className={cn(
@@ -90,6 +93,53 @@ function TrackItemCheckbox({
 
 export default TrackItemCheckbox;
 
+interface CheckboxProps {
+  isPro: boolean;
+  isFree: boolean;
+  isLoggedIn: boolean;
+  checked: boolean;
+  onChange: (ev: ChangeEvent<HTMLInputElement>) => void;
+  pathname: string;
+}
+
+function Checkbox({
+  isPro,
+  isFree,
+  isLoggedIn,
+  checked,
+  onChange,
+  pathname,
+}: CheckboxProps) {
+  if (isPro || (isFree && isLoggedIn)) {
+    return (
+      <input
+        type="checkbox"
+        onChange={onChange}
+        checked={checked}
+        className="cursor-pointer w-8 h-8 dark:bg-background-700 dark:border-background-600 dark:checked:bg-green-600 text-green-600 dark:text-green-600 bg-background-100 border-background-200 rounded-full focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-background-800 focus:ring-2 transition-all"
+      />
+    );
+  }
+
+  if (isFree && !isLoggedIn) {
+    return (
+      <SignInDialog
+        trigger={
+          <input
+            type="checkbox"
+            checked={false}
+            onChange={(ev) => ev.stopPropagation()}
+            className="cursor-pointer w-8 h-8 dark:bg-background-700 dark:border-background-600 dark:checked:bg-green-600 text-green-600 dark:text-green-600 bg-background-100 border-background-200 rounded-full focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-background-800 focus:ring-2 transition-all"
+          />
+        }
+        redirectTo={pathname}
+      />
+    );
+  }
+
+  return <LockedCheckbox />;
+}
+
 function LockedCheckbox() {
   return (
     <ResponsiveHoverCard
@@ -103,19 +153,3 @@ function LockedCheckbox() {
   );
 }
 
-function BlockedCheckbox({ showBlockedCheckbox = false }) {
-  return showBlockedCheckbox ? (
-    <BecomeProDialog
-      trigger={
-        <input
-          type="checkbox"
-          checked={false}
-          onChange={(ev) => ev.stopPropagation()}
-          className="cursor-pointer w-8 h-8 dark:bg-background-700 dark:border-background-600 dark:checked:bg-green-600 text-green-600 dark:text-green-600 bg-background-100 border-background-200 rounded-full focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-background-800 focus:ring-2 transition-all"
-        />
-      }
-    />
-  ) : (
-    <LockedCheckbox />
-  );
-}

@@ -73,10 +73,8 @@ function SectionCard({ section, index, userCompleted }: SectionCardProps) {
 
         <section>
           <h3 className="mb-2">
-            Seu{" "}
-            <span className="font-bold border-b-2 border-brand-500">
-              progresso
-            </span>{" "}
+            Progresso nessa{" "}
+            <span className="font-bold border-b-2 border-brand-500">seção</span>{" "}
             <span className="text-xs dark:text-gray-400 text-gray-700">{`(${userCompleted}/${totalTrackables})`}</span>
           </h3>
 

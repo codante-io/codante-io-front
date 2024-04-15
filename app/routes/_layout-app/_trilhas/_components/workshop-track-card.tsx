@@ -11,6 +11,7 @@ import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import type { Workshop } from "~/lib/models/workshop.server";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
+import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
 import ProOverlay from "~/routes/_layout-app/_trilhas/_components/pro-overlay";
 
 interface WorkshopTrackCardProps {
@@ -28,6 +29,8 @@ function WorkshopTrackCard({ workshop, userIsPro }: WorkshopTrackCardProps) {
       {workshop?.status === "soon" && (
         <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
       )}
+      {!workshop?.is_premium && !userIsPro && <FreeChip />}
+
       <div className="flex flex-col justify-between p-8 h-full flex-grow">
         <div>
           <div className="mb-2 card-header">

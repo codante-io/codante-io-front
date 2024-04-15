@@ -13,6 +13,8 @@ import ProOverlay from "./pro-overlay";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
+import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
+
 
 interface ChallengeTrackCardProps {
   challenge: Challenge;
@@ -31,9 +33,8 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
       {challenge?.status === "soon" && (
         <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
       )}
-      {!challenge?.is_premium && !userIsPro && (
-        <CardItemRibbon type="success" text="Free" />
-      )}
+      {!challenge?.is_premium && !userIsPro && <FreeChip />}
+
       <div className="flex flex-col justify-between p-8 h-full flex-grow">
         <div>
           <div className="mb-2 card-header">
@@ -74,36 +75,14 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
             )}
             <div className="border-t border-gray-200 dark:border-gray-800 my-4 px-2" />
 
-            <div className="flex items-start gap-10">
-              {/* {challenge?.instructor && (
-                <div className>
-                  <span className="text-xs text-gray-600 dark:text-gray-200">
-                    Quem vai te ensinar:
-                  </span>
-                  <div className="flex items-center gap-2 h-7 pb-1">
-                    <UserAvatar
-                      className="w-4 h-4"
-                      avatar={{
-                        avatar_url: challenge.instructor.avatar_url,
-                        name: challenge.instructor.name,
-                        badge: null,
-                      }}
-                    />
-                    <h4 className="text-xs font-bold">
-                      {challenge.instructor.name}
-                    </h4>
-                  </div>
-                </div>
-              )} */}
-              {challenge?.tags && challenge?.tags.length > 0 && (
-                <div>
-                  <span className="text-xs text-gray-600 dark:text-gray-200">
-                    O que você vai aprender:
-                  </span>
-                  <CardItemTagsText tags={challenge?.tags} />
-                </div>
-              )}
-            </div>
+            {challenge?.tags && challenge?.tags.length > 0 && (
+              <div>
+                <span className="text-xs text-gray-600 dark:text-gray-200">
+                  O que você vai aprender:
+                </span>
+                <CardItemTagsText tags={challenge?.tags} />
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-3 mt-2">

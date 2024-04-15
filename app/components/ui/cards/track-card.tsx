@@ -4,17 +4,25 @@ import type { Track } from "~/lib/models/track.server";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
+import { cn } from "~/lib/utils/cn";
 
 function TrackCard({ track }: { track: Track }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div key={track?.id}>
+    <div
+      key={track?.id}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Link
         to={`/trilhas/${track?.slug}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="cursor-pointer relative block p-3 h-full w-full"
+        aria-disabled={track.status === "soon"}
+        className={cn(
+          "cursor-pointer relative block p-3 h-full w-full",
+          track.status === "soon" && "pointer-events-none",
+        )}
+        tabIndex={track.status === "soon" ? -1 : 0}
       >
         <AnimatePresence>
           {isHovered && (

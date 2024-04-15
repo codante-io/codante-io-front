@@ -12,6 +12,8 @@ import {
 import { FaRegQuestionCircle } from "react-icons/fa";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
+import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
+
 
 interface ExternalLinkTrackCardProps {
   trackItem: TrackItem;
@@ -28,10 +30,12 @@ function LinkTrackCard({ trackItem, userIsPro }: ExternalLinkTrackCardProps) {
       {trackItem?.status === "soon" && (
         <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
       )}
+      {!trackItem?.is_premium && !userIsPro && <FreeChip />}
+
       <div className="flex flex-col justify-between p-8 h-full flex-grow">
         <div>
           <div className="mb-2 card-header">
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <div className="h-full text-violet-400">
                 <BsBoxArrowUpRight className="w-full h-10" />
               </div>
