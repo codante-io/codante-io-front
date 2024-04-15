@@ -11,6 +11,7 @@ import { PiCertificate } from "react-icons/pi";
 import type { User } from "~/lib/models/user.server";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { FaCrown } from "react-icons/fa";
+import { Card } from "~/components/ui/cards/card";
 
 export default function CertificateDashboard() {
   const { dashboardData, user }: { dashboardData: Dashboard; user: User } =
@@ -24,7 +25,13 @@ export default function CertificateDashboard() {
     (certificate) => certificate.status === "pending",
   );
 
-  if (!user.is_pro) return <ProBanner />;
+  if (!user.is_pro)
+    return (
+      <>
+        <h1 className="text-2xl mb-8">Certificados </h1>
+        <ProBanner />
+      </>
+    );
   return (
     <>
       <h1 className="text-2xl mb-8">
@@ -47,7 +54,7 @@ export default function CertificateDashboard() {
       {pendingCertificates.length > 0 &&
         pendingCertificates.map((certificate) => (
           <>
-            <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-10" />
+            <div className="w-full h-[1px] bg-background-100 dark:bg-background-700 my-10" />
             <h1 className="text-2xl mb-3">
               Certificados{" "}
               <span className="text-brand-400 font-semibold">pendentes</span>
@@ -125,11 +132,11 @@ function waitingToast() {
 
 function ProBanner() {
   return (
-    <div className="absolute z-20 p-3 bg-white border border-gray-200 rounded-lg shadow-2xl shadow-background-700 dark:bg-background-800 dark:border-background-600 md:p-10 mx-3 mt-10 sm:m-10">
-      <h3 className="font-bold md:text-2xl text-brand font-lexend">Ops... </h3>
+    <Card className="p-3 sm:p-8 max-w-[500px]">
+      <h3 className="font-bold text-xl text-brand font-lexend mb-2">Ops...</h3>
       <span>
-        Você precisa ser um membro <ProSpanWrapper>PRO</ProSpanWrapper> para ter
-        acesso aos certificados.
+        Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem acessar os
+        Certificados.
       </span>
       <Link to="/assine" className="w-full inline-block mt-4">
         <button className="mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
@@ -140,6 +147,6 @@ function ProBanner() {
           </span>
         </button>
       </Link>
-    </div>
+    </Card>
   );
 }

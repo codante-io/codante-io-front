@@ -37,7 +37,7 @@ export default function ChallengeDashboard() {
           )}
         </div>
 
-        <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-10" />
+        <div className="w-full h-[1px] bg-background-100 dark:bg-background-700 my-10" />
         <h1 className="text-2xl mb-8">
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">concluídos</span>
