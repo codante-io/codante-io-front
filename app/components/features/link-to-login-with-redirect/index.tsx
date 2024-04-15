@@ -18,6 +18,10 @@ export default function LinkToLoginWithRedirect({
     redirectTo = "/";
   }
 
+  if (redirectTo === "/") {
+    redirectTo = "/dashboard";
+  }
+
   return (
     <Link to={`/login?redirectTo=${redirectTo}`} {...rest}>
       {children}

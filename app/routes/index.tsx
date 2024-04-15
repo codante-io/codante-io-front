@@ -155,7 +155,7 @@ function Headline() {
                 )}
 
                 {!user && (
-                  <Link to={`/login?redirectTo=/dashboard`}>
+                  <Link to={`/login`}>
                     <button
                       className={`${buttonVariants({
                         size: "sm",
