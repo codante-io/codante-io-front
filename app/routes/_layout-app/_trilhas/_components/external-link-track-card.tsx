@@ -14,6 +14,7 @@ import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
 import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
 
+
 interface ExternalLinkTrackCardProps {
   trackItem: TrackItem;
   userIsPro: boolean;
