@@ -129,7 +129,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
               borderLeft: `3px solid ${alertInfo.color}`,
             }}
           >
-            <div className="flex gap-2 items-center h-6">
+            <div className="flex gap-2 items-center h-6 -mb-3">
               <img
                 className="w-5 h-auto"
                 style={{ color: alertInfo.color }}
