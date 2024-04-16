@@ -13,6 +13,15 @@ import { getDashboardData } from "~/lib/models/dashboard.server";
 import { useEffect } from "react";
 import type { User } from "~/lib/models/user.server";
 import NotFound from "~/components/features/error-handling/not-found";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 export async function loader({
   request,
@@ -89,10 +98,13 @@ export default function Dashboard() {
     <div className="flex min-h-screen w-full flex-col container mx-auto">
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-col gap-4 bg-muted/40 md:gap-8">
         <div className="mx-auto grid w-full gap-2">
-          <h1 className="text-3xl font-semibold">Dashboard</h1>
+          <h1 className="text-center md:text-start text-3xl font-semibold">
+            Dashboard
+          </h1>
         </div>
         <div className="mx-auto grid w-full items-start gap-2 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-          <nav className="grid gap-4 text-sm text-muted-foreground">
+          {/* navbar when md or bigger */}
+          <nav className="md:grid gap-4 text-sm text-muted-foreground hidden">
             {tabs.map((tab) => (
               <Link
                 key={tab.name}
@@ -108,6 +120,34 @@ export default function Dashboard() {
                 {tab.name}
               </Link>
             ))}
+          </nav>
+          {/* navbar when sm or xs */}
+          <nav className="text-sm text-muted-foreground md:hidden mx-auto mt-7">
+            <Select
+              onValueChange={(value) => {
+                navigate(`/dashboard/${value}`);
+              }}
+            >
+              <SelectTrigger className="w-[175px]">
+                <SelectValue
+                  placeholder={
+                    tabs.find((tab) => tab.current)
+                      ? tabs.find((tab) => tab.current)?.name
+                      : "Workshops"
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Dashboard</SelectLabel>
+                  {tabs.map((tab) => (
+                    <SelectItem value={tab.href} key={tab.href}>
+                      <span>{tab.name ? tab.name : "Workshops"}</span>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </nav>
           <div className="">
             <Outlet context={{ dashboardData, user }} />
