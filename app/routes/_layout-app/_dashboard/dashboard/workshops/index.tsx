@@ -18,8 +18,8 @@ export default function WorkshopsDashboard() {
   );
   return (
     <>
-      <div className="">
-        <h1 className="text-2xl mb-8 mt-8 md:mt-0">
+      <div className="text-center">
+        <h1 className="text-2xl mb-8 mt-8 md:mt-0 text-center">
           Workshops{" "}
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
@@ -37,11 +37,11 @@ export default function WorkshopsDashboard() {
         </div>
 
         <Separator orientation="horizontal" className="my-5" />
-        <h1 className="text-2xl mb-8">
+        <h1 className="text-2xl mb-8 text-center">
           Workshops{" "}
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
-        <div className="flex flex-wrap gap-6 items-center">
+        <div className="flex flex-wrap gap-6 items-center justify-center">
           {completedWorkshopUsers.length > 0 ? (
             completedWorkshopUsers.map((workshopUser) => (
               <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
