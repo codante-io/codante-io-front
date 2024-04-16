@@ -34,12 +34,12 @@ export default function CertificateDashboard() {
       </>
     );
   return (
-    <>
+    <div className="text-center md:text-start">
       <h1 className="text-2xl mb-8 mt-8 md:mt-0">
         Certificados{" "}
         <span className="text-brand-400 font-semibold">publicados</span>
       </h1>
-      <div className="flex flex-col gap-3 items-start justify-start">
+      <div className="flex flex-col gap-3 md:items-start items-center justify-center md:justify-start">
         {publishedCertificates.length > 0 ? (
           publishedCertificates.map((certificate) => (
             <CertificateCard key={certificate.id} certificate={certificate} />
@@ -60,7 +60,7 @@ export default function CertificateDashboard() {
               Certificados{" "}
               <span className="text-brand-400 font-semibold">pendentes</span>
             </h1>
-            <div className="flex flex-col gap-3 items-start justify-start">
+            <div className="flex flex-col gap-3 md:items-start items-center justify-center md:justify-start">
               <CertificateCard
                 key={certificate.id}
                 certificate={certificate}
@@ -69,7 +69,7 @@ export default function CertificateDashboard() {
             </div>
           </>
         ))}
-    </>
+    </div>
   );
 }
 
@@ -92,6 +92,7 @@ function CertificateCard({
         to={`/certificados/${certificate.id}`}
         className="flex items-center gap-1 font-normal text-gray-600 dark:text-gray-200 hover:opacity-65 transition-opacity ease-in-out text-sm sm:text-base"
         onClick={(event) => handleClick(event)}
+        title={certificate.certifiable_name}
       >
         <p className="flex items-center gap-1 flex-shrink-0">
           {pending ? (
@@ -104,7 +105,7 @@ function CertificateCard({
               ? "Workshop"
               : "MP"}
           </span>{" "}
-          <span className="max-w-[150px] sm:max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <span className="max-w-[185px] sm:max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
             {certificate.certifiable_name}
           </span>
         </p>

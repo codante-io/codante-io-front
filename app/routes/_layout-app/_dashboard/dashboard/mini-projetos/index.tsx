@@ -19,13 +19,13 @@ export default function ChallengeDashboard() {
   );
 
   return (
-    <>
+    <div className="text-center md:text-start">
       <div className="">
         <h1 className="text-2xl mb-8 mt-8 md:mt-0">
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
-        <div className="flex flex-wrap gap-6 items-center">
+        <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
           {onGoingChallengeUsers.length > 0 ? (
             onGoingChallengeUsers.map((challengeUser) => (
               <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
@@ -43,7 +43,7 @@ export default function ChallengeDashboard() {
           Mini Projetos{" "}
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
-        <div className="flex flex-wrap gap-6 items-center">
+        <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
           {completedChallengeUsers.length > 0 ? (
             completedChallengeUsers.map((challengeUser) => (
               <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
@@ -56,7 +56,7 @@ export default function ChallengeDashboard() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
