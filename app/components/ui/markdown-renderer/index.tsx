@@ -220,7 +220,7 @@ function processMarkdown(markdown: string): string {
   let processedMarkdown = markdown;
 
   for (const [key, value] of Object.entries(replacements)) {
-    processedMarkdown = processedMarkdown.replace(new RegExp(key, "g"), value);
+    processedMarkdown = processedMarkdown.replace(new RegExp(key, "gi"), value);
   }
 
   return processedMarkdown;
