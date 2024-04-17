@@ -128,7 +128,7 @@ export default function Dashboard() {
                 navigate(`/dashboard/${value}`);
               }}
             >
-              <SelectTrigger className="max-w-[200px]">
+              <SelectTrigger className="max-w-full">
                 <SelectValue
                   placeholder={
                     tabs.find((tab) => tab.current)
