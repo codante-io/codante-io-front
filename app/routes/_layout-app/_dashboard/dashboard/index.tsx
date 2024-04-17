@@ -122,13 +122,13 @@ export default function Dashboard() {
             ))}
           </nav>
           {/* navbar when sm or xs */}
-          <nav className="text-sm text-muted-foreground md:hidden mx-auto mt-7">
+          <nav className="text-sm w-full md:hidden mt-6 flex justify-center">
             <Select
               onValueChange={(value) => {
                 navigate(`/dashboard/${value}`);
               }}
             >
-              <SelectTrigger className="w-[175px]">
+              <SelectTrigger className="max-w-[185px]">
                 <SelectValue
                   placeholder={
                     tabs.find((tab) => tab.current)
@@ -149,6 +149,7 @@ export default function Dashboard() {
               </SelectContent>
             </Select>
           </nav>
+
           <div className="">
             <Outlet context={{ dashboardData, user }} />
           </div>
