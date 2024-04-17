@@ -19,12 +19,17 @@ export default function CertificateDashboard() {
     useOutletContext();
   const certificates = dashboardData.certificates;
 
-  const publishedCertificates = certificates.filter(
-    (certificate) => certificate.status === "published",
-  );
-  const pendingCertificates = certificates.filter(
-    (certificate) => certificate.status === "pending",
-  );
+  let publishedCertificates;
+  let pendingCertificates;
+
+  if (certificates) {
+    publishedCertificates = certificates.filter(
+      (certificate) => certificate.status === "published",
+    );
+    pendingCertificates = certificates.filter(
+      (certificate) => certificate.status === "pending",
+    );
+  }
 
   if (!user.is_pro)
     return (
@@ -40,7 +45,7 @@ export default function CertificateDashboard() {
         <span className="text-brand-400 font-semibold">publicados</span>
       </h1>
       <div className="flex flex-col gap-3 md:items-start items-center justify-center md:justify-start">
-        {publishedCertificates.length > 0 ? (
+        {publishedCertificates && publishedCertificates.length > 0 ? (
           publishedCertificates.map((certificate) => (
             <CertificateCard key={certificate.id} certificate={certificate} />
           ))
@@ -52,7 +57,8 @@ export default function CertificateDashboard() {
         )}
       </div>
 
-      {pendingCertificates.length > 0 &&
+      {pendingCertificates &&
+        pendingCertificates.length > 0 &&
         pendingCertificates.map((certificate) => (
           <div key={certificate.id}>
             <Separator orientation="horizontal" className="my-5" />

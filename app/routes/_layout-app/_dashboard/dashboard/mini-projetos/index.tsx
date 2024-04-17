@@ -10,13 +10,18 @@ export default function ChallengeDashboard() {
   const { dashboardData }: { dashboardData: Dashboard } = useOutletContext();
   const challengeUsers = dashboardData.challenge_users;
 
-  const onGoingChallengeUsers = challengeUsers.filter(
-    (challengeUser) => !challengeUser.completed,
-  );
+  let onGoingChallengeUsers;
+  let completedChallengeUsers;
 
-  const completedChallengeUsers = challengeUsers.filter(
-    (challengeUser) => challengeUser.completed,
-  );
+  if (challengeUsers) {
+    onGoingChallengeUsers = challengeUsers.filter(
+      (challengeUser) => !challengeUser.completed,
+    );
+
+    completedChallengeUsers = challengeUsers.filter(
+      (challengeUser) => challengeUser.completed,
+    );
+  }
 
   return (
     <div className="text-center md:text-start">
@@ -26,7 +31,7 @@ export default function ChallengeDashboard() {
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
-          {onGoingChallengeUsers.length > 0 ? (
+          {onGoingChallengeUsers && onGoingChallengeUsers.length > 0 ? (
             onGoingChallengeUsers.map((challengeUser) => (
               <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
             ))
@@ -44,7 +49,7 @@ export default function ChallengeDashboard() {
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
-          {completedChallengeUsers.length > 0 ? (
+          {completedChallengeUsers && completedChallengeUsers.length > 0 ? (
             completedChallengeUsers.map((challengeUser) => (
               <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
             ))
