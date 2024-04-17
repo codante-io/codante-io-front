@@ -55,7 +55,7 @@ function TrackItemCheckbox({
         <>
           <div
             className={cn(
-              "w-[1px] h-[calc(100%_-_70px)] bg-background-200 dark:bg-background-700",
+              "w-[1px] h-[40%] bg-background-200 dark:bg-background-700",
               showTopLine && "bg-transparent dark:bg-transparent",
             )}
           />

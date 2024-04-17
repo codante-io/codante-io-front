@@ -120,6 +120,7 @@ export default function TrackSlug() {
                   />
                 </div>
                 <div className="w-full sm:w-3/4 group">
+                  {sectionIndex === 0 && <UnderConstructionCard />}
                   {section.trackables &&
                     section.trackables.map((trackable, index) => (
                       <div key={index} className="flex flex-col items-center">
@@ -150,9 +151,6 @@ export default function TrackSlug() {
                                 "mb-12",
                             )}
                           >
-                            {sectionIndex === 0 && index === 0 && (
-                              <UnderConstructionCard />
-                            )}
                             <TrackCard
                               trackItem={trackable}
                               userIsPro={userIsPro}

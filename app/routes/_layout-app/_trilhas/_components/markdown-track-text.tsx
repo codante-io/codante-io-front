@@ -7,9 +7,14 @@ interface MarkdownTrackTextProps {
 
 function MarkdownTrackText({ trackItem }: MarkdownTrackTextProps) {
   return (
-    <div className="pb-6 text-start prose-sm">
-      <h1>{trackItem?.pivot.name}</h1>
-      <MarkdownRenderer markdown={trackItem.content} />
+    <div className="pb-6 text-start">
+      <h1 className="text-xl">{trackItem?.pivot?.name}</h1>
+      <MarkdownRenderer
+        fontSize="small"
+        prose={false}
+        markdown={trackItem.content}
+        wrapperClasses="dark:text-gray-400 text-gray-600"
+      />
     </div>
   );
 }
