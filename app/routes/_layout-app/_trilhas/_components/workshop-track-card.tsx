@@ -3,7 +3,6 @@ import { BsCameraVideo } from "react-icons/bs";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { Card } from "~/components/ui/cards/card";
 
-import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
 import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
 
 import { NewButton } from "~/components/ui/new-button";
@@ -13,6 +12,7 @@ import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
 import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
 import ProOverlay from "~/routes/_layout-app/_trilhas/_components/pro-overlay";
+import SoonChip from "~/routes/_layout-app/_trilhas/_components/soon-chip";
 
 interface WorkshopTrackCardProps {
   workshop: Workshop;
@@ -26,9 +26,7 @@ function WorkshopTrackCard({ workshop, userIsPro }: WorkshopTrackCardProps) {
       className="w-full relative overflow-visible text-start border-l-8 mb-12"
       id={workshop.slug}
     >
-      {workshop?.status === "soon" && (
-        <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
-      )}
+      {workshop?.status === "soon" && <SoonChip />}
       {!workshop?.is_premium && !userIsPro && <FreeChip />}
 
       <div className="flex flex-col justify-between p-8 h-full flex-grow">

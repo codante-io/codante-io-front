@@ -15,7 +15,6 @@ import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pr
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
 
-
 interface ChallengeTrackCardProps {
   challenge: Challenge;
   userIsPro: boolean;
@@ -34,7 +33,6 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
         <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
       )}
       {!challenge?.is_premium && !userIsPro && <FreeChip />}
-
       <div className="flex flex-col justify-between p-8 h-full flex-grow">
         <div>
           <div className="mb-2 card-header">

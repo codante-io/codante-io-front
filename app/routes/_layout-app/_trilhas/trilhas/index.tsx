@@ -38,7 +38,7 @@ export default function Workshops() {
           </p>
         </div>
       </section>
-      <section className="grid grid-cols-3 mt-10">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10">
         {tracks.map((track) => (
           <TrackCard key={track.slug} track={track} />
         ))}

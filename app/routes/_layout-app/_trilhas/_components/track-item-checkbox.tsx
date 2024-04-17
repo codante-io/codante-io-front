@@ -7,7 +7,6 @@ import { cn } from "~/lib/utils/cn";
 import BecomeProCard from "./become-pro-card";
 import SignInDialog from "~/routes/_layout-app/_trilhas/_components/sign-in-dialog";
 
-
 interface TrackItemCheckboxProps {
   trackableId: string | number;
   showCheckbox: boolean;
@@ -56,7 +55,7 @@ function TrackItemCheckbox({
         <>
           <div
             className={cn(
-              "w-[1px] h-[calc(100%_-_70px)] bg-background-200 dark:bg-background-700",
+              "w-[1px] h-[40%] bg-background-200 dark:bg-background-700",
               showTopLine && "bg-transparent dark:bg-transparent",
             )}
           />
@@ -152,4 +151,3 @@ function LockedCheckbox() {
     />
   );
 }
-

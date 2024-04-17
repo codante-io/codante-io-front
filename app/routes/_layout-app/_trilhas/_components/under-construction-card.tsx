@@ -5,7 +5,7 @@ function UnderConstructionCard() {
   return (
     <Card
       border="bright"
-      className="relative overflow-visible text-start border-l-8 mb-12 dark:border-amber-400 border-amber-400"
+      className="relative overflow-visible text-start mb-12 dark:border-amber-400/40 shadow-none border-amber-400/40 dark:bg-transparent"
     >
       <div className="flex flex-col justify-between px-8 py-4 h-full flex-grow">
         <div>

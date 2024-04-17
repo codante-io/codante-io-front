@@ -4,6 +4,7 @@ import { Highlight, themes } from "prism-react-renderer";
 import React, { type ReactElement } from "react";
 import slugify from "slugify";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { cn } from "~/lib/utils/cn";
 import type { ColorMode } from "~/lib/utils/dark-mode";
 
 const getCodeComponent =
@@ -230,18 +231,22 @@ export default function MarkdownRenderer({
   markdown,
   wrapperClasses = undefined,
   fontSize,
+  prose = true,
 }: {
   markdown: string;
   wrapperClasses?: string;
   fontSize?: "small";
+  prose?: boolean;
 }) {
   const { colorMode } = useColorMode();
   const processedMarkdown = processMarkdown(markdown);
   return (
     <div
-      className={`prose  dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
-        wrapperClasses ?? ""
-      } ${fontSize === "small" ? "lg:prose-base" : "lg:prose-lg"}`}
+      className={cn(
+        prose && "prose dark:prose-invert prose-ul:ml-0 prose-h2:mb-2",
+        fontSize === "small" ? "lg:prose-base" : "lg:prose-lg",
+        wrapperClasses,
+      )}
     >
       <Markdown
         options={{
