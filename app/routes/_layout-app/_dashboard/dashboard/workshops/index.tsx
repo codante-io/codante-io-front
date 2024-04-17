@@ -9,13 +9,18 @@ export default function WorkshopsDashboard() {
   const { dashboardData }: { dashboardData: Dashboard } = useOutletContext();
   const workshopUsers = dashboardData.workshop_users;
 
-  const onGoingWorkshopUsers = workshopUsers.filter(
-    (workshopUser) => workshopUser.status !== "completed",
-  );
-  // const onGoingWorkshopUsers = [];
-  const completedWorkshopUsers = workshopUsers.filter(
-    (workshopUser) => workshopUser.status === "completed",
-  );
+  let onGoingWorkshopUsers;
+  let completedWorkshopUsers;
+
+  if (workshopUsers) {
+    onGoingWorkshopUsers = workshopUsers.filter(
+      (workshopUser) => workshopUser.status !== "completed",
+    );
+
+    completedWorkshopUsers = workshopUsers.filter(
+      (workshopUser) => workshopUser.status === "completed",
+    );
+  }
   return (
     <div className="text-center md:text-start">
       <div className="">
@@ -24,7 +29,7 @@ export default function WorkshopsDashboard() {
           <span className="font-semibold text-brand-400">em andamento</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
-          {onGoingWorkshopUsers.length > 0 ? (
+          {onGoingWorkshopUsers && onGoingWorkshopUsers.length > 0 ? (
             onGoingWorkshopUsers.map((workshopUser) => (
               <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
             ))
@@ -42,7 +47,7 @@ export default function WorkshopsDashboard() {
           <span className="font-semibold text-brand-400">concluídos</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
-          {completedWorkshopUsers.length > 0 ? (
+          {completedWorkshopUsers && completedWorkshopUsers.length > 0 ? (
             completedWorkshopUsers.map((workshopUser) => (
               <WorkshopCard key={workshopUser.id} workshop={workshopUser} />
             ))
