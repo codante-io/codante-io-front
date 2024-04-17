@@ -214,7 +214,7 @@ export default function WorkshopSlug() {
           <div className="mt-12">
             {workshop.lessons.length > 0 && (
               <>
-                <WorkshopLessonsHeader workshop={workshop} />
+                <WorkshopLessonsHeader workshop={workshop} showResources />
                 <WorkshopLessonsList activeIndex={-1} workshop={workshop} />
               </>
             )}

@@ -64,21 +64,6 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
                     }
                   />
                 </h3>
-                {/* {challenge?.instructor && (
-                  <div className="flex gap-2 items-center mt-2">
-                    <h4 className="text-sm dark:text-gray-400 text-gray-700">
-                      {challenge.instructor.name}
-                    </h4>
-                    <UserAvatar
-                      className="w-6 h-6"
-                      avatar={{
-                        avatar_url: challenge.instructor.avatar_url,
-                        name: challenge.instructor.name,
-                        badge: null,
-                      }}
-                    />
-                  </div>
-                )} */}
               </div>
             </div>
             {userCanSee && (
