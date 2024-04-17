@@ -4,6 +4,7 @@ import { Highlight, themes } from "prism-react-renderer";
 import React, { type ReactElement } from "react";
 import slugify from "slugify";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { cn } from "~/lib/utils/cn";
 import type { ColorMode } from "~/lib/utils/dark-mode";
 
 const getCodeComponent =
@@ -129,7 +130,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
               borderLeft: `3px solid ${alertInfo.color}`,
             }}
           >
-            <div className="flex gap-2 items-center h-6">
+            <div className="flex gap-2 items-center h-6 -mb-3">
               <img
                 className="w-5 h-auto"
                 style={{ color: alertInfo.color }}
@@ -220,7 +221,7 @@ function processMarkdown(markdown: string): string {
   let processedMarkdown = markdown;
 
   for (const [key, value] of Object.entries(replacements)) {
-    processedMarkdown = processedMarkdown.replace(new RegExp(key, "g"), value);
+    processedMarkdown = processedMarkdown.replace(new RegExp(key, "gi"), value);
   }
 
   return processedMarkdown;
@@ -230,18 +231,22 @@ export default function MarkdownRenderer({
   markdown,
   wrapperClasses = undefined,
   fontSize,
+  prose = true,
 }: {
   markdown: string;
   wrapperClasses?: string;
   fontSize?: "small";
+  prose?: boolean;
 }) {
   const { colorMode } = useColorMode();
   const processedMarkdown = processMarkdown(markdown);
   return (
     <div
-      className={`prose  dark:prose-invert prose-ul:ml-0 prose-h2:mb-2 ${
-        wrapperClasses ?? ""
-      } ${fontSize === "small" ? "lg:prose-base" : "lg:prose-lg"}`}
+      className={cn(
+        prose && "prose dark:prose-invert prose-ul:ml-0 prose-h2:mb-2",
+        fontSize === "small" ? "lg:prose-base" : "lg:prose-lg",
+        wrapperClasses,
+      )}
     >
       <Markdown
         options={{

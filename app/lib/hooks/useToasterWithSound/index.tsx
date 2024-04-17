@@ -4,6 +4,8 @@ import { useCallback } from "react";
 
 import errorSound from "~/lib/sounds/error.wav";
 import successSound from "~/lib/sounds/success.mp3";
+import { NewButton } from "~/components/ui/new-button";
+import { Link } from "@remix-run/react";
 
 export const useToasterWithSound = () => {
   const [playSuccess] = useSound(successSound);
@@ -25,8 +27,34 @@ export const useToasterWithSound = () => {
     [playError],
   );
 
+  const showSignUpToast = useCallback(
+    (message?: string, redirectTo?: string) => {
+      playError();
+
+      toast(
+        (t) => (
+          <Link to={`login?redirectTo=${redirectTo}`}>
+            {message ||
+              "Esse conteúdo está disponível para nossos usuários cadastrados."}
+            <NewButton
+              className="mt-4 w-full"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Fazer login
+            </NewButton>
+          </Link>
+        ),
+        {
+          duration: 4000,
+        },
+      );
+    },
+    [playError],
+  );
+
   return {
     showErrorToast,
     showSuccessToast,
+    showSignUpToast,
   };
 };
