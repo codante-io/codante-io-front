@@ -54,7 +54,7 @@ export default function CertificateDashboard() {
 
       {pendingCertificates.length > 0 &&
         pendingCertificates.map((certificate) => (
-          <>
+          <div key={certificate.id}>
             <Separator orientation="horizontal" className="my-5" />
             <h1 className="text-2xl mb-3">
               Certificados{" "}
@@ -67,7 +67,7 @@ export default function CertificateDashboard() {
                 pending
               />
             </div>
-          </>
+          </div>
         ))}
     </div>
   );
