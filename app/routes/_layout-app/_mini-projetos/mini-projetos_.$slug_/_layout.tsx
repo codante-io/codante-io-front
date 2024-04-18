@@ -39,6 +39,13 @@ import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { cn } from "~/lib/utils/cn";
 import TitleIcon from "~/components/ui/title-icon";
 import { requestCertificate } from "~/lib/models/certificates.server";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -279,34 +286,40 @@ export default function ChallengeSlug() {
 
             <div className="container mt-4 mb-8 lg:mb-12 lg:mt-16 ">
               <div>
+                {/* mobile tabs */}
                 <div className="sm:hidden">
                   <label htmlFor="tabs" className="sr-only">
                     Select a tab
                   </label>
-                  <select
-                    onChange={(e) => {
-                      const tab = tabs.find((t) => t.name === e.target.value);
-                      if (tab) {
-                        navigate(
-                          `/mini-projetos/${challenge?.slug}/${tab.href}`,
-                        );
-                      }
+                  <Select
+                    onValueChange={(value) => {
+                      navigate(
+                        `/mini-projetos/${challenge?.slug}${value === "/" ? value : `/${value}`}`,
+                      );
                     }}
-                    id="tabs"
-                    name="tabs"
-                    className="block w-full rounded-md dark:border-gray-600 dark:bg-background-800 focus:border-indigo-500 focus:ring-indigo-500"
-                    defaultValue={
-                      tabs
-                        .filter((t) => t.isVisible)
-                        .find((tab) => tab?.current)?.name
-                    }
                   >
-                    {tabs
-                      .filter((t) => t.isVisible)
-                      .map((tab) => (
-                        <option key={tab.name}>{tab.name}</option>
-                      ))}
-                  </select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue
+                        placeholder={
+                          tabs
+                            .filter((t) => t.isVisible)
+                            .find((tab) => tab?.current)?.name
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {tabs
+                        .filter((t) => t.isVisible)
+                        .map((tab) => (
+                          <SelectItem
+                            value={tab.href ? tab.href : "/"}
+                            key={tab.name}
+                          >
+                            {tab.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="hidden sm:block">
                   <nav className="flex space-x-4" aria-label="Tabs">
