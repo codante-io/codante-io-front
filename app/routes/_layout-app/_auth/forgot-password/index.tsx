@@ -1,9 +1,9 @@
 import { sendPasswordLink } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import Input from "~/components/features/form/input";
-
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export async function action({
   request,
@@ -32,11 +32,10 @@ export default function PasswordReset() {
       </h1>
       {!isSuccessfulSubmission ? (
         <Form replace method="post" className="mt-8">
-          <Input
-            label="Coloque seu email para redefinir sua senha:"
-            name="email"
-            id="email"
-          ></Input>
+          <Label htmlFor="email">
+            Coloque seu email para redefinir sua senha
+          </Label>
+          <Input name="email" id="email"></Input>
           <div className="mt-2 text-xs text-red-400 min-h-4">{errors}</div>
 
           <div className="text-right">

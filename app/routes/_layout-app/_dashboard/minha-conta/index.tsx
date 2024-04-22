@@ -7,7 +7,6 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import Input from "~/components/features/form/input";
 import LoadingButton from "~/components/features/form/loading-button";
 import ProBadge from "~/components/ui/pro-badge";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
@@ -29,6 +28,8 @@ import toast from "react-hot-toast";
 import { logoutWithRedirectAfterLogin, user } from "~/lib/services/auth.server";
 import DiscordButton from "~/components/features/auth/discord-button";
 import { BsGithub } from "react-icons/bs";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -251,19 +252,19 @@ function MyAccountSection({
 
       <AuthCard className="max-w-xl mt-6">
         <Form method="post">
+          <Label htmlFor="name">Nome</Label>
           <Input
             id="name"
             name="name"
-            label="Nome"
             type="text"
             onChange={() => {}}
             defaultValue={user?.name}
           />
           <div className="mt-6">
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               name="email"
-              label="Email"
               type="email"
               onChange={() => {}}
               value={user?.email}
@@ -339,18 +340,18 @@ function PasswordChangeSection({
 
       <AuthCard className="max-w-xl mt-6">
         <Form replace method="post">
+          <Label htmlFor="password">Nova Senha</Label>
           <Input
             id="password"
             name="password"
-            label="Nova Senha"
             type="password"
             autoComplete="off"
           />
           <div className="mt-6">
+            <Label htmlFor="password_confirmation">Confirme a Senha</Label>
             <Input
               id="password_confirmation"
               name="password_confirmation"
-              label="Confirme a Senha"
               type="password"
               autoComplete="off"
             />
@@ -558,14 +559,16 @@ function LinkedinSection({
       <AuthCard className="max-w-xl mt-6">
         <div className="mt-6" id="social-github">
           {user?.github_user ? (
-            <Input
-              id="github"
-              name="github"
-              label="Github"
-              type="text"
-              defaultValue={`https://github.com/${user?.github_user}`}
-              disabled
-            />
+            <>
+              <Label htmlFor="github">Github</Label>
+              <Input
+                id="github"
+                name="github"
+                type="text"
+                defaultValue={`https://github.com/${user?.github_user}`}
+                disabled
+              />
+            </>
           ) : (
             <div>
               <p className="dark:text-gray-400 text-gray-600 text-sm block text-inter font-light mb-2">
@@ -589,14 +592,16 @@ function LinkedinSection({
 
         <div className="mt-6" id="social-discord">
           {user?.discord_user && (
-            <Input
-              id="discord"
-              name="discord"
-              label="Discord"
-              type="text"
-              defaultValue={user?.discord_user}
-              disabled
-            />
+            <>
+              <Label htmlFor="discord">Discord</Label>
+              <Input
+                id="discord"
+                name="discord"
+                type="text"
+                defaultValue={user?.discord_user}
+                disabled
+              />
+            </>
           )}
 
           {!user?.discord_user && (
@@ -618,10 +623,10 @@ function LinkedinSection({
               >
                 https://www.linkedin.com/in/
               </label>
+              <Label htmlFor="linkedin">Linkedin</Label>
               <Input
                 id="linkedin"
                 name="linkedin"
-                label="Linkedin"
                 type="text"
                 onChange={(event) => setLinkedinUser(event.target.value)}
                 required

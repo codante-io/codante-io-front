@@ -1,10 +1,11 @@
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
-import Input from "~/components/features/form/input";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { register } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
 
 import LoadingButton from "~/components/features/form/loading-button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export async function action({ request }: { request: Request }) {
   let formData = await request.formData();
@@ -50,31 +51,21 @@ export default function Register() {
           Cadastre-se
         </h1>
         <Form method="POST" className="flex flex-col">
-          <Input
-            name="name"
-            id="name"
-            label="Nome"
-            type="text"
-            className="mb-4"
-          />
-          <Input
-            name="email"
-            id="email"
-            label="Email"
-            type="email"
-            className="mb-4"
-          />
+          <Label htmlFor="name">Nome</Label>
+          <Input name="name" id="name" type="text" className="mb-4" />
+          <Label htmlFor="email">Email</Label>
+          <Input name="email" id="email" type="email" className="mb-4" />
+          <Label htmlFor="password">Senha</Label>
           <Input
             name="password"
             id="password"
-            label="Senha"
             type="password"
             className="mb-4"
           />
+          <Label htmlFor="password_confirmation">Confirme sua Senha</Label>
           <Input
             name="password_confirmation"
             id="password_confirmation"
-            label="Confirme sua Senha"
             type="password"
             className="mb-2"
           />

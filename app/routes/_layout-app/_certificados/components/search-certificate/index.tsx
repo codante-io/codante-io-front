@@ -1,8 +1,9 @@
 import { useNavigate } from "@remix-run/react";
 import { useRef } from "react";
-import Input from "~/components/features/form/input";
 import { Card } from "~/components/ui/cards/card";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export default function SearchCertificate({ error }: { error?: boolean }) {
   const inputValueRef = useRef("");
@@ -20,10 +21,10 @@ export default function SearchCertificate({ error }: { error?: boolean }) {
       <h1 className="text-lg text-gray-700 dark:text-gray-50 mb-8">
         Verificar Certificado
       </h1>
+      <Label htmlFor="search-certificate">Código de verificação</Label>
       <Input
         name="search-certificate"
         id="search-certificate"
-        label="Código de verificação"
         defaultValue={inputValueRef.current}
         onChange={(e) => (inputValueRef.current = e.target.value)}
         className=""

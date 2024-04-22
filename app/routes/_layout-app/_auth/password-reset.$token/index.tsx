@@ -6,9 +6,9 @@ import {
 } from "@remix-run/react";
 import { resetPassword } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import Input from "~/components/features/form/input";
-
 import LoadingButton from "~/components/features/form/loading-button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -60,15 +60,13 @@ export default function PasswordReset() {
         <Form method="post" className="mt-8">
           <input type="hidden" name="email" value={email} />
           <input type="hidden" name="token" value={token} />
-          <Input
-            label="Nova Senha"
-            type="password"
-            name="password"
-            id="password"
-          />
+          <Label htmlFor="password">Nova Senha</Label>
+          <Input type="password" name="password" id="password" />
           <div className="mt-4">
+            <Label htmlFor="password_confirmation">
+              Confirmação da nova senha
+            </Label>
             <Input
-              label="Confirmação da nova senha"
               type="password"
               id="password_confirmation"
               name="password_confirmation"
@@ -89,7 +87,7 @@ export default function PasswordReset() {
           </div>
         </Form>
       ) : (
-        <div className="mt-8 text-sm font-light text-gray-400 text-gray-500">
+        <div className="mt-8 text-sm font-light dark:text-gray-400 text-gray-500">
           Tudo certo! Você redefiniu uma nova senha. Agora, é só fazer o login
           normalmente.
         </div>
