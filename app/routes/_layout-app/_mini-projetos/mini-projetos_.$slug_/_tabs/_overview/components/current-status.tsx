@@ -7,7 +7,7 @@ import { Card } from "~/components/ui/cards/card";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import type { ChallengeUser } from "~/lib/models/user.server";
 import { PiCertificateLight } from "react-icons/pi";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 export default function CurrentStatus({
   challengeUser,
@@ -91,7 +91,7 @@ export default function CurrentStatus({
             </p>
             {!challengeUser.certificate && (
               <Form replace method="post">
-                <NewButton
+                <Button
                   onClick={handleSubmitButton}
                   type="submit"
                   variant={"link"}
@@ -101,11 +101,11 @@ export default function CurrentStatus({
                   }`}
                 >
                   Solicitar certificado
-                </NewButton>
+                </Button>
               </Form>
             )}
             {challengeUser.certificate && (
-              <NewButton
+              <Button
                 asChild
                 className="text-xs inline dark:text-gray-500 text-gray-400 pl-0 mt-2 h-fit"
                 variant={"link"}
@@ -126,7 +126,7 @@ export default function CurrentStatus({
                     </span>
                   )}
                 </Link>
-              </NewButton>
+              </Button>
             )}
           </section>
         </div>

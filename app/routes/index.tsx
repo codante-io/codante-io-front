@@ -35,7 +35,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import DiscordButton from "~/components/features/auth/discord-button";
-import { buttonVariants } from "~/components/ui/new-button";
+import { buttonVariants } from "~/components/ui/button";
 
 export const loader = async () => {
   return json({

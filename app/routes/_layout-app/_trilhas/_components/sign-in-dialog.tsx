@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 interface SignInDialogProps {
   trigger: React.ReactNode;
@@ -28,7 +28,7 @@ function SignInDialog({ trigger, redirectTo }: SignInDialogProps) {
           Faça login ou cadastre-se gratuitamente na nossa plataforma!
         </p>
         <Link to={`/login?redirectTo=${redirectTo}`} className="w-full">
-          <NewButton className="w-full font-bold">Fazer login</NewButton>
+          <Button className="w-full font-bold">Fazer login</Button>
         </Link>
       </DialogContent>
     </Dialog>

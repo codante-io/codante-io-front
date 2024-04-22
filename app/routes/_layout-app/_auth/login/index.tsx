@@ -8,7 +8,6 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { useState } from "react";
-import Input from "~/components/features/form/input";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { login } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
@@ -16,7 +15,9 @@ import { authenticator } from "~/lib/services/github-auth.server";
 import LoadingButton from "~/components/features/form/loading-button";
 import { metaV1 } from "@remix-run/v1-meta";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
 
 export function links() {
   return [
@@ -112,17 +113,12 @@ export default function Login() {
           </h1>
           <Form method="POST" className="flex flex-col ">
             <input type="hidden" name="redirectTo" value={redirectTo} />
-            <Input
-              name="email"
-              id="email"
-              label="Email"
-              type="email"
-              className="mb-8"
-            />
+            <Label htmlFor="email">Email</Label>
+            <Input name="email" id="email" type="email" className="mb-8" />
+            <Label htmlFor="password">Senha</Label>
             <Input
               name="password"
               id="password"
-              label="Senha"
               type="password"
               className="mb-2"
             />
@@ -145,7 +141,7 @@ export default function Login() {
               {errors as any}
             </div>
             <div className="text-right">
-              <NewButton type="submit">Login</NewButton>
+              <Button type="submit">Login</Button>
             </div>
           </Form>
         </AuthCard>

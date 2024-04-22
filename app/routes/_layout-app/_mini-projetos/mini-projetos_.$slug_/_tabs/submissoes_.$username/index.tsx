@@ -38,7 +38,7 @@ import classNames from "~/lib/utils/class-names";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
 import LoadingButton from "~/components/features/form/loading-button";
 import invariant from "tiny-invariant";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
 import CommentSection from "~/components/features/comments/comment-section";
@@ -513,13 +513,13 @@ function EditSection({
                                 Salvar
                               </span>
                             </LoadingButton>
-                            <NewButton
+                            <Button
                               type="button"
                               variant={"outline-ghost"}
                               onClick={toggleDialog}
                             >
                               Cancelar
-                            </NewButton>
+                            </Button>
                           </div>
                         </Form>
                       </div>

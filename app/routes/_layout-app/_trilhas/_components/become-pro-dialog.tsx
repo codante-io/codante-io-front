@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
 interface BecomeProDialogProps {
@@ -32,9 +32,9 @@ function BecomeProDialog({ trigger }: BecomeProDialogProps) {
           exclusivos.
         </p>
         <Link to="/assine" className="w-full">
-          <NewButton variant="pro" className="w-full font-bold">
+          <Button variant="pro" className="w-full font-bold">
             Saiba mais
-          </NewButton>
+          </Button>
         </Link>
       </DialogContent>
     </Dialog>

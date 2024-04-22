@@ -5,7 +5,7 @@ import { Card } from "~/components/ui/cards/card";
 
 import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
 
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import type { Workshop } from "~/lib/models/workshop.server";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
@@ -78,16 +78,16 @@ function WorkshopTrackCard({ workshop, userIsPro }: WorkshopTrackCardProps) {
         <div className="flex gap-3 mt-2">
           {userIsPro ? (
             <Link to={`/workshops/${workshop?.slug}`} target="_blank">
-              <NewButton variant="secondary" type="button">
+              <Button variant="secondary" type="button">
                 Ver workshop
-              </NewButton>
+              </Button>
             </Link>
           ) : (
             <BecomeProDialog
               trigger={
-                <NewButton variant="secondary" type="button">
+                <Button variant="secondary" type="button">
                   Ver workshop
-                </NewButton>
+                </Button>
               }
             />
           )}

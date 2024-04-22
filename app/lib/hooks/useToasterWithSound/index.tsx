@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import errorSound from "~/lib/sounds/error.wav";
 import successSound from "~/lib/sounds/success.mp3";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import { Link } from "@remix-run/react";
 
 export const useToasterWithSound = () => {
@@ -36,12 +36,9 @@ export const useToasterWithSound = () => {
           <Link to={`login?redirectTo=${redirectTo}`}>
             {message ||
               "Esse conteúdo está disponível para nossos usuários cadastrados."}
-            <NewButton
-              className="mt-4 w-full"
-              onClick={() => toast.dismiss(t.id)}
-            >
+            <Button className="mt-4 w-full" onClick={() => toast.dismiss(t.id)}>
               Fazer login
-            </NewButton>
+            </Button>
           </Link>
         ),
         {

@@ -3,7 +3,6 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getCertificateById } from "~/lib/models/certificates.server";
 import { pdf } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
-import Button from "~/components/ui/button";
 import CertificatePDF from "~/components/_layouts/certificate-pdf";
 import { formatDate } from "~/lib/utils/format-date";
 import { Card } from "~/components/ui/cards/card";
@@ -20,6 +19,7 @@ import {
 import toast from "react-hot-toast";
 import { IoCopySharp } from "react-icons/io5";
 import SearchCertificate from "../components/search-certificate";
+import { Button } from "~/components/ui/button";
 
 export async function loader({
   request,
@@ -176,8 +176,12 @@ export default function CertificadoId() {
             </Link>
           )}
 
-          <Button type="button" onClick={handleButtonClick} className="mt-3">
-            {pdfUrl ? "Baixar certificado" : "Preparando download"}
+          <Button
+            onClick={handleButtonClick}
+            className="mt-3"
+            disabled={!pdfUrl}
+          >
+            {pdfUrl ? "Baixar certificado" : "Preparando download..."}
           </Button>
         </Card>
       </div>

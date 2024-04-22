@@ -4,10 +4,10 @@ import LoadingButton from "~/components/features/form/loading-button";
 import type { Step } from "../../../build-steps.server";
 import DiscordButton from "~/components/features/auth/discord-button";
 import { BsDiscord } from "react-icons/bs";
-import { NewButton } from "~/components/ui/new-button";
 import { Card } from "~/components/ui/cards/card";
-import { NewInput } from "~/components/ui/new-input";
+import { Input } from "~/components/ui/input";
 import party from "party-js";
+import { Button } from "~/components/ui/button";
 
 export default function JoinChallengeSection({
   className = "",
@@ -155,7 +155,7 @@ function StepForm({
     if (step.intent === "submit-challenge") {
       return (
         <div className="mt-4 pr-1">
-          <NewInput
+          <Input
             placeholder="URL do seu deploy"
             name="submission-url"
             id="submission-url"
@@ -214,7 +214,7 @@ function StepForm({
   function getSecondaryButton() {
     return (
       step.secondaryButton && (
-        <NewButton
+        <Button
           type="submit"
           variant="outline"
           className=""
@@ -222,7 +222,7 @@ function StepForm({
           value={step.secondaryIntent}
         >
           {step.secondaryButton}
-        </NewButton>
+        </Button>
       )
     );
   }
