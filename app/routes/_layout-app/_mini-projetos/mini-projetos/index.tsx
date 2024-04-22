@@ -8,7 +8,7 @@ import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { CalendarDaysIcon, ClockIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { metaV1 } from "@remix-run/v1-meta";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils/cn";
 
 export function meta(args: any) {
@@ -99,12 +99,12 @@ export default function Projects() {
 
             <Countdown featuredChallenge={featuredChallenge} />
             <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
-              <NewButton
+              <Button
                 type="button"
                 className="hidden text-white bg-transparent border-2 border-yellow-400 md:block hover:bg-blue-600 "
               >
                 Participe do Mini Projeto
-              </NewButton>
+              </Button>
             </Link>
           </div>
 

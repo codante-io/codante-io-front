@@ -2,7 +2,7 @@ import { useNavigate } from "@remix-run/react";
 import { useRef } from "react";
 import Input from "~/components/features/form/input";
 import { Card } from "~/components/ui/cards/card";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 export default function SearchCertificate({ error }: { error?: boolean }) {
   const inputValueRef = useRef("");
@@ -35,9 +35,9 @@ export default function SearchCertificate({ error }: { error?: boolean }) {
       ) : (
         ""
       )}
-      <NewButton type="button" onClick={handleSubmit} className="mt-3 self-end">
+      <Button type="button" onClick={handleSubmit} className="mt-3 self-end">
         Buscar
-      </NewButton>
+      </Button>
     </Card>
   );
 }

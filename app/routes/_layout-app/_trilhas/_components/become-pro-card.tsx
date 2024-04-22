@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/cards/card";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
 function BecomeProCard() {
@@ -28,9 +28,9 @@ function BecomeProCard() {
       </CardContent>
       <CardFooter>
         <Link to="/assine" className="w-full">
-          <NewButton variant="pro" className="w-full font-bold">
+          <Button variant="pro" className="w-full font-bold">
             Saiba mais
-          </NewButton>
+          </Button>
         </Link>
       </CardFooter>
     </Card>

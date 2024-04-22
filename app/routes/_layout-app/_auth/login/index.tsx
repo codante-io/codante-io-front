@@ -16,7 +16,7 @@ import { authenticator } from "~/lib/services/github-auth.server";
 import LoadingButton from "~/components/features/form/loading-button";
 import { metaV1 } from "@remix-run/v1-meta";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 export function links() {
   return [
@@ -145,7 +145,7 @@ export default function Login() {
               {errors as any}
             </div>
             <div className="text-right">
-              <NewButton type="submit">Login</NewButton>
+              <Button type="submit">Login</Button>
             </div>
           </Form>
         </AuthCard>

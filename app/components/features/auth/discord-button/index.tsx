@@ -1,7 +1,7 @@
 import { BsDiscord } from "react-icons/bs";
 import { getPublicEnv } from "../../../_layouts/public-env";
 import React from "react";
-import { buttonVariants } from "~/components/ui/new-button";
+import { buttonVariants } from "~/components/ui/button";
 
 type Props = {
   className?: string;

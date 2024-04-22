@@ -1,7 +1,7 @@
 import { CgSpinner } from "react-icons/cg";
 import type { ButtonProps } from "../../../ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 type LoadingButtonProps = {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export default function LoadingButton({
   ...rest
 }: LoadingButtonProps) {
   return (
-    <NewButton
+    <Button
       disabled={status !== "idle" || isSuccessfulSubmission}
       size={size}
       className={`relative ${className}`}
@@ -42,6 +42,6 @@ export default function LoadingButton({
       >
         {children}
       </span>
-    </NewButton>
+    </Button>
   );
 }

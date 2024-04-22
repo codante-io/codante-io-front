@@ -19,7 +19,7 @@ import {
 import toast from "react-hot-toast";
 import { IoCopySharp } from "react-icons/io5";
 import SearchCertificate from "../components/search-certificate";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 export async function loader({
   request,
@@ -176,13 +176,13 @@ export default function CertificadoId() {
             </Link>
           )}
 
-          <NewButton
+          <Button
             onClick={handleButtonClick}
             className="mt-3"
             disabled={!pdfUrl}
           >
             {pdfUrl ? "Baixar certificado" : "Preparando download..."}
-          </NewButton>
+          </Button>
         </Card>
       </div>
     </div>

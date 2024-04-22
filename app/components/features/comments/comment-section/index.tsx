@@ -5,7 +5,6 @@ import type { User } from "~/lib/models/user.server";
 import { formatName } from "~/lib/utils/format-name";
 import UserAvatar from "~/components/ui/user-avatar";
 import { FiSend } from "react-icons/fi";
-import { NewButton, buttonVariants } from "~/components/ui/new-button";
 import { Dialog, Transition } from "@headlessui/react";
 import { useOnClickOutside } from "~/lib/hooks/useOnClickOutside";
 import { Card } from "~/components/ui/cards/card";
@@ -13,6 +12,7 @@ import TitleIcon from "~/components/ui/title-icon";
 import TextareaAutosize from "react-textarea-autosize";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import toast from "react-hot-toast";
+import { Button, buttonVariants } from "~/components/ui/button";
 
 export default function CommentSection({
   comments,
@@ -100,12 +100,12 @@ export default function CommentSection({
         />
       ) : (
         <div className="mt-6">
-          <NewButton
+          <Button
             onClick={() => navigate("/login?redirectTo=" + redirectTo)}
             className={buttonVariants({ variant: "outline" })}
           >
             Faça login para comentar
-          </NewButton>
+          </Button>
         </div>
       )}
     </section>
@@ -377,7 +377,7 @@ const CommentInput = React.forwardRef<
               }
             }}
           />
-          <NewButton
+          <Button
             variant="ghost"
             type="submit"
             name="intent"
@@ -386,7 +386,7 @@ const CommentInput = React.forwardRef<
             className="m-2 hover:opacity-70"
           >
             <FiSend className="text-brand-500  text-xl" />
-          </NewButton>
+          </Button>
         </Card>
       </form>
     );
@@ -595,14 +595,14 @@ function DeleteModal({
                       </div>
                     </div>
                     <div className="mt-8 flex gap-x-3">
-                      <NewButton
+                      <Button
                         type="button"
                         variant={"destructive"}
                         onClick={handleDelete}
                       >
                         Deletar
-                      </NewButton>
-                      <NewButton
+                      </Button>
+                      <Button
                         type="button"
                         variant={"outline-ghost"}
                         onClick={() =>
@@ -610,7 +610,7 @@ function DeleteModal({
                         }
                       >
                         Cancelar
-                      </NewButton>
+                      </Button>
                     </div>
                   </form>
                 </div>

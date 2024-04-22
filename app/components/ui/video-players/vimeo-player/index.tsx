@@ -6,7 +6,7 @@ import ProSpanWrapper from "../../pro-span-wrapper";
 import { Link } from "@remix-run/react";
 import { FaCrown } from "react-icons/fa";
 import type { AvailableTo } from "~/lib/models/lesson.server";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 
 type VimeoPlayerProps = {
   vimeoUrl: string;
@@ -119,14 +119,14 @@ function NotAvailableOverlay({
       </p>
       {available_to === "logged_in" && (
         <LinkToLoginWithRedirect className="mt-6 text-gray-800 ">
-          <NewButton
+          <Button
             type="button"
             // textSizeClass="text-base"
             className="flex justify-center items-center gap-2 px-4 py-7 w-full"
           >
             <img src="/img/github-logo.svg" alt="" />
             Entre com Github
-          </NewButton>
+          </Button>
         </LinkToLoginWithRedirect>
       )}
       {available_to === "pro" && (

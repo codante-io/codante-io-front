@@ -1,7 +1,7 @@
 import { Link, useOutletContext } from "@remix-run/react";
 import { Send } from "lucide-react";
 import { Card, CardContent, CardFooter } from "~/components/ui/cards/card";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import UserAvatar from "~/components/ui/user-avatar";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
@@ -61,12 +61,12 @@ function WaitingSubmissionBanner({
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
             Estamos aguardando a sua submissão 👀
           </p>
-          <NewButton asChild size="sm" className="mt-4">
+          <Button asChild size="sm" className="mt-4">
             <Link to={`/mini-projetos/${challenge.slug}#submit-challenge`}>
               <Send className="w-4 h-4 mr-2" />
               Submeter
             </Link>
-          </NewButton>
+          </Button>
         </div>
       </CardContent>
       <CardFooter className="p-0">

@@ -7,7 +7,7 @@ import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
 import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
 import ResumedChallengeCard from "~/components/ui/cards/resumed-challenge-card";
 
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import type { Challenge } from "~/lib/models/challenge.server";
 import ProOverlay from "./pro-overlay";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
@@ -86,16 +86,16 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
         <div className="flex flex-col md:flex-row gap-3 mt-2">
           {userCanSee ? (
             <Link to={`/mini-projetos/${challenge?.slug}`} target="_blank">
-              <NewButton variant="secondary" type="button">
+              <Button variant="secondary" type="button">
                 Acessar projeto
-              </NewButton>
+              </Button>
             </Link>
           ) : (
             <BecomeProDialog
               trigger={
-                <NewButton variant="secondary" type="button">
+                <Button variant="secondary" type="button">
                   Acessar projeto
-                </NewButton>
+                </Button>
               }
             />
           )}
@@ -105,16 +105,16 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
               to={`/mini-projetos/${challenge?.slug}/resolucao`}
               target="_blank"
             >
-              <NewButton variant="secondary" type="button">
+              <Button variant="secondary" type="button">
                 Ver resolução
-              </NewButton>
+              </Button>
             </Link>
           ) : (
             <BecomeProDialog
               trigger={
-                <NewButton variant="secondary" type="button">
+                <Button variant="secondary" type="button">
                   Ver resolução
-                </NewButton>
+                </Button>
               }
             />
           )}

@@ -4,7 +4,7 @@ import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { getSubscriptionByPagarmeOrderId } from "~/lib/models/subscription.server";
 import BoletoIcon from "./boleto-icon";
 import ThumbIcon from "./thumb-icon";
-import { NewButton } from "~/components/ui/new-button";
+import { Button } from "~/components/ui/button";
 import toast from "react-hot-toast";
 
 export async function loader({ request }: { request: Request }) {
@@ -74,7 +74,7 @@ export default function AssineSucesso() {
           </p>
           {subscriptionStatus !== "active" && paymentMethod === "boleto" && (
             <div className="flex flex-col items-center justify-center gap-4 mt-12 md:gap-10 md:flex-row">
-              <NewButton
+              <Button
                 onClick={copyToClipboard}
                 variant={"outline"}
                 // textColorClass="text-gray-700 dark:text-white"
@@ -82,8 +82,8 @@ export default function AssineSucesso() {
               >
                 Código de Barras
                 <FiCopy className="text-gray-400 transition-colors group-hover:text-brand" />
-              </NewButton>
-              <NewButton
+              </Button>
+              <Button
                 variant={"outline"}
                 className="flex items-center justify-center w-48 gap-2 transition-colors bg-transparent border border-gray-300 hover:border-brand group"
                 // textColorClass="text-gray-700 dark:text-white"
@@ -93,7 +93,7 @@ export default function AssineSucesso() {
               >
                 Ver Boleto
                 <FiExternalLink className="text-gray-400 transition-colors group-hover:text-brand" />
-              </NewButton>
+              </Button>
             </div>
           )}
         </div>
