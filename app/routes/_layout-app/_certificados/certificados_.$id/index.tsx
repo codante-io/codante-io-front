@@ -28,8 +28,10 @@ export async function loader({
   request: Request;
   params: { id: string };
 }) {
+  const certificate = await getCertificateById(params.id);
+  if (!certificate || certificate.error) return json({ certificate: null });
   return json({
-    certificate: await getCertificateById(params.id),
+    certificate,
   });
 }
 
@@ -47,7 +49,7 @@ export default function CertificadoId() {
   useEffect(() => {
     if (!certificate) return;
     async function generatePdf() {
-      if (!pdfUrl) {
+      if (!pdfUrl && certificate) {
         const blob = await pdf(
           <CertificatePDF
             username={certificate.user.name}

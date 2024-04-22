@@ -32,6 +32,7 @@ export type Certificate = {
   status: "pending" | "published";
   metadata: CertificateMetadata;
   created_at: string;
+  error?: any; // caso certificado nao exista, requisição irá retornar a chave erro
 };
 
 export async function requestCertificate(
