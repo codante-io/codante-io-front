@@ -38,7 +38,7 @@ export default function WorkshopLessonsHeader({
 
       {showResources && (
         <ul className="mt-4 font-light">
-          {workshop.resources.map((resource) => {
+          {workshop?.resources?.map((resource) => {
             return (
               <li
                 key={resource.url}
