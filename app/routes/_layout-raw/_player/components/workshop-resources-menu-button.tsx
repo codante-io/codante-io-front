@@ -33,7 +33,7 @@ export default function WorkshopResourcesMenuButton({
   }
 
   return (
-    <Menu as="div" className="relative hidden md:block">
+    <Menu as="div" className="relative hidden z-20 md:block">
       <div>
         <Menu.Button className="flex items-center gap-2 p-3 text-sm transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500 hover:text-brand dark:hover:text-brand">
           <span className="sr-only">Abrir Menu de Materiais Extras</span>
