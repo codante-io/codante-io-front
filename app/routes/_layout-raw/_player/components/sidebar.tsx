@@ -7,6 +7,7 @@ import CodanteLogoMinimal from "./codante-logo-minimal";
 import WorkshopTitle from "./workshop-title";
 import WorkshopLessonList from "./workshop-lesson-list";
 import type { Challenge } from "~/lib/models/challenge.server";
+import { HiMiniArrowSmallLeft } from "react-icons/hi2";
 
 export default function Sidebar({
   workshop,
@@ -53,7 +54,9 @@ export default function Sidebar({
                 className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:flex lg:items-center hover:bg-gray-200 dark:hover:bg-background-700"
               >
                 <span className="flex items-center gap-1 text-sm font-light text-gray-600 dark:text-gray-500 font-lexend">
-                  <span className="text-lg">&larr;</span>
+                  <span className="text-lg">
+                    <HiMiniArrowSmallLeft />
+                  </span>
                   Voltar
                 </span>
               </Link>
