@@ -31,11 +31,11 @@ export default function SolutionCode() {
   function getStackblitzUrl() {
     if (!solutionSubmission || !solutionSubmission.fork_url) return false;
     if (
-      challenge.resources.find(
+      challenge.resources?.find(
         (resource) => resource.type === "stackblitz-embed",
       )
     ) {
-      return challenge.resources.find(
+      return challenge.resources?.find(
         (resource) => resource.type === "stackblitz-embed",
       )?.url;
     } else {
