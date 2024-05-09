@@ -1,4 +1,9 @@
-import { useFetcher, useNavigate, useOutletContext } from "@remix-run/react";
+import {
+  useFetcher,
+  useFetchers,
+  useNavigate,
+  useOutletContext,
+} from "@remix-run/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import type { Comment } from "~/lib/models/comments.server";
 import type { User } from "~/lib/models/user.server";
@@ -32,18 +37,67 @@ export default function CommentSection({
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
-  const [toastId, setToastId] = useState<string | null>(null);
+  const fetchers = useFetchers();
 
-  useEffect(() => {
-    if (isSubmittingOrLoading && toastId === null) {
-      const id = toast.loading("Enviando comentário...");
-      setToastId(id);
-    } else if (!isSubmittingOrLoading && toastId !== null) {
-      toast.dismiss(toastId);
-      toast.success("Comentário enviado!");
-      setToastId(null);
+  const optimisticEntries = fetchers.reduce<Comment[]>((memo, f) => {
+    if (f.formData) {
+      const data = Object.fromEntries(f.formData);
+      if (data.intent === "edit-comment") {
+        memo = comments.map((comment) => {
+          if (comment.id == data.commentId) {
+            return {
+              ...comment,
+              comment: data.comment as string,
+            };
+          }
+          return comment;
+        });
+      } else if (data.intent === "comment") {
+        memo.push({
+          ...data,
+          id: Math.floor(Math.random() * 100 + 1).toString(),
+          user,
+          comment: data.comment as string,
+          commentable_id: data.commentableId as string,
+          commentable_type: data.commentableType as string,
+          created_at_human: "agora",
+          replying_to: data.replyingTo
+            ? (Number(data.replyingTo) as unknown as string)
+            : undefined,
+        });
+      } else if (data.intent === "delete-comment") {
+        memo = comments.map((comment) => {
+          if (comment.id == data.commentId) {
+            return {
+              ...comment,
+              deleted: true,
+            };
+          }
+          return comment;
+        });
+      }
     }
-  }, [isSubmittingOrLoading, toastId]);
+
+    return memo;
+  }, []);
+
+  // divide as entradas em um objeto
+  const optimisticMap = optimisticEntries.reduce(
+    (map, entry) => {
+      return { ...map, [entry.id]: entry };
+    },
+    {} as { [key: string]: Comment },
+  );
+
+  // adiciona os novos valores em comments, sem alterar ordem
+  comments = comments.map((comment) => optimisticMap[comment.id] || comment);
+
+  // impede que o comentário editado vire um novo comentário
+  const newEntries = optimisticEntries.filter((entry) => {
+    return !comments.some((comment) => comment.id === entry.id);
+  });
+
+  comments = [...comments, ...newEntries];
 
   function handleCommentButton(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
@@ -164,18 +218,10 @@ function CommentCard({
     }
 
     if (isSubmittingOrLoading && toastId === null) {
-      if (fetcher.formMethod === "PUT") {
-        const id = toast.loading("Editando comentário...");
-        setToastId(id);
-        setSuccessMessage("Comentário editado!");
-      } else if (fetcher.formMethod === "DELETE") {
+      if (fetcher.formMethod === "DELETE") {
         const id = toast.loading("Deletando comentário...");
         setToastId(id);
         setSuccessMessage("Comentário deletado!");
-      } else {
-        const id = toast.loading("Enviando comentário...");
-        setToastId(id);
-        setSuccessMessage("Comentário enviado!");
       }
     } else if (!isSubmittingOrLoading && toastId !== null) {
       toast.dismiss(toastId);
@@ -207,6 +253,7 @@ function CommentCard({
   function replyComment(event: React.MouseEvent | React.KeyboardEvent) {
     event?.preventDefault();
     const inputedComment = replyInputRef.current?.value;
+
     if (inputedComment) {
       fetcher.submit(
         {
@@ -239,9 +286,23 @@ function CommentCard({
     setDeleteModal({ ...deleteModal, isOpen: false });
   }
 
-  function handleEditButton() {
+  function handleEditButton(isReply?: boolean) {
     const inputedComment = editInputRef.current?.value;
     if (inputedComment) {
+      // if (!isReply) {
+      //   setEditedComment({
+      //     ...comment,
+      //     comment: inputedComment,
+      //     isReply: false,
+      //   });
+      // } else {
+      //   setEditedComment({
+      //     ...replies.find((reply) => reply.id === editSettings.commentId),
+      //     comment: inputedComment,
+      //     isReply: true,
+      //   });
+      // }
+
       fetcher.submit(
         {
           intent: "edit-comment",
@@ -269,6 +330,9 @@ function CommentCard({
       <div>
         <CommentInfo
           ref={editInputRef}
+          // comment={
+          //   editedComment && !editedComment.isReply ? editedComment : comment
+          // }
           comment={comment}
           editSettings={editSettings}
           setEditSettings={setEditSettings}
@@ -286,11 +350,14 @@ function CommentCard({
             <div key={reply.id}>
               <CommentInfo
                 ref={editInputRef}
+                // comment={
+                //   editedComment && editedComment.isReply ? editedComment : reply
+                // }
                 comment={reply}
                 editSettings={editSettings}
                 setEditSettings={setEditSettings}
                 disableEditButtonFunction={disableEditButton}
-                handleEditButton={handleEditButton}
+                handleEditButton={() => handleEditButton(true)}
                 editButtonIsDisabled={isEditButtonDisabled}
                 setShowReplyInput={setShowReplyInput}
                 setDeleteModal={setDeleteModal}
