@@ -78,7 +78,7 @@ export default function SubmissionCard({
           className={classNames(
             "w-full transition-all delay-75 aspect-video",
             isHomePage
-              ? "opacity-40 blur-sm group-hover:blur-none group-hover:opacity-100"
+              ? "opacity-40 md:blur-sm lg:group-hover:blur-none group-hover:opacity-100"
               : "",
           )}
         />
