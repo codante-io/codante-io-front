@@ -24,6 +24,7 @@ const config = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter var", "sans-serif"],
+        cursive: ["Gloria Hallelujah", "cursive"],
       },
       colors: {
         gray: {

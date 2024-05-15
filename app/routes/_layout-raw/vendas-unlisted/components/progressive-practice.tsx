@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { BoldColored } from "~/routes/_layout-raw/vendas-unlisted/bold-colored-text";
-import { StickyScroll } from "~/routes/_layout-raw/vendas-unlisted/sticky-scroll-reveal";
+import { BoldColored } from "./bold-colored-text";
+import { StickyScroll } from "./sticky-scroll-reveal";
 
 const Keyboard = ({ children }: { children: React.ReactNode }) => (
   <span className="inline-block border border-background-600 bg-background-700 p-1 rounded-lg text-xs font-semibold">
@@ -174,7 +174,7 @@ const content = [
     ),
   },
 ];
-export function ProgressivePractice() {
+export function ProgressivePracticeContent() {
   return (
     <div className="p-10 mt-10 lg:mt-0">
       <StickyScroll content={content} />

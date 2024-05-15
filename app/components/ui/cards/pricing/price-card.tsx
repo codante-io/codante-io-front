@@ -20,7 +20,7 @@ export default function PriceCard({
         data?.name.startsWith("PRO")
           ? "border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white"
           : "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl",
-        "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full",
+        "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full shrink-0 grow-0",
       )}
     >
       {data?.banner && <CardItemRibbon text={data?.banner} />}
@@ -61,7 +61,9 @@ export default function PriceCard({
           <span className="opacity-50">
             {data.installments > 1 && `${data.installments}x`}
           </span>{" "}
-          <span className="text-5xl font-semibold">R${data?.monthlyPrice}</span>
+          <span className="text-5xl font-semibold">
+            R${data?.monthlyPrice?.toFixed(2)}
+          </span>
         </p>
 
         <p className="mb-12 text-sm text-center text-gray-900 font-extralight slate-600 dark:text-gray-50">

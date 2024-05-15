@@ -14,21 +14,25 @@ import NotFound from "~/components/features/error-handling/not-found";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getHome } from "~/lib/models/home.server";
 import {
-  freePlanDetails,
-  freePlanFeatures,
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/ui/cards/pricing/pricing-data";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
-import { useState } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useMediaQuery } from "react-responsive";
-import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import SubmissionCard from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
-import { ProgressivePractice } from "~/routes/_layout-raw/vendas-unlisted/progressive-practice";
-import { BoldColored } from "~/routes/_layout-raw/vendas-unlisted/bold-colored-text";
+import { ProgressivePracticeContent } from "./components/progressive-practice";
+import { BoldColored } from "./components/bold-colored-text";
 import { PlayCircle } from "lucide-react";
+import Faq from "~/routes/_layout-app/_subscription/faq";
+import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { cn } from "~/lib/utils";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
+import { PiChartLineUp, PiWarning } from "react-icons/pi";
+import Counter from "./components/counter";
+import Footer from "~/components/_layouts/footer";
+import { Crisp } from "crisp-sdk-web";
 
 export const loader = async () => {
   return json({
@@ -37,19 +41,27 @@ export const loader = async () => {
 };
 
 export default function HomePage() {
+  useEffect(() => {
+    Crisp.configure("dec01a18-bf11-4fb8-a820-6a53760ba042");
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
         <BackgroundBlur />
         <Headline />
+        <ProgressivePractice />
         <Submissions />
-        <PraticaProgressiva />
         <WorkShops />
         <Challenges />
         <Community />
+        <Founders />
         <Testimonial />
         <Pricing />
+        <Bonus />
+        <FAQ />
       </div>
+      <Footer />
     </div>
   );
 }
@@ -69,8 +81,16 @@ export function ErrorBoundary() {
 }
 
 function CodanteProButton() {
+  const scroll = () => {
+    const section = document.querySelector("#pricing");
+    section?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <button className="relative inline-flex items-center justify-center text-2xl px-10 py-4 overflow-hidden font-medium text-gray-200 bg-gray-800 rounded-lg group w-full lg:w-8/12">
+    <button
+      onClick={scroll}
+      className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-200 bg-gray-800 rounded-lg group w-full lg:w-7/12"
+    >
       <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-brand-500 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
       <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
       <span className="relative">
@@ -86,17 +106,47 @@ function CodanteProButton() {
 function Headline() {
   const { colorMode } = useColorMode();
 
+  const [hoveredIndex, setHoveredIndex] = useState<string | null>();
+  const springConfig = { stiffness: 100, damping: 5 };
+  const x = useMotionValue(0); // going to set this value on mouse move
+  // rotate the tooltip
+  const rotate = useSpring(
+    useTransform(x, [-100, 100], [-45, 45]),
+    springConfig,
+  );
+  // translate the tooltip
+  const translateX = useSpring(
+    useTransform(x, [-100, 100], [-50, 50]),
+    springConfig,
+  );
+
+  const handleMouseMove = (event: any) => {
+    const halfWidth = event.target.offsetWidth / 2;
+    x.set(event.nativeEvent.offsetX - halfWidth); // set the x value, which is then used in transform and rotate
+  };
+
+  const techs = [
+    { name: "React", image: "react" },
+    { name: "Next.js", image: "next" },
+    { name: "Tailwind", image: "tailwind" },
+    { name: "Framer Motion", image: "framer-motion" },
+    { name: "Typescript", image: "typescript" },
+    { name: "HTML", image: "html" },
+    { name: "CSS", image: "css" },
+    { name: "Javascript", image: "javascript" },
+  ];
+
   return (
     <>
       <section
         id="headline"
         className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_68px)]"
       >
-        <div className="container flex flex-col items-center gap-2 mt-6">
+        <div className="container flex flex-col items-center gap-2 mt-2">
           <nav>
-            <img className="w-auto h-16" src="/cdnt.svg" alt="Codante" />
+            <img className="w-auto h-14" src="/cdnt.svg" alt="Codante" />
           </nav>
-          <h1 className="text-4xl font-light text-center mt-12 font-lexend md:text-6xl">
+          <h1 className="text-3xl font-light text-center mt-6 font-lexend md:text-6xl">
             Aprenda front-end <br />
             <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
               de verdade
@@ -109,10 +159,11 @@ function Headline() {
           </h1>
           <p className="font-light text-center font-inter text-xl max-w-[670px] mt-12 text-gray-100">
             Entenda porque você se sente{" "}
-            <span className="italic">completamente perdido(a)</span> quando está
-            estudando programação e descubra o que você pode fazer para aprender
-            front-end <span className="italic font-bold">DE VERDADE</span> para{" "}
-            <span className="underline italic">
+            <span className="italic ">completamente perdido(a)</span> quando
+            está estudando programação e descubra o que você pode fazer para
+            aprender front-end{" "}
+            <span className="italic font-bold">DE VERDADE</span> para{" "}
+            <span className="italic font-normal color-underline decoration-brand-300">
               conquistar os seus objetivos de carreira.
             </span>
           </p>
@@ -124,7 +175,7 @@ function Headline() {
         </div>
 
         <div className="container flex mt-8 gap-8 h-full flex-col items-center">
-          <div className="aspect-video overflow-hidden rounded-lg w-full lg:w-8/12">
+          <div className="aspect-video overflow-hidden rounded-lg w-full lg:w-7/12">
             <iframe
               className="w-full h-full"
               src="https://www.youtube.com/embed/1F9HkIky8ps?si=zHhAx50nggQ8_pp5"
@@ -138,7 +189,7 @@ function Headline() {
 
           <CodanteProButton />
 
-          <div className="flex gap-8 justify-between w-full lg:w-10/12 text-center text-sm lg:text-xl">
+          <div className="flex gap-8 justify-between w-full lg:w-10/12 text-center text-sm lg:text-xl mb-20">
             <div className="flex flex-col items-center">
               <motion.img
                 initial="hidden"
@@ -209,12 +260,89 @@ function Headline() {
             </div>
           </div>
         </div>
+        <div className="container flex flex-col  overflow-hidden items-center justify-center  border-gray-200 dark:border-gray-800 mb-16">
+          <div className="h-[1px] bg-background-700 w-2/3"></div>
+          <div className="relative w-full">
+            <h2 className="mt-14 text-center mb-2 text-gray-400 font-lexend">
+              Aprenda e pratique as principais
+            </h2>
+            <motion.h1
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, y: 0 },
+                hidden: { opacity: 0.5, y: -10 },
+              }}
+              className="mb-8 text-2xl lg:text-4xl font-light font-lexend text-center"
+            >
+              Tecnologias de{" "}
+              <span className="color-underline decoration-amber-400">
+                front-end
+              </span>
+            </motion.h1>
+          </div>
+
+          <div className="grid justify-center grid-cols-4 gap-12 px-0 lg:grid-cols-8 mt-10">
+            {techs.map((technology, index) => (
+              <div key={index} className="relative group flex justify-center">
+                {hoveredIndex === technology.name && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20, scale: 0.6 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 10,
+                      },
+                    }}
+                    exit={{ opacity: 0, y: 20, scale: 0.6 }}
+                    style={{
+                      translateX: translateX,
+                      rotate: rotate,
+                      whiteSpace: "nowrap",
+                    }}
+                    className="absolute -top-16 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md dark:bg-background-700 bg-background-00 z-50 shadow-xl px-4 py-2"
+                  >
+                    <div className="absolute left-2 translate-x-1/2 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-brand-500 to-transparent h-px " />
+                    <div className="font-bold relative z-30 text-base">
+                      {technology.name}
+                    </div>
+                  </motion.div>
+                )}
+                <motion.div
+                  onMouseMove={handleMouseMove}
+                  key={technology.name}
+                  initial="hidden"
+                  whileInView="visible"
+                  transition={{ duration: 0.6, delay: 0.05 * index }}
+                  variants={{
+                    visible: { opacity: 1, y: 0 },
+                    hidden: { opacity: 0.5, y: -10 },
+                  }}
+                  onMouseEnter={() => setHoveredIndex(technology.name)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-gradient-to-br from-background-700 to-background-900 rounded-xl flex justify-center items-center"
+                >
+                  <img
+                    src={`img/vendas/techs/${technology.image}.svg`}
+                    className="w-8 h-8 lg:w-12 lg:h-12"
+                    alt={technology.name}
+                  />
+                </motion.div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
     </>
   );
 }
 
-function PraticaProgressiva() {
+function ProgressivePractice() {
   const { colorMode } = useColorMode();
 
   return (
@@ -224,13 +352,13 @@ function PraticaProgressiva() {
     >
       <div className="container flex flex-col items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10 top-0">
         <div className="relative w-full">
-          <h1 className="mt-14 mb-8 text-3xl lg:text-4xl font-light font-lexend text-center">
+          <h1 className="mt-14 mb-8 text-3xl lg:text-4xl font-light font-lexend text-center text-shadow">
             Aprenda do <span className="font-bold"> jeito certo</span>
           </h1>
           <img
             src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
             alt="Line stroke effect"
-            className="absolute top-[83px] w-32 lg:w-64 left-1/2 ml-16 lg:ml-24 transform -translate-x-1/2 -z-10"
+            className="absolute top-[90px] w-32 lg:w-48 left-1/2 ml-16 lg:ml-24 transform -translate-x-1/2 -z-10"
           />
           <motion.img
             initial="hidden"
@@ -268,7 +396,7 @@ function PraticaProgressiva() {
               <p className="font-light font-inter text-sm text-gray-300">
                 Quando você está assistindo uma aula ou vendo um curso, você
                 está na etapa de{" "}
-                <span className="border-b border-amber-400 font-bold">
+                <span className="decoration-amber-400 color-underline">
                   aprendizagem passiva
                 </span>
                 {". "}
@@ -295,7 +423,7 @@ function PraticaProgressiva() {
               <p className="font-light font-inter text-sm text-gray-300">
                 Quando você está de fato colocando a mão na massa, você está na
                 etapa de{" "}
-                <span className="border-b border-brand font-bold">
+                <span className="color-underline decoration-brand-500">
                   aprendizagem ativa
                 </span>
                 . Aqui o aprendizado é <span className="italic">maior</span>.
@@ -328,9 +456,11 @@ function PraticaProgressiva() {
               <p className="font-light font-inter text-sm text-gray-300">
                 Muita gente acha que quando está assitindo um curso e
                 programando junto com o professor, está praticando de forma{" "}
-                <span className="border-b border-brand font-bold">ativa</span>.
-                Mas a verdade é que isso ainda é{" "}
-                <span className="border-b border-amber-400 font-bold">
+                <span className="color-underline decoration-brand-500">
+                  ativa
+                </span>
+                . Mas a verdade é que isso ainda é{" "}
+                <span className="color-underline decoration-amber-400">
                   aprendizado passivo
                 </span>
                 . Você precisa ir além. Depois de fazer cursos e projetos
@@ -342,8 +472,8 @@ function PraticaProgressiva() {
         </section>
 
         <section className="mt-16 w-full flex flex-col items-center overflow-y-visible">
-          <h2 className="text-center text-gray-300 lg:text-xl">
-            É por isso que o Codante usa a ideia da
+          <h2 className="text-center text-gray-300 lg:text-xl font-cursive">
+            É por isso que o <b>Codante</b> usa a ideia da
           </h2>
           <h1 className="mt-2 mb-8 text-3xl lg:text-5xl font-light font-lexend text-center">
             Prática <span className="font-bold"> progressiva</span>
@@ -393,7 +523,7 @@ function PraticaProgressiva() {
             />
           </div>
 
-          <ProgressivePractice />
+          <ProgressivePracticeContent />
 
           <section className="mt-16 flex flex-col lg:flex-row gap-20 lg:gap-10 mb-24 items-center lg:items-start">
             <motion.div
@@ -450,7 +580,7 @@ function WorkShops() {
     >
       <div className="container flex flex-col  overflow-hidden items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center font-lexend mb-2 text-gray-300">
+          <h2 className="mt-14 text-center mb-2 text-gray-300 font-lexend">
             Fortaleça sua base teórica com nossos
           </h2>
           <motion.h1
@@ -470,40 +600,64 @@ function WorkShops() {
             alt="Line stroke effect"
             className="absolute top-[120px] w-64 left-1/2 transform -translate-x-1/2 -z-10"
           />
-          <motion.img
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.8 }}
-            variants={{
-              visible: { opacity: 1, scaleZ: 1 },
-              hidden: { opacity: 0, scaleZ: 0 },
-            }}
-            src={`/img/blue-smoke.svg`}
-            alt="Smoke effect"
-            className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
-          />
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, scaleZ: 1 },
+                hidden: { opacity: 0, scaleZ: 0 },
+              }}
+              src={`/img/blue-smoke.svg`}
+              alt="Smoke effect"
+              className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
+            />
+          </div>
         </div>
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl text-center w-full md:w-3/4">
-          Nossos{" "}
-          <span className="font-bold border-b border-brand-500">workshops</span>{" "}
-          são verdadeiras aulas ministradas por nós e por profissionais
-          convidados. Eles são gravados ao vivo e posteriormente editados e
-          disponibilizados na plataforma. Tudo feito com muito carinho e{" "}
-          <b>foco na qualidade</b>.
-          <br />
-          <br />
-          Assinando o <b>Codante</b>{" "}
-          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
-            PRO
-          </span>
-          , você tem acesso a{" "}
-          <b>
-            <u>
-              <i>todos os nossos workshops</i>
-            </u>
-          </b>
-          . Inclusive os próximos que lançarmos.
-        </p>
+        <div className="flex gap-16 mt-20 mb-10 px-4 flex-col-reverse lg:flex-row">
+          <p className="mt-16 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+            Nossos{" "}
+            <span className="color-underline decoration-brand-500">
+              workshops
+            </span>{" "}
+            são verdadeiras aulas ministradas por nós e por profissionais
+            convidados. Eles são gravados ao vivo e posteriormente editados e
+            disponibilizados na plataforma. Tudo feito com muito carinho e{" "}
+            <b>foco na qualidade</b>.
+            <br />
+            <br />
+            Assinando o <b>Codante</b>{" "}
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+              PRO
+            </span>
+            , você tem acesso a{" "}
+            <b>
+              <u>
+                <i>todos os nossos workshops</i>
+              </u>
+            </b>
+            . Inclusive os próximos que lançarmos.
+          </p>
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, x: 0 },
+                hidden: { opacity: 0.5, x: 10 },
+              }}
+              src="img/vendas/workshops.webp"
+              alt="Fundo gradiente com screenshot da tela de workshops"
+              className="w-[40rem] shrink-0 grow-0"
+            />
+          </div>
+        </div>
+        <h2 className="mt-14 mb-10 text-center text-gray-300 font-lexend text-xl">
+          Veja alguns{" "}
+          <span className="color-underline decoration-brand-500">exemplos</span>
+        </h2>
         <section className="grid justify-center grid-cols-1 gap-4 px-0 lg:grid-cols-2">
           {homeInfo?.featured_workshops?.map((workshop) => (
             <WorkshopCard key={workshop.id} workshop={workshop} />
@@ -542,8 +696,9 @@ function Challenges() {
       <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
         <div className="relative w-full">
           <h2 className="mt-14 text-center font-lexend mb-2 text-gray-300">
-            Pratique de forma guiada ou direcionada com nossos{" "}
+            Pratique com nossos{" "}
           </h2>
+
           <motion.h1
             initial="hidden"
             whileInView="visible"
@@ -575,48 +730,69 @@ function Challenges() {
           />
         </div>
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl text-center w-full md:w-3/4">
-          Nossos{" "}
-          <span className="font-bold border-b border-amber-500">
-            mini projetos
-          </span>{" "}
-          são projetos completos, contendo uma{" "}
-          <b>
-            <i>lista de requisitos</i>
-          </b>{" "}
-          e um{" "}
-          <b>
-            <i>design no Figma</i>
-          </b>
-          . Eles são focados em uma tecnologia específica, mas você pode fazer
-          da forma como preferir.
-          <br />
-          <br />
-          Você pode fazê-los de{" "}
-          <span className="font-bold border-b border-[#EAC9FF]">
-            forma guiada
-          </span>
-          , assistindo nossas resoluções oficiais ou fazê-los de{" "}
-          <span className="font-bold border-b border-[#C9E5FF]">
-            forma direcionada
-          </span>
-          , apenas seguindo a lista de requisitos e quebrando a cabeça pra
-          chegar em uma solução.
-          <br />
-          <br />
-          As listas de requisitos e Figmas são gratuitos. Assinando o{" "}
-          <b>Codante</b>{" "}
-          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
-            PRO
-          </span>
-          , você tem acesso a{" "}
-          <b>
-            <u>
-              <i>todas as nossas resoluções oficiais de projetos</i>
-            </u>
-          </b>
-          . Inclusive as próximas que lançarmos.
-        </p>
+        <div className="flex gap-16 mt-20 mb-10 px-4 flex-col lg:flex-row">
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, x: 0 },
+                hidden: { opacity: 0.5, x: -10 },
+              }}
+              src="img/vendas/mini-projetos.webp"
+              alt="Fundo gradiente com screenshot da tela de mini projetos"
+              className="w-[40rem] shrink-0 grow-0"
+            />
+          </div>
+          <p className="mt-10 font-light text-gray-300 font-inter text-md md:text-xl prose w-full md:w-3/4">
+            Nossos{" "}
+            <span className="color-underline decoration-amber-400">
+              mini projetos
+            </span>{" "}
+            são projetos completos, contendo uma{" "}
+            <b>
+              <i>lista de requisitos</i>
+            </b>{" "}
+            e um{" "}
+            <b>
+              <i>design no Figma</i>
+            </b>
+            . Eles são focados em uma tecnologia específica, mas você pode fazer
+            da forma como preferir.
+            <br />
+            <br />
+            Você pode fazê-los de{" "}
+            <span className="color-underline decoration-[#EAC9FF]">
+              forma guiada
+            </span>
+            , assistindo nossas resoluções oficiais ou fazê-los de{" "}
+            <span className="color-underline decoration-[#C9E5FF]">
+              forma direcionada
+            </span>
+            , apenas seguindo a lista de requisitos e quebrando a cabeça pra
+            chegar em uma solução.
+            <br />
+            <br />
+            As listas de requisitos e Figmas são gratuitos. Assinando o{" "}
+            <b>Codante</b>{" "}
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+              PRO
+            </span>
+            , você tem acesso a{" "}
+            <b>
+              <u>
+                <i>todas as nossas resoluções oficiais de projetos</i>
+              </u>
+            </b>
+            . Inclusive as próximas que lançarmos.
+          </p>
+        </div>
+        <h2 className="mt-14 mb-10 text-center text-gray-300 font-lexend text-xl">
+          Veja alguns{" "}
+          <span className="color-underline decoration-amber-400">exemplos</span>
+        </h2>
+
         <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {orderedChallengeList.map((challenge) => (
             <div key={challenge.slug} className="mx-auto">
@@ -700,14 +876,14 @@ function Community() {
           </div>
         </section>
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl text-center w-full md:w-3/4">
+        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
           O Codante é composto por uma comunidade de pessoas que estão
           praticando e evoluindo juntas. Você pode se conectar com elas através
-          da nossa <b>comunidade no Discord</b>.
+          do nosso <b>servidor no Discord</b>.
           <br />
           <br />
           Além disso, você pode ver quem está participando dos{" "}
-          <span className="font-bold border-b border-amber-500">
+          <span className="color-underline decoration-amber-400">
             projetos
           </span>{" "}
           e acessar as <b>resoluções da comunidade</b> para ver como outras
@@ -734,6 +910,305 @@ function Community() {
   );
 }
 
+function Founders() {
+  const { colorMode } = useColorMode();
+
+  return (
+    <section id="founders" className="flex justify-center w-full">
+      <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
+        <div className="relative w-full">
+          <motion.h1
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0.5, y: -10 },
+            }}
+            className="mt-20 mb-8 text-4xl font-light font-lexend text-center"
+          >
+            Quem somos nós
+          </motion.h1>
+          <img
+            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+            alt="Line stroke effect"
+            className="absolute top-[120px] w-64 left-1/2 transform -translate-x-1/2 -z-10"
+          />
+          <motion.img
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, scaleZ: 1 },
+              hidden: { opacity: 0, scaleZ: 0 },
+            }}
+            src={`/img/yellow-smoke.svg`}
+            alt="Smoke effect"
+            className="absolute top-0 w-full left-1/2 transform translate-x-[-50%] -z-10"
+          />
+        </div>
+
+        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+          O Codante é a junção dos nossos anos de experiência como devs e
+          professores.
+          <br />
+          <br />
+          Somos apaixonados por desenvolvimento web, principalmente{" "}
+          <span className="color-underline decoration-amber-400">
+            front-end
+          </span>
+          . Por isso, colocamos muito carinho para criar uma plataforma que seja
+          bonita e com uma ótima experiência para nossa comunidade.
+          <br />
+          <br />
+          Conheça um pouco mais sobre nossa história:
+        </p>
+
+        <section className="mt-20 mb-10 w-full">
+          <div className="w-full flex lg:flex-row flex-col gap-10">
+            <div className="relative">
+              <motion.img
+                initial="hidden"
+                whileInView="visible"
+                transition={{ duration: 0.8 }}
+                variants={{
+                  visible: { opacity: 1, x: 0 },
+                  hidden: { opacity: 0.5, x: 10 },
+                }}
+                src="img/vendas/icaro.webp"
+                className="grow-0 shrink-0 lg:w-[32rem] w-full h-auto rounded-xl"
+                alt="Ícaro Harry"
+              />
+            </div>
+            <div className="prose w-full text-gray-400">
+              <h2 className="text-gray-300 font-lexend text-2xl font-medium flex items-center gap-2">
+                Ícaro Harry
+                <a
+                  href={"https://www.linkedin.com/in/%C3%ADcaro/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
+                >
+                  <AiFillLinkedin className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                </a>
+                <a
+                  href={"https://www.github.com/icaroharry/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
+                >
+                  <AiFillGithub className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                </a>
+              </h2>
+              <ul className="marker:text-amber-400">
+                <li>
+                  <span className="color-underline decoration-brand-300">
+                    Dev front-end
+                  </span>{" "}
+                  há 10 anos e{" "}
+                  <span className="color-underline decoration-brand-300">
+                    professor
+                  </span>{" "}
+                  há 4 anos.
+                </li>
+                <li>
+                  <span className="italic">Ensinou</span>,{" "}
+                  <span className="italic">treinou</span> e{" "}
+                  <span className="italic">mentorou</span> mais de{" "}
+                  <span className="color-underline decoration-brand-300">
+                    600 pessoas
+                  </span>{" "}
+                  no Brasil e na Europa, antes de começar o Codante.
+                </li>
+                <li>
+                  Foi coordenador responsável por turmas de até{" "}
+                  <span className="color-underline decoration-brand-300">
+                    450 alunos
+                  </span>
+                  , gerindo equipes de até 12 professores e instrutores.
+                </li>
+                <li>
+                  Trabalhou como desenvolvedor em{" "}
+                  <span className="color-underline decoration-brand-300">
+                    5 empresas
+                  </span>{" "}
+                  nacionais e internacionais, tendo atuado em projetos nas áreas
+                  de visualização de dados médicos; mercado financeiro e
+                  blockchain.
+                </li>
+                <li>
+                  Trabalhou em projetos com{" "}
+                  <span className="color-underline decoration-brand-300">
+                    React
+                  </span>
+                  ,{" "}
+                  <span className="color-underline decoration-brand-300">
+                    Vue
+                  </span>
+                  ,{" "}
+                  <span className="color-underline decoration-brand-300">
+                    Angular (1 e 2)
+                  </span>
+                  ,
+                  <span className="color-underline decoration-brand-300">
+                    Next.js
+                  </span>
+                  ,{" "}
+                  <span className="color-underline decoration-brand-300">
+                    Remix
+                  </span>
+                  , tendo uma ampla experiência com diferentes tecnologias de
+                  front-end.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="w-full flex lg:flex-row flex-col gap-10 mt-16">
+            <div>
+              <motion.img
+                initial="hidden"
+                whileInView="visible"
+                transition={{ duration: 0.8 }}
+                variants={{
+                  visible: { opacity: 1, x: 0 },
+                  hidden: { opacity: 0.5, x: 10 },
+                }}
+                src="img/vendas/cestari.webp"
+                className="grow-0 shrink-0 lg:w-[32rem] w-full h-auto rounded-xl"
+                alt="Roberto Cestari"
+              />
+            </div>
+            <div className="prose w-full text-gray-400 ">
+              <h2 className="text-gray-300 font-lexend text-2xl font-medium flex items-center gap-2">
+                Roberto Cestari
+                <a
+                  href={"https://www.linkedin.com/in/robertotcestari/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
+                >
+                  <AiFillLinkedin className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                </a>
+                <a
+                  href={"https://www.github.com/robertotcestari/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
+                >
+                  <AiFillGithub className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                </a>
+              </h2>
+              <ul className="marker:text-brand-400">
+                <li>
+                  Foi{" "}
+                  <span className="color-underline decoration-amber-300">
+                    Tech Lead
+                  </span>{" "}
+                  de Front-end e responsável pelo currículo de Front-end bem
+                  como liderança técnica de um time de mais de 20 pessoas em uma
+                  das maiores empresas de educação do país.
+                </li>
+                <li>
+                  Foi professor de Front-End para mais de{" "}
+                  <span className="color-underline decoration-amber-300">
+                    400 alunos
+                  </span>{" "}
+                  antes de começar o Codante.
+                </li>
+                <li>
+                  É fundador e CTO do{" "}
+                  <a
+                    href={"https://trilhante.com.br"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="color-underline decoration-orange-400 text-gray-400"
+                  >
+                    Trilhante
+                  </a>
+                  , uma das maiores plataformas de ensino de direito do Brasil.
+                  O Trilhante possui em sua plataforma{" "}
+                  <span className="color-underline decoration-amber-300">
+                    20k aulas
+                  </span>{" "}
+                  e{" "}
+                  <span className="color-underline decoration-amber-300">
+                    680 cursos
+                  </span>
+                  , todos gravado in-house, e conta com{" "}
+                  <span className="color-underline decoration-amber-300">
+                    117k usuários
+                  </span>{" "}
+                  e mais de{" "}
+                  <span className="color-underline decoration-amber-300">
+                    25k assinaturas
+                  </span>{" "}
+                  vendidas.
+                </li>
+                <li>
+                  Além da plataforma, o canal do Youtube conseguiu ~300k
+                  seguidores com mais de{" "}
+                  <span className="color-underline decoration-amber-300">
+                    29 milhões
+                  </span>{" "}
+                  de aulas assistidas.
+                </li>
+                <li>
+                  É graduado em Administração de Empresas pela EAESP-FGV, e
+                  graduado e mestre em Direito pela USP
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  );
+}
+
+function FAQ() {
+  return (
+    <section id="founders" className="flex justify-center w-full">
+      <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
+        <div className="relative w-full">
+          <motion.h1
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0.5, y: -10 },
+            }}
+            className="mt-20 mb-8 text-4xl font-light font-lexend text-center"
+          >
+            Perguntas{" "}
+            <span className="color-underline decoration-amber-500">
+              frequentes
+            </span>
+          </motion.h1>
+
+          <motion.img
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, scaleZ: 1 },
+              hidden: { opacity: 0, scaleZ: 0 },
+            }}
+            src={`/img/yellow-smoke.svg`}
+            alt="Smoke effect"
+            className="absolute top-0 w-full left-1/2 transform translate-x-[-50%] -z-10"
+          />
+        </div>
+
+        <section className="mt-20 mb-10">
+          <Faq />
+        </section>
+      </div>
+    </section>
+  );
+}
+
 function Submissions() {
   const { homeInfo } = useLoaderData<typeof loader>();
   const submissions = homeInfo.featured_submissions;
@@ -746,18 +1221,30 @@ function Submissions() {
       <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
         <h1 className="mt-14 mb-8 text-3xl md:text-4xl font-light font-lexend text-center w-full lg:w-6/12">
           Veja o que a nossa{" "}
-          <span className="text-brand-500 font-bold">comunidade</span> está
-          construindo com base na{" "}
+          <span className="relative font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+            comunidade
+          </span>{" "}
+          está construindo com base na{" "}
           <span className="italic">
-            técnica da <span className="font-bold">prática progressiva</span>
+            técnica da{" "}
+            <span className="color-underline decoration-brand-500">
+              prática progressiva
+            </span>
           </span>
           .
         </h1>
-        <p className="mt-2 mb-2 font-light font-inter text-md md:text-xl text-center w-full md:w-3/4 text-gray-300">
-          Esses projetos foram feitos por pessoas que estão aprendendo e
-          praticando front-end.
+        <p className="mt-2 mb-2 font-light font-inter md:text-xl text-center w-full md:w-3/4 text-gray-300">
+          Esses projetos foram feitos por pessoas que estão{" "}
+          <span className="color-underline decoration-amber-400">
+            aprendendo
+          </span>{" "}
+          e{" "}
+          <span className="color-underline decoration-brand-500">
+            praticando
+          </span>{" "}
+          front-end.
         </p>
-        <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-center w-full md:w-1/2 text-gray-300">
+        <p className="mt-2 mb-10 font-light font-inter md:text-xl text-center w-full md:w-1/2 text-gray-300">
           Alguns foram feitos de <span className="italic">forma guiada</span>,
           seguindo os nossos tutoriais. Outros foram feitos de{" "}
           <span className="italic">forma direcionada</span>, apenas a partir da
@@ -805,40 +1292,356 @@ function Submissions() {
 function Pricing() {
   const { homeInfo } = useLoaderData<typeof loader>();
 
+  const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
+
+  const currentPrice =
+    homeInfo.plan_info.price_in_cents +
+    promotionInfo?.content_count * 100 +
+    promotionInfo?.user_raised_count * 100 * 10;
+
   const proPlanWithPrice = {
     ...proPlanDetails,
-    monthlyPrice: Math.round(homeInfo.plan_info.price_in_cents / 100 / 12),
-    totalPrice: homeInfo.plan_info.price_in_cents / 100,
+    monthlyPrice: Math.trunc((currentPrice / 100 / 12) * 100) / 100, // truncate 2 decimals
+    totalPrice: currentPrice / 100,
   };
 
   return (
     <section
       id="pricing"
-      className="flex justify-center w-full -mb-10 text-center text-gray-800 bg-white dark:bg-background-900 dark:text-gray-50"
+      className="flex justify-center w-full -mb-10 text-center text-gray-800 dark:text-gray-50 container px-8"
     >
-      <div className="container flex flex-col items-center">
-        <h1 className="mt-16 text-3xl font-light font-lexend">
-          Seja{" "}
-          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
-            PRO
-          </span>
-        </h1>
-        <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-          No Codante sempre teremos muito conteúdo gratuito. Para uma
-          experiência completa, assine nosso{" "}
-          <span className="text-brand-400">
-            plano vitalício com valor promocional de lançamento
-          </span>{" "}
-          <span className="font-bold underline text-brand-400">
-            por tempo limitado
-          </span>
-          . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
-        </p>
-        <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
-          <PriceCard
-            featuresByCategory={freePlanFeatures}
-            data={freePlanDetails}
+      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
+        <div className="relative w-full">
+          <h2 className="mt-14 text-center mb-2 text-gray-400 font-lexend">
+            Assine agora o
+          </h2>
+          <motion.h1
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0.5, y: -10 },
+            }}
+            className="mb-8  text-4xl font-light font-lexend text-center"
+          >
+            Codante{" "}
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+              PRO
+            </span>
+          </motion.h1>
+
+          <motion.img
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, scaleZ: 1 },
+              hidden: { opacity: 0, scaleZ: 0 },
+            }}
+            src={`/img/yellow-smoke.svg`}
+            alt="Smoke effect"
+            className="absolute top-0 w-full left-1/2 transform translate-x-[-50%] -z-10"
           />
+        </div>
+
+        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+          Esse é o melhor momento da história para <b>assinar o Codante</b>.
+          <br />
+          <br />
+          Nós vamos recompensar as pessoas que estão acreditando no projeto
+          desde o início com{" "}
+          <span className="color-underline decoration-amber-400">
+            acesso vitalício
+          </span>{" "}
+          e um{" "}
+          <span className="color-underline decoration-amber-400">
+            preço inédito
+          </span>{" "}
+          que não vai se repetir nessas condições.
+        </p>
+
+        <motion.div
+          className="relative rotate-2 mb-10 "
+          initial="hidden"
+          whileInView="visible"
+          transition={{ duration: 0.6 }}
+          variants={{
+            visible: { y: 0, opacity: 1 },
+            hidden: { y: 10, opacity: 0 },
+          }}
+        >
+          <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+          <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
+            <p className="font-light font-inter prose text-gray-300 text-start">
+              <span className="inline-block">
+                <PiWarning
+                  className="text-amber-400 mr-2 -mb-[2px]"
+                  size={20}
+                />
+              </span>
+              Quanto antes você assinar o Codante,{" "}
+              <span className="decoration-amber-400 color-underline">
+                mais barato
+              </span>{" "}
+              você vai pagar.
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="h-[1px] w-1/3 self-center bg-background-700 my-10" />
+
+        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+          O Codante está apenas começando. Em apenas <b>1 ano de existência</b>{" "}
+          já construímos muita coisa. Dá uma olhada:
+        </p>
+
+        <section className="grid grid-cols-2 lg:grid-cols-4 justify-between gap-8">
+          <motion.div
+            className="relative rotate-2 h-32 w-32"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.6 }}
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: 10, opacity: 0 },
+            }}
+          >
+            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+              <span className="text-4xl flex">
+                <Counter from={320} to={340} />+
+              </span>
+              <span className="decoration-purple-400 color-underline font-light">
+                aulas
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="relative rotate-2 h-32 w-32"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.6 }}
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: 10, opacity: 0 },
+            }}
+          >
+            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+              <span className="text-4xl">
+                <Counter from={15} to={25} />
+              </span>
+              <span className="decoration-amber-400 color-underline font-light">
+                projetos
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="relative rotate-2 h-32 w-32"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.6 }}
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: 10, opacity: 0 },
+            }}
+          >
+            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+              <span className="text-4xl">
+                <Counter from={0} to={6} />
+              </span>
+              <span className="decoration-brand-400 color-underline font-light">
+                workshops
+              </span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="relative rotate-2 h-32 w-32"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.6 }}
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: 10, opacity: 0 },
+            }}
+          >
+            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+              <span className="text-4xl">
+                <Counter from={0} to={1} />
+              </span>
+              <span className="decoration-emerald-400 color-underline font-light">
+                trilha
+              </span>
+            </div>
+          </motion.div>
+        </section>
+
+        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+          Nós estamos trabalhando para nos tornar uma das maiores plataformas de
+          ensino de programação do Brasil. Então nós não vamos parar de produzir
+          conteúdo!
+          <br />
+          <br />
+          Queremos recompensar <b>de verdade</b> as pessoas que estão nos
+          apoiando desde já. Vamos lançar um <b>preço dinâmico</b> que vai ser
+          mais barato o quanto antes você comprar.
+        </p>
+
+        <motion.div
+          className="relative rotate-3 mb-10 "
+          initial="hidden"
+          whileInView="visible"
+          transition={{ duration: 0.6 }}
+          variants={{
+            visible: { y: 0, opacity: 1 },
+            hidden: { y: 10, opacity: 0 },
+          }}
+        >
+          <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+          <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
+            <p className="font-light font-inter prose-lg text-gray-300 text-start">
+              <span className="inline-block">
+                <PiChartLineUp
+                  className="text-amber-400 mr-2 -mb-[2px]"
+                  size={20}
+                />
+              </span>
+              A cada novo{" "}
+              <span className="decoration-amber-400 color-underline">
+                conteúdo
+              </span>{" "}
+              que adicionarmos, o preço vai subir{" "}
+              <span className="decoration-green-400 color-underline">R$1</span>.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="relative -rotate-3 mb-10 "
+          initial="hidden"
+          whileInView="visible"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          variants={{
+            visible: { y: 0, opacity: 1 },
+            hidden: { y: 10, opacity: 0 },
+          }}
+        >
+          <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+          <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
+            <p className="font-light font-inter prose-lg text-gray-300 text-start">
+              <span className="inline-block">
+                <PiChartLineUp
+                  className="text-amber-400 mr-2  -mb-[2px]"
+                  size={20}
+                />
+              </span>
+              A cada{" "}
+              <span className="decoration-amber-400 color-underline">
+                100 pessoas
+              </span>{" "}
+              que assinarem, o preço vai subir{" "}
+              <span className="decoration-green-400 color-underline">R$10</span>
+              .
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="h-[1px] w-1/3 self-center bg-background-700 my-10" />
+
+        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+          Não perca tempo. Assine agora para obter o{" "}
+          <span className="decoration-amber-400 color-underline">
+            melhor preço
+          </span>
+          .
+        </p>
+
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+          <motion.div
+            className="relative rotate-2 h-72 w-72"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.6 }}
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: 10, opacity: 0 },
+            }}
+          >
+            <div className="bg-gradient-to-tl from-transparent to-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center border-b-4 border-b-green-400">
+              <span>
+                <span className="text-5xl font-black">
+                  <Counter from={0} to={promotionInfo?.content_count || 0} />
+                </span>
+              </span>
+              <span className="decoration-green-400 color-underline text-xl">
+                conteúdos adicionados
+              </span>
+
+              <span className="text-sm text-gray-400">
+                desde o começo da promoção
+              </span>
+
+              <span className="text-sm text-gray-400 mt-10">
+                Vamos adicionar mais em breve
+              </span>
+            </div>
+          </motion.div>
+          <motion.div
+            className="relative rotate-2 h-72 w-72"
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.6 }}
+            variants={{
+              visible: { y: 0, opacity: 1 },
+              hidden: { y: 10, opacity: 0 },
+            }}
+          >
+            <div className="bg-gradient-to-tr from-transparent to-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center  border-b-4 border-b-purple-400">
+              <span>
+                <span className="text-5xl font-black">
+                  <Counter from={0} to={promotionInfo?.user_count || 0} />
+                </span>
+              </span>
+              <span className="decoration-purple-400 color-underline text-xl">
+                pessoas assinaram
+              </span>
+
+              <span className="text-sm text-gray-400">
+                desde o último aumento de preço
+              </span>
+
+              <span className="text-sm text-gray-400 mt-10">
+                <b className="text-gray-200">
+                  {100 - (promotionInfo?.user_count || 0)}
+                </b>{" "}
+                assinaturas restantes nesse preço
+              </span>
+            </div>
+          </motion.div>
+        </section>
+
+        <div className="h-[1px] w-1/3 self-center bg-background-700 my-10" />
+
+        <motion.h1
+          initial="hidden"
+          whileInView="visible"
+          transition={{ duration: 0.8 }}
+          variants={{
+            visible: { opacity: 1, y: 0 },
+            hidden: { opacity: 0.5, y: -10 },
+          }}
+          className="text-4xl font-light font-lexend text-center"
+        >
+          Preço{" "}
+          <span className="color-underline decoration-brand-400">atual</span>
+        </motion.h1>
+        <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start w-full">
           <PriceCard
             data={proPlanWithPrice}
             featuresByCategory={proPlanFeatures}
@@ -849,90 +1652,157 @@ function Pricing() {
   );
 }
 
+function Bonus() {
+  const { colorMode } = useColorMode();
+
+  return (
+    <section
+      id="bonus"
+      className="flex justify-center w-full text-gray-800 bg-transparent dark:text-gray-50 mt-10"
+    >
+      <div className="container flex flex-col  overflow-hidden items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
+        <div className="relative w-full">
+          <h2 className="mt-14 text-center mb-2 text-gray-300 font-lexend">
+            Comprando agora você ganha
+          </h2>
+          <motion.h1
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0.5, y: -10 },
+            }}
+            className="mb-8 text-4xl font-light font-lexend text-center"
+          >
+            Bônus
+          </motion.h1>
+          <img
+            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+            alt="Line stroke effect"
+            className="absolute top-[120px] w-32 left-1/2 transform -translate-x-1/2 -z-10"
+          />
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, scaleZ: 1 },
+                hidden: { opacity: 0, scaleZ: 0 },
+              }}
+              src={`/img/blue-smoke.svg`}
+              alt="Smoke effect"
+              className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
+            />
+          </div>
+        </div>
+        <div className="flex gap-16 mt-20 mb-10 px-4 flex-col-reverse lg:flex-row">
+          <p className="mt-16 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+            Comprando agora, você leva de bônus uma{" "}
+            <span className="color-underline decoration-brand-500">
+              análise de currículo e LinkedIn
+            </span>
+            .
+            <br />
+            <br />
+            Para ter acesso, bastar assinar o <b>Codante</b>{" "}
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+              PRO
+            </span>{" "}
+            agora. Depois disso, você precisa usar a plataforma e submeter 2
+            projetos da sua escolha. Depois, basta entrar em contato pelo
+            Discord para solicitar sua análise.
+            <br />
+            <br />
+            Nossa equipe vai fazer um{" "}
+            <span className="color-underline decoration-brand-500">
+              relatório
+            </span>{" "}
+            mostrando tudo o que você pode melhorar para conquistar os seus
+            objetivos.
+          </p>
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, x: 0 },
+                hidden: { opacity: 0.5, x: 10 },
+              }}
+              src="img/vendas/bonus.webp"
+              alt="Fundo gradiente com screenshot da tela com LinkedIn e Currículo"
+              className="w-[40rem] shrink-0 grow-0"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Testimonial() {
+  const { colorMode } = useColorMode();
   const { homeInfo } = useLoaderData<typeof loader>();
   const featuredTestimonials = homeInfo.featured_testimonials;
 
-  const [position, setPosition] = useState(2);
-  const controls = useAnimation();
-
-  const isLargeScreen = useMediaQuery({ minWidth: 1024 });
-  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
-
-  let slideWidth: number;
-  if (isLargeScreen) {
-    slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap. (+2) é o posicionamento inicial
-  } else if (isMediumScreen) {
-    slideWidth = 308 + 2;
-  } else {
-    slideWidth = 0 + 2;
-  }
-
-  const nextSlide = async () => {
-    const newPosition = position - 308; // 308 é o valor do card + gap
-    if (newPosition * -1 >= featuredTestimonials.length * 308 - slideWidth)
-      return;
-    setPosition(newPosition);
-    await controls.start({ x: newPosition, transition: { duration: 0.5 } });
-  };
-
-  const prevSlide = async () => {
-    const newPosition = position + 308;
-    if (newPosition > 2) return;
-    setPosition(newPosition);
-    await controls.start({ x: newPosition, transition: { duration: 0.5 } });
-  };
-
-  if (featuredTestimonials.length < 1) return null;
-
   return (
     <section className="container flex justify-center w-full text-center mb-10">
-      <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
-        <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
-          Depoimentos
-        </h1>
-        <p className="mb-10 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-          Veja o que alguns membros estão falando sobre o{" "}
-          <span className="text-brand-500 font-bold">Codante</span>
-        </p>
-        <div className="items-center flex">
-          <RiArrowLeftSLine
-            className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-            onClick={() => prevSlide()}
+      <div className="mt-10 flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
+        <div className="relative w-full">
+          <h2 className="mt-14 text-center mb-2 text-gray-300 font-cursive">
+            Um pouco de amor dos nossos alunos
+          </h2>
+          <motion.h1
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0.5, y: -10 },
+            }}
+            className="mb-8 text-4xl font-light font-lexend text-center"
+          >
+            Depoimentos
+          </motion.h1>
+          <img
+            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+            alt="Line stroke effect"
+            className="absolute top-[120px] w-64 left-1/2 transform -translate-x-1/2 -z-10"
           />
-          <div className="overflow-hidden w-[308px] md:w-[616px] lg:w-[925px]">
-            <motion.section
-              className="rounded-lg flex gap-5 "
-              animate={controls}
-              initial={{ x: 2 }}
-            >
-              {featuredTestimonials.map((testimonial, index) => (
-                <TestimonialCard
-                  key={index}
-                  testimonial={testimonial.body}
-                  avatarUrl={testimonial.avatar_url}
-                  name={testimonial.name}
-                  socialMediaProfileName={testimonial.social_media_nickname}
-                  socialMediaProfileUrl={testimonial.social_media_link}
-                />
-              ))}
-            </motion.section>
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, scaleZ: 1 },
+                hidden: { opacity: 0, scaleZ: 0 },
+              }}
+              src={`/img/blue-smoke.svg`}
+              alt="Smoke effect"
+              className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
+            />
           </div>
-          <RiArrowRightSLine
-            className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-            onClick={() => nextSlide()}
-          />
         </div>
-        <div className="flex gap-5 mt-5">
-          <RiArrowLeftSLine
-            className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
-            onClick={() => prevSlide()}
-          />
-          <RiArrowRightSLine
-            className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-            onClick={() => nextSlide()}
-          />
-        </div>
+
+        <motion.section
+          className="rounded-lg grid grid-cols-1 md:grid-cols-2 xl:grid-cols-10 gap-5 w-full mt-16"
+          initial={{ x: 2 }}
+        >
+          {featuredTestimonials.map((testimonial, index) => (
+            <TestimonialCard
+              wide={[2, 4].includes(index)}
+              key={index}
+              testimonial={testimonial.body}
+              avatarUrl={testimonial.avatar_url}
+              name={testimonial.name}
+              socialMediaProfileName={testimonial.social_media_nickname}
+              socialMediaProfileUrl={testimonial.social_media_link}
+            />
+          ))}
+        </motion.section>
       </div>
     </section>
   );
@@ -944,19 +1814,29 @@ function TestimonialCard({
   name,
   socialMediaProfileName,
   socialMediaProfileUrl,
+  wide,
 }: {
   testimonial: string;
   avatarUrl: string;
   name: string;
   socialMediaProfileName: string;
   socialMediaProfileUrl: string;
+  wide: boolean;
 }) {
   return (
     <article
-      className="flex flex-shrink-0 flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
-    hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2"
+      className={cn(
+        "flex gap-6 flex-shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-700 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg translate-x-2 col-span-1 xl:col-span-3",
+        wide && "xl:col-span-4",
+      )}
     >
-      <p className="text-start">{testimonial}</p>
+      <MarkdownRenderer
+        prose
+        // fontSize="small"
+        markdown={testimonial}
+        wrapperClasses="text-start text-gray-400"
+      />
+      {/* <p className="text-start prose text-gray-400">{testimonial}</p> */}
       <div className="flex items-center gap-5">
         <div>
           <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />
