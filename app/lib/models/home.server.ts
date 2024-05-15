@@ -35,6 +35,7 @@ export type HomeInfo = {
     name: string;
     price_in_cents: number;
     slug: string;
+    details: string;
   };
 
   // @TODO: remove this when we have a proper type for featured tracks

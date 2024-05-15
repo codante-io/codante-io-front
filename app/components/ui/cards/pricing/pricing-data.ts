@@ -50,6 +50,19 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
     ],
   },
   {
+    Trilhas: [
+      {
+        title: "Acesso a todas as trilhas",
+        isAvailable: true,
+      },
+      {
+        title: "Certificado",
+        info: "Obtenha um certificado de conclusão da trilha",
+        isAvailable: true,
+      },
+    ],
+  },
+  {
     "Outras vantagens": [
       {
         title: "Pro Badge",
@@ -61,11 +74,7 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
         info: "Acesse os canais exclusivos da comunidade PRO no Discord, com prioridade nas respostas",
         isAvailable: true,
       },
-      {
-        title: "Acesso ao Ranking Premiado",
-        info: "Em breve, você poderá participar do Ranking Premiado, onde os melhores colocados ganharão prêmios",
-        isAvailable: true,
-      },
+
       {
         title: "Plano Vitalício: pague uma vez, tenha para sempre",
         isAvailable: true,

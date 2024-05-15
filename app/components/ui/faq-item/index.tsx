@@ -56,7 +56,7 @@ export default function FaqItem({
           key={isVisible ? "open" : "closed"}
           className={`${isVisible ? "visible" : "invisible"} `}
         >
-          <p className="font-extralight dark:text-gray-300 text-gray-600 pb-4 md:leading-relaxed text-sm md:text-base">
+          <p className="font-extralight dark:text-gray-300 text-gray-600 pb-4 text-sm md:text-base font-sans prose">
             {answer}
           </p>
         </motion.div>

@@ -37,6 +37,7 @@
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "crisp-sdk-web": "^1.0.25",
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.1",
     "framer-motion": "^11.0.14",
