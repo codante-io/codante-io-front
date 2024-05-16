@@ -4,7 +4,7 @@ import { BoldColored } from "./bold-colored-text";
 import { StickyScroll } from "./sticky-scroll-reveal";
 
 const Keyboard = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-block border dark:border-background-600 darkbg-background-700 bg-background-100 border-background-150 p-1 rounded-lg text-xs font-semibold">
+  <span className="inline-block border dark:border-background-600 dark:bg-background-700 bg-background-100 border-background-150 p-1 rounded-lg text-xs font-semibold">
     {children}
   </span>
 );
