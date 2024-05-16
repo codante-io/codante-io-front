@@ -89,13 +89,13 @@ function CodanteProButton() {
   return (
     <button
       onClick={scroll}
-      className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-200 bg-gray-800 rounded-lg group w-full lg:w-7/12"
+      className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-100 bg-brand-500 rounded-lg group w-full lg:w-7/12"
     >
-      <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-brand-500 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
+      <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-background-700 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
       <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
       <span className="relative">
         Quero ter acesso ao <span className="font-bold">Codante</span>{" "}
-        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-500">
           PRO
         </span>
       </span>
@@ -144,7 +144,15 @@ function Headline() {
       >
         <div className="container flex flex-col items-center gap-2 mt-2">
           <nav>
-            <img className="w-auto h-14" src="/cdnt.svg" alt="Codante" />
+            {colorMode === "light" ? (
+              <img
+                className="w-auto h-14"
+                src="/cdnt-light.svg"
+                alt="Codante"
+              />
+            ) : (
+              <img className="w-auto h-14" src="/cdnt.svg" alt="Codante" />
+            )}{" "}
           </nav>
           <h1 className="text-3xl font-light text-center mt-6 font-lexend md:text-6xl">
             Aprenda front-end <br />
@@ -157,7 +165,7 @@ function Headline() {
               />
             </span>
           </h1>
-          <p className="font-light text-center font-inter text-xl max-w-[670px] mt-12 text-gray-100">
+          <p className="font-light text-center font-inter text-xl max-w-[670px] mt-12 dark:text-gray-100 text-gray-700">
             Entenda porque você se sente{" "}
             <span className="italic ">completamente perdido(a)</span> quando
             está estudando programação e descubra o que você pode fazer para
@@ -168,9 +176,9 @@ function Headline() {
             </span>
           </p>
 
-          <p className="flex gap-2 items-center font-light text-center font-inter text-md max-w-[670px] text-gray-400 mt-10">
-            <PlayCircle className="h-5 text-gray-100" />
-            Assista a aula
+          <p className="flex gap-2 items-center font-light text-center font-inter text-md max-w-[670px] text-gray-600 dark:text-gray-400 mt-10">
+            <PlayCircle className="h-5 dark:text-gray-100 text-gray-700" />
+            Assista à aula
           </p>
         </div>
 
@@ -203,7 +211,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone de ampulheta"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 Acesso vitalício
               </h2>
             </div>
@@ -220,7 +228,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone de medalha"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 30 dias de garantia
               </h2>
             </div>
@@ -237,7 +245,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone do Discord"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 Comunidade no Discord
               </h2>
             </div>
@@ -254,16 +262,16 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone de escudo"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 Pagamento seguro
               </h2>
             </div>
           </div>
         </div>
         <div className="container flex flex-col  overflow-hidden items-center justify-center  border-gray-200 dark:border-gray-800 mb-16">
-          <div className="h-[1px] bg-background-700 w-2/3"></div>
+          <div className="h-[1px] bg-background-100 dark:bg-background-700 w-2/3"></div>
           <div className="relative w-full">
-            <h2 className="mt-14 text-center mb-2 text-gray-400 font-lexend">
+            <h2 className="mt-14 text-center mb-2 text-gray-600 dark:text-gray-400 font-lexend">
               Aprenda e pratique as principais
             </h2>
             <motion.h1
@@ -305,7 +313,7 @@ function Headline() {
                       rotate: rotate,
                       whiteSpace: "nowrap",
                     }}
-                    className="absolute -top-16 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md dark:bg-background-700 bg-background-00 z-50 shadow-xl px-4 py-2"
+                    className="absolute -top-16 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md dark:bg-background-700 bg-background-50 z-50 shadow-xl px-4 py-2"
                   >
                     <div className="absolute left-2 translate-x-1/2 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-brand-500 to-transparent h-px " />
                     <div className="font-bold relative z-30 text-base">
@@ -325,7 +333,7 @@ function Headline() {
                   }}
                   onMouseEnter={() => setHoveredIndex(technology.name)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-gradient-to-br from-background-700 to-background-900 rounded-xl flex justify-center items-center"
+                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-gradient-to-br dark:from-background-700 dark:to-background-900 from-background-50 to-background-100 rounded-xl flex justify-center items-center"
                 >
                   <img
                     src={`img/vendas/techs/${technology.image}.svg`}
@@ -352,7 +360,7 @@ function ProgressivePractice() {
     >
       <div className="container flex flex-col items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10 top-0">
         <div className="relative w-full">
-          <h1 className="mt-14 mb-8 text-3xl lg:text-4xl font-light font-lexend text-center text-shadow">
+          <h1 className="mt-14 mb-8 text-3xl lg:text-4xl font-light font-lexend text-center dark:text-shadow">
             Aprenda do <span className="font-bold"> jeito certo</span>
           </h1>
           <img
@@ -377,7 +385,7 @@ function ProgressivePractice() {
         <section className="mt-12 flex flex-col-reverse lg:flex-row gap-20 lg:gap-10 mb-24 items-center lg:items-start overflow-hidden">
           <div className="lg:h-72 w-full flex justify-center">
             <motion.img
-              src={`/img/vendas/glasser-1.webp`}
+              src={`/img/vendas/glasser-1-${colorMode}.webp`}
               alt="Pirâmide de glasser - aprendizagem passiva"
             />
           </div>
@@ -391,9 +399,9 @@ function ProgressivePractice() {
               hidden: { x: 100, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-              <p className="font-light font-inter text-sm text-gray-300">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+              <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Quando você está assistindo uma aula ou vendo um curso, você
                 está na etapa de{" "}
                 <span className="decoration-amber-400 color-underline">
@@ -418,9 +426,9 @@ function ProgressivePractice() {
             }}
             className="relative -rotate-2 max-h-16 max-w-96"
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-              <p className="font-light font-inter text-sm text-gray-300">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+              <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Quando você está de fato colocando a mão na massa, você está na
                 etapa de{" "}
                 <span className="color-underline decoration-brand-500">
@@ -433,7 +441,7 @@ function ProgressivePractice() {
           <div className="lg:h-72 w-full flex justify-center">
             <motion.img
               className=""
-              src={`/img/vendas/glasser-2.webp`}
+              src={`/img/vendas/glasser-2-${colorMode}.webp`}
               alt="Pirâmide de glasser - aprendizagem ativa"
             />
           </div>
@@ -451,9 +459,9 @@ function ProgressivePractice() {
             }}
             className="relative rotate-1 max-h-16 max-w-2xl"
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-              <p className="font-light font-inter text-sm text-gray-300">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+              <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Muita gente acha que quando está assitindo um curso e
                 programando junto com o professor, está praticando de forma{" "}
                 <span className="color-underline decoration-brand-500">
@@ -472,7 +480,7 @@ function ProgressivePractice() {
         </section>
 
         <section className="mt-16 w-full flex flex-col items-center overflow-y-visible">
-          <h2 className="text-center text-gray-300 lg:text-xl font-cursive">
+          <h2 className="text-center dark:text-gray-300 text-gray-600 lg:text-xl font-cursive">
             É por isso que o <b>Codante</b> usa a ideia da
           </h2>
           <h1 className="mt-2 mb-8 text-3xl lg:text-5xl font-light font-lexend text-center">
@@ -486,7 +494,7 @@ function ProgressivePractice() {
               transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 3 }}
               className="absolute w-8 top-32 left-10"
               src="img/vendas/sparkle-1.svg"
-              alt=""
+              alt="Efeito brilhante (sparkle) desenhado a mao - forma 1"
             />
             <motion.img
               animate={{ scale: [0, 1, 1, 1, 0] }}
@@ -499,7 +507,7 @@ function ProgressivePractice() {
               }}
               className="absolute w-8 top-6 right-12"
               src="img/vendas/sparkle-2.svg"
-              alt=""
+              alt="Efeito brilhante (sparkle) desenhado a mao - forma 2"
             />
             <motion.img
               animate={{ scale: [0, 1, 1, 1, 0] }}
@@ -512,13 +520,13 @@ function ProgressivePractice() {
               }}
               className="absolute w-8 top-72 right-20 rotate-[36deg]"
               src="img/vendas/sparkle-1.svg"
-              alt=""
+              alt="Efeito brilhante (sparkle) desenhado a mao - forma 3"
             />
 
             <motion.img
               whileHover={{ scale: 1.05 }}
               className="w-[34rem] mt-20 mb-10"
-              src="img/vendas/pratica-progressiva.png"
+              src={`img/vendas/pratica-progressiva-${colorMode}.png`}
               alt="Escada da prática progressiva - Base teórica, prática guiada, prática direcionada e mundo real"
             />
           </div>
@@ -537,9 +545,9 @@ function ProgressivePractice() {
               }}
               className="relative rotate-1 max-h-16 max-w-2xl"
             >
-              <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-              <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-                <p className="font-light font-inter text-sm text-gray-300">
+              <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+              <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+                <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                   E o aprendizado continua... depois que você chega no{" "}
                   <BoldColored color="#DDFFC9">mundo real</BoldColored>, você
                   pode voltar para a{" "}
@@ -580,7 +588,7 @@ function WorkShops() {
     >
       <div className="container flex flex-col  overflow-hidden items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center mb-2 text-gray-300 font-lexend">
+          <h2 className="mt-14 text-center mb-2 dark:text-gray-300 text-gray-600 font-lexend">
             Fortaleça sua base teórica com nossos
           </h2>
           <motion.h1
@@ -616,7 +624,7 @@ function WorkShops() {
           </div>
         </div>
         <div className="flex gap-16 mt-20 mb-10 px-4 flex-col-reverse lg:flex-row">
-          <p className="mt-16 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+          <p className="mt-16 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose">
             Nossos{" "}
             <span className="color-underline decoration-brand-500">
               workshops
@@ -654,18 +662,19 @@ function WorkShops() {
             />
           </div>
         </div>
-        <h2 className="mt-14 mb-10 text-center text-gray-300 font-lexend text-xl">
+        <h2 className="mt-14 mb-10 text-center dark:text-gray-300 text-gray-600 font-lexend text-xl">
           Veja alguns{" "}
           <span className="color-underline decoration-brand-500">exemplos</span>
         </h2>
         <section className="grid justify-center grid-cols-1 gap-4 px-0 lg:grid-cols-2">
           {homeInfo?.featured_workshops?.map((workshop) => (
-            <WorkshopCard key={workshop.id} workshop={workshop} />
+            <WorkshopCard openInNewTab key={workshop.id} workshop={workshop} />
           ))}
         </section>
         <section className="flex justify-center w-full mt-10">
           <Link
             to="/workshops"
+            target="_blank"
             className="px-4 py-2 rounded-full bg-background-100 dark:bg-background-700"
           >
             Ver todos
@@ -695,7 +704,7 @@ function Challenges() {
     <section id="mini-projects" className="flex justify-center w-full">
       <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center font-lexend mb-2 text-gray-300">
+          <h2 className="mt-14 text-center font-lexend mb-2 dark:text-gray-300 text-gray-600">
             Pratique com nossos{" "}
           </h2>
 
@@ -745,7 +754,7 @@ function Challenges() {
               className="w-[40rem] shrink-0 grow-0"
             />
           </div>
-          <p className="mt-10 font-light text-gray-300 font-inter text-md md:text-xl prose w-full md:w-3/4">
+          <p className="mt-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl prose w-full md:w-3/4">
             Nossos{" "}
             <span className="color-underline decoration-amber-400">
               mini projetos
@@ -788,7 +797,7 @@ function Challenges() {
             . Inclusive as próximas que lançarmos.
           </p>
         </div>
-        <h2 className="mt-14 mb-10 text-center text-gray-300 font-lexend text-xl">
+        <h2 className="mt-14 mb-10 text-center dark:text-gray-300 text-gray-600 font-lexend text-xl">
           Veja alguns{" "}
           <span className="color-underline decoration-amber-400">exemplos</span>
         </h2>
@@ -796,13 +805,14 @@ function Challenges() {
         <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {orderedChallengeList.map((challenge) => (
             <div key={challenge.slug} className="mx-auto">
-              <ChallengeCard challenge={challenge} />
+              <ChallengeCard openInNewTab challenge={challenge} />
             </div>
           ))}
         </section>
         <section className="flex justify-center w-full mt-10 mb-10">
           <Link
             to="/mini-projetos"
+            target="_blank"
             className="px-4 py-2 bg-white rounded-full dark:bg-background-800"
           >
             Ver todos
@@ -823,7 +833,7 @@ function Community() {
     <section id="mini-projects" className="flex justify-center w-full">
       <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center font-lexend mb-2 text-gray-300">
+          <h2 className="mt-14 text-center font-lexend mb-2 dark:text-gray-300 text-gray-600">
             Continue evoluindo junto com nossa{" "}
           </h2>
           <motion.h1
@@ -858,9 +868,9 @@ function Community() {
         </div>
 
         <section className="mt-20 mb-10">
-          <h3 className="mb-10 font-light text-gray-300 font-inter text-md md:text-xl text-center ">
+          <h3 className="mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl text-center ">
             Já somos{" "}
-            <b className="rotate-2 inline-block bg-background-700 bold border border-background-600 px-2 rounded-lg">
+            <b className="rotate-2 inline-block dark:bg-background-700 bold border dark:border-background-600 bg-background-100 border-background-150 px-2 rounded-lg">
               {`${avatarSection.user_count} devs`}
             </b>{" "}
             evoluindo nossas habilidades de front-end.
@@ -876,7 +886,7 @@ function Community() {
           </div>
         </section>
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose">
           O Codante é composto por uma comunidade de pessoas que estão
           praticando e evoluindo juntas. Você pode se conectar com elas através
           do nosso <b>servidor no Discord</b>.
@@ -948,7 +958,7 @@ function Founders() {
           />
         </div>
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose">
           O Codante é a junção dos nossos anos de experiência como devs e
           professores.
           <br />
@@ -980,8 +990,8 @@ function Founders() {
                 alt="Ícaro Harry"
               />
             </div>
-            <div className="prose w-full text-gray-400">
-              <h2 className="text-gray-300 font-lexend text-2xl font-medium flex items-center gap-2">
+            <div className="prose w-full text-gray-600 dark:text-gray-400">
+              <h2 className="dark:text-gray-300 text-gray-700 font-lexend text-2xl font-medium flex items-center gap-2">
                 Ícaro Harry
                 <a
                   href={"https://www.linkedin.com/in/%C3%ADcaro/"}
@@ -989,7 +999,7 @@ function Founders() {
                   rel="noopener noreferrer"
                   className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
                 >
-                  <AiFillLinkedin className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                  <AiFillLinkedin className="text-2xl dark:text-gray-700 text-gray-600 transition hover:text-gray-700  dark:hover:text-gray-300" />
                 </a>
                 <a
                   href={"https://www.github.com/icaroharry/"}
@@ -997,7 +1007,7 @@ function Founders() {
                   rel="noopener noreferrer"
                   className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
                 >
-                  <AiFillGithub className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                  <AiFillGithub className="text-2xl dark:text-gray-700 text-gray-600 transition hover:text-gray-700  dark:hover:text-gray-300" />
                 </a>
               </h2>
               <ul className="marker:text-amber-400">
@@ -1079,8 +1089,8 @@ function Founders() {
                 alt="Roberto Cestari"
               />
             </div>
-            <div className="prose w-full text-gray-400 ">
-              <h2 className="text-gray-300 font-lexend text-2xl font-medium flex items-center gap-2">
+            <div className="prose w-full text-gray-600 dark:text-gray-400 ">
+              <h2 className="dark:text-gray-300 text-gray-700 font-lexend text-2xl font-medium flex items-center gap-2">
                 Roberto Cestari
                 <a
                   href={"https://www.linkedin.com/in/robertotcestari/"}
@@ -1088,7 +1098,7 @@ function Founders() {
                   rel="noopener noreferrer"
                   className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
                 >
-                  <AiFillLinkedin className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                  <AiFillLinkedin className="text-2xl text-gray-600 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
                 </a>
                 <a
                   href={"https://www.github.com/robertotcestari/"}
@@ -1096,7 +1106,7 @@ function Founders() {
                   rel="noopener noreferrer"
                   className="inline-block text-sm font-light text-gray-500 dark:text-gray-300"
                 >
-                  <AiFillGithub className="text-2xl text-gray-300 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
+                  <AiFillGithub className="text-2xl text-gray-600 transition hover:text-gray-700 dark:text-gray-700 dark:hover:text-gray-300" />
                 </a>
               </h2>
               <ul className="marker:text-brand-400">
@@ -1122,7 +1132,7 @@ function Founders() {
                     href={"https://trilhante.com.br"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="color-underline decoration-orange-400 text-gray-400"
+                    className="color-underline decoration-orange-400 text-gray-600 dark:text-gray-400"
                   >
                     Trilhante
                   </a>
@@ -1233,7 +1243,7 @@ function Submissions() {
           </span>
           .
         </h1>
-        <p className="mt-2 mb-2 font-light font-inter md:text-xl text-center w-full md:w-3/4 text-gray-300">
+        <p className="mt-2 mb-2 font-light font-inter md:text-xl text-center w-full md:w-3/4 dark:text-gray-300 text-gray-600">
           Esses projetos foram feitos por pessoas que estão{" "}
           <span className="color-underline decoration-amber-400">
             aprendendo
@@ -1244,7 +1254,7 @@ function Submissions() {
           </span>{" "}
           front-end.
         </p>
-        <p className="mt-2 mb-10 font-light font-inter md:text-xl text-center w-full md:w-1/2 text-gray-300">
+        <p className="mt-2 mb-10 font-light font-inter md:text-xl text-center w-full md:w-1/2 dark:text-gray-300 text-gray-600">
           Alguns foram feitos de <span className="italic">forma guiada</span>,
           seguindo os nossos tutoriais. Outros foram feitos de{" "}
           <span className="italic">forma direcionada</span>, apenas a partir da
@@ -1312,7 +1322,7 @@ function Pricing() {
     >
       <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center mb-2 text-gray-400 font-lexend">
+          <h2 className="mt-14 text-center mb-2 text-gray-600 dark:text-gray-400 font-lexend">
             Assine agora o
           </h2>
           <motion.h1
@@ -1345,7 +1355,7 @@ function Pricing() {
           />
         </div>
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
           Esse é o melhor momento da história para <b>assinar o Codante</b>.
           <br />
           <br />
@@ -1371,9 +1381,9 @@ function Pricing() {
             hidden: { y: 10, opacity: 0 },
           }}
         >
-          <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-          <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-            <p className="font-light font-inter prose text-gray-300 text-start">
+          <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+          <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+            <p className="font-light font-inter prose dark:text-gray-300 text-gray-600 text-start">
               <span className="inline-block">
                 <PiWarning
                   className="text-amber-400 mr-2 -mb-[2px]"
@@ -1389,9 +1399,9 @@ function Pricing() {
           </div>
         </motion.div>
 
-        <div className="h-[1px] w-1/3 self-center bg-background-700 my-10" />
+        <div className="h-[1px] w-1/3 self-center dark:bg-background-700 bg-background-150 my-10" />
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
           O Codante está apenas começando. Em apenas <b>1 ano de existência</b>{" "}
           já construímos muita coisa. Dá uma olhada:
         </p>
@@ -1407,8 +1417,8 @@ function Pricing() {
               hidden: { y: 10, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
               <span className="text-4xl flex">
                 <Counter from={320} to={340} />+
               </span>
@@ -1428,8 +1438,8 @@ function Pricing() {
               hidden: { y: 10, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
               <span className="text-4xl">
                 <Counter from={15} to={25} />
               </span>
@@ -1449,8 +1459,8 @@ function Pricing() {
               hidden: { y: 10, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
               <span className="text-4xl">
                 <Counter from={0} to={6} />
               </span>
@@ -1470,8 +1480,8 @@ function Pricing() {
               hidden: { y: 10, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="bg-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center">
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
               <span className="text-4xl">
                 <Counter from={0} to={1} />
               </span>
@@ -1482,7 +1492,7 @@ function Pricing() {
           </motion.div>
         </section>
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
           Nós estamos trabalhando para nos tornar uma das maiores plataformas de
           ensino de programação do Brasil. Então nós não vamos parar de produzir
           conteúdo!
@@ -1503,9 +1513,9 @@ function Pricing() {
             hidden: { y: 10, opacity: 0 },
           }}
         >
-          <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-          <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-            <p className="font-light font-inter prose-lg text-gray-300 text-start">
+          <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+          <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+            <p className="font-light font-inter prose-lg dark:text-gray-300 text-gray-600 text-start">
               <span className="inline-block">
                 <PiChartLineUp
                   className="text-amber-400 mr-2 -mb-[2px]"
@@ -1532,9 +1542,9 @@ function Pricing() {
             hidden: { y: 10, opacity: 0 },
           }}
         >
-          <div className="absolute top-1 h-full w-full bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-          <div className="bg-background-800 p-4 rounded-xl border-background-700 border">
-            <p className="font-light font-inter prose-lg text-gray-300 text-start">
+          <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+          <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
+            <p className="font-light font-inter prose-lg dark:text-gray-300 text-gray-600 text-start">
               <span className="inline-block">
                 <PiChartLineUp
                   className="text-amber-400 mr-2  -mb-[2px]"
@@ -1552,9 +1562,9 @@ function Pricing() {
           </div>
         </motion.div>
 
-        <div className="h-[1px] w-1/3 self-center bg-background-700 my-10" />
+        <div className="h-[1px] w-1/3 self-center dark:bg-background-700 bg-background-150 my-10" />
 
-        <p className="mt-10 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
+        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
           Não perca tempo. Assine agora para obter o{" "}
           <span className="decoration-amber-400 color-underline">
             melhor preço
@@ -1573,7 +1583,7 @@ function Pricing() {
               hidden: { y: 10, opacity: 0 },
             }}
           >
-            <div className="bg-gradient-to-tl from-transparent to-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center border-b-4 border-b-green-400">
+            <div className="bg-gradient-to-tl from-transparent dark:to-background-800 p-4 rounded-xl dark:border-background-700 to-background-100 border-background-150 border h-full w-full flex flex-col items-center justify-center border-b-4 border-b-green-400">
               <span>
                 <span className="text-5xl font-black">
                   <Counter from={0} to={promotionInfo?.content_count || 0} />
@@ -1583,13 +1593,19 @@ function Pricing() {
                 conteúdos adicionados
               </span>
 
-              <span className="text-sm text-gray-400">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
                 desde o começo da promoção
               </span>
 
-              <span className="text-sm text-gray-400 mt-10">
-                Vamos adicionar mais em breve
-              </span>
+              {promotionInfo?.content_count > 0 && (
+                <span className="text-sm text-gray-600 dark:text-gray-400 mt-10">
+                  O preço já aumentou{" "}
+                  <b className="dark:text-gray-200 text-gray-600">
+                    R${promotionInfo?.content_count}{" "}
+                  </b>{" "}
+                  desde o começo da promoção.
+                </span>
+              )}
             </div>
           </motion.div>
           <motion.div
@@ -1602,7 +1618,7 @@ function Pricing() {
               hidden: { y: 10, opacity: 0 },
             }}
           >
-            <div className="bg-gradient-to-tr from-transparent to-background-800 p-4 rounded-xl border-background-700 border h-full w-full flex flex-col items-center justify-center  border-b-4 border-b-purple-400">
+            <div className="bg-gradient-to-tr from-transparent dark:to-background-800 p-4 rounded-xl dark:border-background-700 to-background-100 border-background-150 border h-full w-full flex flex-col items-center justify-center  border-b-4 border-b-purple-400">
               <span>
                 <span className="text-5xl font-black">
                   <Counter from={0} to={promotionInfo?.user_count || 0} />
@@ -1612,21 +1628,31 @@ function Pricing() {
                 pessoas assinaram
               </span>
 
-              <span className="text-sm text-gray-400">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
                 desde o último aumento de preço
               </span>
 
-              <span className="text-sm text-gray-400 mt-10">
-                <b className="text-gray-200">
+              <span className="text-sm text-gray-600 dark:text-gray-400 mt-10">
+                <b className="dark:text-gray-200 text-gray-600">
                   {100 - (promotionInfo?.user_count || 0)}
                 </b>{" "}
                 assinaturas restantes nesse preço
               </span>
+
+              {promotionInfo?.user_raised_count > 0 && (
+                <span className="text-sm text-gray-600 dark:text-gray-400 mt-10">
+                  O preço já aumentou{" "}
+                  <b className="dark:text-gray-200 text-gray-600">
+                    R${promotionInfo?.user_raised_count * 10}{" "}
+                  </b>{" "}
+                  desde o começo da promoção.
+                </span>
+              )}
             </div>
           </motion.div>
         </section>
 
-        <div className="h-[1px] w-1/3 self-center bg-background-700 my-10" />
+        <div className="h-[1px] w-1/3 self-center dark:bg-background-700 bg-background-150 my-10" />
 
         <motion.h1
           initial="hidden"
@@ -1662,7 +1688,7 @@ function Bonus() {
     >
       <div className="container flex flex-col  overflow-hidden items-center justify-center border-t border-gray-200 dark:border-gray-800 mb-10">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center mb-2 text-gray-300 font-lexend">
+          <h2 className="mt-14 text-center mb-2 dark:text-gray-300 text-gray-600 font-lexend">
             Comprando agora você ganha
           </h2>
           <motion.h1
@@ -1698,7 +1724,7 @@ function Bonus() {
           </div>
         </div>
         <div className="flex gap-16 mt-20 mb-10 px-4 flex-col-reverse lg:flex-row">
-          <p className="mt-16 mb-10 font-light text-gray-300 font-inter text-md md:text-xl w-full md:w-3/4 prose">
+          <p className="mt-16 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose">
             Comprando agora, você leva de bônus uma{" "}
             <span className="color-underline decoration-brand-500">
               análise de currículo e LinkedIn
@@ -1751,7 +1777,7 @@ function Testimonial() {
     <section className="container flex justify-center w-full text-center mb-10">
       <div className="mt-10 flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
         <div className="relative w-full">
-          <h2 className="mt-14 text-center mb-2 text-gray-300 font-cursive">
+          <h2 className="mt-14 text-center mb-2 dark:text-gray-300 text-gray-600 font-cursive">
             Um pouco de amor dos nossos alunos
           </h2>
           <motion.h1
@@ -1834,9 +1860,9 @@ function TestimonialCard({
         prose
         // fontSize="small"
         markdown={testimonial}
-        wrapperClasses="text-start text-gray-400"
+        wrapperClasses="text-start text-gray-600 dark:text-gray-400"
       />
-      {/* <p className="text-start prose text-gray-400">{testimonial}</p> */}
+      {/* <p className="text-start prose text-gray-600 dark:text-gray-400">{testimonial}</p> */}
       <div className="flex items-center gap-5">
         <div>
           <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />

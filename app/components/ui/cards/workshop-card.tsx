@@ -12,11 +12,18 @@ import {
 import { hasHappened } from "~/lib/utils/workshop-utils";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 
-function WorkshopCard({ workshop }: { workshop: Workshop }) {
+function WorkshopCard({
+  workshop,
+  openInNewTab = false,
+}: {
+  workshop: Workshop;
+  openInNewTab?: boolean;
+}) {
   return (
     <article className="w-full flex flex-col justify-center items-center">
       <Link
         to={`/workshops/${workshop?.slug}`}
+        target={openInNewTab ? "_blank" : "_self"}
         className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
       >
         {workshop?.status === "soon" && !hasHappened(workshop) && (
