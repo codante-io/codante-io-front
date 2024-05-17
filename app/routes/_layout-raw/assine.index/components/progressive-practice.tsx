@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { BoldColored } from "~/routes/_layout-raw/vendas-unlisted/bold-colored-text";
-import { StickyScroll } from "~/routes/_layout-raw/vendas-unlisted/sticky-scroll-reveal";
+import { BoldColored } from "./bold-colored-text";
+import { StickyScroll } from "./sticky-scroll-reveal";
 
 const Keyboard = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-block border border-background-600 bg-background-700 p-1 rounded-lg text-xs font-semibold">
+  <span className="inline-block border dark:border-background-600 dark:bg-background-700 bg-background-100 border-background-150 p-1 rounded-lg text-xs font-semibold">
     {children}
   </span>
 );
@@ -12,8 +12,11 @@ const Keyboard = ({ children }: { children: React.ReactNode }) => (
 const content = [
   {
     title: (
-      <span className="-rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-        Base <span className="font-bold text-[#FFDCC9]">teórica</span>
+      <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+        Base{" "}
+        <span className="font-bold text-[#F4AD85] dark:text-[#FFDCC9]">
+          teórica
+        </span>
       </span>
     ),
     description: (
@@ -43,17 +46,23 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-[#FFDCC9] to-[#9e7158] back rounded-xl flex justify-center items-center">
-        <span className="-rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-          Base <span className="font-bold text-[#FFDCC9]">teórica</span>
+      <div className="w-full h-full bg-gradient-to-br dark:from-[#FFDCC9] dark:to-[#9e7158] from-[#FFDCC9] to-[#F4AD85] back rounded-xl flex justify-center items-center">
+        <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+          Base{" "}
+          <span className="font-bold text-[#F4AD85] dark:text-[#FFDCC9]">
+            teórica
+          </span>
         </span>
       </div>
     ),
   },
   {
     title: (
-      <span className="rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-        Prática <span className="font-bold text-[#EAC9FF]">guiada</span>
+      <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+        Prática{" "}
+        <span className="font-bold text-[#C27AEE] dark:text-[#EAC9FF]">
+          guiada
+        </span>
       </span>
     ),
     description: (
@@ -84,17 +93,23 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-[#EAC9FF] to-[#975eba] back rounded-xl flex justify-center items-center">
-        <span className="rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-          Prática <span className="font-bold text-[#EAC9FF]">guiada</span>
+      <div className="w-full h-full bg-gradient-to-br dark:from-[#EAC9FF] dark:to-[#975eba] from-[#EAC9FF] to-[#C27AEE] back rounded-xl flex justify-center items-center">
+        <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+          Prática{" "}
+          <span className="font-bold text-[#C27AEE] dark:text-[#EAC9FF]">
+            guiada
+          </span>
         </span>
       </div>
     ),
   },
   {
     title: (
-      <span className="-rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-        Prática <span className="font-bold text-[#C9E5FF]">direcionada</span>
+      <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+        Prática{" "}
+        <span className="font-bold text-[#71BBFF]dark:text-[#C9E5FF]">
+          direcionada
+        </span>
       </span>
     ),
     description: (
@@ -124,17 +139,23 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-[#C9E5FF] to-[#41678b] back rounded-xl flex justify-center items-center">
-        <span className="-rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-          Prática <span className="font-bold text-[#C9E5FF]">direcionada</span>
+      <div className="w-full h-full bg-gradient-to-br dark:from-[#C9E5FF] dark:to-[#41678b] from-[#C9E5FF] to-[#71BBFF] back rounded-xl flex justify-center items-center">
+        <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+          Prática{" "}
+          <span className="font-bold text-[#71BBFF] dark:text-[#C9E5FF]">
+            direcionada
+          </span>
         </span>
       </div>
     ),
   },
   {
     title: (
-      <span className="rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-        Mundo <span className="font-bold text-[#DDFFC9]">real</span>
+      <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+        Mundo{" "}
+        <span className="font-bold text-[#7CE03F] dark:text-[#DDFFC9]">
+          real
+        </span>
       </span>
     ),
     description: (
@@ -166,15 +187,18 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-[#DDFFC9] to-[#5d8745] back rounded-xl flex justify-center items-center">
-        <span className="rotate-2 inline-block p-4 rounded-xl bg-background-800 font-lexend text-2xl">
-          Mundo <span className="font-bold text-[#DDFFC9]">real</span>
+      <div className="w-full h-full bg-gradient-to-br dark:from-[#DDFFC9] dark:to-[#68974c] from-[#DDFFC9] to-[#7CE03F] back rounded-xl flex justify-center items-center">
+        <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
+          Mundo{" "}
+          <span className="font-bold text-[#7CE03F] dark:text-[#DDFFC9]">
+            real
+          </span>
         </span>
       </div>
     ),
   },
 ];
-export function ProgressivePractice() {
+export function ProgressivePracticeContent() {
   return (
     <div className="p-10 mt-10 lg:mt-0">
       <StickyScroll content={content} />

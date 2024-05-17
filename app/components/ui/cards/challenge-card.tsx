@@ -15,9 +15,11 @@ export default function ChallengeCard({
   challenge,
   animatedBackground = true,
   className = "",
+  openInNewTab,
 }: {
   challenge: ChallengeCardType;
   animatedBackground?: boolean;
+  openInNewTab?: boolean;
   className?: string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -25,6 +27,7 @@ export default function ChallengeCard({
   return (
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
+      target={openInNewTab ? "_blank" : "_self"}
       to={
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
