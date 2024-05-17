@@ -187,7 +187,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#DDFFC9] dark:to-[#b0e293] from-[#DDFFC9] to-[#7CE03F] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-gradient-to-br dark:from-[#DDFFC9] dark:to-[#68974c] from-[#DDFFC9] to-[#7CE03F] back rounded-xl flex justify-center items-center">
         <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Mundo{" "}
           <span className="font-bold text-[#7CE03F] dark:text-[#DDFFC9]">

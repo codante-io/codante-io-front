@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import {
   Link,
   isRouteErrorResponse,
@@ -33,12 +33,56 @@ import { PiChartLineUp, PiWarning } from "react-icons/pi";
 import Counter from "./components/counter";
 import Footer from "~/components/_layouts/footer";
 import { Crisp } from "crisp-sdk-web";
+import { currentToken } from "~/lib/services/auth.server";
+import axios from "axios";
+import type { AxiosError } from "axios";
+import type { Subscription } from "~/lib/models/subscription.server";
+import { environment } from "~/lib/models/environment";
 
 export const loader = async () => {
   return json({
     homeInfo: await getHome(),
   });
 };
+
+export async function action({ request }: { request: Request }) {
+  let token = await currentToken({ request });
+
+  try {
+    const response = await axios.get<{
+      checkoutLink: string;
+      pagarmeOrderID: string;
+      subscription: Subscription;
+    }>(`${environment().API_HOST}/pagarme/get-link`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    return redirect(`${response.data.checkoutLink}`);
+  } catch (error: any) {
+    // if it is an axios error
+    if (error.isAxiosError) {
+      const axiosError = error as AxiosError;
+
+      // console.log(error);
+
+      // return "errror";
+      // if it is a 401 error
+      if (axiosError.response?.status === 401) {
+        // redirect to login page
+        return redirect("/login");
+      }
+
+      const errorMessage = error.response.data.message;
+      const encodedErrorMessage = encodeURIComponent(errorMessage);
+
+      return redirect(`/assine/erro?error=${encodedErrorMessage}`);
+    }
+
+    return redirect(`/assine/erro`);
+  }
+}
 
 export default function HomePage() {
   useEffect(() => {
