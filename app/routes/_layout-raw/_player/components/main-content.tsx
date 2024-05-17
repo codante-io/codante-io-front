@@ -13,6 +13,8 @@ import type { Workshop } from "~/lib/models/workshop.server";
 import Breadcrumbs from "./workshop-breadcrumbs";
 import WorkshopResourcesMenuButton from "./workshop-resources-menu-button";
 import CommentSection from "~/components/features/comments/comment-section";
+import { HiMiniArrowSmallLeft } from "react-icons/hi2";
+import { useEffect } from "react";
 
 type MainContentProps = {
   setIsSidebarOpen: (value: boolean) => void;
@@ -37,12 +39,30 @@ export default function MainContent({
   nextLessonPath,
   handleVideoEnded,
 }: MainContentProps) {
+  useEffect(() => {
+    setIsSidebarOpen(true);
+  }, [setIsSidebarOpen]);
   return (
     <section className="relative">
-      <div className="flex items-center justify-between h-20 lg:justify-end">
-        <button className="" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-          <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white lg:invisible" />
-        </button>
+      <div className="flex items-center justify-between h-20">
+        <div className="flex gap-2 items-center">
+          <button className="" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white" />
+          </button>
+          <Link
+            to={`/${isChallenge ? "mini-projetos" : "workshops"}/${
+              isChallenge ? `${challenge?.slug}/resolucao` : workshop.slug
+            }`}
+            className="px-2 py-1 text-2xl transition-colors rounded-lg lg:flex lg:items-center hover:bg-gray-200 dark:hover:bg-background-700"
+          >
+            <span className="flex items-center gap-1 text-sm font-light text-gray-600 dark:text-gray-500 font-lexend">
+              <span className="text-lg">
+                <HiMiniArrowSmallLeft />
+              </span>
+              Voltar
+            </span>
+          </Link>
+        </div>
         <div className="flex items-center">
           <div className="mr-3">
             <ToggleColorMode />

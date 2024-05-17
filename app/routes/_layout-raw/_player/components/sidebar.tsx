@@ -31,11 +31,9 @@ export default function Sidebar({
   return (
     <div
       ref={ref}
-      className={`lg:sticky w-80 absolute overflow-y-auto left-0 z-10 bg-background-100 dark:bg-background-900 lg:dark:bg-transparent lg:bg-transparent top-0 flex-col duration-500 transition-all max-h-screen lg:opacity-100 lg:flex lg:translate-x-0 lg:visible ${
-        isSidebarOpen ? "" : "-translate-x-80"
-      }`}
+      className={`w-80 lg:w-96 absolute overflow-y-auto left-0 z-10 bg-background-100 dark:bg-background-900 top-0 flex-col duration-500 transition-all max-h-screen lg:opacity-100 ${isSidebarOpen ? "" : "-translate-x-80 lg:-translate-x-96"}`}
     >
-      <div className="px-4 lg:px-0">
+      <div className="px-2">
         <div className="">
           <div className="flex items-center justify-between h-20">
             <Link to="/" className="">
