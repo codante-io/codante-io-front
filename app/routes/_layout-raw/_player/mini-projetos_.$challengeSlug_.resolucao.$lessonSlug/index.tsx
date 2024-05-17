@@ -128,11 +128,8 @@ export default function LessonIndex() {
   const { colorMode } = useColorMode();
   return (
     <div
-      className={`min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 
-      ${colorMode === "dark" ? "darkScroll" : "lightScroll"}
-      $
-
-    `}
+      className={` min-h-screen max-w-[1600px] flex  transition-all duration-500  mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 
+    ${colorMode === "dark" ? "darkScroll" : "lightScroll"}`}
     >
       <Sidebar
         isChallenge={true}
