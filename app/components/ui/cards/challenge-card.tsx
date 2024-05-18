@@ -7,8 +7,6 @@ import UserAvatar from "../user-avatar";
 import CardItemLevel from "~/components/ui/cards/card-item-level";
 import CardItemEffort from "~/components/ui/cards/card-item-effort";
 import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
 import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
 
 export default function ChallengeCard({
@@ -22,8 +20,6 @@ export default function ChallengeCard({
   openInNewTab?: boolean;
   className?: string;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <Link
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
@@ -31,30 +27,11 @@ export default function ChallengeCard({
       to={
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={classNames(
         "relative group block p-3 h-full w-full",
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer",
       )}
     >
-      <AnimatePresence>
-        {animatedBackground && isHovered && (
-          <motion.span
-            className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-background-700 block rounded-3xl -z-10"
-            layoutId="hoverBackground"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: { duration: 0.15 },
-            }}
-            exit={{
-              opacity: 0,
-              transition: { duration: 0.15, delay: 0.2 },
-            }}
-          />
-        )}
-      </AnimatePresence>
       <article
         className={`group
           relative flex flex-col w-full h-full bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
