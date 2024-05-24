@@ -11,7 +11,7 @@ export async function registerChallengeLead(
   try {
     await axios.post(`${environment().API_HOST}/leads`, {
       email,
-      tags: ["first_challenge"],
+      tags: ["lead-first-challenge"],
     });
 
     return {
