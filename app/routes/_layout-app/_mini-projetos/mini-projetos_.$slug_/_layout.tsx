@@ -47,6 +47,9 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
+import MobileSignupForm from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/mobile-signup-form";
+import { registerChallengeLead } from "~/lib/models/lead.server";
+
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
   if (!data?.challenge) {
@@ -120,6 +123,10 @@ export async function action({ request }: ActionFunctionArgs) {
     case "requestCertificate":
       const certifiableId = formData.get("certifiable_id") as string;
       return requestCertificate(request, "ChallengeUser", certifiableId);
+    case "register-lead":
+      const email = formData.get("email") as string;
+
+      return registerChallengeLead(request, email);
     default:
       return null;
   }
@@ -210,7 +217,7 @@ export default function ChallengeSlug() {
     isVisible: boolean;
   }[] = [
     {
-      name: "Overview",
+      name: "Lista de requisitos",
       isVisible: true,
       icon: (
         <svg
@@ -259,15 +266,16 @@ export default function ChallengeSlug() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50">
+    <div className="flex flex-col items-center justify-center -mb-10 text-gray-900 dark:text-gray-50 relative">
+      <MobileSignupForm user={user} />
       <section className="min-h-[calc(100vh_-_68px)] flex flex-col items-center w-full mb-10 text-gray-800 bg-transparent lg:mb-24 dark:text-gray-50">
         {!location.pathname.includes("submissoes/") && (
           <>
             <div className="container">
               <div>
                 <h1 className="flex items-center justify-between text-2xl font-light lg:text-3xl font-lexend">
-                  <span className="flex items-center">
-                    <TitleIcon className="h-4 w-4 inline mr-2 text-blue-300 dark:text-blue-900" />
+                  <span className="flex items-start lg:items-center">
+                    <TitleIcon className="h-4 w-4 inline mr-2 mt-2 lg:mt-0 text-blue-300 dark:text-blue-900" />
                     <span>
                       <span className="inline font-extralight">Projeto</span>{" "}
                       <span className="inline font-bold">
