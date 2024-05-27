@@ -401,10 +401,17 @@ function Submissions() {
 function Pricing() {
   const { homeInfo } = useLoaderData<typeof loader>();
 
+  const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
+
+  const currentPrice =
+    homeInfo.plan_info.price_in_cents +
+    promotionInfo?.content_count * 100 +
+    promotionInfo?.user_raised_count * 100 * 10;
+
   const proPlanWithPrice = {
     ...proPlanDetails,
-    monthlyPrice: Math.round(homeInfo.plan_info.price_in_cents / 100 / 12),
-    totalPrice: homeInfo.plan_info.price_in_cents / 100,
+    monthlyPrice: Math.trunc((currentPrice / 100 / 12) * 100) / 100, // truncate 2 decimals
+    totalPrice: currentPrice / 100,
   };
 
   return (
