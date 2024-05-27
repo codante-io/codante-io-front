@@ -62,7 +62,11 @@ export default function PriceCard({
             {data.installments > 1 && `${data.installments}x`}
           </span>{" "}
           <span className="text-5xl font-semibold">
-            R${data?.monthlyPrice?.toFixed(2)}
+            R$
+            {(data?.monthlyPrice && data?.monthlyPrice % 2 === 0) ||
+            data?.monthlyPrice === 0
+              ? data?.monthlyPrice
+              : data?.monthlyPrice?.toFixed(2)}
           </span>
         </p>
 

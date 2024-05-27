@@ -30,12 +30,11 @@ import { MdLiveTv } from "react-icons/md";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
 import SubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
-import { useState } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useMediaQuery } from "react-responsive";
-import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { motion } from "framer-motion";
 import DiscordButton from "~/components/features/auth/discord-button";
 import { buttonVariants } from "~/components/ui/button";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
+import { cn } from "~/lib/utils";
 
 export const loader = async () => {
   return json({
@@ -447,93 +446,159 @@ function Pricing() {
 }
 
 function Testimonial() {
+  const { colorMode } = useColorMode();
   const { homeInfo } = useLoaderData<typeof loader>();
   const featuredTestimonials = homeInfo.featured_testimonials;
 
-  const [position, setPosition] = useState(2);
-  const controls = useAnimation();
-
-  const isLargeScreen = useMediaQuery({ minWidth: 1024 });
-  const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
-
-  let slideWidth: number;
-  if (isLargeScreen) {
-    slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap. (+2) é o posicionamento inicial
-  } else if (isMediumScreen) {
-    slideWidth = 308 + 2;
-  } else {
-    slideWidth = 0 + 2;
-  }
-
-  const nextSlide = async () => {
-    const newPosition = position - 308; // 308 é o valor do card + gap
-    if (newPosition * -1 >= featuredTestimonials.length * 308 - slideWidth)
-      return;
-    setPosition(newPosition);
-    await controls.start({ x: newPosition, transition: { duration: 0.5 } });
-  };
-
-  const prevSlide = async () => {
-    const newPosition = position + 308;
-    if (newPosition > 2) return;
-    setPosition(newPosition);
-    await controls.start({ x: newPosition, transition: { duration: 0.5 } });
-  };
-
-  if (featuredTestimonials.length < 1) return null;
-
   return (
     <section className="container flex justify-center w-full text-center mb-10">
-      <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
-        <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
-          Depoimentos
-        </h1>
-        <p className="mb-10 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-          Veja o que estão falando sobre o{" "}
-          <span className="text-brand-500 font-bold">Codante</span>
-        </p>
-        <div className="items-center flex">
-          <RiArrowLeftSLine
-            className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-            onClick={() => prevSlide()}
+      <div className="mt-10 flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
+        <div className="relative w-full">
+          <h2 className="mt-14 text-center mb-2 dark:text-gray-300 text-gray-600 font-cursive">
+            Um pouco de amor dos nossos alunos
+          </h2>
+          <motion.h1
+            initial="hidden"
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0.5, y: -10 },
+            }}
+            className="mb-8 text-4xl font-light font-lexend text-center"
+          >
+            Depoimentos
+          </motion.h1>
+          <img
+            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+            alt="Line stroke effect"
+            className="absolute top-[120px] w-64 left-1/2 transform -translate-x-1/2 -z-10"
           />
-          <div className="overflow-hidden w-[308px] md:w-[616px] lg:w-[925px]">
-            <motion.section
-              className="rounded-lg flex gap-5 "
-              animate={controls}
-              initial={{ x: 2 }}
-            >
-              {featuredTestimonials.map((testimonial, index) => (
-                <TestimonialCard
-                  key={index}
-                  testimonial={testimonial.body}
-                  avatarUrl={testimonial.avatar_url}
-                  name={testimonial.name}
-                  socialMediaProfileName={testimonial.social_media_nickname}
-                  socialMediaProfileUrl={testimonial.social_media_link}
-                />
-              ))}
-            </motion.section>
+          <div className="w-full">
+            <motion.img
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.8 }}
+              variants={{
+                visible: { opacity: 1, scaleZ: 1 },
+                hidden: { opacity: 0, scaleZ: 0 },
+              }}
+              src={`/img/blue-smoke.svg`}
+              alt="Smoke effect"
+              className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
+            />
           </div>
-          <RiArrowRightSLine
-            className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-            onClick={() => nextSlide()}
-          />
         </div>
-        <div className="flex gap-5 mt-5">
-          <RiArrowLeftSLine
-            className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
-            onClick={() => prevSlide()}
-          />
-          <RiArrowRightSLine
-            className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-            onClick={() => nextSlide()}
-          />
-        </div>
+
+        <motion.section
+          className="rounded-lg grid grid-cols-1 md:grid-cols-2 xl:grid-cols-10 gap-5 w-full mt-16"
+          initial={{ x: 2 }}
+        >
+          {featuredTestimonials.map((testimonial, index) => (
+            <TestimonialCard
+              wide={[2, 4].includes(index)}
+              key={index}
+              testimonial={testimonial.body}
+              avatarUrl={testimonial.avatar_url}
+              name={testimonial.name}
+              socialMediaProfileName={testimonial.social_media_nickname}
+              socialMediaProfileUrl={testimonial.social_media_link}
+            />
+          ))}
+        </motion.section>
       </div>
     </section>
   );
 }
+
+// function OldTestimonial() {
+//   const { homeInfo } = useLoaderData<typeof loader>();
+//   const featuredTestimonials = homeInfo.featured_testimonials;
+
+//   const [position, setPosition] = useState(2);
+//   const controls = useAnimation();
+
+//   const isLargeScreen = useMediaQuery({ minWidth: 1024 });
+//   const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
+
+//   let slideWidth: number;
+//   if (isLargeScreen) {
+//     slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap. (+2) é o posicionamento inicial
+//   } else if (isMediumScreen) {
+//     slideWidth = 308 + 2;
+//   } else {
+//     slideWidth = 0 + 2;
+//   }
+
+//   const nextSlide = async () => {
+//     const newPosition = position - 308; // 308 é o valor do card + gap
+//     if (newPosition * -1 >= featuredTestimonials.length * 308 - slideWidth)
+//       return;
+//     setPosition(newPosition);
+//     await controls.start({ x: newPosition, transition: { duration: 0.5 } });
+//   };
+
+//   const prevSlide = async () => {
+//     const newPosition = position + 308;
+//     if (newPosition > 2) return;
+//     setPosition(newPosition);
+//     await controls.start({ x: newPosition, transition: { duration: 0.5 } });
+//   };
+
+//   if (featuredTestimonials.length < 1) return null;
+
+//   return (
+//     <section className="container flex justify-center w-full text-center mb-10">
+//       <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
+//         <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
+//           Depoimentos
+//         </h1>
+//         <p className="mb-10 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
+//           Veja o que estão falando sobre o{" "}
+//           <span className="text-brand-500 font-bold">Codante</span>
+//         </p>
+//         <div className="items-center flex">
+//           <RiArrowLeftSLine
+//             className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
+//             onClick={() => prevSlide()}
+//           />
+//           <div className="overflow-hidden w-[308px] md:w-[616px] lg:w-[925px]">
+//             <motion.section
+//               className="rounded-lg flex gap-5 "
+//               animate={controls}
+//               initial={{ x: 2 }}
+//             >
+//               {featuredTestimonials.map((testimonial, index) => (
+//                 <TestimonialCard
+//                   key={index}
+//                   testimonial={testimonial.body}
+//                   avatarUrl={testimonial.avatar_url}
+//                   name={testimonial.name}
+//                   socialMediaProfileName={testimonial.social_media_nickname}
+//                   socialMediaProfileUrl={testimonial.social_media_link}
+//                 />
+//               ))}
+//             </motion.section>
+//           </div>
+//           <RiArrowRightSLine
+//             className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
+//             onClick={() => nextSlide()}
+//           />
+//         </div>
+//         <div className="flex gap-5 mt-5">
+//           <RiArrowLeftSLine
+//             className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
+//             onClick={() => prevSlide()}
+//           />
+//           <RiArrowRightSLine
+//             className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
+//             onClick={() => nextSlide()}
+//           />
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 function TestimonialCard({
   testimonial,
@@ -541,19 +606,29 @@ function TestimonialCard({
   name,
   socialMediaProfileName,
   socialMediaProfileUrl,
+  wide,
 }: {
   testimonial: string;
   avatarUrl: string;
   name: string;
   socialMediaProfileName: string;
   socialMediaProfileUrl: string;
+  wide: boolean;
 }) {
   return (
     <article
-      className="flex flex-shrink-0 flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
-    hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2"
+      className={cn(
+        "flex gap-6 flex-shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-700 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg translate-x-2 col-span-1 xl:col-span-3",
+        wide && "xl:col-span-4",
+      )}
     >
-      <p className="text-start">{testimonial}</p>
+      <MarkdownRenderer
+        prose
+        // fontSize="small"
+        markdown={testimonial}
+        wrapperClasses="text-start text-gray-600 dark:text-gray-400"
+      />
+      {/* <p className="text-start prose text-gray-600 dark:text-gray-400">{testimonial}</p> */}
       <div className="flex items-center gap-5">
         <div>
           <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />
@@ -573,3 +648,42 @@ function TestimonialCard({
     </article>
   );
 }
+
+// function TestimonialCard({
+//   testimonial,
+//   avatarUrl,
+//   name,
+//   socialMediaProfileName,
+//   socialMediaProfileUrl,
+// }: {
+//   testimonial: string;
+//   avatarUrl: string;
+//   name: string;
+//   socialMediaProfileName: string;
+//   socialMediaProfileUrl: string;
+// }) {
+//   return (
+//     <article
+//       className="flex flex-shrink-0 flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
+//     hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2"
+//     >
+//       <p className="text-start">{testimonial}</p>
+//       <div className="flex items-center gap-5">
+//         <div>
+//           <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />
+//         </div>
+//         <div className="flex flex-col items-start">
+//           <h3 className="text-brand-500 font-bold">{name}</h3>
+//           <a
+//             href={socialMediaProfileUrl}
+//             target="_blank"
+//             rel="noreferrer"
+//             className="text-gray-500"
+//           >
+//             {socialMediaProfileName}
+//           </a>
+//         </div>
+//       </div>
+//     </article>
+//   );
+// }
