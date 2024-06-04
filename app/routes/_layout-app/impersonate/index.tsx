@@ -47,7 +47,7 @@ export default function ImpersonatePage() {
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
       <h1 className="text-2xl mb-8 mt-8 md:mt-0">Impersonate</h1>
-      <Form method="post" className="w-96">
+      <Form method="post" className="w-full sm:w-96">
         <Input name="userId" id="userId" label="ID do Usuário" />
         <Button className="my-2">Impersonate</Button>
       </Form>
