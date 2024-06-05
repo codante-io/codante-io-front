@@ -70,7 +70,7 @@ export default function VimeoPlayer({
       <div
         className={`absolute top-0 z-10 w-full overflow-hidden opacity-1 ${roundedClassName} `}
       >
-        <div className="vimeo-full-width" ref={playerRef}></div>
+        <main className="vimeo-full-width" ref={playerRef}></main>
       </div>
 
       <div
