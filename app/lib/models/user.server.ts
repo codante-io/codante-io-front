@@ -1,7 +1,10 @@
+import axios from "axios";
 import type { Certificate } from "./certificates.server";
 import type { ChallengeSummary } from "./challenge.server";
 import type { Comment } from "./comments.server";
 import type { Reactions } from "./reactions.server";
+import { currentToken } from "../services/auth.server";
+import { environment } from "./environment";
 
 export type User = {
   id: number;
@@ -48,3 +51,28 @@ export type UserAvatar = {
   avatar_url: string;
   name: string;
 };
+
+export async function impersonate(
+  request: any,
+  userId: string,
+): Promise<string | null> {
+  const token = await currentToken({ request });
+  return axios
+    .post(
+      `${environment().API_HOST}/impersonate`,
+      {
+        user_id: userId,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      },
+    )
+    .then((res) => res.data.token)
+    .catch((error) => {
+      return {
+        error: error,
+      };
+    });
+}
