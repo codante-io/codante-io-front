@@ -47,7 +47,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-import MobileSignupForm from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/mobile-signup-form";
+import MobileSignupForm from "./components/mobile-signup-form";
 import { registerChallengeLead } from "~/lib/models/lead.server";
 
 export const meta = ({ data, params }: any) => {

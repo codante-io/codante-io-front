@@ -1,7 +1,7 @@
 import { useLocation } from "@remix-run/react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import ResponsiveEmailSignup from "~/components/features/auth/responsive-email-signup";
+import ResponsiveEmailSignup from "./responsive-email-signup";
 import { useMediaQuery } from "~/lib/hooks/use-media-query";
 import type { User } from "~/lib/models/user.server";
 
