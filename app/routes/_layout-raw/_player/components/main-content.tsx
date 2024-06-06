@@ -81,21 +81,32 @@ export default function MainContent({
           )}
         </div>
       </div>
-      <div className="mt-3">
-        <VimeoPlayer
-          vimeoUrl={lesson.video_url || ""}
-          available_to={lesson.available_to}
-          onVideoEnded={() => handleVideoEnded(lesson.id)}
-          thumbnailURL={lesson.thumbnail_url}
-          autoplay={true}
-        />
-      </div>
-      <h1 className="mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend">
-        {lesson?.name}
-      </h1>
-      <p className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-gray-300 text-gray-500">
-        {lesson?.description}
-      </p>
+      <section>
+        <div className="mt-3">
+          <VimeoPlayer
+            vimeoUrl={lesson.video_url || ""}
+            available_to={lesson.available_to}
+            onVideoEnded={() => handleVideoEnded(lesson.id)}
+            thumbnailURL={lesson.thumbnail_url}
+            autoplay={true}
+            title={lesson.name}
+            labelledBy="video-title"
+            describedBy="video-description"
+          />
+        </div>
+        <h1
+          id="video-title"
+          className="mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend"
+        >
+          {lesson?.name}
+        </h1>
+        <p
+          id="video-description"
+          className="mt-2 sm:text-lg md:text-xl lg:mt-4 lg:text-[22px] lg:leading-snug font-light dark:text-gray-300 text-gray-500"
+        >
+          {lesson?.description}
+        </p>
+      </section>
       {lesson.content && (
         <div>
           <MarkdownRenderer markdown={lesson.content} />

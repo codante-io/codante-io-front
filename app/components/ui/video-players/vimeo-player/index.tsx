@@ -15,6 +15,9 @@ type VimeoPlayerProps = {
   thumbnailURL?: string;
   roundedClassName?: string;
   available_to?: AvailableTo | undefined;
+  title?: string;
+  labelledBy?: string;
+  describedBy?: string;
 };
 
 export default function VimeoPlayer({
@@ -24,6 +27,9 @@ export default function VimeoPlayer({
   thumbnailURL,
   roundedClassName = "lg:rounded-xl",
   available_to = undefined,
+  title = undefined,
+  labelledBy = undefined,
+  describedBy = undefined,
 }: VimeoPlayerProps) {
   const playerRef = useRef(null);
 
@@ -70,7 +76,13 @@ export default function VimeoPlayer({
       <div
         className={`absolute top-0 z-10 w-full overflow-hidden opacity-1 ${roundedClassName} `}
       >
-        <main className="vimeo-full-width" ref={playerRef}></main>
+        <main
+          title={title ? `Video ${title}` : "Vimeo Player"}
+          className="vimeo-full-width"
+          ref={playerRef}
+          aria-labelledby={labelledBy}
+          aria-describedby={describedBy}
+        ></main>
       </div>
 
       <div
