@@ -31,17 +31,13 @@ export async function registerChallengeLead(
   }
 }
 
-export async function registerLead(
-  request: Request,
-  email: string,
-  tags?: string[],
-) {
+export async function registerLead(request: Request, email: string) {
   return axios
     .post(
       `${environment().API_HOST}/leads`,
       {
         email,
-        tags,
+        tags: ["lead-assine"],
       },
       {},
     )

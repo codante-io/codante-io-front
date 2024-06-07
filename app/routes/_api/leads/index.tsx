@@ -2,7 +2,7 @@ import { abort404 } from "~/lib/utils/responses.server";
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import NotFound from "~/components/features/error-handling/not-found";
 import { Error500 } from "~/components/features/error-handling/500";
-import { registerLead } from "~/lib/models/lead.server";
+import { registerChallengeLead, registerLead } from "~/lib/models/lead.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -12,8 +12,10 @@ export async function action({ request }: { request: Request }) {
   // const tag = formData.get("tag") as string | undefined;
 
   switch (intent) {
-    case "register-lead":
+    case "register-lead-assine":
       return registerLead(request, email);
+    case "register-lead-challenge":
+      return registerChallengeLead(request, email);
   }
 }
 
