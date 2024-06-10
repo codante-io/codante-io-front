@@ -68,7 +68,6 @@ export default function ResponsiveEmailSignup() {
               isSuccessfulSubmission={isSuccessfulSubmission}
               name="intent"
               value="register-lead-challenge"
-              // onClick={handleSubmit}
             >
               Receber instruções
             </LoadingButton>

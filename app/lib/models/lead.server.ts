@@ -42,7 +42,7 @@ export async function registerLead(request: Request, email: string) {
       {},
     )
     .then((res) => {
-      return { message: "success" };
+      return { success: "Cadastro realizado com sucesse!" };
     })
     .catch((error) => {
       let errorMsg =

@@ -43,6 +43,7 @@ import { Card, CardContent, CardTitle } from "~/components/ui/cards/card";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import toast from "react-hot-toast";
+import ResponsiveEmailSignup from "./components/responsive-email-signup";
 
 export const loader = async () => {
   return json({
@@ -131,31 +132,17 @@ export function ErrorBoundary() {
 }
 
 function CodanteProButton() {
-  const scroll = () => {
-    const section = document.querySelector("#pricing");
-    section?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  // const scroll = () => {
+  //   const section = document.querySelector("#price-card");
+  //   section?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // };
 
-  return (
-    <button
-      onClick={scroll}
-      className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-100 bg-brand-500 rounded-lg group w-full lg:w-7/12"
-    >
-      <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-background-700 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
-      <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
-      <span className="relative">
-        Quero ter acesso ao <span className="font-bold">Codante</span>{" "}
-        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-500">
-          PRO
-        </span>
-      </span>
-    </button>
-  );
+  return <ResponsiveEmailSignup />;
 }
 
 interface FetcherData {
   error?: string;
-  message?: string;
+  success?: string;
 }
 
 function LeadForm() {
@@ -180,7 +167,7 @@ function LeadForm() {
   const fetcherData = fetcher.data as FetcherData;
   const errorMsg = fetcherData && fetcherData.error ? fetcherData.error : null;
   const successMsg =
-    fetcherData && fetcherData.message ? fetcherData.message : null;
+    fetcherData && fetcherData.success ? fetcherData.success : null;
   // if (successMsg) toast.success("E-mail cadastrado com sucesso!");
 
   useEffect(() => {
@@ -190,9 +177,6 @@ function LeadForm() {
   return (
     <Card className="max-w-[500px] p-4 mb-10">
       <CardTitle className="mx-2">Quero receber novidades!</CardTitle>
-      {/* <CardDescription className="my-4">
-        Cadastre seu e-mail e fique por dentro das nossas atualizações.
-      </CardDescription> */}
       <CardContent>
         <p className="text-gray-400 text-sm my-4">
           Cadastre seu e-mail e fique por dentro das nossas últimas
@@ -1892,6 +1876,7 @@ function Pricing() {
             hidden: { opacity: 0.5, y: -10 },
           }}
           className="text-4xl font-light font-lexend text-center"
+          id="price-card"
         >
           Preço{" "}
           <span className="color-underline decoration-brand-400">atual</span>
