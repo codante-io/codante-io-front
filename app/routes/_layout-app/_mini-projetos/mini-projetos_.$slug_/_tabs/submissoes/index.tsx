@@ -18,7 +18,6 @@ export default function Submissions() {
   }>();
 
   const userStatus = challenge.current_user_status;
-
   return (
     <>
       <div className="container grid justify-center xl:gap-10 gap-6 lg:grid-cols-3 md:grid-cols-2">
@@ -28,14 +27,16 @@ export default function Submissions() {
         userStatus === "joined-discord" ? (
           <WaitingSubmissionBanner user={user} challenge={challenge} />
         ) : null}
-        {challengeUsers.map((challengeUser) => (
-          <SubmissionCard
-            key={challengeUser.id}
-            challengeUser={challengeUser}
-            size="medium"
-            challengeSlug={challenge.slug}
-          />
-        ))}
+        {challengeUsers
+          .filter((challengeUser) => challengeUser.listed)
+          .map((challengeUser) => (
+            <SubmissionCard
+              key={challengeUser.id}
+              challengeUser={challengeUser}
+              size="medium"
+              challengeSlug={challenge.slug}
+            />
+          ))}
       </div>
     </>
   );
