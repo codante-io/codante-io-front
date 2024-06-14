@@ -194,8 +194,8 @@ export default function MySolution() {
               Encontramos um problema na sua submissão!
             </BannerAlert.Title>
             <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-left">
-              Faça os ajustes na sua aplicação e atualize o link do deploy. Se
-              preferir, entre em contato com a nossa equipe!
+              Faça os ajustes na sua aplicação e atualize o link do deploy. Em
+              caso de dúvidas, entre em contato com a nossa equipe!
             </BannerAlert.Subtitle>
           </BannerAlert.Body>
         </BannerAlert>
