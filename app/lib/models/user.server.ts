@@ -44,6 +44,7 @@ export type ChallengeUser = {
   updated_at: string;
   certificate: Certificate | null;
   comments: Comment[];
+  listed: boolean;
 };
 
 export type UserAvatar = {
