@@ -2,7 +2,7 @@ import { useNavigate, useOutletContext } from "@remix-run/react";
 import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/features/reactions/reactions-button";
-import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
+import Chip from "~/components/ui/chip";
 import TooltipWrapper from "~/components/ui/tooltip";
 import UserAvatar from "~/components/ui/user-avatar";
 import type {
@@ -88,13 +88,7 @@ export default function SubmissionCard({
             )}
           />
         </div>
-        {!listed && (
-          <CardItemRibbon
-            type="live-now"
-            text="Não listado"
-            className="absolute"
-          />
-        )}
+        {!listed && <Chip text="Não listado" type="unlisted" />}
       </a>
 
       <footer

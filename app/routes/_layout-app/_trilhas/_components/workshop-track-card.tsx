@@ -10,9 +10,8 @@ import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import type { Workshop } from "~/lib/models/workshop.server";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
-import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
 import ProOverlay from "~/routes/_layout-app/_trilhas/_components/pro-overlay";
-import SoonChip from "~/routes/_layout-app/_trilhas/_components/soon-chip";
+import Chip from "~/components/ui/chip";
 
 interface WorkshopTrackCardProps {
   workshop: Workshop;
@@ -26,8 +25,10 @@ function WorkshopTrackCard({ workshop, userIsPro }: WorkshopTrackCardProps) {
       className="w-full relative overflow-visible text-start border-l-8 mb-12"
       id={workshop.slug}
     >
-      {workshop?.status === "soon" && <SoonChip />}
-      {!workshop?.is_premium && !userIsPro && <FreeChip />}
+      {workshop?.status === "soon" && <Chip text="Em breve" />}
+      {!workshop?.is_premium && !userIsPro && (
+        <Chip text="Gratuito" type="free" />
+      )}
 
       <div className="flex flex-col justify-between p-8 h-full flex-grow">
         <div>

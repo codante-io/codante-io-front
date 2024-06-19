@@ -28,17 +28,15 @@ export default function Submissions() {
         userStatus === "joined-discord" ? (
           <WaitingSubmissionBanner user={user} challenge={challenge} />
         ) : null}
-        {challengeUsers
-          // .filter((challengeUser) => challengeUser.listed)
-          .map((challengeUser) => (
-            <SubmissionCard
-              listed={challengeUser.listed}
-              key={challengeUser.id}
-              challengeUser={challengeUser}
-              size="medium"
-              challengeSlug={challenge.slug}
-            />
-          ))}
+        {challengeUsers.map((challengeUser) => (
+          <SubmissionCard
+            listed={challengeUser.listed}
+            key={challengeUser.id}
+            challengeUser={challengeUser}
+            size="medium"
+            challengeSlug={challenge.slug}
+          />
+        ))}
       </div>
     </>
   );

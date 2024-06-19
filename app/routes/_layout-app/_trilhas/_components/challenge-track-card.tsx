@@ -13,7 +13,7 @@ import ProOverlay from "./pro-overlay";
 import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
 import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
-import FreeChip from "~/routes/_layout-app/_trilhas/_components/free-chip";
+import Chip from "~/components/ui/chip";
 
 interface ChallengeTrackCardProps {
   challenge: Challenge;
@@ -32,7 +32,9 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
       {challenge?.status === "soon" && (
         <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
       )}
-      {!challenge?.is_premium && !userIsPro && <FreeChip />}
+      {!challenge?.is_premium && !userIsPro && (
+        <Chip text="Gratuito" type="free" />
+      )}
       <div className="flex flex-col justify-between p-8 h-full flex-grow">
         <div>
           <div className="mb-2 card-header">
