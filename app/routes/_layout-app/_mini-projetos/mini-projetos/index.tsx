@@ -87,7 +87,7 @@ export default function Projects() {
 
       {featuredChallenge && (
         <>
-          <section className="md:relative md:h-[500px] lg:h-[500px] mb-32 mt-[80px] rounded-lg md:pl-[420px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col">
+          <section className="md:relative md:h-[500px] lg:h-[500px] mb-20 md:mb-32 mt-[80px] rounded-lg md:pl-[420px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col">
             <div className="flex-col px-6 pt-6">
               <h3 className="font-light text-yellow-400 ">
                 Mini Projeto em destaque
@@ -145,7 +145,7 @@ export default function Projects() {
               </div>
             </div>
           </section>
-          <div className="w-full h-[1px] dark:bg-gray-800 bg-gray-200 mb-24" />
+          <div className="w-full h-[1px] dark:bg-gray-800 bg-gray-200 mb-12 md:mb-24" />
         </>
       )}
 
