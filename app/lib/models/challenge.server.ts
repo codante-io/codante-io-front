@@ -92,16 +92,33 @@ export type ChallengeParticipants = {
   avatars: UserAvatar[];
 };
 
-export type ChallengesByCategory = {
-  featured?: ChallengeCard[];
-} & Record<string, ChallengeCard[]>;
+export type ChallengesByTechnology = {
+  technologies: {
+    name: string;
+    image_url: string;
+    challenges: ChallengeCard[];
+  }[];
+
+  filters: {
+    technologies: Tag[];
+  };
+};
+
+type Filters = {
+  technology: string | null;
+};
 
 export async function getChallenges(
+  { technology }: Filters,
   request: Request,
-): Promise<ChallengesByCategory> {
+): Promise<ChallengesByTechnology> {
   const token = await currentToken({ request });
+  const url = new URL(`${environment().API_HOST}/challenges`);
+  url.searchParams.append("groupedByTechnology", "true");
+  technology && url.searchParams.append("technology", technology);
+
   const challenges = await axios
-    .get(`${environment().API_HOST}/challenges?groupedByTechnology=true`, {
+    .get(url.toString(), {
       headers: {
         Authorization: "Bearer " + token,
       },
