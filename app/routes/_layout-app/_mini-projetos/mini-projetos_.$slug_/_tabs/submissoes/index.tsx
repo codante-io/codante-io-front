@@ -18,6 +18,7 @@ export default function Submissions() {
   }>();
 
   const userStatus = challenge.current_user_status;
+
   return (
     <>
       <div className="container grid justify-center xl:gap-10 gap-6 lg:grid-cols-3 md:grid-cols-2">
@@ -28,9 +29,10 @@ export default function Submissions() {
           <WaitingSubmissionBanner user={user} challenge={challenge} />
         ) : null}
         {challengeUsers
-          .filter((challengeUser) => challengeUser.listed)
+          // .filter((challengeUser) => challengeUser.listed)
           .map((challengeUser) => (
             <SubmissionCard
+              listed={challengeUser.listed}
               key={challengeUser.id}
               challengeUser={challengeUser}
               size="medium"

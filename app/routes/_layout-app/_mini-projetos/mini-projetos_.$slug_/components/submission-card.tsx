@@ -1,12 +1,14 @@
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useOutletContext } from "@remix-run/react";
 import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/features/reactions/reactions-button";
+import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
 import TooltipWrapper from "~/components/ui/tooltip";
 import UserAvatar from "~/components/ui/user-avatar";
 import type {
   UserAvatar as UserAvatarType,
   ChallengeUser,
+  User,
 } from "~/lib/models/user.server";
 import classNames from "~/lib/utils/class-names";
 import { formatName } from "~/lib/utils/format-name";
@@ -14,6 +16,7 @@ import { formatName } from "~/lib/utils/format-name";
 type RequiredChallengeUserProps = {
   avatar: UserAvatarType;
   id: number;
+  user: User;
 };
 
 export default function SubmissionCard({
@@ -26,6 +29,7 @@ export default function SubmissionCard({
   className,
   isHomePage = false,
   footerPadding = "px-4 py-4",
+  listed,
 }: {
   footerPadding?: string;
   showReactions?: boolean;
@@ -36,7 +40,9 @@ export default function SubmissionCard({
   challengeSlug?: string;
   className?: string;
   isHomePage?: boolean;
+  listed: boolean;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
   const [editSubmition, setEditSubmition] = useState(false);
 
   function handleEditSubmition() {
@@ -46,12 +52,12 @@ export default function SubmissionCard({
     }
   }
   const navigate = useNavigate();
-
   return (
     <article
       className={classNames(
         "relative overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow",
         size === "medium" && "max-w-[377px]",
+        !listed && (!user || user.id !== challengeUser.user.id) && "hidden",
         challengeUser.is_solution
           ? "border-brand-500"
           : "dark:border-background-600 border-background-200",
@@ -60,9 +66,7 @@ export default function SubmissionCard({
       )}
     >
       <a
-        className={classNames(
-          "overflow-hidden group relative hover:opacity-80",
-        )}
+        className="overflow-hidden group relative"
         onClick={(event) => {
           if (!challengeUser.is_solution) return;
           event.preventDefault();
@@ -72,16 +76,25 @@ export default function SubmissionCard({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img
-          src={challengeUser.submission_image_url}
-          alt="Screenshot da aplicação submetida"
-          className={classNames(
-            "w-full transition-all delay-75 aspect-video",
-            isHomePage
-              ? "opacity-40 md:blur-sm lg:group-hover:blur-none group-hover:opacity-100"
-              : "",
-          )}
-        />
+        <div className={classNames(listed ? "hover:opacity-80" : "opacity-30")}>
+          <img
+            src={challengeUser.submission_image_url}
+            alt="Screenshot da aplicação submetida"
+            className={classNames(
+              "w-full transition-all delay-75 aspect-video",
+              isHomePage
+                ? "opacity-40 md:blur-sm lg:group-hover:blur-none group-hover:opacity-100"
+                : "",
+            )}
+          />
+        </div>
+        {!listed && (
+          <CardItemRibbon
+            type="live-now"
+            text="Não listado"
+            className="absolute"
+          />
+        )}
       </a>
 
       <footer
