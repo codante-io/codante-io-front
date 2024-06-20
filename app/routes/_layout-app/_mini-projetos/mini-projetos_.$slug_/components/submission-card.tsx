@@ -29,7 +29,7 @@ export default function SubmissionCard({
   className,
   isHomePage = false,
   footerPadding = "px-4 py-4",
-  listed,
+  listed = true,
 }: {
   footerPadding?: string;
   showReactions?: boolean;
