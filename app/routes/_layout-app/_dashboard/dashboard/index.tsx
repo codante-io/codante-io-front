@@ -8,7 +8,7 @@ import {
   useOutletContext,
 } from "@remix-run/react";
 import { PiCertificateLight } from "react-icons/pi";
-import { MdComputer } from "react-icons/md";
+import { MdComputer, MdOutlineUpload } from "react-icons/md";
 import { getDashboardData } from "~/lib/models/dashboard.server";
 import { useEffect } from "react";
 import type { User } from "~/lib/models/user.server";
@@ -73,6 +73,12 @@ export default function Dashboard() {
       ),
       href: "mini-projetos",
       current: location.pathname.includes("mini-projetos"),
+    },
+    {
+      name: "Submissões",
+      href: "submissoes",
+      icon: <MdOutlineUpload />,
+      current: location.pathname.includes("submissoes"),
     },
     {
       name: "Certificados",
