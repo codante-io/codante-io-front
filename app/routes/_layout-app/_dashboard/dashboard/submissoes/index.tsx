@@ -54,9 +54,9 @@ export default function SubmissionsDashboard() {
           </>
         )}
 
-        <h1 className="text-2xl mb-8">
+        <h1 className="text-2xl my-8 md:mt-0 ">
           Minhas{" "}
-          <span className="font-semibold text-brand-400">Submissões</span>
+          <span className="font-semibold text-brand-400">submissões</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
           {listedChallengeUsers && listedChallengeUsers.length > 0 ? (
@@ -92,16 +92,16 @@ function SubmissonCard({
       className={"cursor-pointer"}
     >
       <article
-        className={`group sm:w-[292px] max-w-[298px] sm:h-[245px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl font-lexend border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow overflow-hidden flex flex-col relative`}
+        className={`group sm:w-[292px] max-w-[298px] sm:h-[235px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl font-lexend border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow overflow-hidden flex flex-col relative`}
       >
         <img
           src={challenge.submission_image_url}
           alt={`Submissão projeto ${challenge.challenge_name}`}
-          className={`${challenge.listed ? "opacity-100" : "opacity-70"}`}
+          className={`${challenge.listed ? "opacity-100" : "opacity-70"} h-44 rounded-t-xl`}
         />
 
         {!challenge.listed && <Chip text="Não listado" type="unlisted" />}
-        <div className="p-4">
+        <div className="p-4 h-full flex items-center">
           <h2 className="font-light leading-tight text-gray-700 dark:text-gray-50">
             {challenge.challenge_name}
           </h2>
