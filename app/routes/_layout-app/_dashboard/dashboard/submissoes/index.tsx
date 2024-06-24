@@ -30,10 +30,14 @@ export default function SubmissionsDashboard() {
       <div className="">
         {unlistedChallengeUsers && unlistedChallengeUsers.length > 0 && (
           <>
-            <h1 className="text-2xl mb-8 mt-8 md:mt-0">
+            <h1 className="text-2xl mb-2 mt-8 md:mt-0">
               Submissões{" "}
               <span className="font-semibold text-brand-400">não listadas</span>
             </h1>
+            <h2 className="mb-8 dark:text-gray-400">
+              Encontramos algum problema nessas submissões. Elas não serão
+              listadas na plataforma até que você as atualize.
+            </h2>
             <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
               {unlistedChallengeUsers && unlistedChallengeUsers.length > 0
                 ? unlistedChallengeUsers.map((challengeUser) => (
@@ -88,8 +92,7 @@ function SubmissonCard({
       className={"cursor-pointer"}
     >
       <article
-        className={`group sm:w-[292px] max-w-[298px] sm:h-[245px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
-          font-lexend border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow overflow-hidden flex flex-col relative`}
+        className={`group sm:w-[292px] max-w-[298px] sm:h-[245px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl font-lexend border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow overflow-hidden flex flex-col relative`}
       >
         <img
           src={challenge.submission_image_url}

@@ -75,16 +75,16 @@ export default function Dashboard() {
       current: location.pathname.includes("mini-projetos"),
     },
     {
-      name: "Certificados",
-      href: "certificados",
-      icon: <PiCertificateLight />,
-      current: location.pathname.includes("certificados"),
-    },
-    {
       name: "Submissões",
       href: "submissoes",
       icon: <MdOutlineUpload />,
       current: location.pathname.includes("submissoes"),
+    },
+    {
+      name: "Certificados",
+      href: "certificados",
+      icon: <PiCertificateLight />,
+      current: location.pathname.includes("certificados"),
     },
   ];
 
