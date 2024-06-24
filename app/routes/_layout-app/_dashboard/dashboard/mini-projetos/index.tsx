@@ -73,7 +73,7 @@ function ChallengeCard({ challenge }: { challenge: ChallengeUserDashboard }) {
     >
       <article
         className={`group
-          relative xl:max-w-[292px] max-w-[298px] sm:h-[255px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
+          relative sm:w-[292px] max-w-[298px] sm:h-[245px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow`}
       >

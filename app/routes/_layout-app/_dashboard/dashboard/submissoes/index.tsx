@@ -1,62 +1,72 @@
 import { Link, useOutletContext } from "@remix-run/react";
+import Chip from "~/components/ui/chip";
 import { Separator } from "~/components/ui/separator";
-// import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
 import type {
   ChallengeUserDashboard,
   Dashboard,
 } from "~/lib/models/dashboard.server";
+import type { User } from "~/lib/models/user.server";
 
 export default function SubmissionsDashboard() {
-  const { dashboardData }: { dashboardData: Dashboard } = useOutletContext();
+  const { dashboardData, user }: { dashboardData: Dashboard; user: User } =
+    useOutletContext();
   const challengeUsers = dashboardData.challenge_users;
-  // console.log(challengeUsers);
-  let onGoingChallengeUsers;
-  let completedChallengeUsers;
+
+  let listedChallengeUsers;
+  let unlistedChallengeUsers;
 
   if (challengeUsers) {
-    onGoingChallengeUsers = challengeUsers.filter(
-      (challengeUser) => !challengeUser.completed,
+    listedChallengeUsers = challengeUsers.filter(
+      (challengeUser) => challengeUser.listed && challengeUser.submission_url,
     );
 
-    completedChallengeUsers = challengeUsers.filter(
-      (challengeUser) => challengeUser.completed,
+    unlistedChallengeUsers = challengeUsers.filter(
+      (challengeUser) => !challengeUser.listed && challengeUser.submission_url,
     );
   }
 
   return (
     <div className="text-center md:text-start">
       <div className="">
-        <h1 className="text-2xl mb-8 mt-8 md:mt-0">
-          Mini Projetos{" "}
-          <span className="font-semibold text-brand-400">em andamento</span>
-        </h1>
-        <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
-          {onGoingChallengeUsers && onGoingChallengeUsers.length > 0 ? (
-            onGoingChallengeUsers.map((challengeUser) => (
-              <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
-            ))
-          ) : (
-            <h2 className="dark:text-gray-600 text-gray-400">
-              Você não possui{" "}
-              <span className="font-semibold">Mini Projetos</span> em andamento
-            </h2>
-          )}
-        </div>
+        {unlistedChallengeUsers && unlistedChallengeUsers.length > 0 && (
+          <>
+            <h1 className="text-2xl mb-8 mt-8 md:mt-0">
+              Submissões{" "}
+              <span className="font-semibold text-brand-400">não listadas</span>
+            </h1>
+            <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
+              {unlistedChallengeUsers && unlistedChallengeUsers.length > 0
+                ? unlistedChallengeUsers.map((challengeUser) => (
+                    <SubmissonCard
+                      key={challengeUser.id}
+                      challenge={challengeUser}
+                      user={user}
+                    />
+                  ))
+                : null}
+            </div>
 
-        <Separator orientation="horizontal" className="my-5" />
+            <Separator orientation="horizontal" className="my-5" />
+          </>
+        )}
+
         <h1 className="text-2xl mb-8">
-          Mini Projetos{" "}
-          <span className="font-semibold text-brand-400">concluídos</span>
+          Minhas{" "}
+          <span className="font-semibold text-brand-400">Submissões</span>
         </h1>
         <div className="flex flex-wrap gap-6 items-center justify-center md:justify-start">
-          {completedChallengeUsers && completedChallengeUsers.length > 0 ? (
-            completedChallengeUsers.map((challengeUser) => (
-              <ChallengeCard key={challengeUser.id} challenge={challengeUser} />
+          {listedChallengeUsers && listedChallengeUsers.length > 0 ? (
+            listedChallengeUsers.map((challengeUser) => (
+              <SubmissonCard
+                key={challengeUser.id}
+                challenge={challengeUser}
+                user={user}
+              />
             ))
           ) : (
             <h2 className="dark:text-gray-600 text-gray-400">
-              Você não concluiu nenhum{" "}
-              <span className="font-semibold">Mini Projeto</span>
+              Você não possui nenhuma{" "}
+              <span className="font-semibold">submissão</span>
             </h2>
           )}
         </div>
@@ -65,41 +75,33 @@ export default function SubmissionsDashboard() {
   );
 }
 
-function ChallengeCard({ challenge }: { challenge: ChallengeUserDashboard }) {
+function SubmissonCard({
+  challenge,
+  user,
+}: {
+  challenge: ChallengeUserDashboard;
+  user: User;
+}) {
   return (
     <Link
-      to={`/mini-projetos/${challenge.challenge_slug}`}
+      to={`/mini-projetos/${challenge.challenge_slug}/submissoes/${user.github_user}`}
       className={"cursor-pointer"}
     >
       <article
-        className={`group
-          relative xl:max-w-[292px] max-w-[298px] sm:h-[255px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
-          font-lexend border-[1.5px] border-background-200 dark:border-background-600
-        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow`}
+        className={`group sm:w-[292px] max-w-[298px] sm:h-[245px] bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
+          font-lexend border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow overflow-hidden flex flex-col relative`}
       >
-        <div
-          className={`flex m-1 items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600 overflow-hidden`}
-        >
-          {/* {challenge?.main_technology?.name && (
-            <CardItemMainTechnology
-              technologyName={challenge.main_technology?.name}
-              technologyImgSrc={challenge.main_technology?.image_url}
-            />
-          )} */}
-          <img
-            src={challenge.challenge_image}
-            className={`inline-block -mb-3 h-full object-cover group-hover:animate-float`}
-            alt=""
-          />
-        </div>
-        <div className="flex flex-col justify-between p-6 pt-3">
-          <div>
-            <div className="mb-2 card-header">
-              <h2 className="mb-1 font-light leading-tight text-gray-700 dark:text-gray-50">
-                {challenge.challenge_name}
-              </h2>
-            </div>
-          </div>
+        <img
+          src={challenge.submission_image_url}
+          alt={`Submissão projeto ${challenge.challenge_name}`}
+          className={`${challenge.listed ? "opacity-100" : "opacity-70"}`}
+        />
+
+        {!challenge.listed && <Chip text="Não listado" type="unlisted" />}
+        <div className="p-4">
+          <h2 className="font-light leading-tight text-gray-700 dark:text-gray-50">
+            {challenge.challenge_name}
+          </h2>
         </div>
       </article>
     </Link>

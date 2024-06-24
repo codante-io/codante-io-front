@@ -10,6 +10,9 @@ export type ChallengeUserDashboard = {
   challenge_name: string;
   challenge_image: string;
   challenge_slug: string;
+  listed: boolean;
+  submission_url: string;
+  submission_image_url: string;
 };
 
 export type WorkshopUserDashboard = {
