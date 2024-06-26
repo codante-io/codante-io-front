@@ -23,7 +23,7 @@ import useMousePosition from "./useMousePosition";
 import transformElement from "./transformElement";
 import { faqs, supporters, techs, steps } from "./data";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
-import BannerAlert from "~/components/ui/banner-alert";
+import AlertBanner from "~/components/ui/alert-banner";
 
 export const meta = () => {
   return [
@@ -83,19 +83,10 @@ export default function HomePage() {
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50 scroll-smooth">
         <BackgroundBlur />
 
-        <BannerAlert className="w-full max-w-2xl mx-auto mt-4">
-          <BannerAlert.Icon />
-          <BannerAlert.Body>
-            <BannerAlert.Title>
-              As submissões da Rinha de Front-end finalizaram!
-            </BannerAlert.Title>
-            <BannerAlert.Subtitle>
-              Você poderá continuar submetendo sua resolução, mas a
-              classificação oficial somente valerá para as submissões feitas até
-              dia 31/10/2023
-            </BannerAlert.Subtitle>
-          </BannerAlert.Body>
-        </BannerAlert>
+        <AlertBanner
+          title="As submissões da Rinha de Front-end finalizaram!"
+          subtitle="Você poderá continuar submetendo sua resolução, mas a classificação oficial somente valerá para as submissões feitas até dia 31/10/2023"
+        />
 
         <section
           id="headline"
