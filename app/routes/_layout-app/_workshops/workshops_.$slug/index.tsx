@@ -12,7 +12,7 @@ import {
 } from "react-icons/ai";
 import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { Instructor } from "~/lib/models/instructor.server";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
@@ -30,6 +30,7 @@ import AdminEditButton from "~/components/features/admin-edit-button/AdminEditBu
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 import AlertBanner from "~/components/ui/alert-banner";
+import { createPortal } from "react-dom";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -92,6 +93,11 @@ export default function WorkshopSlug() {
     return now.toISOString() > date.toISOString();
   }
 
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    // Define isClient como true uma vez que o componente é montado, indicando que está no lado do cliente
+    setIsClient(true);
+  }, []);
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
@@ -115,14 +121,26 @@ export default function WorkshopSlug() {
         />
       )}
 
-      {workshop.status === "streaming" && (
+      {/* {workshop.status === "streaming" && (
         <AlertBanner
           className="mx-auto"
           type="streaming"
           title="Esse workshop está acontecendo agora!"
           subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
         />
-      )}
+      )} */}
+      {workshop.status === "streaming" &&
+        isClient &&
+        createPortal(
+          <AlertBanner
+            className="w-full min-w-full relative top-8"
+            type="streaming"
+            title="Estou utilizando portal!!"
+            subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
+            allBorders={false}
+          />,
+          document.getElementById("main-content-page"),
+        )}
 
       {/* Header */}
       <header className="flex items-center gap-2 mb-8 lg:gap-6">

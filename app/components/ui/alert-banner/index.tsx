@@ -49,12 +49,14 @@ function AlertBanner({
   type = "default",
   className,
   titleMargin,
+  allBorders = true,
 }: {
   title: string;
   subtitle: React.ReactNode;
   type?: "default" | "warning" | "streaming";
   className?: string;
   titleMargin?: string;
+  allBorders?: boolean;
 }) {
   const textColor = style[type].textColor;
   const bgColor = style[type].bgColor;
@@ -66,10 +68,11 @@ function AlertBanner({
   return (
     <div
       className={cn(
-        "px-4 py-3 mb-8 -mt-8 border rounded shadow-md",
+        "px-4 py-3 mb-8 -mt-8 shadow-md",
         bgColor,
         borderColor,
         bannerSize,
+        allBorders ? "rounded border" : "border border-r-0 border-l-0",
         className,
       )}
     >
