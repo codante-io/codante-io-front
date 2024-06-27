@@ -410,8 +410,8 @@ function Pricing() {
 
   const proPlanWithPrice = {
     ...proPlanDetails,
-    monthlyPrice: Math.trunc((currentPrice / 100 / 12) * 100) / 100, // truncate 2 decimals
-    totalPrice: currentPrice / 100,
+    totalPrice: isNaN(currentPrice) ? 0 : currentPrice / 100,
+    monthlyPrice: isNaN(currentPrice) ? 0 : currentPrice / 100 / 12, // truncate 2 decimals
   };
 
   return (
