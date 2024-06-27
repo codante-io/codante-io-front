@@ -51,6 +51,7 @@ export type UserAvatar = {
   badge: "pro" | "admin" | null;
   avatar_url: string;
   name: string;
+  github_user?: string;
 };
 
 export async function impersonate(

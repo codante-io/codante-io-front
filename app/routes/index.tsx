@@ -29,12 +29,12 @@ import BannerAlert from "~/components/ui/banner-alert";
 import { MdLiveTv } from "react-icons/md";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
-import SubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
 import { motion } from "framer-motion";
 import DiscordButton from "~/components/features/auth/discord-button";
 import { buttonVariants } from "~/components/ui/button";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { cn } from "~/lib/utils";
+import HomeSubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/home-submission-card";
 
 export const loader = async () => {
   return json({
@@ -363,30 +363,22 @@ function Submissions() {
         <div className="relative mb-20">
           <section className=" flex gap-4 upper-post-list mb-4">
             {submissions.slice(0, 12).map((submission, index) => (
-              <SubmissionCard
-                footerPadding="px-2 py-2"
+              <HomeSubmissionCard
                 key={index}
-                isHomePage
-                challengeUser={submission}
                 challengeSlug={submission.challenge.slug}
-                showReactions={false}
-                size="small"
-                className="flex-shrink-0"
+                submissionImageUrl={submission.submission_image_url}
+                avatar={submission.avatar}
               />
             ))}
           </section>
 
           <section className="flex gap-4 scroll-auto lower-post-list">
             {submissions.slice(12).map((submission, index) => (
-              <SubmissionCard
-                footerPadding="px-2 py-2"
+              <HomeSubmissionCard
                 key={index}
-                isHomePage
-                challengeUser={submission}
                 challengeSlug={submission.challenge.slug}
-                showReactions={false}
-                size="small"
-                className="flex-shrink-0"
+                submissionImageUrl={submission.submission_image_url}
+                avatar={submission.avatar}
               />
             ))}
           </section>
