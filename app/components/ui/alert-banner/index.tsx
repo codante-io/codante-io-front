@@ -41,6 +41,16 @@ const style = {
     bannerSize: "w-full max-w-2xl",
     textDirection: "text-center md:text-left",
   },
+  "workshop-is-live": {
+    bgColor: "dark:bg-red-900 bg-red-100",
+    borderColor: "border-red-500",
+    icon: (
+      <MdLiveTv className="w-10 h-10 mb-4 text-red-500 fill-current dark:text-red-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
+    ),
+    textColor: "dark:text-white text-gray-800",
+    bannerSize: "w-full max-w-2xl",
+    textDirection: "text-center md:text-left",
+  },
 };
 
 function AlertBanner({
@@ -48,15 +58,16 @@ function AlertBanner({
   subtitle,
   type = "default",
   className,
-  titleMargin,
-  allBorders = true,
+  bordersX = true,
+  position,
+  ...props
 }: {
-  title: string;
+  title: React.ReactNode;
   subtitle: React.ReactNode;
-  type?: "default" | "warning" | "streaming";
+  type?: "default" | "warning" | "streaming" | "workshop-is-live";
   className?: string;
-  titleMargin?: string;
-  allBorders?: boolean;
+  position?: string;
+  bordersX?: boolean;
 }) {
   const textColor = style[type].textColor;
   const bgColor = style[type].bgColor;
@@ -72,15 +83,16 @@ function AlertBanner({
         bgColor,
         borderColor,
         bannerSize,
-        allBorders ? "rounded border" : "border border-r-0 border-l-0",
+        bordersX ? "rounded border" : "border border-r-0 border-l-0",
         className,
       )}
+      {...props}
     >
-      <div className="flex flex-col items-center md:flex-row">
+      <div className={cn("flex flex-col items-center md:flex-row", position)}>
         {icon}
         <div className="flex-1">
           <div
-            className={cn("font-bold", textColor, textDirection, titleMargin)}
+            className={cn("font-bold mb-3 md:mb-0", textColor, textDirection)}
           >
             {title}
           </div>

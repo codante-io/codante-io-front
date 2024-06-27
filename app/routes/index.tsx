@@ -91,7 +91,6 @@ function Headline() {
           <AlertBanner
             type="streaming"
             title="Existe um workshop acontecendo ao vivo agora!"
-            titleMargin="mb-3 md:mb-0"
             subtitle={
               <span>
                 Clique para assistir juntos o streaming do workshop:{" "}

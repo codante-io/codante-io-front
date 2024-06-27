@@ -98,50 +98,49 @@ export default function WorkshopSlug() {
     // Define isClient como true uma vez que o componente é montado, indicando que está no lado do cliente
     setIsClient(true);
   }, []);
+
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
-      {workshop.status === "soon" && (
-        <AlertBanner
-          title={`${
-            workshopHasHappened()
-              ? `Esse workshop aconteceu recentemente!`
-              : "Ei! Esse workshop ainda não aconteceu!"
-          }`}
-          subtitle={`${
-            workshopHasHappened()
-              ? "Aguarde que em breve estará disponível na plataforma."
-              : `Você poderá assisti-lo ao vivo ${
-                  publishedDate
-                    ? `no dia ${publishedDate}${
-                        publishedTime ? ` às ${publishedTime}` : ""
-                      }. Se preferir, será disponibilizada também a versão editada.`
-                    : " em breve."
-                }`
-          }`}
-        />
-      )}
+      {workshop.status === "soon" &&
+        isClient &&
+        createPortal(
+          <AlertBanner
+            className="w-full min-w-full relative top-8"
+            position="container mx-auto"
+            bordersX={false}
+            title={`${
+              workshopHasHappened()
+                ? `Esse workshop aconteceu recentemente!`
+                : "Ei! Esse workshop ainda não aconteceu!"
+            }`}
+            subtitle={`${
+              workshopHasHappened()
+                ? "Aguarde que em breve estará disponível na plataforma."
+                : `Você poderá assisti-lo ao vivo ${
+                    publishedDate
+                      ? `no dia ${publishedDate}${
+                          publishedTime ? ` às ${publishedTime}` : ""
+                        }. Se preferir, será disponibilizada também a versão editada.`
+                      : " em breve."
+                  }`
+            }`}
+          />,
+          document.getElementById("alert-banner-lower")!,
+        )}
 
-      {/* {workshop.status === "streaming" && (
-        <AlertBanner
-          className="mx-auto"
-          type="streaming"
-          title="Esse workshop está acontecendo agora!"
-          subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
-        />
-      )} */}
       {workshop.status === "streaming" &&
         isClient &&
         createPortal(
           <AlertBanner
             className="w-full min-w-full relative top-8"
-            type="streaming"
-            title="Estou utilizando portal!!"
+            type="workshop-is-live"
+            title="Esse workshop está acontecendo agora!"
             subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
-            allBorders={false}
+            bordersX={false}
+            position="container mx-auto"
           />,
-          document.getElementById("main-content-page"),
+          document.getElementById("alert-banner-lower")!,
         )}
-
       {/* Header */}
       <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
