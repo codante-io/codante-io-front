@@ -44,6 +44,7 @@ export type Workshop = {
   }[];
   lessons: Lesson[];
   tags: Tag[];
+  next_lesson: Lesson | null;
 
   workshop_user: WorkshopUser;
   pivot?: TrackablePivot;

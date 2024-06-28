@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
 import CardItemDuration from "~/components/ui/cards/card-item-duration";
@@ -8,6 +8,7 @@ import { getWorkshop } from "~/lib/models/workshop.server";
 import {
   AiFillGithub,
   AiFillLinkedin,
+  AiFillPlayCircle,
   AiFillTwitterCircle,
 } from "react-icons/ai";
 import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -17,7 +18,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
 import { abort404 } from "~/lib/utils/responses.server";
-import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import {
   fromSecondsToTimeStringWithoutSeconds,
   getPublishedDateAndTime,
@@ -29,6 +29,7 @@ import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
+import { HiMiniArrowSmallRight } from "react-icons/hi2";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export const meta = ({ data, params }: any) => {
@@ -79,6 +80,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
   const workshop = loaderData?.workshop;
+  const nextLesson = workshop?.next_lesson || workshop?.lessons[0];
 
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     workshop.published_at,
@@ -93,7 +95,7 @@ export default function WorkshopSlug() {
   }
 
   return (
-    <section className="container mx-auto mt-8 mb-16 lg:mt-12">
+    <section className="container mx-auto mb-16">
       {workshop.status === "soon" && (
         <AlertBannerPortal
           title={`${
@@ -123,21 +125,17 @@ export default function WorkshopSlug() {
         />
       )}
       {/* Header */}
-      <header className="flex items-center gap-2 mb-8 lg:gap-6">
-        <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
+      <header className="flex justify-center flex-col gap-2 mb-8 lg:gap-6">
+        {/* <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" /> */}
         <div>
-          <span className="lg:text-2xl font-extralight">Workshop</span>
-          <h1 className="text-3xl font-bold lg:text-5xl font-lexend">
-            {workshop.name}
+          <span className="lg:text-lg font-extralight">Workshop</span>
+          <h1 className="text-3xl font-bold lg:text-4xl font-lexend">
+            {workshop.name}{" "}
+            <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
           </h1>
         </div>
-      </header>
-
-      {/* layout */}
-      <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
-        {/* left Side */}
-        <div className="w-full">
-          <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-200 dark:bg-background-800 rounded-xl">
+        <div>
+          <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
@@ -148,15 +146,60 @@ export default function WorkshopSlug() {
               )}
             />
           </div>
+        </div>
+      </header>
 
-          <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
-
+      {/* layout */}
+      <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
+        {/* left Side */}
+        <div className="w-full">
           {/* Video */}
           {workshop.status === "streaming" && workshop.streaming_url && (
             <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
           )}
-          {workshop.video_url && workshop.status !== "streaming" && (
-            <VimeoPlayer vimeoUrl={workshop.video_url} />
+
+          {workshop.status === "published" && (
+            <Link
+              to={`/workshops/${workshop.slug}/${nextLesson.slug}`}
+              className={`relative flex items-center justify-center aspect-video overflow-hidden rounded-xl bg-background-200 dark:bg-background-800 group dark:border-none border-2`}
+            >
+              {nextLesson.thumbnail_url && (
+                <img
+                  key={nextLesson.id}
+                  className="opacity-70"
+                  src={nextLesson.thumbnail_url}
+                  alt=""
+                />
+              )}
+
+              <div className="absolute z-10 opacity-90 sm:opacity-30 group-hover:opacity-90 scale-100 group-hover:scale-110 transition-all duration-300">
+                <AiFillPlayCircle className="sm:w-28 sm:h-28 h-16 w-16 text-brand-500" />
+              </div>
+
+              <motion.div className="flex absolute w-full bottom-0 z-10 bg-background-100 px-4 dark:bg-background-800 justify-end dark:border-t-2 border-background-200 dark:border-background-700 pb-0 group-hover:pb-1 transition-all">
+                <div className="flex items-center justify-between sm:p-4 p-2 right-0">
+                  <div className="flex items-center gap-2">
+                    <div>
+                      <h3 className="text-xs sm:text-lg font-semibold text-gray-800 dark:text-gray-50">
+                        {nextLesson.id === workshop.lessons[0].id
+                          ? "Assistir agora"
+                          : "Continuar assistindo"}
+                        <HiMiniArrowSmallRight className="inline-block" />
+                      </h3>
+                      <p className="text-xs sm:text-sm font-light text-gray-500 dark:text-gray-300">
+                        <b className="sm:text-xs text-[10px] text-brand-500">
+                          {workshop.lessons.findIndex(
+                            (lesson) => lesson.id === nextLesson.id,
+                          ) + 1}
+                          .
+                        </b>{" "}
+                        {nextLesson.name}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
           )}
 
           <div className="mt-6 lg:mt-12">
@@ -167,7 +210,7 @@ export default function WorkshopSlug() {
           </div>
         </div>
         {/* Right Side */}
-        <div className="lg:w-3/5">
+        <div className="lg:w-3/5 space-y-12">
           {/* Progress Bar & Certificate */}
           {workshop.workshop_user && (
             <div className="">
@@ -186,7 +229,7 @@ export default function WorkshopSlug() {
           )}
           {/* Instrutor */}
           <div>
-            <div className="flex items-center mt-12">
+            <div className="flex items-center">
               <TitleIcon className="inline-block w-3 h-3 mr-2" />
               <h3 className="inline-block mt-0 text-lg font-light">
                 Seu <span className="font-bold">Instrutor</span>
@@ -196,7 +239,7 @@ export default function WorkshopSlug() {
           </div>
 
           {/* Aulas */}
-          <div className="mt-12">
+          <div className="">
             {workshop.lessons.length > 0 && (
               <>
                 <WorkshopLessonsHeader workshop={workshop} showResources />
