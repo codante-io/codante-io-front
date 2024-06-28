@@ -14,7 +14,6 @@ import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { Instructor } from "~/lib/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import BannerAlert from "~/components/ui/banner-alert";
 import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
 import { abort404 } from "~/lib/utils/responses.server";
@@ -24,13 +23,13 @@ import {
   getPublishedDateAndTime,
 } from "~/lib/utils/interval";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
-import { MdComputer, MdLiveTv } from "react-icons/md";
+import { MdComputer } from "react-icons/md";
 import type { IconType } from "react-icons";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
-import BannerAlertInfo from "~/components/ui/banner-alert/banner-alert-info";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
+import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -96,7 +95,7 @@ export default function WorkshopSlug() {
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
       {workshop.status === "soon" && (
-        <BannerAlertInfo
+        <AlertBannerPortal
           title={`${
             workshopHasHappened()
               ? `Esse workshop aconteceu recentemente!`
@@ -117,26 +116,12 @@ export default function WorkshopSlug() {
       )}
 
       {workshop.status === "streaming" && (
-        <BannerAlert
-          bgColor="dark:bg-transparent bg-white"
-          borderColor="border-red-500"
-          className="w-full "
-        >
-          <MdLiveTv className="w-10 h-10 mb-4 text-red-500 fill-current dark:text-red-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
-          <div>
-            <BannerAlert.Title
-              textColor="dark:text-white text-gray-800"
-              className="mb-3 text-center md:text-left md:mb-0"
-            >
-              Esse workshop está acontecendo agora!
-            </BannerAlert.Title>
-            <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-center md:text-left">
-              Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥
-            </BannerAlert.Subtitle>
-          </div>
-        </BannerAlert>
+        <AlertBannerPortal
+          type="workshop-is-live"
+          title="Esse workshop está acontecendo agora!"
+          subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
+        />
       )}
-
       {/* Header */}
       <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />

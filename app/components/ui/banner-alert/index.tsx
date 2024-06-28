@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "~/lib/utils";
 import classNames from "~/lib/utils/class-names";
 
 export default function BannerAlert({
@@ -14,7 +15,7 @@ export default function BannerAlert({
 }) {
   return (
     <div
-      className={classNames(
+      className={cn(
         bgColor || "bg-brand-100 dark:bg-brand-950",
         borderColor || "border-brand",
         "px-4 py-3 mb-8 -mt-8 border rounded shadow-md",

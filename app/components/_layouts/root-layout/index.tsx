@@ -15,7 +15,9 @@ export default function AppLayout({
 }: AppLayoutProps) {
   return (
     <>
+      <div id="alert-banner-upper"></div>
       <Navbar user={user} hideLinks={hideNavbarLinks} />
+      <div id="alert-banner-lower"></div>
       <main className="lg:py-10 py-6 min-h-[calc(100vh-170px)] mx-auto">
         {children}
       </main>
