@@ -42,9 +42,8 @@ import { Button } from "~/components/ui/button";
 import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
 import CommentSection from "~/components/features/comments/comment-section";
-import BannerAlert from "~/components/ui/banner-alert";
-import { IoWarning } from "react-icons/io5";
 import NotFound from "~/components/features/error-handling/not-found";
+import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -183,23 +182,13 @@ export default function MySolution() {
   return (
     <div className="container text-center">
       {user && submissionUser.user.id === user.id && !submissionUser.listed && (
-        <BannerAlert
-          className="w-full max-w-2xl mx-auto mt-4"
-          bgColor="dark:bg-transparent bg-white"
-          borderColor="border-yellow-400"
-        >
-          <IoWarning className="w-10 h-10 mb-4 text-yellow-400 fill-current dark:text-yellow-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
-          <BannerAlert.Body>
-            <BannerAlert.Title textColor="dark:text-white text-gray-800 text-left">
-              Encontramos um problema na sua submissão!
-            </BannerAlert.Title>
-            <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-left">
-              Faça os ajustes na sua aplicação e atualize o link do deploy. Em
-              caso de dúvidas, entre em contato com a nossa equipe!
-            </BannerAlert.Subtitle>
-          </BannerAlert.Body>
-        </BannerAlert>
+        <AlertBannerPortal
+          title="Encontramos um problema na sua submissão!"
+          subtitle="Faça os ajustes na sua aplicação e atualize o link do deploy. Em caso de dúvidas, entre em contato com a nossa equipe!"
+          type="warning"
+        />
       )}
+
       <Headline
         submissionUser={submissionUser}
         challenge={challenge}
