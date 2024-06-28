@@ -4,12 +4,12 @@ import { cn } from "~/lib/utils/cn";
 
 const style = {
   default: {
-    bgColor: "bg-brand-100 dark:bg-brand-950",
+    bgColor: "bg-brand-100 dark:bg-sky-900",
     borderColor: "border-brand",
     icon: (
       <div className="py-1">
         <svg
-          className="w-6 h-6 mr-4 fill-current text-brand-500 dark:text-brand-300"
+          className="w-6 h-6 mr-4 fill-current text-brand-500 dark:text-sky-100"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -17,17 +17,17 @@ const style = {
         </svg>
       </div>
     ),
-    textColor: "text-brand-500 dark:text-brand-300",
+    textColor: "text-brand-500 dark:text-sky-100",
     bannerSize: "w-full max-w-2xl mx-auto",
     textDirection: "text-left",
   },
   warning: {
-    bgColor: "dark:bg-transparent bg-white",
+    bgColor: "dark:bg-yellow-500 bg-yellow-100",
     borderColor: "border-yellow-400",
     icon: (
-      <IoWarning className="w-10 h-10 mb-4 text-yellow-400 fill-current dark:text-yellow-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
+      <IoWarning className="w-10 h-10 mb-4 text-yellow-700 fill-current dark:text-gray-900 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
     ),
-    textColor: "dark:text-white text-gray-800",
+    textColor: "dark:text-gray-900 text-yellow-700",
     bannerSize: "w-full max-w-2xl mx-auto",
     textDirection: "text-left",
   },
@@ -52,6 +52,14 @@ const style = {
     textDirection: "text-center md:text-left",
   },
 };
+export type AlertBannerProps = {
+  title: React.ReactNode;
+  subtitle: React.ReactNode;
+  type?: "default" | "warning" | "streaming" | "workshop-is-live";
+  className?: string;
+  container?: boolean;
+  bordersX?: boolean;
+};
 
 function AlertBanner({
   title,
@@ -59,16 +67,9 @@ function AlertBanner({
   type = "default",
   className,
   bordersX = true,
-  position,
+  container = false,
   ...props
-}: {
-  title: React.ReactNode;
-  subtitle: React.ReactNode;
-  type?: "default" | "warning" | "streaming" | "workshop-is-live";
-  className?: string;
-  position?: string;
-  bordersX?: boolean;
-}) {
+}: AlertBannerProps) {
   const textColor = style[type].textColor;
   const bgColor = style[type].bgColor;
   const borderColor = style[type].borderColor;
@@ -79,16 +80,20 @@ function AlertBanner({
   return (
     <div
       className={cn(
-        "px-4 py-3 mb-8 -mt-8 shadow-md",
+        "px-4 py-3 shadow-md rounded border",
         bgColor,
         borderColor,
         bannerSize,
-        bordersX ? "rounded border" : "border border-r-0 border-l-0",
         className,
       )}
       {...props}
     >
-      <div className={cn("flex flex-col items-center md:flex-row", position)}>
+      <div
+        className={cn(
+          "flex flex-col items-center md:flex-row",
+          container && "mx-auto container",
+        )}
+      >
         {icon}
         <div className="flex-1">
           <div

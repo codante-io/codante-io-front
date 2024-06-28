@@ -43,7 +43,7 @@ import { SaveIcon } from "lucide-react";
 import { abort404 } from "~/lib/utils/responses.server";
 import CommentSection from "~/components/features/comments/comment-section";
 import NotFound from "~/components/features/error-handling/not-found";
-import AlertBanner from "~/components/ui/alert-banner";
+import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -182,11 +182,10 @@ export default function MySolution() {
   return (
     <div className="container text-center">
       {user && submissionUser.user.id === user.id && !submissionUser.listed && (
-        <AlertBanner
+        <AlertBannerPortal
           title="Encontramos um problema na sua submissão!"
           subtitle="Faça os ajustes na sua aplicação e atualize o link do deploy. Em caso de dúvidas, entre em contato com a nossa equipe!"
           type="warning"
-          className="mt-4"
         />
       )}
 

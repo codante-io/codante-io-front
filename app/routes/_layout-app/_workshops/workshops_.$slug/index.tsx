@@ -12,7 +12,7 @@ import {
 } from "react-icons/ai";
 import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { Instructor } from "~/lib/models/instructor.server";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
 import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
@@ -29,8 +29,7 @@ import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
-import AlertBanner from "~/components/ui/alert-banner";
-import { createPortal } from "react-dom";
+import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -93,54 +92,36 @@ export default function WorkshopSlug() {
     return now.toISOString() > date.toISOString();
   }
 
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    // Define isClient como true uma vez que o componente é montado, indicando que está no lado do cliente
-    setIsClient(true);
-  }, []);
-
   return (
     <section className="container mx-auto mt-8 mb-16 lg:mt-12">
-      {workshop.status === "soon" &&
-        isClient &&
-        createPortal(
-          <AlertBanner
-            className="w-full min-w-full relative top-8"
-            position="container mx-auto"
-            bordersX={false}
-            title={`${
-              workshopHasHappened()
-                ? `Esse workshop aconteceu recentemente!`
-                : "Ei! Esse workshop ainda não aconteceu!"
-            }`}
-            subtitle={`${
-              workshopHasHappened()
-                ? "Aguarde que em breve estará disponível na plataforma."
-                : `Você poderá assisti-lo ao vivo ${
-                    publishedDate
-                      ? `no dia ${publishedDate}${
-                          publishedTime ? ` às ${publishedTime}` : ""
-                        }. Se preferir, será disponibilizada também a versão editada.`
-                      : " em breve."
-                  }`
-            }`}
-          />,
-          document.getElementById("alert-banner-lower")!,
-        )}
+      {workshop.status === "soon" && (
+        <AlertBannerPortal
+          title={`${
+            workshopHasHappened()
+              ? `Esse workshop aconteceu recentemente!`
+              : "Ei! Esse workshop ainda não aconteceu!"
+          }`}
+          subtitle={`${
+            workshopHasHappened()
+              ? "Aguarde que em breve estará disponível na plataforma."
+              : `Você poderá assisti-lo ao vivo ${
+                  publishedDate
+                    ? `no dia ${publishedDate}${
+                        publishedTime ? ` às ${publishedTime}` : ""
+                      }. Se preferir, será disponibilizada também a versão editada.`
+                    : " em breve."
+                }`
+          }`}
+        />
+      )}
 
-      {workshop.status === "streaming" &&
-        isClient &&
-        createPortal(
-          <AlertBanner
-            className="w-full min-w-full relative top-8"
-            type="workshop-is-live"
-            title="Esse workshop está acontecendo agora!"
-            subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
-            bordersX={false}
-            position="container mx-auto"
-          />,
-          document.getElementById("alert-banner-lower")!,
-        )}
+      {workshop.status === "streaming" && (
+        <AlertBannerPortal
+          type="workshop-is-live"
+          title="Esse workshop está acontecendo agora!"
+          subtitle="Você pode assistir ao vivo aqui embaixo o streaming ao vivo! 🎥"
+        />
+      )}
       {/* Header */}
       <header className="flex items-center gap-2 mb-8 lg:gap-6">
         <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" />
