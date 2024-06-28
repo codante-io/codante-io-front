@@ -47,8 +47,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-import MobileSignupForm from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/mobile-signup-form";
-import { registerChallengeLead } from "~/lib/models/lead.server";
+import MobileSignupForm from "./components/mobile-signup-form";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -123,10 +122,6 @@ export async function action({ request }: ActionFunctionArgs) {
     case "requestCertificate":
       const certifiableId = formData.get("certifiable_id") as string;
       return requestCertificate(request, "ChallengeUser", certifiableId);
-    case "register-lead":
-      const email = formData.get("email") as string;
-
-      return registerChallengeLead(request, email);
     default:
       return null;
   }

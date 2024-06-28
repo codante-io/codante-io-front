@@ -1,27 +1,38 @@
-import {
-  Form,
-  useActionData,
-  useNavigation,
-  useSubmit,
-} from "@remix-run/react";
+import { useActionData, useFetcher } from "@remix-run/react";
 
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { ResponsiveDialog } from "~/components/ui/responsive-dialog";
 import LoadingButton from "~/components/features/form/loading-button";
+import { useEffect } from "react";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 
-export default function ResponsiveEmailSignup({ slug }: { slug: string }) {
-  const submit = useSubmit();
+interface FetcherData {
+  error?: string;
+  success?: string;
+}
+
+export default function ResponsiveEmailSignup() {
   const errors = useActionData();
-  const transition = useNavigation();
+  const fetcher = useFetcher();
+  const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
-  const status = transition.state;
+  const status = fetcher.state;
   let isSuccessfulSubmission = status === "idle" && errors === null;
 
+  const fetcherData = fetcher.data as FetcherData;
+  const errorMsg = fetcherData && fetcherData.error ? fetcherData.error : null;
+  const successMsg =
+    fetcherData && fetcherData.success ? fetcherData.success : null;
+
+  useEffect(() => {
+    if (successMsg) showSuccessToast(successMsg);
+    if (errorMsg) showErrorToast(errorMsg);
+  }, [successMsg, errorMsg, showErrorToast, showSuccessToast]);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    submit(event.currentTarget, {
+    fetcher.submit(event.currentTarget.form, {
       method: "post",
-      action: `/mini-projetos/${slug}`,
     });
   }
 
@@ -33,7 +44,12 @@ export default function ResponsiveEmailSignup({ slug }: { slug: string }) {
       triggerButtonSize="lg"
     >
       <>
-        <Form method="POST" className="flex flex-col" onSubmit={handleSubmit}>
+        <fetcher.Form
+          method="post"
+          className="flex flex-col"
+          onSubmit={handleSubmit}
+          action="/leads?index"
+        >
           <Label htmlFor="email">Seu email</Label>
           <Input name="email" id="email" type="email" className="mb-4" />
 
@@ -51,12 +67,12 @@ export default function ResponsiveEmailSignup({ slug }: { slug: string }) {
               status={status}
               isSuccessfulSubmission={isSuccessfulSubmission}
               name="intent"
-              value="register-lead"
+              value="register-lead-challenge"
             >
               Receber instruções
             </LoadingButton>
           </div>
-        </Form>
+        </fetcher.Form>
       </>
     </ResponsiveDialog>
   );

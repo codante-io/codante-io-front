@@ -2,6 +2,7 @@ import { json, redirect } from "@remix-run/node";
 import {
   Link,
   isRouteErrorResponse,
+  useFetcher,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
@@ -19,7 +20,7 @@ import {
 } from "~/components/ui/cards/pricing/pricing-data";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import SubmissionCard from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
@@ -38,6 +39,11 @@ import axios from "axios";
 import type { AxiosError } from "axios";
 import type { Subscription } from "~/lib/models/subscription.server";
 import { environment } from "~/lib/models/environment";
+import { Card, CardContent, CardTitle } from "~/components/ui/cards/card";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
+import toast from "react-hot-toast";
+import ResponsiveEmailSignup from "./components/responsive-email-signup";
 
 export const loader = async () => {
   return json({
@@ -126,25 +132,75 @@ export function ErrorBoundary() {
 }
 
 function CodanteProButton() {
-  const scroll = () => {
-    const section = document.querySelector("#pricing");
-    section?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  // const scroll = () => {
+  //   const section = document.querySelector("#price-card");
+  //   section?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // };
+
+  return <ResponsiveEmailSignup />;
+}
+
+interface FetcherData {
+  error?: string;
+  success?: string;
+}
+
+function LeadForm() {
+  const fetcher = useFetcher();
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const isSubmittingOrLoading =
+    fetcher.state === "submitting" || fetcher.state === "loading";
+
+  function handleLeadClickButton() {
+    if (emailRef?.current?.value) {
+      fetcher.submit(
+        { intent: "register-lead", email: emailRef.current.value },
+        {
+          method: "post",
+          action: "/leads?index",
+        },
+      );
+    }
+  }
+
+  const fetcherData = fetcher.data as FetcherData;
+  const errorMsg = fetcherData && fetcherData.error ? fetcherData.error : null;
+  const successMsg =
+    fetcherData && fetcherData.success ? fetcherData.success : null;
+  // if (successMsg) toast.success("E-mail cadastrado com sucesso!");
+
+  useEffect(() => {
+    if (successMsg) toast.success("E-mail cadastrado com sucesso!");
+  }, [successMsg]);
 
   return (
-    <button
-      onClick={scroll}
-      className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-100 bg-brand-500 rounded-lg group w-full lg:w-7/12"
-    >
-      <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-background-700 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
-      <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
-      <span className="relative">
-        Quero ter acesso ao <span className="font-bold">Codante</span>{" "}
-        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-500">
-          PRO
-        </span>
-      </span>
-    </button>
+    <Card className="max-w-[500px] p-4 mb-10">
+      <CardTitle className="mx-2">Quero receber novidades!</CardTitle>
+      <CardContent>
+        <p className="text-gray-400 text-sm my-4">
+          Cadastre seu e-mail e fique por dentro das nossas últimas
+          atualizações.{" "}
+        </p>
+        <Input
+          name="email"
+          id="email"
+          ref={emailRef}
+          type="email"
+          placeholder="example@email.com"
+        />
+        <div className="text-red-500 text-xs mt-1 leading-3 min-h-[12px]">
+          {<p>{errorMsg || " "}</p>}
+        </div>
+        <Button
+          className={`${isSubmittingOrLoading ? "cursor-wait" : "cursor-pointer"} mt-2`}
+          onClick={handleLeadClickButton}
+          disabled={isSubmittingOrLoading}
+        >
+          Cadastrar
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -390,6 +446,7 @@ function Headline() {
             ))}
           </div>
         </div>
+        <LeadForm />
       </section>
     </>
   );
@@ -1819,6 +1876,7 @@ function Pricing() {
             hidden: { opacity: 0.5, y: -10 },
           }}
           className="text-4xl font-light font-lexend text-center"
+          id="price-card"
         >
           Preço{" "}
           <span className="color-underline decoration-brand-400">atual</span>

@@ -30,3 +30,32 @@ export async function registerChallengeLead(
     };
   }
 }
+
+export async function registerLead(request: Request, email: string) {
+  return axios
+    .post(
+      `${environment().API_HOST}/leads`,
+      {
+        email,
+        tags: ["lead-assine"],
+      },
+      {},
+    )
+    .then((res) => {
+      return { success: "Cadastro realizado com sucesse!" };
+    })
+    .catch((error) => {
+      let errorMsg =
+        "Não foi possível realizar o cadastro. Por favor, tente novamente.";
+
+      if (error.response.status === 409) {
+        errorMsg = "Esse email já está cadastrado em nossa lista.";
+      } else if (error.response.status === 422) {
+        errorMsg = "Por favor, insira um email válido.";
+      }
+
+      return {
+        error: errorMsg,
+      };
+    });
+}
