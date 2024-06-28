@@ -5,39 +5,39 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import type { AxiosError } from "axios";
+import axios from "axios";
+import { Crisp } from "crisp-sdk-web";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { PlayCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { PiChartLineUp, PiWarning } from "react-icons/pi";
 import BackgroundBlur from "~/components/_layouts/background-blur";
-import ChallengeCard from "~/components/ui/cards/challenge-card";
-import PriceCard from "~/components/ui/cards/pricing/price-card";
-import WorkshopCard from "~/components/ui/cards/workshop-card";
+import Footer from "~/components/_layouts/footer";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
-import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
-import { getHome } from "~/lib/models/home.server";
+import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
+import ChallengeCard from "~/components/ui/cards/challenge-card";
+import PriceCard from "~/components/ui/cards/pricing/price-card";
 import {
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/ui/cards/pricing/pricing-data";
-import { useColorMode } from "~/lib/contexts/color-mode-context";
-import UserAvatar from "~/components/ui/user-avatar";
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import SubmissionCard from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/submission-card";
-import { ProgressivePracticeContent } from "./components/progressive-practice";
-import { BoldColored } from "./components/bold-colored-text";
-import { PlayCircle } from "lucide-react";
-import Faq from "~/routes/_layout-app/_subscription/faq";
-import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
-import { cn } from "~/lib/utils";
+import WorkshopCard from "~/components/ui/cards/workshop-card";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
-import { PiChartLineUp, PiWarning } from "react-icons/pi";
-import Counter from "./components/counter";
-import Footer from "~/components/_layouts/footer";
-import { Crisp } from "crisp-sdk-web";
-import { currentToken } from "~/lib/services/auth.server";
-import axios from "axios";
-import type { AxiosError } from "axios";
-import type { Subscription } from "~/lib/models/subscription.server";
+import UserAvatar from "~/components/ui/user-avatar";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { environment } from "~/lib/models/environment";
+import { getHome } from "~/lib/models/home.server";
+import type { Subscription } from "~/lib/models/subscription.server";
+import { currentToken } from "~/lib/services/auth.server";
+import { cn } from "~/lib/utils";
+import Faq from "~/routes/_layout-app/_subscription/faq";
+import { BoldColored } from "./components/bold-colored-text";
+import Counter from "./components/counter";
+import { ProgressivePracticeContent } from "./components/progressive-practice";
 
 export const loader = async () => {
   return json({
@@ -1420,30 +1420,22 @@ function Submissions() {
         <div className="relative mb-20">
           <section className=" flex gap-4 upper-post-list mb-4">
             {submissions.slice(0, 12).map((submission, index) => (
-              <SubmissionCard
-                footerPadding="px-2 py-2"
+              <CarouselSubmissionCard
                 key={index}
-                isHomePage
-                challengeUser={submission}
                 challengeSlug={submission.challenge.slug}
-                showReactions={false}
-                size="small"
-                className="flex-shrink-0"
+                submissionImageUrl={submission.submission_image_url}
+                avatar={submission.avatar}
               />
             ))}
           </section>
 
           <section className="flex gap-4 scroll-auto lower-post-list">
             {submissions.slice(12).map((submission, index) => (
-              <SubmissionCard
-                footerPadding="px-2 py-2"
+              <CarouselSubmissionCard
                 key={index}
-                isHomePage
-                challengeUser={submission}
                 challengeSlug={submission.challenge.slug}
-                showReactions={false}
-                size="small"
-                className="flex-shrink-0"
+                submissionImageUrl={submission.submission_image_url}
+                avatar={submission.avatar}
               />
             ))}
           </section>

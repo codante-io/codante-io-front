@@ -7,7 +7,7 @@ import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import classNames from "~/lib/utils/class-names";
 import { formatName } from "~/lib/utils/format-name";
-import SubmissionCard from "../../components/submission-card";
+import SubmissionCard from "~/components/features/submission-card/submission-card";
 import WaitingIcon from "../../components/waiting-icon";
 
 export default function Submissions() {

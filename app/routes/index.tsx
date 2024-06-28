@@ -34,7 +34,7 @@ import DiscordButton from "~/components/features/auth/discord-button";
 import { buttonVariants } from "~/components/ui/button";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { cn } from "~/lib/utils";
-import HomeSubmissionCard from "./_layout-app/_mini-projetos/mini-projetos_.$slug_/components/home-submission-card";
+import CarouselSubmissionCard from "../components/features/submission-card/carousel-submission-card";
 
 export const loader = async () => {
   return json({
@@ -363,7 +363,7 @@ function Submissions() {
         <div className="relative mb-20">
           <section className=" flex gap-4 upper-post-list mb-4">
             {submissions.slice(0, 12).map((submission, index) => (
-              <HomeSubmissionCard
+              <CarouselSubmissionCard
                 key={index}
                 challengeSlug={submission.challenge.slug}
                 submissionImageUrl={submission.submission_image_url}
@@ -374,7 +374,7 @@ function Submissions() {
 
           <section className="flex gap-4 scroll-auto lower-post-list">
             {submissions.slice(12).map((submission, index) => (
-              <HomeSubmissionCard
+              <CarouselSubmissionCard
                 key={index}
                 challengeSlug={submission.challenge.slug}
                 submissionImageUrl={submission.submission_image_url}
