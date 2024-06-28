@@ -1,4 +1,5 @@
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
+import { BiEdit } from "react-icons/bi";
 
 type AdminEditButtonProps = {
   baseURL?: string;
@@ -12,17 +13,15 @@ export default function AdminEditButton({
   const user = useUserFromOutletContext();
 
   return (
-    <div className="my-4 ">
-      {user?.is_admin ? (
-        <a
-          href={baseURL + url}
-          target="_blank"
-          rel="noreferrer"
-          className="p-2 text-xs text-red-500 border-2 border-red-300 rounded hover:underline max-w-20 dark:border-red-900 dark:text-red-300"
-        >
-          Editar
-        </a>
-      ) : null}
-    </div>
+    user?.is_admin && (
+      <a
+        href={baseURL + url}
+        target="_blank"
+        rel="noreferrer"
+        className="p-2 text-xs inline-block align-middle"
+      >
+        <BiEdit className="w-6 h-6 text-red-200" />
+      </a>
+    )
   );
 }
