@@ -3,10 +3,13 @@ type CardItemTagProps = {
   className?: string;
 };
 
-export default function CardItemTag({ tagName, className }: CardItemTagProps) {
+export default function WorkshopCardTag({
+  tagName,
+  className,
+}: CardItemTagProps) {
   return (
     <span
-      className={`mr-1 rounded-full px-2 py-[0.20rem] text-xs font-light capitalize ${className}`}
+      className={`text-[10px] font-light whitespace-nowrap capitalize ${className}`}
     >
       {tagName}
     </span>

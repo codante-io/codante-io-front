@@ -1,16 +1,17 @@
+import { CalendarIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
-import type { Workshop } from "~/lib/models/workshop.server";
-import CardDurationItem from "./card-item-duration";
-import CardItemDifficulty from "./card-item-difficulty";
-import CardItemTag from "./card-item-tag";
-import CardItemLessonsCount from "./card-item-lessons-count";
+import { Fragment } from "react/jsx-runtime";
 import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
+import type { Workshop } from "~/lib/models/workshop.server";
 import {
   fromSecondsToTimeStringWithoutSeconds,
   getPublishedDateAndTime,
 } from "~/lib/utils/interval";
 import { hasHappened } from "~/lib/utils/workshop-utils";
-import { CalendarIcon } from "@heroicons/react/24/outline";
+import CardItemDifficulty from "./card-item-difficulty";
+import CardDurationItem from "./card-item-duration";
+import CardItemLessonsCount from "./card-item-lessons-count";
+import WorkshopCardTag from "./card-item-tag";
 
 function WorkshopCard({
   workshop,
@@ -47,7 +48,7 @@ function WorkshopCard({
           className="w-full md:w-56 lg:w-40 xl:w-56 md:h-auto h-40 rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
         ></div>
 
-        <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">
+        <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[410px] overflow-hidden">
           <div>
             <CardItemDifficulty
               difficulty={workshop.difficulty}
@@ -57,20 +58,27 @@ function WorkshopCard({
               <h2 className="mb-1 text-lg text-gray-700 lg:text-xl dark:text-gray-50 font-lexend ">
                 {workshop?.name}
               </h2>
-              <div className="min-h-[24px]">
-                {workshop.tags?.map((tag) => {
+              <div className=" flex flex-wrap gap-1 ">
+                {workshop.tags?.map((tag, i) => {
                   return (
-                    <CardItemTag
-                      tagName={tag.name}
-                      key={tag.id}
-                      className="text-blue-900 bg-blue-200 dark:text-gray-300 dark:bg-blue-900"
-                    />
+                    <Fragment key={tag.id}>
+                      <WorkshopCardTag
+                        tagName={tag.name}
+                        key={tag.id}
+                        className="italic text-gray-500 dark:text-gray-400 border dark:border-background-600 px-1.5 rounded-full"
+                      />
+                      {/* {i !== workshop.tags.length - 1 && (
+                        <span className="text-[10px] text-gray-500 dark:text-gray-400 -ml-1">
+                          ,
+                        </span>
+                      )} */}
+                    </Fragment>
                   );
                 })}
               </div>
             </div>
             {/* Instrutor */}
-            <div className="flex mb-8">
+            <div className="flex xl:mb-8 mb-5">
               {workshop?.instructor?.avatar_url && (
                 <img
                   src={workshop?.instructor?.avatar_url}
@@ -88,7 +96,7 @@ function WorkshopCard({
               </div>
             </div>
             <div className="h-24 lg:mb-2">
-              <p className="w-full font-sans font-light text-[15px] text-gray-700 dark:text-gray-300 line-clamp-4">
+              <p className="w-full  font-extralight xl:font-light text-[13px] xl:text-[15px] text-gray-700 dark:text-gray-300 line-clamp-4">
                 {workshop?.short_description}
               </p>
             </div>
