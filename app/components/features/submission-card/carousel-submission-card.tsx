@@ -5,7 +5,7 @@ import {
   SubmissionCard,
   SubmissionCardFooter,
   SubmissionCardImage,
-} from "./submission-card-v2";
+} from "./submission-card";
 import { Link } from "@remix-run/react";
 
 type CarouselSubmissionCardProps = {
@@ -36,9 +36,9 @@ export default function CarouselSubmissionCard({
 
 function CarouselSubmissionCardFooter({ avatar }: { avatar: UserAvatarType }) {
   return (
-    <footer className="flex items-center gap-3 dark:bg-background-700 p-3 dark:text-white text-gray-700">
+    <footer className="flex items-center gap-3 text-gray-700 dark:bg-background-700 dark:text-white">
       <UserAvatar avatar={avatar} className="w-10 h-10" />
-      <div className="w-full flex-1">
+      <div className="flex-1 w-full">
         <p className="text-xs dark:text-gray-400">Resolução de</p>
         <h3 className=" line-clamp-1" title={formatName(avatar.name)}>
           {formatName(avatar.name)}
@@ -50,7 +50,7 @@ function CarouselSubmissionCardFooter({ avatar }: { avatar: UserAvatarType }) {
 
 function BlurImageWrapper(props: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className="opacity-20 bg-black hover:opacity-100 sm:blur-sm sm:hover:blur-none transition-all ">
+    <div className="transition-all bg-black opacity-20 hover:opacity-100 sm:blur-sm sm:hover:blur-none ">
       {props.children}
     </div>
   );
