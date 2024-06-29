@@ -67,7 +67,13 @@ function SubmissionCardFooter({
   ...props
 }: SubmissionCardFooterProps) {
   return (
-    <CardFooter className={cn("px-0 py-0 block", className)} {...props}>
+    <CardFooter
+      className={cn(
+        "px-0 py-0 block  dark:bg-background-700 p-3 dark:text-white text-gray-700",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </CardFooter>
   );

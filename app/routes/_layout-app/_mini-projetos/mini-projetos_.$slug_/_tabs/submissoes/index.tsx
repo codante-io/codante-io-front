@@ -1,13 +1,13 @@
 import { Link, useOutletContext } from "@remix-run/react";
 import { Send } from "lucide-react";
-import { Card, CardContent, CardFooter } from "~/components/ui/cards/card";
+import ChallengeSubmissionCard from "~/components/features/submission-card/challenge-submission-card";
 import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardFooter } from "~/components/ui/cards/card";
 import UserAvatar from "~/components/ui/user-avatar";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import classNames from "~/lib/utils/class-names";
 import { formatName } from "~/lib/utils/format-name";
-import SubmissionCard from "~/components/features/submission-card/submission-card";
 import WaitingIcon from "../../components/waiting-icon";
 
 export default function Submissions() {
@@ -29,12 +29,18 @@ export default function Submissions() {
           <WaitingSubmissionBanner user={user} challenge={challenge} />
         ) : null}
         {challengeUsers.map((challengeUser) => (
-          <SubmissionCard
-            listed={challengeUser.listed}
+          <ChallengeSubmissionCard
+            submissionImageUrl={challengeUser.submission_image_url}
+            avatar={challengeUser.user.avatar}
+            k
+            challengeSlug="desafio-1"
+            // listed={challengeUser.listed}
+            isSolution={challengeUser.is_solution}
             key={challengeUser.id}
-            challengeUser={challengeUser}
-            size="medium"
-            challengeSlug={challenge.slug}
+
+            // challengeUser={challengeUser}
+            // size="md"
+            // challengeSlug={challenge.slug}
           />
         ))}
       </div>
