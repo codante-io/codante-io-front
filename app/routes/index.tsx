@@ -25,8 +25,6 @@ import {
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/ui/cards/pricing/pricing-data";
-import BannerAlert from "~/components/ui/banner-alert";
-import { MdLiveTv } from "react-icons/md";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
 import { motion } from "framer-motion";
@@ -35,6 +33,7 @@ import { buttonVariants } from "~/components/ui/button";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { cn } from "~/lib/utils";
 import CarouselSubmissionCard from "../components/features/submission-card/carousel-submission-card";
+import AlertBanner from "~/components/ui/alert-banner";
 
 export const loader = async () => {
   return json({
@@ -89,20 +88,11 @@ function Headline() {
       <div className="container flex flex-col items-center">
         {/* Live Streaming Banner */}
         {homeInfo.live_streaming_workshop && (
-          <BannerAlert
-            bgColor="dark:bg-transparent bg-white"
-            borderColor="border-red-500"
-            className="w-full max-w-2xl mt-2 md:-mb-5"
-          >
-            <MdLiveTv className="w-10 h-10 mb-4 text-red-500 fill-current dark:text-red-300 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
-            <div>
-              <BannerAlert.Title
-                textColor="dark:text-white text-gray-800"
-                className="mb-3 text-center md:text-left md:mb-0"
-              >
-                Existe um workshop acontecendo ao vivo agora!
-              </BannerAlert.Title>
-              <BannerAlert.Subtitle textColor="dark:text-white text-gray-800 text-center md:text-left">
+          <AlertBanner
+            type="streaming"
+            title="Existe um workshop acontecendo ao vivo agora!"
+            subtitle={
+              <span>
                 Clique para assistir juntos o streaming do workshop:{" "}
                 <Link
                   to={`/workshops/${homeInfo.live_streaming_workshop.slug}`}
@@ -110,10 +100,12 @@ function Headline() {
                 >
                   <b>{homeInfo.live_streaming_workshop.name}</b>
                 </Link>
-              </BannerAlert.Subtitle>
-            </div>
-          </BannerAlert>
+              </span>
+            }
+            className="mt-2 md:-mb-5"
+          />
         )}
+
         <h1 className="text-5xl font-light text-center md:mt-10 font-lexend lg:text-7xl">
           Evolua na programação <br />
           <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">

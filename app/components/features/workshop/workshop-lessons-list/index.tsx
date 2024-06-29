@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import { IoLockClosed } from "react-icons/io5";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { fromSecondsToTimeString } from "~/lib/utils/interval";
@@ -33,7 +34,13 @@ export default function WorkshopLessonsList({
                 : ""
             }`}
           >
-            <span className={`mr-3 text-sm text-brand`}>{id + 1}.</span>
+            <span className={`mr-3 text-sm text-brand-400`}>
+              {lesson.user_can_view ? (
+                `${id + 1}.`
+              ) : (
+                <IoLockClosed className="w-3 h-3" />
+              )}
+            </span>
             <h4
               className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
             >

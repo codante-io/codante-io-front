@@ -4,7 +4,7 @@ export default function Footer() {
   const navigation = [
     {
       name: "Email",
-      href: "mailto:contato@gmail.com",
+      href: "mailto:contato@codante.io",
       icon: (props: any) => (
         <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
           <path

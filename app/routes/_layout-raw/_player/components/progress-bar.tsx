@@ -19,9 +19,11 @@ export default function ProgressBar({
   const { user } = useOutletContext<{
     user: User;
   }>();
-  const isCompleted =
-    (lessons.filter((l) => l.user_completed).length * 100) / lessons.length >=
-    100;
+
+  const completedPercentage =
+    (lessons.filter((l) => l.user_completed).length * 100) / lessons.length;
+
+  const isCompleted = completedPercentage >= 100;
 
   function handleSubmit() {
     toast((t) => (
@@ -45,18 +47,15 @@ export default function ProgressBar({
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
           <div
             className={`${
-              isCompleted ? "bg-green-600" : "bg-amber-400"
+              isCompleted ? "bg-green-600" : "dark:bg-brand-400 bg-brand-300"
             } h-2.5 rounded-full`}
             style={{
-              width: `${
-                (lessons.filter((l) => l.user_completed).length * 100) /
-                lessons.length
-              }%`,
+              width: `${completedPercentage}%`,
             }}
           />
         </div>
       </div>
-      {showStatus && (
+      {showStatus && completedPercentage > 0 && (
         <div className="flex gap-3 items-center mt-5">
           <p className="dark:text-gray-400 text-gray-600 text-sm">
             {workshopUser?.completed_at &&
@@ -78,7 +77,10 @@ export default function ProgressBar({
                 Certificado
               </Link>
             ) : (
-              <span className="">Você ainda não finalizou esse Workshop.</span>
+              <span className="">
+                Você já assistiu {Math.round(completedPercentage)}% desse
+                Workshop.
+              </span>
             )}
           </p>
         </div>
