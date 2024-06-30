@@ -38,9 +38,9 @@ export type Workshop = {
   }[];
   instructor: Instructor;
   is_standalone: boolean;
-  lesson_sections: {
+  lesson_sections?: {
     name: string;
-    lessons: string;
+    lessons: string[];
   }[];
   lessons: Lesson[];
   tags: Tag[];

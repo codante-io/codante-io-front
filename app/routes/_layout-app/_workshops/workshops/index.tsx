@@ -58,7 +58,7 @@ export default function Workshops() {
           ))}
         </Card>
       )}
-      <section className="grid grid-cols-1 gap-5 lg:grid-cols-2 place-items-center">
+      <section className="grid grid-cols-1 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr">
         {pastWorkshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}

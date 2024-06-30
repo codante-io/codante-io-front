@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import { IoLockClosed } from "react-icons/io5";
+import { Fragment } from "react/jsx-runtime";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { fromSecondsToTimeString } from "~/lib/utils/interval";
@@ -25,33 +26,78 @@ export default function WorkshopLessonsList({
 
   return (
     <ol className="mt-4">
-      {workshop.lessons.map((lesson: Lesson, id: number) => (
-        <Link key={lesson.id} to={`${linkPrefix}/${lesson.slug}`}>
-          <li
-            className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
-              activeIndex === id
-                ? "bg-background-200 dark:bg-background-800 font-semibold"
-                : ""
-            }`}
-          >
-            <span className={`mr-3 text-sm text-brand-400`}>
-              {lesson.user_can_view ? (
-                `${id + 1}.`
-              ) : (
-                <IoLockClosed className="w-3 h-3" />
-              )}
-            </span>
-            <h4
-              className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
-            >
-              {lesson.name}
-            </h4>
-            <span className="text-sm text-gray-500 dark:text-gray-300">
-              {fromSecondsToTimeString(lesson.duration_in_seconds)}
-            </span>
-          </li>
-        </Link>
-      ))}
+      {workshop.lesson_sections
+        ? workshop.lesson_sections.map((section, index) => (
+            <Fragment key={index}>
+              <li className="px-3 py-2 font-semibold text-gray-700 dark:text-gray-50 mt-4">
+                {section.name}
+              </li>
+              {section.lessons.map((lessonId: string, id: number) => (
+                <LessonLink
+                  key={lessonId}
+                  workshop={workshop}
+                  lessonId={lessonId}
+                  linkPrefix={linkPrefix}
+                  index={id}
+                  activeIndex={activeIndex}
+                />
+              ))}
+            </Fragment>
+          ))
+        : workshop.lessons.map((lesson: Lesson, id: number) => (
+            <LessonLink
+              key={lesson.id}
+              workshop={workshop}
+              lessonId={lesson.id}
+              linkPrefix={linkPrefix}
+              index={id}
+              activeIndex={activeIndex}
+            />
+          ))}
     </ol>
+  );
+}
+
+function LessonLink({
+  workshop,
+  lessonId,
+  linkPrefix,
+  index,
+  activeIndex,
+}: {
+  workshop: Workshop;
+  lessonId: string;
+  linkPrefix: string;
+  index: number;
+  activeIndex: number;
+}) {
+  const lesson = workshop.lessons.find((l) => l.id === lessonId)!;
+
+  return (
+    <Link key={lessonId} to={`${linkPrefix}/${lesson.slug}`}>
+      <li
+        className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
+          activeIndex === index
+            ? "bg-background-200 dark:bg-background-800 font-semibold"
+            : ""
+        }`}
+      >
+        <span className={`mr-3 text-sm text-brand-400`}>
+          {lesson.user_can_view ? (
+            `${index + 1}.`
+          ) : (
+            <IoLockClosed className="w-3 h-3" />
+          )}
+        </span>
+        <h4
+          className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
+        >
+          {lesson.name}
+        </h4>
+        <span className="text-sm text-gray-500 dark:text-gray-300">
+          {fromSecondsToTimeString(lesson.duration_in_seconds)}
+        </span>
+      </li>
+    </Link>
   );
 }

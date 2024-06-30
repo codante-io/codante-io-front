@@ -31,6 +31,7 @@ import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 import { HiMiniArrowSmallRight } from "react-icons/hi2";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
+import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -70,7 +71,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const workshop = await getWorkshop(params.slug, request);
 
-  if (!workshop || !workshop.is_standalone) {
+  if (!workshop) {
     return abort404();
   }
 
@@ -137,6 +138,7 @@ export default function WorkshopSlug() {
         <div>
           <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
             <CardItemDifficulty difficulty={workshop.difficulty} />
+            <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
             <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
                 workshop?.lessons?.reduce(

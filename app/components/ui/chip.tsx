@@ -42,7 +42,12 @@ function Chip({
   const borderColor = colors[type].borderColor;
 
   return (
-    <div className="absolute right-4 top-4 bg-background-50  dark:bg-background-700 rounded-lg">
+    <div
+      className={cn(
+        "absolute right-4 top-4 bg-background-50  dark:bg-background-700 rounded-lg",
+        className,
+      )}
+    >
       <div
         className={cn(
           "px-2 py-1 backdrop-blur-sm border text-white mx-auto text-center rounded-lg relative",
