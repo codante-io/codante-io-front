@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { IoLockClosed } from "react-icons/io5";
 import { Fragment } from "react/jsx-runtime";
+import BecomeProDialog from "~/components/ui/become-pro-dialog";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { fromSecondsToTimeString } from "~/lib/utils/interval";
@@ -38,7 +39,7 @@ export default function WorkshopLessonsList({
                   workshop={workshop}
                   lessonId={lessonId}
                   linkPrefix={linkPrefix}
-                  index={id}
+                  index={workshop.lessons.findIndex((l) => l.id === lessonId)}
                   activeIndex={activeIndex}
                 />
               ))}
@@ -73,7 +74,7 @@ function LessonLink({
 }) {
   const lesson = workshop.lessons.find((l) => l.id === lessonId)!;
 
-  return (
+  return lesson.user_can_view ? (
     <Link key={lessonId} to={`${linkPrefix}/${lesson.slug}`}>
       <li
         className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
@@ -82,13 +83,7 @@ function LessonLink({
             : ""
         }`}
       >
-        <span className={`mr-3 text-sm text-brand-400`}>
-          {lesson.user_can_view ? (
-            `${index + 1}.`
-          ) : (
-            <IoLockClosed className="w-3 h-3" />
-          )}
-        </span>
+        <span className={`mr-3 text-sm text-brand-400`}>{`${index + 1}.`}</span>
         <h4
           className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
         >
@@ -99,5 +94,45 @@ function LessonLink({
         </span>
       </li>
     </Link>
+  ) : (
+    <BecomeProLink lesson={lesson} activeIndex={activeIndex} index={index} />
+  );
+}
+
+function BecomeProLink({
+  lesson,
+  activeIndex,
+  index,
+}: {
+  lesson: Lesson;
+  activeIndex: number;
+  index: number;
+}) {
+  return (
+    <div key={lesson.id}>
+      <BecomeProDialog
+        trigger={
+          <li
+            className={`flex items-center justify-between gap-3 px-3 py-3 font-light transition rounded-lg cursor-pointer hover:bg-background-200 dark:hover:bg-background-800 mb-1 ${
+              activeIndex === index
+                ? "bg-background-200 dark:bg-background-800 font-semibold"
+                : ""
+            }`}
+          >
+            <span className={`mr-3 text-sm text-brand-400`}>
+              <IoLockClosed className="w-3 h-3" />
+            </span>
+            <h4
+              className={`flex-1 inline-block mr-2 text-gray-700 dark:text-gray-50`}
+            >
+              {lesson.name}
+            </h4>
+            <span className="text-sm text-gray-500 dark:text-gray-300">
+              {fromSecondsToTimeString(lesson.duration_in_seconds)}
+            </span>
+          </li>
+        }
+      />
+    </div>
   );
 }

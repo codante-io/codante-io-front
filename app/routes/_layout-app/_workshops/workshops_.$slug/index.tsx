@@ -11,7 +11,11 @@ import {
   AiFillPlayCircle,
   AiFillTwitterCircle,
 } from "react-icons/ai";
-import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  InformationCircleIcon,
+  LockClosedIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import type { Instructor } from "~/lib/models/instructor.server";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -32,6 +36,7 @@ import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 import { HiMiniArrowSmallRight } from "react-icons/hi2";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count";
+import { PiGift } from "react-icons/pi";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -135,7 +140,7 @@ export default function WorkshopSlug() {
             <AdminEditButton url={`/workshop/${workshop.id}/edit`} />
           </h1>
         </div>
-        <div>
+        <div className="flex gap-4">
           <div className="inline-flex gap-6 px-4 py-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
@@ -147,6 +152,19 @@ export default function WorkshopSlug() {
                 ),
               )}
             />
+          </div>
+          <div className="p-4 mb-4 lg:mb-12 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
+            {workshop.is_premium ? (
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                <LockClosedIcon className="w-4 h-4 inline-block mr-2 text-amber-400 align-text-top" />
+                Conteúdo exclusivo
+              </span>
+            ) : (
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                <PiGift className="w-5 h-5 inline-block mr-2 text-green-400 align-text-top" />
+                Conteúdo gratuito
+              </span>
+            )}
           </div>
         </div>
       </header>

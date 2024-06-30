@@ -10,8 +10,8 @@ import ResumedChallengeCard from "~/components/ui/cards/resumed-challenge-card";
 import { Button } from "~/components/ui/button";
 import type { Challenge } from "~/lib/models/challenge.server";
 import ProOverlay from "./pro-overlay";
-import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
-import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
+import BecomeProCard from "~/components/ui/become-pro-card";
+import BecomeProDialog from "~/components/ui/become-pro-dialog";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import Chip from "~/components/ui/chip";
 

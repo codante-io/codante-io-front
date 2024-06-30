@@ -21,9 +21,9 @@ function BecomeProCard() {
       </CardHeader>
       <CardContent>
         <p className="text-gray-600 dark:text-gray-300">
-          Nossas trilhas são exclusivas para nossos assinantes. <br />
+          Esse conteúdo é exclusivo para nossos assinantes. <br />
           <br />
-          Considere se inscrever para ter acesso a conteúdos exclusivos.
+          Considere se inscrever para ter acesso completo.
         </p>
       </CardContent>
       <CardFooter>

@@ -37,6 +37,11 @@ const navigation = [
 
 const moreMenuNavigation = [
   {
+    name: "Planos e preços",
+    href: "/planos",
+    external: false,
+  },
+  {
     name: "Testes Técnicos",
     href: "/testes-tecnicos",
     external: false,

@@ -10,8 +10,8 @@ import {
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
 import { FaRegQuestionCircle } from "react-icons/fa";
-import BecomeProCard from "~/routes/_layout-app/_trilhas/_components/become-pro-card";
-import BecomeProDialog from "~/routes/_layout-app/_trilhas/_components/become-pro-dialog";
+import BecomeProCard from "~/components/ui/become-pro-card";
+import BecomeProDialog from "~/components/ui/become-pro-dialog";
 import Chip from "~/components/ui/chip";
 
 interface ExternalLinkTrackCardProps {
