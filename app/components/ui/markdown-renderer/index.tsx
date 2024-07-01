@@ -6,6 +6,7 @@ import slugify from "slugify";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { cn } from "~/lib/utils/cn";
 import type { ColorMode } from "~/lib/utils/dark-mode";
+import { isAlert, processMarkdown } from "./utils";
 
 const getCodeComponent =
   (colorMode: ColorMode) =>
@@ -66,35 +67,13 @@ function H2WithDivider({
   );
 }
 
-function isAlert(firstChild: React.ReactElement) {
-  if (firstChild.props.children[0].startsWith("Dica"))
-    return { color: "#22c55e", text: "Dica", imgPath: "/icons/bulb-icons.svg" };
-  if (firstChild.props.children[0].startsWith("Informação"))
-    return {
-      color: "#3b82f6",
-      text: "Informação",
-      imgPath: "/icons/info.svg",
-    };
-  if (firstChild.props.children[0].startsWith("Importante"))
-    return {
-      color: "#a855f7",
-      text: "Importante",
-      imgPath: "/icons/icon-important.svg",
-    };
-  if (firstChild.props.children[0].startsWith("Aviso"))
-    return {
-      color: "#fde047",
-      text: "Aviso",
-      imgPath: "/icons/warning.svg",
-    };
-  if (firstChild.props.children[0].startsWith("Cuidado"))
-    return {
-      color: "#ef4444",
-      text: "Cuidado",
-      imgPath: "/icons/caution.svg",
-    };
-  return false;
-}
+const CodeComponent = ({ children }: { children: React.ReactElement }) => {
+  return (
+    <code className="bg-background-200 dark:bg-background-700 p-1 rounded-md">
+      {children}
+    </code>
+  );
+};
 
 const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   h1: {
@@ -159,9 +138,9 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   },
 
   code: {
+    component: CodeComponent,
     props: {
-      className:
-        "dark:text-brand-300 dark:bg-background-700 bg-background-200 px-1.5 py-0.5 rounded-md font-mono before:content-[''] after:content-['']",
+      className: "bg-background-200 dark:bg-background-700 p-1 rounded-md",
     },
   },
 
@@ -203,29 +182,15 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   },
 
   span: {
+    component: ({ children }: { children: React.ReactElement }) => {
+      // console.log(children);
+      return <span className="font-light">{children}</span>;
+    },
     props: {
-      className: fontSize === "small" ? "text-sm" : "",
+      className: `${fontSize === "small" ? "text-sm" : ""} font-light`,
     },
   },
 });
-
-function processMarkdown(markdown: string): string {
-  const replacements = {
-    "\\[!Tip\\]": "Dica",
-    "\\[!Note\\]": "Informação",
-    "\\[!Important\\]": "Importante",
-    "\\[!Warning\\]": "Aviso",
-    "\\[!Caution\\]": "Cuidado",
-  };
-
-  let processedMarkdown = markdown;
-
-  for (const [key, value] of Object.entries(replacements)) {
-    processedMarkdown = processedMarkdown.replace(new RegExp(key, "gi"), value);
-  }
-
-  return processedMarkdown;
-}
 
 export default function MarkdownRenderer({
   markdown,
