@@ -1,52 +1,52 @@
+import {
+  InformationCircleIcon,
+  LockClosedIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
-import invariant from "tiny-invariant";
-import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
-import CardItemDuration from "~/components/ui/cards/card-item-duration";
-import TitleIcon from "~/components/ui/title-icon";
-import { getWorkshop } from "~/lib/models/workshop.server";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import type { IconType } from "react-icons";
 import {
   AiFillGithub,
   AiFillLinkedin,
   AiFillTwitterCircle,
   AiOutlineSolution,
 } from "react-icons/ai";
-import {
-  InformationCircleIcon,
-  LockClosedIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import type { Instructor } from "~/lib/models/instructor.server";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
-import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
-import { abort404 } from "~/lib/utils/responses.server";
-import {
-  fromSecondsToHHMM,
-  fromSecondsToTimeStringWithoutSeconds,
-  getPublishedDateAndTime,
-} from "~/lib/utils/interval";
-import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { MdComputer } from "react-icons/md";
-import type { IconType } from "react-icons";
-import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
-import YoutubePlayer from "~/components/ui/video-players/youtube-player";
-import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
-import AlertBannerPortal from "~/components/ui/alert-banner-portal";
-import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count";
 import { PiGift } from "react-icons/pi";
-import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
-import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
+import { RiLiveLine } from "react-icons/ri";
+import invariant from "tiny-invariant";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
+import NextLessonPreview from "~/components/features/workshop/next-lesson-preview/index";
+import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
+import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
+import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 import BecomeProCard from "~/components/ui/become-pro-card";
 import BecomeProFreeCard from "~/components/ui/become-pro-free-card";
 import { Button } from "~/components/ui/button";
-import { RiLiveFill, RiLiveLine } from "react-icons/ri";
-import NextLessonPreview from "~/components/features/workshop/next-lesson-preview/index";
+import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
+import CardItemDuration from "~/components/ui/cards/card-item-duration";
+import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
+import TitleIcon from "~/components/ui/title-icon";
+import YoutubePlayer from "~/components/ui/video-players/youtube-player";
+import type { Instructor } from "~/lib/models/instructor.server";
+import { getWorkshop } from "~/lib/models/workshop.server";
+import {
+  fromSecondsToTimeStringWithoutSeconds,
+  getPublishedDateAndTime,
+  humanTimeFormat,
+} from "~/lib/utils/interval";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+import { abort404 } from "~/lib/utils/responses.server";
+import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { User } from "~/lib/models/user.server";
+import type { User } from "~/lib/models/user.server";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -169,9 +169,8 @@ export default function WorkshopSlug() {
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
             <CardItemDuration
-              durationString={fromSecondsToTimeStringWithoutSeconds(
+              durationString={humanTimeFormat(
                 workshop?.lessons?.reduce((acc, lesson) => {
-                  console.log(lesson.duration_in_seconds);
                   return acc + Number(lesson.duration_in_seconds);
                 }, 0),
               )}

@@ -1,17 +1,12 @@
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
+import { RiLiveLine } from "react-icons/ri";
+import Chip from "~/components/ui/chip";
 import type { Workshop } from "~/lib/models/workshop.server";
-import {
-  formatTime,
-  fromSecondsToHHMM,
-  fromSecondsToTimeStringWithoutSeconds,
-  getPublishedDateAndTime,
-} from "~/lib/utils/interval";
+import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { hasHappened } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
-import Chip from "~/components/ui/chip";
-import { RiLiveFill, RiLiveLine } from "react-icons/ri";
 
 import { AiOutlineSolution } from "react-icons/ai";
 
@@ -126,17 +121,11 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
           <>
             <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
             <CardDurationItem
-              durationString={formatTime(
+              durationString={humanTimeFormat(
                 workshop?.lessons?.reduce(
                   (acc, lesson) => acc + lesson.duration_in_seconds,
                   0,
                 ),
-                {
-                  minuteSuffix: "",
-                  hourSuffix: "h",
-                  secondsSuffix: "",
-                  removeSeconds: true,
-                },
               )}
             />
           </>

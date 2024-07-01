@@ -38,6 +38,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crisp-sdk-web": "^1.0.25",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.2",
     "framer-motion": "^11.2.12",

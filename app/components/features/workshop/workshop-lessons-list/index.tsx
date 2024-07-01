@@ -90,7 +90,7 @@ function LessonLink({
         >
           {lesson.name}
         </h4>
-        <span className="text-sm text-gray-500 dark:text-gray-300">
+        <span className="text-sm text-gray-500 dark:text-gray-400 ">
           {fromSecondsToTimeString(lesson.duration_in_seconds)}
         </span>
       </li>
