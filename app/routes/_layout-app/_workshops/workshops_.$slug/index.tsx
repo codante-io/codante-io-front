@@ -36,11 +36,7 @@ import TitleIcon from "~/components/ui/title-icon";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import type { Instructor } from "~/lib/models/instructor.server";
 import { getWorkshop } from "~/lib/models/workshop.server";
-import {
-  fromSecondsToTimeStringWithoutSeconds,
-  getPublishedDateAndTime,
-  humanTimeFormat,
-} from "~/lib/utils/interval";
+import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
