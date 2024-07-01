@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import CardItemDifficulty from "~/components/ui/cards/card-item-difficulty";
 import CardItemDuration from "~/components/ui/cards/card-item-duration";
@@ -23,6 +23,7 @@ import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons
 import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
 import { abort404 } from "~/lib/utils/responses.server";
 import {
+  fromSecondsToHHMM,
   fromSecondsToTimeStringWithoutSeconds,
   getPublishedDateAndTime,
 } from "~/lib/utils/interval";
@@ -41,8 +42,11 @@ import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import BecomeProCard from "~/components/ui/become-pro-card";
 import BecomeProFreeCard from "~/components/ui/become-pro-free-card";
 import { Button } from "~/components/ui/button";
-import { RiLiveFill } from "react-icons/ri";
+import { RiLiveFill, RiLiveLine } from "react-icons/ri";
 import NextLessonPreview from "~/components/features/workshop/next-lesson-preview/index";
+
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { User } from "~/lib/models/user.server";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -91,6 +95,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
+
+  const { user } = useOutletContext<{ user: User }>();
   const workshop = loaderData?.workshop;
   const nextLesson = workshop?.next_lesson || workshop?.lessons[0];
 
@@ -143,13 +149,13 @@ export default function WorkshopSlug() {
           <span className="lg:text-lg font-extralight flex items-center gap-2">
             {workshop.is_standalone ? (
               <>
-                <RiLiveFill className="text-red-400 w-4 h-4" />
-                Workshop ao vivo
+                <RiLiveLine className="text-brand-400 w-4 h-4" />
+                Workshop
               </>
             ) : (
               <>
                 <AiOutlineSolution className="text-amber-500 w-4 h-4" />
-                Workshop de resolução de projeto
+                Tutorial
               </>
             )}
           </span>
@@ -164,33 +170,38 @@ export default function WorkshopSlug() {
             <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
             <CardItemDuration
               durationString={fromSecondsToTimeStringWithoutSeconds(
-                workshop?.lessons?.reduce(
-                  (acc, lesson) => acc + lesson.duration_in_seconds,
-                  0,
-                ),
+                workshop?.lessons?.reduce((acc, lesson) => {
+                  console.log(lesson.duration_in_seconds);
+                  return acc + Number(lesson.duration_in_seconds);
+                }, 0),
               )}
             />
           </div>
-          <ResponsiveHoverCard
-            trigger={
-              <div className="p-4 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl cursor-pointer">
-                {workshop.is_premium ? (
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    <LockClosedIcon className="w-4 h-4 inline-block mr-2 text-amber-400 align-text-top" />
-                    Conteúdo exclusivo <ProSpanWrapper>PRO</ProSpanWrapper>
-                  </span>
-                ) : (
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    <PiGift className="w-5 h-5 inline-block mr-2 text-green-400 align-text-top" />
-                    Conteúdo gratuito
-                  </span>
-                )}
-              </div>
-            }
-            cardContent={
-              workshop.is_premium ? <BecomeProCard /> : <BecomeProFreeCard />
-            }
-          />
+          {!user?.is_pro && (
+            <ResponsiveHoverCard
+              behavior="click"
+              trigger={
+                <div className="p-4 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl cursor-pointer text-xs">
+                  {workshop.is_premium ? (
+                    <span className="text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                      <LockClosedIcon className="w-4 h-4 inline-block mr-1 text-amber-400 align-text-top" />
+                      Conteúdo <ProSpanWrapper>PRO</ProSpanWrapper>{" "}
+                      <IoInformationCircleOutline className="inline-block ml-2 w-5 h-5 align-text-top" />
+                    </span>
+                  ) : (
+                    <span className="text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                      <PiGift className="w-5 h-5 inline-block mr-2 text-green-400 align-text-top" />
+                      Conteúdo gratuito
+                      <IoInformationCircleOutline className="inline-block ml-1 w-5 h-5 align-text-top" />
+                    </span>
+                  )}
+                </div>
+              }
+              cardContent={
+                workshop.is_premium ? <BecomeProCard /> : <BecomeProFreeCard />
+              }
+            />
+          )}
         </div>
       </header>
 
@@ -220,11 +231,16 @@ export default function WorkshopSlug() {
                   <b>{workshop.challenge?.name}</b>.
                 </p>
 
-                <Link to={`/mini-projetos/${workshop.challenge?.slug}`}>
-                  <Button variant="default" className="mt-4">
-                    Ver Mini Projeto
-                  </Button>
-                </Link>
+                <div className="flex gap-2 mt-4">
+                  <Link to={`/mini-projetos/${workshop.challenge?.slug}`}>
+                    <Button variant="default">Ver Mini Projeto</Button>
+                  </Link>
+                  <Link
+                    to={`/mini-projetos/${workshop.challenge?.slug}/resolucao-codigo`}
+                  >
+                    <Button variant="secondary">Código completo</Button>
+                  </Link>
+                </div>
 
                 <div className="mt-16">
                   <Subtitle text="Descrição do projeto" />
@@ -265,11 +281,29 @@ export default function WorkshopSlug() {
             <InstructorCard instructor={workshop.instructor} />
           </div>
 
+          {/* Materiais */}
+          {workshop?.resources && (
+            <div>
+              <div className="flex items-center">
+                <TitleIcon className="inline-block w-3 h-3 mr-2" />
+                <h3 className="font-bold inline-block mt-0 text-lg">
+                  Materiais
+                </h3>
+              </div>
+              <WorkshopLessonsHeader workshop={workshop} showResources />
+              {/* <WorkshopLessonsList activeIndex={-1} workshop={workshop} /> */}
+            </div>
+          )}
+
           {/* Aulas */}
           <div className="">
             {workshop.lessons.length > 0 && (
               <>
-                <WorkshopLessonsHeader workshop={workshop} showResources />
+                <div className="flex items-center">
+                  <TitleIcon className="inline-block w-3 h-3 mr-2" />
+                  <h3 className="font-bold inline-block mt-0 text-lg">Aulas</h3>
+                </div>
+                {/* <WorkshopLessonsHeader workshop={workshop} showResources /> */}
                 <WorkshopLessonsList activeIndex={-1} workshop={workshop} />
               </>
             )}

@@ -115,9 +115,6 @@ function WorkshopLessonListItem({
     if (isLoggedIn && lesson.user_can_view) {
       return <MarkCompletedButton lesson={lesson} />;
     }
-    // if (!isLoggedIn && lesson.user_can_view) {
-    //   return <LockOpenIcon className="w-4 h-4 text-green-600 basis-5 ml-0.5" />;
-    // }
 
     return <LockClosedIcon className="w-4 h-4 text-gray-400 basis-5" />;
   }

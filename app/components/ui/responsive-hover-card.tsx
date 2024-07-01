@@ -14,11 +14,13 @@ import { useMediaQuery } from "~/lib/hooks/use-media-query";
 interface ResponsiveHoverCardProps {
   trigger: React.ReactNode;
   cardContent: React.ReactNode;
+  behavior?: "hover" | "click";
 }
 
 export function ResponsiveHoverCard({
   trigger,
   cardContent,
+  behavior = "hover",
 }: ResponsiveHoverCardProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -27,7 +29,7 @@ export function ResponsiveHoverCard({
     setHideOnMobile(isMobile);
   }, [isMobile]);
 
-  if (hideOnMobile) {
+  if (hideOnMobile || behavior === "click") {
     return (
       <Popover>
         <PopoverTrigger>{trigger}</PopoverTrigger>

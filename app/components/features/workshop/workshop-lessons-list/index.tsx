@@ -30,9 +30,10 @@ export default function WorkshopLessonsList({
       {workshop.lesson_sections
         ? workshop.lesson_sections.map((section, index) => (
             <Fragment key={index}>
-              <li className="px-3 py-2 font-semibold text-gray-700 dark:text-gray-50 mt-4">
+              <li className="px-3 py-2 text-gray-600 dark:text-gray-500 mt-4 text-sm font-light">
                 {section.name}
               </li>
+              <div className="w-full border-b dark:border-b-background-800 border-background-100" />
               {section.lessons.map((lessonId: string, id: number) => (
                 <LessonLink
                   key={lessonId}

@@ -2,6 +2,8 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
 import type { Workshop } from "~/lib/models/workshop.server";
 import {
+  formatTime,
+  fromSecondsToHHMM,
   fromSecondsToTimeStringWithoutSeconds,
   getPublishedDateAndTime,
 } from "~/lib/utils/interval";
@@ -9,7 +11,7 @@ import { hasHappened } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
 import Chip from "~/components/ui/chip";
-import { RiLiveFill } from "react-icons/ri";
+import { RiLiveFill, RiLiveLine } from "react-icons/ri";
 
 import { AiOutlineSolution } from "react-icons/ai";
 
@@ -61,6 +63,24 @@ function WorkshopCard({
 
         <div className="z-10 flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 overflow-hidden">
           <div>
+            <div
+              className=" font-extralight dark:text-gray-400
+text-gray-500 text-xs"
+            >
+              {workshop.is_standalone ? (
+                <div className={`flex items-center gap-1`}>
+                  <RiLiveLine className="group-hover:text-red-400 w-3 h-3 opacity-70" />
+
+                  <span>Workshop</span>
+                </div>
+              ) : (
+                <div className={`flex items-center gap-1`}>
+                  <AiOutlineSolution className="group-hover:text-green-500 w-3 h-3 opacity-70" />
+
+                  <span>Tutorial</span>
+                </div>
+              )}
+            </div>
             <div className="mb-8">
               <h2 className="text-xl text-gray-700 lg:text-2xl dark:text-gray-50 font-lexend max-w-[50%]">
                 {workshop?.name}
@@ -106,11 +126,17 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
           <>
             <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
             <CardDurationItem
-              durationString={fromSecondsToTimeStringWithoutSeconds(
+              durationString={formatTime(
                 workshop?.lessons?.reduce(
                   (acc, lesson) => acc + lesson.duration_in_seconds,
                   0,
                 ),
+                {
+                  minuteSuffix: "",
+                  hourSuffix: "h",
+                  secondsSuffix: "",
+                  removeSeconds: true,
+                },
               )}
             />
           </>
@@ -125,25 +151,6 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
               {publishedTime ? ` às ${publishedTime}` : ""}
             </span>
           </p>
-        )}
-      </div>
-      <div className="group-hover:opacity-0 opacity-100">
-        {workshop.is_standalone ? (
-          <div className={`flex items-center gap-1`}>
-            <RiLiveFill className="text-red-400 w-4 h-4" />
-
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Workshop ao vivo
-            </span>
-          </div>
-        ) : (
-          <div className={`flex items-center gap-1`}>
-            <AiOutlineSolution className="text-amber-500 w-4 h-4" />
-
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              Resolução de projeto
-            </span>
-          </div>
         )}
       </div>
     </div>

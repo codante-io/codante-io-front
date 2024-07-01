@@ -281,6 +281,9 @@ export default function ChallengeSlug() {
                       <span className="inline font-bold">
                         {challenge?.name}
                       </span>
+                      <AdminEditButton
+                        url={`/challenge/${challenge.id}/edit`}
+                      />
                     </span>
                   </span>
                 </h1>
@@ -288,7 +291,6 @@ export default function ChallengeSlug() {
                 <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
                   {challenge?.short_description}
                 </p>
-                <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
               </div>
             </div>
 
