@@ -9,23 +9,26 @@ import {
 import { Button } from "~/components/ui/button";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
-function BecomeProCard() {
+function BecomeProFreeCard() {
   return (
     <Card border="bright" className="text-start">
       <CardHeader>
         <CardTitle>
           <h3 className="text-lg font-medium text-gray-700 dark:text-gray-50">
-            Acesso exclusivo para membros <ProSpanWrapper>PRO</ProSpanWrapper>
+            Esse conteúdo é{" "}
+            <span className="underline bold decoration-2 decoration-green-400">
+              gratuito
+            </span>
           </h3>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-gray-600 dark:text-gray-300 mb-4">
-          Esse conteúdo é exclusivo para nossos assinantes.
+          Você pode acessá-lo gratuitamente.
         </p>
         <p className="text-gray-600 dark:text-gray-300">
-          Libere esse e muito mais conteúdo assinando o <b>Codante</b>{" "}
-          <ProSpanWrapper>PRO</ProSpanWrapper>.
+          Para liberar todos os conteúdos e apoiar nosso projeto, você pode
+          assinar o <b>Codante</b> <ProSpanWrapper>PRO</ProSpanWrapper>.
         </p>{" "}
       </CardContent>
       <CardFooter>
@@ -46,4 +49,4 @@ function BecomeProCard() {
   );
 }
 
-export default BecomeProCard;
+export default BecomeProFreeCard;
