@@ -18,7 +18,7 @@ import NotFound from "~/components/features/error-handling/not-found";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getHome } from "~/lib/models/home.server";
-import type { User } from "~/lib/models/user.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 import {
   freePlanDetails,
   freePlanFeatures,

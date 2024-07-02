@@ -55,9 +55,9 @@ export default function ProgressBar({
           />
         </div>
       </div>
-      {showStatus && completedPercentage > 0 && (
+      {showStatus && (
         <div className="flex gap-3 items-center mt-5">
-          <p className="dark:text-gray-400 text-gray-600 text-sm">
+          <p className="dark:text-gray-400 text-gray-600 text-xs">
             {workshopUser?.completed_at &&
               `Você completou esse Workshop em ${formatDateDDMMYYYY(
                 workshopUser?.completed_at,
@@ -78,8 +78,10 @@ export default function ProgressBar({
               </Link>
             ) : (
               <span className="">
-                Você já assistiu {Math.round(completedPercentage)}% desse
-                Workshop.
+                {completedPercentage === 0
+                  ? "Você ainda não assistiu nenhuma aula."
+                  : `Você já assistiu ${Math.round(completedPercentage)}% desse
+                Workshop.`}
               </span>
             )}
           </p>

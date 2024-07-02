@@ -43,6 +43,7 @@ import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 
 import { IoInformationCircleOutline } from "react-icons/io5";
 import type { User } from "~/lib/models/user.server";
+import { hasHappened } from "~/lib/utils/workshop-utils";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -100,25 +101,21 @@ export default function WorkshopSlug() {
     workshop.published_at,
   );
 
-  function workshopHasHappened() {
-    if (!workshop.published_at) return false;
-    const now = new Date();
-    const date = new Date(workshop.published_at);
-
-    return now.toISOString() > date.toISOString();
-  }
+  const workshopDurationInSeconds = workshop?.lessons?.reduce((acc, lesson) => {
+    return acc + Number(lesson.duration_in_seconds);
+  }, 0);
 
   return (
     <section className="container mx-auto mb-16">
       {workshop.status === "soon" && (
         <AlertBannerPortal
           title={`${
-            workshopHasHappened()
+            hasHappened(workshop)
               ? `Esse workshop aconteceu recentemente!`
               : "Ei! Esse workshop ainda não aconteceu!"
           }`}
           subtitle={`${
-            workshopHasHappened()
+            hasHappened(workshop)
               ? "Aguarde que em breve estará disponível na plataforma."
               : `Você poderá assisti-lo ao vivo ${
                   publishedDate
@@ -140,17 +137,16 @@ export default function WorkshopSlug() {
       )}
       {/* Header */}
       <header className="flex justify-center flex-col gap-2 mb-8 lg:gap-6">
-        {/* <TitleIcon className="hidden w-8 h-8 lg:h-12 lg:w-12 md:inline-block" /> */}
         <div>
           <span className="lg:text-lg font-extralight flex items-center gap-2">
             {workshop.is_standalone ? (
               <>
-                <RiLiveLine className="text-brand-400 w-4 h-4" />
+                <RiLiveLine className="text-red-400 w-4 h-4" />
                 Workshop
               </>
             ) : (
               <>
-                <AiOutlineSolution className="text-amber-500 w-4 h-4" />
+                <AiOutlineSolution className="text-green-400 w-4 h-4" />
                 Tutorial
               </>
             )}
@@ -165,11 +161,7 @@ export default function WorkshopSlug() {
             <CardItemDifficulty difficulty={workshop.difficulty} />
             <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
             <CardItemDuration
-              durationString={humanTimeFormat(
-                workshop?.lessons?.reduce((acc, lesson) => {
-                  return acc + Number(lesson.duration_in_seconds);
-                }, 0),
-              )}
+              durationString={humanTimeFormat(workshopDurationInSeconds)}
             />
           </div>
           {!user?.is_pro && (
@@ -250,21 +242,28 @@ export default function WorkshopSlug() {
         {/* Right Side */}
         <div className="lg:w-3/5 space-y-12">
           {/* Progress Bar & Certificate */}
-          {workshop.workshop_user && (
-            <div className="">
-              <div className="flex items-center">
-                <TitleIcon className="inline-block w-3 h-3 mr-2" />
-                <h3 className="inline-block mt-0 text-lg font-light">
-                  <span className="font-bold">Progresso</span>
-                </h3>
-              </div>
+          <div className="">
+            <div className="flex items-center">
+              <TitleIcon className="inline-block w-3 h-3 mr-2" />
+              <h3 className="inline-block mt-0 text-lg font-light">
+                <span className="font-bold">Progresso</span>
+              </h3>
+            </div>
+            {!workshop.workshop_user ? (
               <ProgressBar
                 lessons={workshop.lessons}
                 showStatus={true}
                 workshopUser={workshop.workshop_user}
               />
-            </div>
-          )}
+            ) : (
+              <div className="flex flex-col items-start gap-2 hover:opacity-80 w-fit dark:text-gray-400 text-gray-600 text-xs mt-2">
+                Você ainda não começou esse workshop.
+                <Link to={`/workshops/${workshop.slug}/${nextLesson.slug}`}>
+                  <Button variant="default">Iniciar workshop</Button>
+                </Link>
+              </div>
+            )}
+          </div>
           {/* Instrutor */}
           <div>
             <div className="flex items-center">
@@ -286,7 +285,6 @@ export default function WorkshopSlug() {
                 </h3>
               </div>
               <WorkshopLessonsHeader workshop={workshop} showResources />
-              {/* <WorkshopLessonsList activeIndex={-1} workshop={workshop} /> */}
             </div>
           )}
 

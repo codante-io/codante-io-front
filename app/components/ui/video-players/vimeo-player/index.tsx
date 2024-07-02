@@ -7,6 +7,7 @@ import { Link } from "@remix-run/react";
 import { FaCrown } from "react-icons/fa";
 import type { AvailableTo } from "~/lib/models/lesson.server";
 import { Button } from "~/components/ui/button";
+import BecomeProCard from "~/components/ui/become-pro-card";
 
 type VimeoPlayerProps = {
   vimeoUrl: string;
@@ -99,7 +100,9 @@ export default function VimeoPlayer({
         {vimeoUrl ? (
           <PlayCircleIcon className="absolute w-20 h-20 text-brand" />
         ) : (
-          <NotAvailableOverlay available_to={available_to} />
+          <div className="absolute z-20 p-3 max-w-md">
+            <BecomeProCard />
+          </div>
         )}
       </div>
     </div>
@@ -113,7 +116,9 @@ function NotAvailableOverlay({
 }) {
   return (
     <div className="absolute z-20 p-3 bg-white border border-gray-200 max-w-md rounded-lg shadow-2xl shadow-background-700 dark:border- dark:bg-background-800 dark:border-background-600 md:p-10">
-      <h3 className="font-bold md:text-2xl text-brand font-lexend">Ops... </h3>
+      <h3 className="font-bold md:text-2xl text-brand font-lexend">
+        Cadastre-se para acessar!
+      </h3>
       <p className="mt-2 mb-6 text-sm text-gray-500 dark:text-gray-300 md:text-base">
         {available_to === "logged_in" && (
           <span>

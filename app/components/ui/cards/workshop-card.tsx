@@ -4,7 +4,7 @@ import { RiLiveLine } from "react-icons/ri";
 import Chip from "~/components/ui/chip";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
-import { hasHappened } from "~/lib/utils/workshop-utils";
+import { hasHappened, isNew } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
 
@@ -24,17 +24,8 @@ function WorkshopCard({
         target={openInNewTab ? "_blank" : "_self"}
         className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-800 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-all duration-300 overflow-hidden"
       >
-        <div className="group-hover:opacity-0 opacity-100">
-          {workshop?.status === "soon" && !hasHappened(workshop) && (
-            <Chip text="Em breve" />
-          )}
-          {workshop?.status === "soon" && hasHappened(workshop) && (
-            <Chip text="Em Edição" />
-          )}
-          {workshop?.status === "streaming" && (
-            <Chip type="unlisted" text="Ao vivo agora 🔴" />
-          )}
-          {!workshop?.is_premium && <Chip type="free" text="Gratuito" />}
+        <div className="group-hover:opacity-0 opacity-100 transition-all duration-500">
+          <WorkshopChip workshop={workshop} />
         </div>
 
         {workshop?.video_url ? (
@@ -58,10 +49,7 @@ function WorkshopCard({
 
         <div className="z-10 flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 overflow-hidden">
           <div>
-            <div
-              className=" font-extralight dark:text-gray-400
-text-gray-500 text-xs"
-            >
+            <div className=" font-extralight dark:text-gray-400 text-gray-500 text-xs">
               {workshop.is_standalone ? (
                 <div className={`flex items-center gap-1`}>
                   <RiLiveLine className="group-hover:text-red-400 w-3 h-3 opacity-70" />
@@ -144,4 +132,26 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
       </div>
     </div>
   );
+}
+
+function WorkshopChip({ workshop }: { workshop: Workshop }) {
+  if (isNew(workshop)) {
+    return <Chip text="Novo" />;
+  }
+
+  if (workshop.status === "soon" && !hasHappened(workshop)) {
+    return <Chip text="Em breve" />;
+  }
+
+  if (workshop.status === "soon" && hasHappened(workshop)) {
+    return <Chip text="Em Edição" />;
+  }
+
+  if (workshop.status === "streaming") {
+    return <Chip type="unlisted" text="🔴 Ao vivo" />;
+  }
+
+  if (!workshop.is_premium) {
+    return <Chip type="free" text="Gratuito" />;
+  }
 }

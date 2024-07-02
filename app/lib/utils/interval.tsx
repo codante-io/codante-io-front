@@ -27,43 +27,6 @@ export function humanTimeFormat(totalSeconds: number) {
   return `${hoursString}h${minutesString}`;
 }
 
-// type FormatTimeOptions = {
-//   removeSeconds?: boolean;
-//   hourSuffix?: "h" | ":";
-//   minuteSuffix?: "m" | ":" | "";
-//   secondsSuffix?: "s" | "";
-// };
-
-// export function formatTime(
-//   seconds: number,
-//   options: FormatTimeOptions = {},
-// ): string {
-//   // Valores padrão
-//   const defaultOptions: FormatTimeOptions = {
-//     removeSeconds: true,
-//     hourSuffix: "h",
-//     minuteSuffix: "m",
-//     secondsSuffix: "s",
-//   };
-
-//   // Mesclando opções fornecidas com valores padrão
-//   const finalOptions = { ...defaultOptions, ...options };
-
-//   const hours = Math.floor(seconds / 3600);
-//   const minutes = Math.floor((seconds % 3600) / 60);
-//   const secondsLeft = seconds % 60;
-
-//   const hoursString = hours > 0 ? `${hours}${finalOptions.hourSuffix}` : "";
-//   const minutesString =
-//     minutes > 0 || hours > 0 ? `${minutes}${finalOptions.minuteSuffix}` : "";
-//   const secondsString =
-//     secondsLeft > 0 && !finalOptions.removeSeconds
-//       ? `${secondsLeft}${finalOptions.secondsSuffix}`
-//       : "";
-
-//   return `${hoursString}${minutesString}${secondsString}`;
-// }
-
 export function fromSecondsToTimeString(
   seconds: number,
   omitHoursWhenZero = true,
