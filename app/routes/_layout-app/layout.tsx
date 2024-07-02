@@ -6,6 +6,10 @@ type AppLayoutProps = {
   children: React.ReactNode;
 };
 
+export const meta = () => {
+  return [];
+};
+
 export default function AppLayout({ children }: AppLayoutProps) {
   const { user } = useOutletContext<{ user: User | null }>();
   return (
