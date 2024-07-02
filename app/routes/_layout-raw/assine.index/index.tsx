@@ -3,6 +3,7 @@ import {
   Link,
   isRouteErrorResponse,
   useLoaderData,
+  useOutletContext,
   useRouteError,
 } from "@remix-run/react";
 import type { AxiosError } from "axios";
@@ -38,6 +39,8 @@ import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
 import Counter from "./components/counter";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
+import Navbar from "~/components/_layouts/navbar";
+import type { User } from "~/lib/models/user.server";
 
 export const loader = async () => {
   return json({
@@ -88,9 +91,11 @@ export default function HomePage() {
   useEffect(() => {
     Crisp.configure("dec01a18-bf11-4fb8-a820-6a53760ba042");
   }, []);
-
+  const { user } = useOutletContext<{ user: User }>();
   return (
     <div>
+      <Navbar user={user} />
+
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
         <BackgroundBlur />
         <Headline />
@@ -188,7 +193,7 @@ function Headline() {
         className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_68px)]"
       >
         <div className="container flex flex-col items-center gap-2 mt-2">
-          <nav>
+          {/* <nav>
             {colorMode === "light" ? (
               <img
                 className="w-auto h-14"
@@ -198,7 +203,7 @@ function Headline() {
             ) : (
               <img className="w-auto h-14" src="/cdnt.svg" alt="Codante" />
             )}{" "}
-          </nav>
+          </nav> */}
           <h1 className="text-3xl font-light text-center mt-6 font-lexend md:text-6xl">
             Aprenda front-end <br />
             <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
