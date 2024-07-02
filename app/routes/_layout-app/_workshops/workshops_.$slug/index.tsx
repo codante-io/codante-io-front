@@ -44,6 +44,7 @@ import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import type { User } from "~/lib/models/user.server";
 import { hasHappened } from "~/lib/utils/workshop-utils";
+import { HiMiniArrowSmallRight } from "react-icons/hi2";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -243,23 +244,33 @@ export default function WorkshopSlug() {
         <div className="lg:w-3/5 space-y-12">
           {/* Progress Bar & Certificate */}
           <div className="">
-            <div className="flex items-center">
-              <TitleIcon className="inline-block w-3 h-3 mr-2" />
-              <h3 className="inline-block mt-0 text-lg font-light">
-                <span className="font-bold">Progresso</span>
-              </h3>
-            </div>
-            {!workshop.workshop_user ? (
-              <ProgressBar
-                lessons={workshop.lessons}
-                showStatus={true}
-                workshopUser={workshop.workshop_user}
-              />
+            {workshop.workshop_user ? (
+              <>
+                <div className="flex items-center">
+                  <TitleIcon className="inline-block w-3 h-3 mr-2" />
+                  <h3 className="inline-block mt-0 text-lg font-light">
+                    <span className="font-bold">Progresso</span>
+                  </h3>
+                </div>
+                <ProgressBar
+                  lessons={workshop.lessons}
+                  showStatus={true}
+                  workshopUser={workshop.workshop_user}
+                />
+              </>
             ) : (
-              <div className="flex flex-col items-start gap-2 hover:opacity-80 w-fit dark:text-gray-400 text-gray-600 text-xs mt-2">
-                Você ainda não começou esse workshop.
-                <Link to={`/workshops/${workshop.slug}/${nextLesson.slug}`}>
-                  <Button variant="default">Iniciar workshop</Button>
+              <div className="flex flex-col items-start gap-2 dark:text-gray-400 text-gray-600 text-xs mt-2 w-full">
+                <Link
+                  to={`/workshops/${workshop.slug}/${nextLesson.slug}`}
+                  className="w-full"
+                >
+                  <Button
+                    variant="default"
+                    className="w-full p-8 text-xl flex items-center gap-4"
+                  >
+                    <RiLiveLine />
+                    Iniciar workshop
+                  </Button>
                 </Link>
               </div>
             )}

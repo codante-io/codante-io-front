@@ -28,7 +28,7 @@ function WorkshopCard({
           <WorkshopChip workshop={workshop} />
         </div>
 
-        {workshop?.video_url ? (
+        {/* {workshop?.video_url ? (
           <video
             autoPlay
             muted
@@ -43,31 +43,33 @@ function WorkshopCard({
             src={workshop.image_url}
             className="absolute right-0 w-[45%] h-full object-cover object-right-bottom opacity-0 group-hover:opacity-70 transition-all duration-300 p-1 rounded-2xl"
           />
-        )}
+        )} */}
 
         <div className="absolute w-[55%] right-0 z-10 bg-transparent h-full dark:shadow-[inset_200px_0px_50px_-100px_theme('colors.background.800')] shadow-[inset_200px_0px_50px_-100px_theme('colors.background.50')]"></div>
 
-        <div className="z-10 flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 overflow-hidden">
-          <div>
-            <div className=" font-extralight dark:text-gray-400 text-gray-500 text-xs">
-              {workshop.is_standalone ? (
-                <div className={`flex items-center gap-1`}>
-                  <RiLiveLine className="group-hover:text-red-400 w-3 h-3 opacity-70" />
+        <div className="this-div z-10 flex flex-col justify-between flex-1 px-6 py-4 text-left md:mt-0 overflow-hidden">
+          <div className="flex flex-col justify-between h-full">
+            <div>
+              <div className="font-extralight dark:text-gray-400 text-gray-500 text-xs">
+                {workshop.is_standalone ? (
+                  <div className={`flex items-center gap-1`}>
+                    <RiLiveLine className="group-hover:text-red-400 w-3 h-3 opacity-70" />
 
-                  <span>Workshop</span>
-                </div>
-              ) : (
-                <div className={`flex items-center gap-1`}>
-                  <AiOutlineSolution className="group-hover:text-green-500 w-3 h-3 opacity-70" />
+                    <span>Workshop</span>
+                  </div>
+                ) : (
+                  <div className={`flex items-center gap-1`}>
+                    <AiOutlineSolution className="group-hover:text-green-500 w-3 h-3 opacity-70" />
 
-                  <span>Tutorial</span>
-                </div>
-              )}
-            </div>
-            <div className="mb-8">
-              <h2 className="text-xl text-gray-700 lg:text-2xl dark:text-gray-50 font-lexend max-w-[50%]">
-                {workshop?.name}
-              </h2>
+                    <span>Tutorial</span>
+                  </div>
+                )}
+              </div>
+              <div className="mb-8">
+                <h2 className="text-xl text-gray-700 lg:text-2xl dark:text-gray-50 font-lexend max-w-[50%]">
+                  {workshop?.name}
+                </h2>
+              </div>
             </div>
 
             {/* Instrutor */}
@@ -88,8 +90,8 @@ function WorkshopCard({
                 </p>
               </div>
             </div>
+            <WorkshopCardFooter workshop={workshop} />
           </div>
-          <WorkshopCardFooter workshop={workshop} />
         </div>
       </Link>
     </article>

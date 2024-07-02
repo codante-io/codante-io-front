@@ -8,6 +8,7 @@ import { FaCrown } from "react-icons/fa";
 import type { AvailableTo } from "~/lib/models/lesson.server";
 import { Button } from "~/components/ui/button";
 import BecomeProCard from "~/components/ui/become-pro-card";
+import { cn } from "~/lib/utils";
 
 type VimeoPlayerProps = {
   vimeoUrl: string;
@@ -92,7 +93,10 @@ export default function VimeoPlayer({
         {thumbnailURL && (
           <img
             key={thumbnailURL}
-            className="opacity-40 dark:opacity-30"
+            className={cn(
+              "opacity-40 dark:opacity-30",
+              !vimeoUrl && "opacity-10 dark:opacity-10",
+            )}
             src={thumbnailURL}
             alt=""
           />
