@@ -31,7 +31,6 @@ import { cn } from "~/lib/utils";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { PiChartLineUp, PiWarning } from "react-icons/pi";
 import Counter from "./components/counter";
-import Footer from "~/components/_layouts/footer";
 import { Crisp } from "crisp-sdk-web";
 import { currentToken } from "~/lib/services/auth.server";
 import axios from "axios";
@@ -106,7 +105,6 @@ export default function HomePage() {
         <Bonus />
         <FAQ />
       </div>
-      <Footer />
     </div>
   );
 }

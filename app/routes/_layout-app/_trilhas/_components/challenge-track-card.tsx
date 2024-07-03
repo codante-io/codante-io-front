@@ -104,18 +104,18 @@ function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
 
           {userCanSee ? (
             <Link
-              to={`/mini-projetos/${challenge?.slug}/resolucao`}
+              to={`/mini-projetos/${challenge?.slug}/tutorial`}
               target="_blank"
             >
               <Button variant="secondary" type="button">
-                Ver resolução
+                Ver tutorial
               </Button>
             </Link>
           ) : (
             <BecomeProDialog
               trigger={
                 <Button variant="secondary" type="button">
-                  Ver resolução
+                  Ver tutorial
                 </Button>
               }
             />

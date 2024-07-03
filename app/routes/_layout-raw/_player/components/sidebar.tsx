@@ -49,7 +49,7 @@ export default function Sidebar({
             ) : (
               <Link
                 to={`/${isChallenge ? "mini-projetos" : "workshops"}/${
-                  isChallenge ? `${challenge?.slug}/resolucao` : workshop.slug
+                  isChallenge ? `${challenge?.slug}/tutorial` : workshop.slug
                 }`}
                 className="hidden px-2 py-1 text-2xl transition-colors rounded-lg lg:flex lg:items-center hover:bg-gray-200 dark:hover:bg-background-700"
               >

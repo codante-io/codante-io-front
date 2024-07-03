@@ -41,8 +41,14 @@ export default function Workshops() {
   return (
     <main className="container mx-auto text-center">
       <h1 className="mb-10 text-4xl font-lexend">
-        Todos os{" "}
-        <span className="font-bold border-b-4 border-amber-400">Workshops</span>
+        Aprenda com nossos{" "}
+        <span className="font-bold underline decoration-4 decoration-red-400">
+          Workshops
+        </span>{" "}
+        e{" "}
+        <span className="font-bold underline decoration-4 decoration-green-400">
+          Tutoriais
+        </span>
       </h1>
 
       {upcomingWorkshops.length > 0 && (
@@ -58,7 +64,7 @@ export default function Workshops() {
           ))}
         </Card>
       )}
-      <section className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr">
+      <section className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr mt-16">
         {pastWorkshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}

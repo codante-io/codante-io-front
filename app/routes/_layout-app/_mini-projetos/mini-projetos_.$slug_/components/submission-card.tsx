@@ -70,7 +70,7 @@ export default function SubmissionCard({
         onClick={(event) => {
           if (!challengeUser.is_solution) return;
           event.preventDefault();
-          navigate(`/mini-projetos/${challengeSlug}/resolucao-codigo`);
+          navigate(`/mini-projetos/${challengeSlug}/codigo`);
         }}
         href={`/mini-projetos/${challengeSlug}/submissoes/${challengeUser.user?.github_user}`}
         target="_blank"

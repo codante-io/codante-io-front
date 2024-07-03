@@ -9,7 +9,7 @@ import {
 import { Button } from "~/components/ui/button";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
-function BecomeProCard() {
+function BecomeProCard({ hideContent = false }: { hideContent?: boolean }) {
   return (
     <Card border="bright" className="text-start">
       <CardHeader>
@@ -19,17 +19,19 @@ function BecomeProCard() {
           </span>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
-          Esse conteúdo é exclusivo para nossos assinantes.
-        </p>
-        <p className="text-gray-600 dark:text-gray-300">
-          Libere esse e muito mais conteúdo assinando o <b>Codante</b>{" "}
-          <ProSpanWrapper>PRO</ProSpanWrapper>.
-        </p>{" "}
-      </CardContent>
+      {!hideContent && (
+        <CardContent>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Esse conteúdo é exclusivo para nossos assinantes.
+          </p>
+          <p className="text-gray-600 dark:text-gray-300">
+            Libere esse e muito mais conteúdo assinando o <b>Codante</b>{" "}
+            <ProSpanWrapper>PRO</ProSpanWrapper>.
+          </p>{" "}
+        </CardContent>
+      )}
       <CardFooter>
-        <div className="flex gap-4 w-full mt-6">
+        <div className="flex gap-4 w-full sm:mt-4">
           <Link to="/assine" className="w-full">
             <Button variant="secondary" className="w-full font-bold">
               Saiba mais

@@ -25,7 +25,7 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
         isAvailable: true,
       },
       {
-        title: "Resolução Oficial com vídeo",
+        title: "Tutorial de resolução de projetos",
         info: "Nós disponibilizamos resolução oficial dos Mini Projetos em vídeo para membros PRO",
         isAvailable: true,
       },
@@ -95,7 +95,7 @@ export const freePlanFeatures: PlanFeaturesByCategory = [
         isAvailable: true,
       },
       {
-        title: "Resolução Oficial com vídeo",
+        title: "Tutorial de resolução de projetos",
         isAvailable: false,
       },
       {

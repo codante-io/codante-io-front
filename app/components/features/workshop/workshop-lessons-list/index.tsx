@@ -1,7 +1,6 @@
 import { Link } from "@remix-run/react";
 import { IoLockClosed } from "react-icons/io5";
 import { Fragment } from "react/jsx-runtime";
-import BecomeProDialog from "~/components/ui/become-pro-dialog";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { fromSecondsToTimeString } from "~/lib/utils/interval";
@@ -22,7 +21,7 @@ export default function WorkshopLessonsList({
   // if is challenge resolution, we need to add the challenge slug to the link
   // so we can navigate to the correct lesson
   const linkPrefix = isChallengeResolution
-    ? `/mini-projetos/${challengeSlug}/resolucao`
+    ? `/mini-projetos/${challengeSlug}/tutorial`
     : `/workshops/${workshop.slug}`;
 
   return (
@@ -85,7 +84,7 @@ function LessonLink({
         }`}
       >
         <span className={`mr-3 text-sm text-brand-400`}>
-          {lesson.user_can_view ? (
+          {lesson.user_can_view || lesson.available_to !== "pro" ? (
             `${index + 1}.`
           ) : (
             <IoLockClosed className="w-3 h-3" />

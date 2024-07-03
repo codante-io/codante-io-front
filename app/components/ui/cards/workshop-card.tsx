@@ -66,7 +66,7 @@ function WorkshopCard({
                 )}
               </div>
               <div className="mb-8">
-                <h2 className="text-xl text-gray-700 lg:text-2xl dark:text-gray-50 font-lexend max-w-[50%]">
+                <h2 className="text-xl text-gray-700 xl:text-2xl dark:text-gray-50 font-lexend max-w-[50%]">
                   {workshop?.name}
                 </h2>
               </div>

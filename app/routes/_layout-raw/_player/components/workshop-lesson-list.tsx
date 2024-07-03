@@ -30,7 +30,7 @@ export default function WorkshopLessonList({
   // if is challenge resolution, we need to add the challenge slug to the link
   // so we can navigate to the correct lesson
   const linkPrefix = isChallenge
-    ? `/mini-projetos/${challenge?.slug}/resolucao`
+    ? `/mini-projetos/${challenge?.slug}/tutorial`
     : `/workshops/${workshop.slug}`;
 
   return (

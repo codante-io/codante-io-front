@@ -14,7 +14,7 @@ import invariant from "tiny-invariant";
 import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
-import { BsStars } from "react-icons/bs";
+import { BsCodeSlash, BsStars } from "react-icons/bs";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
@@ -238,8 +238,8 @@ export default function ChallengeSlug() {
         location.pathname === `/mini-projetos/${challenge?.slug}/`,
     },
     {
-      name: "Resolução",
-      href: "resolucao",
+      name: "Tutorial",
+      href: "tutorial",
       isVisible: hasSolution,
       icon: (
         <svg
@@ -254,7 +254,14 @@ export default function ChallengeSlug() {
           ></path>
         </svg>
       ),
-      current: location.pathname.includes("resolucao"),
+      current: location.pathname.includes("tutorial"),
+    },
+    {
+      name: "Código",
+      href: "codigo",
+      isVisible: hasSolution,
+      icon: <BsCodeSlash />,
+      current: location.pathname.includes("codigo"),
     },
     {
       name: "Submissões",
