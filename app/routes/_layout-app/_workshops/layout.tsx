@@ -13,6 +13,10 @@ export default function WorkshopLayout() {
   return <Outlet context={{ user }} />;
 }
 
+export const meta = () => {
+  return [];
+};
+
 export function ErrorBoundary() {
   const error = useRouteError();
 

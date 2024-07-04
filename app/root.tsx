@@ -1,5 +1,5 @@
-import React from "react";
 import { json, type LinksFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/react";
 import {
   Links,
   Meta,
@@ -10,20 +10,20 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import React from "react";
 import { Toaster } from "react-hot-toast";
+import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
+import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
+import { Error500 } from "./components/features/error-handling/500";
+import NotFound from "./components/features/error-handling/not-found";
 import LoadingBar from "./components/ui/loading-bar";
 import { ColorModeProvider } from "./lib/contexts/color-mode-context";
-import stylesheet from "./tailwind.css?url";
-import { DarkModeScriptInnerHtml } from "./lib/utils/dark-mode";
-import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
-import { user } from "./lib/services/auth.server";
-import { getOgGeneratorUrl } from "./lib/utils/path-utils";
-import NotFound from "./components/features/error-handling/not-found";
-import { Error500 } from "./components/features/error-handling/500";
-import type { User } from "./lib/models/user.server";
-import { metaV1 } from "@remix-run/v1-meta";
 import { environment } from "./lib/models/environment";
-import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
+import type { User } from "./lib/models/user.server";
+import { user } from "./lib/services/auth.server";
+import { DarkModeScriptInnerHtml } from "./lib/utils/dark-mode";
+import { getOgGeneratorUrl } from "./lib/utils/path-utils";
+import stylesheet from "./tailwind.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -32,27 +32,52 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg" },
 ];
 
-export function meta(args: any) {
-  return metaV1(args, {
-    charset: "utf-8",
-    title: "Codante - Cursos e Projetos Online de Programação",
-    viewport: "width=device-width,initial-scale=1",
-    description:
-      "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
-
-    "og:title": "Codante - Cursos e Projetos Online de Programação",
-    "og:description": "Codante - Cursos e Projetos Online de Programação",
-    "og:image": getOgGeneratorUrl("Codante"),
-    "og:type": "website",
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:title": "Codante - Cursos e Projetos Online de Programação",
-    "twitter:description": "Codante - Cursos e Projetos Online de Programação",
-    "twitter:image": getOgGeneratorUrl("Codante"),
-    "twitter:image:alt": "Codante",
-  });
-}
+export const meta: MetaFunction = ({ matches }) => {
+  return [
+    { title: "Codante - Cursos e Projetos Online de Programação" },
+    {
+      property: "og:title",
+      content: "Codante - Cursos e Projetos Online de Programação",
+    },
+    {
+      name: "description",
+      content:
+        "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
+    },
+    {
+      property: "og:description",
+      content:
+        "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
+    },
+    {
+      property: "og:image",
+      content: getOgGeneratorUrl("Codante"),
+    },
+    { property: "og:type", content: "website" },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    { name: "twitter:domain", content: "codante.io" },
+    {
+      name: "twitter:title",
+      content: "Codante - Cursos e Projetos Online de Programação",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
+    },
+    {
+      name: "twitter:image",
+      content: getOgGeneratorUrl("Codante"),
+    },
+    {
+      name: "twitter:image:alt",
+      content: "Codante",
+    },
+  ];
+};
 
 export async function loader({ request }: { request: Request }) {
   const userData = (await user({ request })) as User | null;

@@ -1,25 +1,28 @@
-import type { MetaArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Card } from "~/components/ui/cards/card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import { getWorkshops } from "~/lib/models/workshop.server";
 
-export function meta({ matches }: MetaArgs) {
-  const parentMeta = matches
-    .flatMap((match) => match.meta ?? [])
-    .filter((meta) => !("title" in meta))
-    .filter((meta) => (meta as any).name !== "description");
+export const meta = () => {
   return [
-    ...parentMeta,
     { title: "Workshops | Codante.io" },
     {
       name: "description",
       content:
-        "Tópicos atuais de front end ensinados de forma prática e objetiva por profissionais do mercado.",
+        "Os workshops do Codante são ensinados por especialistas da indústria de tecnologia usando uma abordagem prática e técnicas modernas de front-end",
+    },
+    {
+      property: "og:title",
+      content: "Workshops | Codante.io",
+    },
+    {
+      property: "og:description",
+      content:
+        "Os workshops do Codante são ensinados por especialistas da indústria de tecnologia usando uma abordagem prática e técnicas modernas de front-end",
     },
   ];
-}
+};
 
 export const loader = async ({ request }: { request: Request }) => {
   return json({

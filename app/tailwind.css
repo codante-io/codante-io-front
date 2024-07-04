@@ -15,28 +15,28 @@
 }
 
 .lower-post-list {
-  animation: slide-to-right 120s linear infinite alternate;
+  animation: slide-to-right 100s linear infinite alternate;
 }
 
 @keyframes slide-to-right {
   0% {
-    transform: translateX(0);
+    transform: translateX(22%);
   }
   100% {
-    transform: translateX(-65%);
+    transform: translateX(-22%);
   }
 }
 
 .upper-post-list {
-  animation: slide-to-left 120s linear infinite alternate;
+  animation: slide-to-left 100s linear infinite alternate;
 }
 
 @keyframes slide-to-left {
   0% {
-    transform: translateX(-65%);
+    transform: translateX(-22%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateX(22%);
   }
 }
 
