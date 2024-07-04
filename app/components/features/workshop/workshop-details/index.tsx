@@ -18,12 +18,16 @@ type WorkshopDetailsProps = {
   workshop: Workshop;
   nextLesson: Lesson;
   showDescription?: boolean;
+  isFree?: boolean;
+  userIsPro?: boolean;
 };
 
 function WorkshopDetails({
   workshop,
   nextLesson,
   showDescription = true,
+  isFree = false,
+  userIsPro = false,
 }: WorkshopDetailsProps) {
   return (
     <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
@@ -73,7 +77,7 @@ function WorkshopDetails({
           </div>
         )}
 
-        {!showDescription && (
+        {!showDescription && !userIsPro && (
           <div className="text-gray-600 dark:text-gray-300 mt-6 bg-background-800 p-6 text-sm rounded-xl mb-8">
             <p>
               Todos os nossos projetos são{" "}
@@ -82,7 +86,10 @@ function WorkshopDetails({
               <b>
                 Codante <ProSpanWrapper>PRO</ProSpanWrapper>
               </b>
-              . Algumas aulas estão abertas para você experimentar.
+              .{" "}
+              {isFree
+                ? "Este é um tutorial gratuito, para que você possa assistir e experimentar."
+                : "Algumas aulas estão abertas para você experimentar."}
             </p>
             <p className="mt-4">
               Se gostar, considere assinar para ter acesso a todos os tutoriais
@@ -124,27 +131,29 @@ function WorkshopDetails({
             </>
           ) : (
             <div className="flex flex-col items-start gap-2 dark:text-gray-400 text-gray-600 text-xs mt-2 w-full">
-              <Link
-                to={`/workshops/${workshop.slug}/${nextLesson.slug}`}
-                className="w-full"
-              >
-                <Button
-                  variant="default"
-                  className="w-full p-8 text-xl flex items-center gap-4"
+              {nextLesson && (
+                <Link
+                  to={`/workshops/${workshop.slug}/${nextLesson.slug}`}
+                  className="w-full"
                 >
-                  {workshop.is_standalone ? (
-                    <>
-                      <RiLiveLine />
-                      Iniciar workshop
-                    </>
-                  ) : (
-                    <>
-                      <AiOutlineSolution />
-                      Iniciar tutorial
-                    </>
-                  )}
-                </Button>
-              </Link>
+                  <Button
+                    variant="default"
+                    className="w-full p-8 text-xl flex items-center gap-4"
+                  >
+                    {workshop.is_standalone ? (
+                      <>
+                        <RiLiveLine />
+                        Iniciar workshop
+                      </>
+                    ) : (
+                      <>
+                        <AiOutlineSolution />
+                        Iniciar tutorial
+                      </>
+                    )}
+                  </Button>
+                </Link>
+              )}
             </div>
           )}
         </div>

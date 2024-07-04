@@ -135,13 +135,15 @@ export default function WorkshopSlug() {
           </h1>
         </div>
         <div className="flex gap-4 flex-wrap mb-0 sm:mb-4 lg:mb-12">
-          <div className="inline-flex gap-6 px-4 py-4  md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
-            <CardItemDifficulty difficulty={workshop.difficulty} />
-            <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
-            <CardItemDuration
-              durationString={humanTimeFormat(workshopDurationInSeconds)}
-            />
-          </div>
+          {workshop.lessons && workshop.lessons.length > 0 && (
+            <div className="inline-flex gap-6 px-4 py-4  md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
+              <CardItemDifficulty difficulty={workshop.difficulty} />
+              <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
+              <CardItemDuration
+                durationString={humanTimeFormat(workshopDurationInSeconds)}
+              />
+            </div>
+          )}
           {!user?.is_pro && (
             <ResponsiveHoverCard
               behavior="click"

@@ -85,7 +85,6 @@ export async function getCertificateBySlug(request: Request, slug: string) {
 }
 
 export async function getCertificateById(id: string): Promise<Certificate> {
-  // console.log(id);
   const certificate = await axios
     .get(`${environment().API_HOST}/certificates/${id}`)
     .then((res) => {

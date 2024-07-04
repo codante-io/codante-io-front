@@ -1,14 +1,17 @@
 import toast from "react-hot-toast";
 import { BsGithub, BsGlobe } from "react-icons/bs";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 
 export default function SolutionButtonsSection({
+  challenge,
   challengeUser,
   user,
   challengeSlug,
   sendoToSolutionPage = false,
 }: {
+  challenge: Challenge;
   challengeUser: ChallengeUser;
   challengeSlug?: string;
   user: User;
@@ -16,14 +19,22 @@ export default function SolutionButtonsSection({
 }) {
   function handleClick(event: React.MouseEvent) {
     // se usuário não for pro e os botões forem de resolução, não deixa acessar.
-    if ((!user || !user?.is_pro) && challengeUser.is_solution) {
+
+    if (
+      (!user || (!user?.is_pro && !!challenge.is_premium)) &&
+      challengeUser.is_solution
+    ) {
       event?.preventDefault();
-      toast((t) => (
-        <p>
-          Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem acessar essa
-          resolução.
-        </p>
-      ));
+      toast((t) =>
+        user || challenge.is_premium ? (
+          <p>
+            Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem acessar
+            essa resolução.
+          </p>
+        ) : (
+          <p>Faça login para acessar o código.</p>
+        ),
+      );
     }
   }
 

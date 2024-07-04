@@ -21,7 +21,7 @@ function SignInCard() {
       </CardHeader>
       <CardContent>
         <p className="text-gray-600 dark:text-gray-300">
-          Esta aula é <strong>aberta e gratuita</strong> 🎉. Para acessá-la,
+          Este conteúdo é <strong>aberto e gratuito</strong> 🎉. Para acessá-lo,
           você precisa fazer o login.
         </p>
       </CardContent>
