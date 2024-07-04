@@ -119,7 +119,7 @@ export default function LessonIndex() {
   function nextLessonPath() {
     const nextLesson = workshop.lessons[activeIndex + 1];
     if (nextLesson) {
-      return `/mini-projetos/${challenge.slug}/resolucao/${nextLesson.slug}`;
+      return `/mini-projetos/${challenge.slug}/tutorial/${nextLesson.slug}`;
     } else {
       return "";
     }

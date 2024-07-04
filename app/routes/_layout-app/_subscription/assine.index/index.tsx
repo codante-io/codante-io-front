@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { PiChartLineUp, PiWarning } from "react-icons/pi";
 import BackgroundBlur from "~/components/_layouts/background-blur";
-import Footer from "~/components/_layouts/footer";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
@@ -106,7 +105,6 @@ export default function HomePage() {
         <Bonus />
         <FAQ />
       </div>
-      <Footer />
     </div>
   );
 }
@@ -188,17 +186,6 @@ function Headline() {
         className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_68px)]"
       >
         <div className="container flex flex-col items-center gap-2 mt-2">
-          <nav>
-            {colorMode === "light" ? (
-              <img
-                className="w-auto h-14"
-                src="/cdnt-light.svg"
-                alt="Codante"
-              />
-            ) : (
-              <img className="w-auto h-14" src="/cdnt.svg" alt="Codante" />
-            )}{" "}
-          </nav>
           <h1 className="text-3xl font-light text-center mt-6 font-lexend md:text-6xl">
             Aprenda front-end <br />
             <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
@@ -711,7 +698,7 @@ function WorkShops() {
           Veja alguns{" "}
           <span className="color-underline decoration-brand-500">exemplos</span>
         </h2>
-        <section className="grid justify-center grid-cols-1 gap-4 px-0 lg:grid-cols-2">
+        <section className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr mt-16">
           {homeInfo?.featured_workshops?.map((workshop) => (
             <WorkshopCard openInNewTab key={workshop.id} workshop={workshop} />
           ))}

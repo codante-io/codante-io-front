@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeCard, ChallengeSummary } from "./challenge.server";
-import type { UserAvatar } from "./user.server";
+import type { ChallengeUser, UserAvatar } from "./user.server";
 import { environment } from "./environment";
 
 export type HomeInfo = {
@@ -13,12 +13,7 @@ export type HomeInfo = {
     social_media_link: string;
     social_media_nickname: string;
   }[];
-  featured_submissions: {
-    id: number;
-    submission_image_url: string;
-    avatar: UserAvatar;
-    challenge: ChallengeSummary;
-  }[];
+  featured_submissions: ChallengeUser[];
   avatar_section: {
     avatars: UserAvatar[];
     user_count: number;

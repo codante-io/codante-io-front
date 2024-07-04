@@ -15,23 +15,22 @@ export default function ResolutionSection({
   return (
     <div>
       <h1 className="flex items-center mb-4 text-xl font-semibold text-gray-700 font-lexend dark:text-gray-300">
-        Resolução
+        Tutorial
       </h1>
       {!isAvailable && (
         <p className="text-sm text-gray-400">
-          Esta resolução será publicada em breve!{" "}
-          {/* <button className="text-xs underline text-brand">Me avise!</button> */}
+          Este tutorial será publicado em breve!{" "}
         </p>
       )}
       {isAvailable ? (
         <Link
-          to={`/mini-projetos/${challenge.slug}/resolucao`}
+          to={`/mini-projetos/${challenge.slug}/tutorial`}
           className="relative"
         >
           <img
             className="relative w-full rounded-lg aspect-video"
             src={thumbnailUrl}
-            alt=""
+            alt="Capa do tutorial (thumbnail)"
           />
         </Link>
       ) : (

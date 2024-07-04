@@ -276,7 +276,7 @@ function Countdown({
           </span>
         ) : (
           <strong className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 text-md">
-            Resolução será publicada em breve
+            Tutorial será publicado em breve
           </strong>
         )}
       </p>

@@ -1,11 +1,11 @@
-import { Link, useOutletContext } from "@remix-run/react";
+import { useOutletContext } from "@remix-run/react";
 import { Navigate } from "react-router-dom";
-import { FaCrown } from "react-icons/fa";
-import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import SolutionButtonsSection from "../../components/solution-buttons-section";
+import BecomeProCard from "~/components/ui/become-pro-card";
+import SignInCard from "~/components/ui/sign-in-card";
 
 export default function SolutionCode() {
   const { challengeUsers, challenge, user } = useOutletContext<{
@@ -49,11 +49,11 @@ export default function SolutionCode() {
   return (
     <section className="container">
       <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
-        Resolução em Código
+        Código completo
       </h1>
       <div className="relative w-full h-[65vh] rounded-lg overflow-hidden">
         <div className="absolute inset-0 bg-cover lg:bg-fill bg-center bg-no-repeat blur-sm bg-[url('/img/cover-stackblitz-light.png')] dark:bg-[url('/img/cover-stackblitz-dark.png')]"></div>
-        {user && user?.is_pro ? (
+        {(user && user?.is_pro) || (user && !challenge.is_premium) ? (
           <iframe
             title="slug"
             src={
@@ -63,27 +63,22 @@ export default function SolutionCode() {
             className="w-full h-full rounded-lg shadow blur-none relative z-10"
           ></iframe>
         ) : (
-          <div className="absolute z-20 p-3 bg-white border border-gray-200 rounded-lg shadow-2xl shadow-background-700 dark:border- dark:bg-background-800 dark:border-background-600 md:p-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <h3 className="font-bold md:text-2xl text-brand font-lexend">
-              Ops...{" "}
-            </h3>
-            <span>
-              Você precisa ser um membro <ProSpanWrapper>PRO</ProSpanWrapper>{" "}
-              para acessar essa aula
-            </span>
-            <Link to="/assine" className="w-full inline-block mt-4">
-              <button className="mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
-                <FaCrown className="mr-2 text-amber-500" />
-                <span>
-                  Seja
-                  <b className="ml-1">PRO </b>
-                </span>
-              </button>
-            </Link>
+          <div className="absolute flex w-full h-full justify-center items-center">
+            <div className="max-w-md">
+              {user || challenge.is_premium ? (
+                <BecomeProCard />
+              ) : (
+                <SignInCard />
+              )}
+            </div>
           </div>
         )}
       </div>
-      <SolutionButtonsSection challengeUser={solutionSubmission} user={user} />
+      <SolutionButtonsSection
+        challenge={challenge}
+        challengeUser={solutionSubmission}
+        user={user}
+      />
     </section>
   );
 }

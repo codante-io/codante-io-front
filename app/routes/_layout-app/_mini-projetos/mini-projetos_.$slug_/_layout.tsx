@@ -14,7 +14,7 @@ import invariant from "tiny-invariant";
 import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
-import { BsStars } from "react-icons/bs";
+import { BsCodeSlash, BsStars } from "react-icons/bs";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
@@ -238,8 +238,8 @@ export default function ChallengeSlug() {
         location.pathname === `/mini-projetos/${challenge?.slug}/`,
     },
     {
-      name: "Resolução",
-      href: "resolucao",
+      name: "Tutorial",
+      href: "tutorial",
       isVisible: hasSolution,
       icon: (
         <svg
@@ -254,7 +254,14 @@ export default function ChallengeSlug() {
           ></path>
         </svg>
       ),
-      current: location.pathname.includes("resolucao"),
+      current: location.pathname.includes("tutorial"),
+    },
+    {
+      name: "Código",
+      href: "codigo",
+      isVisible: hasSolution,
+      icon: <BsCodeSlash />,
+      current: location.pathname.includes("codigo"),
     },
     {
       name: "Submissões",
@@ -281,6 +288,9 @@ export default function ChallengeSlug() {
                       <span className="inline font-bold">
                         {challenge?.name}
                       </span>
+                      <AdminEditButton
+                        url={`/challenge/${challenge.id}/edit`}
+                      />
                     </span>
                   </span>
                 </h1>
@@ -288,7 +298,6 @@ export default function ChallengeSlug() {
                 <p className="mt-2 mb-4 font-light text-gray-400 font-inter text-md md:mt-3 text-start">
                   {challenge?.short_description}
                 </p>
-                <AdminEditButton url={`/challenge/${challenge.id}/edit`} />
               </div>
             </div>
 

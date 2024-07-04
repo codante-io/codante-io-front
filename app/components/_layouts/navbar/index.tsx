@@ -18,16 +18,16 @@ function classNames(...classes: any) {
 
 const navigation = [
   {
-    name: "Trilhas",
-    href: "/trilhas",
-  },
-  {
     name: "Workshops",
     href: "/workshops",
   },
   {
     name: "Mini Projetos",
     href: "/mini-projetos",
+  },
+  {
+    name: "Trilhas",
+    href: "/trilhas",
   },
   // {
   //   name: "Agenda",
@@ -36,6 +36,11 @@ const navigation = [
 ];
 
 const moreMenuNavigation = [
+  {
+    name: "Planos e preços",
+    href: "/planos",
+    external: false,
+  },
   {
     name: "Testes Técnicos",
     href: "/testes-tecnicos",

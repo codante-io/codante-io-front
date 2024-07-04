@@ -6,6 +6,7 @@ import type { Certificate } from "./certificates.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
 import { currentToken } from "~/lib/services/auth.server";
 import { environment } from "./environment";
+import type { Challenge } from "~/lib/models/challenge.server";
 
 export type WorkshopUser = {
   id: number;
@@ -38,13 +39,14 @@ export type Workshop = {
   }[];
   instructor: Instructor;
   is_standalone: boolean;
-  lesson_sections: {
+  lesson_sections?: {
     name: string;
-    lessons: string;
+    lessons: string[];
   }[];
   lessons: Lesson[];
   tags: Tag[];
   next_lesson: Lesson | null;
+  challenge?: Challenge;
 
   workshop_user: WorkshopUser;
   pivot?: TrackablePivot;

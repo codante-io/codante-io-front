@@ -1,23 +1,62 @@
-export function fromSecondsToTimeString(seconds: number): string {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds - hours * 3600) / 60);
-  const secondsLeft = seconds - hours * 3600 - minutes * 60;
+import { format, addSeconds, intervalToDuration } from "date-fns";
 
-  return `${hours ? String(hours).padStart(2, "0") + ":" : ""}${
-    minutes ? String(minutes).padStart(2, "0") + ":" : "00:"
-  }${String(secondsLeft).padStart(2, "0")}`;
+export function formatTime(totalSeconds: number, formatString = "H:mm:ss") {
+  const helperDate = addSeconds(new Date(0), totalSeconds);
+
+  return format(helperDate, formatString);
+}
+
+/**
+ * Formats the total number of seconds into a human-readable time format.
+ * @param totalSeconds - The total number of seconds to be formatted.
+ * @returns A string representing the formatted time in the format "00h00" or "00m" if the total time is less than an hour.
+ */
+export function humanTimeFormat(totalSeconds: number) {
+  const { hours, minutes } = intervalToDuration({
+    start: 0,
+    end: totalSeconds * 1000,
+  });
+
+  let hoursString = minutes ? `${hours}` : "";
+  let minutesString = minutes ? `${String(minutes).padStart(2, "0")}` : "";
+
+  if (!hours) {
+    return `${minutesString}m`;
+  }
+
+  return `${hoursString}h${minutesString}`;
+}
+
+export function fromSecondsToTimeString(
+  seconds: number,
+  omitHoursWhenZero = true,
+): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secondsLeft = seconds % 60;
+
+  const hoursString = hours > 0 ? String(hours).padStart(2, "0") : "00";
+  const minutesString =
+    minutes > 0 || hours > 0 ? String(minutes).padStart(2, "0") : "00";
+  const secondsString = String(secondsLeft).padStart(2, "0");
+
+  if (!hours && omitHoursWhenZero) {
+    return `${minutesString}:${secondsString}`;
+  }
+
+  return `${hoursString}:${minutesString}:${secondsString}`;
 }
 
 export function fromSecondsToTimeStringWithoutSeconds(
-  seconds: number,
+  totalSeconds: number,
 ): string | null {
-  if (!seconds) return null;
-  const fullString = fromSecondsToTimeString(seconds);
-  const [hours, minutes] = fullString.split(":");
+  if (totalSeconds == null) return null;
+  const fullString = fromSecondsToTimeString(totalSeconds);
+  const [hours, minutes, seconds] = fullString.split(":");
 
   // remove leading 0
   if (hours === "00") {
-    return `${minutes}m`;
+    return `${minutes}m${seconds}`;
   }
 
   //remove first 0

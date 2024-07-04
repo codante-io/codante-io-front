@@ -6,6 +6,7 @@ export type Plan = {
   name: string;
   price_in_cents: number;
   slug: string;
+  details: string;
 };
 
 export async function getPlanDetails() {
