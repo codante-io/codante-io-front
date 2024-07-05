@@ -161,7 +161,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   code: {
     props: {
       className:
-        "dark:text-brand-300 dark:bg-background-700 bg-background-200 px-1.5 py-0.5 rounded-md font-mono before:content-[''] after:content-['']",
+        "dark:text-brand-300 dark:bg-background-700 bg-background-200 font-medium px-1.5 py-0.5 rounded-md font-mono before:content-[''] after:content-['']",
     },
   },
 
