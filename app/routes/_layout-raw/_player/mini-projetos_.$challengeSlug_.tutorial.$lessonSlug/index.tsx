@@ -9,7 +9,10 @@ import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { getChallenge } from "~/lib/models/challenge.server";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
-import type { Workshop } from "~/lib/models/workshop.server";
+import {
+  userEnteredWorkshop,
+  type Workshop,
+} from "~/lib/models/workshop.server";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
@@ -82,6 +85,8 @@ export async function loader({
   if (!lesson) {
     return abort404();
   }
+
+  await userEnteredWorkshop(params.slug, request);
 
   return {
     challenge: challenge,
