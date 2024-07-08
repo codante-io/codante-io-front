@@ -80,3 +80,27 @@ export async function getWorkshop(
     });
   return workshop;
 }
+
+export async function userEnteredWorkshop(
+  slug: string,
+  request: any,
+): Promise<Workshop | null> {
+  const token = await currentToken({ request });
+  const workshop = await axios
+    .post(
+      `${environment().API_HOST}/workshops/${slug}/user-entered`,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      },
+    )
+    .then((res) => res.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
+  return workshop;
+}

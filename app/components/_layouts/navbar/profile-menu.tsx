@@ -12,7 +12,7 @@ export default function ProfileMenu({ user }: { user: User }) {
       <div>
         <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
           <span className="sr-only">Open user menu</span>
-          {user?.avatar.avatar_url ? (
+          {user?.avatar?.avatar_url ? (
             <UserAvatar
               avatar={user.avatar}
               className="w-8 h-8"
