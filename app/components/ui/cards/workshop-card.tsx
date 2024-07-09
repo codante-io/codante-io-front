@@ -2,7 +2,7 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
 import { RiLiveLine } from "react-icons/ri";
 import Chip from "~/components/ui/chip";
-import type { Workshop } from "~/lib/models/workshop.server";
+import type { WorkshopCard } from "~/lib/models/workshop.server";
 import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { hasHappened, isNew } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
@@ -15,7 +15,7 @@ function WorkshopCard({
   workshop,
   openInNewTab = false,
 }: {
-  workshop: Workshop;
+  workshop: WorkshopCard;
   openInNewTab?: boolean;
 }) {
   return (
@@ -96,7 +96,7 @@ function WorkshopCard({
 
 export default WorkshopCard;
 
-function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
+function WorkshopCardFooter({ workshop }: { workshop: WorkshopCard }) {
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     workshop.published_at,
   );
@@ -105,14 +105,9 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
       <div className="mt-auto flex gap-6 items-center">
         {workshop.status === "published" && (
           <>
-            <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
+            <CardItemLessonsCount lessonsCount={workshop.lessons_count} />
             <CardDurationItem
-              durationString={humanTimeFormat(
-                workshop?.lessons?.reduce(
-                  (acc, lesson) => acc + lesson.duration_in_seconds,
-                  0,
-                ),
-              )}
+              durationString={humanTimeFormat(workshop.duration_in_seconds)}
             />
           </>
         )}
@@ -132,7 +127,7 @@ function WorkshopCardFooter({ workshop }: { workshop: Workshop }) {
   );
 }
 
-function WorkshopChip({ workshop }: { workshop: Workshop }) {
+function WorkshopChip({ workshop }: { workshop: WorkshopCard }) {
   if (isNew(workshop)) {
     return <Chip text="Novo" />;
   }

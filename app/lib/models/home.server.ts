@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { Workshop } from "./workshop.server";
-import type { ChallengeCard, ChallengeSummary } from "./challenge.server";
+import type { WorkshopCard } from "./workshop.server";
+import type { ChallengeCard } from "./challenge.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
 import { environment } from "./environment";
 
@@ -23,7 +23,7 @@ export type HomeInfo = {
     name: string;
     slug: string;
   } | null;
-  featured_workshops: Workshop[];
+  featured_workshops: WorkshopCard[];
   featured_challenges: ChallengeCard[];
   plan_info: {
     id: number;

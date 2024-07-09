@@ -31,7 +31,6 @@ export const loader = async ({ request }: { request: Request }) => {
 };
 export default function Workshops() {
   const { workshops } = useLoaderData<typeof loader>();
-
   const pastWorkshops = workshops.filter(
     (workshop) =>
       workshop.published_at && new Date(workshop.published_at) < new Date(),
