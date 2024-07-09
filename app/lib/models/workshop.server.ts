@@ -54,7 +54,27 @@ export type Workshop = {
   is_premium?: boolean;
 };
 
-export async function getWorkshops(): Promise<Array<Workshop>> {
+export type WorkshopCard = {
+  id: string;
+  name: string;
+  slug: string;
+  video_url?: string;
+  duration_in_seconds: number;
+  status: string;
+  is_standalone: boolean;
+  is_premium: boolean;
+  lessons_count: number;
+  instructor: {
+    id: number;
+    name: string;
+    company: string;
+    avatar_url: string;
+  };
+  published_at?: string;
+  streaming_url?: string | null;
+};
+
+export async function getWorkshops(): Promise<Array<WorkshopCard>> {
   const workshops = await axios
     .get(`${environment().API_HOST}/workshops`)
     .then((res) => res.data.data);
