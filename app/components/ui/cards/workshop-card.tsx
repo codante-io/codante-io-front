@@ -9,6 +9,7 @@ import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
 
 import { AiOutlineSolution } from "react-icons/ai";
+import { cn } from "~/lib/utils/cn";
 
 function WorkshopCard({
   workshop,
@@ -28,24 +29,19 @@ function WorkshopCard({
           <WorkshopChip workshop={workshop} />
         </div>
 
-        {/* {workshop?.video_url ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            src={workshop?.video_url}
-            className="absolute right-0 w-[45%] h-full object-cover object-right-bottom opacity-0 group-hover:opacity-70 transition-all duration-300 p-1 rounded-2xl"
-          />
-        ) : (
-          <img
-            alt="workshop"
-            src={workshop.image_url}
-            className="absolute right-0 w-[45%] h-full object-cover object-right-bottom opacity-0 group-hover:opacity-70 transition-all duration-300 p-1 rounded-2xl"
-          />
-        )} */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          src={workshop.video_url}
+          className={cn(
+            "absolute top-0 opacity-0 right-0 bottom-0 left-0 w-full h-full rounded-2xl object-cover group-hover:opacity-60 transition-all duration-300 p-1 self-center scale-110",
+            workshop.is_standalone && "object-right-bottom",
+          )}
+        />
 
-        <div className="absolute w-[55%] right-0 z-10 bg-transparent h-full dark:shadow-[inset_200px_0px_50px_-100px_theme('colors.background.800')] shadow-[inset_200px_0px_50px_-100px_theme('colors.background.50')]"></div>
+        <div className="absolute w-full right-0 z-10 bg-transparent h-full opacity-100 dark:shadow-[inset_200px_0px_250px_0px_theme('colors.background.800')] shadow-[inset_200px_0px_50px_-100px_theme('colors.background.50')]"></div>
 
         <div className="this-div z-10 flex flex-col justify-between flex-1 px-6 py-4 text-left md:mt-0 overflow-hidden">
           <div className="flex flex-col justify-between h-full">
