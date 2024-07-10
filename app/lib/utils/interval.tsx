@@ -1,4 +1,4 @@
-import { format, addSeconds, intervalToDuration } from "date-fns";
+import { format, addSeconds } from "date-fns";
 
 export function formatTime(totalSeconds: number, formatString = "H:mm:ss") {
   const helperDate = addSeconds(new Date(0), totalSeconds);
@@ -12,19 +12,14 @@ export function formatTime(totalSeconds: number, formatString = "H:mm:ss") {
  * @returns A string representing the formatted time in the format "00h00" or "00m" if the total time is less than an hour.
  */
 export function humanTimeFormat(totalSeconds: number) {
-  const { hours, minutes } = intervalToDuration({
-    start: 0,
-    end: totalSeconds * 1000,
-  });
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
 
-  let hoursString = minutes ? `${hours}` : "";
-  let minutesString = minutes ? `${String(minutes).padStart(2, "0")}` : "";
-
-  if (!hours) {
-    return `${minutesString}m`;
+  if (hours > 0) {
+    return `${hours}h${minutes.toString().padStart(2, "0")}`;
+  } else {
+    return `${minutes}m`;
   }
-
-  return `${hoursString}h${minutesString}`;
 }
 
 export function fromSecondsToTimeString(

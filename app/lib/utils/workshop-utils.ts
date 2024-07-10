@@ -1,6 +1,6 @@
-import type { WorkshopCard } from "~/lib/models/workshop.server";
+import type { Workshop, WorkshopCard } from "~/lib/models/workshop.server";
 
-export function hasHappened(workshop: WorkshopCard) {
+export function hasHappened(workshop: WorkshopCard | Workshop) {
   if (
     workshop.published_at &&
     new Date().getTime() > new Date(workshop.published_at).getTime()
