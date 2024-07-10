@@ -25,7 +25,7 @@ function WorkshopCard({
         target={openInNewTab ? "_blank" : "_self"}
         className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-800 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-all duration-300 overflow-hidden"
       >
-        <div className="group-hover:opacity-0 opacity-100 transition-all duration-500 z-50">
+        <div className="group-hover:opacity-0 opacity-100 transition-all duration-500 z-20">
           <WorkshopChip workshop={workshop} />
         </div>
 
