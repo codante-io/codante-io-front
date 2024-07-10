@@ -261,7 +261,7 @@ function WorkShops() {
           ensinados por profissionais do mercado. Os workshops são gravados ao
           vivo e posteriormente editados e disponibilizados na plataforma.
         </p>
-        <section className="grid justify-center grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
+        <section className="grid justify-center w-full grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
           {homeInfo?.featured_workshops?.map((workshop) => (
             <WorkshopCard key={workshop.id} workshop={workshop} />
           ))}

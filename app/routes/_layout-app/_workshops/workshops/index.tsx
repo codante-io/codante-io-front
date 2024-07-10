@@ -66,6 +66,7 @@ export default function Workshops() {
           ))}
         </Card>
       )}
+
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr mt-16">
         {pastWorkshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />

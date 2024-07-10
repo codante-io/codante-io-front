@@ -19,13 +19,13 @@ function WorkshopCard({
   openInNewTab?: boolean;
 }) {
   return (
-    <article className="w-full flex flex-col justify-center items-center h-full group">
+    <article className="w-full flex flex-col justify-center items-center h-full min-h-[240px] group @container">
       <Link
         to={`/workshops/${workshop?.slug}`}
         target={openInNewTab ? "_blank" : "_self"}
         className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-800 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-all duration-300 overflow-hidden"
       >
-        <div className="group-hover:opacity-0 opacity-100 transition-all duration-500">
+        <div className="group-hover:opacity-0 opacity-100 transition-all duration-300 z-20">
           <WorkshopChip workshop={workshop} />
         </div>
 
@@ -61,32 +61,34 @@ function WorkshopCard({
                   </div>
                 )}
               </div>
-              <div className="mb-8">
-                <h2 className="text-xl text-gray-700 xl:text-2xl dark:text-gray-50 font-lexend max-w-[50%]">
+              <div className="">
+                <h2 className="@xs:text-lg text-lg leading-tight @sm:text-lg @md:text-lg text-gray-700 @lg:text-2xl dark:text-gray-50 font-lexend max-w-[75%]">
                   {workshop?.name}
                 </h2>
               </div>
             </div>
 
             {/* Instrutor */}
-            <div className="flex mb-12">
-              {workshop?.instructor?.avatar_url && (
-                <img
-                  src={workshop?.instructor?.avatar_url}
-                  alt=""
-                  className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200 "
-                />
-              )}
-              <div>
-                <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
-                  {workshop?.instructor?.name}
-                </p>
-                <p className="text-xs font-light text-gray-400 dark:text-gray-300">
-                  {workshop?.instructor?.company}
-                </p>
+            <div className="">
+              <div className="flex mb-6">
+                {workshop?.instructor?.avatar_url && (
+                  <img
+                    src={workshop?.instructor?.avatar_url}
+                    alt=""
+                    className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200 "
+                  />
+                )}
+                <div>
+                  <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
+                    {workshop?.instructor?.name}
+                  </p>
+                  <p className="text-xs font-light text-gray-400 dark:text-gray-300">
+                    {workshop?.instructor?.company}
+                  </p>
+                </div>
               </div>
+              <WorkshopCardFooter workshop={workshop} />
             </div>
-            <WorkshopCardFooter workshop={workshop} />
           </div>
         </div>
       </Link>
