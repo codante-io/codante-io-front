@@ -67,17 +67,6 @@ export default function Workshops() {
         </Card>
       )}
 
-      {/* <h2 className="mb-0 text-2xl font-lexend text-left">
-        Aprenda com nossos{" "}
-        <span className="font-bold underline decoration-4 decoration-red-400">
-          Workshops
-        </span>{" "}
-        e{" "}
-        <span className="font-bold underline decoration-4 decoration-green-400">
-          Tutoriais
-        </span>
-      </h2> */}
-
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr mt-16">
         {pastWorkshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
