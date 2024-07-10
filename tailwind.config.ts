@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import tailwindForm from "@tailwindcss/forms";
 import tailwindTypography from "@tailwindcss/typography";
+import tailwindContainerQueries from "@tailwindcss/container-queries";
 
 const config = {
   darkMode: "class",
@@ -139,7 +140,7 @@ const config = {
       },
     },
   },
-  plugins: [tailwindForm, tailwindTypography],
+  plugins: [tailwindForm, tailwindTypography, tailwindContainerQueries],
 } satisfies Config;
 
 export default config;
