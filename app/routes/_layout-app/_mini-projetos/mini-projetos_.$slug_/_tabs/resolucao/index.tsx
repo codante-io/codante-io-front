@@ -1,9 +1,8 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 
+// Esta rota foi movida para /tutorial. Para preservar o SEO, vamos redirecionar para a nova rota.
 export const loader: LoaderFunction = async ({ request }) => {
-  // get current full path and replace /resolucao with /tutorial
-
   const newPath = request.url.replace("/resolucao", "/tutorial");
   return redirect(newPath, 301);
 };
