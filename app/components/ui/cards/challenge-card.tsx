@@ -94,16 +94,13 @@ export default function ChallengeCard({
 
               <div className="border-t border-gray-200 dark:border-gray-800 my-4 px-2"></div>
 
-              <div>
+              <div className="mt-10 mb-10">
                 <span className="text-xs text-gray-600 dark:text-gray-400">
                   O que você vai aprender:
                 </span>
-                <CardItemTagsText tags={challenge?.tags} />
+                <CardItemTagsText light tags={challenge?.tags} />
               </div>
             </div>
-            <p className="text-sm font-light text-gray-600 line-clamp-3 slate-600 dark:text-gray-300">
-              {challenge?.short_description}
-            </p>
           </div>
           <div className="flex items-center justify-end w-full mt-8">
             <section>

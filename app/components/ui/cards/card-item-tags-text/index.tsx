@@ -9,12 +9,12 @@ function CardItemTagsText({
   light?: boolean;
 }) {
   return (
-    <div className="pb-1 overflow-x-auto overflow-scrollbar scrollbar-thumb tags">
+    <div className="pb-1 leading-tight">
       {tags?.map((tag, index) => (
         <span key={tag.id} className="inline-block text-xs mr-1">
           <span
             className={cn(
-              "flex items-center gap-1 font-bold",
+              "flex items-center gap-1 font-bold ",
               light && "font-light",
             )}
           >
