@@ -34,6 +34,7 @@ import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import { cn } from "~/lib/utils";
 import CarouselSubmissionCard from "../components/features/submission-card/carousel-submission-card";
 import AlertBanner from "~/components/ui/alert-banner";
+import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 
 export const loader = async () => {
   return json({
@@ -233,6 +234,8 @@ function Headline() {
 function WorkShops() {
   const { homeInfo } = useLoaderData<typeof loader>();
   const { colorMode } = useColorMode();
+
+  useLazyLoading();
 
   return (
     <section

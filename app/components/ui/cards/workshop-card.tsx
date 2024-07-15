@@ -7,7 +7,6 @@ import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { hasHappened, isNew } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
-
 import { AiOutlineSolution } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 
@@ -34,10 +33,11 @@ function WorkshopCard({
           muted
           loop
           playsInline
-          src={workshop.video_url}
+          data-src={workshop.video_url}
           className={cn(
             "absolute top-0 opacity-0 right-0 bottom-0 left-0 w-full h-full rounded-2xl object-cover group-hover:opacity-60 transition-all duration-300 p-1 self-center scale-110",
             workshop.is_standalone && "object-right-bottom",
+            "lazy", // lazy-loading library
           )}
         />
 
