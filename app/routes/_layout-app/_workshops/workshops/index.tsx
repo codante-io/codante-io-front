@@ -2,6 +2,7 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Card } from "~/components/ui/cards/card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
+import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { getWorkshops } from "~/lib/models/workshop.server";
 
 export const meta = () => {
@@ -39,6 +40,8 @@ export default function Workshops() {
     (workshop) =>
       workshop.published_at && new Date(workshop.published_at) >= new Date(),
   );
+
+  useLazyLoading();
 
   return (
     <main className="container mx-auto text-center">
