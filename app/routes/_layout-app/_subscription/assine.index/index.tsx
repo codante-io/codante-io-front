@@ -37,6 +37,7 @@ import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
 import Counter from "./components/counter";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
+import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 
 export const loader = async () => {
   return json({
@@ -87,6 +88,8 @@ export default function HomePage() {
   useEffect(() => {
     Crisp.configure("dec01a18-bf11-4fb8-a820-6a53760ba042");
   }, []);
+
+  useLazyLoading();
 
   return (
     <div>
@@ -698,11 +701,13 @@ function WorkShops() {
           Veja alguns{" "}
           <span className="color-underline decoration-brand-500">exemplos</span>
         </h2>
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-3 place-items-center auto-rows-fr mt-16">
+
+        <section className="grid justify-center w-full grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
           {homeInfo?.featured_workshops?.map((workshop) => (
-            <WorkshopCard openInNewTab key={workshop.id} workshop={workshop} />
+            <WorkshopCard key={workshop.id} workshop={workshop} />
           ))}
         </section>
+
         <section className="flex justify-center w-full mt-10">
           <Link
             to="/workshops"
