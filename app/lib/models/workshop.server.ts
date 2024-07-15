@@ -104,9 +104,9 @@ export async function getWorkshop(
 export async function userEnteredWorkshop(
   slug: string,
   request: any,
-): Promise<Workshop | null> {
+): Promise<void> {
   const token = await currentToken({ request });
-  const workshop = await axios
+  await axios
     .post(
       `${environment().API_HOST}/workshops/${slug}/user-entered`,
       {},
@@ -122,5 +122,4 @@ export async function userEnteredWorkshop(
         return null;
       }
     });
-  return workshop;
 }
