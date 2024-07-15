@@ -10,11 +10,11 @@ import type { Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { getWorkshop, userEnteredWorkshop } from "~/lib/models/workshop.server";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
 import Sidebar from "../components/sidebar";
 import styles from "../styles.css?url";
-import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -78,7 +78,7 @@ export async function loader({
     return abort404();
   }
 
-  await userEnteredWorkshop(workshop.slug, request);
+  userEnteredWorkshop(workshop.slug, request);
 
   return {
     workshop: workshop,
