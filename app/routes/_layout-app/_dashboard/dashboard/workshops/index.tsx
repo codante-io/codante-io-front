@@ -36,7 +36,13 @@ export default function WorkshopsDashboard() {
         <div className="grid justify-center w-full grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
           {ongoingWorkshops && ongoingWorkshops.length > 0 ? (
             ongoingWorkshops.map((workshop) => (
-              <WorkshopCard size={"sm"} key={workshop.id} workshop={workshop} />
+              <WorkshopCard
+                size={"sm"}
+                key={workshop.id}
+                workshop={workshop}
+                withProgress
+                withChip={false}
+              />
             ))
           ) : (
             <h2 className="dark:text-gray-600 text-gray-400">
@@ -54,7 +60,13 @@ export default function WorkshopsDashboard() {
         <div className="grid justify-center w-full grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
           {completedWorkshops && completedWorkshops.length > 0 ? (
             completedWorkshops.map((workshop) => (
-              <WorkshopCard size={"sm"} key={workshop.id} workshop={workshop} />
+              <WorkshopCard
+                withProgress
+                size={"sm"}
+                key={workshop.id}
+                workshop={workshop}
+                withChip={false}
+              />
             ))
           ) : (
             <h2 className="dark:text-gray-600 text-gray-400">

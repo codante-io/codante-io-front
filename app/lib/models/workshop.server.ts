@@ -76,6 +76,7 @@ export type WorkshopCard = {
     status: string;
     completed_at: string;
     started_at: string;
+    percentage_completed: number;
   };
 };
 
