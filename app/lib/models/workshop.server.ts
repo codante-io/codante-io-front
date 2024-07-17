@@ -72,6 +72,11 @@ export type WorkshopCard = {
   };
   published_at?: string;
   streaming_url?: string | null;
+  pivot?: {
+    status: string;
+    completed_at: string;
+    started_at: string;
+  };
 };
 
 export async function getWorkshops(): Promise<Array<WorkshopCard>> {

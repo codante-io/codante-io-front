@@ -162,7 +162,7 @@ export async function currentToken({ request }: { request: Request }) {
 
   if (session.has("user")) {
     const { token } = session.get("user");
-    return token;
+    return token as string;
   }
 }
 
@@ -172,7 +172,7 @@ export async function user({
 }: {
   request: Request;
   params?: any;
-}): Promise<User | null | TypedResponse<any>> {
+}): Promise<User | null | TypedResponse<User>> {
   let response;
   let token = await currentToken({ request });
 
