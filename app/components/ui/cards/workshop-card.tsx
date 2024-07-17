@@ -1,24 +1,46 @@
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { Link } from "@remix-run/react";
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import { AiOutlineSolution } from "react-icons/ai";
 import { RiLiveLine } from "react-icons/ri";
 import Chip from "~/components/ui/chip";
 import type { WorkshopCard } from "~/lib/models/workshop.server";
+import { cn } from "~/lib/utils/cn";
 import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { hasHappened, isNew } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
-import { AiOutlineSolution } from "react-icons/ai";
-import { cn } from "~/lib/utils/cn";
+
+const workshopCardVariants = cva("", {
+  variants: {
+    size: {
+      default: "min-h-[240px]",
+      sm: "min-h-[180px]",
+    },
+  },
+  defaultVariants: {
+    size: "default",
+  },
+});
+
+type WorkshopCardProps = {
+  workshop: WorkshopCard;
+  openInNewTab?: boolean;
+} & VariantProps<typeof workshopCardVariants>;
 
 function WorkshopCard({
   workshop,
   openInNewTab = false,
-}: {
-  workshop: WorkshopCard;
-  openInNewTab?: boolean;
-}) {
+  size,
+}: WorkshopCardProps) {
   return (
-    <article className="w-full flex flex-col justify-center items-center h-full min-h-[240px] group @container">
+    <article
+      className={cn(
+        "w-full flex flex-col justify-center items-center h-full  group @container",
+        workshopCardVariants({ size }),
+      )}
+    >
       <Link
         to={`/workshops/${workshop?.slug}`}
         target={openInNewTab ? "_blank" : "_self"}
@@ -68,25 +90,27 @@ function WorkshopCard({
               </div>
             </div>
 
-            {/* Instrutor */}
             <div className="">
-              <div className="flex mb-6">
-                {workshop?.instructor?.avatar_url && (
-                  <img
-                    src={workshop?.instructor?.avatar_url}
-                    alt=""
-                    className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200 "
-                  />
-                )}
-                <div>
-                  <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
-                    {workshop?.instructor?.name}
-                  </p>
-                  <p className="text-xs font-light text-gray-400 dark:text-gray-300">
-                    {workshop?.instructor?.company}
-                  </p>
+              {/* Instrutor */}
+              {size !== "sm" && (
+                <div className="flex mb-6">
+                  {workshop?.instructor?.avatar_url && (
+                    <img
+                      src={workshop?.instructor?.avatar_url}
+                      alt=""
+                      className="w-10 h-10 mr-4 border-2 rounded-full dark:border-background-700 border-background-200 "
+                    />
+                  )}
+                  <div>
+                    <p className="text-sm font-normal text-gray-700 dark:text-gray-50">
+                      {workshop?.instructor?.name}
+                    </p>
+                    <p className="text-xs font-light text-gray-400 dark:text-gray-300">
+                      {workshop?.instructor?.company}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
               <WorkshopCardFooter workshop={workshop} />
             </div>
           </div>

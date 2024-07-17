@@ -2,6 +2,7 @@ import type { AxiosResponse } from "axios";
 import axios from "axios";
 import { currentToken } from "~/lib/services/auth.server";
 import { environment } from "./environment";
+import type { WorkshopCard } from "./workshop.server";
 
 export type ChallengeUserDashboard = {
   id: number;
@@ -56,4 +57,27 @@ export async function getDashboardData(
           "Ocorreu um erro ao buscar informações. Por favor, tente novamente ou entre em contato.",
       };
     });
+}
+
+export async function getDashboardWorkshops(request: Request) {
+  let token = await currentToken({ request });
+
+  if (!token) {
+    throw new Error("Token não encontrado");
+  }
+
+  const res = await axios.get<WorkshopCard[]>(
+    `${environment().API_HOST}/dashboard/workshops`,
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    },
+  );
+
+  if (res.status !== 200) {
+    throw new Error("Erro ao buscar workshops");
+  }
+
+  return res.data;
 }
