@@ -127,7 +127,7 @@ export default function Workshops() {
       </h1>
 
       {/* filtro */}
-      <div className="flex gap-3">
+      <div className="flex flex-wrap justify-center gap-2 md:gap-3">
         {technologies.map((technology) => {
           const isSelected = selectedTechs?.includes(technology.value);
           return (
@@ -137,7 +137,7 @@ export default function Workshops() {
               type="button"
               value={technology.value}
               className={cn(
-                "flex items-center gap-2 p-3 py-3 text-sm text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-gray-700 border-gray-300 hover:border-brand-300 hover:dark:border-brand-300",
+                "flex items-center gap-2 p-3 md:py-3 py-2 text-sm text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-gray-700 border-gray-300 hover:border-brand-300 hover:dark:border-brand-300",
                 isSelected &&
                   "border-brand-300 dark:border-brand-300 dark:text-white text-gray-700 bg-background-100 dark:bg-background-800",
               )}
