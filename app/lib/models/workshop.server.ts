@@ -80,9 +80,20 @@ export type WorkshopCard = {
   };
 };
 
-export async function getWorkshops(): Promise<Array<WorkshopCard>> {
+export async function getWorkshops({
+  tech,
+}: {
+  tech: string;
+}): Promise<Array<WorkshopCard>> {
+  if (tech === "") {
+    const workshops = await axios
+      .get(`${environment().API_HOST}/workshops`)
+      .then((res) => res.data.data);
+    return workshops;
+  }
+
   const workshops = await axios
-    .get(`${environment().API_HOST}/workshops`)
+    .get(`${environment().API_HOST}/workshops?tecnologia=${tech}`)
     .then((res) => res.data.data);
   return workshops;
 }
