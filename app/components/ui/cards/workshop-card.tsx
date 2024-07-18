@@ -57,27 +57,27 @@ function WorkshopCard({
           )}
         >
           {withChip && (
-            <div className="group-hover:opacity-0 opacity-100 transition-all duration-300 z-20">
+            <div className="z-20 transition-all duration-300 opacity-100 group-hover:opacity-0">
               <WorkshopChip workshop={workshop} />
             </div>
           )}
 
           <VideoHoverElement workshop={workshop} />
 
-          <div className="z-10 flex flex-col justify-between px-6 py-4 text-left md:mt-0 flex-1 overflow-hidden">
+          <div className="z-10 flex flex-col justify-between flex-1 px-6 py-4 overflow-hidden text-left md:mt-0">
             <div className="flex flex-col justify-between flex-1">
               <div>
                 {withProgress && <ProgressBar workshop={workshop} />}
 
-                <div className="font-extralight dark:text-gray-400 text-gray-500 text-xs">
+                <div className="text-xs text-gray-500 font-extralight dark:text-gray-400">
                   {workshop.is_standalone ? (
                     <div className={`flex items-center gap-1`}>
-                      <RiLiveLine className="group-hover:text-red-400 w-3 h-3 opacity-70" />
+                      <RiLiveLine className="w-3 h-3 group-hover:text-red-400 opacity-70" />
                       <span>Workshop</span>
                     </div>
                   ) : (
                     <div className={`flex items-center gap-1`}>
-                      <AiOutlineSolution className="group-hover:text-green-500 w-3 h-3 opacity-70" />
+                      <AiOutlineSolution className="w-3 h-3 group-hover:text-green-500 opacity-70" />
 
                       <span>Tutorial</span>
                     </div>
@@ -144,7 +144,7 @@ function WorkshopCardFooter({
 
   return (
     <div className="flex justify-between">
-      <div className="mt-auto flex gap-6 items-center">
+      <div className="flex items-center gap-6 mt-auto">
         {workshop.status === "published" && (
           <>
             <CardItemLessonsCount
@@ -155,19 +155,19 @@ function WorkshopCardFooter({
               durationString={humanTimeFormat(workshop.duration_in_seconds)}
             />
             {withProgress && percentageCompleted === 100 && (
-              <div className="flex text-xs dark:text-gray-400 text-gray-500  decoration-green-400 underline-offset-2 gap-1 items-center">
-                <CheckCheck className="h-4 w-4 text-green-400" />
+              <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 decoration-green-400 underline-offset-2">
+                <CheckCheck className="w-4 h-4 text-green-400" />
                 Completo{" "}
               </div>
             )}
           </>
         )}
         {workshop.status === "soon" && !hasHappened(workshop) && (
-          <p className="inline-flex gap-2 items-center text-xs  text-brand-300 border border-brand-400 dark:border-brand-300 rounded-lg py-1 px-2 ">
+          <p className="inline-flex items-center gap-2 px-2 py-1 text-xs border rounded-lg text-brand-300 border-brand-400 dark:border-brand-300 ">
             <span className="font-bold ">
               <CalendarIcon className="w-4 h-4 dark:text-brand-300 text-brand-400" />
             </span>{" "}
-            <span className="dark:text-white text-gray-600">
+            <span className="text-gray-600 dark:text-white">
               {publishedDate}
               {publishedTime ? ` às ${publishedTime}` : ""}
             </span>
