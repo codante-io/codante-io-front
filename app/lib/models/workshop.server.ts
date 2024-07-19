@@ -1,12 +1,10 @@
-import axios from "axios";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
 import type { Certificate } from "./certificates.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
-import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
 import type { Challenge } from "~/lib/models/challenge.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type WorkshopUser = {
   id: number;
@@ -85,15 +83,17 @@ export async function getWorkshops({
 }: {
   tech: string;
 }): Promise<Array<WorkshopCard>> {
+  const axios = await createAxios();
+
   if (tech === "") {
     const workshops = await axios
-      .get(`${environment().API_HOST}/workshops`)
+      .get("/workshops")
       .then((res) => res.data.data);
     return workshops;
   }
 
   const workshops = await axios
-    .get(`${environment().API_HOST}/workshops?tecnologia=${tech}`)
+    .get(`/workshops?tecnologia=${tech}`)
     .then((res) => res.data.data);
   return workshops;
 }
@@ -102,13 +102,9 @@ export async function getWorkshop(
   slug: string,
   request: any,
 ): Promise<Workshop | null> {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
   const workshop = await axios
-    .get(`${environment().API_HOST}/workshops/${slug}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/workshops/${slug}`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -122,17 +118,9 @@ export async function userEnteredWorkshop(
   slug: string,
   request: any,
 ): Promise<void> {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
   await axios
-    .post(
-      `${environment().API_HOST}/workshops/${slug}/user-entered`,
-      {},
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .post(`/workshops/${slug}/user-entered`)
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {

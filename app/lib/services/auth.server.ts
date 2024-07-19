@@ -4,10 +4,10 @@ import {
   createCookieSessionStorage,
   redirect,
 } from "@remix-run/node";
-import axios from "./axios.server";
 import type { AxiosResponse } from "axios";
 import type { User } from "~/lib/models/user.server";
 import { environment } from "~/lib/models/environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -36,6 +36,7 @@ export async function register({
   password: string;
   passwordConfirmation: string;
 }) {
+  const axios = await createAxios(request);
   try {
     await axios.post("/register", {
       name,
@@ -68,6 +69,7 @@ export async function login({
 }) {
   let response: AxiosResponse;
   let session = await sessionStorage.getSession(request.headers.get("Cookie"));
+  const axios = await createAxios(request);
 
   try {
     response = await axios.post("/login", { email, password });
@@ -105,16 +107,9 @@ export async function logout({
   let user = session.get("user");
 
   if (!user?.token) return redirect(redirectTo);
+  const axios = await createAxios(request);
 
-  await axios.post(
-    "/logout",
-    {},
-    {
-      headers: {
-        Authorization: "Bearer " + user?.token,
-      },
-    },
-  );
+  await axios.post("/logout");
 
   return redirect(redirectTo, {
     headers: {
@@ -130,6 +125,8 @@ export async function logoutWithRedirectAfterLogin({
   request: Request;
   redirectTo?: string;
 }) {
+  const axios = await createAxios(request);
+
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie"),
   );
@@ -138,15 +135,7 @@ export async function logoutWithRedirectAfterLogin({
 
   if (!user?.token) return redirect(`/login?redirectTo=${redirectTo}`);
 
-  await axios.post(
-    "/logout",
-    {},
-    {
-      headers: {
-        Authorization: "Bearer " + user?.token,
-      },
-    },
-  );
+  await axios.post("/logout");
 
   return redirect(`/login?redirectTo=${redirectTo}`, {
     headers: {
@@ -174,14 +163,10 @@ export async function user({
   params?: any;
 }): Promise<User | null | TypedResponse<User>> {
   let response;
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
-    response = await axios.get<User>("/user", {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+    response = await axios.get<User>("/user");
   } catch (error: any) {
     // se o usuário não estiver autenticado, destrua a sessão e redirecione de volta.
     if (error?.response?.status === 401) {
@@ -224,6 +209,8 @@ export async function resetPassword({
   password: string;
   passwordConfirmation: string;
 }) {
+  const axios = await createAxios();
+
   try {
     await axios.post("/reset-password", {
       token,
@@ -241,6 +228,8 @@ export async function resetPassword({
 }
 
 export async function sendPasswordLink({ email }: { email: string }) {
+  const axios = await createAxios();
+
   try {
     await axios.post("/forgot-password", { email });
   } catch (error: any) {

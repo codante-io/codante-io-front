@@ -1,8 +1,6 @@
 import type { AxiosResponse } from "axios";
-import axios from "axios";
-import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
 import type { WorkshopCard } from "./workshop.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type ChallengeUserDashboard = {
   id: number;
@@ -41,14 +39,10 @@ export type Dashboard = {
 export async function getDashboardData(
   request: Request,
 ): Promise<AxiosResponse<any, any> | { error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   return axios
-    .get(`${environment().API_HOST}/dashboard/show-data`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get("/dashboard/show-data")
     .then((res) => res.data)
     .catch((error) => {
       return {
@@ -60,20 +54,8 @@ export async function getDashboardData(
 }
 
 export async function getDashboardWorkshops(request: Request) {
-  let token = await currentToken({ request });
-
-  if (!token) {
-    throw new Error("Token não encontrado");
-  }
-
-  const res = await axios.get<WorkshopCard[]>(
-    `${environment().API_HOST}/dashboard/workshops`,
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    },
-  );
+  const axios = await createAxios(request);
+  const res = await axios.get<WorkshopCard[]>(`/dashboard/workshops`);
 
   if (res.status !== 200) {
     throw new Error("Erro ao buscar workshops");

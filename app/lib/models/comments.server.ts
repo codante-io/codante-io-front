@@ -1,8 +1,6 @@
 import type { AxiosResponse } from "axios";
-import axios from "axios";
-import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
 import type { User } from "./user.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type Comment = {
   id: string;
@@ -21,23 +19,15 @@ export async function createComment(
   comment: string,
   replyingTo: string | null = null,
 ): Promise<AxiosResponse<any, any> | { error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   return axios
-    .post(
-      `${environment().API_HOST}/comments`,
-      {
-        commentable_id: commentableId,
-        commentable_type: commentableType,
-        comment,
-        replying_to: replyingTo,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .post("/comments", {
+      commentable_id: commentableId,
+      commentable_type: commentableType,
+      comment,
+      replying_to: replyingTo,
+    })
     .then((res) => res.data)
     .catch((error) => {
       return {
@@ -53,21 +43,13 @@ export async function updateComment(
   commentId: string,
   comment: string,
 ): Promise<AxiosResponse<any, any> | { error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   return axios
-    .put(
-      `${environment().API_HOST}/comments`,
-      {
-        comment_id: commentId,
-        comment,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .put("/comments", {
+      comment_id: commentId,
+      comment,
+    })
     .then((res) => res.data)
     .catch((error) => {
       return {
@@ -82,15 +64,12 @@ export async function deleteComment(
   request: Request,
   commentId: string,
 ): Promise<AxiosResponse<any, any> | { error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   return axios
-    .delete(`${environment().API_HOST}/comments`, {
+    .delete("/comments", {
       data: {
         comment_id: commentId,
-      },
-      headers: {
-        Authorization: "Bearer " + token,
       },
     })
     .then((res) => res.data)

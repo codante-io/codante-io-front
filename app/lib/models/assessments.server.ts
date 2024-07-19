@@ -1,6 +1,5 @@
-import axios from "axios";
 import type { Tag } from "./tag.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type Assessment = {
   id: string;
@@ -30,15 +29,17 @@ export type Assessment = {
 };
 
 export async function getAssessments(): Promise<Array<Assessment>> {
+  const axios = await createAxios();
   const assessments: Assessment[] = await axios
-    .get(`${environment().API_HOST}/technical-assessments`)
+    .get("/technical-assessments")
     .then((res) => res.data.data);
   return assessments;
 }
 
 export async function getAssessment(slug: string): Promise<Assessment> {
+  const axios = await createAxios();
   const assessment: Assessment = await axios
-    .get(`${environment().API_HOST}/technical-assessments/${slug}`)
+    .get(`/technical-assessments/${slug}`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {

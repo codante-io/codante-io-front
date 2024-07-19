@@ -1,10 +1,9 @@
-import axios from "axios";
-import { currentToken } from "~/lib/services/auth.server";
 import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
 import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
 export type ChallengeEstimatedEffort = "1_day" | "2_days" | "1_week";
@@ -112,17 +111,13 @@ export async function getChallenges(
   { technology }: Filters,
   request: Request,
 ): Promise<ChallengesByTechnology> {
-  const token = await currentToken({ request });
   const url = new URL(`${environment().API_HOST}/challenges`);
   url.searchParams.append("groupedByTechnology", "true");
   technology && url.searchParams.append("technology", technology);
 
+  const axios = await createAxios(request);
   const challenges = await axios
-    .get(url.toString(), {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(url.toString())
     .then((res) => res.data.data);
   return challenges;
 }
@@ -131,14 +126,9 @@ export async function getChallenge(
   slug: string,
   request: Request,
 ): Promise<Challenge> {
-  const token = await currentToken({ request });
-
+  const axios = await createAxios(request);
   const challenge = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/challenges/${slug}`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -153,14 +143,9 @@ export async function getChallengeParticipants(
   slug: string,
   request: Request,
 ): Promise<ChallengeParticipants> {
-  const token = await currentToken({ request });
-
+  const axios = await createAxios(request);
   const challengeParticipants = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}/participants`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/challenges/${slug}/participants`)
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -179,10 +164,10 @@ export async function getSubmissionFromGithubUser(
   user_name: string;
   submission_image_url: string;
 }> {
+  const axios = await createAxios();
+
   const submission = await axios
-    .get(
-      `${environment().API_HOST}/challenges/${slug}/submissions/${githubUser}`,
-    )
+    .get(`/challenges/${slug}/submissions/${githubUser}`)
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -201,19 +186,8 @@ export async function joinChallenge({
   request: Request;
 }): Promise<{ success?: string; error?: string }> {
   try {
-    let token = await currentToken({ request });
-
-    await axios
-      .post(
-        `${environment().API_HOST}/challenges/${slug}/join`,
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        },
-      )
-      .then((res) => res.data);
+    const axios = await createAxios(request);
+    await axios.post(`$/challenges/${slug}/join`);
     return { success: "Sua participação no mini projeto foi registrada." };
   } catch (err) {
     return { error: "Não foi possível registrar sua participação." };
@@ -224,40 +198,12 @@ export async function userJoinedChallenge(
   slug: string,
   request: Request,
 ): Promise<ChallengeUser> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   const challengeUser = await axios
-    .get<{ data: ChallengeUser }>(
-      `${environment().API_HOST}/challenges/${slug}/joined`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .get<{ data: ChallengeUser }>(`/challenges/${slug}/joined`)
     .then((res) => res.data.data);
   return challengeUser;
-}
-
-export async function getUserFork(
-  userGithubLogin: string,
-  challengeSlug: string,
-) {
-  const repos = await axios
-    .get(`https://api.github.com/repos/codante-io/${challengeSlug}/forks`, {
-      headers: {
-        Authorization: `BEARER ${environment().GITHUB_PERSONAL_ACCESS_TOKEN}`,
-      },
-    })
-    // .get(`https://api.github.com/repos/miniprojects-io/countdown-timer/forks`)
-    .then((res) => res.data);
-
-  const userFork = repos.find(
-    (repo: { owner: { login: string } }) =>
-      repo.owner.login === userGithubLogin,
-  );
-
-  return userFork;
 }
 
 export async function updateChallengeUser({
@@ -269,14 +215,10 @@ export async function updateChallengeUser({
   body: { fork_url?: string; joined_discord?: boolean; completed?: boolean };
   request: Request;
 }): Promise<Challenge> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   const challengeUser = await axios
-    .put(`${environment().API_HOST}/challenges/${slug}`, body, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .put(`/challenges/${slug}`, body)
     .then((res) => res.data);
   return challengeUser;
 }
@@ -288,14 +230,10 @@ export async function verifyAndUpdateForkURL({
   slug: string;
   request: Request;
 }): Promise<{ success?: string; error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   const hasForked = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}/forked`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/challenges/${slug}/forked`)
     .then((res) => res.data.data);
 
   return hasForked
@@ -357,14 +295,10 @@ export async function getChallengeUsers(
   request: Request,
   slug: string,
 ): Promise<ChallengeUser[]> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   const challenge = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}/submissions`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/challenges/${slug}/submissions`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -382,21 +316,13 @@ export async function submitChallenge(
   submissionUrl: string,
   metadata?: any,
 ): Promise<{ success?: string; error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   return axios
-    .post(
-      `${environment().API_HOST}/challenges/${slug}/submit`,
-      {
-        submission_url: submissionUrl,
-        metadata,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .post(`/challenges/${slug}/submit`, {
+      submission_url: submissionUrl,
+      metadata,
+    })
     .then(() => ({ success: "Submissão registrada com sucesso." }))
     .catch((error) => {
       return {
@@ -413,21 +339,13 @@ export async function updateChallengeSubmission(
   submissionUrl: string,
   metadata?: any,
 ): Promise<{ success?: string; error?: string }> {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   return axios
-    .put(
-      `${environment().API_HOST}/challenges/${slug}/submit`,
-      {
-        submission_url: submissionUrl,
-        metadata,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .put(`/challenges/${slug}/submit`, {
+      submission_url: submissionUrl,
+      metadata,
+    })
     .then(() => ({ success: "Submissão atualizada com sucesso." }))
     .catch((error) => {
       return {

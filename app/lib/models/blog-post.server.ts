@@ -1,9 +1,7 @@
-import axios from "axios";
-import { currentToken } from "~/lib/services/auth.server";
 import type { Reactions } from "./reactions.server";
 import type { Tag } from "./tag.server";
 import type { Instructor } from "./instructor.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type BlogPost = {
   id: number;
@@ -19,25 +17,19 @@ export type BlogPost = {
 };
 
 export async function getPosts(request: Request) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
+
   const blogPosts: BlogPost[] = await axios
-    .get(`${environment().API_HOST}/blog-posts`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get("/blog-posts")
     .then((res) => res.data.data);
   return blogPosts;
 }
 
 export async function getPost(request: Request, slug: string) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
+
   const blogPost: BlogPost = await axios
-    .get(`${environment().API_HOST}/blog-posts/${slug}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/blog-posts/${slug}`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {
@@ -48,13 +40,9 @@ export async function getPost(request: Request, slug: string) {
 }
 
 export async function getPage(request: Request, slug: string) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
   const page: BlogPost = await axios
-    .get(`${environment().API_HOST}/pages/${slug}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/pages/${slug}`)
     .then((res) => res.data.data)
     .catch((e) => {
       if (e.response.status === 404) {

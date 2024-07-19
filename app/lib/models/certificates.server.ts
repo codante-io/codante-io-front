@@ -1,8 +1,6 @@
-import axios from "axios";
-import { environment } from "./environment";
-import { currentToken } from "../services/auth.server";
 import type { ChallengeUser, User } from "./user.server";
 import type { WorkshopUser } from "./workshop.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type ChallengeUserMetadata = {
   tags: string[];
@@ -40,21 +38,12 @@ export async function requestCertificate(
   certifiable_type: string,
   certifiable_id: string,
 ) {
-  const token = await currentToken({ request });
-
+  const axios = await createAxios(request);
   return axios
-    .post(
-      `${environment().API_HOST}/certificates`,
-      {
-        certifiable_type,
-        certifiable_id,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .post("/certificates", {
+      certifiable_type,
+      certifiable_id,
+    })
     .then((res) => res.data)
     .catch((error) => {
       return {
@@ -66,13 +55,9 @@ export async function requestCertificate(
 }
 
 export async function getCertificateBySlug(request: Request, slug: string) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
   const certificate = await axios
-    .get(`${environment().API_HOST}/challenges/${slug}/certificate`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get(`/challenges/${slug}/certificate`)
     .then((res) => res.data.data)
     .catch((error) => {
       return {
@@ -85,8 +70,10 @@ export async function getCertificateBySlug(request: Request, slug: string) {
 }
 
 export async function getCertificateById(id: string): Promise<Certificate> {
+  const axios = await createAxios();
+
   const certificate = await axios
-    .get(`${environment().API_HOST}/certificates/${id}`)
+    .get(`/certificates/${id}`)
     .then((res) => {
       return res.data.data;
     })

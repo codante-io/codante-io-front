@@ -1,6 +1,5 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import type { AxiosError } from "axios";
-import axios from "axios";
 import PriceCard from "~/components/ui/cards/pricing/price-card";
 import {
   freePlanDetails,
@@ -9,14 +8,13 @@ import {
   proPlanFeatures,
 } from "~/components/ui/cards/pricing/pricing-data";
 import type { Subscription } from "~/lib/models/subscription.server";
-import { currentToken } from "~/lib/services/auth.server";
 import faqQuestions from "../faq-questions";
 import type { Plan } from "~/lib/models/plan.server";
 import { getPlanDetails } from "~/lib/models/plan.server";
 import { Link, useLoaderData } from "@remix-run/react";
-import { environment } from "~/lib/models/environment";
 import FaqItem from "~/components/ui/faq-item";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import { createAxios } from "~/lib/services/axios.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const plan = await getPlanDetails();
@@ -24,31 +22,21 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: { request: Request }) {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
     const response = await axios.get<{
       checkoutLink: string;
       pagarmeOrderID: string;
       subscription: Subscription;
-    }>(`${environment().API_HOST}/pagarme/get-link`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+    }>("/pagarme/get-link");
 
     return redirect(`${response.data.checkoutLink}`);
   } catch (error: any) {
-    // if it is an axios error
     if (error.isAxiosError) {
       const axiosError = error as AxiosError;
 
-      // console.log(error);
-
-      // return "errror";
-      // if it is a 401 error
       if (axiosError.response?.status === 401) {
-        // redirect to login page
         return redirect("/login");
       }
 
