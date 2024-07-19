@@ -1,6 +1,4 @@
-import axios from "axios";
-
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type Lead = {};
 
@@ -9,7 +7,8 @@ export async function registerChallengeLead(
   email: string,
 ): Promise<{}> {
   try {
-    await axios.post(`${environment().API_HOST}/leads`, {
+    const axios = await createAxios(request);
+    await axios.post(`/leads`, {
       email,
       tags: ["lead-first-challenge"],
     });

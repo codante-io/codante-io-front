@@ -1,12 +1,12 @@
 import { SitemapStream, streamToPromise } from "sitemap";
 import { sitemapPages } from "./static-pages";
-import { environment } from "~/lib/models/environment";
-import axios from "axios";
+import { createAxios } from "~/lib/services/axios.server";
 
 export async function loader() {
+  const axios = await createAxios();
+
   const baseUrl = "https://codante.io"; // Ensure you use the correct domain
   const sitemap = new SitemapStream({ hostname: baseUrl });
-  let sitemapApiUrl = `${environment().API_HOST}/sitemap`;
 
   // // get static pages from static-pages.ts
   for (const page of sitemapPages) {
@@ -18,7 +18,7 @@ export async function loader() {
   }
 
   // get dynamic pages from from backend
-  const sitemapItems = (await axios.get(sitemapApiUrl)).data;
+  const sitemapItems = (await axios.get("/sitemap")).data;
 
   for (const item of sitemapItems) {
     sitemap.write({

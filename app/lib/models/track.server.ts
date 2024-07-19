@@ -1,11 +1,10 @@
-import axios from "axios";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import type { Instructor } from "./instructor.server";
 import type { Lesson } from "./lesson.server";
 import type { Tag } from "~/lib/models/tag.server";
-import { environment } from "./environment";
-import { currentToken } from "~/lib/services/auth.server";
+import { createAxios } from "~/lib/services/axios.server";
+import axios from "axios";
 
 export type Track = {
   id: string;
@@ -59,22 +58,16 @@ export type TrackablePivot = {
 };
 
 export async function getTracks(): Promise<Array<Track>> {
-  const tracks = await axios
-    .get(`${environment().API_HOST}/tracks`)
-    .then((res) => res.data.data);
+  const axios = await createAxios();
+
+  const tracks = await axios.get("/tracks").then((res) => res.data.data);
   return tracks;
 }
 
 export async function getTrack(slug: string, request: Request): Promise<Track> {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
 
-  const track = await axios
-    .get(`${environment().API_HOST}/tracks/${slug}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-    .then((res) => res.data.data);
+  const track = await axios.get(`/tracks/${slug}`).then((res) => res.data.data);
   return track;
 }
 
@@ -83,18 +76,10 @@ export async function toggleTrackableCompleted(
   request: Request,
 ) {
   try {
-    const token = await currentToken({ request });
+    const axiosInstance = await createAxios(request);
 
-    const data = await axios
-      .post(
-        `${environment().API_HOST}/trackables/${trackableId}/complete`,
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        },
-      )
+    const data = await axiosInstance
+      .post(`/trackables/${trackableId}/complete`)
       .then((res) => res.data);
 
     const { ok, message, completed } = data;

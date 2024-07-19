@@ -1,9 +1,10 @@
-import axios from "axios";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export async function getUpcoming() {
+  const axios = await createAxios();
+
   const upcomingData: any = await axios
-    .get(`${environment().API_HOST}/upcoming`)
+    .get(`/upcoming`)
     .then((res) => res.data);
   return upcomingData;
 }

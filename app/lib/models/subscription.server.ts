@@ -1,6 +1,4 @@
-import axios from "axios";
-import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type Subscription = {
   id: number;
@@ -21,16 +19,10 @@ export type Subscription = {
 };
 
 export async function getSubscription({ request }: { request: Request }) {
-  const token = await currentToken({ request });
-
-  let endpoint = `${environment().API_HOST}/my-subscription`;
+  const axios = await createAxios(request);
 
   const data: Subscription | null = await axios
-    .get(endpoint, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
+    .get("/my-subscription")
     .then((res) => res.data.data)
     .catch(() => null);
 
@@ -44,19 +36,13 @@ export async function getSubscriptionByPagarmeOrderId({
   request: Request;
   pagarmeOrderId: string;
 }) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
 
-  let endpoint = `${
-    environment().API_HOST
-  }/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
+  let endpoint = `/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
 
   try {
     const data: Subscription | null = await axios
-      .get(endpoint, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+      .get(endpoint)
       .then((res) => res.data.data);
 
     return data;

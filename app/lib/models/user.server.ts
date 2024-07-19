@@ -1,10 +1,8 @@
-import axios from "axios";
 import type { Certificate } from "./certificates.server";
 import type { ChallengeSummary } from "./challenge.server";
 import type { Comment } from "./comments.server";
 import type { Reactions } from "./reactions.server";
-import { currentToken } from "../services/auth.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type User = {
   id: number;
@@ -58,19 +56,11 @@ export async function impersonate(
   request: any,
   userId: string,
 ): Promise<string | null> {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
   return axios
-    .post(
-      `${environment().API_HOST}/impersonate`,
-      {
-        user_id: userId,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .post("/impersonate", {
+      user_id: userId,
+    })
     .then((res) => res.data.token)
     .catch((error) => {
       return {

@@ -1,8 +1,7 @@
-import axios from "axios";
 import type { WorkshopCard } from "./workshop.server";
 import type { ChallengeCard } from "./challenge.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type HomeInfo = {
   featured_testimonials: {
@@ -38,8 +37,7 @@ export type HomeInfo = {
 };
 
 export async function getHome(): Promise<HomeInfo> {
-  const homeInfo = await axios
-    .get(`${environment().API_HOST}/home`)
-    .then((res) => res.data);
+  const axios = await createAxios();
+  const homeInfo = await axios.get("/home").then((res) => res.data);
   return homeInfo;
 }

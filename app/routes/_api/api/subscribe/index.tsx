@@ -1,27 +1,17 @@
-import axios from "axios";
-import { environment } from "~/lib/models/environment";
-import { currentToken } from "~/lib/services/auth.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
   const pagarmeToken = formData.get("pagarmeToken");
   const paymentMethod = formData.get("paymentMethod");
 
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
-    const response = await axios.post(
-      `${environment().API_HOST}/subscribe`,
-      {
-        pagarmeToken,
-        paymentMethod,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    );
+    const response = await axios.post("/subscribe", {
+      pagarmeToken,
+      paymentMethod,
+    });
 
     return new Response(JSON.stringify(response.data), {
       status: 200,

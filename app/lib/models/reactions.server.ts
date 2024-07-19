@@ -1,7 +1,5 @@
 import type { AxiosResponse } from "axios";
-import axios from "axios";
-import { currentToken } from "~/lib/services/auth.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type AllowedReaction = "like" | "exploding-head" | "rocket" | "fire";
 
@@ -21,22 +19,13 @@ export async function react(
   reactableType: string,
   reaction: AllowedReaction,
 ): Promise<AxiosResponse<any, any> | { error?: string }> {
-  let token = await currentToken({ request });
-
+  const axios = await createAxios(request);
   return axios
-    .post(
-      `${environment().API_HOST}/reactions`,
-      {
-        reactable_id: reactableId,
-        reactable_type: reactableType,
-        reaction,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      },
-    )
+    .post("/reactions", {
+      reactable_id: reactableId,
+      reactable_type: reactableType,
+      reaction,
+    })
     .then((res) => res.data)
     .catch((error) => {
       return {

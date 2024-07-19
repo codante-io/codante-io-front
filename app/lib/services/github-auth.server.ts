@@ -1,8 +1,8 @@
-import axios from "./axios.server";
 import { Authenticator } from "remix-auth";
 import { sessionStorage } from "./auth.server";
 import { GitHubStrategy } from "remix-auth-github";
 import { environment } from "~/lib/models/environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export let authenticator = new Authenticator<any>(sessionStorage);
 
@@ -13,6 +13,8 @@ let gitHubStrategy = new GitHubStrategy(
     callbackURL: environment().GITHUB_CALLBACK_URL as string,
   },
   async (params) => {
+    const axios = await createAxios();
+
     const res = await axios.post("/github-login", {
       github_token: params.accessToken,
     });

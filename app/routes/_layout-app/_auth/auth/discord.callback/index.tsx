@@ -1,7 +1,6 @@
 import { redirect, type ActionFunctionArgs } from "@remix-run/node";
-import axios from "axios";
 import { environment } from "~/lib/models/environment";
-import { currentToken } from "~/lib/services/auth.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 export async function loader({ request }: ActionFunctionArgs) {
   // get code from url
@@ -9,20 +8,12 @@ export async function loader({ request }: ActionFunctionArgs) {
   const code = url.searchParams.get("code") as string;
 
   const tokenData = await getToken(code);
-  const token = await currentToken({ request }); // autenticação backend
+  const axios = await createAxios(request);
 
   // chamada backend para salvar dados
-  await axios.post(
-    `${environment().API_HOST}/user/discord`,
-    JSON.stringify(tokenData),
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    },
-  );
+  await axios.post("/user/discord", JSON.stringify(tokenData), {
+    method: "POST",
+  });
 
   // redirecionar para o discord channel.
   return redirect("https://discord.com/channels/1089524234142888048");

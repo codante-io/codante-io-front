@@ -1,5 +1,4 @@
-import axios from "axios";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 export type Plan = {
   id: number;
@@ -10,10 +9,10 @@ export type Plan = {
 };
 
 export async function getPlanDetails() {
-  let endpoint = `${environment().API_HOST}/plan-details`;
+  const axios = await createAxios();
 
   const data: Plan | null = await axios
-    .get(endpoint)
+    .get("/plan-details")
     .then((res) => res.data.data);
 
   return data;

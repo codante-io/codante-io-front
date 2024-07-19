@@ -1,6 +1,5 @@
-import axios from "axios";
 import type { UserAvatar } from "./user.server";
-import { environment } from "./environment";
+import { createAxios } from "~/lib/services/axios.server";
 
 type UserPoints = {
   avatar: UserAvatar;
@@ -12,7 +11,8 @@ type UserPoints = {
 export type Ranking = UserPoints[];
 
 export async function getRanking(monthly: string | null): Promise<Ranking> {
-  let url = `${environment().API_HOST}/ranking`;
+  const axios = await createAxios();
+  let url = "/ranking";
 
   if (monthly) {
     url += `?monthly=${monthly}`;

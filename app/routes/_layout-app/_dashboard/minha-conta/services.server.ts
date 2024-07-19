@@ -1,5 +1,4 @@
-import { currentToken } from "~/lib/services/auth.server";
-import axios from "~/lib/services/axios.server";
+import { createAxios } from "~/lib/services/axios.server";
 
 type changePasswordParams = {
   request: Request;
@@ -22,14 +21,13 @@ export async function changePassword({
   password,
   passwordConfirmation,
 }: changePasswordParams) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
-    await axios.post(
-      "/dashboard/change-password",
-      { password, password_confirmation: passwordConfirmation },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
+    await axios.post("/dashboard/change-password", {
+      password,
+      password_confirmation: passwordConfirmation,
+    });
   } catch (error: any) {
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),
@@ -39,14 +37,10 @@ export async function changePassword({
 }
 
 export async function changeName({ request, name }: changeNameParams) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
-    await axios.post(
-      "/dashboard/change-name",
-      { name },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
+    await axios.post("/dashboard/change-name", { name });
   } catch (error: any) {
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),
@@ -62,14 +56,10 @@ export async function changeSettings({
   request: Request;
   showBadge: boolean;
 }) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
-    await axios.post(
-      "/dashboard/update-settings",
-      { show_badge: showBadge },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
+    await axios.post("/dashboard/update-settings", { show_badge: showBadge });
   } catch (error: any) {
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
@@ -79,14 +69,12 @@ export async function changeLinkedinUrl({
   request,
   linkedin,
 }: changeLinkedinUrlParams) {
-  const token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
-    await axios.post(
-      "/dashboard/change-linkedin-url",
-      { linkedin_user: linkedin },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
+    await axios.post("/dashboard/change-linkedin-url", {
+      linkedin_user: linkedin,
+    });
   } catch (error: any) {
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),

@@ -6,7 +6,6 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import type { AxiosError } from "axios";
-import axios from "axios";
 import { Crisp } from "crisp-sdk-web";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { PlayCircle } from "lucide-react";
@@ -28,16 +27,15 @@ import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import UserAvatar from "~/components/ui/user-avatar";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
-import { environment } from "~/lib/models/environment";
 import { getHome } from "~/lib/models/home.server";
 import type { Subscription } from "~/lib/models/subscription.server";
-import { currentToken } from "~/lib/services/auth.server";
 import { cn } from "~/lib/utils";
 import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
 import Counter from "./components/counter";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
+import { createAxios } from "~/lib/services/axios.server";
 
 export const loader = async () => {
   return json({
@@ -46,18 +44,14 @@ export const loader = async () => {
 };
 
 export async function action({ request }: { request: Request }) {
-  let token = await currentToken({ request });
+  const axios = await createAxios(request);
 
   try {
     const response = await axios.get<{
       checkoutLink: string;
       pagarmeOrderID: string;
       subscription: Subscription;
-    }>(`${environment().API_HOST}/pagarme/get-link`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+    }>("/pagarme/get-link");
 
     return redirect(`${response.data.checkoutLink}`);
   } catch (error: any) {
