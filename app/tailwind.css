@@ -91,7 +91,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 
 /* Estiliza o autofill no dark mode */
