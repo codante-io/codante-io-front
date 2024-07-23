@@ -11,7 +11,7 @@ import {
 } from "@icons-pack/react-simple-icons";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Card } from "~/components/ui/cards/card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
@@ -49,7 +49,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Workshops() {
   const { workshops } = useLoaderData<typeof loader>();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const selectedTechs = searchParams.get("tecnologia");
 
   const pastWorkshops = workshops.filter(
@@ -62,19 +62,6 @@ export default function Workshops() {
   );
 
   useLazyLoading();
-
-  function handleTechFilter(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) {
-    const tech = e.currentTarget.value;
-
-    // Remove tech from searchParams if it's already selected
-    if (selectedTechs?.includes(tech)) {
-      setSearchParams({});
-      return;
-    }
-    setSearchParams({ tecnologia: tech });
-  }
 
   const technologies = [
     {
@@ -131,11 +118,14 @@ export default function Workshops() {
         {technologies.map((technology) => {
           const isSelected = selectedTechs?.includes(technology.value);
           return (
-            <button
-              onClick={handleTechFilter}
+            <Link
+              to={
+                isSelected
+                  ? "/workshops"
+                  : `/workshops?tecnologia=${technology.value}`
+              }
+              prefetch="intent"
               key={technology.value}
-              type="button"
-              value={technology.value}
               className={cn(
                 "flex items-center gap-2 p-3 md:py-3 py-2 text-sm text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-gray-700 border-gray-300 hover:border-brand-300 hover:dark:border-brand-300",
                 isSelected &&
@@ -151,7 +141,7 @@ export default function Workshops() {
                 ),
               })}
               {technology.name}
-            </button>
+            </Link>
           );
         })}
       </div>
