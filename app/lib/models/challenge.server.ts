@@ -187,7 +187,7 @@ export async function joinChallenge({
 }): Promise<{ success?: string; error?: string }> {
   try {
     const axios = await createAxios(request);
-    await axios.post(`$/challenges/${slug}/join`);
+    await axios.post(`/challenges/${slug}/join`);
     return { success: "Sua participação no mini projeto foi registrada." };
   } catch (err) {
     return { error: "Não foi possível registrar sua participação." };
