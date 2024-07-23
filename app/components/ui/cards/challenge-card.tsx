@@ -22,6 +22,7 @@ export default function ChallengeCard({
 }) {
   return (
     <Link
+      prefetch="intent"
       onClick={(e) => challenge?.status === "soon" && e.preventDefault()}
       target={openInNewTab ? "_blank" : "_self"}
       to={
