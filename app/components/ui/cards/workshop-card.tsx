@@ -49,6 +49,7 @@ function WorkshopCard({
         to={`/workshops/${workshop?.slug}`}
         target={openInNewTab ? "_blank" : "_self"}
         className="w-full"
+        prefetch="intent"
       >
         <div
           className={cn(
