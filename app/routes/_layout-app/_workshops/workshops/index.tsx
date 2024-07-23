@@ -68,7 +68,7 @@ export default function Workshops() {
       workshop.published_at && new Date(workshop.published_at) >= new Date(),
   );
 
-  useLazyLoading();
+  useLazyLoading([selectedTechs]);
 
   const technologies = [
     {
