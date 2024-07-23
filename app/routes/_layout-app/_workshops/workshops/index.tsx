@@ -42,9 +42,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const tech = url.searchParams.get("tecnologia") ?? "";
 
-  return json({
-    workshops: await getWorkshops({ tech }),
-  });
+  return json(
+    {
+      workshops: await getWorkshops({ tech }),
+    },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=300, s-maxage=600",
+      },
+    },
+  );
 };
 
 export default function Workshops() {
@@ -124,7 +131,7 @@ export default function Workshops() {
                   ? "/workshops"
                   : `/workshops?tecnologia=${technology.value}`
               }
-              prefetch="intent"
+              prefetch="render"
               key={technology.value}
               className={cn(
                 "flex items-center gap-2 p-3 md:py-3 py-2 text-sm text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-gray-700 border-gray-300 hover:border-brand-300 hover:dark:border-brand-300",
