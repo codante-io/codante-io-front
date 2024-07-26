@@ -61,6 +61,11 @@ const moreMenuNavigation = [
     href: "https://changelog.codante.io/",
     external: true,
   },
+  {
+    name: "Codante APIs",
+    href: "https://apis.codante.io/",
+    external: true,
+  },
 ];
 
 export default function Navbar({
