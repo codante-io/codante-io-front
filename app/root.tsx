@@ -88,13 +88,29 @@ export async function loader({ request }: { request: Request }) {
     return userData;
   }
 
-  return json({
-    user: userData,
-    ENV: {
-      BASE_URL: environment().BASE_URL,
-      NODE_ENV: environment().NODE_ENV,
+  //https://sergiodxa.com/tutorials/fix-double-data-request-when-prefetching-in-remix
+  let headers = new Headers();
+  let purpose =
+    request.headers.get("Purpose") ||
+    request.headers.get("X-Purpose") ||
+    request.headers.get("Sec-Purpose") ||
+    request.headers.get("Sec-Fetch-Purpose") ||
+    request.headers.get("X-Moz");
+
+  if (purpose === "prefetch") {
+    headers.set("Cache-Control", "private, max-age=20");
+  }
+
+  return json(
+    {
+      user: userData,
+      ENV: {
+        BASE_URL: environment().BASE_URL,
+        NODE_ENV: environment().NODE_ENV,
+      },
     },
-  });
+    { headers },
+  );
 }
 
 export default function App({ children }: { children: React.ReactNode }) {

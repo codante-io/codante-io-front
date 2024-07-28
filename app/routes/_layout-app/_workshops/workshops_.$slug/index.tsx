@@ -1,6 +1,6 @@
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useOutletContext } from "@remix-run/react";
+import { json, useLoaderData, useOutletContext } from "@remix-run/react";
 import { AiOutlineSolution } from "react-icons/ai";
 import { PiGift } from "react-icons/pi";
 import { RiLiveLine } from "react-icons/ri";
@@ -65,7 +65,20 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     return abort404();
   }
 
-  return { slug: params.slug, workshop };
+  //https://sergiodxa.com/tutorials/fix-double-data-request-when-prefetching-in-remix
+  let headers = new Headers();
+  let purpose =
+    request.headers.get("Purpose") ||
+    request.headers.get("X-Purpose") ||
+    request.headers.get("Sec-Purpose") ||
+    request.headers.get("Sec-Fetch-Purpose") ||
+    request.headers.get("X-Moz");
+
+  if (purpose === "prefetch") {
+    headers.set("Cache-Control", "private, max-age=15");
+  }
+
+  return json({ slug: params.slug, workshop }, { headers });
 };
 
 export default function WorkshopSlug() {
