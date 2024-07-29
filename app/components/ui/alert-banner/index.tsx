@@ -59,6 +59,7 @@ export type AlertBannerProps = {
   className?: string;
   container?: boolean;
   bordersX?: boolean;
+  icon?: React.ReactNode;
 };
 
 function AlertBanner({
@@ -68,12 +69,13 @@ function AlertBanner({
   className,
   bordersX = true,
   container = false,
+  icon = null,
   ...props
 }: AlertBannerProps) {
   const textColor = style[type].textColor;
   const bgColor = style[type].bgColor;
   const borderColor = style[type].borderColor;
-  const icon = style[type].icon;
+  const localIcon = icon || style[type].icon;
   const bannerSize = style[type].bannerSize;
   const textDirection = style[type].textDirection;
 
@@ -94,7 +96,7 @@ function AlertBanner({
           container && "mx-auto container",
         )}
       >
-        {icon}
+        {localIcon}
         <div className="flex-1">
           <div
             className={cn("font-bold mb-3 md:mb-0", textColor, textDirection)}
