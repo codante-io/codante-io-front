@@ -2,7 +2,6 @@ import type { Tag } from "./tag.server";
 import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
-import { environment } from "./environment";
 import { createAxios } from "~/lib/services/axios.server";
 
 export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
@@ -103,23 +102,35 @@ export type ChallengesByTechnology = {
   };
 };
 
-type Filters = {
-  technology: string | null;
+type GetChallengeArgs = {
+  tech: string;
+  request: Request;
 };
 
-export async function getChallenges(
-  { technology }: Filters,
-  request: Request,
-): Promise<ChallengesByTechnology> {
-  const url = new URL(`${environment().API_HOST}/challenges`);
-  url.searchParams.append("groupedByTechnology", "true");
-  technology && url.searchParams.append("technology", technology);
-
+export async function getChallenges({
+  tech,
+  request,
+}: GetChallengeArgs): Promise<{
+  challenges: ChallengeCard[];
+  featuredChallenge: ChallengeCard;
+}> {
   const axios = await createAxios(request);
-  const challenges = await axios
-    .get(url.toString())
+
+  if (!tech) {
+    const data = await axios.get("/challenges").then((res) => res.data.data);
+    return {
+      challenges: data.challenges,
+      featuredChallenge: data.featuredChallenge,
+    };
+  }
+
+  const data = await axios
+    .get(`/challenges?tecnologia=${tech}`)
     .then((res) => res.data.data);
-  return challenges;
+  return {
+    challenges: data.challenges,
+    featuredChallenge: data.featuredChallenge,
+  };
 }
 
 export async function getChallenge(
