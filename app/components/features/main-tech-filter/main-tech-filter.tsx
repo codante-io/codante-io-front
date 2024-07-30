@@ -73,6 +73,7 @@ export default function MainTechFilter({
             to={
               isSelected ? baseUrl : `${baseUrl}?tecnologia=${technology.value}`
             }
+            preventScrollReset
             prefetch="intent"
             key={technology.value}
             className={cn(
