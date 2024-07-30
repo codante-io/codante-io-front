@@ -30,6 +30,23 @@ export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://rsms.me" },
   { rel: "stylesheet", href: "https://rsms.me/inter/inter.css?url" },
   { rel: "icon", href: "/favicon.svg" },
+  { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "32x32",
+    href: "/favicon-32x32.png",
+  },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "16x16",
+    href: "/favicon-16x16.png",
+  },
+  { rel: "manifest", href: "/site.webmanifest" },
+
+  { rel: "shortcut icon", href: "/favicon.ico" },
+  { rel: "mask-icon", href: "/mask-icon.svg", color: "#5282FF" },
 ];
 
 export const meta: MetaFunction = ({ matches }) => {
