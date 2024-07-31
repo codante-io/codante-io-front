@@ -8,12 +8,19 @@ export type Plan = {
   details: string;
 };
 
+export type Coupon = {
+  code: string;
+  name: string;
+  discount_amount: number;
+  type: string;
+};
+
 export async function getPlanDetails() {
   const axios = await createAxios();
 
-  const data: Plan | null = await axios
+  const data: { plan: Plan | null; coupon: Coupon | null } = await axios
     .get("/plan-details")
-    .then((res) => res.data.data);
+    .then((res) => res.data);
 
   return data;
 }

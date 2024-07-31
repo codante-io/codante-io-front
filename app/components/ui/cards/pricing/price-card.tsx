@@ -5,6 +5,10 @@ import classNames from "~/lib/utils/class-names";
 import { BsInfoCircle } from "react-icons/bs";
 import TooltipWrapper from "~/components/ui/tooltip";
 import type { PlanDetails, PlanFeaturesByCategory } from "./pricing-types";
+import { Button } from "../../button";
+import { useState } from "react";
+import { Input } from "../../input";
+import { useFetcher } from "@remix-run/react";
 
 export default function PriceCard({
   data,
@@ -78,6 +82,7 @@ export default function PriceCard({
       </div>
 
       <PriceButton plan={data.name} />
+      {data.name === "PRO (Vitalício)" && <CouponSection />}
 
       <div className="h-[1px] bg-background-500/30 w-1/2 mx-auto my-6" />
 
@@ -129,5 +134,63 @@ function FeatureItem({
         )}
       </div>
     </li>
+  );
+}
+
+function CouponSection() {
+  const [open, setOpen] = useState(false);
+  const fetcher = useFetcher();
+
+  //get loader data from another
+
+  // const isSubmittingOrLoading =
+  //   fetcher.state === "submitting" || fetcher.state === "loading";
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    fetcher.submit(
+      { coupon: "asldk" },
+      {
+        method: "get",
+        action: "/planos",
+      },
+    );
+
+    console.log("enviado");
+  }
+
+  if (open) {
+    return (
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-4">
+        <Input
+          className="h-9 font-light dark:bg-transparent border-[1.5px]"
+          placeholder="Código do Cupom"
+        />
+        <Button
+          variant={"outline"}
+          size={"sm"}
+          className="dark:border-background-700"
+        >
+          Aplicar
+        </Button>
+      </form>
+    );
+  }
+  return (
+    <div className="text-right">
+      {!open && (
+        <Button
+          type="button"
+          variant={"link"}
+          onClick={() => setOpen(true)}
+          className="inline-block text-xs font-light group "
+        >
+          <span className="text-gray-400 group-hover:text-white">
+            Possui cupom?
+          </span>
+        </Button>
+      )}
+    </div>
   );
 }

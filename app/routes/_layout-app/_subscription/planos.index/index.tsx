@@ -17,7 +17,8 @@ import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { createAxios } from "~/lib/services/axios.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const plan = await getPlanDetails();
+  const { plan, coupon } = await getPlanDetails();
+
   return { request, plan };
 }
 
