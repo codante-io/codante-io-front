@@ -10,16 +10,19 @@ import {
   SiTailwindcssHex,
 } from "@icons-pack/react-simple-icons";
 import { Link } from "@remix-run/react";
+import { AiFillTrophy } from "react-icons/ai";
 import { cn } from "~/lib/utils";
 
 type MainTechFilterProps = {
   selectedTechs?: string | null;
   baseUrl: string;
+  techsToDisplay?: string[];
 };
 
 export default function MainTechFilter({
   selectedTechs,
   baseUrl,
+  techsToDisplay = ["nextjs", "tailwindcss", "react", "fundamentos", "ui-ux"],
 }: MainTechFilterProps) {
   const technologies = [
     {
@@ -62,11 +65,23 @@ export default function MainTechFilter({
       hoverClass: "group-hover:text-[#F24E1E]",
       selectClass: "text-[#F24E1E]",
     },
+    {
+      name: "Hackathon",
+      icon: (props: any) => <AiFillTrophy {...props} />,
+      value: "hackathon",
+      color: "#fcd34d",
+      hoverClass: "group-hover:text-[#fcd34d] group-hover:fill-[#fcd34d]",
+      selectClass: "text-[#fcd34d]",
+    },
   ];
+
+  const filteredTechs = technologies.filter((tech) =>
+    techsToDisplay.includes(tech.value),
+  );
 
   return (
     <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-      {technologies.map((technology) => {
+      {filteredTechs.map((technology) => {
         const isSelected = selectedTechs?.includes(technology.value);
         return (
           <Link
