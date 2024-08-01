@@ -1,4 +1,4 @@
-import type { PlanDetails, PlanFeaturesByCategory } from "./pricing-types";
+import type { PlanDetails, PlanFeaturesByCategory } from "./pricing.d";
 
 export const freePlanDetails: PlanDetails = {
   name: "Gratuito",
@@ -7,9 +7,8 @@ export const freePlanDetails: PlanDetails = {
 };
 
 export const proPlanDetails: PlanDetails = {
-  name: "PRO (Vitalício)",
+  name: "Vitalício",
   fullPrice: 948,
-  banner: "Oferta de lançamento",
   installments: 12,
 };
 

@@ -17,11 +17,7 @@ import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
-import PriceCard from "~/components/ui/cards/pricing/price-card";
-import {
-  proPlanDetails,
-  proPlanFeatures,
-} from "~/components/ui/cards/pricing/pricing-data";
+
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import UserAvatar from "~/components/ui/user-avatar";
@@ -36,6 +32,8 @@ import Counter from "./components/counter";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { createAxios } from "~/lib/services/axios.server";
+import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import { proPlanDetails } from "~/components/ui/cards/pricing/data";
 
 export const loader = async () => {
   return json({
@@ -1802,10 +1800,7 @@ function Pricing() {
           <span className="color-underline decoration-brand-400">atual</span>
         </motion.h1>
         <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start w-full">
-          <PriceCard
-            data={proPlanWithPrice}
-            featuresByCategory={proPlanFeatures}
-          />
+          <ProPricingCard />
         </section>
       </div>
     </section>

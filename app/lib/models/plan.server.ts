@@ -15,11 +15,20 @@ export type Coupon = {
   type: string;
 };
 
-export async function getPlanDetails() {
+export async function getPlanDetails({
+  couponCode,
+}: {
+  couponCode: string | null;
+}) {
   const axios = await createAxios();
 
+  let url = "/plan-details";
+  if (couponCode) {
+    url += `?coupon=${couponCode}`;
+  }
+
   const data: { plan: Plan | null; coupon: Coupon | null } = await axios
-    .get("/plan-details")
+    .get(url)
     .then((res) => res.data);
 
   return data;

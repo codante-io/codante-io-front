@@ -1,12 +1,6 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import type { AxiosError } from "axios";
-import PriceCard from "~/components/ui/cards/pricing/price-card";
-import {
-  freePlanDetails,
-  freePlanFeatures,
-  proPlanDetails,
-  proPlanFeatures,
-} from "~/components/ui/cards/pricing/pricing-data";
+
 import type { Subscription } from "~/lib/models/subscription.server";
 import faqQuestions from "../faq-questions";
 import type { Plan } from "~/lib/models/plan.server";
@@ -15,11 +9,21 @@ import { Link, useLoaderData } from "@remix-run/react";
 import FaqItem from "~/components/ui/faq-item";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { createAxios } from "~/lib/services/axios.server";
+import FreePricingCard from "~/components/ui/cards/pricing/free";
+import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import { proPlanDetails } from "~/components/ui/cards/pricing/data";
+import { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const { plan, coupon } = await getPlanDetails();
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
 
-  return { request, plan };
+  const couponCode = searchParams.get("coupon");
+
+  console.log(couponCode);
+  const { plan, coupon } = await getPlanDetails({ couponCode });
+
+  return { request, plan, coupon };
 }
 
 export async function action({ request }: { request: Request }) {
@@ -52,21 +56,6 @@ export async function action({ request }: { request: Request }) {
 }
 
 export default function AssinePage() {
-  const loaderData = useLoaderData<typeof loader>();
-  const plan = loaderData.plan as Plan;
-
-  const promotionInfo = JSON.parse(plan?.details || "{}");
-
-  const currentPrice =
-    plan.price_in_cents +
-    promotionInfo?.content_count * 100 +
-    promotionInfo?.user_raised_count * 100 * 10;
-
-  const proPlanWithPrice = {
-    ...proPlanDetails,
-    monthlyPrice: Math.trunc((currentPrice / 100 / 12) * 100) / 100, // truncate 2 decimals
-    totalPrice: currentPrice / 100,
-  };
   return (
     <main className="container mx-auto ">
       <h1 className="mb-10 text-3xl md:text-4xl text-center font-lexend">
@@ -100,14 +89,8 @@ export default function AssinePage() {
           </p>
 
           <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row">
-            <PriceCard
-              featuresByCategory={freePlanFeatures}
-              data={freePlanDetails}
-            />
-            <PriceCard
-              data={proPlanWithPrice}
-              featuresByCategory={proPlanFeatures}
-            />
+            <FreePricingCard />
+            <ProPricingCard />
           </section>
         </div>
       </section>

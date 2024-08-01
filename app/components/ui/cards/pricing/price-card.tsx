@@ -1,110 +1,178 @@
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
-import PriceButton from "./price-button";
-import classNames from "~/lib/utils/class-names";
 import { BsInfoCircle } from "react-icons/bs";
 import TooltipWrapper from "~/components/ui/tooltip";
-import type { PlanDetails, PlanFeaturesByCategory } from "./pricing-types";
+import type { PlanFeaturesByCategory } from "./pricing.d";
 import { Button } from "../../button";
 import { useState } from "react";
 import { Input } from "../../input";
-import { useFetcher } from "@remix-run/react";
+import { cn } from "~/lib/utils";
+import { Skeleton } from "~/components/ui/skeleton";
+import { CgSpinner } from "react-icons/cg";
 
-export default function PriceCard({
-  data,
-  featuresByCategory,
+const PriceCard = ({
+  children,
+  className,
 }: {
-  // @TODO: change this to price when the API is ready
-  data: PlanDetails;
-  featuresByCategory: PlanFeaturesByCategory;
-}) {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
     <article
-      className={classNames(
-        data?.name.startsWith("PRO")
-          ? "border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white"
-          : "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl",
-        "relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full shrink-0 grow-0",
+      className={cn(
+        "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full shrink-0 grow-0 transition-all",
+        className,
       )}
     >
-      {data?.banner && <CardItemRibbon text={data?.banner} />}
-
-      <div className="mb-8 card-header">
-        <h2
-          className={classNames(
-            "mb-1 text-xl text-center",
-            // data?.name.startsWith('PRO') ? 'text-amber-400' : 'text-gray-700 dark:text-gray-50',
-          )}
-        >
-          {data?.name.startsWith("PRO") ? (
-            <>
-              <span className="px-1 dark:font-normal rounded text-white  dark:text-amber-400 dark:bg-transparent bg-amber-400 drop-shadow-[0_0.8px_0.8px_rgba(0,0,0,0.4)]">{`PRO`}</span>
-              <span className="text-gray-800 dark:text-gray-50">
-                {data?.name.slice(3)}
-              </span>
-            </>
-          ) : (
-            <span className="text-gray-800 dark:text-gray-50">
-              {data?.name}
-            </span>
-          )}
-        </h2>
-      </div>
-
-      <div className="h-[150px] flex flex-col justify-center items-center">
-        <p className="mb-2 text-sm text-center text-gray-800 font-extralight slate-600 dark:text-gray-50">
-          {data.fullPrice && (
-            <span className="opacity-50">
-              {`de `}
-              <span className="line-through">{`R$ ${data.fullPrice}`}</span>
-            </span>
-          )}
-        </p>
-
-        <p className="mb-2 text-center text-gray-800 text-md font-extralight slate-600 dark:text-gray-50">
-          <span className="opacity-50">
-            {data.installments > 1 && `${data.installments}x`}
-          </span>{" "}
-          <span className="text-5xl font-semibold">
-            R$
-            {(data?.monthlyPrice && data?.monthlyPrice % 2 === 0) ||
-            data?.monthlyPrice === 0
-              ? data?.monthlyPrice
-              : data?.monthlyPrice?.toFixed(2)}
-          </span>
-        </p>
-
-        <p className="mb-12 text-sm text-center text-gray-900 font-extralight slate-600 dark:text-gray-50">
-          {data.totalPrice && (
-            <span className="opacity-50">{`à vista R$ ${data.totalPrice}`}</span>
-          )}
-        </p>
-      </div>
-
-      <PriceButton plan={data.name} />
-      {data.name === "PRO (Vitalício)" && <CouponSection />}
-
-      <div className="h-[1px] bg-background-500/30 w-1/2 mx-auto my-6" />
-
-      {/* Seção de vantagens */}
-      {featuresByCategory.map((category) => {
-        const categoryName = Object.keys(category)[0];
-        return (
-          <section key={categoryName}>
-            <h3 className="text-xs text-brand-400">{categoryName}</h3>
-            <ul className="mt-1 mb-5 space-y-2 text-sm leading-6 text-gray-600 dark:text-gray-50">
-              {category[categoryName].map((feature) => {
-                return <FeatureItem key={feature.title} feature={feature} />;
-              })}
-            </ul>
-          </section>
-        );
-      })}
+      {children}
     </article>
   );
+};
+
+const PriceCardRibbon = ({ text }: { text: string }) => {
+  return <CardItemRibbon text={text} />;
+};
+
+const PriceCardTitle = ({
+  children,
+  className,
+  isLoading,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  isLoading?: boolean;
+}) => {
+  return (
+    <h2
+      className={cn(
+        "mb-9 text-xl text-center text-gray-800 dark:text-gray-50",
+        className,
+      )}
+    >
+      {isLoading ? <Skeleton className="h-6 w-24 mx-auto" /> : children}
+    </h2>
+  );
+};
+
+interface PriceCardPricingProps {
+  fullPrice?: number;
+  installments?: number;
+  monthlyPrice?: number;
+  totalPrice?: number;
+  isLoading?: boolean;
 }
 
-function FeatureItem({
+const PriceCardPricing = ({
+  fullPrice,
+  installments,
+  monthlyPrice,
+  totalPrice,
+  isLoading,
+}: PriceCardPricingProps) => {
+  const formattedMonthlyPrice =
+    (monthlyPrice || 0) % 2 === 0 ? monthlyPrice : monthlyPrice?.toFixed(2);
+
+  return (
+    <div className="h-[150px] flex flex-col justify-center items-center">
+      {isLoading ? (
+        <Skeleton className="h-16 w-full mx-auto" />
+      ) : (
+        <>
+          <p className="mb-2 text-sm text-center text-gray-800 font-extralight slate-600 dark:text-gray-50">
+            {fullPrice && (
+              <span className="opacity-50">
+                {`de `}
+                <span className="line-through">{`R$ ${fullPrice}`}</span>
+              </span>
+            )}
+          </p>
+
+          <p className="mb-2 text-center text-gray-800 text-md font-extralight slate-600 dark:text-gray-50">
+            <span className="opacity-50">
+              {installments !== undefined &&
+                installments > 1 &&
+                `${installments}x`}
+            </span>{" "}
+            <span className="text-5xl font-semibold">
+              R$
+              {formattedMonthlyPrice}
+            </span>
+          </p>
+
+          <p className="mb-12 text-sm text-center text-gray-900 font-extralight slate-600 dark:text-gray-50">
+            {totalPrice && (
+              <span className="opacity-50">{`à vista R$ ${totalPrice}`}</span>
+            )}
+          </p>
+        </>
+      )}
+    </div>
+  );
+};
+
+const PriceCardCoupon = ({
+  onSubmit,
+  isLoading,
+  error,
+}: {
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  isLoading?: boolean;
+  error?: string;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  if (open) {
+    return (
+      <form onSubmit={onSubmit} className="">
+        <div className="flex items-center gap-2 mt-4">
+          <Input
+            className="h-9 font-light dark:bg-transparent border-[1.5px]"
+            placeholder="Código do Cupom"
+            name="couponCode"
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            type="submit"
+            className="dark:border-background-700 w-24"
+          >
+            {isLoading ? (
+              <CgSpinner className="animate-spin text-center inline-block h-5 w-5" />
+            ) : (
+              "Aplicar"
+            )}
+          </Button>
+        </div>
+
+        {error && (
+          <span className="text-red-700 text-xs font-light m-4">{error}</span>
+        )}
+      </form>
+    );
+  }
+  return (
+    <div className="text-right">
+      {!open && (
+        <Button
+          type="button"
+          variant={"link"}
+          onClick={() => setOpen(true)}
+          className="inline-block text-xs font-light group "
+        >
+          <span className="text-gray-400 group-hover:text-white">
+            Possui cupom?
+          </span>
+        </Button>
+      )}
+    </div>
+  );
+};
+
+const PriceCardDivider = () => (
+  <div className="h-[1px] bg-background-500/30 w-1/2 mx-auto my-6" />
+);
+
+function PriceCardFeatureItem({
   feature,
 }: {
   feature: { title: string; isAvailable: boolean; info?: string };
@@ -137,60 +205,32 @@ function FeatureItem({
   );
 }
 
-function CouponSection() {
-  const [open, setOpen] = useState(false);
-  const fetcher = useFetcher();
-
-  //get loader data from another
-
-  // const isSubmittingOrLoading =
-  //   fetcher.state === "submitting" || fetcher.state === "loading";
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    fetcher.submit(
-      { coupon: "asldk" },
-      {
-        method: "get",
-        action: "/planos",
-      },
-    );
-
-    console.log("enviado");
-  }
-
-  if (open) {
+const PriceCardFeatures = ({
+  features,
+}: {
+  features: PlanFeaturesByCategory;
+}) =>
+  features.map((category) => {
+    const categoryName = Object.keys(category)[0];
     return (
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 mt-4">
-        <Input
-          className="h-9 font-light dark:bg-transparent border-[1.5px]"
-          placeholder="Código do Cupom"
-        />
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          className="dark:border-background-700"
-        >
-          Aplicar
-        </Button>
-      </form>
+      <section key={categoryName}>
+        <h3 className="text-xs text-brand-400">{categoryName}</h3>
+        <ul className="mt-1 mb-5 space-y-2 text-sm leading-6 text-gray-600 dark:text-gray-50">
+          {category[categoryName].map((feature) => {
+            return (
+              <PriceCardFeatureItem key={feature.title} feature={feature} />
+            );
+          })}
+        </ul>
+      </section>
     );
-  }
-  return (
-    <div className="text-right">
-      {!open && (
-        <Button
-          type="button"
-          variant={"link"}
-          onClick={() => setOpen(true)}
-          className="inline-block text-xs font-light group "
-        >
-          <span className="text-gray-400 group-hover:text-white">
-            Possui cupom?
-          </span>
-        </Button>
-      )}
-    </div>
-  );
-}
+  });
+
+PriceCard.Ribbon = PriceCardRibbon;
+PriceCard.Title = PriceCardTitle;
+PriceCard.Pricing = PriceCardPricing;
+PriceCard.Coupon = PriceCardCoupon;
+PriceCard.Divider = PriceCardDivider;
+PriceCard.Features = PriceCardFeatures;
+
+export default PriceCard;

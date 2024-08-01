@@ -11,7 +11,6 @@ import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
 import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/_layouts/background-blur";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
-import PriceCard from "~/components/ui/cards/pricing/price-card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
@@ -19,12 +18,7 @@ import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getHome } from "~/lib/models/home.server";
 import type { User } from "~/lib/models/user.server";
-import {
-  freePlanDetails,
-  freePlanFeatures,
-  proPlanDetails,
-  proPlanFeatures,
-} from "~/components/ui/cards/pricing/pricing-data";
+
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
 import { motion } from "framer-motion";
@@ -36,6 +30,10 @@ import CarouselSubmissionCard from "../components/features/submission-card/carou
 import AlertBanner from "~/components/ui/alert-banner";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
+import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import FreePricingCard from "~/components/ui/cards/pricing/free";
+import { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
+import { proPlanDetails } from "~/components/ui/cards/pricing/data";
 
 export const loader = async () => {
   return json({
@@ -453,19 +451,6 @@ function Submissions() {
 function Pricing() {
   const { homeInfo } = useLoaderData<typeof loader>();
 
-  const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
-
-  const currentPrice =
-    homeInfo.plan_info.price_in_cents +
-    promotionInfo?.content_count * 100 +
-    promotionInfo?.user_raised_count * 100 * 10;
-
-  const proPlanWithPrice = {
-    ...proPlanDetails,
-    totalPrice: isNaN(currentPrice) ? 0 : currentPrice / 100,
-    monthlyPrice: isNaN(currentPrice) ? 0 : currentPrice / 100 / 12, // truncate 2 decimals
-  };
-
   return (
     <section
       id="pricing"
@@ -490,14 +475,8 @@ function Pricing() {
           . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
         </p>
         <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
-          <PriceCard
-            featuresByCategory={freePlanFeatures}
-            data={freePlanDetails}
-          />
-          <PriceCard
-            data={proPlanWithPrice}
-            featuresByCategory={proPlanFeatures}
-          />
+          <FreePricingCard />
+          <ProPricingCard />
         </section>
       </div>
     </section>
