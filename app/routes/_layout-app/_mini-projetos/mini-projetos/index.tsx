@@ -59,7 +59,17 @@ export default function ChallengesIndex() {
         Mini Projetos
       </h1>
       <FeaturedChallengeSection featuredChallenge={featuredChallenge} />
-      <MainTechFilter selectedTechs={selectedTechs} baseUrl="/mini-projetos" />
+      <MainTechFilter
+        selectedTechs={selectedTechs}
+        baseUrl="/mini-projetos"
+        techsToDisplay={[
+          "nextjs",
+          "tailwindcss",
+          "react",
+          "fundamentos",
+          "hackathon",
+        ]}
+      />
       <section className="mt-16 flex flex-col gap-20">
         <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
           {challenges.map((challenge: ChallengeCardType) => (
