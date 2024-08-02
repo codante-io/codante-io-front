@@ -23,7 +23,7 @@ import UserAvatar from "~/components/ui/user-avatar";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getHome } from "~/lib/models/home.server";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
 import Counter from "./components/counter";

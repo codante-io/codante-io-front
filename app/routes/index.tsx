@@ -25,7 +25,7 @@ import { motion } from "framer-motion";
 import DiscordButton from "~/components/features/auth/discord-button";
 import { buttonVariants } from "~/components/ui/button";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 import CarouselSubmissionCard from "../components/features/submission-card/carousel-submission-card";
 import AlertBanner from "~/components/ui/alert-banner";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";

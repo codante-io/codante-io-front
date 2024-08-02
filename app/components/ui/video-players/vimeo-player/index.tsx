@@ -3,7 +3,7 @@ import Vimeo from "@vimeo/player";
 import { useEffect, useRef } from "react";
 import type { AvailableTo } from "~/lib/models/lesson.server";
 import BecomeProCard from "~/components/ui/become-pro-card";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 import SignInCard from "~/components/ui/sign-in-card";
 import { useMediaQuery } from "~/lib/hooks/use-media-query";
 

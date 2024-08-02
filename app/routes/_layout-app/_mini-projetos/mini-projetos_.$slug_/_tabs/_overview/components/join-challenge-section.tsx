@@ -8,6 +8,7 @@ import { Card } from "~/components/ui/cards/card";
 import { Input } from "~/components/ui/input";
 import party from "party-js";
 import { Button } from "~/components/ui/button";
+import { cn } from "~/lib/utils/cn";
 
 export default function JoinChallengeSection({
   className = "",
@@ -20,10 +21,6 @@ export default function JoinChallengeSection({
   user?: any;
   slug: string;
 }) {
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(" ");
-  }
-
   return (
     <Card
       as="aside"
@@ -34,7 +31,7 @@ export default function JoinChallengeSection({
           {initialSteps?.map((step: Step, stepIndex: number) => (
             <li
               key={step.name}
-              className={classNames(
+              className={cn(
                 stepIndex !== initialSteps.length - 1 ? "pb-10" : "",
                 "relative",
               )}

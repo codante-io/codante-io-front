@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 import classNames from "~/lib/utils/class-names";
 
 export default function BannerAlert({

@@ -2,7 +2,7 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type { CardProps } from "~/components/ui/cards/card";
 import { Card, CardFooter } from "~/components/ui/cards/card";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 
 const submissionCardVariants = cva("", {
   variants: {

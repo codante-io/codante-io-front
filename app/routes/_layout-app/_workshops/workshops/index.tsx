@@ -16,7 +16,7 @@ import { Card } from "~/components/ui/cards/card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { getWorkshops } from "~/lib/models/workshop.server";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 
 export const meta = () => {
   return [
