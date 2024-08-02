@@ -7,28 +7,26 @@ import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 
 import classNames from "~/lib/utils/class-names";
 
-export default function PriceButton({
-  plan,
+export default function PriceButtonPro({
+  isLoading,
+  coupon,
 }: {
-  plan: "Gratuito" | "PRO (Vitalício)";
+  isLoading?: boolean;
+  coupon?: string;
 }) {
   const user = useUserFromOutletContext();
   const navigate = useNavigate();
   const fetcher = useFetcher();
+
   const [isHovering, setIsHovering] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [showLoader, setShowLoader] = useState(isLoading);
   const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
 
   // Use effect para manter o loading enquanto o fetcher estiver em submitting.
   useEffect(() => {
-    if (isSubmittingOrLoading) {
-      setIsLoading(true);
-    }
-    if (!isSubmittingOrLoading) {
-      setIsLoading(false);
-    }
+    setShowLoader(!!isSubmittingOrLoading);
   }, [isSubmittingOrLoading]);
 
   function sendToGoogleTagManager() {
@@ -36,18 +34,17 @@ export default function PriceButton({
     if (typeof window === "undefined") {
       return;
     }
-    window.dataLayer = window.dataLayer || [];
+    (window as any).dataLayer = (window as any).dataLayer || [];
 
-    window.dataLayer.push({
+    (window as any).dataLayer.push({
       event: "checkout",
     });
   }
 
   async function checkout() {
-    setIsLoading(true);
+    setShowLoader(true);
 
     sendToGoogleTagManager();
-    // send event to google tag manager
 
     toast.custom(
       () => (
@@ -69,7 +66,7 @@ export default function PriceButton({
 
     // wait 2 seconds to show the toast (wait promise)
     setTimeout(() => {
-      fetcher.submit({}, { method: "post", action: "/assine" });
+      fetcher.submit({ coupon }, { method: "post", action: "/plans" });
     }, 2000);
   }
 
@@ -83,20 +80,11 @@ export default function PriceButton({
   );
 
   if (!user) {
-    if (plan === "Gratuito") {
-      return (
-        <button
-          onClick={() => navigate("/login?redirectTo=/assine")}
-          className="flex items-center justify-center w-full p-2 text-white border rounded-md sm:py-2 md:py-4 bg-background-700 border-background-600 gap-x-2 hover:bg-background-600"
-        >
-          <FiGithub />
-          Entre com Github
-        </button>
-      );
-    }
     return (
       <button
-        onClick={() => navigate("/login?redirectTo=/assine")}
+        onClick={() =>
+          navigate(`/login?redirectTo=${window.location.pathname}`)
+        }
         className={classNames(
           isHovering && "bg-opacity-50",
           "w-full p-2 text-white bg-brand rounded-md sm:py-2 md:py-4 flex items-center justify-center gap-x-2",
@@ -109,19 +97,7 @@ export default function PriceButton({
     );
   }
 
-  if (user && plan === "Gratuito") {
-    return (
-      <button
-        disabled
-        className="w-full p-2 text-white border rounded-md cursor-not-allowed sm:py-2 md:py-4 bg-background-700 gap-x-2 border-background-600"
-      >
-        Você já tem esse plano
-      </button>
-    );
-  }
-
-  // if there is user and user.isPro === true
-  if (user && plan === "PRO (Vitalício)" && user.is_pro) {
+  if (user && user.is_pro) {
     return (
       <button
         disabled
@@ -134,15 +110,15 @@ export default function PriceButton({
   return (
     <button
       onClick={checkout}
-      disabled={isLoading}
+      disabled={showLoader}
       className={classNames(
         "w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand",
-        isLoading && "cursor-not-allowed",
-        isLoading && "bg-opacity-50 hover:bg-opacity-50",
-        !isLoading && "hover:bg-opacity-70",
+        showLoader && "cursor-not-allowed",
+        showLoader && "bg-opacity-50 hover:bg-opacity-50",
+        !showLoader && "hover:bg-opacity-70",
       )}
     >
-      {isLoading ? (
+      {showLoader ? (
         <CgSpinner className="animate-spin text-center inline-block h-5 w-5" />
       ) : (
         "Assinar Pro"

@@ -11,7 +11,6 @@ import { BsDiscord, BsFillPersonFill } from "react-icons/bs";
 import AppLayout from "~/components/_layouts/root-layout";
 import BackgroundBlur from "~/components/_layouts/background-blur";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
-import PriceCard from "~/components/ui/cards/pricing/price-card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
@@ -19,12 +18,7 @@ import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getHome } from "~/lib/models/home.server";
 import type { User } from "~/lib/models/user.server";
-import {
-  freePlanDetails,
-  freePlanFeatures,
-  proPlanDetails,
-  proPlanFeatures,
-} from "~/components/ui/cards/pricing/pricing-data";
+
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import UserAvatar from "~/components/ui/user-avatar";
 import { motion } from "framer-motion";
@@ -36,6 +30,8 @@ import CarouselSubmissionCard from "../components/features/submission-card/carou
 import AlertBanner from "~/components/ui/alert-banner";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
+import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import FreePricingCard from "~/components/ui/cards/pricing/free";
 
 export const loader = async () => {
   return json({
@@ -451,21 +447,6 @@ function Submissions() {
 }
 
 function Pricing() {
-  const { homeInfo } = useLoaderData<typeof loader>();
-
-  const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
-
-  const currentPrice =
-    homeInfo.plan_info.price_in_cents +
-    promotionInfo?.content_count * 100 +
-    promotionInfo?.user_raised_count * 100 * 10;
-
-  const proPlanWithPrice = {
-    ...proPlanDetails,
-    totalPrice: isNaN(currentPrice) ? 0 : currentPrice / 100,
-    monthlyPrice: isNaN(currentPrice) ? 0 : currentPrice / 100 / 12, // truncate 2 decimals
-  };
-
   return (
     <section
       id="pricing"
@@ -490,14 +471,8 @@ function Pricing() {
           . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
         </p>
         <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
-          <PriceCard
-            featuresByCategory={freePlanFeatures}
-            data={freePlanDetails}
-          />
-          <PriceCard
-            data={proPlanWithPrice}
-            featuresByCategory={proPlanFeatures}
-          />
+          <FreePricingCard />
+          <ProPricingCard />
         </section>
       </div>
     </section>
@@ -570,95 +545,6 @@ function Testimonial() {
   );
 }
 
-// function OldTestimonial() {
-//   const { homeInfo } = useLoaderData<typeof loader>();
-//   const featuredTestimonials = homeInfo.featured_testimonials;
-
-//   const [position, setPosition] = useState(2);
-//   const controls = useAnimation();
-
-//   const isLargeScreen = useMediaQuery({ minWidth: 1024 });
-//   const isMediumScreen = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
-
-//   let slideWidth: number;
-//   if (isLargeScreen) {
-//     slideWidth = 308 * 2 + 2; // 308 é o valor do card + gap. (+2) é o posicionamento inicial
-//   } else if (isMediumScreen) {
-//     slideWidth = 308 + 2;
-//   } else {
-//     slideWidth = 0 + 2;
-//   }
-
-//   const nextSlide = async () => {
-//     const newPosition = position - 308; // 308 é o valor do card + gap
-//     if (newPosition * -1 >= featuredTestimonials.length * 308 - slideWidth)
-//       return;
-//     setPosition(newPosition);
-//     await controls.start({ x: newPosition, transition: { duration: 0.5 } });
-//   };
-
-//   const prevSlide = async () => {
-//     const newPosition = position + 308;
-//     if (newPosition > 2) return;
-//     setPosition(newPosition);
-//     await controls.start({ x: newPosition, transition: { duration: 0.5 } });
-//   };
-
-//   if (featuredTestimonials.length < 1) return null;
-
-//   return (
-//     <section className="container flex justify-center w-full text-center mb-10">
-//       <div className="mt-10 container flex flex-col items-center mb-10 justify-center border-t border-gray-200 dark:border-gray-800">
-//         <h1 className="mt-14 mb-8 text-4xl font-light font-lexend text-center">
-//           Depoimentos
-//         </h1>
-//         <p className="mb-10 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-//           Veja o que estão falando sobre o{" "}
-//           <span className="text-brand-500 font-bold">Codante</span>
-//         </p>
-//         <div className="items-center flex">
-//           <RiArrowLeftSLine
-//             className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-//             onClick={() => prevSlide()}
-//           />
-//           <div className="overflow-hidden w-[308px] md:w-[616px] lg:w-[925px]">
-//             <motion.section
-//               className="rounded-lg flex gap-5 "
-//               animate={controls}
-//               initial={{ x: 2 }}
-//             >
-//               {featuredTestimonials.map((testimonial, index) => (
-//                 <TestimonialCard
-//                   key={index}
-//                   testimonial={testimonial.body}
-//                   avatarUrl={testimonial.avatar_url}
-//                   name={testimonial.name}
-//                   socialMediaProfileName={testimonial.social_media_nickname}
-//                   socialMediaProfileUrl={testimonial.social_media_link}
-//                 />
-//               ))}
-//             </motion.section>
-//           </div>
-//           <RiArrowRightSLine
-//             className="md:inline hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-//             onClick={() => nextSlide()}
-//           />
-//         </div>
-//         <div className="flex gap-5 mt-5">
-//           <RiArrowLeftSLine
-//             className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse mr-[5px]"
-//             onClick={() => prevSlide()}
-//           />
-//           <RiArrowRightSLine
-//             className="inline md:hidden text-3xl text-brand-300 w-10 cursor-pointer hover:animate-pulse"
-//             onClick={() => nextSlide()}
-//           />
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 function TestimonialCard({
   testimonial,
   avatarUrl,
@@ -707,42 +593,3 @@ function TestimonialCard({
     </article>
   );
 }
-
-// function TestimonialCard({
-//   testimonial,
-//   avatarUrl,
-//   name,
-//   socialMediaProfileName,
-//   socialMediaProfileUrl,
-// }: {
-//   testimonial: string;
-//   avatarUrl: string;
-//   name: string;
-//   socialMediaProfileName: string;
-//   socialMediaProfileUrl: string;
-// }) {
-//   return (
-//     <article
-//       className="flex flex-shrink-0 flex-col justify-between w-72 bg-background-50 h-80 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600
-//     hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow translate-x-2"
-//     >
-//       <p className="text-start">{testimonial}</p>
-//       <div className="flex items-center gap-5">
-//         <div>
-//           <img src={avatarUrl} alt="Avatar" className="w-10 rounded-full" />
-//         </div>
-//         <div className="flex flex-col items-start">
-//           <h3 className="text-brand-500 font-bold">{name}</h3>
-//           <a
-//             href={socialMediaProfileUrl}
-//             target="_blank"
-//             rel="noreferrer"
-//             className="text-gray-500"
-//           >
-//             {socialMediaProfileName}
-//           </a>
-//         </div>
-//       </div>
-//     </article>
-//   );
-// }

@@ -1,11 +1,10 @@
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   Link,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import type { AxiosError } from "axios";
 import { Crisp } from "crisp-sdk-web";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { PlayCircle } from "lucide-react";
@@ -17,66 +16,26 @@ import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
-import PriceCard from "~/components/ui/cards/pricing/price-card";
-import {
-  proPlanDetails,
-  proPlanFeatures,
-} from "~/components/ui/cards/pricing/pricing-data";
+
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import UserAvatar from "~/components/ui/user-avatar";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getHome } from "~/lib/models/home.server";
-import type { Subscription } from "~/lib/models/subscription.server";
 import { cn } from "~/lib/utils";
 import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
 import Counter from "./components/counter";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
-import { createAxios } from "~/lib/services/axios.server";
+import ProPricingCard from "~/components/ui/cards/pricing/pro";
 
 export const loader = async () => {
   return json({
     homeInfo: await getHome(),
   });
 };
-
-export async function action({ request }: { request: Request }) {
-  const axios = await createAxios(request);
-
-  try {
-    const response = await axios.get<{
-      checkoutLink: string;
-      pagarmeOrderID: string;
-      subscription: Subscription;
-    }>("/pagarme/get-link");
-
-    return redirect(`${response.data.checkoutLink}`);
-  } catch (error: any) {
-    // if it is an axios error
-    if (error.isAxiosError) {
-      const axiosError = error as AxiosError;
-
-      // console.log(error);
-
-      // return "errror";
-      // if it is a 401 error
-      if (axiosError.response?.status === 401) {
-        // redirect to login page
-        return redirect("/login");
-      }
-
-      const errorMessage = error.response.data.message;
-      const encodedErrorMessage = encodeURIComponent(errorMessage);
-
-      return redirect(`/assine/erro?error=${encodedErrorMessage}`);
-    }
-
-    return redirect(`/assine/erro`);
-  }
-}
 
 export default function HomePage() {
   useEffect(() => {
@@ -1438,17 +1397,6 @@ function Pricing() {
 
   const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
 
-  const currentPrice =
-    homeInfo.plan_info.price_in_cents +
-    promotionInfo?.content_count * 100 +
-    promotionInfo?.user_raised_count * 100 * 10;
-
-  const proPlanWithPrice = {
-    ...proPlanDetails,
-    monthlyPrice: Math.trunc((currentPrice / 100 / 12) * 100) / 100, // truncate 2 decimals
-    totalPrice: currentPrice / 100,
-  };
-
   return (
     <section
       id="pricing"
@@ -1802,10 +1750,7 @@ function Pricing() {
           <span className="color-underline decoration-brand-400">atual</span>
         </motion.h1>
         <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start w-full">
-          <PriceCard
-            data={proPlanWithPrice}
-            featuresByCategory={proPlanFeatures}
-          />
+          <ProPricingCard />
         </section>
       </div>
     </section>
