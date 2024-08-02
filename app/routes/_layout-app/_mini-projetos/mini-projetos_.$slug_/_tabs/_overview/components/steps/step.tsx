@@ -1,53 +1,38 @@
-import type { ReactNode } from "react";
+import type { EventHandler, ReactNode } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 import type { StepStatus, UserStepsIds } from "../../../../build-steps.server";
 import { Form, useLocation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
-import React from "react";
 import { Card } from "~/components/ui/cards/card";
 
+// Types for props
 type StepProps = {
   id: UserStepsIds;
   title: string;
   description: ReactNode;
   status: StepStatus;
   last?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
 };
-
-type StepLineProps = {
-  last?: boolean;
-  status: StepStatus;
-};
-
-type StepIconProps = {
-  status: StepStatus;
-};
-
+type StepLineProps = { last?: boolean; status: StepStatus };
+type StepIconProps = { status: StepStatus };
 type StepContentProps = {
   title: string;
   description: ReactNode;
-  children: ReactNode;
+  status: StepStatus;
+  children: ReactNode | null;
 };
-
-type StepFormProps = {
-  slug: string;
-  user: any;
-  children: ReactNode;
-};
-
+type StepFormProps = { slug: string; user: any; children: ReactNode };
 type StepPrimaryButtonProps = {
   stepId: UserStepsIds;
   children: ReactNode;
+  onClick?: EventHandler<React.MouseEvent>;
 };
+type StepsContainerProps = { children: ReactNode; className?: string };
 
-type StepsContainerProps = {
-  children: ReactNode;
-  className?: string;
-};
-
+// Main Step component
 function Step({
   id,
   title,
@@ -58,23 +43,21 @@ function Step({
   children,
 }: StepProps) {
   return (
-    <li id={id} className={cn("relative", "pb-10", className)}>
-      <StepLine last={last} status={status} />
+    <li id={id} className={cn("relative pb-10", className)}>
+      <Step.Line last={last} status={status} />
       <div className="relative flex items-start group">
-        <StepIcon status={status} />
-        <StepContent title={title} description={description}>
+        <Step.Icon status={status} />
+        <Step.Content title={title} description={description} status={status}>
           {children}
-        </StepContent>
+        </Step.Content>
       </div>
     </li>
   );
 }
 
+// Step line component
 function StepLine({ last, status }: StepLineProps) {
-  if (last) {
-    return null;
-  }
-
+  if (last) return null;
   return (
     <div
       className={cn(
@@ -87,30 +70,37 @@ function StepLine({ last, status }: StepLineProps) {
   );
 }
 
+// Step icon component selector
 function StepIcon({ status }: StepIconProps) {
-  if (status === "completed") {
-    return <StepIconCompleted />;
+  switch (status) {
+    case "completed":
+      return <StepIconCompleted />;
+    case "current":
+      return <StepIconCurrent />;
+    default:
+      return <StepIconUpcoming />;
   }
-
-  if (status === "current") {
-    return <StepIconCurrent />;
-  }
-
-  return <StepIconUpcoming />;
 }
 
-function StepContent({ title, description, children }: StepContentProps) {
+// Step content component
+function StepContent({
+  title,
+  description,
+  status,
+  children,
+}: StepContentProps) {
   return (
     <div className="flex flex-col min-w-0 ml-4">
       <h4 className="text-sm font-medium">{title}</h4>
       <div className="mt-1 text-xs text-gray-500 dark:text-gray-300">
         {description}
-        {children}
+        {status === "current" ? children : null}
       </div>
     </div>
   );
 }
 
+// Completed icon
 function StepIconCompleted() {
   return (
     <span className="flex items-center h-9">
@@ -121,6 +111,7 @@ function StepIconCompleted() {
   );
 }
 
+// Current icon
 function StepIconCurrent() {
   return (
     <span className="flex items-center h-9" aria-hidden="true">
@@ -131,22 +122,23 @@ function StepIconCurrent() {
   );
 }
 
+// Upcoming icon
 function StepIconUpcoming() {
   return (
     <span className="flex items-center h-9">
       <span className="relative z-10 flex items-center justify-center w-6 h-6 bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-        {" "}
         <span className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300 bg-gray-300 dark:bg-gray-400" />
       </span>
     </span>
   );
 }
 
+// Step form component
 function StepForm({ slug, user, children }: StepFormProps) {
   const location = useLocation();
   return (
     <Form
-      className="mt-2"
+      className="mt-2 pr-1"
       method="post"
       action={`/mini-projetos/${slug}`}
       preventScrollReset
@@ -158,9 +150,15 @@ function StepForm({ slug, user, children }: StepFormProps) {
   );
 }
 
-function StepPrimaryButton({ stepId, children }: StepPrimaryButtonProps) {
+// Primary button inside the step
+function StepPrimaryButton({
+  stepId,
+  children,
+  onClick,
+}: StepPrimaryButtonProps) {
   return (
     <LoadingButton
+      onClick={onClick}
       size="sm"
       status="idle"
       type="submit"
@@ -173,11 +171,15 @@ function StepPrimaryButton({ stepId, children }: StepPrimaryButtonProps) {
   );
 }
 
+// Steps container component
 function StepsContainer({ children, className }: StepsContainerProps) {
   return (
     <Card
       as="aside"
-      className={`${className} relative w-full rounded-lg p-4 pt-3 font-inter`}
+      className={cn(
+        className,
+        "relative w-full rounded-lg p-4 pt-3 font-inter",
+      )}
     >
       <nav aria-label="Progress" className="my-4 mx-1">
         <ol className="overflow-hidden">{children}</ol>
@@ -186,6 +188,7 @@ function StepsContainer({ children, className }: StepsContainerProps) {
   );
 }
 
+// Assign subcomponents to the Step component
 Step.StepsContainer = StepsContainer;
 Step.Form = StepForm;
 Step.PrimaryButton = StepPrimaryButton;
@@ -195,8 +198,5 @@ Step.Content = StepContent;
 Step.IconCompleted = StepIconCompleted;
 Step.IconCurrent = StepIconCurrent;
 Step.IconUpcoming = StepIconUpcoming;
-Step.Form = StepForm;
-Step.PrimaryButton = StepPrimaryButton;
-Step.Line = StepLine;
 
 export default Step;

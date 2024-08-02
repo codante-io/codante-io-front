@@ -60,5 +60,10 @@ export function userSteps(user: User | null, challengeUser?: ChallengeUser) {
     steps.find((step) => step.id === "finish-challenge")!.status = "current";
   }
 
+  // Se o usuário já finalizou o projeto, todos os passos estão completos
+  if (challengeUser?.completed) {
+    steps.find((step) => step.id === "finish-challenge")!.status = "completed";
+  }
+
   return steps;
 }

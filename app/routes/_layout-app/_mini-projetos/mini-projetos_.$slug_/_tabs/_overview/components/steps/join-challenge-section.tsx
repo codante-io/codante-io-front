@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import DiscordButton from "~/components/features/auth/discord-button";
 import { BsDiscord } from "react-icons/bs";
 import { Input } from "~/components/ui/input";
@@ -25,10 +26,7 @@ export default function JoinChallengeSection({
         title="Conecte o seu Github"
         description="Para participar é necessário conectar com o GitHub."
         id="connect-github"
-        status={
-          steps.find((step) => step.id === "connect-github")?.status ??
-          "upcoming"
-        }
+        status={steps.find((step) => step.id === "connect-github")?.status!}
       >
         <Step.Form user={user} slug={slug}>
           <Step.PrimaryButton stepId="connect-github">
@@ -40,7 +38,7 @@ export default function JoinChallengeSection({
         id="join-challenge"
         title="Participe do Mini Projeto"
         description="Participe. É 100% gratuito!"
-        status={"current"}
+        status={steps.find((step) => step.id === "join-challenge")?.status!}
       >
         <Step.Form user={user} slug={slug}>
           <Step.PrimaryButton stepId="join-challenge">
@@ -52,7 +50,7 @@ export default function JoinChallengeSection({
         id="join-discord"
         title="Participe da nossa comunidade"
         description="Tire dúvidas e conecte-se com outras pessoas que estão fazendo esse Mini Projeto."
-        status={"current"}
+        status={steps.find((step) => step.id === "join-discord")?.status!}
       >
         <Step.Form user={user} slug={slug}>
           <section className="flex gap-2 items-center mt-2">
@@ -80,7 +78,7 @@ export default function JoinChallengeSection({
             Acesse o link do repositório, faça um fork e clique em "Verificar".
           </span>
         }
-        status={"current"}
+        status={steps.find((step) => step.id === "verify-fork")?.status!}
       >
         <Step.Form user={user} slug={slug}>
           <Step.PrimaryButton stepId="verify-fork">
@@ -92,14 +90,14 @@ export default function JoinChallengeSection({
         id="submit-challenge"
         title="Submeta sua resolução"
         description="Faça deploy do seu Mini Projeto e envie o link para aparecer na galeria de submissões."
-        status={"current"}
+        status={steps.find((step) => step.id === "submit-challenge")?.status!}
       >
         <Step.Form user={user} slug={slug}>
           <Input
             placeholder="URL do seu deploy"
             name="submission-url"
             id="submission-url"
-            className=""
+            className="pr-1 dark:bg-background-900 w-full"
           />
           <Step.PrimaryButton stepId="submit-challenge">
             Submeter
@@ -111,10 +109,17 @@ export default function JoinChallengeSection({
         title="Finalizar projeto"
         description="Quando acabar o seu Mini Projeto é só marcar aqui como concluído."
         last
-        status={"current"}
+        status={steps.find((step) => step.id === "finish-challenge")?.status!}
       >
         <Step.Form user={user} slug={slug}>
-          <Step.PrimaryButton stepId="finish-challenge">
+          <Step.PrimaryButton
+            onClick={(e) =>
+              party.confetti(e.target as HTMLElement, {
+                count: party.variation.range(40, 250),
+              })
+            }
+            stepId="finish-challenge"
+          >
             Marcar como concluído
           </Step.PrimaryButton>
         </Step.Form>
