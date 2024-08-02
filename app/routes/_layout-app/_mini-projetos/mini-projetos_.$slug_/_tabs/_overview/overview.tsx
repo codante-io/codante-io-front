@@ -1,7 +1,7 @@
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import RepositoryInfoSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/repository-info-section";
-import JoinChallengeSection from "./components/join-challenge-section";
+import JoinChallengeSection from "./components/steps/join-challenge-section";
 import ResolutionSection from "./components/resolution-section";
 import ResourcesSection from "./components/resources-section";
 import { Card } from "~/components/ui/cards/card";
@@ -11,12 +11,12 @@ import type { ChallengeUser } from "~/lib/models/user.server";
 export default function Overview({
   challenge,
   hasSolution,
-  initialSteps,
+  steps,
   challengeUser,
 }: {
   challenge: any;
   hasSolution: boolean;
-  initialSteps: any;
+  steps: { id: string; status: string }[];
   challengeUser: ChallengeUser;
 }) {
   return (
@@ -52,10 +52,7 @@ export default function Overview({
             <CurrentStatus className="mb-5" challengeUser={challengeUser} />
           )}
           <div className="flex flex-wrap items-center justify-between xl:flex-nowrap"></div>
-          <JoinChallengeSection
-            initialSteps={initialSteps}
-            slug={challenge?.slug}
-          />
+          <JoinChallengeSection steps={steps} slug={challenge?.slug} />
         </div>
 
         <RepositoryInfoSection
