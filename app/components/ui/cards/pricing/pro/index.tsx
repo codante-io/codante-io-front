@@ -1,16 +1,15 @@
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useSearchParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import {
   proPlanDetails,
   proPlanFeatures,
 } from "~/components/ui/cards/pricing/data";
 import PriceCard from "~/components/ui/cards/pricing/price-card";
-import { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
 import PriceButtonPro from "~/components/ui/cards/pricing/pro/button";
-import { Skeleton } from "~/components/ui/skeleton";
-import { Plan } from "~/lib/models/plan.server";
+import type { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
+import type { Coupon, Plan } from "~/lib/models/plan.server";
 
-function calculatePromotionPricing(planInfo: Plan) {
+function calculatePromotionPricing(planInfo: Plan, coupon: Coupon) {
   const promotionInfo = JSON.parse(planInfo.details || "{}");
 
   const currentPrice =
@@ -21,8 +20,21 @@ function calculatePromotionPricing(planInfo: Plan) {
   const proPlanWithPrice: PlanDetails = {
     ...proPlanDetails,
     totalPrice: isNaN(currentPrice) ? 0 : currentPrice / 100,
-    monthlyPrice: isNaN(currentPrice) ? 0 : currentPrice / 100 / 12, // truncate 2 decimals
   };
+
+  if (coupon && !coupon?.error) {
+    const discountAmount = coupon.discount_amount;
+    const discountType = coupon.type;
+    proPlanWithPrice.fullPrice = currentPrice / 100;
+
+    if (discountType === "percentage") {
+      proPlanWithPrice.totalPrice! -=
+        (proPlanWithPrice.totalPrice! * discountAmount) / 100;
+    } else {
+      proPlanWithPrice.totalPrice! -= discountAmount / 100;
+    }
+  }
+  proPlanWithPrice.monthlyPrice = proPlanWithPrice.totalPrice! / 12;
 
   return proPlanWithPrice;
 }
@@ -30,17 +42,34 @@ function calculatePromotionPricing(planInfo: Plan) {
 export default function ProPricingCard() {
   const planDetails = useFetcher<any>();
   const [proPlanInfo, setProPlanInfo] = useState<PlanDetails | null>(null);
+  const [searchParams] = useSearchParams();
 
   const isSubmittingOrLoading =
     planDetails.state === "submitting" || planDetails.state === "loading";
 
+  const invalidCouponError = planDetails?.data?.coupon[0]?.message;
+
+  const validCoupon = !planDetails?.data?.coupon[0]?.error
+    ? planDetails?.data?.coupon[0]
+    : null;
+
   useEffect(() => {
-    planDetails.load("/planos");
-  }, []);
+    let url = "/plans";
+
+    if (searchParams.has("coupon")) {
+      const coupon = searchParams.get("coupon");
+      url += `?coupon=${coupon}`;
+    }
+
+    planDetails.load(url);
+  }, []); //eslint-disable-line
 
   useEffect(() => {
     if (planDetails.data) {
-      const proPlanWithPrice = calculatePromotionPricing(planDetails.data.plan);
+      const proPlanWithPrice = calculatePromotionPricing(
+        planDetails.data.plan,
+        planDetails.data.coupon[0],
+      );
 
       setProPlanInfo(proPlanWithPrice);
     }
@@ -49,7 +78,7 @@ export default function ProPricingCard() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const coupon = new FormData(e.currentTarget).get("couponCode") as string;
-    planDetails.load(`/planos?coupon=${coupon}`);
+    planDetails.load(`/plans?coupon=${coupon}`);
   };
 
   return (
@@ -66,16 +95,40 @@ export default function ProPricingCard() {
 
       <PriceCard.Pricing {...proPlanInfo} isLoading={!proPlanInfo} />
 
-      <PriceButtonPro isLoading={!proPlanInfo} />
+      {validCoupon && <CouponChip coupon={validCoupon} />}
+      <PriceButtonPro isLoading={!proPlanInfo} coupon={validCoupon?.code} />
       <PriceCard.Coupon
         onSubmit={handleSubmit}
         isLoading={isSubmittingOrLoading}
-        error={planDetails?.data?.coupon[0]?.message}
+        error={invalidCouponError}
+        success={
+          validCoupon
+            ? `Cupom ${validCoupon.code} aplicado com sucesso!`
+            : undefined
+        }
       />
 
       <PriceCard.Divider />
 
       <PriceCard.Features features={proPlanFeatures} />
     </PriceCard>
+  );
+}
+
+function CouponChip({ coupon }: { coupon: Coupon }) {
+  const couponDiscont =
+    coupon.type === "percentage"
+      ? `${coupon.discount_amount}%`
+      : `R$${(coupon.discount_amount / 100).toFixed(0)}`;
+
+  return (
+    <div className="font-light text-xs text-center -mt-6 mb-6">
+      <span>
+        Você ganhou{" "}
+        <b className="underline decoration-brand-400">{couponDiscont}</b> de
+        desconto com o cupom{" "}
+        <b className="underline decoration-brand-400">{coupon.code}</b>!
+      </span>
+    </div>
   );
 }

@@ -7,10 +7,17 @@ import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 
 import classNames from "~/lib/utils/class-names";
 
-export default function PriceButtonPro({ isLoading }: { isLoading?: boolean }) {
+export default function PriceButtonPro({
+  isLoading,
+  coupon,
+}: {
+  isLoading?: boolean;
+  coupon?: string;
+}) {
   const user = useUserFromOutletContext();
   const navigate = useNavigate();
   const fetcher = useFetcher();
+
   const [isHovering, setIsHovering] = useState(false);
 
   const [showLoader, setShowLoader] = useState(isLoading);
@@ -59,7 +66,7 @@ export default function PriceButtonPro({ isLoading }: { isLoading?: boolean }) {
 
     // wait 2 seconds to show the toast (wait promise)
     setTimeout(() => {
-      fetcher.submit({}, { method: "post", action: "/assine" });
+      fetcher.submit({ coupon }, { method: "post", action: "/plans" });
     }, 2000);
   }
 
@@ -75,7 +82,9 @@ export default function PriceButtonPro({ isLoading }: { isLoading?: boolean }) {
   if (!user) {
     return (
       <button
-        onClick={() => navigate("/login?redirectTo=/assine")}
+        onClick={() =>
+          navigate(`/login?redirectTo=${window.location.pathname}`)
+        }
         className={classNames(
           isHovering && "bg-opacity-50",
           "w-full p-2 text-white bg-brand rounded-md sm:py-2 md:py-4 flex items-center justify-center gap-x-2",

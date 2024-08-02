@@ -13,6 +13,9 @@ export type Coupon = {
   name: string;
   discount_amount: number;
   type: string;
+
+  error?: boolean;
+  message?: string;
 };
 
 export async function getPlanDetails({

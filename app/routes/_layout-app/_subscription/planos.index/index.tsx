@@ -1,59 +1,9 @@
-import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
-import type { AxiosError } from "axios";
-
-import type { Subscription } from "~/lib/models/subscription.server";
 import faqQuestions from "../faq-questions";
-import type { Plan } from "~/lib/models/plan.server";
-import { getPlanDetails } from "~/lib/models/plan.server";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import FaqItem from "~/components/ui/faq-item";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
-import { createAxios } from "~/lib/services/axios.server";
 import FreePricingCard from "~/components/ui/cards/pricing/free";
 import ProPricingCard from "~/components/ui/cards/pricing/pro";
-import { proPlanDetails } from "~/components/ui/cards/pricing/data";
-import { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
-
-export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const searchParams = url.searchParams;
-
-  const couponCode = searchParams.get("coupon");
-
-  console.log(couponCode);
-  const { plan, coupon } = await getPlanDetails({ couponCode });
-
-  return { request, plan, coupon };
-}
-
-export async function action({ request }: { request: Request }) {
-  const axios = await createAxios(request);
-
-  try {
-    const response = await axios.get<{
-      checkoutLink: string;
-      pagarmeOrderID: string;
-      subscription: Subscription;
-    }>("/pagarme/get-link");
-
-    return redirect(`${response.data.checkoutLink}`);
-  } catch (error: any) {
-    if (error.isAxiosError) {
-      const axiosError = error as AxiosError;
-
-      if (axiosError.response?.status === 401) {
-        return redirect("/login");
-      }
-
-      const errorMessage = error.response.data.message;
-      const encodedErrorMessage = encodeURIComponent(errorMessage);
-
-      return redirect(`/assine/erro?error=${encodedErrorMessage}`);
-    }
-
-    return redirect(`/assine/erro`);
-  }
-}
 
 export default function AssinePage() {
   return (

@@ -4,7 +4,7 @@ import { BsInfoCircle } from "react-icons/bs";
 import TooltipWrapper from "~/components/ui/tooltip";
 import type { PlanFeaturesByCategory } from "./pricing.d";
 import { Button } from "../../button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../../input";
 import { cn } from "~/lib/utils";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -101,7 +101,7 @@ const PriceCardPricing = ({
 
           <p className="mb-12 text-sm text-center text-gray-900 font-extralight slate-600 dark:text-gray-50">
             {totalPrice && (
-              <span className="opacity-50">{`à vista R$ ${totalPrice}`}</span>
+              <span className="opacity-50">{`à vista R$ ${Number.isInteger(totalPrice) ? totalPrice : totalPrice.toFixed(2)}`}</span>
             )}
           </p>
         </>
@@ -114,12 +114,20 @@ const PriceCardCoupon = ({
   onSubmit,
   isLoading,
   error,
+  success,
 }: {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading?: boolean;
   error?: string;
+  success?: string;
 }) => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (success) {
+      setOpen(false);
+    }
+  }, [success]);
 
   if (open) {
     return (
@@ -145,7 +153,7 @@ const PriceCardCoupon = ({
         </div>
 
         {error && (
-          <span className="text-red-700 text-xs font-light m-4">{error}</span>
+          <span className="text-red-700 text-xs font-light m-3">{error}</span>
         )}
       </form>
     );
@@ -160,7 +168,7 @@ const PriceCardCoupon = ({
           className="inline-block text-xs font-light group "
         >
           <span className="text-gray-400 group-hover:text-white">
-            Possui cupom?
+            {success ? "Alterar cupom" : "Possui cupom?"}
           </span>
         </Button>
       )}
