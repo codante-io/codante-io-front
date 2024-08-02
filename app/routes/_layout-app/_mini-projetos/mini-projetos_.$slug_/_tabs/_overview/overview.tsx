@@ -7,6 +7,7 @@ import ResourcesSection from "./components/resources-section";
 import { Card } from "~/components/ui/cards/card";
 import CurrentStatus from "./components/current-status";
 import type { ChallengeUser } from "~/lib/models/user.server";
+import type { UserStep } from "../../build-steps.server";
 
 export default function Overview({
   challenge,
@@ -16,7 +17,7 @@ export default function Overview({
 }: {
   challenge: any;
   hasSolution: boolean;
-  steps: { id: string; status: string }[];
+  steps: UserStep[];
   challengeUser: ChallengeUser;
 }) {
   return (
