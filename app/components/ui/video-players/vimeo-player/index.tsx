@@ -17,6 +17,8 @@ type VimeoPlayerProps = {
   title?: string;
   labelledBy?: string;
   describedBy?: string;
+  showPlayIcon?: boolean;
+  thumbnailOpacity?: boolean;
 };
 
 export default function VimeoPlayer({
@@ -29,6 +31,8 @@ export default function VimeoPlayer({
   title = undefined,
   labelledBy = undefined,
   describedBy = undefined,
+  showPlayIcon = true,
+  thumbnailOpacity = true,
 }: VimeoPlayerProps) {
   const playerRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 400px)");
@@ -42,6 +46,7 @@ export default function VimeoPlayer({
       allowfullscreen: true,
       allow: "autoplay; fullscreen; picture-in-picture",
       autoplay: autoplay,
+      controls: true,
     });
 
     player.on("ended", function () {
@@ -86,13 +91,13 @@ export default function VimeoPlayer({
       </div>
 
       <div
-        className={`flex items-center justify-center h-full overflow-hidden ${roundedClassName} bg-background-200 dark:bg-background-800 `}
+        className={`flex items-center justify-center h-full overflow-hidden ${roundedClassName} bg-background-200 dark:bg-background-800 cursor-pointer`}
       >
         {thumbnailURL && (
           <img
             key={thumbnailURL}
             className={cn(
-              "opacity-40 dark:opacity-30",
+              thumbnailOpacity && "opacity-40 dark:opacity-30 ",
               !vimeoUrl && "opacity-10 dark:opacity-10",
             )}
             src={thumbnailURL}
@@ -100,7 +105,11 @@ export default function VimeoPlayer({
           />
         )}
         {vimeoUrl ? (
-          <PlayCircleIcon className="absolute w-20 h-20 text-brand" />
+          <>
+            {showPlayIcon && (
+              <PlayCircleIcon className="absolute w-20 h-20 text-brand" />
+            )}
+          </>
         ) : (
           <div className="absolute z-20 p-3 max-w-md w-full h-full flex justify-center items-center text-xs sm:text-base">
             {available_to === "pro" ? (
