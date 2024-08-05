@@ -285,7 +285,12 @@ function Headline() {
           </div>
         </section>
         <div className="relative flex-1 basis-2/5">
-          <VimeoPlayer vimeoUrl="https://player.vimeo.com/video/827298711" />
+          <VimeoPlayer
+            thumbnailURL="https://codante.s3.amazonaws.com/img/homepage/homevideoposter.avif"
+            vimeoUrl="https://player.vimeo.com/video/827298711"
+            showPlayIcon={false}
+            thumbnailOpacity={false}
+          />
         </div>
       </div>
     </section>
