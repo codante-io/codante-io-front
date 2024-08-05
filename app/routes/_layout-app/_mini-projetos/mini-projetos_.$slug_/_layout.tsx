@@ -34,7 +34,7 @@ import { user as getUser, logout } from "~/lib/services/auth.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
-import { buildInitialSteps } from "./build-steps.server";
+import { userSteps } from "./build-steps.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { cn } from "~/lib/utils/cn";
 import TitleIcon from "~/components/ui/title-icon";
@@ -166,11 +166,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
     challengeUser,
     challengeUsers,
-    initialSteps: buildInitialSteps({
-      user,
-      challengeUser,
-      repositorySlug: challenge.repository_name,
-    }),
+    steps: userSteps(user, challengeUser),
   };
 };
 
@@ -178,7 +174,7 @@ export default function ChallengeSlug() {
   const {
     challenge,
     participants,
-    initialSteps,
+    steps,
     challengeUser,
     challengeUsers,
     user,
@@ -375,7 +371,7 @@ export default function ChallengeSlug() {
               <Overview
                 challenge={challenge}
                 hasSolution={hasSolution}
-                initialSteps={initialSteps}
+                steps={steps}
                 challengeUser={challengeUser as ChallengeUser}
               />
             </>
@@ -387,7 +383,7 @@ export default function ChallengeSlug() {
                 challengeUser,
                 challengeUsers,
                 participants,
-                initialSteps,
+                steps,
                 hasSolution,
               }}
             />

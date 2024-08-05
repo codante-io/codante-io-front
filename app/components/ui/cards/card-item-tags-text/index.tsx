@@ -1,5 +1,5 @@
 import type { Tag } from "~/lib/models/tag.server";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 
 function CardItemTagsText({
   tags,

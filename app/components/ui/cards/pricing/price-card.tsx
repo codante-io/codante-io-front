@@ -6,7 +6,7 @@ import type { PlanFeaturesByCategory } from "./pricing.d";
 import { Button } from "../../button";
 import { useEffect, useState } from "react";
 import { Input } from "../../input";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/utils/cn";
 import { Skeleton } from "~/components/ui/skeleton";
 import { CgSpinner } from "react-icons/cg";
 
