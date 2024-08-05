@@ -2,7 +2,7 @@ import type { EventHandler, ReactNode } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 import type { StepStatus, UserStepsIds } from "../../../../build-steps.server";
-import { Form, useLocation } from "@remix-run/react";
+import { Form, useLocation, useNavigation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Card } from "~/components/ui/cards/card";
 
@@ -43,7 +43,7 @@ function Step({
   children,
 }: StepProps) {
   return (
-    <li id={id} className={cn("relative pb-10", className)}>
+    <li id={id} className={cn("relative pb-10", last && "pb-0", className)}>
       <Step.Line last={last} status={status} />
       <div className="relative flex items-start group">
         <Step.Icon status={status} />
@@ -156,11 +156,12 @@ function StepPrimaryButton({
   children,
   onClick,
 }: StepPrimaryButtonProps) {
+  const navigation = useNavigation();
   return (
     <LoadingButton
       onClick={onClick}
       size="sm"
-      status="idle"
+      status={navigation.state}
       type="submit"
       className="mt-3"
       name="intent"
