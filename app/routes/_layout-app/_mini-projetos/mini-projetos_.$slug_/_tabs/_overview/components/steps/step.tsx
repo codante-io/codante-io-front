@@ -24,10 +24,16 @@ type StepContentProps = {
   status: StepStatus;
   children: ReactNode | null;
 };
-type StepFormProps = { slug: string; user: any; children: ReactNode };
+type StepFormProps = {
+  slug: string;
+  user: any;
+  children: ReactNode;
+  className?: string;
+};
 type StepPrimaryButtonProps = {
   stepId: UserStepsIds;
   children: ReactNode;
+
   onClick?: EventHandler<React.MouseEvent>;
 };
 type StepsContainerProps = { children: ReactNode; className?: string };
@@ -134,11 +140,11 @@ function StepIconUpcoming() {
 }
 
 // Step form component
-function StepForm({ slug, user, children }: StepFormProps) {
+function StepForm({ slug, user, children, className }: StepFormProps) {
   const location = useLocation();
   return (
     <Form
-      className="mt-2 pr-1"
+      className={cn("mt-2 pr-1", className)}
       method="post"
       action={`/mini-projetos/${slug}`}
       preventScrollReset

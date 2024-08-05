@@ -21,7 +21,7 @@ export default function Overview({
   challengeUser: ChallengeUser;
 }) {
   return (
-    <div className="container grid grid-cols-3 gap-10">
+    <div className="container grid grid-cols-3 gap-6 xl:gap-10">
       <Card
         border={"default"}
         className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2"
