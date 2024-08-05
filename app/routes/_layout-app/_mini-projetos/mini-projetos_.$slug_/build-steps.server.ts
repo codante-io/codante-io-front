@@ -65,5 +65,11 @@ export function userSteps(user: User | null, challengeUser?: ChallengeUser) {
     steps.find((step) => step.id === "finish-challenge")!.status = "completed";
   }
 
+  // Todos os passos que são subsequentes ao passo atual são considerados futuros
+  const currentStepIndex = steps.findIndex((step) => step.status === "current");
+  steps.slice(currentStepIndex + 1).forEach((step) => {
+    step.status = "upcoming";
+  });
+
   return steps;
 }
