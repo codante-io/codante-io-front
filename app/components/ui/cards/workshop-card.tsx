@@ -115,6 +115,7 @@ function WorkshopCard({
                 <WorkshopCardFooter
                   withProgress={withProgress}
                   workshop={workshop}
+                  withChip={withChip}
                 />
               </div>
             </div>
@@ -130,9 +131,11 @@ export default WorkshopCard;
 function WorkshopCardFooter({
   workshop,
   withProgress = false,
+  withChip = true,
 }: {
   workshop: WorkshopCard;
   withProgress: boolean;
+  withChip?: boolean;
 }) {
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     workshop.published_at,
@@ -163,7 +166,7 @@ function WorkshopCardFooter({
             )}
           </>
         )}
-        {workshop.status === "soon" && !hasHappened(workshop) && (
+        {withChip && workshop.status === "soon" && !hasHappened(workshop) && (
           <p className="inline-flex items-center gap-2 px-2 py-1 text-xs border rounded-lg text-brand-300 border-brand-400 dark:border-brand-300 ">
             <span className="font-bold ">
               <CalendarIcon className="w-4 h-4 dark:text-brand-300 text-brand-400" />
@@ -180,10 +183,6 @@ function WorkshopCardFooter({
 }
 
 function WorkshopChip({ workshop }: { workshop: WorkshopCard }) {
-  if (isNew(workshop)) {
-    return <Chip text="Novo" />;
-  }
-
   if (workshop.status === "soon" && !hasHappened(workshop)) {
     return <Chip text="Em breve" />;
   }
@@ -194,6 +193,10 @@ function WorkshopChip({ workshop }: { workshop: WorkshopCard }) {
 
   if (workshop.status === "streaming") {
     return <Chip type="unlisted" text="🔴 Ao vivo" />;
+  }
+
+  if (isNew(workshop)) {
+    return <Chip text="Novo" />;
   }
 
   if (!workshop.is_premium) {

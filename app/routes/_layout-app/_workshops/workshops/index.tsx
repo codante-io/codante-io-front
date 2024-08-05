@@ -12,11 +12,11 @@ import {
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
-import { Card } from "~/components/ui/cards/card";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { getWorkshops } from "~/lib/models/workshop.server";
 import { cn } from "~/lib/utils/cn";
+import FeaturedWorkshopSection from "~/routes/_layout-app/_workshops/workshops/featured-workshop-section";
 
 export const meta = () => {
   return [
@@ -120,6 +120,10 @@ export default function Workshops() {
         <span className=" decoration-4 decoration-green-400">Tutoriais</span>
       </h1>
 
+      {upcomingWorkshops.length > 0 && (
+        <FeaturedWorkshopSection featuredWorkshop={upcomingWorkshops[0]} />
+      )}
+
       {/* filtro */}
       <div className="flex flex-wrap justify-center gap-2 md:gap-3">
         {technologies.map((technology) => {
@@ -152,20 +156,6 @@ export default function Workshops() {
           );
         })}
       </div>
-
-      {upcomingWorkshops.length > 0 && (
-        <Card
-          border={"none"}
-          className="flex flex-col items-center justify-start py-4 mb-10 shadow-none rounded-xl bg-background-100 dark:bg-background-900"
-        >
-          <h3 className="mb-1 text-sm text-gray-400 dark:text-gray-300">
-            🎬 Em breve e ao vivo:
-          </h3>
-          {upcomingWorkshops.map((workshop) => (
-            <WorkshopCard key={workshop.slug} workshop={workshop} />
-          ))}
-        </Card>
-      )}
 
       <section className="grid grid-cols-1 mt-16 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 place-items-center auto-rows-fr">
         {pastWorkshops.map((workshop) => (
