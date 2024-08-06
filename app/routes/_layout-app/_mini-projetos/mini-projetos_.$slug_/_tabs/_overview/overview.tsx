@@ -8,6 +8,7 @@ import { Card } from "~/components/ui/cards/card";
 import CurrentStatus from "./components/current-status";
 import type { ChallengeUser } from "~/lib/models/user.server";
 import type { UserStep } from "../../build-steps.server";
+import type { Challenge } from "~/lib/models/challenge.server";
 
 export default function Overview({
   challenge,
@@ -15,13 +16,13 @@ export default function Overview({
   steps,
   challengeUser,
 }: {
-  challenge: any;
+  challenge: Challenge;
   hasSolution: boolean;
   steps: UserStep[];
   challengeUser: ChallengeUser;
 }) {
   return (
-    <div className="container grid grid-cols-3 gap-10">
+    <div className="container grid grid-cols-3 gap-6 xl:gap-10">
       <Card
         border={"default"}
         className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2"
@@ -41,7 +42,7 @@ export default function Overview({
         )}
         <div className="!mt-6">
           <MarkdownRenderer
-            markdown={challenge?.description}
+            markdown={challenge?.description ?? ""}
             wrapperClasses="mx-auto px-2 md:px-4 pb-12"
           />
         </div>
@@ -53,7 +54,11 @@ export default function Overview({
             <CurrentStatus className="mb-5" challengeUser={challengeUser} />
           )}
           <div className="flex flex-wrap items-center justify-between xl:flex-nowrap"></div>
-          <JoinChallengeSection steps={steps} slug={challenge?.slug} />
+          <JoinChallengeSection
+            steps={steps}
+            slug={challenge?.slug}
+            githubRepoUrl={challenge.repository_name}
+          />
         </div>
 
         <RepositoryInfoSection

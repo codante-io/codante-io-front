@@ -38,6 +38,7 @@ export type ChallengeUser = {
   reactions: Reactions;
   avatar: UserAvatar;
   is_solution: boolean;
+  submitted_at: string | null;
   created_at: string;
   updated_at: string;
   certificate: Certificate | null;

@@ -201,6 +201,7 @@ export default function MySolution() {
         user={user}
       />
       <SolutionButtonsSection
+        challenge={challenge}
         challengeUser={submissionUser}
         user={user}
         challengeSlug={challenge.slug}
