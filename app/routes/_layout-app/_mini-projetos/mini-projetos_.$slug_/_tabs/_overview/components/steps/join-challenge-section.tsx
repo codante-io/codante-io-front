@@ -8,12 +8,14 @@ import type { UserStep } from "../../../../build-steps.server";
 import "./filepond-style.css";
 import Step from "./step";
 import SubmissionStepForm from "./submission-step-form";
+import { Link } from "@remix-run/react";
 
 type JoinChallengeSectionProps = {
   className?: string;
   steps: UserStep[];
   user?: any;
   slug: string;
+  githubRepoUrl: string;
 };
 
 export default function JoinChallengeSection({
@@ -21,6 +23,7 @@ export default function JoinChallengeSection({
   steps,
   user,
   slug,
+  githubRepoUrl,
 }: JoinChallengeSectionProps) {
   return (
     <Step.StepsContainer className={className}>
@@ -77,7 +80,20 @@ export default function JoinChallengeSection({
         title="Faça o fork do repositório"
         description={
           <span>
-            Acesse o link do repositório, faça um fork e clique em "Verificar".
+            Acesse o{" "}
+            {steps.find((step) => step.id === "verify-fork")?.status ===
+            "current" ? (
+              <Link
+                to={`https://github.com/codante-io/${githubRepoUrl}`}
+                target="_blank"
+                className="text-brand hover:underline"
+              >
+                link do repositório
+              </Link>
+            ) : (
+              "link do repositório"
+            )}
+            , faça um fork e clique em "Verificar".
           </span>
         }
         status={steps.find((step) => step.id === "verify-fork")?.status!}

@@ -6,7 +6,6 @@ const stepArr = [
   "join-discord",
   "verify-fork",
   "submit-challenge",
-  "submit-challenge-without-deploy",
   "finish-challenge",
 ] as const;
 
@@ -74,6 +73,5 @@ export function userSteps(user: User | null, challengeUser?: ChallengeUser) {
       step.status = "upcoming";
     });
   }
-
   return steps;
 }

@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button";
 import { InfoIcon } from "lucide-react";
 import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import type { UserStepsIds } from "../../../../build-steps.server";
 
 registerPlugin(FilePondPluginFileValidateType);
 
@@ -80,7 +81,9 @@ export default function SubmissionStepForm({
             credits={false}
           />
           <div className="flex justify-between gap-1">
-            <Step.PrimaryButton stepId="submit-challenge-without-deploy">
+            <Step.PrimaryButton
+              stepId={"submit-challenge-without-deploy" as UserStepsIds}
+            >
               Submeter
             </Step.PrimaryButton>
             <Button
