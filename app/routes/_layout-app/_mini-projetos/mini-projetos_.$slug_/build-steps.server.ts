@@ -6,6 +6,7 @@ const stepArr = [
   "join-discord",
   "verify-fork",
   "submit-challenge",
+  "submit-challenge-without-deploy",
   "finish-challenge",
 ] as const;
 
@@ -49,13 +50,13 @@ export function userSteps(user: User | null, challengeUser?: ChallengeUser) {
   }
 
   // Se o usuário já verificou o fork, o próximo passo é submeter a resolução
-  if (challengeUser?.fork_url || challengeUser?.is_solution) {
+  if (challengeUser?.fork_url) {
     steps.find((step) => step.id === "verify-fork")!.status = "completed";
     steps.find((step) => step.id === "submit-challenge")!.status = "current";
   }
 
   // Se o usuário já submeteu a resolução, o próximo passo é finalizar o projeto
-  if (challengeUser?.submission_url) {
+  if (challengeUser?.submitted_at) {
     steps.find((step) => step.id === "submit-challenge")!.status = "completed";
     steps.find((step) => step.id === "finish-challenge")!.status = "current";
   }

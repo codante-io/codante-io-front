@@ -344,6 +344,34 @@ export async function submitChallenge(
     });
 }
 
+export async function submitChallengeWithoutDeploy(
+  request: Request,
+  slug: string,
+  submissionImage: FormDataEntryValue | null,
+): Promise<{ success?: string; error?: string }> {
+  const axios = await createAxios(request);
+
+  const form = new FormData();
+  form.append("submission_image", submissionImage as File);
+
+  return axios
+    .post(`/challenges/${slug}/submit-without-deploy`, form, {
+      headers: {
+        "Content-Type": "multipart/form-data", // important!
+      },
+    })
+    .then(() => {
+      return { success: "Submissão registrada com sucesso." };
+    })
+    .catch((error) => {
+      return {
+        error:
+          error?.response?.data?.message ||
+          "Não foi possível submeter o seu mini projeto. Por favor, tente novamente.",
+      };
+    });
+}
+
 export async function updateChallengeSubmission(
   request: Request,
   slug: string,

@@ -2,6 +2,7 @@ import type { EventHandler, ReactNode } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 import type { StepStatus, UserStepsIds } from "../../../../build-steps.server";
+import type { FormProps } from "@remix-run/react";
 import { Form, useLocation, useNavigation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Card } from "~/components/ui/cards/card";
@@ -29,7 +30,8 @@ type StepFormProps = {
   user: any;
   children: ReactNode;
   className?: string;
-};
+} & FormProps;
+
 type StepPrimaryButtonProps = {
   stepId: UserStepsIds;
   children: ReactNode;
@@ -140,7 +142,7 @@ function StepIconUpcoming() {
 }
 
 // Step form component
-function StepForm({ slug, user, children, className }: StepFormProps) {
+function StepForm({ slug, user, children, className, ...rest }: StepFormProps) {
   const location = useLocation();
   return (
     <Form
@@ -148,6 +150,7 @@ function StepForm({ slug, user, children, className }: StepFormProps) {
       method="post"
       action={`/mini-projetos/${slug}`}
       preventScrollReset
+      {...rest}
     >
       <input type="hidden" name="redirectTo" value={location.pathname} />
       <input type="hidden" name="user" value={user} />

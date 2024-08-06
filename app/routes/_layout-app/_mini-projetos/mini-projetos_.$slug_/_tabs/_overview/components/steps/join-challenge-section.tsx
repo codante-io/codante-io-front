@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-import DiscordButton from "~/components/features/auth/discord-button";
-import { BsDiscord } from "react-icons/bs";
-import { Input } from "~/components/ui/input";
-import party from "party-js";
-import { Button } from "~/components/ui/button";
-import Step from "./step";
-import type { UserStep } from "../../../../build-steps.server";
-import { useState } from "react";
-import { FilePond } from "react-filepond";
 import "filepond/dist/filepond.min.css";
+import party from "party-js";
+import { BsDiscord } from "react-icons/bs";
+import DiscordButton from "~/components/features/auth/discord-button";
+import { Button } from "~/components/ui/button";
+import type { UserStep } from "../../../../build-steps.server";
 import "./filepond-style.css";
+import Step from "./step";
+import SubmissionStepForm from "./submission-step-form";
 
 type JoinChallengeSectionProps = {
   className?: string;
@@ -119,65 +117,5 @@ export default function JoinChallengeSection({
         </Step.Form>
       </Step>
     </Step.StepsContainer>
-  );
-}
-
-function SubmissionStepForm({ user, slug }: { user: any; slug: string }) {
-  const [hasDeployUrl, setHasDeployUrl] = useState(true);
-
-  function handleToggleHasDeploy() {
-    setHasDeployUrl((prev) => !prev);
-  }
-
-  return (
-    <Step.Form user={user} slug={slug} className="mt-4">
-      {hasDeployUrl && (
-        <>
-          <Input
-            placeholder="URL do seu deploy"
-            name="submission-url"
-            id="submission-url"
-            className="pr-1 dark:bg-background-900 w-full"
-          />
-
-          <div className="flex justify-between gap-1">
-            <Step.PrimaryButton stepId="submit-challenge">
-              Submeter
-            </Step.PrimaryButton>
-            <Button
-              variant={"link"}
-              type="button"
-              className="text-xs pr-2 pl-2 dark:text-gray-500"
-              onClick={handleToggleHasDeploy}
-            >
-              Não tem deploy?
-            </Button>
-          </div>
-        </>
-      )}
-      {!hasDeployUrl && (
-        <>
-          <FilePond
-            labelIdle="Arraste a imagem ou <span class='filepond--label-action'>clique aqui</span>"
-            labelThousandsSeparator="."
-            credits={false}
-            acceptedFileTypes={["image/png"]}
-          />
-          <div className="flex justify-between gap-1">
-            <Step.PrimaryButton stepId="submit-challenge">
-              Submeter
-            </Step.PrimaryButton>
-            <Button
-              variant={"link"}
-              type="button"
-              className="text-xs pr-2 pl-2 dark:text-gray-500"
-              onClick={handleToggleHasDeploy}
-            >
-              Possui deploy?
-            </Button>
-          </div>
-        </>
-      )}
-    </Step.Form>
   );
 }

@@ -44,6 +44,7 @@
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.2",
     "filepond": "^4.31.1",
+    "filepond-plugin-file-validate-type": "^1.2.9",
     "framer-motion": "^11.2.12",
     "howler": "^2.2.4",
     "isbot": "^5.1.11",

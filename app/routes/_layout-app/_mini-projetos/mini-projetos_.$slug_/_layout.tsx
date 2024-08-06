@@ -25,6 +25,7 @@ import {
   getChallengeUsers,
   joinChallenge,
   submitChallenge,
+  submitChallengeWithoutDeploy,
   updateChallengeCompleted,
   updateUserJoinedDiscord,
   userJoinedChallenge,
@@ -108,6 +109,9 @@ export async function action({ request }: ActionFunctionArgs) {
       // get the url from the form
       const submissionUrl = formData.get("submission-url") as string;
       return submitChallenge(request, slug, submissionUrl);
+    case "submit-challenge-without-deploy":
+      const submissionImage = formData.get("submission_image");
+      return submitChallengeWithoutDeploy(request, slug, submissionImage);
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
