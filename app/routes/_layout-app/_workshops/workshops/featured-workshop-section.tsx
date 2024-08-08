@@ -13,48 +13,83 @@ export default function FeaturedWorkshopSection({
   if (!featuredWorkshop) return null;
   return (
     <>
-      <section className="md:relative mb-20 md:mb-32 mt-[80px] rounded-xl border-[1.5px] border-background-800 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-transparent  md:flex justify-center items-center px-14">
-        <div className="flex justify-center md:left-10">
+      <section className="lg:relative mb-20 lg:mb-32 mt-[80px] rounded-xl border-[1.5px] border-background-800 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-transparent flex lg:flex-row justify-center items-center px-14 flex-col-reverse">
+        <div className="flex justify-center lg:left-10">
           <div className="w-96 py-14">
             <WorkshopCard withChip={false} workshop={featuredWorkshop} />
           </div>
         </div>
-        <div className="flex-col px-6 pt-6 h-full text-start">
-          <h3 className="font-light text-brand-400 ">
-            Próximo workshop ao vivo
-          </h3>
-          <h1 className="text-2xl font-bold text-white ">
-            {featuredWorkshop.name}
-          </h1>
-          <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base">
-            Esse workshop será transmitido ao vivo do nosso estúdio. Cadastre-se
-            gratuitamente para receber as novidades.
-          </p>
-          <p className="mt-4 text-sm ">
-            <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200">
-              <CalendarDaysIcon className="inline w-4 h-4 " />
-              Data:
-              <strong className="text-white dark:text-white ">
-                {new Date(
-                  Date.parse(featuredWorkshop.published_at as string),
-                ).toLocaleDateString("pt-BR", {
-                  dateStyle: "short",
-                }) +
-                  ", " +
-                  new Date(
-                    Date.parse(featuredWorkshop.published_at as string),
-                  ).toLocaleTimeString("pt-BR", {
-                    timeStyle: "short",
-                  })}
-              </strong>
-            </span>{" "}
-          </p>
 
-          <Countdown featuredWorkshop={featuredWorkshop} />
-        </div>
+        {featuredWorkshop.status === "streaming" ? (
+          <WorkshopStreamingInfo featuredWorkshop={featuredWorkshop} />
+        ) : (
+          <WorkshopSoonInfo featuredWorkshop={featuredWorkshop} />
+        )}
       </section>
-      {/* <div className="w-full h-[1px] dark:bg-gray-800 bg-gray-200 mb-12 md:mb-24" /> */}
     </>
+  );
+}
+
+function WorkshopSoonInfo({
+  featuredWorkshop,
+}: {
+  featuredWorkshop: WorkshopCardType;
+}) {
+  return (
+    <div className="flex-col px-6 pt-6 text-center lg:text-start">
+      <h3 className="font-light text-brand-400 ">Próximo workshop ao vivo</h3>
+
+      <h1 className="text-2xl font-bold text-white ">
+        {featuredWorkshop.name}
+      </h1>
+      <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base">
+        Esse workshop será transmitido ao vivo do nosso estúdio. Cadastre-se
+        gratuitamente para receber as novidades.
+      </p>
+      <p className="mt-4 text-sm ">
+        <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200">
+          <CalendarDaysIcon className="inline w-4 h-4 " />
+          Data:
+          <strong className="text-white dark:text-white ">
+            {new Date(
+              Date.parse(featuredWorkshop.published_at as string),
+            ).toLocaleDateString("pt-BR", {
+              dateStyle: "short",
+            }) +
+              ", " +
+              new Date(
+                Date.parse(featuredWorkshop.published_at as string),
+              ).toLocaleTimeString("pt-BR", {
+                timeStyle: "short",
+              })}
+          </strong>
+        </span>{" "}
+      </p>
+
+      <Countdown featuredWorkshop={featuredWorkshop} />
+    </div>
+  );
+}
+
+function WorkshopStreamingInfo({
+  featuredWorkshop,
+}: {
+  featuredWorkshop: WorkshopCardType;
+}) {
+  return (
+    <div className="flex-col px-6 pt-6 h-full text-center lg:text-start ">
+      <h3 className="font-light text-red-400 ">
+        🔴 Workshop acontecendo agora
+      </h3>
+
+      <h1 className="text-2xl font-bold text-white ">
+        {featuredWorkshop.name}
+      </h1>
+      <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base">
+        Esse workshop está sendo transmitido ao vivo do nosso estúdio. Acompanhe
+        aqui de forma gratuita!
+      </p>
+    </div>
   );
 }
 

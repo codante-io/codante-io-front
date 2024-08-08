@@ -32,7 +32,7 @@ function WorkshopDetails({
   return (
     <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
       {/* left Side */}
-      <div className="w-full">
+      <div className="w-full mb-6 lb:mt-12">
         {/* Video */}
         {workshop.status === "streaming" && workshop.streaming_url && (
           <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
@@ -42,7 +42,7 @@ function WorkshopDetails({
         )}
 
         {showDescription && (
-          <div className="mt-6 lg:mt-12">
+          <div className="">
             <Subtitle text="Sobre o Workshop" />
             {workshop.is_standalone ? (
               <div>
