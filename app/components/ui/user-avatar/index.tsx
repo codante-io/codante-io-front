@@ -59,8 +59,7 @@ export default function UserAvatar({
     <img
       className={`${className} rounded-full ring-2 ring-white dark:ring-gray-800 bg-background-400`}
       src={
-        avatar.avatar_url ||
-        "htthttps://screenshot-service1.codante.io/avatars/sm"
+        avatar.avatar_url || "https://screenshot-service1.codante.io/avatars/sm"
       }
       alt="Avatar do usuário"
     />
