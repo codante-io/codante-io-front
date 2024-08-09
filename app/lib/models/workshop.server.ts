@@ -114,17 +114,19 @@ export async function getWorkshop(
   return workshop;
 }
 
-export async function userEnteredWorkshop(
+export async function userJoinedWorkshop(
   slug: string,
   request: any,
-): Promise<void> {
+): Promise<{ message?: string }> {
   const axios = await createAxios(request);
-  await axios
-    .post(`/workshops/${slug}/user-entered`)
+  return axios
+    .post(`/workshops/${slug}/joined`)
     .then((res) => res.data)
     .catch((e) => {
       if (e.response.status === 404) {
         return null;
       }
+
+      return e;
     });
 }
