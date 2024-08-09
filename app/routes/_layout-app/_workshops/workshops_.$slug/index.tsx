@@ -14,7 +14,7 @@ import CardItemDuration from "~/components/ui/cards/card-item-duration";
 import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
-import { getWorkshop } from "~/lib/models/workshop.server";
+import { getWorkshop, userJoinedWorkshop } from "~/lib/models/workshop.server";
 import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
@@ -81,6 +81,15 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   return json({ slug: params.slug, workshop }, { headers });
 };
 
+export const action = async ({ request }: LoaderFunctionArgs) => {
+  const formData = await request.formData();
+  const slug = formData.get("slug");
+
+  const entered = await userJoinedWorkshop(slug as string, request);
+
+  return entered ? json({ success: true }) : json({ success: false });
+};
+
 export default function WorkshopSlug() {
   const loaderData = useLoaderData<typeof loader>();
 
@@ -103,7 +112,7 @@ export default function WorkshopSlug() {
           title={`${
             hasHappened(workshop)
               ? `Esse workshop aconteceu recentemente!`
-              : "Ei! Esse workshop ainda não aconteceu!"
+              : "Esse workshop está agendado."
           }`}
           subtitle={`${
             hasHappened(workshop)
@@ -112,7 +121,7 @@ export default function WorkshopSlug() {
                   publishedDate
                     ? `no dia ${publishedDate}${
                         publishedTime ? ` às ${publishedTime}` : ""
-                      }. Se preferir, será disponibilizada também a versão editada.`
+                      }.`
                     : " em breve."
                 }`
           }`}
@@ -157,7 +166,7 @@ export default function WorkshopSlug() {
               />
             </div>
           )}
-          {!user?.is_pro && (
+          {!user?.is_pro && workshop.status !== "soon" && (
             <ResponsiveHoverCard
               behavior="click"
               trigger={

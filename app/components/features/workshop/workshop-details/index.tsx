@@ -1,6 +1,15 @@
-import { Link } from "@remix-run/react";
+import {
+  Link,
+  useFetcher,
+  useNavigate,
+  useSearchParams,
+} from "@remix-run/react";
+import { useEffect, useState } from "react";
 import { AiOutlineSolution } from "react-icons/ai";
+import { CgSpinner } from "react-icons/cg";
+import { FiGithub } from "react-icons/fi";
 import { RiLiveLine } from "react-icons/ri";
+import { TbCalendarCheck } from "react-icons/tb";
 import NextLessonPreview from "~/components/features/workshop/next-lesson-preview";
 import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
 import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
@@ -9,8 +18,12 @@ import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import TitleIcon from "~/components/ui/title-icon";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
+import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
+import { cn } from "~/lib/utils/cn";
+import { isUpcoming } from "~/lib/utils/workshop-utils";
 import InstructorCard from "~/routes/_layout-app/_workshops/workshops_.$slug/instructor-card";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 
@@ -29,6 +42,8 @@ function WorkshopDetails({
   isFree = false,
   userIsPro = false,
 }: WorkshopDetailsProps) {
+  const user = useUserFromOutletContext();
+
   return (
     <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
       {/* left Side */}
@@ -114,21 +129,9 @@ function WorkshopDetails({
       {/* Right Side */}
       <div className="lg:w-3/5 space-y-12 mx-auto">
         {/* Progress Bar & Certificate */}
-        <div className="">
+        <div>
           {workshop.workshop_user ? (
-            <>
-              <div className="flex items-center">
-                <TitleIcon className="inline-block w-3 h-3 mr-2" />
-                <h3 className="inline-block mt-0 text-lg font-light">
-                  <span className="font-bold">Progresso</span>
-                </h3>
-              </div>
-              <ProgressBar
-                lessons={workshop.lessons}
-                showStatus={true}
-                workshopUser={workshop.workshop_user}
-              />
-            </>
+            <WorkshopProgress workshop={workshop} />
           ) : (
             <div className="flex flex-col items-start gap-2 dark:text-gray-400 text-gray-600 text-xs mt-2 w-full">
               {nextLesson && (
@@ -153,6 +156,12 @@ function WorkshopDetails({
                     )}
                   </Button>
                 </Link>
+              )}
+
+              {user ? (
+                <SubscribeToWorkshop workshop={workshop} />
+              ) : (
+                <LoginButton />
               )}
             </div>
           )}
@@ -206,4 +215,130 @@ function Subtitle({ text }: { text: string }) {
       <h3 className="text-2xl text-gray-700 dark:text-gray-50">{text}</h3>
     </div>
   );
+}
+
+function SubscribeToWorkshop({ workshop }: { workshop: Workshop }) {
+  const fetcher = useFetcher<{ success: boolean }>();
+  const [searchParams] = useSearchParams();
+  const { showSuccessToast, showErrorToast } = useToasterWithSound();
+
+  let isSubmittingOrLoading =
+    fetcher.state === "submitting" || fetcher.state === "loading";
+
+  const join = searchParams.get("join");
+
+  const handleClick = () => {
+    fetcher.submit(
+      {
+        slug: workshop.slug,
+      },
+      { method: "post" },
+    );
+  };
+
+  useEffect(() => {
+    if (join) {
+      handleClick();
+    }
+  }, [join]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (fetcher.data?.success === true) {
+      showSuccessToast(
+        "Sua inscrição está confirmada. Você receberá atualizações por e-mail.",
+      );
+    }
+
+    if (fetcher.data?.success === false) {
+      showErrorToast("Erro ao tentar participar do workshop.");
+    }
+  }, [fetcher.data, showSuccessToast, showErrorToast]);
+
+  return (
+    <Button
+      variant="default"
+      className="w-full p-8 text-xl flex items-center gap-4"
+      onClick={handleClick}
+    >
+      {isSubmittingOrLoading ? (
+        <>
+          <CgSpinner className="animate-spin text-center inline-block h-5 w-5" />
+        </>
+      ) : (
+        <>
+          <RiLiveLine />
+          Quero participar do workshop
+        </>
+      )}
+    </Button>
+  );
+}
+
+function LoginButton() {
+  const navigate = useNavigate();
+  const [isHovering, setIsHovering] = useState(false);
+
+  const buttonText = isHovering ? (
+    <>
+      <FiGithub />
+      Entre com Github
+    </>
+  ) : (
+    <>
+      <RiLiveLine />
+      Quero participar do workshop
+    </>
+  );
+
+  return (
+    <Button
+      variant="default"
+      onClick={() =>
+        navigate(`/login?redirectTo=${window.location.pathname}?join=true`)
+      }
+      className={cn(
+        isHovering && "bg-opacity-50",
+        "w-full p-8 text-xl flex items-center gap-4",
+      )}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {buttonText}
+    </Button>
+  );
+}
+
+function WorkshopProgress({ workshop }: { workshop: Workshop }) {
+  if (isUpcoming(workshop)) {
+    return (
+      <div className="dark:text-gray-300 text-gray-600 mt-2 text-sm bg-background-700 border-[1.5px] rounded-lg p-6 border-background-600">
+        <h2 className="text-xl dark:text-gray-100 text-gray-700 mb-2 flex items-center gap-2">
+          <TbCalendarCheck className=" w-6 h-6 text-green-400" />
+          Inscrição confirmada
+        </h2>
+        Sua inscrição está confirmada nesse workshop. Nós vamos te atualizar das
+        novidades por e-mail!
+      </div>
+    );
+  }
+
+  if (workshop.status === "published") {
+    return (
+      <>
+        <div className="flex items-center">
+          <TitleIcon className="inline-block w-3 h-3 mr-2" />
+          <h3 className="inline-block mt-0 text-lg font-light">
+            <span className="font-bold">Progresso</span>
+          </h3>
+        </div>
+        <ProgressBar
+          lessons={workshop.lessons}
+          showStatus={true}
+          workshopUser={workshop.workshop_user}
+        />
+      </>
+    );
+  }
+
+  return null;
 }
