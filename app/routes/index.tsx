@@ -29,7 +29,6 @@ import { cn } from "~/lib/utils/cn";
 import CarouselSubmissionCard from "../components/features/submission-card/carousel-submission-card";
 import AlertBanner from "~/components/ui/alert-banner";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
-import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 import ProPricingCard from "~/components/ui/cards/pricing/pro";
 import FreePricingCard from "~/components/ui/cards/pricing/free";
 
@@ -83,70 +82,6 @@ function Headline() {
       id="headline"
       className="flex flex-col items-center w-full lg:min-h-[calc(100vh_-_68px)]"
     >
-      <AlertBannerPortal
-        icon={
-          <div className="w-10 h-10 mb-4 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 512 512"
-            >
-              <mask id="circleFlagsOlympics0">
-                <circle cx="256" cy="256" r="256" fill="#fff" />
-              </mask>
-              <g mask="url(#circleFlagsOlympics0)">
-                <path fill="#eee" d="M0 0h512v512H0z" />
-                <path
-                  fill="#338af3"
-                  d="M109.6 153.1A71.8 71.8 0 0 0 38 224.7a71.8 71.8 0 0 0 71.6 71.6a71.8 71.8 0 0 0 71.6-71.6a71.8 71.8 0 0 0-71.6-71.6m0 20c28.6 0 51.6 23 51.6 51.6s-23 51.6-51.6 51.6s-51.6-23-51.6-51.6s23-51.6 51.6-51.6"
-                />
-                <path
-                  fill="#333"
-                  d="M256 153.1a71.8 71.8 0 0 0-71.6 71.6a71.8 71.8 0 0 0 71.6 71.6a71.8 71.8 0 0 0 71.6-71.6a71.8 71.8 0 0 0-71.6-71.6m0 20c28.6 0 51.6 23 51.6 51.6s-23 51.6-51.6 51.6s-51.6-23-51.6-51.6s23-51.6 51.6-51.6"
-                />
-                <path
-                  fill="#d80027"
-                  d="M402.4 153.1a71.8 71.8 0 0 0-71.6 71.6a71.8 71.8 0 0 0 71.6 71.6a71.8 71.8 0 0 0 71.6-71.6a71.8 71.8 0 0 0-71.6-71.6m0 20c28.6 0 51.6 23 51.6 51.6s-23 51.6-51.6 51.6s-51.6-23-51.6-51.6s23-51.6 51.6-51.6"
-                />
-                <path
-                  fill="#ffda44"
-                  d="M182.8 215.7a71.8 71.8 0 0 0-71.6 71.6a71.8 71.8 0 0 0 71.6 71.6a71.8 71.8 0 0 0 71.6-71.6a71.8 71.8 0 0 0-71.6-71.6m0 20c28.6 0 51.6 23 51.6 51.6s-23 51.6-51.6 51.6s-51.6-23-51.6-51.6s23-51.6 51.6-51.6"
-                />
-                <path
-                  fill="#6da544"
-                  d="M329.2 215.7a71.8 71.8 0 0 0-71.6 71.6a71.8 71.8 0 0 0 71.6 71.6a71.8 71.8 0 0 0 71.6-71.6a71.8 71.8 0 0 0-71.6-71.6m0 20c28.6 0 51.6 23 51.6 51.6s-23 51.6-51.6 51.6s-51.6-23-51.6-51.6s23-51.6 51.6-51.6"
-                />
-                <path
-                  fill="#338af3"
-                  d="m166.9 181.7l-16 12a51.5 51.5 0 0 1 0 61.9l16 12a71.6 71.6 0 0 0 0-85.9"
-                />
-                <path
-                  fill="#333"
-                  d="m313.3 181.7l-16 12a51.5 51.5 0 0 1 0 61.9l16 12a71.6 71.6 0 0 0 0-85.9M225 266l-12 16a71.7 71.7 0 0 0 43 14.3v-20a51.5 51.5 0 0 1-31-10.3"
-                />
-                <path
-                  fill="#d80027"
-                  d="m371.4 266l-12 16a71.7 71.7 0 0 0 43 14.3v-20a51.5 51.5 0 0 1-31-10.3"
-                />
-              </g>
-            </svg>
-          </div>
-        }
-        position="bottom"
-        title={<h1>Hackathon Olimpíadas de Paris 2024 </h1>}
-        subtitle={
-          <p>
-            Participe gratuitamente e concorra a prêmios.{" "}
-            <Link
-              to="/mini-projetos/hackathon-olimpiadas"
-              className="font-bold underline"
-            >
-              Acesse aqui.
-            </Link>
-          </p>
-        }
-      />
       <div className="container flex flex-col items-center">
         {/* Live Streaming Banner */}
         {homeInfo.live_streaming_workshop && (
