@@ -264,7 +264,7 @@ export default function Conta() {
                     to={`https://github.com/${user.github_user}`}
                     target="_blank"
                   >
-                    @robertotcestari
+                    @{user.github_user}
                   </Link>
                 </p>
               )}
