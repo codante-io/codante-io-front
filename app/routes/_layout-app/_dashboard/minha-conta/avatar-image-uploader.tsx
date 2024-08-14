@@ -1,17 +1,28 @@
-import React, { useState, useCallback } from "react";
-import { useSubmit } from "@remix-run/react";
+import React, { useState, useCallback, useEffect } from "react";
+import { Form, useFetcher } from "@remix-run/react";
 import type { Area, Point } from "react-easy-crop";
 import Cropper from "react-easy-crop";
 import { Button } from "~/components/ui/button";
 import { Send } from "lucide-react";
 import { Slider } from "~/components/ui/slider";
+import LoadingButton from "~/components/features/form/loading-button";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 
-const AvatarUpload: React.FC = () => {
+function AvatarUpload({
+  onSuccessfulUpload,
+}: {
+  onSuccessfulUpload: () => void;
+}) {
   const [image, setImage] = useState<string | null>(null);
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const submit = useSubmit();
+  const fetcher = useFetcher<{
+    error?: boolean;
+    success?: boolean;
+    message: string;
+  }>();
+  const { showErrorToast, showSuccessToast } = useToasterWithSound();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -77,9 +88,23 @@ const AvatarUpload: React.FC = () => {
       const formData = new FormData();
       formData.append("avatar", croppedImage, "avatar.jpg");
       formData.append("intent", "avatar-submission");
-      submit(formData, { method: "post", encType: "multipart/form-data" });
+      fetcher.submit(formData, {
+        method: "post",
+        encType: "multipart/form-data",
+      });
     }
   };
+
+  useEffect(() => {
+    if (fetcher.data?.error) {
+      showErrorToast(fetcher.data?.message ?? "Erro ao submeter avatar");
+    }
+
+    if (fetcher.data?.success) {
+      showSuccessToast("Avatar alterado com sucesso");
+      onSuccessfulUpload();
+    }
+  }, [fetcher.data, showErrorToast, showSuccessToast, onSuccessfulUpload]);
 
   const cancelImage = () => {
     setImage(null);
@@ -91,7 +116,31 @@ const AvatarUpload: React.FC = () => {
   return (
     <div>
       {!image ? (
-        <input type="file" accept="image/*" onChange={onFileChange} />
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={onFileChange}
+            className="hidden"
+          />
+          <div className="flex items-center space-x-3">
+            <Button
+              onClick={() => {
+                const input = document.querySelector(
+                  "input[type=file]",
+                ) as HTMLInputElement;
+                if (input) {
+                  input.click();
+                }
+              }}
+              variant="secondary"
+              className=""
+            >
+              Escolha um arquivo
+            </Button>
+            <span className="text-gray-300 truncate">No file chosen</span>
+          </div>
+        </div>
       ) : (
         <div>
           <div style={{ position: "relative", width: "100%", height: 300 }}>
@@ -116,19 +165,21 @@ const AvatarUpload: React.FC = () => {
             />
           </div>
 
-          <form onSubmit={onSubmit} className="flex gap-2 mt-8">
-            <Button type="submit" className="flex gap-2 items-center">
-              <Send className="h-4 w-4" />
-              Submeter
-            </Button>
+          <Form onSubmit={onSubmit} className="flex gap-2 mt-8">
+            <LoadingButton status={fetcher.state} type="submit">
+              <span className="flex gap-2 items-center">
+                <Send className="h-4 w-4" />
+                Submeter
+              </span>
+            </LoadingButton>
             <Button variant="outline" type="button" onClick={cancelImage}>
               Cancelar
             </Button>
-          </form>
+          </Form>
         </div>
       )}
     </div>
   );
-};
+}
 
 export default AvatarUpload;

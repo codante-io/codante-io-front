@@ -87,3 +87,34 @@ export async function changeLinkedinUrl({
     };
   }
 }
+
+export async function changeAvatar({
+  request,
+  avatar,
+}: {
+  request: Request;
+  avatar: Blob;
+}) {
+  const axios = await createAxios(request);
+
+  const formData = new FormData();
+  const avatarFile = new File([avatar], "avatar.jpg", { type: "image/jpeg" });
+  formData.append("avatar", avatarFile, "avatar.jpg");
+
+  try {
+    const res = await axios.post<{
+      success?: boolean;
+      error?: boolean;
+      message: string;
+    }>("/dashboard/change-avatar", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    return res.data;
+  } catch (error: any) {
+    return {
+      error: true,
+      message: error.response?.data?.message,
+    };
+  }
+}

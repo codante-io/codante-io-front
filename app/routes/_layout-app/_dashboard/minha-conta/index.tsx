@@ -1,44 +1,47 @@
+import { Disclosure, Switch } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import {
   Form,
+  Link,
   useActionData,
   useFetcher,
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
+import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { BsGithub } from "react-icons/bs";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FiCopy, FiExternalLink } from "react-icons/fi";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import DiscordButton from "~/components/features/auth/discord-button";
 import LoadingButton from "~/components/features/form/loading-button";
-import ProBadge from "~/components/ui/pro-badge";
-import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
-import { authenticator } from "~/lib/services/github-auth.server";
-import AuthCard from "../../_auth/auth-card";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import ProBadge from "~/components/ui/pro-badge";
+import UserAvatar from "~/components/ui/user-avatar";
+import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
+import type { Subscription } from "~/lib/models/subscription.server";
+import { getSubscription } from "~/lib/models/subscription.server";
+import type { User } from "~/lib/models/user.server";
+import { logoutWithRedirectAfterLogin, user } from "~/lib/services/auth.server";
+import { authenticator } from "~/lib/services/github-auth.server";
+import AuthCard from "../../_auth/auth-card";
+import AvatarUpload from "./avatar-image-uploader";
 import {
+  changeAvatar,
   changeLinkedinUrl,
   changeName,
   changePassword,
   changeSettings,
 } from "./services.server";
-import type { User } from "~/lib/models/user.server";
-import { FiCopy, FiExternalLink } from "react-icons/fi";
-import type { Subscription } from "~/lib/models/subscription.server";
-import { getSubscription } from "~/lib/models/subscription.server";
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
-import { Disclosure, Switch } from "@headlessui/react";
-import toast from "react-hot-toast";
-import { logoutWithRedirectAfterLogin, user } from "~/lib/services/auth.server";
-import DiscordButton from "~/components/features/auth/discord-button";
-import { BsGithub } from "react-icons/bs";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import UserAvatar from "~/components/ui/user-avatar";
-import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
-import AvatarUpload from "./avatar-image-uploader";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -99,9 +102,17 @@ export async function action({ request }: { request: Request }) {
   if (intent === "avatar-submission") {
     const avatar = formData.get("avatar") as File;
 
-    const res = await changeSettings({ request, avatar });
-    if (res?.errors) {
-      return { changeAvatarErrors: res.message };
+    const res = await changeAvatar({ request, avatar });
+    if (res?.error) {
+      return {
+        error: true,
+        message: res.message,
+      };
+    } else {
+      return {
+        success: true,
+        message: "Avatar alterado com sucesso",
+      };
     }
   }
 
@@ -125,8 +136,10 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export default function Conta() {
-  // const [crop, setCrop] = useState({ x: 0, y: 0 });
-  // const [zoom, setZoom] = useState(1);
+  const { user, subscription } = useLoaderData<typeof loader>();
+  const actionData = useActionData<typeof action>();
+  const { showSuccessToast } = useToasterWithSound();
+  const [avatarDialogOpen, setAvatarDialogOpen] = useState(false);
 
   const transition = useNavigation();
   const changeNameStatus =
@@ -141,10 +154,6 @@ export default function Conta() {
     transition.formData?.get("intent") === "changeLinkedinUrl"
       ? transition.state
       : "idle";
-
-  const { user, subscription } = useLoaderData<typeof loader>();
-  const actionData = useActionData<typeof action>();
-  const { showSuccessToast } = useToasterWithSound();
 
   let changePasswordErrors;
   let changeNameErrors;
@@ -206,22 +215,27 @@ export default function Conta() {
     <>
       <div className="container mx-auto mb-16">
         <header className="flex gap-10 ">
-          <Dialog open={true}>
+          <Dialog
+            open={avatarDialogOpen}
+            onOpenChange={() => setAvatarDialogOpen((value) => !value)}
+          >
             <DialogContent className="w-11/12 sm:max-w-md rounded-md p-8">
               <DialogHeader>
-                <DialogTitle className="text-start text-lg md:text-xl font-medium text-gray-700 dark:text-gray-50">
+                <DialogTitle className="text-start text-lg md:text-xl font-medium text-gray-700 dark:text-gray-50 mb-6">
                   Altere seu Avatar
                 </DialogTitle>
               </DialogHeader>
-              <p className="text-gray-600 dark:text-gray-300">
-                Altere seu avatar para algo que te represente.
-              </p>
-              <AvatarUpload />
+              <AvatarUpload
+                onSuccessfulUpload={() => setAvatarDialogOpen(false)}
+              />
             </DialogContent>
           </Dialog>
-          <div className="hover:bg-red-500 cursor-pointer relative group">
-            <div className="absolute top-0 invisible group-hover:visible bg-white text-black">
-              Trocar avatar
+          <div
+            className="cursor-pointer relative group"
+            onClick={() => setAvatarDialogOpen(!avatarDialogOpen)}
+          >
+            <div className="absolute transition inset-0 center hidden group-hover:flex bg-opacity-70 bg-black text-gray-200 hover:flex items-center justify-center rounded-full">
+              <Edit />
             </div>
             <UserAvatar
               avatar={user.avatar}
@@ -230,35 +244,9 @@ export default function Conta() {
             />
           </div>
 
-          {/* <div> */}
-          {/* <Cropper
-              image={user.avatar.avatar_url}
-              crop={crop}
-              zoom={zoom}
-              aspect={1}
-              onCropChange={setCrop}
-              onCropComplete={() => console.log("cropped")}
-              onZoomChange={setZoom}
-            />
-          </div> */}
-          {/* <div className="controls">
-            <input
-              type="range"
-              value={zoom}
-              min={1}
-              max={3}
-              step={0.1}
-              aria-labelledby="Zoom"
-              onChange={(e) => {
-                // setZoom();
-              }}
-              className="zoom-range"
-            />
-          </div> */}
-
           <div>
             <h1 className="text-2xl font-lexend">
-              <div>Roberto Cestari</div>
+              <div>{user.name}</div>
             </h1>
 
             <p className="flex items-center mt-1 mb-3">
@@ -267,16 +255,32 @@ export default function Conta() {
               </span>
               {user?.is_pro === 1 && <ProBadge />}
             </p>
-            <div className="text-xs font-light dark:text-gray-500">
-              <p className="flex items-center gap-2 mb-1">
-                <FaGithub className="h-4 w-4" /> @robertotcestari
-              </p>
-              <p className="flex items-center gap-2 mb-1">
-                <FaLinkedin className="h-4 w-4" /> @robertotcestari
-              </p>
-              <p className="flex items-center gap-2 mb-1">
-                <FaDiscord className="h-4 w-4" /> @robertotcestari
-              </p>
+            <div className="text-xs font-light dark:text-gray-500 space-y-3">
+              {user.github_user && (
+                <p className="flex items-center gap-2 ">
+                  <FaGithub className="h-4 w-4" />
+                  <Link
+                    className="hover:underline"
+                    to={`https://github.com/${user.github_user}`}
+                    target="_blank"
+                  >
+                    @robertotcestari
+                  </Link>
+                </p>
+              )}
+              {user.linkedin_user && (
+                <p className="flex items-center gap-2 ">
+                  <FaLinkedin className="h-4 w-4" />
+                  <Link
+                    target="_blank"
+                    className="hover:underline"
+                    to={`https://linkedin.com/in/${user.linkedin_user}`}
+                  >
+                    linkedin.com/in/
+                    {user.linkedin_user}
+                  </Link>
+                </p>
+              )}
             </div>
           </div>
         </header>
