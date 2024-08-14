@@ -52,14 +52,19 @@ export async function changeName({ request, name }: changeNameParams) {
 export async function changeSettings({
   request,
   showBadge,
+  avatar,
 }: {
   request: Request;
-  showBadge: boolean;
+  showBadge?: boolean;
+  avatar?: Blob;
 }) {
   const axios = await createAxios(request);
 
   try {
-    await axios.post("/dashboard/update-settings", { show_badge: showBadge });
+    await axios.post("/dashboard/update-settings", {
+      show_badge: showBadge,
+      avatar,
+    });
   } catch (error: any) {
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }
@@ -78,6 +83,37 @@ export async function changeLinkedinUrl({
   } catch (error: any) {
     return {
       errors: Object.values(error?.response?.data?.errors).flat(),
+      message: error.response?.data?.message,
+    };
+  }
+}
+
+export async function changeAvatar({
+  request,
+  avatar,
+}: {
+  request: Request;
+  avatar: Blob;
+}) {
+  const axios = await createAxios(request);
+
+  const formData = new FormData();
+  const avatarFile = new File([avatar], "avatar.jpg", { type: "image/jpeg" });
+  formData.append("avatar", avatarFile, "avatar.jpg");
+
+  try {
+    const res = await axios.post<{
+      success?: boolean;
+      error?: boolean;
+      message: string;
+    }>("/dashboard/change-avatar", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    return res.data;
+  } catch (error: any) {
+    return {
+      error: true,
       message: error.response?.data?.message,
     };
   }
