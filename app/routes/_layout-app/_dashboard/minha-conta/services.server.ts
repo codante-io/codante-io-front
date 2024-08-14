@@ -52,14 +52,19 @@ export async function changeName({ request, name }: changeNameParams) {
 export async function changeSettings({
   request,
   showBadge,
+  avatar,
 }: {
   request: Request;
-  showBadge: boolean;
+  showBadge?: boolean;
+  avatar?: Blob;
 }) {
   const axios = await createAxios(request);
 
   try {
-    await axios.post("/dashboard/update-settings", { show_badge: showBadge });
+    await axios.post("/dashboard/update-settings", {
+      show_badge: showBadge,
+      avatar,
+    });
   } catch (error: any) {
     return { errors: Object.values(error?.response?.data?.errors).flat() };
   }

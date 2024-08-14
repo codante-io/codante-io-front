@@ -13,6 +13,12 @@ import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { authenticator } from "~/lib/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
+import {
   changeLinkedinUrl,
   changeName,
   changePassword,
@@ -30,6 +36,9 @@ import DiscordButton from "~/components/features/auth/discord-button";
 import { BsGithub } from "react-icons/bs";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import UserAvatar from "~/components/ui/user-avatar";
+import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
+import AvatarUpload from "./avatar-image-uploader";
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -87,6 +96,15 @@ export async function action({ request }: { request: Request }) {
     });
   }
 
+  if (intent === "avatar-submission") {
+    const avatar = formData.get("avatar") as File;
+
+    const res = await changeSettings({ request, avatar });
+    if (res?.errors) {
+      return { changeAvatarErrors: res.message };
+    }
+  }
+
   return null;
 }
 
@@ -107,6 +125,9 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export default function Conta() {
+  // const [crop, setCrop] = useState({ x: 0, y: 0 });
+  // const [zoom, setZoom] = useState(1);
+
   const transition = useNavigation();
   const changeNameStatus =
     transition.formData?.get("intent") === "changeName"
@@ -184,21 +205,80 @@ export default function Conta() {
   return (
     <>
       <div className="container mx-auto mb-16">
-        <header className="">
-          <h1 className="text-3xl font-lexend">
-            {/* <span className="hidden ml-3 font-light text-blue-500 md:inline">
-              {" "}
-              &#8226;{" "}
-            </span> */}
-            Minha Conta
-          </h1>
+        <header className="flex gap-10 ">
+          <Dialog open={true}>
+            <DialogContent className="w-11/12 sm:max-w-md rounded-md p-8">
+              <DialogHeader>
+                <DialogTitle className="text-start text-lg md:text-xl font-medium text-gray-700 dark:text-gray-50">
+                  Altere seu Avatar
+                </DialogTitle>
+              </DialogHeader>
+              <p className="text-gray-600 dark:text-gray-300">
+                Altere seu avatar para algo que te represente.
+              </p>
+              <AvatarUpload />
+            </DialogContent>
+          </Dialog>
+          <div className="hover:bg-red-500 cursor-pointer relative group">
+            <div className="absolute top-0 invisible group-hover:visible bg-white text-black">
+              Trocar avatar
+            </div>
+            <UserAvatar
+              avatar={user.avatar}
+              className="w-32 h-32"
+              showTooltip={false}
+            />
+          </div>
 
-          <span className="flex items-center mt-2">
-            <span className="hidden text-sm font-light md:inline dark:text-gray-300">
-              {user?.name}
-            </span>
-            {user?.is_pro === 1 && <ProBadge />}
-          </span>
+          {/* <div> */}
+          {/* <Cropper
+              image={user.avatar.avatar_url}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              onCropChange={setCrop}
+              onCropComplete={() => console.log("cropped")}
+              onZoomChange={setZoom}
+            />
+          </div> */}
+          {/* <div className="controls">
+            <input
+              type="range"
+              value={zoom}
+              min={1}
+              max={3}
+              step={0.1}
+              aria-labelledby="Zoom"
+              onChange={(e) => {
+                // setZoom();
+              }}
+              className="zoom-range"
+            />
+          </div> */}
+
+          <div>
+            <h1 className="text-2xl font-lexend">
+              <div>Roberto Cestari</div>
+            </h1>
+
+            <p className="flex items-center mt-1 mb-3">
+              <span className="hidden text-sm font-light md:inline dark:text-gray-300">
+                Codante
+              </span>
+              {user?.is_pro === 1 && <ProBadge />}
+            </p>
+            <div className="text-xs font-light dark:text-gray-500">
+              <p className="flex items-center gap-2 mb-1">
+                <FaGithub className="h-4 w-4" /> @robertotcestari
+              </p>
+              <p className="flex items-center gap-2 mb-1">
+                <FaLinkedin className="h-4 w-4" /> @robertotcestari
+              </p>
+              <p className="flex items-center gap-2 mb-1">
+                <FaDiscord className="h-4 w-4" /> @robertotcestari
+              </p>
+            </div>
+          </div>
         </header>
         {subscription && <SubscriptionSection subscription={subscription} />}
 
