@@ -159,7 +159,7 @@ function WorkshopDetails({
               )}
 
               {/* Botão de Participar do Workshop */}
-              {workshop.status === "soon" && (
+              {workshop?.status === "soon" && (
                 <>
                   {user ? (
                     <SubscribeToWorkshop workshop={workshop} />
@@ -283,15 +283,23 @@ function LoginToSubscribeButton() {
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
 
-  const buttonText = isHovering ? (
+  const buttonText = (
     <>
-      <FiGithub />
-      Entre com Github
-    </>
-  ) : (
-    <>
-      <RiLiveLine />
-      Quero participar do workshop
+      {isHovering && (
+        <span className="absolute inset-0 flex justify-center items-center gap-3">
+          <FiGithub />
+          Entre com Github
+        </span>
+      )}
+      <span
+        className={cn(
+          !isHovering ? "" : "invisible",
+          "flex items-center gap-3",
+        )}
+      >
+        <RiLiveLine />
+        Quero participar do workshop
+      </span>
     </>
   );
 
@@ -303,7 +311,7 @@ function LoginToSubscribeButton() {
       }
       className={cn(
         isHovering && "bg-opacity-50",
-        "w-full p-8 text-xl flex items-center gap-4",
+        "w-full p-8 text-xl flex items-center gap-4 relative",
       )}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}

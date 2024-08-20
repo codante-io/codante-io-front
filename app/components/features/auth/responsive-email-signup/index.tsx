@@ -16,7 +16,7 @@ export default function ResponsiveEmailSignup({ slug }: { slug: string }) {
   const transition = useNavigation();
 
   const status = transition.state;
-  let isSuccessfulSubmission = status === "idle" && errors === null;
+  const isSuccessfulSubmission = status === "idle" && errors === null;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     submit(event.currentTarget, {
