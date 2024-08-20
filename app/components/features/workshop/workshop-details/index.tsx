@@ -4,7 +4,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AiOutlineSolution } from "react-icons/ai";
 import { CgSpinner } from "react-icons/cg";
 import { FiGithub } from "react-icons/fi";
@@ -158,10 +158,15 @@ function WorkshopDetails({
                 </Link>
               )}
 
-              {user ? (
-                <SubscribeToWorkshop workshop={workshop} />
-              ) : (
-                <LoginButton />
+              {/* Botão de Participar do Workshop */}
+              {workshop.status === "soon" && (
+                <>
+                  {user ? (
+                    <SubscribeToWorkshop workshop={workshop} />
+                  ) : (
+                    <LoginToSubscribeButton />
+                  )}
+                </>
               )}
             </div>
           )}
@@ -222,25 +227,25 @@ function SubscribeToWorkshop({ workshop }: { workshop: Workshop }) {
   const [searchParams] = useSearchParams();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
-  let isSubmittingOrLoading =
+  const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
 
   const join = searchParams.get("join");
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     fetcher.submit(
       {
         slug: workshop.slug,
       },
       { method: "post" },
     );
-  };
+  }, [fetcher, workshop.slug]);
 
   useEffect(() => {
     if (join) {
       handleClick();
     }
-  }, [join]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [join, handleClick]);
 
   useEffect(() => {
     if (fetcher.data?.success === true) {
@@ -274,7 +279,7 @@ function SubscribeToWorkshop({ workshop }: { workshop: Workshop }) {
   );
 }
 
-function LoginButton() {
+function LoginToSubscribeButton() {
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
 
