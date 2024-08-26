@@ -55,7 +55,7 @@ export default function ChallengesIndex() {
 
   return (
     <main className="container mx-auto">
-      <h1 className="mb-10 text-3xl lg:text-4xl font-lexend text-center">
+      <h1 className="mb-10 text-3xl text-center lg:text-4xl font-lexend">
         Mini Projetos
       </h1>
       <FeaturedChallengeSection featuredChallenge={featuredChallenge} />
@@ -70,8 +70,8 @@ export default function ChallengesIndex() {
           "hackathon",
         ]}
       />
-      <section className="mt-16 flex flex-col gap-20">
-        <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
+      <section className="flex flex-col gap-20 mt-16">
+        <div className="grid grid-cols-1 gap-0 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
           {challenges.map((challenge: ChallengeCardType) => (
             <ChallengeCard key={challenge.id} challenge={challenge} />
           ))}
