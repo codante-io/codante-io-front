@@ -11,12 +11,10 @@ import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
 
 export default function ChallengeCard({
   challenge,
-  animatedBackground = true,
   className = "",
   openInNewTab,
 }: {
   challenge: ChallengeCardType;
-  animatedBackground?: boolean;
   openInNewTab?: boolean;
   className?: string;
 }) {
@@ -29,7 +27,7 @@ export default function ChallengeCard({
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
       className={classNames(
-        "relative group block p-3 h-full w-full",
+        "relative group block p-3 h-full max-w-[450px] w-full mx-auto",
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer",
       )}
     >
@@ -49,7 +47,7 @@ export default function ChallengeCard({
             />
           )}
 
-          <div className="h-full w-full overflow-hidden flex justify-center items-center pt-4">
+          <div className="flex items-center justify-center w-full h-full pt-4 overflow-hidden">
             <img
               src={challenge.image_url}
               className={`inline-block -mb-3 h-44 object-cover ${
@@ -71,10 +69,10 @@ export default function ChallengeCard({
         {!challenge?.is_premium && (
           <CardItemRibbon type="success" text="Free" />
         )}
-        <div className="flex flex-col justify-between py-4 px-6 h-full flex-grow">
+        <div className="flex flex-col justify-between flex-grow h-full px-6 py-4">
           <div>
             <div className="mb-2 card-header">
-              <h2 className="min-h-16 mb-4 text-2xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
+              <h2 className="mb-4 text-2xl font-medium text-gray-700 min-h-16 dark:text-gray-50 line-clamp-2">
                 {challenge?.name}
               </h2>
               <div className="flex items-baseline gap-2">
@@ -93,7 +91,7 @@ export default function ChallengeCard({
                 </div>
               )}
 
-              <div className="border-t border-gray-200 dark:border-gray-800 my-4 px-2"></div>
+              <div className="px-2 my-4 border-t border-gray-200 dark:border-gray-800"></div>
 
               <div className="mt-10 mb-10">
                 <span className="text-xs text-gray-600 dark:text-gray-400">

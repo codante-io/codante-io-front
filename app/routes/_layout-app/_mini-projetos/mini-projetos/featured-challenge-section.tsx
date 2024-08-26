@@ -64,7 +64,6 @@ export default function FeaturedChallengeSection({
           <div className="w-96">
             <ChallengeCard
               className="shadow-[7px_7px_20px_0px_rgba(255,255,255,0.10)] dark:hover:shadow-[7px_7px_20px_0px_rgba(255,255,255,0.20)]"
-              animatedBackground={false}
               challenge={featuredChallenge}
             />
           </div>
