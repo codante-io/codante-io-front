@@ -44,6 +44,7 @@ import { abort404 } from "~/lib/utils/responses.server";
 import CommentSection from "~/components/features/comments/comment-section";
 import NotFound from "~/components/features/error-handling/not-found";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
+import { cn } from "~/lib/utils/cn";
 
 export function meta({ matches, params, data }: MetaArgs) {
   const { submissionData } = data as any;
@@ -138,13 +139,14 @@ export async function action({
 
   const intent = formData.get("intent");
   switch (intent) {
-    case "updateSubmission":
+    case "updateSubmission": {
       const submissionUrl = formData.get("submission_url") as string;
       return updateChallengeSubmission(request, params.slug, submissionUrl);
+    }
   }
 }
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
   invariant(params.username, `params.username is required`);
 
@@ -195,17 +197,11 @@ export default function MySolution() {
         user={user}
       />
       <ShareSection challenge={challenge} location={location} />
-      <MainSection
-        submissionUser={submissionUser}
-        challenge={challenge}
-        user={user}
-      />
+      <MainSection submissionUser={submissionUser} user={user} />
       <SolutionButtonsSection
         challenge={challenge}
         challengeUser={submissionUser}
         user={user}
-        challengeSlug={challenge.slug}
-        sendoToSolutionPage
       />
       <CommentSection
         comments={submissionUser.comments}
@@ -362,23 +358,27 @@ function ShareSection({
 
 function MainSection({
   submissionUser,
-  challenge,
   user,
 }: {
   submissionUser: ChallengeUser;
-  challenge: Challenge;
   user: User;
 }) {
   return (
     <main className="dark:border-background-700 border-gray-300 overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow w-full dark:bg-background-700">
       <div className="">
         <img
-          className="cursor-pointer"
+          className={cn("cursor-pointer")}
           src={submissionUser.submission_image_url}
           alt={`Print Screen da submissão de ${formatName(
             submissionUser.user.name,
           )}`}
-          onClick={() => window.open(submissionUser.submission_url, "_blank")}
+          onClick={() => {
+            if (submissionUser.submission_url) {
+              window.open(submissionUser.submission_url, "_blank");
+            } else {
+              window.open(submissionUser.fork_url ?? "", "_blank");
+            }
+          }}
         />
       </div>
       <footer
@@ -424,7 +424,7 @@ function EditSection({
   const transition = useNavigation();
   const status = transition.state;
 
-  let isSuccessfulSubmission =
+  const isSuccessfulSubmission =
     status === "idle" && actionData && actionData?.error === undefined;
 
   function toggleDialog() {
