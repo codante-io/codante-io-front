@@ -8,14 +8,10 @@ export default function SolutionButtonsSection({
   challenge,
   challengeUser,
   user,
-  challengeSlug,
-  sendoToSolutionPage = false,
 }: {
   challenge: Challenge;
   challengeUser: ChallengeUser;
-  challengeSlug?: string;
   user: User;
-  sendoToSolutionPage?: boolean;
 }) {
   function handleClick(event: React.MouseEvent) {
     // se usuário não for pro e os botões forem de resolução, não deixa acessar.
@@ -25,7 +21,7 @@ export default function SolutionButtonsSection({
       challengeUser.is_solution
     ) {
       event?.preventDefault();
-      toast((t) =>
+      toast(() =>
         user || challenge.is_premium ? (
           <p>
             Apenas membros <ProSpanWrapper>PRO</ProSpanWrapper> podem acessar
