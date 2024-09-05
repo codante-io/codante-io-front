@@ -57,7 +57,7 @@ function WorkshopDetails({
         )}
 
         {showDescription && (
-          <div className="">
+          <div className="mt-16">
             <Subtitle text="Sobre o Workshop" />
             {workshop.is_standalone ? (
               <div>
