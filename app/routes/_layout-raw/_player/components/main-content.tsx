@@ -83,16 +83,18 @@ export default function MainContent({
       </div>
       <section>
         <div className="mt-3">
-          <VimeoPlayer
-            vimeoUrl={lesson.video_url || ""}
-            available_to={lesson.available_to}
-            onVideoEnded={() => handleVideoEnded(lesson.id)}
-            thumbnailURL={lesson.thumbnail_url}
-            autoplay={true}
-            title={lesson.name}
-            labelledBy="video-title"
-            describedBy="video-description"
-          />
+          {lesson.video_url && (
+            <VimeoPlayer
+              vimeoUrl={lesson.video_url || ""}
+              available_to={lesson.available_to}
+              onVideoEnded={() => handleVideoEnded(lesson.id)}
+              thumbnailURL={lesson.thumbnail_url}
+              autoplay={true}
+              title={lesson.name}
+              labelledBy="video-title"
+              describedBy="video-description"
+            />
+          )}
         </div>
         <h1
           id="video-title"
