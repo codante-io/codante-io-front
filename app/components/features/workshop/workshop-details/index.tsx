@@ -57,37 +57,42 @@ function WorkshopDetails({
         )}
 
         {showDescription && (
-          <div className="">
-            <Subtitle text="Sobre o Workshop" />
+          <div className="mt-16">
             {workshop.is_standalone ? (
-              <div>
-                <MarkdownRenderer markdown={workshop.description} />
-              </div>
+              <>
+                <Subtitle text="Sobre o Workshop" />
+                <div>
+                  <MarkdownRenderer markdown={workshop.description} />
+                </div>
+              </>
             ) : (
-              <div className="text-gray-600 dark:text-gray-300">
-                <p>
-                  Esse workshop é um tutorial resolvendo o Mini Projeto{" "}
-                  <b>{workshop.challenge?.name}</b>.
-                </p>
+              <>
+                <Subtitle text="Sobre o Tutorial" />
+                <div className="text-gray-600 dark:text-gray-300">
+                  <p>
+                    Esse tutorial mostra o passo-a-passo para resolver o Mini
+                    Projeto <b>{workshop.challenge?.name}</b>.
+                  </p>
 
-                <div className="flex gap-2 mt-4">
-                  <Link to={`/mini-projetos/${workshop.challenge?.slug}`}>
-                    <Button variant="default">Ver Mini Projeto</Button>
-                  </Link>
-                  <Link
-                    to={`/mini-projetos/${workshop.challenge?.slug}/codigo`}
-                  >
-                    <Button variant="secondary">Código completo</Button>
-                  </Link>
-                </div>
+                  <div className="flex gap-2 mt-4">
+                    <Link to={`/mini-projetos/${workshop.challenge?.slug}`}>
+                      <Button variant="default">Ver Mini Projeto</Button>
+                    </Link>
+                    <Link
+                      to={`/mini-projetos/${workshop.challenge?.slug}/codigo`}
+                    >
+                      <Button variant="secondary">Código completo</Button>
+                    </Link>
+                  </div>
 
-                <div className="mt-16">
-                  <Subtitle text="Descrição do projeto" />
-                  <MarkdownRenderer
-                    markdown={workshop.challenge?.description || ""}
-                  />
+                  <div className="mt-16">
+                    <Subtitle text="Descrição do projeto" />
+                    <MarkdownRenderer
+                      markdown={workshop.challenge?.description || ""}
+                    />
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         )}

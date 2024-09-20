@@ -69,7 +69,7 @@ export default function ResourcesSection({
 
 function Icon({ resource }: { resource: any }) {
   const classnames =
-    "inline-block w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300";
+    "inline-block shrink-0 w-5 h-5 mr-2 text-gray-700 transition-colors dark:text-gray-300 group-hover:text-brand-500 dark:group-hover:text-brand-300";
   if (resource.type === "figma") {
     return <FiFigma className={classnames} />;
   }
