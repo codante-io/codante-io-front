@@ -15,6 +15,7 @@ export type Lesson = {
   section?: string;
   thumbnail_url?: string;
   user_completed?: boolean;
+  type: "video" | "text";
   user_can_view?: boolean;
   available_to?: AvailableTo;
   comments: Comment[];
