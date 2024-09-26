@@ -83,7 +83,7 @@ export default function MainContent({
       </div>
       <section>
         <div className="mt-3">
-          {lesson.video_url && (
+          {lesson.type === "video" && (
             <VimeoPlayer
               vimeoUrl={lesson.video_url || ""}
               available_to={lesson.available_to}
