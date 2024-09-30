@@ -102,8 +102,8 @@ export default function TrackSlug() {
       </header>
 
       <section className="w-full flex flex-col">
-        {track?.sections &&
-          track?.sections.map((section, sectionIndex: number) => {
+        {track &&
+          track?.map((section, sectionIndex: number) => {
             return (
               <div
                 key={sectionIndex}
@@ -120,30 +120,10 @@ export default function TrackSlug() {
                   />
                 </div>
                 <div className="w-full sm:w-3/4 group">
-                  {sectionIndex === 0 && <UnderConstructionCard />}
                   {section.trackables &&
                     section.trackables.map((trackable, index) => (
                       <div key={index} className="flex flex-col items-center">
                         <div className="flex w-full gap-4">
-                          <TrackItemCheckbox
-                            trackableId={trackable?.pivot?.id || ""}
-                            showTopLine={sectionIndex === 0 && index === 0}
-                            showBottomLine={
-                              index === section.trackables.length - 1 &&
-                              sectionIndex === track.sections.length - 1
-                            }
-                            showCheckbox={
-                              !(trackable as TrackItem).type ||
-                              (trackable as TrackItem).type !== "markdown"
-                            }
-                            completed={trackable.completed}
-                            onChange={handleCheckboxChange}
-                            error={actionData}
-                            userIsPro={userIsPro}
-                            userIsLoggedIn={!!user}
-                            isFree={!trackable?.is_premium}
-                          />
-
                           <div
                             className={cn(
                               "w-full",
@@ -192,17 +172,4 @@ function TrackCard({
       />
     );
   }
-
-  if (
-    trackItem?.pivot?.trackable_type.includes("TrackItem") &&
-    (trackItem as TrackItem)?.type === "external_link"
-  ) {
-    return (
-      <ExternalLinkTrackCard
-        trackItem={trackItem as TrackItem}
-        userIsPro={userIsPro}
-      />
-    );
-  }
-  return <MarkdownTrackText trackItem={trackItem as TrackItem} />;
 }
