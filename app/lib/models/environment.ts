@@ -15,6 +15,8 @@ const environmentSchema = z.object({
   GITHUB_CALLBACK_URL: z.string().min(1),
   DISCORD_APP_CLIENT_ID: z.string().min(1),
   DISCORD_APP_SECRET: z.string().min(1),
+  RECAPTCHA_SITE_KEY: z.string().min(1),
+  RECAPTCHA_SECRET_KEY: z.string().min(1),
 });
 
 const environment = () => environmentSchema.parse(process.env);

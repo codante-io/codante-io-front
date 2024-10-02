@@ -6,17 +6,33 @@ import AuthCard from "../auth-card";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { useCallback, useEffect, useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { isUserHuman } from "~/lib/utils/recaptcha";
+import { sendDiscordAdminNotification } from "~/lib/services/notifications.server";
 
 export async function action({ request }: { request: Request }) {
-  let formData = await request.formData();
+  const formData = await request.formData();
 
-  let email = formData.get("email") as string;
-  let password = formData.get("password") as string;
-  let name = formData.get("name") as string;
-  let passwordConfirmation = formData.get("password_confirmation") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const name = formData.get("name") as string;
+  const passwordConfirmation = formData.get("password_confirmation") as string;
+
+  const token = formData.get("_captcha") as string;
+  const key = process.env.RECAPTCHA_SECRET_KEY as string;
+
+  const isHuman = await isUserHuman(token, key);
+
+  if (!isHuman) {
+    await sendDiscordAdminNotification(
+      `Novo cadastro de ${name} (${email}) não verificado como humano`,
+    );
+    return "Ocorreu um erro ao processar o seu cadastro. Entre em contato no nosso Discord.";
+  }
 
   // @ts-ignore-next-line
-  let { errors, redirector } = await register({
+  const { errors, redirector } = await register({
     request,
     name,
     email,
@@ -28,13 +44,30 @@ export async function action({ request }: { request: Request }) {
 }
 
 export default function Register() {
-  let errors = useActionData<string>();
+  const errors = useActionData<string>();
 
   const transition = useNavigation();
   const { colorMode } = useColorMode();
 
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      return;
+    }
+
+    const token = await executeRecaptcha("register");
+    setCaptchaToken(token);
+  }, [executeRecaptcha]);
+
+  useEffect(() => {
+    handleReCaptchaVerify();
+  }, [handleReCaptchaVerify]);
+
   const status = transition.state;
-  let isSuccessfulSubmission = status === "idle" && errors === null;
+  const isSuccessfulSubmission = status === "idle" && errors === null;
 
   return (
     <>
@@ -51,6 +84,10 @@ export default function Register() {
           Cadastre-se
         </h1>
         <Form method="POST" className="flex flex-col">
+          {captchaToken && (
+            <input type="hidden" name="_captcha" value={captchaToken}></input>
+          )}
+
           <Label htmlFor="name">Nome</Label>
           <Input name="name" id="name" type="text" className="mb-4" />
           <Label htmlFor="email">Email</Label>
@@ -85,14 +122,15 @@ export default function Register() {
               status={status}
               isSuccessfulSubmission={isSuccessfulSubmission}
               type="submit"
-              className="relative mt-8 transition duration-200 "
+              className="relative mt-8 transition duration-200"
+              onClick={handleReCaptchaVerify}
             >
               Cadastre-se
             </LoadingButton>
           </div>
         </Form>
       </AuthCard>
-      <p className={` text-xs font-light text-gray-500 mb-2 text-right mt-4`}>
+      <p className={`text-xs font-light text-gray-500 mb-2 text-right mt-4`}>
         ... ou, se preferir, entre com{" "}
         <Link to="/login" className="underline">
           github
