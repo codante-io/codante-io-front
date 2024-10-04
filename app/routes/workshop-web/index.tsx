@@ -22,27 +22,30 @@ import Formulario from "./forms";
 export const meta = () => {
   return [
     { title: "Desenvolvimento web" },
-    { name: "description", content: "A melhor rinha de frontend" },
-    { property: "og:title", content: "Rinha de Frontend" },
-    { property: "og:description", content: "A melhor rinha de frontend" },
+    { name: "description", content: "Inicie no desenvolvimento web" },
+    { property: "og:title", content: "Iniciando no desenvolvimento web" },
+    { property: "og:description", content: "Inicie no desenvolvimento web" },
     {
       property: "og:image",
       content:
         "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
     },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://codante.io/rinha-frontend" },
+    { property: "og:url", content: "https://codante.io/trilhas" },
     { property: "twitter:card", content: "summary_large_image" },
     { property: "twitter:domain", content: "codante.io" },
-    { property: "twitter:url", content: "https://codante.io/rinha-frontend" },
-    { property: "twitter:title", content: "Rinha de Frontend" },
-    { property: "twitter:description", content: "A melhor rinha de frontend" },
+    { property: "twitter:url", content: "https://codante.io/trilhas" },
+    { property: "twitter:title", content: "Iniciando no desenvolvimento web" },
+    {
+      property: "twitter:description",
+      content: "Inicie no desenvolvimento web",
+    },
     {
       property: "twitter:image",
       content:
         "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
     },
-    { property: "twitter:image:alt", content: "Rinha de Frontend" },
+    { property: "twitter:image:alt", content: "Inicie no desenvolvimento web" },
   ];
 };
 
@@ -74,12 +77,6 @@ export default function HomePage() {
           <section id="headline" className="flex justify-center w-full z-1">
             <div className="container flex flex-col md:flex-row">
               <div className="flex flex-col items-center">
-                {/* <img
-          src="img/workshop-web/logo.webp"
-          className="scale-75"
-          alt="imagem de um texto escrito iniciando no desenvolvimento web"
-          ref={imageRef}
-        /> */}
                 <img
                   src={
                     colorMode === "light"
