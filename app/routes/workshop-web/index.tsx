@@ -17,6 +17,7 @@ import useMousePosition from "./useMousePosition";
 import transformElement from "./transformElement";
 import { faqs, techs, steps } from "./data";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
+import { BsFillPersonPlusFill } from "react-icons/bs";
 import Formulario from "./forms";
 
 export const meta = () => {
@@ -80,7 +81,7 @@ export default function HomePage() {
                 <img
                   src={
                     colorMode === "light"
-                      ? "img/workshop-web/logo.svg"
+                      ? "img/workshop-web/logo1.svg"
                       : "img/workshop-web/logo-dark.webp"
                   }
                   className="logo-light"
