@@ -39,7 +39,7 @@ export const steps = [
   {
     title: "Cadastre-se e participe.",
     description: "Você terá acesso a conteúdo e exercícios.",
-    img: "img/workshop-web/start.svg",
+    img: "img/workshop-web/steps/start.svg",
     alt: "Imagem de uma pessoa clicando no botão start",
   },
   {
