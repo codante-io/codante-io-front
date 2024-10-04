@@ -75,7 +75,7 @@ const LeadForm = () => {
               className="dark:bg-background-50 dark:text-gray-800"
               name="phone"
               type="text"
-              ref={withMask("(99) 9999-9999")}
+              ref={withMask("(99) 99999-9999")}
             />
           </div>
           <LoadingButton
