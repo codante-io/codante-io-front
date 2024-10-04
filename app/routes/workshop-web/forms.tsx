@@ -5,7 +5,7 @@ const Formulario = () => {
   const { colorMode } = useColorMode();
 
   return (
-    <div className="flex">
+    <div className="flex justify-center">
       <div
         className={`bg-white rounded-lg shadow-lg p-8 w-96 forms ${colorMode === "light" ? "forms-light" : "forms-dark"}`}
       >
@@ -14,7 +14,7 @@ const Formulario = () => {
         </h1>
         <form>
           <div className="mb-4">
-            <label>Nome:t</label>
+            <label>Nome:</label>
             <input
               type="text"
               required
