@@ -1,5 +1,4 @@
 import {
-  Link,
   isRouteErrorResponse,
   useOutletContext,
   useRouteError,
@@ -11,14 +10,14 @@ import BackgroundBlur from "~/components/_layouts/background-blur";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import TitleIcon from "~/components/ui/title-icon";
-import Wave from "~/components/_layouts/wave";
 import type { User } from "~/lib/models/user.server";
 import useMousePosition from "./useMousePosition";
 import transformElement from "./transformElement";
-import { faqs, techs, steps } from "./data";
+import { techs, steps } from "./data";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
-import { BsFillPersonPlusFill } from "react-icons/bs";
-import Formulario from "./forms";
+import LeadForm from "./lead-form";
+import { registerMarketingLead } from "~/lib/models/lead.server";
+import { ActionFunctionArgs } from "@remix-run/node";
 
 export const meta = () => {
   return [
@@ -26,28 +25,30 @@ export const meta = () => {
     { name: "description", content: "Inicie no desenvolvimento web" },
     { property: "og:title", content: "Iniciando no desenvolvimento web" },
     { property: "og:description", content: "Inicie no desenvolvimento web" },
-    {
-      property: "og:image",
-      content:
-        "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
-    },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://codante.io/trilhas" },
+    { property: "og:url", content: "https://codante.io/workshop-web" },
     { property: "twitter:card", content: "summary_large_image" },
     { property: "twitter:domain", content: "codante.io" },
-    { property: "twitter:url", content: "https://codante.io/trilhas" },
+    { property: "twitter:url", content: "https://codante.io/workshop-web" },
     { property: "twitter:title", content: "Iniciando no desenvolvimento web" },
     {
       property: "twitter:description",
       content: "Inicie no desenvolvimento web",
     },
-    {
-      property: "twitter:image",
-      content:
-        "https://codante.s3.sa-east-1.amazonaws.com/img/challenge-icons/rinha.png",
-    },
-    { property: "twitter:image:alt", content: "Inicie no desenvolvimento web" },
   ];
+};
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const email = formData.get("email") as string;
+  const name = formData.get("name") as string;
+  const phone = formData.get("phone") as string;
+  return registerMarketingLead(request, {
+    email,
+    name,
+    phone,
+    tag: "workshop-web-out-2024",
+  });
 };
 
 export default function HomePage() {
@@ -76,7 +77,7 @@ export default function HomePage() {
           <BackgroundBlur />
 
           <section id="headline" className="flex justify-center w-full z-1">
-            <div className="container flex flex-col md:flex-row">
+            <div className="container flex flex-col lg:flex-row">
               <div className="flex flex-col items-center">
                 <img
                   src={
@@ -98,9 +99,19 @@ export default function HomePage() {
                   <span className="italic font-bold">te guiar</span> nessa
                   jornada!
                 </p>
+
+                <p className="font-light text-center text-2xl mb-10 lg:mx-10">
+                  Participe do nosso workshop gratuito e ao vivo que vai
+                  acontecer nos dias
+                  <span className="italic font-bold">
+                    {" "}
+                    9, 10 e 11 de Outubro
+                  </span>
+                  .
+                </p>
               </div>
               <div className="mb-10">
-                <Formulario />
+                <LeadForm />
               </div>
             </div>
           </section>
@@ -122,7 +133,7 @@ export default function HomePage() {
         </section>
         <section
           id="como-funciona"
-          className="flex justify-center w-full mb-16 text-gray-800 bg-transparent dark:text-gray-50"
+          className="flex justify-center w-full  mt-20 mb-16 text-gray-800 bg-transparent dark:text-gray-50"
         >
           <div className="container mb-10">
             <h1 className="flex items-center mt-4 mb-4 text-3xl font-light sm:mt-8 font-lexend">
@@ -131,9 +142,9 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
-              O final do ano se aproxima, mas ainda há tempo para você{" "}
-              <span className="italic font-bold">tirar o sonho do papel</span> e
-              aprender programação!
+              Faremos um workshop ao vivo e gratuito nos dias{" "}
+              <span className="italic font-bold"> 9, 10 e 11 de Outubro</span>.
+              Para te ensinar como funciona o desenvolvimento web.
             </p>
 
             <section className="grid grid-cols-1 gap-10 text-gray-700 md:grid-cols-2 lg:grid-cols-3 dark:text-gray-100">
@@ -159,7 +170,7 @@ export default function HomePage() {
                           : img.replace(".png", "-dark.png")
                       }
                       alt={alt}
-                      className="mt-2 hover:animate-float h-full max-h-[200px] md:max-h-[120px] xl:max-h-[150px] object-contain"
+                      className="mt-2 hover:animate-float h-full max-h-[200px] md:max-h-[120px] xl:max-h-[130px] object-contain"
                     />
                   </article>
                   <span
@@ -169,62 +180,8 @@ export default function HomePage() {
                 </div>
               ))}
             </section>
-
-            <div className="flex justify-center mt-10">
-              <Link
-                to="#headline"
-                rel="noreferrer"
-                className="flex items-center justify-center w-56 h-12 gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
-              >
-                <BsFillPersonPlusFill className="mr-2" color="#fff" />{" "}
-                Participar
-              </Link>
-            </div>
           </div>
         </section>
-        <Wave position="top" />
-        <section
-          id="faq"
-          className="flex justify-center w-full text-gray-800 dark:bg-background-700 bg-background-100 dark:text-gray-50"
-        >
-          <div className="container relative -top-12">
-            <h1 className="flex items-center mt-16 mb-4 text-3xl font-light font-lexend">
-              <TitleIcon className="hidden w-4 h-4 mr-2 md:inline-block" /> FAQ
-            </h1>
-            <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
-              Aqui você encontra as perguntas mais frequentes sobre a{" "}
-              <span className="italic font-bold">
-                Iniciando no desenvolvimento Web
-              </span>
-              .
-            </p>
-            <section className="flex flex-col gap-5">
-              {faqs.map(({ question, answer }, index) => (
-                <article
-                  key={index}
-                  className="dark:bg-background-800 bg-background-50 dark:border-background-600 border-l-[3.5px] border-background-200 p-4"
-                >
-                  <h1 className="flex items-center mb-3 text-lg font-semibold">
-                    <TitleIcon className="inline-block w-3 h-3 mr-2 " />
-                    {question}
-                  </h1>
-                  <p>{answer}</p>
-                </article>
-              ))}
-            </section>
-            <div className="flex justify-center mt-10">
-              <Link
-                to="#headline"
-                rel="noreferrer"
-                className="flex items-center justify-center w-56 h-12 gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
-              >
-                <BsFillPersonPlusFill className="mr-2" color="#fff" />{" "}
-                Participar
-              </Link>
-            </div>
-          </div>
-        </section>
-        <Wave position="bottom" />
       </div>
     </AppLayout>
   );

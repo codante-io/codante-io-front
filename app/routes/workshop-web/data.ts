@@ -37,43 +37,44 @@ export const techs = [
 
 export const steps = [
   {
-    title: "Cadastre-se e participe.",
-    description: "Você terá acesso a conteúdo e exercícios.",
-    img: "img/workshop-web/steps/start.svg",
+    title: "Cadastre-se gratuitamente.",
+    description:
+      "Cadastre-se para receber o link e as informações do workshop.",
+    img: "img/workshop-web/steps/start.png",
     alt: "Imagem de uma pessoa clicando no botão start",
   },
   {
-    title: "Aprenda a estudar.",
+    title: "Confira seu e-mail.",
     description:
-      "Desenvolva habilidades que melhoram sua compreensão com nossas técnicas.",
-    img: "img/workshop-web/steps/learn.svg",
-    alt: "Imagem de uma pessoa estudando",
-  },
-  {
-    title: "Exercícios práticos.",
-    description:
-      "Tenha acesso a diversos exercícios práticos para fixar o conteúdo.",
+      "Vamos enviar uma confirmação para você. Se você receber, você está cadastrado.",
     img: "img/workshop-web/steps/coding.png",
     alt: "Ilustração de uma pessoa programando",
   },
   {
-    title: "Compartilhe sua dúvida.",
+    title: "Veja as aulas.",
     description:
-      "Estaremos disponíveis para ajudar você a resolver seus problemas.",
-    img: "img/workshop-web/steps/share.png",
+      "Esteja disponível para assistir as aulas do workshop pelo YouTube.",
+    img: "img/workshop-web/steps/learn.png",
+    alt: "Imagem de uma pessoa estudando",
+  },
+  {
+    title: "Faça os exercícios.",
+    description:
+      "Nossa abordagem é mão na massa, então não esqueça de fazer os exercícios.",
+    img: "img/workshop-web/steps/calendar.png",
     alt: "Ilustração com várias logos de redes sociais (Twitter, Facebook, Instagram, LinkedIn)",
   },
   {
-    title: "Planejamento.",
+    title: "Interaja com a comunidade.",
     description:
-      "Um conteúdo planejado para te tirar do zero, mesmo que você não saiba nada.",
-    img: "img/workshop-web/steps/calendar.png",
+      "Não esqueça de interagir com a comunidade, compartilhar o conteúdo e fazer parte da nossa turma.",
+    img: "img/workshop-web/steps/share.png",
     alt: "Ilustração de uma pessoa ao lado de um calendário",
   },
   {
-    title: "Certificado!",
+    title: "Solicite o Certificado!",
     description:
-      "Todos os participantes receberão um certificado de participação.",
+      "Um certificado de participação estará disponível após assistir todas as aulas.",
     img: "img/workshop-web/steps/winner.png",
     alt: "Ilustração de duas pessoas comemorando ao lado de um troféu",
   },
