@@ -3,7 +3,11 @@ import { json } from "@remix-run/node";
 import { useActionData, useLoaderData, useSubmit } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { getTrack, toggleTrackableCompleted } from "~/lib/models/track.server";
-import type { TrackItem } from "~/lib/models/track.server";
+import type {
+  ChallengeTrackable,
+  TrackItem,
+  WorkshopTrackable,
+} from "~/lib/models/track.server";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
@@ -12,15 +16,10 @@ import AdminEditButton from "~/components/features/admin-edit-button/AdminEditBu
 import ChallengeTrackCard from "~/routes/_layout-app/_trilhas/_components/challenge-track-card";
 import WorkshopTrackCard from "~/routes/_layout-app/_trilhas/_components/workshop-track-card";
 import { cn } from "~/lib/utils/cn";
-import ExternalLinkTrackCard from "~/routes/_layout-app/_trilhas/_components/external-link-track-card";
-import MarkdownTrackText from "~/routes/_layout-app/_trilhas/_components/markdown-track-text";
-import SectionCard from "~/routes/_layout-app/_trilhas/_components/section-card";
-import TrackItemCheckbox from "~/routes/_layout-app/_trilhas/_components/track-item-checkbox";
 import { useEffect } from "react";
-import type { ChangeEvent } from "react";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
-import UnderConstructionCard from "~/routes/_layout-app/_trilhas/_components/under-construction-card";
+import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 
 export const meta = ({ data, params }: any) => {
   const title = `Trilha: ${data.track?.name} | Codante.io`;
@@ -68,15 +67,14 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function TrackSlug() {
   const { track } = useLoaderData<typeof loader>();
+
   const submit = useSubmit();
+  useLazyLoading();
+
   const actionData = useActionData<any>();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
   const user = useUserFromOutletContext();
   const userIsPro = user?.is_pro || false;
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLFormElement>) => {
-    submit(event.currentTarget, { replace: true });
-  };
 
   useEffect(() => {
     if (actionData?.error) {
@@ -92,57 +90,30 @@ export default function TrackSlug() {
     <section className="container mx-auto text-center">
       <header className="flex flex-col items-center justify-center gap-2 mb-8 text-center lg:gap-6">
         <h1 className=" text-4xl font-lexend">
-          Aprenda{" "}
-          <span className="font-bold border-b-4 border-brand-500">
-            {track.name}
-          </span>
+          <span className="font-bold">{track.name}</span>
         </h1>
 
         <AdminEditButton url={`/track/${track.id}/edit`} />
       </header>
 
       <section className="w-full flex flex-col">
-        {track &&
-          track?.map((section, sectionIndex: number) => {
-            return (
-              <div
-                key={sectionIndex}
-                className="flex sm:flex-row flex-col gap-12"
-              >
-                <div className="w-full h-fit sm:w-1/4 sm:sticky top-2 md:pb-24">
-                  <SectionCard
-                    section={section}
-                    index={sectionIndex}
-                    userCompleted={section.trackables.reduce(
-                      (acc, curr) => (curr.completed ? acc + 1 : acc),
-                      0,
+        <div className="w-full group">
+          {track.trackables &&
+            track.trackables.map((trackable, index) => (
+              <div key={index} className="flex flex-col items-center">
+                <div className="flex w-full gap-4">
+                  <div
+                    className={cn(
+                      "w-full",
+                      // index === section.trackables.length - 1 && "mb-12",
                     )}
-                  />
-                </div>
-                <div className="w-full sm:w-3/4 group">
-                  {section.trackables &&
-                    section.trackables.map((trackable, index) => (
-                      <div key={index} className="flex flex-col items-center">
-                        <div className="flex w-full gap-4">
-                          <div
-                            className={cn(
-                              "w-full",
-                              index === section.trackables.length - 1 &&
-                                "mb-12",
-                            )}
-                          >
-                            <TrackCard
-                              trackItem={trackable}
-                              userIsPro={userIsPro}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                  >
+                    <TrackCard trackItem={trackable} userIsPro={userIsPro} />
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+        </div>
       </section>
     </section>
   );
@@ -152,19 +123,19 @@ function TrackCard({
   trackItem,
   userIsPro,
 }: {
-  trackItem: Workshop | Challenge | TrackItem;
+  trackItem: WorkshopTrackable | ChallengeTrackable;
   userIsPro: boolean;
 }) {
-  if (trackItem?.pivot?.trackable_type.includes("Workshop")) {
+  if (trackItem?.type.includes("Workshop")) {
     return (
       <WorkshopTrackCard
-        workshop={trackItem as Workshop}
+        workshop={trackItem as WorkshopTrackable}
         userIsPro={userIsPro}
       />
     );
   }
 
-  if (trackItem?.pivot?.trackable_type.includes("Challenge")) {
+  if (trackItem?.type.includes("Challenge")) {
     return (
       <ChallengeTrackCard
         challenge={trackItem as Challenge}

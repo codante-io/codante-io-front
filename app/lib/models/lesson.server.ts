@@ -21,6 +21,8 @@ export type Lesson = {
   comments: Comment[];
 };
 
+export type LessonsGroupedBySection = Record<string, Lesson[]>;
+
 export type AvailableTo = "all" | "logged_in" | "pro";
 
 export async function getLesson(slug: string) {

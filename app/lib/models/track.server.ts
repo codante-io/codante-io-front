@@ -1,7 +1,7 @@
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import type { Instructor } from "./instructor.server";
-import type { Lesson } from "./lesson.server";
+import type { LessonsGroupedBySection } from "./lesson.server";
 import type { Tag } from "~/lib/models/tag.server";
 import { createAxios } from "~/lib/services/axios.server";
 import axios from "axios";
@@ -16,10 +16,24 @@ export type Track = {
   status: "draft" | "published" | "soon" | "archived";
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
+  trackables: (WorkshopTrackable | ChallengeTrackable)[];
+  created_at: string;
+  updated_at: string;
+};
+
+export type WorkshopTrackable = {
+  id: number;
+  type: "App\\Models\\Workshop";
+  name: string;
+  slug: string;
+  video_url: string;
   instructor: Instructor;
-  lessons: Lesson[];
-  tags: any[];
-  sections: TrackSection[];
+  lessons: LessonsGroupedBySection;
+};
+
+export type ChallengeTrackable = {
+  id: number;
+  type: "App\\Models\\Challenge";
 };
 
 export type TrackSection = {

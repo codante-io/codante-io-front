@@ -1,100 +1,63 @@
-import { Link } from "@remix-run/react";
-import { BsCameraVideo } from "react-icons/bs";
-import { FaRegQuestionCircle } from "react-icons/fa";
 import { Card } from "~/components/ui/cards/card";
-
-import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
-
-import { Button } from "~/components/ui/button";
-import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
-import type { Workshop } from "~/lib/models/workshop.server";
-import BecomeProCard from "~/components/ui/become-pro-card";
-import BecomeProDialog from "~/components/ui/become-pro-dialog";
-import ProOverlay from "~/routes/_layout-app/_trilhas/_components/pro-overlay";
-import Chip from "~/components/ui/chip";
+import { cn } from "~/lib/utils/cn";
+import { WorkshopLessons } from "./workshop-lessons";
+import { WorkshopTrackable } from "~/lib/models/track.server";
 
 interface WorkshopTrackCardProps {
-  workshop: Workshop;
+  workshop: WorkshopTrackable;
   userIsPro: boolean;
 }
 
-function WorkshopTrackCard({ workshop, userIsPro }: WorkshopTrackCardProps) {
+function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
   return (
     <Card
       border="bright"
-      className="w-full relative overflow-visible text-start border-l-8 mb-12"
+      className="w-full relative text-start mb-12 p-8 flex gap-8 pb-0 lg:flex-row flex-col"
       id={workshop.slug}
     >
-      {workshop?.status === "soon" && <Chip text="Em breve" />}
-      {!workshop?.is_premium && !userIsPro && (
-        <Chip text="Gratuito" type="free" />
-      )}
+      <div className="lg:basis-1/2 basis-full h-full aspect-video mb-6">
+        <VideoHoverElement workshop={workshop} />
+      </div>
 
-      <div className="flex flex-col justify-between p-8 h-full flex-grow">
-        <div>
-          <div className="mb-2 card-header">
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              <div className="h-full text-brand-500">
-                <BsCameraVideo className="w-full h-12" />
-              </div>
-              <div>
-                <h2 className="text-xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
-                  {workshop?.pivot?.name}
-                </h2>
-                <h3>
-                  <span className="text-sm text-gray-600 dark:text-gray-400 border-b border-brand-500">
-                    Workshop:
-                  </span>{" "}
-                  {userIsPro ? workshop?.name : <ProOverlay />}
-                  {!userIsPro && (
-                    <ResponsiveHoverCard
-                      trigger={
-                        <span className="inline-block w-4 h-4 pt-[2px] my-auto ml-1 rounded-full bg-background-50 dark:text-gray-400 text-gray-700 dark:bg-background-700">
-                          <FaRegQuestionCircle />
-                        </span>
-                      }
-                      cardContent={<BecomeProCard />}
-                    />
-                  )}
-                </h3>
-              </div>
-            </div>
-            {userIsPro && (
-              <p className="text-sm font-light text-gray-600 line-clamp-3 slate-600 dark:text-gray-300 mt-6">
-                {workshop?.short_description}
-              </p>
-            )}
-            <div className="border-t border-gray-200 dark:border-gray-800 my-4 px-2" />
-
-            {workshop?.tags && workshop?.tags.length > 0 && (
-              <div>
-                <span className="text-xs text-gray-600 dark:text-gray-200">
-                  O que você vai aprender:
-                </span>
-                <CardItemTagsText tags={workshop?.tags} />
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="flex gap-3 mt-2">
-          {userIsPro ? (
-            <Link to={`/workshops/${workshop?.slug}`} target="_blank">
-              <Button variant="secondary" type="button">
-                Ver workshop
-              </Button>
-            </Link>
-          ) : (
-            <BecomeProDialog
-              trigger={
-                <Button variant="secondary" type="button">
-                  Ver workshop
-                </Button>
-              }
-            />
-          )}
-        </div>
+      <div className="lg:basis-1/2 basis-full">
+        <WorkshopLessons
+          lessons={workshop.lessons}
+          workshopSlug={workshop.slug}
+        />
       </div>
     </Card>
+  );
+}
+
+function VideoHoverElement({ workshop }: { workshop: WorkshopTrackable }) {
+  return (
+    <div className="aspect-video w-full h-full relative group/workshop">
+      {workshop.video_url && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          data-src={workshop.video_url}
+          className={cn(
+            "opacity-30 w-full h-full rounded-lg object-cover group-hover/workshop:opacity-60 transition-all duration-300 p-1  object-right-bottom lazy",
+          )}
+        />
+      )}
+
+      <div
+        className={cn(
+          "rounded-lg opacity-100 absolute top-0 left-0 w-full h-full dark:bg-background-700 bg-background-100 transition-all duration-300 flex items-center justify-center",
+          workshop.video_url && "opacity-100 group-hover/workshop:opacity-0 ",
+        )}
+      >
+        <div className="flex flex-col items-center justify-center gap-2">
+          <h3 className="text-3xl font-lexend font-bold decoration-amber-400 underline text-center">
+            {workshop.name}
+          </h3>
+        </div>
+      </div>
+    </div>
   );
 }
 
