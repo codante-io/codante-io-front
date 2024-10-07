@@ -12,10 +12,10 @@ function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
   return (
     <Card
       border="bright"
-      className="w-full relative text-start mb-12 p-8 flex gap-8 pb-0 lg:flex-row flex-col"
+      className="w-full relative text-start mb-12 p-12 flex gap-8 pb-0 lg:flex-row flex-col bg-transparent"
       id={workshop.slug}
     >
-      <div className="lg:basis-1/2 basis-full h-full aspect-video mb-6">
+      <div className="lg:basis-1/2 basis-full h-full aspect-video mb-12">
         <VideoHoverElement workshop={workshop} />
       </div>
 

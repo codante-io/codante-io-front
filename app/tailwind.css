@@ -107,8 +107,13 @@
     background: #1e2b38;
   }
 
+  .scrollbar-transparent::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
   .scrollbar::-webkit-scrollbar-thumb {
     background: rgb(44, 63, 82);
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar {
