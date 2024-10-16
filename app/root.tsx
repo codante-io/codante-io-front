@@ -49,7 +49,7 @@ export const links: LinksFunction = () => [
   { rel: "mask-icon", href: "/mask-icon.svg", color: "#5282FF" },
 ];
 
-export const meta: MetaFunction = ({ matches }) => {
+export const meta: MetaFunction = () => {
   return [
     { title: "Codante - Cursos e Projetos Online de Programação" },
     {
@@ -106,8 +106,8 @@ export async function loader({ request }: { request: Request }) {
   }
 
   //https://sergiodxa.com/tutorials/fix-double-data-request-when-prefetching-in-remix
-  let headers = new Headers();
-  let purpose =
+  const headers = new Headers();
+  const purpose =
     request.headers.get("Purpose") ||
     request.headers.get("X-Purpose") ||
     request.headers.get("Sec-Purpose") ||
@@ -130,12 +130,12 @@ export async function loader({ request }: { request: Request }) {
   );
 }
 
-export default function App({ children }: { children: React.ReactNode }) {
+export default function App() {
   const loaderData = useLoaderData<typeof loader>();
   const user = loaderData.user;
 
   return (
-    <html lang="pt" suppressHydrationWarning>
+    <html lang="pt" suppressHydrationWarning className="dark">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
