@@ -135,7 +135,7 @@ export default function App({ children }: { children: React.ReactNode }) {
   const user = loaderData.user;
 
   return (
-    <html lang="pt" suppressHydrationWarning>
+    <html lang="pt" className="dark" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />

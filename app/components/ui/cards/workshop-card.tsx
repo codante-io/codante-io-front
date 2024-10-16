@@ -12,6 +12,7 @@ import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { hasHappened, isNew } from "~/lib/utils/workshop-utils";
 import CardDurationItem from "./card-item-duration";
 import CardItemLessonsCount from "./card-item-lessons-count";
+import { useEffect, useState } from "react";
 
 const workshopCardVariants = cva("", {
   variants: {
@@ -205,6 +206,16 @@ function WorkshopChip({ workshop }: { workshop: WorkshopCard }) {
 }
 
 function VideoHoverElement({ workshop }: { workshop: WorkshopCard }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <>
       <video

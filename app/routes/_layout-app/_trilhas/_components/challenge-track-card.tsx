@@ -1,128 +1,58 @@
-import { Link } from "@remix-run/react";
-import { BsCodeSlash } from "react-icons/bs";
-import { FaRegQuestionCircle } from "react-icons/fa";
 import { Card } from "~/components/ui/cards/card";
-
-import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
-import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
-import ResumedChallengeCard from "~/components/ui/cards/resumed-challenge-card";
-
-import { Button } from "~/components/ui/button";
-import type { Challenge } from "~/lib/models/challenge.server";
-import ProOverlay from "./pro-overlay";
-import BecomeProCard from "~/components/ui/become-pro-card";
-import BecomeProDialog from "~/components/ui/become-pro-dialog";
-import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
-import Chip from "~/components/ui/chip";
+import { cn } from "~/lib/utils/cn";
+import { ChallengeTrackable } from "~/lib/models/track.server";
+import { ChallengeSteps } from "~/routes/_layout-app/_trilhas/_components/challenge-steps";
 
 interface ChallengeTrackCardProps {
-  challenge: Challenge;
+  challenge: ChallengeTrackable;
   userIsPro: boolean;
 }
 
-function ChallengeTrackCard({ challenge, userIsPro }: ChallengeTrackCardProps) {
-  const userCanSee = userIsPro || !challenge?.is_premium;
-
+function ChallengeTrackCard({ challenge }: ChallengeTrackCardProps) {
   return (
     <Card
-      id={challenge?.slug}
       border="bright"
-      className="w-full relative overflow-visible text-start border-l-8 mb-12"
+      className="w-full relative text-start p-4 mb-12 md:p-12 flex gap-8 pb-0 md:pb-0 lg:flex-row flex-col bg-transparent"
+      id={challenge.slug}
     >
-      {challenge?.status === "soon" && (
-        <CardItemRibbon className="group-hover:animate-tada" text="Em breve" />
-      )}
-      {!challenge?.is_premium && !userIsPro && (
-        <Chip text="Gratuito" type="free" />
-      )}
-      <div className="flex flex-col justify-between p-8 h-full flex-grow">
-        <div>
-          <div className="mb-2 card-header">
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              <div className="h-full text-amber-400">
-                <BsCodeSlash className="w-full h-12" />
-              </div>
-              <div>
-                <h2 className="text-xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
-                  {challenge?.pivot?.name}
-                </h2>
-                <h3>
-                  <span className="text-sm text-gray-600 dark:text-gray-400 border-b border-amber-400">
-                    Mini projeto:
-                  </span>{" "}
-                  {userCanSee ? challenge?.name : <ProOverlay />}
-                  <ResponsiveHoverCard
-                    trigger={
-                      <span className="inline-block w-4 h-4 pt-[2px] my-auto ml-1 rounded-full bg-background-50 dark:text-gray-400 text-gray-700 dark:bg-background-700">
-                        <FaRegQuestionCircle />
-                      </span>
-                    }
-                    cardContent={
-                      userIsPro || !challenge?.is_premium ? (
-                        <ResumedChallengeCard challenge={challenge} />
-                      ) : (
-                        <BecomeProCard />
-                      )
-                    }
-                  />
-                </h3>
-              </div>
-            </div>
-            {userCanSee && (
-              <p className="text-sm font-light text-gray-600 line-clamp-3 slate-600 dark:text-gray-300 mt-6">
-                {challenge?.short_description}
-              </p>
-            )}
-            <div className="border-t border-gray-200 dark:border-gray-800 my-4 px-2" />
+      <div className="lg:basis-1/2 basis-full h-full aspect-video mb-4 md:mb-12">
+        <VideoHoverElement challenge={challenge} />
+      </div>
 
-            {challenge?.tags && challenge?.tags.length > 0 && (
-              <div>
-                <span className="text-xs text-gray-600 dark:text-gray-200">
-                  O que você vai aprender:
-                </span>
-                <CardItemTagsText tags={challenge?.tags} />
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row gap-3 mt-2">
-          {userCanSee ? (
-            <Link to={`/mini-projetos/${challenge?.slug}`} target="_blank">
-              <Button variant="secondary" type="button">
-                Acessar projeto
-              </Button>
-            </Link>
-          ) : (
-            <BecomeProDialog
-              trigger={
-                <Button variant="secondary" type="button">
-                  Acessar projeto
-                </Button>
-              }
-            />
-          )}
-
-          {userCanSee ? (
-            <Link
-              to={`/mini-projetos/${challenge?.slug}/tutorial`}
-              target="_blank"
-            >
-              <Button variant="secondary" type="button">
-                Ver tutorial
-              </Button>
-            </Link>
-          ) : (
-            <BecomeProDialog
-              trigger={
-                <Button variant="secondary" type="button">
-                  Ver tutorial
-                </Button>
-              }
-            />
-          )}
-        </div>
+      <div className="lg:basis-1/2 basis-full">
+        <ChallengeSteps challengeSlug={challenge.slug} />
       </div>
     </Card>
+  );
+}
+
+function VideoHoverElement({ challenge }: { challenge: ChallengeTrackable }) {
+  return (
+    <div className="aspect-video w-full h-full relative group/challenge bg-background-100 dark:bg-background-700 overflow-hidden rounded-lg">
+      {challenge.image_url && (
+        <img
+          src={challenge.image_url}
+          alt="Project preview"
+          className="w-full h-full"
+        />
+      )}
+
+      <div
+        className={cn(
+          "rounded-lg opacity-100 absolute top-0 left-0 w-full h-full dark:bg-background-700 bg-background-100 transition-all duration-300 flex items-center justify-center",
+          challenge.image_url && "opacity-100 group-hover/challenge:opacity-0 ",
+        )}
+      >
+        <div className="flex flex-col items-center justify-center gap-2 w-full">
+          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-brand-400">
+            Projeto
+          </h2>
+          <h3 className="max-w-[65%] text-xl md:text-2xl font-lexend font-bold decoration-amber-400 text-center">
+            {challenge.name}
+          </h3>
+        </div>
+      </div>
+    </div>
   );
 }
 

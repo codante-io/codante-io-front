@@ -5,6 +5,7 @@ import type { LessonsGroupedBySection } from "./lesson.server";
 import type { Tag } from "~/lib/models/tag.server";
 import { createAxios } from "~/lib/services/axios.server";
 import axios from "axios";
+import { ChallengeUser } from "~/lib/models/user.server";
 
 export type Track = {
   id: string;
@@ -33,6 +34,10 @@ export type WorkshopTrackable = {
 
 export type ChallengeTrackable = {
   id: number;
+  name: string;
+  slug: string;
+  image_url: string;
+  challengeUser: ChallengeUser;
   type: "App\\Models\\Challenge";
 };
 

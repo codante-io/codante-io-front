@@ -12,10 +12,10 @@ function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
   return (
     <Card
       border="bright"
-      className="w-full relative text-start mb-12 p-12 flex gap-8 pb-0 lg:flex-row flex-col bg-transparent"
+      className="w-full relative text-start p-4 mb-12 md:p-12 flex gap-8 pb-0 md:pb-0 lg:flex-row flex-col bg-transparent"
       id={workshop.slug}
     >
-      <div className="lg:basis-1/2 basis-full h-full aspect-video mb-12">
+      <div className="lg:basis-1/2 basis-full h-full aspect-video mb-4 md:mb-12">
         <VideoHoverElement workshop={workshop} />
       </div>
 
@@ -51,8 +51,11 @@ function VideoHoverElement({ workshop }: { workshop: WorkshopTrackable }) {
           workshop.video_url && "opacity-100 group-hover/workshop:opacity-0 ",
         )}
       >
-        <div className="flex flex-col items-center justify-center gap-2">
-          <h3 className="text-3xl font-lexend font-bold decoration-amber-400 underline text-center">
+        <div className="flex flex-col items-center justify-center gap-2 w-full">
+          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-amber-400">
+            Módulo
+          </h2>
+          <h3 className="max-w-[65%] text-xl md:text-2xl font-lexend font-bold text-center">
             {workshop.name}
           </h3>
         </div>
