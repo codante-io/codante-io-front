@@ -66,8 +66,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   }
 
   //https://sergiodxa.com/tutorials/fix-double-data-request-when-prefetching-in-remix
-  let headers = new Headers();
-  let purpose =
+  const headers = new Headers();
+  const purpose =
     request.headers.get("Purpose") ||
     request.headers.get("X-Purpose") ||
     request.headers.get("Sec-Purpose") ||

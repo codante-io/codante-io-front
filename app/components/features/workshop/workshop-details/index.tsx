@@ -62,7 +62,9 @@ function WorkshopDetails({
               <>
                 <Subtitle text="Sobre o Workshop" />
                 <div>
-                  <MarkdownRenderer markdown={workshop.description} />
+                  <MarkdownRenderer
+                    markdown={workshop.challenge?.description || ""}
+                  />
                 </div>
               </>
             ) : (
