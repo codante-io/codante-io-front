@@ -28,11 +28,11 @@ export const faqs = [
 
 export const techs = [
   { name: "html", position: [25, 12] },
-  { name: "css", position: [40, 10] },
+  { name: "css", position: [80, 10] },
   { name: "javascript", position: [52, 12] },
   { name: "tailwind", position: [16, 15] },
   { name: "next", position: [70, 12] },
-  { name: "react", position: [85, 13] },
+  { name: "react", position: [40, 13] },
 ];
 
 export const steps = [
