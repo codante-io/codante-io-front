@@ -28,7 +28,7 @@ const LeadForm = () => {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     submit(event.currentTarget, {
       method: "post",
-      action: "/workshop-web",
+      action: "/workshop-images",
     });
   }
 

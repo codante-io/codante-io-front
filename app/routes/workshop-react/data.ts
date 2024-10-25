@@ -40,42 +40,42 @@ export const steps = [
     title: "Cadastre-se gratuitamente.",
     description:
       "Cadastre-se para receber o link e as informações do workshop.",
-    img: "img/workshop-web/steps/start.png",
+    img: "img/workshop-images/steps/start.png",
     alt: "Imagem de uma pessoa clicando no botão start",
   },
   {
     title: "Confira seu e-mail.",
     description:
       "Vamos enviar uma confirmação para você. Se você receber, você está cadastrado.",
-    img: "img/workshop-web/steps/coding.png",
+    img: "img/workshop-images/steps/coding.png",
     alt: "Ilustração de uma pessoa programando",
   },
   {
     title: "Veja as aulas.",
     description:
       "Esteja disponível para assistir as aulas do workshop pelo YouTube.",
-    img: "img/workshop-web/steps/learn.png",
+    img: "img/workshop-images/steps/learn.png",
     alt: "Imagem de uma pessoa estudando",
   },
   {
     title: "Faça os exercícios.",
     description:
       "Nossa abordagem é mão na massa, então não esqueça de fazer os exercícios.",
-    img: "img/workshop-web/steps/calendar.png",
+    img: "img/workshop-images/steps/calendar.png",
     alt: "Ilustração com várias logos de redes sociais (Twitter, Facebook, Instagram, LinkedIn)",
   },
   {
     title: "Interaja com a comunidade.",
     description:
       "Não esqueça de interagir com a comunidade, compartilhar o conteúdo e fazer parte da nossa turma.",
-    img: "img/workshop-web/steps/share.png",
+    img: "img/workshop-images/steps/share.png",
     alt: "Ilustração de uma pessoa ao lado de um calendário",
   },
   {
     title: "Solicite o Certificado!",
     description:
       "Um certificado de participação estará disponível após assistir todas as aulas.",
-    img: "img/workshop-web/steps/winner.png",
+    img: "img/workshop-images/steps/winner.png",
     alt: "Ilustração de duas pessoas comemorando ao lado de um troféu",
   },
 ];

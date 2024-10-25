@@ -81,8 +81,8 @@ export default function HomePage() {
                 <img
                   src={
                     colorMode === "light"
-                      ? "img/workshop-web/logo.png"
-                      : "img/workshop-web/logo-dark.png"
+                      ? "img/workshop-images/logo.png"
+                      : "img/workshop-images/logo-dark.png"
                   }
                   className="logo-light"
                   alt="imagem de um texto escrito iniciando no desenvolvimento web"
@@ -117,7 +117,7 @@ export default function HomePage() {
             <img
               key={name}
               className="absolute w-8 opacity-60 animate-float"
-              src={`img/workshop-web/${name}.svg`}
+              src={`img/workshop-images/${name}.svg`}
               alt={`${name} logo`}
               style={{
                 left: `${position[0]}%`,
