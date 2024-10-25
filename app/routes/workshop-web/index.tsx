@@ -56,7 +56,6 @@ export default function HomePage() {
   const mousePosition = useMousePosition();
   const imageRef = useRef(null);
   const { colorMode } = useColorMode();
-
   useEffect(() => {
     if (window?.screen?.width < 640) return;
 
@@ -83,7 +82,7 @@ export default function HomePage() {
                   src={
                     colorMode === "light"
                       ? "img/workshop-web/logo1.svg"
-                      : "img/workshop-web/logo-dark.webp"
+                      : "img/workshop-web/logo-dark.png"
                   }
                   className="logo-light"
                   alt="imagem de um texto escrito iniciando no desenvolvimento web"
