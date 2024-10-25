@@ -22,18 +22,18 @@ import { ActionFunctionArgs } from "@remix-run/node";
 export const meta = () => {
   return [
     { title: "Desenvolvimento web" },
-    { name: "description", content: "Inicie no desenvolvimento web" },
-    { property: "og:title", content: "Iniciando no desenvolvimento web" },
-    { property: "og:description", content: "Inicie no desenvolvimento web" },
+    { name: "description", content: "Comece sua jornada com React" },
+    { property: "og:title", content: "Comece sua jornada com React" },
+    { property: "og:description", content: "Comece sua jornada com React" },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://codante.io/workshop-web" },
+    { property: "og:url", content: "https://codante.io/jornada-react" },
     { property: "twitter:card", content: "summary_large_image" },
     { property: "twitter:domain", content: "codante.io" },
-    { property: "twitter:url", content: "https://codante.io/workshop-web" },
-    { property: "twitter:title", content: "Iniciando no desenvolvimento web" },
+    { property: "twitter:url", content: "https://codante.io/workshop-react" },
+    { property: "twitter:title", content: "Comece sua jornada com React" },
     {
       property: "twitter:description",
-      content: "Inicie no desenvolvimento web",
+      content: "Comece sua jornada com React",
     },
   ];
 };
@@ -47,7 +47,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     email,
     name,
     phone,
-    tag: "workshop-web-out-2024",
+    tag: "workshop-react-out-2024",
   });
 };
 
@@ -56,7 +56,6 @@ export default function HomePage() {
   const mousePosition = useMousePosition();
   const imageRef = useRef(null);
   const { colorMode } = useColorMode();
-
   useEffect(() => {
     if (window?.screen?.width < 640) return;
 
@@ -82,8 +81,8 @@ export default function HomePage() {
                 <img
                   src={
                     colorMode === "light"
-                      ? "img/workshop-web/logo1.svg"
-                      : "img/workshop-web/logo-dark.webp"
+                      ? "img/workshop-images/logo.png"
+                      : "img/workshop-images/logo-dark.png"
                   }
                   className="logo-light"
                   alt="imagem de um texto escrito iniciando no desenvolvimento web"
@@ -91,7 +90,7 @@ export default function HomePage() {
                 />
 
                 <p className="font-light text-center text-2xl my-16 lg:mx-10">
-                  Quer aprender desenvolvimento web,{" "}
+                  Quer aprender React,{" "}
                   <span className="italic font-bold">
                     mas não sabe por onde começar
                   </span>
@@ -101,13 +100,10 @@ export default function HomePage() {
                 </p>
 
                 <p className="font-light text-center text-2xl mb-10 lg:mx-10">
-                  Participe do nosso workshop gratuito e ao vivo que vai
-                  acontecer nos dias
-                  <span className="italic font-bold">
-                    {" "}
-                    9, 10 e 11 de Outubro
-                  </span>
-                  .
+                  Participe do nosso workshop{" "}
+                  <span className="italic font-bold">gratuito</span> e ao vivo
+                  que vai acontecer nos dias
+                  <span className="italic font-bold"> 30 e 31 de outubro</span>.
                 </p>
               </div>
               <div className="mb-10">
@@ -121,7 +117,7 @@ export default function HomePage() {
             <img
               key={name}
               className="absolute w-8 opacity-60 animate-float"
-              src={`img/workshop-web/${name}.svg`}
+              src={`img/workshop-images/${name}.svg`}
               alt={`${name} logo`}
               style={{
                 left: `${position[0]}%`,
@@ -143,8 +139,8 @@ export default function HomePage() {
 
             <p className="mt-2 mb-10 font-light font-inter text-md md:text-xl text-start">
               Faremos um workshop ao vivo e gratuito nos dias{" "}
-              <span className="italic font-bold"> 9, 10 e 11 de Outubro</span>.
-              Para te ensinar como funciona o desenvolvimento web.
+              <span className="italic font-bold"> 30 e 31 de outubro </span>.
+              Para te ensinar o React do zero.
             </p>
 
             <section className="grid grid-cols-1 gap-10 text-gray-700 md:grid-cols-2 lg:grid-cols-3 dark:text-gray-100">
