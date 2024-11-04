@@ -70,9 +70,11 @@ export async function loader({
   request: any;
 }) {
   const workshop = await getWorkshop(params.workshopSlug, request);
-  const lesson = workshop?.lessons.find(
-    (lesson) => lesson.slug === params.slug,
-  );
+  const allLessons = workshop?.lessons
+    ? Object.values(workshop?.lessons).flat()
+    : [];
+
+  const lesson = allLessons.find((lesson) => lesson.slug === params.slug);
 
   if (!workshop || !lesson) {
     return abort404();
@@ -83,7 +85,7 @@ export async function loader({
   return {
     workshop: workshop,
     lesson: lesson,
-    activeIndex: workshop.lessons.findIndex(
+    activeIndex: allLessons.findIndex(
       (lesson: Lesson) => lesson.slug === params.slug,
     ),
   };
@@ -131,7 +133,7 @@ export default function LessonIndex() {
     >
       <Sidebar
         workshop={workshop}
-        activeIndex={activeIndex}
+        currentLessonId={lesson.id}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
         user={user}

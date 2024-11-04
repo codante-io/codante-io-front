@@ -13,6 +13,7 @@ import type { Workshop } from "~/lib/models/workshop.server";
 import Breadcrumbs from "./workshop-breadcrumbs";
 import WorkshopResourcesMenuButton from "./workshop-resources-menu-button";
 import CommentSection from "~/components/features/comments/comment-section";
+import WorkshopTitle from "~/routes/_layout-raw/_player/components/workshop-title";
 
 type MainContentProps = {
   setIsSidebarOpen: (value: boolean) => void;
@@ -38,11 +39,22 @@ export default function MainContent({
   handleVideoEnded,
 }: MainContentProps) {
   return (
-    <section className="relative">
-      <div className="flex items-center justify-between h-20 lg:justify-end">
-        <button className="" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+    <section className="relative flex flex-col gap-10">
+      <div className="flex items-center justify-between h-20">
+        <WorkshopTitle
+          isLoggedIn={!!user}
+          workshop={workshop}
+          isChallenge={isChallenge}
+          challenge={challenge}
+          lesson={lesson}
+        />
+        <button
+          className="block lg:hidden"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        >
           <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white lg:invisible" />
         </button>
+
         <div className="flex items-center">
           <div className="mr-3">
             <ToggleColorMode />
@@ -59,7 +71,7 @@ export default function MainContent({
           )}
         </div>
       </div>
-      <div className="flex items-center justify-between h-8">
+      {/* <div className="flex items-center justify-between h-8">
         <Breadcrumbs
           workshop={workshop}
           lesson={lesson}
@@ -80,9 +92,9 @@ export default function MainContent({
             </Link>
           )}
         </div>
-      </div>
+      </div> */}
       <section>
-        <div className="mt-3">
+        <div>
           {lesson.type === "video" && (
             <VimeoPlayer
               vimeoUrl={lesson.video_url || ""}

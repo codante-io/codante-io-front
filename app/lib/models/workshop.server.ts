@@ -1,5 +1,5 @@
 import type { Instructor } from "./instructor.server";
-import type { Lesson } from "./lesson.server";
+import type { Lesson, LessonsGroupedBySection } from "./lesson.server";
 import type { Tag } from "./tag.server";
 import type { Certificate } from "./certificates.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
@@ -41,7 +41,7 @@ export type Workshop = {
     name: string;
     lessons: string[];
   }[];
-  lessons: Lesson[];
+  lessons: LessonsGroupedBySection;
   tags: Tag[];
   next_lesson: Lesson | null;
   challenge?: Challenge;
