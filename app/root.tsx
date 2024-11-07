@@ -1,7 +1,6 @@
 import { json, type LinksFunction } from "@remix-run/node";
 import type { MetaFunction } from "@remix-run/react";
 import {
-  Link,
   Links,
   Meta,
   Outlet,
@@ -11,7 +10,6 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import React from "react";
 import { Toaster } from "react-hot-toast";
 import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
 import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
@@ -25,7 +23,6 @@ import { user } from "./lib/services/auth.server";
 import { DarkModeScriptInnerHtml } from "./lib/utils/dark-mode";
 import { getOgGeneratorUrl } from "./lib/utils/path-utils";
 import stylesheet from "./tailwind.css?url";
-import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -169,27 +166,7 @@ export default function App() {
               "bg-background-50 dark:bg-background-800 dark:text-gray-50",
           }}
         />
-        <AlertBannerPortal
-          excludedRoutes={["/black-friday"]}
-          position="bottom"
-          type="black-friday"
-          title={
-            <h1 className="text-3xl mt-10 font-nabla">
-              Black Friday do Codante
-            </h1>
-          }
-          subtitle={
-            <p className="mb-10">
-              A última chance.{" "}
-              <Link
-                to="/black-friday"
-                className="font-bold decoration-amber-400 underline"
-              >
-                Cadastre-se para ficar por dentro!
-              </Link>{" "}
-            </p>
-          }
-        />
+
         {getPublicEnv("NODE_ENV") !== "production" && (
           <div className="fixed z-50 w-20 py-2 font-bold text-center text-blue-700 bg-blue-100 rounded-full bottom-2 left-2">
             <span className="block sm:hidden">xs</span>
