@@ -51,11 +51,24 @@ const style = {
     bannerSize: "w-full max-w-2xl",
     textDirection: "text-center md:text-left",
   },
+  "black-friday": {
+    icon: null,
+    bgColor: "dark:bg-background-900 bg-background-100",
+    borderColor: "border-yellow-500",
+    textColor: "dark:text-white text-gray-800",
+    bannerSize: "w-full max-w-2xl",
+    textDirection: "text-center md:text-left",
+  },
 };
 export type AlertBannerProps = {
   title: React.ReactNode;
   subtitle: React.ReactNode;
-  type?: "default" | "warning" | "streaming" | "workshop-is-live";
+  type?:
+    | "default"
+    | "warning"
+    | "streaming"
+    | "workshop-is-live"
+    | "black-friday";
   className?: string;
   container?: boolean;
   bordersX?: boolean;
@@ -67,7 +80,6 @@ function AlertBanner({
   subtitle,
   type = "default",
   className,
-  bordersX = true,
   container = false,
   icon = null,
   ...props

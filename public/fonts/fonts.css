@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Nabla&display=swap");
+
 /* lexend-100 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -78,4 +80,17 @@
   font-style: normal;
   font-weight: 400;
   src: url("/fonts/gloria-hallelujah-v21-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* Nabla-Regular - variable font */
+@font-face {
+  font-display: swap;
+  font-family: "Nabla";
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "EDPT" 100,
+    "EHLT" 12;
+  src: url("/fonts/Nabla-Regular.ttf") format("ttf");
 }
