@@ -3,15 +3,11 @@ import type { User } from "~/lib/models/user.server";
 import AppLayoutComponent from "~/components/_layouts/root-layout";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
-type AppLayoutProps = {
-  children: React.ReactNode;
-};
-
 export const meta = () => {
   return [];
 };
 
-export default function AppLayout({ children }: AppLayoutProps) {
+export default function AppLayout() {
   const { user } = useOutletContext<{ user: User | null }>();
   return (
     <AppLayoutComponent user={user}>
@@ -20,7 +16,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
         position="bottom"
         type="black-friday"
         title={
-          <h1 className="text-3xl mt-10 font-nabla">Black Friday do Codante</h1>
+          <img
+            src="/img/black-friday/logo.png"
+            alt="Black Friday do Codante"
+            className="w-full md:w-[500px] mt-10 mb-4"
+          />
         }
         subtitle={
           <p className="mb-10">

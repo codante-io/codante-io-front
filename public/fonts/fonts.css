@@ -83,14 +83,12 @@
 }
 
 /* Nabla-Regular - variable font */
-@font-face {
-  font-display: swap;
-  font-family: "Nabla";
+.font-nabla {
+  font-family: "Nabla", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-variation-settings:
     "EDPT" 100,
     "EHLT" 12;
-  src: url("/fonts/Nabla-Regular.ttf") format("ttf");
 }

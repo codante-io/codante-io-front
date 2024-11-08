@@ -49,7 +49,11 @@ export default function HomePage() {
         position="bottom"
         type="black-friday"
         title={
-          <h1 className="text-3xl mt-10 font-nabla">Black Friday do Codante</h1>
+          <img
+            src="/img/black-friday/logo.png"
+            alt="Black Friday do Codante"
+            className="w-full md:w-[500px] mt-10 mb-4"
+          />
         }
         subtitle={
           <p className="mb-10">

@@ -26,7 +26,6 @@ const config = {
         lexend: ["Lexend", "sans-serif"],
         inter: ["Inter var", "sans-serif"],
         cursive: ["Gloria Hallelujah", "cursive"],
-        nabla: ["Nabla", "sans-serif"],
       },
       colors: {
         gray: {

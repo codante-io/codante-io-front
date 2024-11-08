@@ -27,6 +27,38 @@ import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import LeadForm from "./components/lead-form";
 import { Spotlight } from "./components/spotlight";
 import { registerMarketingLead } from "~/lib/models/lead.server";
+import { BadgeCheck } from "lucide-react";
+import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
+
+export const meta = () => {
+  const title = `Black Friday do Codante`;
+  const description =
+    "A última chance. Cadastre seu e-mail para ficar por dentro!";
+  const imageUrl = getOgGeneratorUrl("Black Friday do Codante", "Black Friday");
+
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    {
+      property: "og:url",
+      content: `https://codante.io/black-friday`,
+    },
+    { property: "twitter:card", content: "summary_large_image" },
+    { property: "twitter:domain", content: "codante.io" },
+    {
+      property: "twitter:url",
+      content: `https://codante.io/black-friday`,
+    },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
+    { property: "twitter:image", content: imageUrl },
+    { property: "twitter:image:alt", content: title },
+  ];
+};
 
 export const loader = async () => {
   return json({
@@ -147,23 +179,47 @@ function Headline() {
     <>
       <section id="headline" className="flex flex-col items-center w-full ">
         <div className="container flex flex-col items-center gap-2 mt-2">
-          <Spotlight className="-top-56 -left-24" fill="white" />
+          <Spotlight
+            className="md:-top-56 md:-left-24 -top-32 -left-16"
+            fill="white"
+          />
           <div className="w-full flex flex-col sm:flex-row gap-10 ">
             <div className="w-full">
-              <h1 className="font-nabla text-3xl sm:text-5xl">
-                Black Friday do Codante
-              </h1>
-              {/* <SlidingText>Black Friday do Codante</SlidingText> */}
+              <img
+                src="/img/black-friday/logo.png"
+                alt="Black Friday do Codante"
+                className="w-full"
+              />
               <p className="font-light font-inter text-xl max-w-[670px] mt-12 dark:text-gray-100 text-gray-700">
                 <span className="italic font-bold ">
-                  Dia 15/11 vamos revelar nossa oferta.
+                  Dia 15/11 vamos revelar nossa oferta limitada.
                 </span>{" "}
                 Vai ser sua última chance de aproveitar o desconto exclusivo do
-                nosso plano vitalício com bônus especiais.{" "}
+                nosso plano vitalício com bônus especiais. <br />
+                <br />
                 <span className="italic font-normal color-underline decoration-amber-400">
                   Cadastre seu e-mail para ficar por dentro!
                 </span>
               </p>
+
+              <div className="mt-12 dark:text-gray-200 text-gray-700">
+                <ul className="font-lexend text-lg space-y-2">
+                  <li>
+                    <BadgeCheck className="w-5 h-5 mr-1 inline-block text-amber-400" />{" "}
+                    Tenha acesso antecipado à nossa oferta
+                  </li>
+                  <li>
+                    {" "}
+                    <BadgeCheck className="w-5 h-5 mr-1 inline-block text-amber-400" />{" "}
+                    Prioridade nos bônus limitados
+                  </li>
+                  <li>
+                    {" "}
+                    <BadgeCheck className="w-5 h-5 mr-1 inline-block text-amber-400" />{" "}
+                    Acesso vitalício a todos os conteúdos do Codante
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <LeadForm />
