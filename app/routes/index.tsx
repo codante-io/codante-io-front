@@ -31,6 +31,7 @@ import AlertBanner from "~/components/ui/alert-banner";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import ProPricingCard from "~/components/ui/cards/pricing/pro";
 import FreePricingCard from "~/components/ui/cards/pricing/free";
+import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 
 export const loader = async () => {
   return json({
@@ -43,6 +44,29 @@ export default function HomePage() {
 
   return (
     <AppLayout user={user}>
+      <AlertBannerPortal
+        excludedRoutes={["/black-friday"]}
+        position="bottom"
+        type="black-friday"
+        title={
+          <img
+            src="/img/black-friday/logo.png"
+            alt="Black Friday do Codante"
+            className="w-full md:w-[500px] mt-10 mb-4"
+          />
+        }
+        subtitle={
+          <p className="mb-10">
+            A última chance.{" "}
+            <Link
+              to="/black-friday"
+              className="font-bold decoration-amber-400 underline"
+            >
+              Cadastre-se para ficar por dentro!
+            </Link>{" "}
+          </p>
+        }
+      />
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
         <BackgroundBlur />
         <Headline />

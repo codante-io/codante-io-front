@@ -47,7 +47,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     email,
     name,
     phone,
-    tag: "workshop-web-out-2024",
+    tag: "workshop-react-out-2024",
   });
 };
 
