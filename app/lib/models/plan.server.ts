@@ -19,15 +19,17 @@ export type Coupon = {
 };
 
 export async function getPlanDetails({
+  planId = 1,
   couponCode,
 }: {
+  planId?: number;
   couponCode: string | null;
 }) {
   const axios = await createAxios();
 
-  let url = "/plan-details";
+  let url = `/plan-details?plan_id=${planId}`;
   if (couponCode) {
-    url += `?coupon=${couponCode}`;
+    url += `&coupon=${couponCode}`;
   }
 
   const data: { plan: Plan | null; coupon: Coupon | null } = await axios

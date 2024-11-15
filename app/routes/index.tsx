@@ -62,7 +62,7 @@ export default function HomePage() {
               to="/black-friday"
               className="font-bold decoration-amber-400 underline"
             >
-              Cadastre-se para ficar por dentro!
+              Assine o plano vitalício com valor promocional!
             </Link>{" "}
           </p>
         }
