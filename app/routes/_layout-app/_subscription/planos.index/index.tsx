@@ -4,6 +4,7 @@ import FaqItem from "~/components/ui/faq-item";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import FreePricingCard from "~/components/ui/cards/pricing/free";
 import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import YearlyPricingCard from "~/components/ui/cards/pricing/yearly";
 
 export default function AssinePage() {
   return (
@@ -38,8 +39,9 @@ export default function AssinePage() {
             . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
           </p>
 
-          <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row">
+          <section className="flex flex-col-reverse justify-center gap-10 mt-10 mb-20 lg:flex-row">
             <FreePricingCard />
+            <YearlyPricingCard />
             <ProPricingCard />
           </section>
         </div>
