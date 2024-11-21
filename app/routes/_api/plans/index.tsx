@@ -9,8 +9,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const searchParams = url.searchParams;
 
   const couponCode = searchParams.get("coupon");
+  const planId = searchParams.get("plan_id") ?? "1";
 
-  const { plan, coupon } = await getPlanDetails({ couponCode });
+  const { plan, coupon } = await getPlanDetails({
+    couponCode,
+    planId: parseInt(planId),
+  });
 
   return { request, plan, coupon };
 }

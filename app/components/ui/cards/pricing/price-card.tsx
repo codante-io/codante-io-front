@@ -69,8 +69,9 @@ const PriceCardPricing = ({
   totalPrice,
   isLoading,
 }: PriceCardPricingProps) => {
-  const formattedMonthlyPrice =
-    (monthlyPrice || 0) % 2 === 0 ? monthlyPrice : monthlyPrice?.toFixed(2);
+  const formattedMonthlyPrice = Number.isInteger(monthlyPrice)
+    ? monthlyPrice
+    : monthlyPrice?.toFixed(2);
 
   return (
     <div className="h-[150px] flex flex-col justify-center items-center">
