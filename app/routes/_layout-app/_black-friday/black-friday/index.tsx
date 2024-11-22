@@ -31,6 +31,7 @@ import ProPricingCard from "~/components/ui/cards/pricing/pro";
 import { ProgressivePracticeContent } from "~/routes/_layout-app/_black-friday/black-friday/components/progressive-practice";
 import { IoWarning } from "react-icons/io5";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
+import WhyUs from "./components/why-us/why-us";
 
 export const meta = () => {
   const title = `Black Friday do Codante`;
@@ -264,7 +265,9 @@ function Headline() {
         </div>
         <div className="h-[1px] bg-background-100 dark:bg-background-700 w-2/3 my-20"></div>
       </section>
-
+      <section className="mb-16">
+        <WhyUs />
+      </section>
       <section id="bonus" className="flex flex-col items-center w-full mb-16">
         <h3 className="mb-2 dark:text-gray-300 text-gray-600 font-light font-cursive text-center dark:text-shadow">
           Aproveite essa Black Friday para ganhar
