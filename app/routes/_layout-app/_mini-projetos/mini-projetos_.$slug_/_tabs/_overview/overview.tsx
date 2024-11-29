@@ -40,6 +40,7 @@ export default function Overview({
             className="object-scale-down w-full bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
           />
         )}
+        {/* TODO: Trocar aqui para a aula do challenge */}
         <div className="!mt-6">
           <MarkdownRenderer
             markdown={challenge?.description ?? ""}

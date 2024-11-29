@@ -52,7 +52,7 @@ function VideoHoverElement({ workshop }: { workshop: WorkshopTrackable }) {
         )}
       >
         <div className="flex flex-col items-center justify-center gap-2 w-full">
-          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-amber-400">
+          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-brand-400">
             Módulo
           </h2>
           <h3 className="max-w-[65%] text-xl md:text-2xl font-lexend font-bold text-center">

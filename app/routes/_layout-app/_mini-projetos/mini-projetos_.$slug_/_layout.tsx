@@ -395,22 +395,11 @@ export default function ChallengeSlug() {
         }
       </section>
 
-      {!location.pathname.includes("submissoes/") && (
-        <>
-          <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
-          <section
-            id="mini-projects"
-            className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
-          >
-            <div className="container mb-10">
-              <ParticipantsSection
-                currentUserIsEnrolled={challenge.current_user_is_enrolled}
-                participants={participants}
-              />
-            </div>
-          </section>
-        </>
-      )}
+      {/* Participants Section */}
+      <ParticipantsWebsiteSection
+        currentUserIsEnrolled={challenge.current_user_is_enrolled}
+        participants={participants}
+      />
     </div>
   );
 }
@@ -431,4 +420,33 @@ export function ErrorBoundary() {
       <Error500 error={error} />
     </div>
   );
+}
+
+type ParticipantsSectionProps = {
+  currentUserIsEnrolled: boolean;
+  participants: any;
+};
+
+function ParticipantsWebsiteSection({
+  currentUserIsEnrolled,
+  participants,
+}: ParticipantsSectionProps) {
+  if (!location.pathname.includes("submissoes/")) {
+    return (
+      <>
+        <hr className="mt-10 w-full container dark:border-background-700 border-background-200" />
+        <section
+          id="mini-projects"
+          className="flex my-10 justify-center w-full text-gray-800 dark:text-gray-50"
+        >
+          <div className="container mb-10">
+            <ParticipantsSection
+              currentUserIsEnrolled={currentUserIsEnrolled}
+              participants={participants}
+            />
+          </div>
+        </section>
+      </>
+    );
+  }
 }

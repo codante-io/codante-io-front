@@ -44,8 +44,8 @@ function VideoHoverElement({ challenge }: { challenge: ChallengeTrackable }) {
         )}
       >
         <div className="flex flex-col items-center justify-center gap-2 w-full">
-          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-brand-400">
-            Projeto
+          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-amber-300">
+            Mini Projeto
           </h2>
           <h3 className="max-w-[65%] text-xl md:text-2xl font-lexend font-bold decoration-amber-400 text-center">
             {challenge.name}

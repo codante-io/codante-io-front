@@ -83,9 +83,9 @@ export default function Sidebar({
                       >
                         <li
                           id={`lesson-${lesson.id}`}
-                          className="flex items-center gap-4 dark:hover:bg-background-700 hover:bg-background-150 rounded-xl px-2 group/lesson"
+                          className=" flex items-center gap-4 dark:hover:bg-background-700 hover:bg-background-150 rounded-xl px-2 group/lesson"
                         >
-                          <div className="relative py-[1.2rem]">
+                          <div className="relative py-[1.4rem]">
                             {index > 0 && (
                               <div
                                 className={
