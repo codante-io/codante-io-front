@@ -98,7 +98,7 @@ export default function HomePage() {
           <Clock className="w-10 h-10 mb-4 dark:text-white text-brand-500 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
         }
         title="Oferta por tempo limitado"
-        subtitle={<Countdown targetDate={new Date("2024-12-01T23:59:59")} />}
+        subtitle={<Countdown targetDate={new Date("2024-12-03T03:00:00")} />}
       />
 
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
