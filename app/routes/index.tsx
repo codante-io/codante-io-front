@@ -469,7 +469,6 @@ function Testimonial() {
           initial={{ x: 2 }}
         >
           {featuredTestimonials.map((testimonial, index) => {
-            console.log(testimonial);
             return (
               <TestimonialCard
                 wide={[2, 4].includes(index)}

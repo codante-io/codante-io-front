@@ -1,15 +1,18 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useActionData, useLoaderData, useSubmit } from "@remix-run/react";
+import {
+  isRouteErrorResponse,
+  useActionData,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { getTrack, toggleTrackableCompleted } from "~/lib/models/track.server";
 import type {
   ChallengeTrackable,
-  TrackItem,
   WorkshopTrackable,
 } from "~/lib/models/track.server";
 import type { Challenge } from "~/lib/models/challenge.server";
-import type { Workshop } from "~/lib/models/workshop.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 
@@ -20,11 +23,14 @@ import { useEffect } from "react";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
+import NotFound from "~/components/features/error-handling/not-found";
+import { Error500 } from "~/components/features/error-handling/500";
+import { abort404 } from "~/lib/utils/responses.server";
 
 export const meta = ({ data, params }: any) => {
-  const title = `Trilha: ${data.track?.name} | Codante.io`;
-  const description = data.track?.short_description ?? "";
-  const imageUrl = getOgGeneratorUrl(data.track?.name ?? "Codante", "Trilha");
+  const title = `Trilha: ${data?.track?.name} | Codante.io`;
+  const description = data?.track?.short_description ?? "";
+  const imageUrl = getOgGeneratorUrl(data?.track?.name ?? "Codante", "Trilha");
 
   return [
     { title },
@@ -46,7 +52,7 @@ export const meta = ({ data, params }: any) => {
     { property: "twitter:title", content: title },
     { property: "twitter:description", content: description },
     { property: "twitter:image", content: imageUrl },
-    { property: "twitter:image:alt", content: data.track?.name },
+    { property: "twitter:image:alt", content: data?.track?.name },
   ];
 };
 
@@ -59,16 +65,36 @@ export async function action({ request }: { request: Request }) {
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(params.slug, `params.slug is required`);
+
+  const track = await getTrack(params.slug, request);
+
+  if (!track) {
+    return abort404();
+  }
   return json({
     slug: params.slug,
-    track: await getTrack(params.slug, request),
+    track,
   });
 };
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <NotFound />
+      </div>
+    );
+  }
+
+  return <Error500 error={error} />;
+}
 
 export default function TrackSlug() {
   const { track } = useLoaderData<typeof loader>();
 
-  const submit = useSubmit();
+  // const submit = useSubmit();
   useLazyLoading();
 
   const actionData = useActionData<any>();

@@ -13,7 +13,7 @@ export default function NotFound({ error }: { error?: any }) {
       </p>
       {getPublicEnv("NODE_ENV") !== "production" ? (
         <pre className="p-4 mb-10 text-xs rounded-lg bg-background-200 dark:bg-background-800">
-          {JSON.stringify(error ?? "")}
+          Erro: {JSON.stringify(error ?? "", null, 2)}
         </pre>
       ) : null}
       <Link className="text-sm font-medium text-brand" to="/">

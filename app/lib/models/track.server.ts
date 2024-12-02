@@ -86,7 +86,15 @@ export async function getTracks(): Promise<Array<Track>> {
 export async function getTrack(slug: string, request: Request): Promise<Track> {
   const axios = await createAxios(request);
 
-  const track = await axios.get(`/tracks/${slug}`).then((res) => res.data.data);
+  const track = await axios
+    .get(`/tracks/${slug}`)
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
+
   return track;
 }
 
