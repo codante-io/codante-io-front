@@ -2,17 +2,17 @@ import { Link, useOutletContext } from "@remix-run/react";
 import toast from "react-hot-toast";
 import { PiCertificateLight } from "react-icons/pi";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
-import type { Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import type { WorkshopUser } from "~/lib/models/workshop.server";
 import { formatDateDDMMYYYY } from "~/lib/utils/format-date";
+import { SidebarLesson } from "./sidebar/types";
 
 export default function ProgressBar({
   lessons,
   showStatus = false,
   workshopUser,
 }: {
-  lessons: Lesson[];
+  lessons: SidebarLesson[];
   showStatus?: boolean;
   workshopUser?: WorkshopUser;
 }) {

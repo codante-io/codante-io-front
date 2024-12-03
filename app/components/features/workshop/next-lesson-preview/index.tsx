@@ -1,14 +1,14 @@
 import { Link } from "@remix-run/react";
 import { HiMiniArrowSmallRight, HiMiniPlayCircle } from "react-icons/hi2";
-import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
 
 function NextLessonPreview({
   workshop,
   nextLesson,
 }: {
   workshop: Workshop;
-  nextLesson: Lesson;
+  nextLesson: SidebarLesson;
 }) {
   return (
     <Link

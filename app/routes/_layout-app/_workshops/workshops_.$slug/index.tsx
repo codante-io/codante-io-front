@@ -66,8 +66,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   }
 
   //https://sergiodxa.com/tutorials/fix-double-data-request-when-prefetching-in-remix
-  let headers = new Headers();
-  let purpose =
+  const headers = new Headers();
+  const purpose =
     request.headers.get("Purpose") ||
     request.headers.get("X-Purpose") ||
     request.headers.get("Sec-Purpose") ||
@@ -95,15 +95,11 @@ export default function WorkshopSlug() {
 
   const { user } = useOutletContext<{ user: User }>();
   const workshop = loaderData?.workshop;
-  const nextLesson = workshop?.next_lesson || workshop?.lessons[0];
+  const nextLesson = workshop?.first_unwatched_lesson || workshop?.lessons[0];
 
   const [publishedDate, publishedTime] = getPublishedDateAndTime(
     workshop.published_at,
   );
-
-  const workshopDurationInSeconds = workshop?.lessons?.reduce((acc, lesson) => {
-    return acc + Number(lesson.duration_in_seconds);
-  }, 0);
 
   return (
     <section className="container mx-auto mb-16">
@@ -162,7 +158,7 @@ export default function WorkshopSlug() {
               <CardItemDifficulty difficulty={workshop.difficulty} />
               <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
               <CardItemDuration
-                durationString={humanTimeFormat(workshopDurationInSeconds)}
+                durationString={humanTimeFormat(workshop.duration_in_seconds)}
               />
             </div>
           )}

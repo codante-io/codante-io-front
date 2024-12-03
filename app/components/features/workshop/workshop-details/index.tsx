@@ -20,16 +20,16 @@ import TitleIcon from "~/components/ui/title-icon";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
-import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { cn } from "~/lib/utils/cn";
 import { isUpcoming } from "~/lib/utils/workshop-utils";
 import InstructorCard from "~/routes/_layout-app/_workshops/workshops_.$slug/instructor-card";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
 
 type WorkshopDetailsProps = {
   workshop: Workshop;
-  nextLesson: Lesson;
+  nextLesson: SidebarLesson;
   showDescription?: boolean;
   isFree?: boolean;
   userIsPro?: boolean;

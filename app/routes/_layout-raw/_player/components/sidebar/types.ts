@@ -9,5 +9,6 @@ export type SidebarLesson = {
   slug: string;
   url: string;
   user_completed: boolean;
+  thumbnail_url: string;
   open: boolean;
 };
