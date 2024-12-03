@@ -33,7 +33,7 @@ export default function WorkshopLessonsList({
                 {section.name}
               </li>
               <div className="w-full border-b dark:border-b-background-800 border-background-100" />
-              {section.lessons.map((lessonId: string, id: number) => (
+              {section.lesson_ids.map((lessonId: string) => (
                 <LessonLink
                   key={lessonId}
                   workshop={workshop}

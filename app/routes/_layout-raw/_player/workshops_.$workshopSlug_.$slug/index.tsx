@@ -6,14 +6,14 @@ import {
 } from "@remix-run/react";
 import { useState } from "react";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
-import type { Lesson } from "~/lib/models/lesson.server";
+import { getLesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { getWorkshop, userJoinedWorkshop } from "~/lib/models/workshop.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar/sidebar";
 import styles from "../styles.css?url";
 
 export function links() {
@@ -70,11 +70,7 @@ export async function loader({
   request: any;
 }) {
   const workshop = await getWorkshop(params.workshopSlug, request);
-  const allLessons = workshop?.lessons
-    ? Object.values(workshop?.lessons).flat()
-    : [];
-
-  const lesson = allLessons.find((lesson) => lesson.slug === params.slug);
+  const lesson = await getLesson(params.slug, request);
 
   if (!workshop || !lesson) {
     return abort404();
@@ -85,9 +81,6 @@ export async function loader({
   return {
     workshop: workshop,
     lesson: lesson,
-    activeIndex: allLessons.findIndex(
-      (lesson: Lesson) => lesson.slug === params.slug,
-    ),
   };
 }
 
@@ -95,11 +88,12 @@ export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const { user } = useOutletContext<{ user: User | null }>();
   const workshop: Workshop = loaderData.workshop;
-  const activeIndex = loaderData.activeIndex;
   const lesson = loaderData.lesson;
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const activeIndex = workshop.lessons.findIndex((l) => l.id === lesson.id);
 
   async function handleVideoEnded(lessonId: string) {
     if (user) {
@@ -132,11 +126,11 @@ export default function LessonIndex() {
   `}
     >
       <Sidebar
-        workshop={workshop}
+        sections={workshop.lesson_sections ?? []}
+        sidebarLessons={workshop.lessons}
         currentLessonId={lesson.id}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
-        user={user}
       />
 
       <div

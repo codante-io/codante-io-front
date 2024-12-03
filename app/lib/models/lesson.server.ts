@@ -21,15 +21,23 @@ export type Lesson = {
   comments: Comment[];
 };
 
-export type LessonsGroupedBySection = Record<string, Lesson[]>;
+// export type LessonsGroupedBySection = Record<string, Lesson[]>;
 
 export type AvailableTo = "all" | "logged_in" | "pro";
 
-export async function getLesson(slug: string) {
-  const axios = await createAxios();
+export async function getLesson(
+  slug: string,
+  request: any,
+): Promise<Lesson | null> {
+  const axios = await createAxios(request);
   const lesson = await axios
     .get(`/lessons/${slug}`)
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
   return lesson;
 }
 

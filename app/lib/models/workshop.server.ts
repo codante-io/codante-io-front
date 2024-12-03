@@ -1,10 +1,11 @@
 import type { Instructor } from "./instructor.server";
-import type { Lesson, LessonsGroupedBySection } from "./lesson.server";
+import type { Lesson } from "./lesson.server";
 import type { Tag } from "./tag.server";
 import type { Certificate } from "./certificates.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
 import type { Challenge } from "~/lib/models/challenge.server";
 import { createAxios } from "~/lib/services/axios.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
 
 export type WorkshopUser = {
   id: number;
@@ -39,9 +40,9 @@ export type Workshop = {
   is_standalone: boolean;
   lesson_sections?: {
     name: string;
-    lessons: string[];
+    lesson_ids: string[];
   }[];
-  lessons: LessonsGroupedBySection;
+  lessons: SidebarLesson[];
   tags: Tag[];
   next_lesson: Lesson | null;
   challenge?: Challenge;
