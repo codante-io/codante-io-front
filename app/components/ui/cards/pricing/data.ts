@@ -8,7 +8,6 @@ export const freePlanDetails: PlanDetails = {
 
 export const proPlanDetails: PlanDetails = {
   name: "Vitalício",
-  fullPrice: 1788,
   installments: 12,
 };
 
