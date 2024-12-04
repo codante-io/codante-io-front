@@ -1,19 +1,9 @@
-import { Bars3Icon } from "@heroicons/react/24/outline";
-import { Link } from "@remix-run/react";
-import { BsArrowRight } from "react-icons/bs";
-import { MdOutlineSkipNext } from "react-icons/md";
-import LinkToLoginWithRedirect from "~/components/features/link-to-login-with-redirect";
+import CommentSection from "~/components/features/comments/comment-section";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
-import ProfileMenu from "~/components/_layouts/navbar/profile-menu";
-import ToggleColorMode from "~/components/ui/toggle-color-mode";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import type { Workshop } from "~/lib/models/workshop.server";
-import Breadcrumbs from "./workshop-breadcrumbs";
-import WorkshopResourcesMenuButton from "./workshop-resources-menu-button";
-import CommentSection from "~/components/features/comments/comment-section";
-import WorkshopTitle from "~/routes/_layout-raw/_player/components/workshop-title";
 
 type MainContentProps = {
   setIsSidebarOpen: (value: boolean) => void;
@@ -23,76 +13,21 @@ type MainContentProps = {
   isChallenge?: boolean;
   lesson: Lesson;
   challenge?: any;
-  nextLessonPath: () => string | null;
   handleVideoEnded: (lessonId: string) => void;
 };
 
 export default function MainContent({
-  setIsSidebarOpen,
-  isSidebarOpen,
-  isChallenge = false,
-  challenge = null,
-  user,
+  // setIsSidebarOpen,
+  // isSidebarOpen,
+  // isChallenge = false,
+  // challenge = null,
+  // user,
   workshop,
   lesson,
-  nextLessonPath,
   handleVideoEnded,
 }: MainContentProps) {
   return (
-    <section className="relative flex flex-col gap-10">
-      <div className="flex items-center justify-between h-20">
-        <WorkshopTitle
-          isLoggedIn={!!user}
-          workshop={workshop}
-          isChallenge={isChallenge}
-          challenge={challenge}
-          lesson={lesson}
-        />
-        <button
-          className="block lg:hidden"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        >
-          <Bars3Icon className="w-8 h-8 text-gray-600 dark:text-white lg:invisible" />
-        </button>
-
-        <div className="flex items-center">
-          <div className="mr-3">
-            <ToggleColorMode />
-          </div>
-          {user ? (
-            <div className="static inset-y-0 inset-auto right-0 flex items-center ">
-              {/* Profile dropdown */}
-              <ProfileMenu user={user} />
-            </div>
-          ) : (
-            <LinkToLoginWithRedirect className="static inset-y-0 inset-auto right-0 flex items-center text-gray-700 dark:text-white gap-x-1">
-              Login <BsArrowRight className="hidden md:inline" />
-            </LinkToLoginWithRedirect>
-          )}
-        </div>
-      </div>
-      {/* <div className="flex items-center justify-between h-8">
-        <Breadcrumbs
-          workshop={workshop}
-          lesson={lesson}
-          isChallenge={isChallenge}
-          challenge={challenge}
-        />
-        <div className="flex items-center gap-2">
-          <div>
-            {workshop.resources && workshop.resources.length > 0 && (
-              <WorkshopResourcesMenuButton resources={workshop.resources} />
-            )}
-          </div>
-          {nextLessonPath() && (
-            <Link to={nextLessonPath() ?? ""}>
-              <div className="flex items-center p-2 text-3xl text-gray-500 transition-colors rounded-lg hover:bg-gray-200 dark:hover:bg-background-700 dark:text-gray-500 hover:text-brand dark:hover:text-brand">
-                <MdOutlineSkipNext className="inline-block" />
-              </div>
-            </Link>
-          )}
-        </div>
-      </div> */}
+    <section className="relative flex flex-col gap-10 py-10">
       <section>
         <div>
           {lesson.type === "video" && (

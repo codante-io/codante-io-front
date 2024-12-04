@@ -107,11 +107,17 @@ export async function action({ request }: ActionFunctionArgs) {
       break;
     case "submit-challenge":
       // get the url from the form
-      const submissionUrl = formData.get("submission-url") as string;
-      return submitChallenge(request, slug, submissionUrl);
+      return submitChallenge(
+        request,
+        slug,
+        formData.get("submission-url") as string,
+      );
     case "submit-challenge-without-deploy":
-      const submissionImage = formData.get("submission_image");
-      return submitChallengeWithoutDeploy(request, slug, submissionImage);
+      return submitChallengeWithoutDeploy(
+        request,
+        slug,
+        formData.get("submission_image"),
+      );
     case "finish-challenge":
       return updateChallengeCompleted({
         slug,
@@ -125,12 +131,13 @@ export async function action({ request }: ActionFunctionArgs) {
         request,
       });
     case "requestCertificate":
-      const certifiableId = formData.get("certifiable_id") as string;
-      return requestCertificate(request, "ChallengeUser", certifiableId);
+      return requestCertificate(
+        request,
+        "ChallengeUser",
+        formData.get("certifiable_id") as string,
+      );
     case "register-lead":
-      const email = formData.get("email") as string;
-
-      return registerChallengeLead(request, email);
+      return registerChallengeLead(request, formData.get("email") as string);
     default:
       return null;
   }

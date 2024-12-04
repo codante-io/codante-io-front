@@ -1,15 +1,13 @@
 import { Link } from "@remix-run/react";
-import type { Workshop } from "~/lib/models/workshop.server";
-import { fromSecondsToTimeString } from "~/lib/utils/interval";
-import ProgressBar from "./progress-bar";
 import type { Challenge } from "~/lib/models/challenge.server";
+import { Lesson } from "~/lib/models/lesson.server";
+import type { Workshop } from "~/lib/models/workshop.server";
 import Breadcrumbs from "~/routes/_layout-raw/_player/components/workshop-breadcrumbs";
 
 export default function WorkshopTitle({
   workshop,
   isChallenge = false,
   challenge = null,
-  isLoggedIn = false,
   lesson,
 }: {
   workshop: Workshop;
@@ -20,7 +18,7 @@ export default function WorkshopTitle({
 }) {
   return (
     <div className="flex flex-col justify-center">
-      {/* <h3 className="text-lg font-bold ">
+      <h3 className="text-lg font-bold ">
         <Link
           className="hover:underline"
           to={
@@ -31,7 +29,7 @@ export default function WorkshopTitle({
         >
           {isChallenge ? challenge?.name : workshop.name}
         </Link>
-      </h3> */}
+      </h3>
       <div className=" text-xs text-brand">
         <Breadcrumbs
           workshop={workshop}

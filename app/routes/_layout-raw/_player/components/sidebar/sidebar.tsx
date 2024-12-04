@@ -30,7 +30,7 @@ export default function Sidebar({
         isSidebarOpen ? "" : "-translate-x-80"
       }`}
     >
-      <div className="max-h-full pb-8 px-2 lg:overflow-y-scroll lg:overscroll-contain scrollbar">
+      <div className="max-h-full pb-8 px-2 lg:overflow-y-scroll lg:overscroll-contain dark:scrollbar ">
         <div className="relative h-full group/lessons">
           <div ref={ref} className={cn("inset-0", "flex flex-col gap-8")}>
             {sections.map((section) => {

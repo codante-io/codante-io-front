@@ -1,11 +1,11 @@
-import type { Challenge } from "~/lib/models/challenge.server";
-import type { Workshop } from "~/lib/models/workshop.server";
-import type { Instructor } from "./instructor.server";
-import type { LessonsGroupedBySection } from "./lesson.server";
-import type { Tag } from "~/lib/models/tag.server";
-import { createAxios } from "~/lib/services/axios.server";
 import axios from "axios";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { Tag } from "~/lib/models/tag.server";
 import { ChallengeUser } from "~/lib/models/user.server";
+import type { Workshop } from "~/lib/models/workshop.server";
+import { createAxios } from "~/lib/services/axios.server";
+import type { Instructor } from "./instructor.server";
+import type { Lesson } from "./lesson.server";
 
 export type Track = {
   id: string;
@@ -29,7 +29,7 @@ export type WorkshopTrackable = {
   slug: string;
   video_url: string;
   instructor: Instructor;
-  lessons: LessonsGroupedBySection;
+  lessons: Lesson[];
 };
 
 export type ChallengeTrackable = {

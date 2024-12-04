@@ -5,7 +5,6 @@ import {
   useOutletContext,
 } from "@remix-run/react";
 import { useState } from "react";
-import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { getLesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import type { Workshop } from "~/lib/models/workshop.server";
@@ -13,12 +12,10 @@ import { getWorkshop, userJoinedWorkshop } from "~/lib/models/workshop.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
+import Nav from "../components/nav/nav";
 import Sidebar from "../components/sidebar/sidebar";
-import styles from "../styles.css?url";
 
-export function links() {
-  return [{ rel: "stylesheet", href: styles }];
-}
+import makeTitles from "~/lib/features/player/makeTitles";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -76,11 +73,13 @@ export async function loader({
     return abort404();
   }
 
+  const titles = makeTitles({ workshop });
   userJoinedWorkshop(workshop.slug, request);
 
   return {
     workshop: workshop,
     lesson: lesson,
+    titles,
   };
 }
 
@@ -92,6 +91,9 @@ export default function LessonIndex() {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const titles = loaderData.titles;
+  if (!titles) return null;
 
   const activeIndex = workshop.lessons.findIndex((l) => l.id === lesson.id);
 
@@ -116,38 +118,44 @@ export default function LessonIndex() {
     }
   }
 
-  const { colorMode } = useColorMode();
   return (
-    <div
-      className={` min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8 
-    ${colorMode === "dark" ? "darkScroll" : "lightScroll"}
-    $
-
-  `}
-    >
-      <Sidebar
-        sections={workshop.lesson_sections ?? []}
-        sidebarLessons={workshop.lessons}
-        currentLessonId={lesson.id}
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
-
-      <div
-        className={`pb-10 px-4 transition-opacity ${
-          isSidebarOpen ? "opacity-30" : "opacity-100"
-        }`}
-      >
-        <MainContent
-          handleVideoEnded={handleVideoEnded}
+    <>
+      <Nav user={user} titles={titles} />
+      <MainArea>
+        <Sidebar
+          sections={workshop.lesson_sections ?? []}
+          sidebarLessons={workshop.lessons}
+          currentLessonId={lesson.id}
           isSidebarOpen={isSidebarOpen}
-          lesson={lesson}
-          nextLessonPath={nextLessonPath}
-          user={user}
-          workshop={workshop}
           setIsSidebarOpen={setIsSidebarOpen}
         />
-      </div>
+
+        <div
+          className={`pb-10  transition-opacity ${
+            isSidebarOpen ? "opacity-30" : "opacity-100"
+          }`}
+        >
+          <MainContent
+            handleVideoEnded={handleVideoEnded}
+            isSidebarOpen={isSidebarOpen}
+            lesson={lesson}
+            // nextLessonPath={nextLessonPath}
+            user={user}
+            workshop={workshop}
+            setIsSidebarOpen={setIsSidebarOpen}
+          />
+        </div>
+      </MainArea>
+    </>
+  );
+}
+
+function MainArea({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className={`min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8`}
+    >
+      {children}
     </div>
   );
 }

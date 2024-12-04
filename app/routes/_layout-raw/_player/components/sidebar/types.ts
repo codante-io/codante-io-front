@@ -10,5 +10,13 @@ export type SidebarLesson = {
   url: string;
   user_completed: boolean;
   thumbnail_url: string;
+  duration_in_seconds: number;
   open: boolean;
+};
+
+export type Title = {
+  type: string;
+  title: string;
+  subTitle: string;
+  url: string;
 };
