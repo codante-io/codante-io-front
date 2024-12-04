@@ -10,7 +10,6 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { PlayCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
-import { PiChartLineUp, PiWarning } from "react-icons/pi";
 import BackgroundBlur from "~/components/_layouts/background-blur";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
@@ -26,10 +25,11 @@ import { getHome } from "~/lib/models/home.server";
 import { cn } from "~/lib/utils/cn";
 import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
-import Counter from "./components/counter";
 import { ProgressivePracticeContent } from "./components/progressive-practice";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import FreePricingCard from "~/components/ui/cards/pricing/free";
+import YearlyPricingCard from "~/components/ui/cards/pricing/yearly";
 
 export const loader = async () => {
   return json({
@@ -1393,9 +1393,9 @@ function Submissions() {
 }
 
 function Pricing() {
-  const { homeInfo } = useLoaderData<typeof loader>();
+  // const { homeInfo } = useLoaderData<typeof loader>();
 
-  const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
+  // const promotionInfo = JSON.parse(homeInfo?.plan_info?.details || "{}");
 
   return (
     <section
@@ -1437,319 +1437,9 @@ function Pricing() {
           />
         </div>
 
-        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
-          Esse é o melhor momento da história para <b>assinar o Codante</b>.
-          <br />
-          <br />
-          Nós vamos recompensar as pessoas que estão acreditando no projeto
-          desde o início com{" "}
-          <span className="color-underline decoration-amber-400">
-            acesso vitalício
-          </span>{" "}
-          e um{" "}
-          <span className="color-underline decoration-amber-400">
-            preço inédito
-          </span>{" "}
-          que não vai se repetir nessas condições.
-        </p>
-
-        <motion.div
-          className="relative rotate-2 mb-10 "
-          initial="hidden"
-          whileInView="visible"
-          transition={{ duration: 0.6 }}
-          variants={{
-            visible: { y: 0, opacity: 1 },
-            hidden: { y: 10, opacity: 0 },
-          }}
-        >
-          <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-          <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
-            <p className="font-light font-inter prose dark:text-gray-300 text-gray-600 text-start">
-              <span className="inline-block">
-                <PiWarning
-                  className="text-amber-400 mr-2 -mb-[2px]"
-                  size={20}
-                />
-              </span>
-              Quanto antes você assinar o Codante,{" "}
-              <span className="decoration-amber-400 color-underline">
-                mais barato
-              </span>{" "}
-              você vai pagar.
-            </p>
-          </div>
-        </motion.div>
-
-        <div className="h-[1px] w-1/3 self-center dark:bg-background-700 bg-background-150 my-10" />
-
-        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
-          O Codante está apenas começando. Em apenas <b>1 ano de existência</b>{" "}
-          já construímos muita coisa. Dá uma olhada:
-        </p>
-
-        <section className="grid grid-cols-2 lg:grid-cols-4 justify-between gap-8">
-          <motion.div
-            className="relative rotate-2 h-32 w-32"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.6 }}
-            variants={{
-              visible: { y: 0, opacity: 1 },
-              hidden: { y: 10, opacity: 0 },
-            }}
-          >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
-              <span className="text-4xl flex">
-                <Counter from={320} to={340} />+
-              </span>
-              <span className="decoration-purple-400 color-underline font-light">
-                aulas
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="relative rotate-2 h-32 w-32"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.6 }}
-            variants={{
-              visible: { y: 0, opacity: 1 },
-              hidden: { y: 10, opacity: 0 },
-            }}
-          >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
-              <span className="text-4xl">
-                <Counter from={15} to={25} />
-              </span>
-              <span className="decoration-amber-400 color-underline font-light">
-                projetos
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="relative rotate-2 h-32 w-32"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.6 }}
-            variants={{
-              visible: { y: 0, opacity: 1 },
-              hidden: { y: 10, opacity: 0 },
-            }}
-          >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
-              <span className="text-4xl">
-                <Counter from={0} to={6} />
-              </span>
-              <span className="decoration-brand-400 color-underline font-light">
-                workshops
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="relative rotate-2 h-32 w-32"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.6 }}
-            variants={{
-              visible: { y: 0, opacity: 1 },
-              hidden: { y: 10, opacity: 0 },
-            }}
-          >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-            <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border h-full w-full flex flex-col items-center justify-center">
-              <span className="text-4xl">
-                <Counter from={0} to={1} />
-              </span>
-              <span className="decoration-emerald-400 color-underline font-light">
-                trilha
-              </span>
-            </div>
-          </motion.div>
-        </section>
-
-        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
-          Nós estamos trabalhando para nos tornar uma das maiores plataformas de
-          ensino de programação do Brasil. Então nós não vamos parar de produzir
-          conteúdo!
-          <br />
-          <br />
-          Queremos recompensar <b>de verdade</b> as pessoas que estão nos
-          apoiando desde já. Vamos lançar um <b>preço dinâmico</b> que vai ser
-          mais barato o quanto antes você comprar.
-        </p>
-
-        <motion.div
-          className="relative rotate-3 mb-10 "
-          initial="hidden"
-          whileInView="visible"
-          transition={{ duration: 0.6 }}
-          variants={{
-            visible: { y: 0, opacity: 1 },
-            hidden: { y: 10, opacity: 0 },
-          }}
-        >
-          <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-          <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
-            <p className="font-light font-inter prose-lg dark:text-gray-300 text-gray-600 text-start">
-              <span className="inline-block">
-                <PiChartLineUp
-                  className="text-amber-400 mr-2 -mb-[2px]"
-                  size={20}
-                />
-              </span>
-              A cada novo{" "}
-              <span className="decoration-amber-400 color-underline">
-                conteúdo
-              </span>{" "}
-              que adicionarmos, o preço vai subir{" "}
-              <span className="decoration-green-400 color-underline">R$1</span>.
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="relative -rotate-3 mb-10 "
-          initial="hidden"
-          whileInView="visible"
-          transition={{ duration: 0.6, delay: 0.5 }}
-          variants={{
-            visible: { y: 0, opacity: 1 },
-            hidden: { y: 10, opacity: 0 },
-          }}
-        >
-          <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-          <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
-            <p className="font-light font-inter prose-lg dark:text-gray-300 text-gray-600 text-start">
-              <span className="inline-block">
-                <PiChartLineUp
-                  className="text-amber-400 mr-2  -mb-[2px]"
-                  size={20}
-                />
-              </span>
-              A cada{" "}
-              <span className="decoration-amber-400 color-underline">
-                100 pessoas
-              </span>{" "}
-              que assinarem, o preço vai subir{" "}
-              <span className="decoration-green-400 color-underline">R$10</span>
-              .
-            </p>
-          </div>
-        </motion.div>
-
-        <div className="h-[1px] w-1/3 self-center dark:bg-background-700 bg-background-150 my-10" />
-
-        <p className="mt-10 mb-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl w-full md:w-3/4 prose lg:text-center text-start">
-          Não perca tempo. Assine agora para obter o{" "}
-          <span className="decoration-amber-400 color-underline">
-            melhor preço
-          </span>
-          .
-        </p>
-
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
-          <motion.div
-            className="relative rotate-2 h-72 w-72"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.6 }}
-            variants={{
-              visible: { y: 0, opacity: 1 },
-              hidden: { y: 10, opacity: 0 },
-            }}
-          >
-            <div className="bg-gradient-to-tl from-transparent dark:to-background-800 p-4 rounded-xl dark:border-background-700 to-background-100 border-background-150 border h-full w-full flex flex-col items-center justify-center border-b-4 border-b-green-400">
-              <span>
-                <span className="text-5xl font-black">
-                  <Counter from={0} to={promotionInfo?.content_count || 0} />
-                </span>
-              </span>
-              <span className="decoration-green-400 color-underline text-xl">
-                conteúdos adicionados
-              </span>
-
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                desde o começo da promoção
-              </span>
-
-              {promotionInfo?.content_count > 0 && (
-                <span className="text-sm text-gray-600 dark:text-gray-400 mt-10">
-                  O preço já aumentou{" "}
-                  <b className="dark:text-gray-200 text-gray-600">
-                    R${promotionInfo?.content_count}{" "}
-                  </b>{" "}
-                  desde o começo da promoção.
-                </span>
-              )}
-            </div>
-          </motion.div>
-          <motion.div
-            className="relative rotate-2 h-72 w-72"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.6 }}
-            variants={{
-              visible: { y: 0, opacity: 1 },
-              hidden: { y: 10, opacity: 0 },
-            }}
-          >
-            <div className="bg-gradient-to-tr from-transparent dark:to-background-800 p-4 rounded-xl dark:border-background-700 to-background-100 border-background-150 border h-full w-full flex flex-col items-center justify-center  border-b-4 border-b-purple-400">
-              <span>
-                <span className="text-5xl font-black">
-                  <Counter from={0} to={promotionInfo?.user_count || 0} />
-                </span>
-              </span>
-              <span className="decoration-purple-400 color-underline text-xl">
-                pessoas assinaram
-              </span>
-
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                desde o último aumento de preço
-              </span>
-
-              <span className="text-sm text-gray-600 dark:text-gray-400 mt-10">
-                <b className="dark:text-gray-200 text-gray-600">
-                  {100 - (promotionInfo?.user_count || 0)}
-                </b>{" "}
-                assinaturas restantes nesse preço
-              </span>
-
-              {promotionInfo?.user_raised_count > 0 && (
-                <span className="text-sm text-gray-600 dark:text-gray-400 mt-10">
-                  O preço já aumentou{" "}
-                  <b className="dark:text-gray-200 text-gray-600">
-                    R${promotionInfo?.user_raised_count * 10}{" "}
-                  </b>{" "}
-                  desde o começo da promoção.
-                </span>
-              )}
-            </div>
-          </motion.div>
-        </section>
-
-        <div className="h-[1px] w-1/3 self-center dark:bg-background-700 bg-background-150 my-10" />
-
-        <motion.h1
-          initial="hidden"
-          whileInView="visible"
-          transition={{ duration: 0.8 }}
-          variants={{
-            visible: { opacity: 1, y: 0 },
-            hidden: { opacity: 0.5, y: -10 },
-          }}
-          className="text-4xl font-light font-lexend text-center"
-        >
-          Preço{" "}
-          <span className="color-underline decoration-brand-400">atual</span>
-        </motion.h1>
-        <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start w-full">
+        <section className="flex flex-col-reverse justify-center gap-10 mt-10 mb-20 lg:flex-row">
+          <FreePricingCard />
+          <YearlyPricingCard />
           <ProPricingCard />
         </section>
       </div>

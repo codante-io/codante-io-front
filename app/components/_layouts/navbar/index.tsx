@@ -204,7 +204,7 @@ function DesktopNavbar({
               ))}
               {!user?.is_pro && (
                 <NavLink
-                  to="/black-friday"
+                  to="/assine"
                   className={({ isActive }) =>
                     classNames(
                       isActive
@@ -344,10 +344,10 @@ function MobileNavbar({
               ))}
               {!user?.is_pro && (
                 <Disclosure.Button
-                  onClick={() => navigate("/black-friday")}
+                  onClick={() => navigate("/assine")}
                   className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
                     matches,
-                    "/black-friday",
+                    "/assine",
                     "dark:bg-background-800 dark:text-white bg-white text-gray-700",
                   )} `}
                 >
