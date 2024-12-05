@@ -3,6 +3,7 @@ import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
 import { createAxios } from "~/lib/services/axios.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
 
 export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
 export type ChallengeEstimatedEffort = "1_day" | "2_days" | "1_week";
@@ -50,6 +51,14 @@ export type Challenge = {
   weekly_featured_start_date: string | null;
   solution_publish_date: string | null;
   is_weekly_featured?: boolean;
+  solution: {
+    lesson_sections: {
+      name: string;
+      lesson_ids: number[];
+    }[];
+    lessons: SidebarLesson[];
+    first_unwatched_lesson: SidebarLesson;
+  };
 };
 
 export type ChallengeCard = {

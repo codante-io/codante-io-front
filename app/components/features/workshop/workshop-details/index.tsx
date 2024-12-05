@@ -11,21 +11,19 @@ import { FiGithub } from "react-icons/fi";
 import { RiLiveLine } from "react-icons/ri";
 import { TbCalendarCheck } from "react-icons/tb";
 import NextLessonPreview from "~/components/features/workshop/next-lesson-preview";
-import WorkshopLessonsHeader from "~/components/features/workshop/workshop-lessons-header";
-import WorkshopLessonsList from "~/components/features/workshop/workshop-lessons-list";
+import WorkshopLessonsList from "~/components/features/workshop/lessons-list";
 import { Button } from "~/components/ui/button";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
-import TitleIcon from "~/components/ui/title-icon";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { cn } from "~/lib/utils/cn";
 import { isUpcoming } from "~/lib/utils/workshop-utils";
-import InstructorCard from "~/routes/_layout-app/_workshops/workshops_.$slug/instructor-card";
 import ProgressBar from "~/routes/_layout-raw/_player/components/progress-bar";
 import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
+import LessonsList from "~/components/features/workshop/lessons-list";
 
 type WorkshopDetailsProps = {
   workshop: Workshop;
@@ -35,7 +33,7 @@ type WorkshopDetailsProps = {
   userIsPro?: boolean;
 };
 
-function WorkshopDetails({
+export default function WorkshopDetails({
   workshop,
   nextLesson,
   showDescription = true,
@@ -53,49 +51,30 @@ function WorkshopDetails({
           <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
         )}
         {workshop.status === "published" && (
-          <NextLessonPreview workshop={workshop} nextLesson={nextLesson} />
+          <NextLessonPreview
+            lessonName={nextLesson.name}
+            lessonNumber={
+              workshop.lessons.findIndex((l) => l.id === nextLesson.id) + 1
+            }
+            lessonUrl={nextLesson.url}
+            thumbnailUrl={nextLesson.thumbnail_url}
+            type={
+              workshop.lessons[0].id === nextLesson.id
+                ? "watch-now"
+                : "keep-watching"
+            }
+          />
         )}
-
-        {showDescription && (
-          <div className="mt-16">
-            {workshop.is_standalone ? (
-              <>
-                <Subtitle text="Sobre o Workshop" />
-                <div>
-                  <MarkdownRenderer markdown={workshop.description} />
-                </div>
-              </>
-            ) : (
-              <>
-                <Subtitle text="Sobre o Tutorial" />
-                <div className="text-gray-600 dark:text-gray-300">
-                  <p>
-                    Esse tutorial mostra o passo-a-passo para resolver o Mini
-                    Projeto <b>{workshop.challenge?.name}</b>.
-                  </p>
-
-                  <div className="flex gap-2 mt-4">
-                    <Link to={`/mini-projetos/${workshop.challenge?.slug}`}>
-                      <Button variant="default">Ver Mini Projeto</Button>
-                    </Link>
-                    <Link
-                      to={`/mini-projetos/${workshop.challenge?.slug}/codigo`}
-                    >
-                      <Button variant="secondary">Código completo</Button>
-                    </Link>
-                  </div>
-
-                  <div className="mt-16">
-                    <Subtitle text="Descrição do projeto" />
-                    <MarkdownRenderer
-                      markdown={workshop.challenge?.description || ""}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        )}
+        <div className="mt-16">
+          <>
+            {/* <Subtitle text="Sobre o Workshop" /> */}
+            <div className="text-gray-600 dark:text-gray-300">
+              <p>
+                <MarkdownRenderer markdown={workshop.description} />
+              </p>
+            </div>
+          </>
+        </div>
 
         {!showDescription && !userIsPro && (
           <div className="text-gray-600 dark:text-gray-300 mt-6 bg-background-800 p-6 text-sm rounded-xl mb-8">
@@ -176,53 +155,15 @@ function WorkshopDetails({
             </div>
           )}
         </div>
-        {/* Instrutor */}
-        <div>
-          <div className="flex items-center">
-            <TitleIcon className="inline-block w-3 h-3 mr-2" />
-            <h3 className="inline-block mt-0 text-lg font-light">
-              Seu <span className="font-bold">Instrutor</span>
-            </h3>
-          </div>
-          <InstructorCard instructor={workshop.instructor} />
-        </div>
-
-        {/* Materiais */}
-        {workshop?.resources && (
-          <div>
-            <div className="flex items-center">
-              <TitleIcon className="inline-block w-3 h-3 mr-2" />
-              <h3 className="font-bold inline-block mt-0 text-lg">Materiais</h3>
-            </div>
-            <WorkshopLessonsHeader workshop={workshop} showResources />
-          </div>
-        )}
 
         {/* Aulas */}
-        <div className="">
-          {workshop.lessons.length > 0 && (
-            <>
-              <div className="flex items-center">
-                <TitleIcon className="inline-block w-3 h-3 mr-2" />
-                <h3 className="font-bold inline-block mt-0 text-lg">Aulas</h3>
-              </div>
-              {/* <WorkshopLessonsHeader workshop={workshop} showResources /> */}
-              <WorkshopLessonsList activeIndex={-1} workshop={workshop} />
-            </>
-          )}
-        </div>
+        {workshop.lessons.length > 0 && (
+          <LessonsList
+            lessons={workshop.lessons}
+            lessonSections={workshop.lesson_sections}
+          />
+        )}
       </div>
-    </div>
-  );
-}
-
-export default WorkshopDetails;
-
-function Subtitle({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-3 mb-4">
-      <TitleIcon className="w-5 h-5"></TitleIcon>
-      <h3 className="text-2xl text-gray-700 dark:text-gray-50">{text}</h3>
     </div>
   );
 }
@@ -343,12 +284,12 @@ function WorkshopProgress({ workshop }: { workshop: Workshop }) {
   if (workshop.status === "published") {
     return (
       <>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <TitleIcon className="inline-block w-3 h-3 mr-2" />
           <h3 className="inline-block mt-0 text-lg font-light">
             <span className="font-bold">Progresso</span>
           </h3>
-        </div>
+        </div> */}
         <ProgressBar
           lessons={workshop.lessons}
           showStatus={true}

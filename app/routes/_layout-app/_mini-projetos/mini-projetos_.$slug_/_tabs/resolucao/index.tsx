@@ -1,13 +1,49 @@
-import type { LoaderFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { useNavigate, useOutletContext } from "@remix-run/react";
+import type { Challenge } from "~/lib/models/challenge.server";
+import LessonsList from "~/components/features/workshop/lessons-list";
+import NextLessonPreview from "~/components/features/workshop/next-lesson-preview";
+import type { User } from "~/lib/models/user.server";
 
-// Esta rota foi movida para /tutorial. Para preservar o SEO, vamos redirecionar para a nova rota.
-export const loader: LoaderFunction = async ({ request }) => {
-  const newPath = request.url.replace("/resolucao", "/tutorial");
-  return redirect(newPath, 301);
-};
+export default function Solution() {
+  const context = useOutletContext<{ challenge: Challenge; user: User }>();
+  // const user = useUserFromOutletContext();
+  const navigate = useNavigate();
+  const challenge = context?.challenge;
 
-export default function Resolucao() {
-  // This component will not be rendered because of the redirect
-  return null;
+  if (!challenge?.has_solution) {
+    return navigate(`/mini-projetos/${challenge?.slug}`);
+  }
+
+  const lessons = challenge.solution.lessons;
+  const lessonSections = challenge.solution.lesson_sections;
+  const nextLesson = challenge.solution.first_unwatched_lesson;
+
+  return (
+    <div className="container">
+      <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
+        {/* left Side */}
+        <div className="w-full mb-6 lb:mt-12">
+          {/* Video */}
+          <NextLessonPreview
+            lessonName={nextLesson.name}
+            lessonNumber={lessons.findIndex((l) => l.id === nextLesson.id) + 1}
+            lessonUrl={nextLesson.url}
+            thumbnailUrl={nextLesson.thumbnail_url}
+            type={
+              lessons[0].id === nextLesson.id ? "watch-now" : "keep-watching"
+            }
+          />
+        </div>
+        {/* Right Side */}
+        <div className="lg:w-3/5 space-y-12 mx-auto">
+          {/* Aulas */}
+          <LessonsList
+            lessons={lessons}
+            lessonSections={lessonSections}
+            nextLessonId={nextLesson.id}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }

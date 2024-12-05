@@ -22,6 +22,7 @@ function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
       <div className="lg:basis-1/2 basis-full">
         <WorkshopLessons
           lessons={workshop.lessons}
+          lesson_sections={workshop.lesson_sections}
           workshopSlug={workshop.slug}
         />
       </div>

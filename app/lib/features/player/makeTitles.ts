@@ -17,7 +17,7 @@ export default function makeTitles(config: Config): Title[] {
     return [
       {
         type: "home",
-        subTitle: "",
+        subTitle: "Todos",
         url: "/workshops",
         title: "Workshops",
       },
@@ -36,7 +36,7 @@ export default function makeTitles(config: Config): Title[] {
     return [
       {
         type: "home",
-        subTitle: "",
+        subTitle: "Todos",
         url: "/mini-projetos",
         title: "Mini Projetos",
       },

@@ -4,8 +4,8 @@ import type { Tag } from "~/lib/models/tag.server";
 import { ChallengeUser } from "~/lib/models/user.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 import { createAxios } from "~/lib/services/axios.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
 import type { Instructor } from "./instructor.server";
-import type { Lesson } from "./lesson.server";
 
 export type Track = {
   id: string;
@@ -29,7 +29,11 @@ export type WorkshopTrackable = {
   slug: string;
   video_url: string;
   instructor: Instructor;
-  lessons: Lesson[];
+  lessons: SidebarLesson[];
+  lesson_sections: {
+    name: string;
+    lesson_ids: number[];
+  }[];
 };
 
 export type ChallengeTrackable = {
@@ -39,6 +43,11 @@ export type ChallengeTrackable = {
   image_url: string;
   challengeUser: ChallengeUser;
   type: "App\\Models\\Challenge";
+  lessons: SidebarLesson[];
+  lesson_sections: {
+    name: string;
+    lesson_ids: number[];
+  }[];
 };
 
 export type TrackSection = {

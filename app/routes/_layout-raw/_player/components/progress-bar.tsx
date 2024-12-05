@@ -43,7 +43,7 @@ export default function ProgressBar({
   }
   return (
     <>
-      <div className="pr-4 mt-4">
+      <div className="">
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
           <div
             className={`${
@@ -56,7 +56,7 @@ export default function ProgressBar({
         </div>
       </div>
       {showStatus && (
-        <div className="flex gap-3 items-center mt-5">
+        <div className="flex gap-3 items-center mt-2">
           <p className="dark:text-gray-400 text-gray-600 text-xs">
             {workshopUser?.completed_at &&
               `Você completou esse Workshop em ${formatDateDDMMYYYY(
@@ -77,7 +77,7 @@ export default function ProgressBar({
                 Certificado
               </Link>
             ) : (
-              <span className="">
+              <span className="text-xs font-light text-gray-500">
                 {completedPercentage === 0
                   ? "Você ainda não assistiu nenhuma aula."
                   : `Você já assistiu ${Math.round(completedPercentage)}% desse

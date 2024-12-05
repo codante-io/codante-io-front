@@ -2,7 +2,7 @@ import type { Comment } from "./comments.server";
 import { createAxios } from "~/lib/services/axios.server";
 
 export type Lesson = {
-  id: string;
+  id: number;
   workshop_id: string;
   name: string;
   description?: string;

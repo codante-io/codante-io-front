@@ -12,10 +12,9 @@ export function meta(args: any) {
   });
 }
 
-export const loader = async ({ request }: { request: Request }) => {
-  return json({
-    tracks: await getTracks(),
-  });
+export const loader = async () => {
+  const tracks = await getTracks();
+  return { tracks };
 };
 export default function Workshops() {
   const { tracks } = useLoaderData<typeof loader>();

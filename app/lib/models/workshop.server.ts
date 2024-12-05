@@ -18,7 +18,7 @@ export type WorkshopUser = {
 };
 
 export type Workshop = {
-  id: string;
+  id: string | number;
   name: string;
   slug: string;
   short_description: string;

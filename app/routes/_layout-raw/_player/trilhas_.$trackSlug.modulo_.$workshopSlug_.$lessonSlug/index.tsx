@@ -16,48 +16,49 @@ import Nav from "../components/nav/nav";
 import Sidebar from "../components/sidebar/sidebar";
 
 import makeTitles from "~/lib/features/player/makeTitles";
+import { getTrack } from "~/lib/models/track.server";
 
-export const meta = ({ data, params }: any) => {
-  if (!data?.workshop) return {};
-  const title = `${data.lesson?.name} | ${data.workshop?.name} | Codante.io`;
-  const description = data.lesson.description ?? "";
-  const imageUrl = getOgGeneratorUrl(
-    data.lesson?.name ?? "Codante",
-    "Workshop " + data.workshop?.name,
-  );
+// export const meta = ({ data, params }: any) => {
+//   if (!data?.workshop) return {};
+//   const title = `${data.lesson?.name} | ${data.workshop?.name} | Codante.io`;
+//   const description = data.lesson.description ?? "";
+//   const imageUrl = getOgGeneratorUrl(
+//     data.lesson?.name ?? "Codante",
+//     "Workshop " + data.workshop?.name,
+//   );
 
-  return [
-    { title },
-    {
-      name: "description",
-      content: `${description} | Workshop: ${data.workshop?.name}`,
-    },
-    { property: "og:title", content: title },
-    {
-      property: "og:description",
-      content: `${description} | Workshop: ${data.workshop?.name}`,
-    },
-    { property: "og:image", content: imageUrl },
-    { property: "og:type", content: "website" },
-    {
-      property: "og:url",
-      content: `https://codante.io/workshops/${params.workshopSlug}/${params.slug}`,
-    },
-    { property: "twitter:card", content: "summary_large_image" },
-    { property: "twitter:domain", content: "codante.io" },
-    {
-      property: "twitter:url",
-      content: `https://codante.io/workshops/${params.workshopSlug}/${params.slug}`,
-    },
-    { property: "twitter:title", content: title },
-    {
-      property: "twitter:description",
-      content: `${description} | Workshop: ${data.workshop?.name}`,
-    },
-    { property: "twitter:image", content: imageUrl },
-    { property: "twitter:image:alt", content: data.lesson?.name },
-  ];
-};
+//   return [
+//     { title },
+//     {
+//       name: "description",
+//       content: `${description} | Workshop: ${data.workshop?.name}`,
+//     },
+//     { property: "og:title", content: title },
+//     {
+//       property: "og:description",
+//       content: `${description} | Workshop: ${data.workshop?.name}`,
+//     },
+//     { property: "og:image", content: imageUrl },
+//     { property: "og:type", content: "website" },
+//     {
+//       property: "og:url",
+//       content: `https://codante.io/workshops/${params.workshopSlug}/${params.slug}`,
+//     },
+//     { property: "twitter:card", content: "summary_large_image" },
+//     { property: "twitter:domain", content: "codante.io" },
+//     {
+//       property: "twitter:url",
+//       content: `https://codante.io/workshops/${params.workshopSlug}/${params.slug}`,
+//     },
+//     { property: "twitter:title", content: title },
+//     {
+//       property: "twitter:description",
+//       content: `${description} | Workshop: ${data.workshop?.name}`,
+//     },
+//     { property: "twitter:image", content: imageUrl },
+//     { property: "twitter:image:alt", content: data.lesson?.name },
+//   ];
+// };
 
 export async function loader({
   params,
@@ -66,19 +67,35 @@ export async function loader({
   params: any;
   request: any;
 }) {
-  const workshop = await getWorkshop(params.workshopSlug, request);
-  const lesson = await getLesson(params.slug, request);
+  const track = await getTrack(params.trackSlug, request);
+  // const workshop = await getWorkshop(params.workshopSlug, request);
+  const lesson = await getLesson(params.lessonSlug, request);
 
-  if (!workshop || !lesson) {
+  const workshop = track?.trackables.find(
+    (t) => t.slug === params.workshopSlug,
+  );
+
+  if (!track || !workshop || !lesson) {
     return abort404();
   }
 
-  const titles = makeTitles({ workshop });
+  // if workshop is not in track, return 404
+  if (!track.trackables.find((t) => t.id === workshop.id)) {
+    return abort404();
+  }
+
+  // if lesson is not in workshop, return 404
+  if (!workshop.lessons.find((l) => l.id === lesson.id)) {
+    return abort404();
+  }
+
+  const titles = makeTitles({ workshop, track });
   userJoinedWorkshop(workshop.slug, request);
 
   return {
-    workshop: workshop,
-    lesson: lesson,
+    workshop,
+    track,
+    lesson,
     titles,
   };
 }
@@ -86,11 +103,18 @@ export async function loader({
 export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const { user } = useOutletContext<{ user: User | null }>();
+  const track = loaderData.track;
   const workshop: Workshop = loaderData.workshop;
   const lesson = loaderData.lesson;
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const currentWorkshop = track.trackables.find(
+    (t) => t.slug === workshop.slug,
+  );
+
+  console.log(currentWorkshop);
 
   const titles = loaderData.titles;
   if (!titles) return null;

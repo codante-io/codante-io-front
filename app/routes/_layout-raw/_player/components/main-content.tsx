@@ -1,33 +1,21 @@
+import { useLocation } from "@remix-run/react";
 import CommentSection from "~/components/features/comments/comment-section";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { Lesson } from "~/lib/models/lesson.server";
-import type { User } from "~/lib/models/user.server";
-import type { Workshop } from "~/lib/models/workshop.server";
 
 type MainContentProps = {
-  setIsSidebarOpen: (value: boolean) => void;
-  isSidebarOpen: boolean;
-  user: User | null;
-  workshop: Workshop;
-  isChallenge?: boolean;
   lesson: Lesson;
-  challenge?: any;
-  handleVideoEnded: (lessonId: string) => void;
+  handleVideoEnded: (lessonId: number) => void;
 };
 
 export default function MainContent({
-  // setIsSidebarOpen,
-  // isSidebarOpen,
-  // isChallenge = false,
-  // challenge = null,
-  // user,
-  workshop,
   lesson,
   handleVideoEnded,
 }: MainContentProps) {
+  const pathname = useLocation().pathname;
   return (
-    <section className="relative flex flex-col gap-10 py-10">
+    <section className="relative  flex flex-col gap-10 pb-10">
       <section>
         <div>
           {lesson.type === "video" && (
@@ -65,7 +53,7 @@ export default function MainContent({
         comments={lesson.comments}
         commentableId={lesson.id}
         commentableType="Lesson"
-        redirectTo={`/workshops/${workshop.slug}/${lesson.slug}`}
+        redirectTo={pathname}
       />
     </section>
   );

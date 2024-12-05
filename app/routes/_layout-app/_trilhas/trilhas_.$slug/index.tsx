@@ -71,10 +71,10 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   if (!track) {
     return abort404();
   }
-  return json({
+  return {
     slug: params.slug,
     track,
-  });
+  };
 };
 
 export function ErrorBoundary() {
@@ -152,7 +152,7 @@ function TrackCard({
   trackItem: WorkshopTrackable | ChallengeTrackable;
   userIsPro: boolean;
 }) {
-  if (trackItem?.type.includes("Workshop")) {
+  if (trackItem?.type.includes("workshop")) {
     return (
       <WorkshopTrackCard
         workshop={trackItem as WorkshopTrackable}
@@ -160,8 +160,7 @@ function TrackCard({
       />
     );
   }
-
-  if (trackItem?.type.includes("Challenge")) {
+  if (trackItem?.type.includes("challenge")) {
     return (
       <ChallengeTrackCard
         challenge={trackItem as Challenge}

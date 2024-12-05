@@ -10,15 +10,23 @@ import {
   useRouteError,
 } from "@remix-run/react";
 
-import invariant from "tiny-invariant";
-import ParticipantsSection from "./components/participants-section";
 import axios from "axios";
 import { useEffect } from "react";
 import { BsCodeSlash, BsStars } from "react-icons/bs";
+import invariant from "tiny-invariant";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import TitleIcon from "~/components/ui/title-icon";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
+import { requestCertificate } from "~/lib/models/certificates.server";
 import {
   getChallenge,
   getChallengeParticipants,
@@ -31,25 +39,17 @@ import {
   userJoinedChallenge,
   verifyAndUpdateForkURL,
 } from "~/lib/models/challenge.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { user as getUser, logout } from "~/lib/services/auth.server";
+import { cn } from "~/lib/utils/cn";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import Overview from "./_tabs/_overview/overview";
 import { userSteps } from "./build-steps.server";
-import type { ChallengeUser, User } from "~/lib/models/user.server";
-import { cn } from "~/lib/utils/cn";
-import TitleIcon from "~/components/ui/title-icon";
-import { requestCertificate } from "~/lib/models/certificates.server";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
-
-import MobileSignupForm from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/mobile-signup-form";
+import ParticipantsSection from "./components/participants-section";
+import { PlayCircle } from "lucide-react";
 import { registerChallengeLead } from "~/lib/models/lead.server";
+import MobileSignupForm from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/components/mobile-signup-form";
 
 export const meta = ({ data, params }: any) => {
   // para não quebrar se não houver challenge ainda.
@@ -196,10 +196,6 @@ export default function ChallengeSlug() {
   const navigate = useNavigate();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
-  const hasSolution = Boolean(
-    challenge?.workshop?.id && challenge.workshop.status === "published",
-  );
-
   const hasSubmissions = Boolean(
     challengeUsers?.length && challengeUsers.length > 0,
   );
@@ -245,28 +241,16 @@ export default function ChallengeSlug() {
         location.pathname === `/mini-projetos/${challenge?.slug}/`,
     },
     {
-      name: "Tutorial",
-      href: "tutorial",
-      isVisible: hasSolution,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1em"
-          height="1em"
-          viewBox="0 0 28 28"
-        >
-          <path
-            fill="currentColor"
-            d="M3 5.75A2.75 2.75 0 0 1 5.75 3h16.5A2.75 2.75 0 0 1 25 5.75v8.75a7.486 7.486 0 0 0-1.5-.876V5.75c0-.69-.56-1.25-1.25-1.25H5.75c-.69 0-1.25.56-1.25 1.25v16.5c0 .69.56 1.25 1.25 1.25h7.874c.234.535.529 1.038.875 1.5H5.75A2.75 2.75 0 0 1 3 22.25V5.75Zm3.75 10.248h7.75a7.493 7.493 0 0 0-.875 1.5H6.75a.75.75 0 0 1 0-1.5ZM6 20.751a.75.75 0 0 1 .75-.75h5.502a.75.75 0 0 1 0 1.5H6.75a.75.75 0 0 1-.75-.75ZM11.502 6a.75.75 0 0 1 .69.458l2.749 6.503a.75.75 0 1 1-1.382.583l-.44-1.042H9.881l-.441 1.043a.75.75 0 1 1-1.382-.585l2.752-6.503A.75.75 0 0 1 11.5 6Zm-.985 5.002h1.967l-.983-2.327l-.984 2.327ZM17.75 6a.75.75 0 0 1 .75.75V8h1.25a.75.75 0 0 1 0 1.5H18.5v1.248a.75.75 0 0 1-1.5 0V9.5h-1.248a.75.75 0 0 1 0-1.5H17V6.75a.75.75 0 0 1 .75-.75ZM27 20.5a6.5 6.5 0 1 1-13 0a6.5 6.5 0 0 1 13 0Zm-6-4a.5.5 0 0 0-1 0V20h-3.5a.5.5 0 0 0 0 1H20v3.5a.5.5 0 0 0 1 0V21h3.5a.5.5 0 0 0 0-1H21v-3.5Z"
-          ></path>
-        </svg>
-      ),
-      current: location.pathname.includes("tutorial"),
+      name: "Resolução",
+      href: "resolucao",
+      isVisible: challenge.has_solution,
+      icon: <PlayCircle className="h-4 w-4" />,
+      current: location.pathname.includes("resolucao"),
     },
     {
       name: "Código",
       href: "codigo",
-      isVisible: hasSolution,
+      isVisible: challenge.has_solution,
       icon: <BsCodeSlash />,
       current: location.pathname.includes("codigo"),
     },
@@ -381,7 +365,7 @@ export default function ChallengeSlug() {
             <>
               <Overview
                 challenge={challenge}
-                hasSolution={hasSolution}
+                hasSolution={challenge.has_solution}
                 steps={steps}
                 challengeUser={challengeUser as ChallengeUser}
               />
@@ -395,7 +379,6 @@ export default function ChallengeSlug() {
                 challengeUsers,
                 participants,
                 steps,
-                hasSolution,
               }}
             />
           )
@@ -438,6 +421,7 @@ function ParticipantsWebsiteSection({
   currentUserIsEnrolled,
   participants,
 }: ParticipantsSectionProps) {
+  const location = useLocation();
   if (!location.pathname.includes("submissoes/")) {
     return (
       <>

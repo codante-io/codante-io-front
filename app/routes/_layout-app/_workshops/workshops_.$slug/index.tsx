@@ -2,10 +2,12 @@ import { LockClosedIcon } from "@heroicons/react/24/outline";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, useLoaderData, useOutletContext } from "@remix-run/react";
 import { AiOutlineSolution } from "react-icons/ai";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiGift } from "react-icons/pi";
 import { RiLiveLine } from "react-icons/ri";
 import invariant from "tiny-invariant";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
+import WorkshopDetails from "~/components/features/workshop/workshop-details";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
 import BecomeProCard from "~/components/ui/become-pro-card";
 import BecomeProFreeCard from "~/components/ui/become-pro-free-card";
@@ -14,14 +16,13 @@ import CardItemDuration from "~/components/ui/cards/card-item-duration";
 import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
+import type { User } from "~/lib/models/user.server";
 import { getWorkshop, userJoinedWorkshop } from "~/lib/models/workshop.server";
 import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
-import { IoInformationCircleOutline } from "react-icons/io5";
-import type { User } from "~/lib/models/user.server";
 import { hasHappened } from "~/lib/utils/workshop-utils";
-import WorkshopDetails from "~/components/features/workshop/workshop-details";
+import InstructorCard, { InstructorCardContent } from "./instructor-card";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -154,7 +155,7 @@ export default function WorkshopSlug() {
         </div>
         <div className="flex gap-4 flex-wrap mb-0 sm:mb-4 lg:mb-12">
           {workshop.lessons && workshop.lessons.length > 0 && (
-            <div className="inline-flex gap-6 px-4 py-4  md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl">
+            <div className="inline-flex gap-6 px-4 py-4  md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl items-center">
               <CardItemDifficulty difficulty={workshop.difficulty} />
               <CardItemLessonsCount lessonsCount={workshop?.lessons?.length} />
               <CardItemDuration
@@ -162,6 +163,26 @@ export default function WorkshopSlug() {
               />
             </div>
           )}
+
+          <ResponsiveHoverCard
+            behavior="click"
+            trigger={
+              <div className="px-4 py-4 md:w-auto lg:px-8 lg:gap-10 bg-background-100 dark:bg-background-800 rounded-xl  text-xs">
+                <span className="text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                  <InstructorCard instructor={workshop.instructor} />
+                </span>
+              </div>
+            }
+            cardContent={
+              <div>
+                <InstructorCardContent
+                  bio={workshop.instructor.bio}
+                  links={workshop.instructor.links}
+                />
+              </div>
+            }
+          />
+
           {!user?.is_pro && workshop.status !== "soon" && (
             <ResponsiveHoverCard
               behavior="click"

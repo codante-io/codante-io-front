@@ -4,7 +4,7 @@ export type SidebarSection = {
 };
 
 export type SidebarLesson = {
-  id: string;
+  id: number;
   name: string;
   slug: string;
   url: string;

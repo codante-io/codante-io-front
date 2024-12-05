@@ -16,28 +16,17 @@ export default function Nav({
   titles: Title[];
 }) {
   return (
-    <div className=" max-w-[1600px] px-8 mx-auto py-6 flex justify-between sticky">
+    <div className="w-full max-w-[1600px] dark:bg-background-900 px-8 mx-auto py-6 flex justify-between  z-50">
       <div className="flex gap-2 items-center dark:bg-background-800 rounded-lg py-2 px-6">
         <Link to="/">
           <CodanteLogo className="w-14 h-14" />
         </Link>
         <div className="border-r-2 border-r-background-700 h-10 mx-4"></div>
-        <Link
-          to={titles[0].url}
-          className="group border-b-2 border-b-transparent hover:border-b-brand transition-colors"
-        >
-          <span className="dark:text-gray-500 text-xs group-hover:dark:text-white transition-colors">
-            Todos
-          </span>
-          <h2 className="font-lexend font-semibold -mt-1 text-gray-400 group-hover:text-white transition-colors">
-            {titles[0].title}
-          </h2>
-        </Link>
-        <ChevronRight className="w-8 h-8 text-gray-600 " />
-        {titles
-          ?.filter((t) => t.type !== "home")
-          .map((title) => {
-            return (
+
+        {titles.map((title, index) => {
+          const isLast = index === titles.length - 1;
+          return (
+            <>
               <Link
                 to={title.url}
                 key={title.type}
@@ -50,8 +39,10 @@ export default function Nav({
                   {title.title}
                 </h2>
               </Link>
-            );
-          })}
+              {!isLast && <ChevronRight className="w-8 h-8 text-gray-600 " />}
+            </>
+          );
+        })}
       </div>
       <div className="flex items-center">
         <div className="mr-3">

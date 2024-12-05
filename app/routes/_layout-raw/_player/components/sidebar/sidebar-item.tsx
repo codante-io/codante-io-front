@@ -2,7 +2,7 @@ import { BsCheck } from "react-icons/bs";
 import { cn } from "~/lib/utils/cn";
 
 type SidebarItemProps = {
-  id: string;
+  id: number;
   name: string;
   current: boolean;
   completed: boolean;
@@ -33,7 +33,12 @@ export default function SidebarItem({
         )}
 
         {completed ? (
-          <BsCheck className="w-3 h-3 text-emerald-600 scale-150" />
+          <BsCheck
+            className={cn(
+              "w-3 h-3 text-emerald-600 scale-150",
+              current && "animate-pulse text-emerald-300",
+            )}
+          />
         ) : (
           <div className="relative">
             {current && (
