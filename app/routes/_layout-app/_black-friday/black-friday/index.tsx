@@ -6,7 +6,7 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import BackgroundBlur from "~/components/_layouts/background-blur";
 import { Error500 } from "~/components/features/error-handling/500";
@@ -25,9 +25,8 @@ import Faq from "~/routes/_layout-app/_subscription/faq";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { Spotlight } from "./components/spotlight";
 import { registerMarketingLead } from "~/lib/models/lead.server";
-import { BadgeCheck, Clock } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import ProPricingCard from "~/components/ui/cards/pricing/pro";
 import { ProgressivePracticeContent } from "~/routes/_layout-app/_black-friday/black-friday/components/progressive-practice";
 import { IoWarning } from "react-icons/io5";
 import AlertBannerPortal from "~/components/ui/alert-banner-portal";
@@ -83,22 +82,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function HomePage() {
-  // useEffect(() => {
-  //   Crisp.configure("dec01a18-bf11-4fb8-a820-6a53760ba042");
-  // }, []);
-
   useLazyLoading();
 
   return (
     <>
       <AlertBannerPortal
-        type="default"
+        type="warning"
         position="bottom"
-        icon={
-          <Clock className="w-10 h-10 mb-4 dark:text-white text-brand-500 md:mb-0 md:w-8 md:h-8 md:mr-6 md:block " />
-        }
-        title="Oferta por tempo limitado"
-        subtitle={<Countdown targetDate={new Date("2024-12-01T23:59:59")} />}
+        title="Oferta encerrada"
+        subtitle="A oferta de Black Friday do Codante encerrou."
       />
 
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
@@ -112,8 +104,6 @@ export default function HomePage() {
         <Community />
         <Founders />
         <Testimonial />
-        {/* <Pricing />
-        <Bonus /> */}
         <FAQ />
         <WhatsAppButton />
       </div>
@@ -258,9 +248,9 @@ function Headline() {
               </div>
             </div>
 
-            <div className="w-full flex lg:justify-end justify-center">
+            {/* <div className="w-full flex lg:justify-end justify-center">
               <ProPricingCard />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="h-[1px] bg-background-100 dark:bg-background-700 w-2/3 my-20"></div>
@@ -552,43 +542,6 @@ function ProgressivePractice() {
               alt="Escada da prática progressiva - Base teórica, prática guiada, prática direcionada e mundo real"
             />
           </div>
-
-          {/* <ProgressivePracticeContent /> */}
-
-          {/* <section className="mt-16 flex flex-col lg:flex-row gap-20 lg:gap-10 mb-24 items-center lg:items-start">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              variants={{
-                visible: { y: 0, opacity: 1 },
-                hidden: { y: 100, opacity: 0 },
-              }}
-              className="relative rotate-1 max-h-16 max-w-2xl"
-            >
-              <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
-              <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
-                <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
-                  E o aprendizado continua... depois que você chega no{" "}
-                  <BoldColored color="#DDFFC9">mundo real</BoldColored>, você
-                  pode voltar para a{" "}
-                  <BoldColored color="#FFDCC9">base teórica</BoldColored>
-                  . Se for preciso, pode pular degraus ou ficar mais tempo em um
-                  mesmo.
-                  <br />
-                  <br /> O mais importante é entender que aprender não é uma
-                  linha reta, mas sim um{" "}
-                  <b>
-                    <i>
-                      <u>ciclo infinito</u>
-                    </i>
-                  </b>
-                  .
-                </p>
-              </div>
-            </motion.div>
-          </section> */}
 
           <div className="my-16 w-full flex justify-center">
             <CodanteProButton />
@@ -1539,32 +1492,6 @@ function TestimonialCard({
       </div>
     </article>
   );
-}
-
-function Countdown({ targetDate }: { targetDate: Date }) {
-  const [timeLeft, setTimeLeft] = useState<string>("");
-
-  function formatTimeLeft(difference: number) {
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-    );
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const difference = targetDate.getTime() - new Date().getTime();
-      setTimeLeft(formatTimeLeft(difference));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  return <div>{timeLeft}</div>;
 }
 
 function WhatsAppButton() {
