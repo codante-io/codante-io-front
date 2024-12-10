@@ -16,6 +16,8 @@ import Nav from "../components/nav/nav";
 import Sidebar from "../components/sidebar/sidebar";
 
 import makeTitles from "~/lib/features/player/makeTitles";
+import SidebarSectionTitle from "../components/sidebar/sidebar-section-title";
+import SidebarItem from "../components/sidebar/sidebar-item";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -87,7 +89,7 @@ export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const { user } = useOutletContext<{ user: User | null }>();
   const workshop: Workshop = loaderData.workshop;
-  const lesson = loaderData.lesson;
+  const currentLesson = loaderData.lesson;
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -95,7 +97,9 @@ export default function LessonIndex() {
   const titles = loaderData.titles;
   if (!titles) return null;
 
-  const activeIndex = workshop.lessons.findIndex((l) => l.id === lesson.id);
+  const activeIndex = workshop.lessons.findIndex(
+    (l) => l.id === currentLesson.id,
+  );
 
   async function handleVideoEnded(lessonId: string) {
     if (user) {
@@ -119,29 +123,53 @@ export default function LessonIndex() {
   }
 
   return (
-    <div className="grid relative bg-background-900">
+    <div className="grid max-w-[1600px] mx-auto bg-background-900 grid-cols-1">
       <Nav user={user} titles={titles} />
       <MainArea>
         <div className="relative">
-          {/* <div className="h-10 sticky top-0 bg-red-50"></div> */}
           <Sidebar
-            sections={workshop.lesson_sections ?? []}
-            sidebarLessons={workshop.lessons}
-            currentLessonId={lesson.id}
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
-          />
+          >
+            {workshop.lesson_sections &&
+              workshop.lesson_sections.map((section) => {
+                const sectionLessons = section.lesson_ids.map((id) =>
+                  workshop.lessons.find((l) => l.id === id),
+                );
+                return (
+                  <div key={section.name} className="">
+                    <SidebarSectionTitle className="border-b border-b-background-800 mb-4 pl-4">
+                      {section.name}
+                    </SidebarSectionTitle>
+                    {sectionLessons.map((sectionLesson, index) => {
+                      return (
+                        <SidebarItem
+                          id={sectionLesson.id}
+                          key={sectionLesson.id}
+                          name={sectionLesson.name}
+                          href={sectionLesson.url}
+                          completed={sectionLesson.user_completed}
+                          isFirst={index === 0}
+                          current={currentLesson.id === sectionLesson.id}
+                          isLast={index === sectionLessons.length - 1}
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
+          </Sidebar>
         </div>
 
         <div
-          className={`pb-10 overscroll-y-contain transition-opacity ${
+          className={`pb-10  transition-opacity ${
             isSidebarOpen ? "opacity-30" : "opacity-100"
           }`}
         >
           <MainContent
             handleVideoEnded={handleVideoEnded}
             isSidebarOpen={isSidebarOpen}
-            lesson={lesson}
+            lesson={currentLesson}
             // nextLessonPath={nextLessonPath}
             user={user}
             workshop={workshop}
@@ -156,7 +184,7 @@ export default function LessonIndex() {
 function MainArea({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`min-h-screen  max-w-[1600px] flex lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8`}
+      className={`w-full relative min-h-screen flex lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] gap-6   justify-center  lg:min-h-[calc(100vh-200px)]  `}
     >
       {children}
     </div>

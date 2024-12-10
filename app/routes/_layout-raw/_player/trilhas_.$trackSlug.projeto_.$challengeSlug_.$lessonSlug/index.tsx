@@ -7,16 +7,15 @@ import {
 import { useState } from "react";
 import { getLesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
-import type { Workshop } from "~/lib/models/workshop.server";
-import { getWorkshop, userJoinedWorkshop } from "~/lib/models/workshop.server";
-import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../components/main-content";
 import Nav from "../components/nav/nav";
-import Sidebar from "../components/sidebar/sidebar";
 
 import makeTitles from "~/lib/features/player/makeTitles";
 import { getTrack } from "~/lib/models/track.server";
+import SidebarSection from "../components/sidebar/sidebar-section";
+import Sidebar from "../components/sidebar/sidebar";
+import { getChallenge } from "~/lib/models/challenge.server";
 
 // export const meta = ({ data, params }: any) => {
 //   if (!data?.workshop) return {};
@@ -60,6 +59,44 @@ import { getTrack } from "~/lib/models/track.server";
 //   ];
 // };
 
+function Readme() {
+  return <div>Olá mundo</div>;
+}
+
+async function getManualLesson(
+  lessonSlug: string,
+  challengeSlug: any,
+  request,
+) {
+  if (lessonSlug === "01-informacoes-do-projeto") {
+    const challenge = await getChallenge(challengeSlug, request);
+    return {
+      id: 9999,
+      name: "Informações do Projeto",
+      content: challenge.description,
+    };
+  }
+
+  if (lessonSlug === "02-participe-do-projeto") {
+    return {
+      id: 9999,
+      name: "Participe do Projeto",
+      description: "Aqui você encontra informações sobre como participar.",
+    };
+  }
+
+  if (lessonSlug === "03-submeta-sua-resolucao") {
+    return {
+      id: 9999,
+      name: "Submeta sua Resolução",
+      content:
+        "Aqui você encontra informações sobre como submeter sua resolução.",
+    };
+  }
+
+  return null;
+}
+
 export async function loader({
   params,
   request,
@@ -68,32 +105,53 @@ export async function loader({
   request: any;
 }) {
   const track = await getTrack(params.trackSlug, request);
-  // const workshop = await getWorkshop(params.workshopSlug, request);
   const lesson = await getLesson(params.lessonSlug, request);
 
-  const workshop = track?.trackables.find(
-    (t) => t.slug === params.workshopSlug,
+  const challenge = track?.trackables.find(
+    (t) => t.slug === params.challengeSlug,
   );
 
-  if (!track || !workshop || !lesson) {
+  const titles = makeTitles({ challenge, track });
+
+  const manualLesson = await getManualLesson(
+    params.lessonSlug,
+    challenge?.slug,
+    request,
+  );
+
+  if (manualLesson) {
+    return {
+      challenge,
+      track,
+      titles,
+      lesson: manualLesson,
+    };
+  }
+
+  if (!track || !challenge || !lesson) {
     return abort404();
   }
 
-  // if workshop is not in track, return 404
-  if (!track.trackables.find((t) => t.id === workshop.id)) {
+  if (!track || !challenge) {
     return abort404();
   }
 
-  // if lesson is not in workshop, return 404
-  if (!workshop.lessons.find((l) => l.id === lesson.id)) {
+  // if challenge is not in track, return 404
+  if (!track.trackables.find((t) => t.id === challenge.id)) {
     return abort404();
   }
 
-  const titles = makeTitles({ workshop, track });
-  userJoinedWorkshop(workshop.slug, request);
+  // if lesson is not in challenge, return 404
+  if (
+    "track_lessons" in challenge &&
+    !challenge.solution.lessons.find((l) => l.id === lesson.id)
+  ) {
+    console.log(lesson.id, l);
+    return abort404();
+  }
 
   return {
-    workshop,
+    challenge,
     track,
     lesson,
     titles,
@@ -103,59 +161,37 @@ export async function loader({
 export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const { user } = useOutletContext<{ user: User | null }>();
-  const track = loaderData.track;
-  const workshop: Workshop = loaderData.workshop;
+  const challenge = loaderData.challenge;
   const lesson = loaderData.lesson;
-  const fetcher = useFetcher();
-  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const currentWorkshop = track.trackables.find(
-    (t) => t.slug === workshop.slug,
-  );
-
-  console.log(currentWorkshop);
 
   const titles = loaderData.titles;
   if (!titles) return null;
-
-  const activeIndex = workshop.lessons.findIndex((l) => l.id === lesson.id);
-
-  async function handleVideoEnded(lessonId: string) {
-    if (user) {
-      fetcher.submit(
-        { lessonId, markCompleted: "true" },
-        { method: "post", action: "/api/set-watched?index" },
-      );
-    }
-    if (nextLessonPath()) {
-      navigate(nextLessonPath());
-    }
-  }
-
-  function nextLessonPath() {
-    const nextLesson = workshop.lessons[activeIndex + 1];
-    if (nextLesson) {
-      return `/workshops/${workshop.slug}/${nextLesson.slug}`;
-    } else {
-      return "";
-    }
-  }
 
   return (
     <div className="grid relative bg-background-900">
       <Nav user={user} titles={titles} />
       <MainArea>
-        <div className="relative">
-          {/* <div className="h-10 sticky top-0 bg-red-50"></div> */}
-          <Sidebar
-            sections={workshop.lesson_sections ?? []}
-            sidebarLessons={workshop.lessons}
-            currentLessonId={lesson.id}
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
+        <Sidebar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        >
+          <SidebarSection
+            name="Resolva o Projeto"
+            lessons={
+              challenge && "track_lessons" in challenge
+                ? challenge.track_lessons
+                : []
+            }
+            currentLessonId={90909}
           />
-        </div>
+
+          <SidebarSection
+            currentLessonId={90909}
+            lessons={challenge.solution.lessons}
+            name="Resolução"
+          />
+        </Sidebar>
 
         <div
           className={`pb-10 overscroll-y-contain transition-opacity ${
@@ -163,12 +199,11 @@ export default function LessonIndex() {
           }`}
         >
           <MainContent
-            handleVideoEnded={handleVideoEnded}
+            handleVideoEnded={() => {}}
             isSidebarOpen={isSidebarOpen}
             lesson={lesson}
             // nextLessonPath={nextLessonPath}
             user={user}
-            workshop={workshop}
             setIsSidebarOpen={setIsSidebarOpen}
           />
         </div>

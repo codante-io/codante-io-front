@@ -6,9 +6,10 @@ import { WorkshopTrackable } from "~/lib/models/track.server";
 interface WorkshopTrackCardProps {
   workshop: WorkshopTrackable;
   userIsPro: boolean;
+  moduleNumber: number;
 }
 
-function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
+function WorkshopTrackCard({ workshop, moduleNumber }: WorkshopTrackCardProps) {
   return (
     <Card
       border="bright"
@@ -16,7 +17,7 @@ function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
       id={workshop.slug}
     >
       <div className="lg:basis-1/2 basis-full h-full aspect-video mb-4 md:mb-12">
-        <VideoHoverElement workshop={workshop} />
+        <VideoHoverElement workshop={workshop} moduleNumber={moduleNumber} />
       </div>
 
       <div className="lg:basis-1/2 basis-full">
@@ -30,7 +31,13 @@ function WorkshopTrackCard({ workshop }: WorkshopTrackCardProps) {
   );
 }
 
-function VideoHoverElement({ workshop }: { workshop: WorkshopTrackable }) {
+function VideoHoverElement({
+  workshop,
+  moduleNumber,
+}: {
+  workshop: WorkshopTrackable;
+  moduleNumber: number;
+}) {
   return (
     <div className="aspect-video w-full h-full relative group/workshop">
       {workshop.video_url && (
@@ -53,10 +60,12 @@ function VideoHoverElement({ workshop }: { workshop: WorkshopTrackable }) {
         )}
       >
         <div className="flex flex-col items-center justify-center gap-2 w-full">
-          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-brand-400">
-            Módulo
+          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive ">
+            {moduleNumber}.{" "}
+            <span className="underline decoration-brand-400">Módulo</span>
           </h2>
-          <h3 className="max-w-[65%] text-xl md:text-2xl font-lexend font-bold text-center">
+
+          <h3 className="max-w-[75%] text-xl md:text-2xl font-lexend font-bold text-center">
             {workshop.name}
           </h3>
         </div>

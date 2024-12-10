@@ -43,11 +43,14 @@ export type ChallengeTrackable = {
   image_url: string;
   challengeUser: ChallengeUser;
   type: "App\\Models\\Challenge";
-  lessons: SidebarLesson[];
-  lesson_sections: {
-    name: string;
-    lesson_ids: number[];
-  }[];
+  track_lessons: SidebarLesson[];
+  solution: {
+    lessons: SidebarLesson[];
+    lesson_sections: {
+      name: string;
+      lesson_ids: number[];
+    }[];
+  };
 };
 
 export type TrackSection = {

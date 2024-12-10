@@ -117,9 +117,8 @@ export default function TrackSlug() {
       <header className="flex flex-col items-center justify-center gap-2 mb-8 text-center lg:gap-6">
         <h1 className=" text-4xl font-lexend">
           <span className="font-bold">{track.name}</span>
+          <AdminEditButton url={`/track/${track.id}/edit`} />
         </h1>
-
-        <AdminEditButton url={`/track/${track.id}/edit`} />
       </header>
 
       <section className="w-full flex flex-col">
@@ -152,11 +151,18 @@ function TrackCard({
   trackItem: WorkshopTrackable | ChallengeTrackable;
   userIsPro: boolean;
 }) {
+  const { track } = useLoaderData<typeof loader>();
+  const moduleNumber =
+    track.trackables.findIndex(
+      (trackable) => trackable.slug === trackItem.slug,
+    ) + 1;
+
   if (trackItem?.type.includes("workshop")) {
     return (
       <WorkshopTrackCard
         workshop={trackItem as WorkshopTrackable}
         userIsPro={userIsPro}
+        moduleNumber={moduleNumber}
       />
     );
   }
@@ -165,6 +171,7 @@ function TrackCard({
       <ChallengeTrackCard
         challenge={trackItem as Challenge}
         userIsPro={userIsPro}
+        moduleNumber={moduleNumber}
       />
     );
   }

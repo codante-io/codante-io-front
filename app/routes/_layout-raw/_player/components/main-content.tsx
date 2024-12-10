@@ -3,6 +3,7 @@ import CommentSection from "~/components/features/comments/comment-section";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { Lesson } from "~/lib/models/lesson.server";
+import { cn } from "~/lib/utils/cn";
 
 type MainContentProps = {
   lesson: Lesson;
@@ -33,7 +34,10 @@ export default function MainContent({
         </div>
         <h1
           id="video-title"
-          className="mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend"
+          className={cn(
+            "mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend",
+            !lesson.video_url && "mt-0",
+          )}
         >
           {lesson?.name}
         </h1>

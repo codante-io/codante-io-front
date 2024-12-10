@@ -5,10 +5,18 @@ interface ConfigItem {
   slug: string;
 }
 
+interface Trackable {
+  slug: string;
+}
+
+interface Track extends ConfigItem {
+  trackables: Trackable[];
+}
+
 interface Config {
   workshop?: ConfigItem;
   challenge?: ConfigItem;
-  track?: ConfigItem;
+  track?: Track;
 }
 
 export default function makeTitles(config: Config): Title[] {
@@ -51,6 +59,11 @@ export default function makeTitles(config: Config): Title[] {
 
   // se config.track existir, mas config.module não existir, retorna o array com track.
   if (config.track && config.workshop) {
+    const moduleNumber =
+      config.track.trackables.findIndex(
+        (trackable) => trackable.slug === config.workshop?.slug,
+      ) + 1;
+
     return [
       {
         type: "track",
@@ -61,13 +74,18 @@ export default function makeTitles(config: Config): Title[] {
       {
         type: "workshop",
         title: config.workshop.name,
-        subTitle: "Módulo XX",
-        url: `/trilhas/${config.track.slug}/modulo-xx`,
+        subTitle: `${moduleNumber}. Módulo`,
+        url: `/trilhas/${config.track.slug}/modulo-${moduleNumber}`,
       },
     ];
   }
 
   if (config.track && config.challenge) {
+    const moduleNumber =
+      config.track.trackables.findIndex(
+        (trackable) => trackable.slug === config.challenge?.slug,
+      ) + 1;
+
     return [
       {
         type: "track",
@@ -78,8 +96,8 @@ export default function makeTitles(config: Config): Title[] {
       {
         type: "module",
         title: config.challenge.name,
-        subTitle: "Módulo XX",
-        url: `/trilhas/${config.track.slug}/modulo-xx`,
+        subTitle: `${moduleNumber}. Projeto`,
+        url: `/trilhas/${config.track.slug}/modulo-${moduleNumber}`,
       },
     ];
   }

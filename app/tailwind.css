@@ -104,7 +104,7 @@
   }
 
   .scrollbar::-webkit-scrollbar-track {
-    background: #1e2b38;
+    background: #0e141a;
   }
 
   .scrollbar-transparent::-webkit-scrollbar-track {
@@ -112,7 +112,7 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: rgb(44, 63, 82);
+    background: #17212b;
     border-radius: 4px;
   }
 

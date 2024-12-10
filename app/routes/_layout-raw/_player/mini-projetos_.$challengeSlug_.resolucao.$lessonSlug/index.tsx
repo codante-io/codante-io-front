@@ -16,6 +16,9 @@ import Sidebar from "~/routes/_layout-raw/_player/components/sidebar/sidebar";
 
 import makeTitles from "~/lib/features/player/makeTitles";
 import { Challenge, getChallenge } from "~/lib/models/challenge.server";
+import SidebarItem from "../components/sidebar/sidebar-item";
+import { SidebarLesson } from "../components/sidebar/types";
+import SidebarSectionTitle from "../components/sidebar/sidebar-section-title";
 
 export const meta = ({ data, params }: any) => {
   if (!data?.challenge) return {};
@@ -120,17 +123,50 @@ export default function LessonIndex() {
     }
   }
 
+  const lessons = challenge.solution.lessons;
+  const sectionsWithLessons = challenge.solution.lesson_sections?.map(
+    (section) => {
+      const sectionLessons = section.lesson_ids.map((id) =>
+        challenge.solution.lessons.find((lesson) => lesson.id === id),
+      ) as SidebarLesson[];
+      return {
+        sectionName: section.name,
+        lessons: sectionLessons,
+      };
+    },
+  );
+
   return (
-    <>
+    <div className="bg-background-900">
       <Nav user={user} titles={titles} />
       <MainArea>
         <Sidebar
-          sections={challenge.solution.lesson_sections ?? []}
-          sidebarLessons={challenge.solution.lessons}
-          currentLessonId={lesson.id}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
-        />
+        >
+          {/* Se não há sections, vamos listar as aulas sem os títulos das sections */}
+          {!sectionsWithLessons && (
+            <div>
+              <LessonsList currentLessonId={lesson.id} lessons={lessons} />
+            </div>
+          )}
+
+          {/* Se há sections, vamos listar os títulos das sections com as aulas */}
+          {sectionsWithLessons &&
+            sectionsWithLessons.map((section) => {
+              return (
+                <div key={section.sectionName}>
+                  <SidebarSectionTitle className="border-b border-b-background-800 mb-4 pl-4 bg-transparent">
+                    {section.sectionName}
+                  </SidebarSectionTitle>
+                  <LessonsList
+                    lessons={section.lessons}
+                    currentLessonId={lesson.id}
+                  />
+                </div>
+              );
+            })}
+        </Sidebar>
 
         <div
           className={`pb-10  transition-opacity ${
@@ -140,7 +176,7 @@ export default function LessonIndex() {
           <MainContent handleVideoEnded={handleVideoEnded} lesson={lesson} />
         </div>
       </MainArea>
-    </>
+    </div>
   );
 }
 
@@ -150,6 +186,33 @@ function MainArea({ children }: { children: React.ReactNode }) {
       className={`min-h-screen max-w-[1600px] flex  lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8`}
     >
       {children}
+    </div>
+  );
+}
+
+function LessonsList({
+  lessons,
+  currentLessonId,
+}: {
+  lessons: SidebarLesson[];
+  currentLessonId: number;
+}) {
+  return (
+    <div>
+      {lessons.map((lesson, index) => {
+        return (
+          <SidebarItem
+            id={lesson.id}
+            key={lesson.id}
+            name={lesson.name}
+            href={lesson.url}
+            completed={lesson.user_completed}
+            current={lesson.id === currentLessonId}
+            isFirst={index === 0}
+            isLast={index === lessons.length - 1}
+          />
+        );
+      })}
     </div>
   );
 }

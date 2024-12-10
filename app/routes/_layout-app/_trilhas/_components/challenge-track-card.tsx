@@ -6,9 +6,13 @@ import { ChallengeSteps } from "~/routes/_layout-app/_trilhas/_components/challe
 interface ChallengeTrackCardProps {
   challenge: ChallengeTrackable;
   userIsPro: boolean;
+  moduleNumber: number;
 }
 
-function ChallengeTrackCard({ challenge }: ChallengeTrackCardProps) {
+function ChallengeTrackCard({
+  challenge,
+  moduleNumber,
+}: ChallengeTrackCardProps) {
   return (
     <Card
       border="bright"
@@ -16,17 +20,27 @@ function ChallengeTrackCard({ challenge }: ChallengeTrackCardProps) {
       id={challenge.slug}
     >
       <div className="lg:basis-1/2 basis-full h-full aspect-video mb-4 md:mb-12">
-        <VideoHoverElement challenge={challenge} />
+        <VideoHoverElement moduleNumber={moduleNumber} challenge={challenge} />
       </div>
 
       <div className="lg:basis-1/2 basis-full">
-        <ChallengeSteps challengeSlug={challenge.slug} />
+        <ChallengeSteps
+          trackLessons={challenge.track_lessons}
+          challengeSlug={challenge.slug}
+          // solution={challenge.solution}
+        />
       </div>
     </Card>
   );
 }
 
-function VideoHoverElement({ challenge }: { challenge: ChallengeTrackable }) {
+function VideoHoverElement({
+  challenge,
+  moduleNumber,
+}: {
+  challenge: ChallengeTrackable;
+  moduleNumber: number;
+}) {
   return (
     <div className="aspect-video w-full h-full relative group/challenge bg-background-100 dark:bg-background-700 overflow-hidden rounded-lg">
       {challenge.image_url && (
@@ -44,10 +58,11 @@ function VideoHoverElement({ challenge }: { challenge: ChallengeTrackable }) {
         )}
       >
         <div className="flex flex-col items-center justify-center gap-2 w-full">
-          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive underline decoration-amber-300">
-            Mini Projeto
+          <h2 className=" text-center dark:text-gray-300 text-gray-600 font-cursive ">
+            {moduleNumber}.{" "}
+            <span className="underline decoration-amber-300">Projeto</span>
           </h2>
-          <h3 className="max-w-[65%] text-xl md:text-2xl font-lexend font-bold decoration-amber-400 text-center">
+          <h3 className="max-w-[75%] text-xl md:text-2xl font-lexend font-bold decoration-amber-400 text-center">
             {challenge.name}
           </h3>
         </div>

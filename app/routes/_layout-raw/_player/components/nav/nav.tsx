@@ -16,7 +16,7 @@ export default function Nav({
   titles: Title[];
 }) {
   return (
-    <div className="w-full max-w-[1600px] dark:bg-background-900 px-8 mx-auto py-6 flex justify-between  z-50">
+    <div className="w-full max-w-[1600px]  px-4 mx-auto py-6 pb-12 flex justify-between  z-50">
       <div className="flex gap-2 items-center dark:bg-background-800 rounded-lg py-2 px-6">
         <Link to="/">
           <CodanteLogo className="w-14 h-14" />

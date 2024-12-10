@@ -248,7 +248,7 @@ export default function ChallengeSlug() {
       current: location.pathname.includes("resolucao"),
     },
     {
-      name: "Código",
+      name: "Código Final",
       href: "codigo",
       isVisible: challenge.has_solution,
       icon: <BsCodeSlash />,
@@ -340,7 +340,7 @@ export default function ChallengeSlug() {
                           className={cn(
                             tab.current
                               ? "bg-background-150 dark:bg-background-800 dark:text-gray-50 text-gray-800 font-semibold"
-                              : "text-gray-500 hover:text-gray-700",
+                              : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-200",
                             "rounded-full px-3 py-2.5 text-sm flex items-center gap-2",
                           )}
                           aria-current={tab.current ? "page" : undefined}

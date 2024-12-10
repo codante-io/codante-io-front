@@ -25,7 +25,7 @@ export default function SidebarItem({
     <Link to={href}>
       <li
         id={`lesson-${id}`}
-        className="flex items-center gap-4  ml-2 pl-2 dark:hover:bg-background-700 hover:bg-background-150 rounded-xl group/lesson transition-colors"
+        className="flex items-center gap-4 dark:hover:bg-background-700 hover:bg-background-150 rounded-xl px-2 group/lesson"
       >
         <div className="relative py-[1.4rem]">
           {!isFirst && (
@@ -69,7 +69,7 @@ export default function SidebarItem({
         </div>
         <span
           className={cn(
-            "dark:text-gray-400 text-gray-600 dark:group-hover/lesson:text-white group-hover/lesson:text-background-700 decoration-[1px] underline-offset-1 text transition-colors",
+            "dark:text-gray-400 text-gray-600 dark:group-hover/lesson:text-white group-hover/lesson:text-background-700 decoration-[1px] underline-offset-1 text ",
             current && "font-semibold dark:text-white text-background-700",
           )}
         >
