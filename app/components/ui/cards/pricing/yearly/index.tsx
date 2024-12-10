@@ -5,7 +5,7 @@ import {
   yearlyPlanFeatures,
 } from "~/components/ui/cards/pricing/data";
 import PriceCard from "~/components/ui/cards/pricing/price-card";
-import PriceButtonPro from "~/components/ui/cards/pricing/pro/button";
+import PriceButtonPro from "~/components/ui/cards/pricing/yearly/button";
 import type { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
 import type { Coupon, Plan } from "~/lib/models/plan.server";
 
