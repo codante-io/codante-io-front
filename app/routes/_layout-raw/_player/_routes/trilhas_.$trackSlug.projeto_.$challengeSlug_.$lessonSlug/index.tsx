@@ -1,21 +1,27 @@
 import {
+  Form,
   useFetcher,
   useLoaderData,
   useNavigate,
   useOutletContext,
 } from "@remix-run/react";
 import { useState } from "react";
-import { getLesson } from "~/lib/models/lesson.server";
+import { getLesson, Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import { abort404 } from "~/lib/utils/responses.server";
-import MainContent from "../components/main-content";
-import Nav from "../components/nav/nav";
+import MainContent from "../../components/main-content";
+import Nav from "../../components/nav/nav";
 
 import makeTitles from "~/lib/features/player/makeTitles";
-import { getTrack } from "~/lib/models/track.server";
-import SidebarSection from "../components/sidebar/sidebar-section";
-import Sidebar from "../components/sidebar/sidebar";
-import { getChallenge } from "~/lib/models/challenge.server";
+import { ChallengeTrackable, getTrack, Track } from "~/lib/models/track.server";
+import SidebarSection from "../../components/sidebar/sidebar-section";
+import Sidebar from "../../components/sidebar/sidebar";
+import { Challenge, getChallenge } from "~/lib/models/challenge.server";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
+import FaqItem from "~/components/ui/faq-item";
+import SidebarSectionTitle from "../../components/sidebar/sidebar-section-title";
+import SidebarItem from "../../components/sidebar/sidebar-item";
 
 // export const meta = ({ data, params }: any) => {
 //   if (!data?.workshop) return {};
@@ -59,19 +65,16 @@ import { getChallenge } from "~/lib/models/challenge.server";
 //   ];
 // };
 
-function Readme() {
-  return <div>Olá mundo</div>;
-}
-
 async function getManualLesson(
   lessonSlug: string,
-  challengeSlug: any,
-  request,
+  challengeSlug: string,
+  request: Request,
 ) {
   if (lessonSlug === "01-informacoes-do-projeto") {
     const challenge = await getChallenge(challengeSlug, request);
     return {
       id: 9999,
+      slug: "01-informacoes-do-projeto",
       name: "Informações do Projeto",
       content: challenge.description,
     };
@@ -80,6 +83,7 @@ async function getManualLesson(
   if (lessonSlug === "02-participe-do-projeto") {
     return {
       id: 9999,
+      slug: "02-participe-do-projeto",
       name: "Participe do Projeto",
       description: "Aqui você encontra informações sobre como participar.",
     };
@@ -88,13 +92,35 @@ async function getManualLesson(
   if (lessonSlug === "03-submeta-sua-resolucao") {
     return {
       id: 9999,
+      slug: "03-submeta-sua-resolucao",
       name: "Submeta sua Resolução",
-      content:
-        "Aqui você encontra informações sobre como submeter sua resolução.",
     };
   }
 
   return null;
+}
+
+function checks(
+  track: Track | null,
+  challenge: ChallengeTrackable | null,
+  lesson: Lesson | null,
+) {
+  if (!track || !challenge || !lesson) {
+    return abort404();
+  }
+
+  // if challenge is not in track, return 404
+  if (!track.trackables.find((t) => t.id === challenge.id)) {
+    return abort404();
+  }
+
+  // if lesson is not in challenge, return 404
+  if (
+    "track_lessons" in challenge &&
+    !challenge.solution.lessons.find((l) => l.id === lesson.id)
+  ) {
+    return abort404();
+  }
 }
 
 export async function loader({
@@ -115,43 +141,23 @@ export async function loader({
 
   const manualLesson = await getManualLesson(
     params.lessonSlug,
-    challenge?.slug,
+    params.challengeSlug,
     request,
   );
 
   if (manualLesson) {
     return {
-      challenge,
+      challenge: challenge as ChallengeTrackable,
       track,
       titles,
       lesson: manualLesson,
     };
   }
 
-  if (!track || !challenge || !lesson) {
-    return abort404();
-  }
-
-  if (!track || !challenge) {
-    return abort404();
-  }
-
-  // if challenge is not in track, return 404
-  if (!track.trackables.find((t) => t.id === challenge.id)) {
-    return abort404();
-  }
-
-  // if lesson is not in challenge, return 404
-  if (
-    "track_lessons" in challenge &&
-    !challenge.solution.lessons.find((l) => l.id === lesson.id)
-  ) {
-    console.log(lesson.id, l);
-    return abort404();
-  }
+  checks(track, challenge, lesson);
 
   return {
-    challenge,
+    challenge: challenge as ChallengeTrackable,
     track,
     lesson,
     titles,
@@ -162,11 +168,40 @@ export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const { user } = useOutletContext<{ user: User | null }>();
   const challenge = loaderData.challenge;
-  const lesson = loaderData.lesson;
+  let lesson = loaderData.lesson!;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const titles = loaderData.titles;
   if (!titles) return null;
+
+  const solutionLessons = challenge.solution.lessons;
+  const solutionLessonSections = challenge.solution.lesson_sections;
+
+  if (lesson.slug === "01-informacoes-do-projeto") {
+    lesson = {
+      id: 997,
+      name: "Informações do Projeto",
+      content: lesson.content,
+    };
+  }
+
+  if (lesson.slug === "02-participe-do-projeto") {
+    lesson = {
+      id: 998,
+      name: "Participe do Projeto",
+      description: "Aqui você encontra informações sobre como participar.",
+    };
+  }
+
+  if (lesson.slug === "03-submeta-sua-resolucao") {
+    lesson = {
+      id: 999,
+      name: "Submeta sua Resolução",
+      content: <FaqItem question="Oi" answer="tudobem" />,
+    };
+  }
+
+  console.log(lesson.id);
 
   return (
     <div className="grid relative bg-background-900">
@@ -177,20 +212,50 @@ export default function LessonIndex() {
           setIsSidebarOpen={setIsSidebarOpen}
         >
           <SidebarSection
-            name="Resolva o Projeto"
+            name="⭐ Resolva o Projeto"
             lessons={
               challenge && "track_lessons" in challenge
                 ? challenge.track_lessons
                 : []
             }
-            currentLessonId={90909}
+            currentLessonId={lesson.id}
           />
 
-          <SidebarSection
-            currentLessonId={90909}
-            lessons={challenge.solution.lessons}
-            name="Resolução"
-          />
+          <div>
+            <SidebarSectionTitle className="border-b border-b-background-800 mb-4 pl-4 ">
+              Resolução
+            </SidebarSectionTitle>
+
+            {solutionLessonSections &&
+              solutionLessonSections.map((section) => {
+                const sectionLessons = section.lesson_ids.map((id) =>
+                  solutionLessons.find((l) => l.id === id),
+                );
+                return (
+                  <div key={section.name} className="">
+                    <h4 className="px-3 py-2 text-gray-600 dark:text-gray-500 mt-4 text-sm font-light">
+                      {section.name}
+                    </h4>
+                    {sectionLessons &&
+                      sectionLessons.map((sectionLesson, index) => {
+                        if (!sectionLesson) return null;
+                        return (
+                          <SidebarItem
+                            id={sectionLesson.id}
+                            key={sectionLesson.id}
+                            name={sectionLesson.name}
+                            href={sectionLesson.url}
+                            completed={sectionLesson.user_completed}
+                            isFirst={index === 0}
+                            current={lesson.id === sectionLesson.id}
+                            isLast={index === sectionLessons.length - 1}
+                          />
+                        );
+                      })}
+                  </div>
+                );
+              })}
+          </div>
         </Sidebar>
 
         <div
@@ -202,7 +267,6 @@ export default function LessonIndex() {
             handleVideoEnded={() => {}}
             isSidebarOpen={isSidebarOpen}
             lesson={lesson}
-            // nextLessonPath={nextLessonPath}
             user={user}
             setIsSidebarOpen={setIsSidebarOpen}
           />

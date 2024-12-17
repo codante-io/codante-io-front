@@ -24,7 +24,7 @@ export type Track = {
 
 export type WorkshopTrackable = {
   id: number;
-  type: "App\\Models\\Workshop";
+  type: "workshop";
   name: string;
   slug: string;
   video_url: string;
@@ -42,7 +42,7 @@ export type ChallengeTrackable = {
   slug: string;
   image_url: string;
   challengeUser: ChallengeUser;
-  type: "App\\Models\\Challenge";
+  type: "challenge";
   track_lessons: SidebarLesson[];
   solution: {
     lessons: SidebarLesson[];
@@ -87,6 +87,13 @@ export type TrackablePivot = {
   description: string;
   section_id: number;
 };
+
+// type guard
+export function isWorkshopTrackable(
+  workshop: WorkshopTrackable | ChallengeTrackable,
+): workshop is WorkshopTrackable {
+  return (workshop as WorkshopTrackable).lessons !== undefined;
+}
 
 export async function getTracks(): Promise<Array<Track>> {
   const axios = await createAxios();

@@ -7,6 +7,7 @@ import ToggleColorMode from "~/components/ui/toggle-color-mode";
 import { User } from "~/lib/models/user.server";
 import CodanteLogo from "../codante-logo";
 import { Title } from "../sidebar/types";
+import { Fragment } from "react";
 
 export default function Nav({
   user,
@@ -26,10 +27,9 @@ export default function Nav({
         {titles.map((title, index) => {
           const isLast = index === titles.length - 1;
           return (
-            <>
+            <Fragment key={title.type}>
               <Link
                 to={title.url}
-                key={title.type}
                 className="group border-b-2 border-b-transparent hover:border-b-brand transition-colors"
               >
                 <span className="dark:text-gray-500 text-xs group-hover:dark:text-brand-300 transition-colors">
@@ -40,7 +40,7 @@ export default function Nav({
                 </h2>
               </Link>
               {!isLast && <ChevronRight className="w-8 h-8 text-gray-600 " />}
-            </>
+            </Fragment>
           );
         })}
       </div>

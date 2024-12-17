@@ -62,6 +62,7 @@ export default function LessonsList({
                   {section.sectionName}
                 </SidebarSectionTitle>
                 {section.lessons.map((lesson, index) => {
+                  if (!lesson) return null;
                   return (
                     <SidebarItem
                       id={lesson.id}

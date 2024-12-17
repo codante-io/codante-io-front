@@ -16,7 +16,7 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <>
-        <Navbar user={{ user }} />
+        <Navbar user={user} />
         <div className="min-h-screen">
           <NotFound />
         </div>

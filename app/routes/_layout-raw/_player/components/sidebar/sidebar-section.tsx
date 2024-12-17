@@ -13,10 +13,11 @@ export default function SidebarSection({
   lessons,
   currentLessonId,
 }: SidebarSectionProps) {
+  console.log(currentLessonId, lessons);
   return (
     <div className="last:pb-20  ">
       {name && (
-        <SidebarSectionTitle className="border-b border-b-background-800 mb-4 pl-4 bg-transparent">
+        <SidebarSectionTitle className="border-b border-b-background-800 mb-4 pl-4">
           {name}
         </SidebarSectionTitle>
       )}

@@ -39,7 +39,7 @@ export type Workshop = {
   is_standalone: boolean;
   lesson_sections?: {
     name: string;
-    lesson_ids: string[];
+    lesson_ids: number[];
   }[];
   lessons: SidebarLesson[];
   tags: Tag[];

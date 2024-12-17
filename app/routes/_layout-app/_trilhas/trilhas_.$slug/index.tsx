@@ -1,5 +1,4 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   useActionData,
@@ -7,25 +6,24 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import { getTrack, toggleTrackableCompleted } from "~/lib/models/track.server";
+import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import type {
   ChallengeTrackable,
   WorkshopTrackable,
 } from "~/lib/models/track.server";
-import type { Challenge } from "~/lib/models/challenge.server";
+import { getTrack, toggleTrackableCompleted } from "~/lib/models/track.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 
-import ChallengeTrackCard from "~/routes/_layout-app/_trilhas/_components/challenge-track-card";
-import WorkshopTrackCard from "~/routes/_layout-app/_trilhas/_components/workshop-track-card";
-import { cn } from "~/lib/utils/cn";
 import { useEffect } from "react";
+import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
-import useLazyLoading from "~/lib/hooks/use-lazy-loading";
-import NotFound from "~/components/features/error-handling/not-found";
-import { Error500 } from "~/components/features/error-handling/500";
+import { cn } from "~/lib/utils/cn";
 import { abort404 } from "~/lib/utils/responses.server";
+import ChallengeTrackCard from "~/routes/_layout-app/_trilhas/_components/challenge-track-card";
+import WorkshopTrackCard from "~/routes/_layout-app/_trilhas/_components/workshop-track-card";
 
 export const meta = ({ data, params }: any) => {
   const title = `Trilha: ${data?.track?.name} | Codante.io`;
@@ -166,10 +164,10 @@ function TrackCard({
       />
     );
   }
-  if (trackItem?.type.includes("challenge")) {
+  if (trackItem?.type === "challenge") {
     return (
       <ChallengeTrackCard
-        challenge={trackItem as Challenge}
+        challenge={trackItem}
         userIsPro={userIsPro}
         moduleNumber={moduleNumber}
       />

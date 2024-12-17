@@ -51,7 +51,7 @@ export default function makeTitles(config: Config): Title[] {
       {
         type: "challenge",
         title: config.challenge.name,
-        subTitle: "Mini-Projeto",
+        subTitle: "Resolução do Mini Projeto",
         url: `/mini-projetos/${config.challenge.slug}`,
       },
     ];

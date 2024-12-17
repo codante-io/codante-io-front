@@ -72,7 +72,7 @@ export default function Navbar({
   user,
   hideLinks,
 }: {
-  user: User;
+  user: User | null;
   hideLinks?: boolean;
 }) {
   return (
@@ -141,7 +141,7 @@ function DesktopNavbar({
   user,
   hideLinks,
 }: {
-  user: User;
+  user: User | null;
   hideLinks?: boolean;
 }) {
   const { colorMode } = useColorMode();
@@ -247,9 +247,11 @@ function DesktopNavbar({
                                 "bg-background-150 dark:bg-background-600"
                               } group font-medium flex w-full items-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
                               onClick={() => {
-                                item.external
-                                  ? window.open(item.href, "_blank")
-                                  : navigate(item.href);
+                                if (item.external) {
+                                  window.open(item.href, "_blank");
+                                } else {
+                                  navigate(item.href);
+                                }
                               }}
                             >
                               {item.name}
@@ -306,7 +308,7 @@ function MobileNavbar({
   hideLinks,
 }: {
   open: boolean;
-  user: User;
+  user: User | null;
   hideLinks?: boolean;
 }) {
   const matches = useMatches();
@@ -381,13 +383,16 @@ function MobileNavbar({
                           {({ active }) => (
                             <button
                               className={`${
-                                active &&
-                                "bg-background-100 dark:bg-background-700"
+                                active
+                                  ? "bg-background-100 dark:bg-background-700"
+                                  : ""
                               } group font-medium flex w-full items-center justify-center rounded-md px-2 py-2 text-sm text-gray-700 dark:text-gray-300`}
                               onClick={() => {
-                                item.external
-                                  ? window.open(item.href, "_blank")
-                                  : navigate(item.href);
+                                if (item.external) {
+                                  window.open(item.href, "_blank");
+                                } else {
+                                  navigate(item.href);
+                                }
                               }}
                             >
                               {item.name}

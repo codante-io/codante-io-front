@@ -1,6 +1,6 @@
 export type SidebarSection = {
   name: string;
-  lesson_ids: string[];
+  lesson_ids: number[];
 };
 
 export type SidebarLesson = {

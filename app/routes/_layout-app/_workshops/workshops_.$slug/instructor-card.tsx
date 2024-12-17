@@ -42,7 +42,10 @@ export function InstructorCardContent({
   links,
 }: {
   bio: string;
-  links: any[];
+  links?: {
+    url: string;
+    type: string;
+  }[];
 }) {
   const SocialIcons: { [key: string]: IconType } = {
     github: AiFillGithub,
