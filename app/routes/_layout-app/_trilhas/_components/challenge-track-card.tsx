@@ -1,5 +1,4 @@
 import { Card } from "~/components/ui/cards/card";
-import { cn } from "~/lib/utils/cn";
 import { ChallengeTrackable } from "~/lib/models/track.server";
 import { ChallengeSteps } from "~/routes/_layout-app/_trilhas/_components/challenge-steps";
 
