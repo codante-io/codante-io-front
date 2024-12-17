@@ -31,19 +31,6 @@ export function ChallengeSteps({
   challengeSlug,
 }: ChallengeLessonsProps) {
   const ref = useRef<HTMLDivElement>(null);
-  // const { nextLessonId, lastCompletedLessonId } = {
-  //   nextLessonId: 2,
-  //   lastCompletedLessonId: 1,
-  // };
-
-  // useEffect(() => {
-  //   if (lastCompletedLessonId) {
-  //     ref.current?.scrollTo({
-  //       top: ref.current.offsetTop,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // }, [lastCompletedLessonId]);
 
   return (
     <div className="relative h-full group/lessons">
@@ -51,7 +38,7 @@ export function ChallengeSteps({
         ref={ref}
         className={cn(
           "inset-0",
-          "group-hover/lessons:overflow-y-auto overflow-y-hidden h-80 lg:h-auto lg:absolute group-hover/lessons:dark:scrollbar scrollbar-transparent flex flex-col gap-8",
+          "group-hover/lessons:overflow-y-auto overflow-y-hidden lg:h-auto lg:absolute group-hover/lessons:dark:scrollbar scrollbar-transparent flex flex-col gap-8",
         )}
       >
         <ul className="list-none mr-4">
@@ -68,33 +55,6 @@ export function ChallengeSteps({
               />
             );
           })}
-          {/* <SidebarItem
-            id={9999}
-            name="Descrição do Projeto"
-            current={false}
-            completed={false}
-            href={`/trilhas/trackSlug/projeto/${challengeSlug}/aula/999`}
-            isFirst={true}
-            isLast={false}
-          />
-          <SidebarItem
-            id={9999}
-            name="Participe do Projeto"
-            current={false}
-            completed={false}
-            href={`/trilhas/trackSlug/projeto/${challengeSlug}/aula/999`}
-            isFirst={false}
-            isLast={false}
-          />
-          <SidebarItem
-            id={9999}
-            name="Submeta sua Resolução"
-            current={false}
-            completed={false}
-            href={`/trilhas/trackSlug/projeto/${challengeSlug}/aula/999`}
-            isFirst={false}
-            isLast={true}
-          /> */}
         </ul>
 
         {/* Aulas do Challenge */}

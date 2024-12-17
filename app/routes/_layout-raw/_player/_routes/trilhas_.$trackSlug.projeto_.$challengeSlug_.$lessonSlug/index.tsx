@@ -22,6 +22,9 @@ import { Button } from "~/components/ui/button";
 import FaqItem from "~/components/ui/faq-item";
 import SidebarSectionTitle from "../../components/sidebar/sidebar-section-title";
 import SidebarItem from "../../components/sidebar/sidebar-item";
+import JoinChallengeSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/join-challenge-section";
+import Step from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/step";
+import LessonSubmitSolution from "./lesson-submit-solution";
 
 // export const meta = ({ data, params }: any) => {
 //   if (!data?.workshop) return {};
@@ -73,25 +76,16 @@ async function getManualLesson(
   if (lessonSlug === "01-informacoes-do-projeto") {
     const challenge = await getChallenge(challengeSlug, request);
     return {
-      id: 9999,
+      id: 990,
       slug: "01-informacoes-do-projeto",
       name: "Informações do Projeto",
       content: challenge.description,
     };
   }
 
-  if (lessonSlug === "02-participe-do-projeto") {
+  if (lessonSlug === "02-submeta-sua-resolucao") {
     return {
-      id: 9999,
-      slug: "02-participe-do-projeto",
-      name: "Participe do Projeto",
-      description: "Aqui você encontra informações sobre como participar.",
-    };
-  }
-
-  if (lessonSlug === "03-submeta-sua-resolucao") {
-    return {
-      id: 9999,
+      id: 991,
       slug: "03-submeta-sua-resolucao",
       name: "Submeta sua Resolução",
     };
@@ -179,25 +173,18 @@ export default function LessonIndex() {
 
   if (lesson.slug === "01-informacoes-do-projeto") {
     lesson = {
-      id: 997,
+      id: 990,
       name: "Informações do Projeto",
       content: lesson.content,
     };
   }
 
-  if (lesson.slug === "02-participe-do-projeto") {
-    lesson = {
-      id: 998,
-      name: "Participe do Projeto",
-      description: "Aqui você encontra informações sobre como participar.",
-    };
-  }
-
   if (lesson.slug === "03-submeta-sua-resolucao") {
     lesson = {
-      id: 999,
+      id: 991,
       name: "Submeta sua Resolução",
-      content: <FaqItem question="Oi" answer="tudobem" />,
+      content: <LessonSubmitSolution />,
+      description: "Siga os passos para participar e submeter seu projeto.",
     };
   }
 
@@ -269,6 +256,7 @@ export default function LessonIndex() {
             lesson={lesson}
             user={user}
             setIsSidebarOpen={setIsSidebarOpen}
+            showCommentSection={false}
           />
         </div>
       </MainArea>

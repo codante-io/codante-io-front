@@ -11,12 +11,14 @@ type MainContentProps = {
   };
   handleVideoEnded: (lessonId: number) => void;
   isSidebarOpen: boolean;
+  showCommentSection?: boolean;
 };
 
 export default function MainContent({
   lesson,
   handleVideoEnded,
   isSidebarOpen,
+  showCommentSection = true,
 }: MainContentProps) {
   const pathname = useLocation().pathname;
   return (
@@ -58,12 +60,14 @@ export default function MainContent({
           </p>
           <LessonContent content={lesson.content} />
         </section>
-        <CommentSection
-          comments={lesson.comments}
-          commentableId={lesson.id}
-          commentableType="Lesson"
-          redirectTo={pathname}
-        />
+        {showCommentSection && (
+          <CommentSection
+            comments={lesson.comments}
+            commentableId={lesson.id}
+            commentableType="Lesson"
+            redirectTo={pathname}
+          />
+        )}
       </section>
     </div>
   );
