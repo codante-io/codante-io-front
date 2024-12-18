@@ -1,5 +1,5 @@
 import { useLoaderData, useOutletContext } from "@remix-run/react";
-import { getLesson } from "~/lib/models/lesson.server";
+import { getLesson, Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import { userJoinedWorkshop } from "~/lib/models/workshop.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
@@ -73,7 +73,7 @@ export default function LessonIndex() {
 
   return (
     <FullPlayer
-      lesson={lesson}
+      lesson={lesson as Lesson}
       lessonSections={lessonSections}
       lessons={lessons}
       titles={titles}

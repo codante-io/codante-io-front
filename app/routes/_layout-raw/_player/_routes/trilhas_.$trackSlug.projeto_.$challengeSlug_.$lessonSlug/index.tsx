@@ -68,15 +68,13 @@ import LessonSubmitSolution from "./lesson-submit-solution";
 //   ];
 // };
 
-export interface ManualLesson {
-  type: "ManualLesson";
-  video_url: string;
-  available_to: string;
-  id: string;
-  thumbnail_url: string;
+export type ManualLesson = {
+  id: number;
   name: string;
-  // other properties...
-}
+  slug?: string;
+  content: string | React.JSX.Element;
+  description: string;
+};
 
 async function getManualLesson(lessonSlug: string) {
   if (lessonSlug === "01-informacoes-do-projeto") {
@@ -281,8 +279,6 @@ export default function LessonIndex() {
             handleVideoEnded={() => {}}
             isSidebarOpen={isSidebarOpen}
             lesson={lesson}
-            user={user}
-            setIsSidebarOpen={setIsSidebarOpen}
             showCommentSection={false}
           />
         </div>
