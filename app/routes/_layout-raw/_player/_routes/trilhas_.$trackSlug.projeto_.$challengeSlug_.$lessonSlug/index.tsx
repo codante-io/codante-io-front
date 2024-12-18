@@ -1,12 +1,6 @@
-import {
-  Form,
-  useFetcher,
-  useLoaderData,
-  useNavigate,
-  useOutletContext,
-} from "@remix-run/react";
-import { useState } from "react";
+import { useLoaderData, useOutletContext } from "@remix-run/react";
 import axios from "axios";
+import { useState } from "react";
 
 import { getLesson, Lesson } from "~/lib/models/lesson.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
@@ -15,25 +9,19 @@ import MainContent from "../../components/main-content";
 import Nav from "../../components/nav/nav";
 
 import makeTitles from "~/lib/features/player/makeTitles";
-import { ChallengeTrackable, getTrack, Track } from "~/lib/models/track.server";
-import SidebarSection from "../../components/sidebar/sidebar-section";
-import { user as getUser } from "~/lib/services/auth.server";
-import Sidebar from "../../components/sidebar/sidebar";
 import {
   Challenge,
   getChallenge,
-  getChallengeUsers,
   userJoinedChallenge,
 } from "~/lib/models/challenge.server";
-import { Input } from "~/components/ui/input";
-import { Button } from "~/components/ui/button";
-import FaqItem from "~/components/ui/faq-item";
-import SidebarSectionTitle from "../../components/sidebar/sidebar-section-title";
-import SidebarItem from "../../components/sidebar/sidebar-item";
-import JoinChallengeSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/join-challenge-section";
-import Step from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/step";
-import LessonSubmitSolution from "./lesson-submit-solution";
+import { ChallengeTrackable, getTrack, Track } from "~/lib/models/track.server";
+import { user as getUser } from "~/lib/services/auth.server";
 import { userSteps } from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
+import Sidebar from "../../components/sidebar/sidebar";
+import SidebarItem from "../../components/sidebar/sidebar-item";
+import SidebarSection from "../../components/sidebar/sidebar-section";
+import SidebarSectionTitle from "../../components/sidebar/sidebar-section-title";
+import LessonSubmitSolution from "./lesson-submit-solution";
 
 // export const meta = ({ data, params }: any) => {
 //   if (!data?.workshop) return {};
@@ -135,12 +123,7 @@ export async function loader({
   );
 
   const titles = makeTitles({ challenge: trackableChallenge, track });
-
-  const manualLesson = await getManualLesson(
-    params.lessonSlug,
-    params.challengeSlug,
-    request,
-  );
+  const manualLesson = await getManualLesson(params.lessonSlug);
 
   if (manualLesson) {
     const user = (await getUser({ request })) as User | null;
@@ -172,10 +155,11 @@ export async function loader({
     };
   }
 
-  checks(track, trackableChallenge, lesson);
+  checks(track, trackableChallenge as ChallengeTrackable, lesson);
 
   return {
     challenge: null,
+    steps: null,
     trackableChallenge: trackableChallenge as ChallengeTrackable,
     track,
     lesson,
@@ -212,7 +196,6 @@ export default function LessonIndex() {
     lesson = {
       id: 991,
       name: "Submeta sua Resolução",
-
       content: <LessonSubmitSolution challenge={challenge} steps={steps} />,
       description: "Siga os passos para participar e submeter seu projeto.",
     };

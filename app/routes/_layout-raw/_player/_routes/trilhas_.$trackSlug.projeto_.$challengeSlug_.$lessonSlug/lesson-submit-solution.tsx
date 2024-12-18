@@ -20,6 +20,7 @@ registerPlugin(FilePondPluginFileValidateType);
 interface LessonSubmitSolutionProps {
   challenge: {
     slug: string;
+    repository_name: string;
   };
   steps: UserStep[];
 }
