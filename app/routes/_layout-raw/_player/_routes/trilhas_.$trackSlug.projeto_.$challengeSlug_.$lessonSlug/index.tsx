@@ -16,7 +16,10 @@ import {
 } from "~/lib/models/challenge.server";
 import { ChallengeTrackable, getTrack, Track } from "~/lib/models/track.server";
 import { user as getUser } from "~/lib/services/auth.server";
-import { userSteps } from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
+import {
+  UserStep,
+  userSteps,
+} from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 import Sidebar from "../../components/sidebar/sidebar";
 import SidebarItem from "../../components/sidebar/sidebar-item";
 import SidebarSection from "../../components/sidebar/sidebar-section";
@@ -64,6 +67,16 @@ import LessonSubmitSolution from "./lesson-submit-solution";
 //     { property: "twitter:image:alt", content: data.lesson?.name },
 //   ];
 // };
+
+export interface ManualLesson {
+  type: "ManualLesson";
+  video_url: string;
+  available_to: string;
+  id: string;
+  thumbnail_url: string;
+  name: string;
+  // other properties...
+}
 
 async function getManualLesson(lessonSlug: string) {
   if (lessonSlug === "01-informacoes-do-projeto") {
@@ -172,9 +185,9 @@ export default function LessonIndex() {
   const { user } = useOutletContext<{ user: User | null }>();
   const trackableChallenge =
     loaderData.trackableChallenge as ChallengeTrackable;
-  let lesson = loaderData.lesson!;
+  let lesson = loaderData.lesson as Lesson | ManualLesson;
   const challenge = loaderData.challenge as Challenge;
-  const steps = loaderData.steps;
+  const steps = loaderData.steps as UserStep[];
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const titles = loaderData.titles;
@@ -187,9 +200,11 @@ export default function LessonIndex() {
   if (lesson.slug === "01-informacoes-do-projeto") {
     lesson = {
       id: 990,
+      slug: "01-informacoes-do-projeto",
       name: "Informações do Projeto",
       content: challenge.description,
-    };
+      description: "",
+    } as ManualLesson;
   }
 
   if (lesson.slug === "02-submeta-sua-resolucao") {

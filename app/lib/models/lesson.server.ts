@@ -1,3 +1,4 @@
+import React from "react";
 import type { Comment } from "./comments.server";
 import { createAxios } from "~/lib/services/axios.server";
 
@@ -6,7 +7,7 @@ export type Lesson = {
   workshop_id: string;
   name: string;
   description?: string;
-  content?: string;
+  content?: string | React.JSX.Element;
   slug: string;
   duration_in_seconds: number;
   created_at: string;

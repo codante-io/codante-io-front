@@ -4,11 +4,10 @@ import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
 import type { Lesson } from "~/lib/models/lesson.server";
 import { cn } from "~/lib/utils/cn";
+import { ManualLesson } from "../_routes/trilhas_.$trackSlug.projeto_.$challengeSlug_.$lessonSlug";
 
 type MainContentProps = {
-  lesson: Lesson & {
-    content: string | JSX.Element;
-  };
+  lesson: Lesson | ManualLesson;
   handleVideoEnded: (lessonId: number) => void;
   isSidebarOpen: boolean;
   showCommentSection?: boolean;
@@ -30,7 +29,7 @@ export default function MainContent({
       <section className="relative  flex flex-col gap-10 pb-10">
         <section>
           <div>
-            {lesson.type === "video" && (
+            {"type" in lesson && lesson.type === "video" && (
               <VimeoPlayer
                 vimeoUrl={lesson.video_url || ""}
                 available_to={lesson.available_to}
@@ -47,7 +46,7 @@ export default function MainContent({
             id="video-title"
             className={cn(
               "mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend",
-              !lesson.video_url && "mt-0",
+              "video_url" in lesson && !lesson.video_url && "mt-0",
             )}
           >
             {lesson?.name}
@@ -58,9 +57,9 @@ export default function MainContent({
           >
             {lesson?.description}
           </p>
-          <LessonContent content={lesson.content} />
+          <LessonContent content={lesson.content!} />
         </section>
-        {showCommentSection && (
+        {"comments" in lesson && showCommentSection && (
           <CommentSection
             comments={lesson.comments}
             commentableId={lesson.id}
