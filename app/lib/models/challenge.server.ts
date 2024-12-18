@@ -209,7 +209,7 @@ export async function joinChallenge({
     const axios = await createAxios(request);
     await axios.post(`/challenges/${slug}/join`);
     return { success: "Sua participação no mini projeto foi registrada." };
-  } catch (err) {
+  } catch {
     return { error: "Não foi possível registrar sua participação." };
   }
 }
@@ -278,7 +278,7 @@ export async function updateUserJoinedDiscord({
     });
 
     return { success: "Passo concluído." };
-  } catch (err) {
+  } catch {
     return {
       error:
         "Não foi possível concluir este passo. Por favor, tente novamente.",
@@ -303,7 +303,7 @@ export async function updateChallengeCompleted({
     });
 
     return { success: "Parabéns! Você concluiu esse mini-projeto." };
-  } catch (err) {
+  } catch {
     return {
       error:
         "Não foi possível concluir este passo. Por favor, tente novamente.",
