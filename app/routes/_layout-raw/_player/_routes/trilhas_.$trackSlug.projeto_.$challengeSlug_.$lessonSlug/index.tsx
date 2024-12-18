@@ -212,6 +212,7 @@ export default function LessonIndex() {
     lesson = {
       id: 991,
       name: "Submeta sua Resolução",
+
       content: <LessonSubmitSolution challenge={challenge} steps={steps} />,
       description: "Siga os passos para participar e submeter seu projeto.",
     };

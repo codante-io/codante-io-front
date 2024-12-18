@@ -11,54 +11,133 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import Step from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/step";
-import {
-  UserStep,
-  UserStepsIds,
-} from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 import "./filepond-style.css";
+import { UserStep } from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 
 registerPlugin(FilePondPluginFileValidateType);
 
-function getButtonStatus(
+// Types
+interface LessonSubmitSolutionProps {
+  challenge: {
+    slug: string;
+  };
+  steps: UserStep[];
+}
+
+interface FetcherResponse {
+  error?: string;
+  success?: string;
+}
+
+// Constants
+
+const API_ACTION = "/api/challenge";
+
+// Utility Functions
+const getButtonStatus = (
   formData: FormData | undefined,
   stepId: string,
   fetcherState: "idle" | "submitting" | "loading",
-) {
+): "idle" | "submitting" | "loading" => {
   if (!formData || fetcherState === "idle") return fetcherState;
-
   const submittedStepId = formData.get("stepId")?.toString();
   return submittedStepId === stepId ? fetcherState : "idle";
-}
+};
 
-export default function LessonSubmitSolution({
-  challenge,
-  steps,
-}: {
-  challenge: any;
-  steps: UserStep[];
-}) {
-  const [hasDeployUrl, setHasDeployUrl] = useState(true);
-
-  function handleToggleHasDeploy() {
-    setHasDeployUrl((prev) => !prev);
-  }
-  const action = "/api/challenge";
-  const fetcher = useFetcher<{ error?: string; success?: string }>();
-  const location = useLocation();
-
+// Custom Hook
+const useFormSubmission = () => {
+  const fetcher = useFetcher<FetcherResponse>();
   const { showSuccessToast, showErrorToast } = useToasterWithSound();
 
   useEffect(() => {
     if (fetcher.data?.error) {
-      showErrorToast(fetcher.data?.error);
+      showErrorToast(fetcher.data.error);
     }
-
     if (fetcher.data?.success) {
-      showSuccessToast(fetcher.data?.success);
+      showSuccessToast(fetcher.data.success);
     }
   }, [fetcher.data, showErrorToast, showSuccessToast]);
 
-  const githubRepoUrl = "server-actions-no-nextjs";
+  return fetcher;
+};
+
+// Component
+export default function LessonSubmitSolution({
+  challenge,
+  steps,
+}: LessonSubmitSolutionProps) {
+  const [hasDeployUrl, setHasDeployUrl] = useState(true);
+  const location = useLocation();
+  const fetcher = useFormSubmission();
+
+  const handleToggleHasDeploy = () => setHasDeployUrl((prev) => !prev);
+
+  const DeployUrlForm = () => (
+    <>
+      <Input
+        placeholder="URL do seu deploy"
+        name="submission-url"
+        id="submission-url"
+        className="pr-1 dark:bg-background-900 w-full"
+      />
+      <div className="flex justify-between gap-1 items-start">
+        <Step.PrimaryButton
+          stepId="submit-challenge"
+          status={getButtonStatus(
+            fetcher.formData,
+            "submit-challenge",
+            fetcher.state,
+          )}
+        >
+          Submeter
+        </Step.PrimaryButton>
+        <Button
+          variant="link"
+          type="button"
+          className="text-xs pr-2 pl-2 dark:text-gray-500"
+          onClick={handleToggleHasDeploy}
+        >
+          Não tem deploy?
+        </Button>
+      </div>
+    </>
+  );
+
+  const ImageUploadForm = () => (
+    <div>
+      <p className="font-light text-gray-400 mb-4">
+        <InfoIcon className="w-4 h-4 inline-block mr-1" />
+        Envie o screenshot da sua aplicação por aqui. A imagem idealmente deverá
+        possuir 1920x1080 pixels. Uma ferramenta útil e gratuita é o{" "}
+        <a
+          className="hover:underline"
+          target="_blank"
+          href="https://screenshot.rocks"
+          rel="noreferrer"
+        >
+          Screenshot.rocks
+        </a>
+        . Você poderá substituir a imagem depois.
+      </p>
+      <FilePond
+        labelIdle="Arraste a imagem ou <span class='filepond--label-action'>clique aqui</span>"
+        labelThousandsSeparator="."
+        storeAsFile={true}
+        required
+        acceptedFileTypes={["image/*"]}
+        name="submission_image"
+        credits={false}
+      />
+      <Button
+        variant="link"
+        type="button"
+        className="text-xs pr-2 pl-2 dark:text-gray-500 "
+        onClick={handleToggleHasDeploy}
+      >
+        Possui Deploy?
+      </Button>
+    </div>
+  );
 
   return (
     <div className="max-w-prose pt-10">
@@ -72,7 +151,7 @@ export default function LessonSubmitSolution({
             "upcoming"
           }
         >
-          <fetcher.Form method="post" action={action}>
+          <fetcher.Form method="post" action={API_ACTION}>
             <input type="hidden" name="redirectTo" value={location.pathname} />
             <input type="hidden" name="stepId" value="connect-github" />
             <Step.PrimaryButton
@@ -96,7 +175,7 @@ export default function LessonSubmitSolution({
             "upcoming"
           }
         >
-          <fetcher.Form method="post" action={action}>
+          <fetcher.Form method="post" action={API_ACTION}>
             <input type="hidden" name="slug" value={challenge.slug} />
             <input type="hidden" name="stepId" value="join-challenge" />
             <Step.PrimaryButton
@@ -120,7 +199,7 @@ export default function LessonSubmitSolution({
             "upcoming"
           }
         >
-          <fetcher.Form action={action}>
+          <fetcher.Form action={API_ACTION}>
             <section className="flex gap-2 items-center mt-2">
               <DiscordButton>
                 <BsDiscord className="w-3 h-3 mr-2" />
@@ -147,7 +226,7 @@ export default function LessonSubmitSolution({
               {steps.find((step) => step.id === "verify-fork")?.status ===
               "current" ? (
                 <Link
-                  to={`https://github.com/codante-io/${githubRepoUrl}`}
+                  to={`https://github.com/codante-io/${challenge.repository_name}`}
                   target="_blank"
                   className="text-brand hover:underline"
                 >
@@ -164,7 +243,7 @@ export default function LessonSubmitSolution({
             "upcoming"
           }
         >
-          <fetcher.Form method="post" action={action}>
+          <fetcher.Form method="post" action={API_ACTION}>
             <input type="hidden" name="slug" value={challenge.slug} />
             <input type="hidden" name="stepId" value="verify-fork" />
             <Step.PrimaryButton
@@ -191,92 +270,13 @@ export default function LessonSubmitSolution({
           <fetcher.Form
             method="post"
             encType="multipart/form-data" // important!
-            action={action}
+            action={API_ACTION}
             className="mt-4"
           >
             <input type="hidden" name="slug" value={challenge.slug} />
             <input type="hidden" name="stepId" value="submit-challenge" />
-            {hasDeployUrl && (
-              <>
-                <Input
-                  placeholder="URL do seu deploy"
-                  name="submission-url"
-                  id="submission-url"
-                  className="pr-1 dark:bg-background-900 w-full"
-                />
-
-                <div className="flex justify-between gap-1">
-                  <Step.PrimaryButton
-                    stepId="submit-challenge"
-                    status={getButtonStatus(
-                      fetcher.formData,
-                      "submit-challenge",
-                      fetcher.state,
-                    )}
-                  >
-                    Submeter
-                  </Step.PrimaryButton>
-                  <Button
-                    variant={"link"}
-                    type="button"
-                    className="text-xs pr-2 pl-2 dark:text-gray-500"
-                    onClick={handleToggleHasDeploy}
-                  >
-                    Não tem deploy?
-                  </Button>
-                </div>
-              </>
-            )}
-            {!hasDeployUrl && (
-              <div>
-                <p className="font-light text-gray-400 mb-4">
-                  <span>
-                    <InfoIcon className="w-4 h-4 inline-block mr-1" />
-                  </span>
-                  Envie o screenshot da sua aplicação por aqui. A imagem
-                  idealmente deverá possuir 1920x1080 pixels. Uma ferramenta
-                  útil e gratuita é o{" "}
-                  <a
-                    className="hover:underline"
-                    target="_blank"
-                    href="https://screenshot.rocks"
-                    rel="noreferrer"
-                  >
-                    Screenshot.rocks
-                  </a>
-                  . Você poderá substituir a imagem depois.
-                </p>
-                <FilePond
-                  labelIdle="Arraste a imagem ou <span class='filepond--label-action'>clique aqui</span>"
-                  labelThousandsSeparator="."
-                  storeAsFile={true}
-                  required
-                  acceptedFileTypes={["image/*"]}
-                  name={"submission_image"}
-                  credits={false}
-                />
-                <div className="flex justify-between gap-1">
-                  <Step.PrimaryButton
-                    stepId={"submit-challenge-without-deploy" as UserStepsIds}
-                    status={getButtonStatus(
-                      fetcher.formData,
-                      "submit-challenge-without-deploy",
-                      fetcher.state,
-                    )}
-                  >
-                    Submeter
-                  </Step.PrimaryButton>
-                  <Button
-                    variant={"link"}
-                    type="button"
-                    className="text-xs pr-2 pl-2 dark:text-gray-500"
-                    onClick={handleToggleHasDeploy}
-                  >
-                    Possui deploy?
-                  </Button>
-                </div>
-              </div>
-            )}
+            {hasDeployUrl && <DeployUrlForm />}
+            {!hasDeployUrl && <ImageUploadForm />}
           </fetcher.Form>
         </Step>
         <Step
@@ -289,7 +289,7 @@ export default function LessonSubmitSolution({
             "upcoming"
           }
         >
-          <fetcher.Form method="post" action="/api/challenge">
+          <fetcher.Form method="post" action={API_ACTION}>
             <input type="hidden" name="slug" value={challenge.slug} />
             <input type="hidden" name="stepId" value="finish-challenge" />
             <Step.PrimaryButton
