@@ -15,6 +15,7 @@ type JoinChallengeSectionProps = {
   steps: UserStep[];
   user?: any;
   slug: string;
+  action?: string;
   githubRepoUrl: string;
 };
 
@@ -23,6 +24,7 @@ export default function JoinChallengeSection({
   steps,
   user,
   slug,
+  action = undefined,
   githubRepoUrl,
 }: JoinChallengeSectionProps) {
   return (
@@ -33,7 +35,7 @@ export default function JoinChallengeSection({
         id="connect-github"
         status={steps.find((step) => step.id === "connect-github")?.status!}
       >
-        <Step.Form user={user} slug={slug}>
+        <Step.Form user={user} slug={slug} action={action}>
           <Step.PrimaryButton stepId="connect-github">
             Conectar Github
           </Step.PrimaryButton>
@@ -45,7 +47,7 @@ export default function JoinChallengeSection({
         description="Participe. É 100% gratuito!"
         status={steps.find((step) => step.id === "join-challenge")?.status!}
       >
-        <Step.Form user={user} slug={slug}>
+        <Step.Form user={user} slug={slug} action={action}>
           <Step.PrimaryButton stepId="join-challenge">
             Participar
           </Step.PrimaryButton>
@@ -57,7 +59,7 @@ export default function JoinChallengeSection({
         description="Tire dúvidas e conecte-se com outras pessoas que estão fazendo esse Mini Projeto."
         status={steps.find((step) => step.id === "join-discord")?.status!}
       >
-        <Step.Form user={user} slug={slug}>
+        <Step.Form user={user} slug={slug} action={action}>
           <section className="flex gap-2 items-center mt-2">
             <DiscordButton>
               <BsDiscord className="w-3 h-3 mr-2" />
@@ -98,7 +100,7 @@ export default function JoinChallengeSection({
         }
         status={steps.find((step) => step.id === "verify-fork")?.status!}
       >
-        <Step.Form user={user} slug={slug}>
+        <Step.Form user={user} slug={slug} action={action}>
           <Step.PrimaryButton stepId="verify-fork">
             VerificarFork
           </Step.PrimaryButton>
@@ -119,7 +121,7 @@ export default function JoinChallengeSection({
         last
         status={steps.find((step) => step.id === "finish-challenge")?.status!}
       >
-        <Step.Form user={user} slug={slug}>
+        <Step.Form user={user} slug={slug} action={action}>
           <Step.PrimaryButton
             onClick={(e) =>
               party.confetti(e.target as HTMLElement, {

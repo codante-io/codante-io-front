@@ -6,8 +6,10 @@ import {
   useOutletContext,
 } from "@remix-run/react";
 import { useState } from "react";
+import axios from "axios";
+
 import { getLesson, Lesson } from "~/lib/models/lesson.server";
-import type { User } from "~/lib/models/user.server";
+import type { ChallengeUser, User } from "~/lib/models/user.server";
 import { abort404 } from "~/lib/utils/responses.server";
 import MainContent from "../../components/main-content";
 import Nav from "../../components/nav/nav";
@@ -15,8 +17,14 @@ import Nav from "../../components/nav/nav";
 import makeTitles from "~/lib/features/player/makeTitles";
 import { ChallengeTrackable, getTrack, Track } from "~/lib/models/track.server";
 import SidebarSection from "../../components/sidebar/sidebar-section";
+import { user as getUser } from "~/lib/services/auth.server";
 import Sidebar from "../../components/sidebar/sidebar";
-import { Challenge, getChallenge } from "~/lib/models/challenge.server";
+import {
+  Challenge,
+  getChallenge,
+  getChallengeUsers,
+  userJoinedChallenge,
+} from "~/lib/models/challenge.server";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import FaqItem from "~/components/ui/faq-item";
@@ -25,6 +33,7 @@ import SidebarItem from "../../components/sidebar/sidebar-item";
 import JoinChallengeSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/join-challenge-section";
 import Step from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/steps/step";
 import LessonSubmitSolution from "./lesson-submit-solution";
+import { userSteps } from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/build-steps.server";
 
 // export const meta = ({ data, params }: any) => {
 //   if (!data?.workshop) return {};
@@ -68,25 +77,19 @@ import LessonSubmitSolution from "./lesson-submit-solution";
 //   ];
 // };
 
-async function getManualLesson(
-  lessonSlug: string,
-  challengeSlug: string,
-  request: Request,
-) {
+async function getManualLesson(lessonSlug: string) {
   if (lessonSlug === "01-informacoes-do-projeto") {
-    const challenge = await getChallenge(challengeSlug, request);
     return {
       id: 990,
       slug: "01-informacoes-do-projeto",
       name: "Informações do Projeto",
-      content: challenge.description,
     };
   }
 
   if (lessonSlug === "02-submeta-sua-resolucao") {
     return {
       id: 991,
-      slug: "03-submeta-sua-resolucao",
+      slug: "02-submeta-sua-resolucao",
       name: "Submeta sua Resolução",
     };
   }
@@ -127,11 +130,11 @@ export async function loader({
   const track = await getTrack(params.trackSlug, request);
   const lesson = await getLesson(params.lessonSlug, request);
 
-  const challenge = track?.trackables.find(
+  const trackableChallenge = track?.trackables.find(
     (t) => t.slug === params.challengeSlug,
   );
 
-  const titles = makeTitles({ challenge, track });
+  const titles = makeTitles({ challenge: trackableChallenge, track });
 
   const manualLesson = await getManualLesson(
     params.lessonSlug,
@@ -140,18 +143,40 @@ export async function loader({
   );
 
   if (manualLesson) {
+    const user = (await getUser({ request })) as User | null;
+
+    let challengeUser: ChallengeUser | undefined = undefined;
+    if (user) {
+      try {
+        challengeUser = await userJoinedChallenge(
+          params.challengeSlug,
+          request,
+        );
+      } catch (err: any) {
+        if (axios.isAxiosError(err)) {
+          if (err?.response?.status) challengeUser = undefined;
+        }
+      }
+    }
+
+    const challenge = await getChallenge(params.challengeSlug, request);
+
+    const steps = userSteps(user, challengeUser);
     return {
-      challenge: challenge as ChallengeTrackable,
+      challenge,
+      steps,
+      trackableChallenge,
       track,
       titles,
       lesson: manualLesson,
     };
   }
 
-  checks(track, challenge, lesson);
+  checks(track, trackableChallenge, lesson);
 
   return {
-    challenge: challenge as ChallengeTrackable,
+    challenge: null,
+    trackableChallenge: trackableChallenge as ChallengeTrackable,
     track,
     lesson,
     titles,
@@ -161,34 +186,37 @@ export async function loader({
 export default function LessonIndex() {
   const loaderData = useLoaderData<typeof loader>();
   const { user } = useOutletContext<{ user: User | null }>();
-  const challenge = loaderData.challenge;
+  const trackableChallenge =
+    loaderData.trackableChallenge as ChallengeTrackable;
   let lesson = loaderData.lesson!;
+  const challenge = loaderData.challenge as Challenge;
+  const steps = loaderData.steps;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const titles = loaderData.titles;
   if (!titles) return null;
 
-  const solutionLessons = challenge.solution.lessons;
-  const solutionLessonSections = challenge.solution.lesson_sections;
+  const solutionLessons = trackableChallenge.solution.lessons;
+  const solutionLessonSections = trackableChallenge.solution.lesson_sections;
 
+  // ================= Manual Lessons =================
   if (lesson.slug === "01-informacoes-do-projeto") {
     lesson = {
       id: 990,
       name: "Informações do Projeto",
-      content: lesson.content,
+      content: challenge.description,
     };
   }
 
-  if (lesson.slug === "03-submeta-sua-resolucao") {
+  if (lesson.slug === "02-submeta-sua-resolucao") {
     lesson = {
       id: 991,
       name: "Submeta sua Resolução",
-      content: <LessonSubmitSolution />,
+      content: <LessonSubmitSolution challenge={challenge} steps={steps} />,
       description: "Siga os passos para participar e submeter seu projeto.",
     };
   }
-
-  console.log(lesson.id);
+  // ===================================================
 
   return (
     <div className="grid relative bg-background-900">
@@ -201,8 +229,8 @@ export default function LessonIndex() {
           <SidebarSection
             name="⭐ Resolva o Projeto"
             lessons={
-              challenge && "track_lessons" in challenge
-                ? challenge.track_lessons
+              trackableChallenge && "track_lessons" in trackableChallenge
+                ? trackableChallenge.track_lessons
                 : []
             }
             currentLessonId={lesson.id}

@@ -13,7 +13,6 @@ export default function SidebarSection({
   lessons,
   currentLessonId,
 }: SidebarSectionProps) {
-  console.log(currentLessonId, lessons);
   return (
     <div className="last:pb-20  ">
       {name && (
