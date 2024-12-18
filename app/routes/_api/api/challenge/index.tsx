@@ -15,7 +15,6 @@ export async function action({ request }: { request: any }) {
   // const lessonId = params.lessonId;
 
   const formData = await request.formData();
-  const url = new URL(request.url);
 
   const intent = formData.get("intent") as string;
   const redirectTo = formData.get("redirectTo") as string;
@@ -45,22 +44,18 @@ export async function action({ request }: { request: any }) {
     case "submit-challenge":
       // get the url from the form
       //eslint-disable-next-line
-      const lele = await submitChallenge(
+      return await submitChallenge(
         request,
         slug,
         formData.get("submission-url") as string,
       ); //eslint-disable-line
-      console.log(lele);
-      return lele;
     case "submit-challenge-without-deploy":
       //eslint-disable-next-line
-      const lili = await submitChallengeWithoutDeploy(
+      return await submitChallengeWithoutDeploy(
         request,
         slug,
         formData.get("submission_image"),
       );
-      console.log(lili);
-      return lili;
     default:
       return null;
   }

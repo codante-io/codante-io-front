@@ -3,7 +3,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 import type { StepStatus, UserStepsIds } from "../../../../build-steps.server";
 import type { FormProps } from "@remix-run/react";
-import { Form, useLocation, useNavigation } from "@remix-run/react";
+import { Form, useLocation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Card } from "~/components/ui/cards/card";
 
@@ -35,7 +35,7 @@ type StepFormProps = {
 
 type StepPrimaryButtonProps = {
   stepId: UserStepsIds;
-  status: "idle" | "loading" | "submitting";
+  status?: "idle" | "loading" | "submitting";
   children: ReactNode;
 
   onClick?: EventHandler<React.MouseEvent>;
