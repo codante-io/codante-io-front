@@ -66,7 +66,11 @@ export default function PriceButtonPro({
 
     // wait 2 seconds to show the toast (wait promise)
     setTimeout(() => {
-      fetcher.submit({ coupon }, { method: "post", action: "/plans" });
+      const formData = new FormData();
+      if (coupon) {
+        formData.append("coupon", coupon);
+      }
+      fetcher.submit(formData, { method: "post", action: "/plans" });
     }, 2000);
   }
 

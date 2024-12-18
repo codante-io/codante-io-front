@@ -450,7 +450,7 @@ function ProgressivePractice() {
             <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
-                Muita gente acha que quando está assitindo um curso e
+                Muita gente acha que quando está assistindo um curso e
                 programando junto com o professor, está praticando de forma{" "}
                 <span className="color-underline decoration-brand-500">
                   ativa
