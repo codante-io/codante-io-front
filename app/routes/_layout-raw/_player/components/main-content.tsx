@@ -22,11 +22,14 @@ export default function MainContent({
   const pathname = useLocation().pathname;
   return (
     <div
-      className={`pb-10  transition-opacity ${
-        isSidebarOpen ? "opacity-30" : "opacity-100"
-      }`}
+      className={cn(
+        `pb-10 transition-opacity ${
+          isSidebarOpen ? "opacity-30" : "opacity-100"
+        }`,
+        "w-full",
+      )}
     >
-      <section className="relative  flex flex-col gap-10 pb-10">
+      <section className="relative flex flex-col gap-10 pb-10">
         <section>
           <div>
             {"type" in lesson && lesson.type === "video" && (
