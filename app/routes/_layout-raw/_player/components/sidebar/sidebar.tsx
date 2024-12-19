@@ -17,7 +17,7 @@ export default function Sidebar({
     <div className="relative">
       <div
         ref={ref}
-        className={`sticky top-10 z-10 pb-12  duration-500 transition-all  lg:opacity-100 lg:flex  lg:visible flex flex-col  h-[calc(100vh)] overflow-auto scrollbar-transparent scrollbar pr-4 `}
+        className={`sticky top-10 z-10 pb-[160px]  duration-500 transition-all  lg:opacity-100 lg:flex  lg:visible flex flex-col  h-[calc(100vh)] overflow-auto scrollbar-transparent scrollbar pr-4 `}
       >
         <div className="relative  ">
           <div ref={ref} className="inset-0 flex flex-col gap-8 ">

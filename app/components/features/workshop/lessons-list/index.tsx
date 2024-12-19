@@ -30,55 +30,33 @@ export default function LessonsList({
   return (
     <ol className="">
       <div className={cn("inset-0", "flex flex-col gap-8")}>
-        {/* Se não há sections, listamos as aulas */}
-        {!sectionsWithLessons && (
-          <div>
-            {lessons.map((lesson, index) => {
-              return (
-                <SidebarItem
-                  id={lesson.id}
-                  key={lesson.id}
-                  name={lesson.name}
-                  href={lesson.url}
-                  completed={lesson.user_completed}
-                  current={lesson.id == nextLessonId}
-                  isFirst={index === 0}
-                  isLast={index === lessons.length - 1}
-                />
-              );
-            })}
-          </div>
-        )}
-
-        {/* Se não há sections, listamos as aulas */}
-        {sectionsWithLessons &&
-          sectionsWithLessons.map((section) => {
-            return (
-              <div>
-                <SidebarSectionTitle
-                  className="border-b border-b-background-800 mb-4 pl-4 bg-transparent"
-                  key={section.sectionName}
-                >
-                  {section.sectionName}
-                </SidebarSectionTitle>
-                {section.lessons.map((lesson, index) => {
-                  if (!lesson) return null;
-                  return (
-                    <SidebarItem
-                      id={lesson.id}
-                      key={lesson.id}
-                      name={lesson.name}
-                      href={lesson.url}
-                      completed={lesson.user_completed}
-                      current={lesson.id == nextLessonId}
-                      isFirst={index === 0}
-                      isLast={index === section.lessons.length - 1}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
+        {sectionsWithLessons?.map((section) => {
+          return (
+            <div>
+              <SidebarSectionTitle
+                className="border-b border-b-background-800 mb-4 pl-4 bg-transparent relative"
+                key={section.sectionName}
+              >
+                {section.sectionName}
+              </SidebarSectionTitle>
+              {section.lessons.map((lesson, index) => {
+                if (!lesson) return null;
+                return (
+                  <SidebarItem
+                    id={lesson.id}
+                    key={lesson.id}
+                    name={lesson.name}
+                    href={lesson.url}
+                    completed={lesson.user_completed}
+                    current={lesson.id == nextLessonId}
+                    isFirst={index === 0}
+                    isLast={index === section.lessons.length - 1}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     </ol>
   );

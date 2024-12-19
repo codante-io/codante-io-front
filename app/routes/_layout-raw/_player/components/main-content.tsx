@@ -46,7 +46,7 @@ export default function MainContent({
             id="video-title"
             className={cn(
               "mt-12 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend",
-              "video_url" in lesson && !lesson.video_url && "mt-0",
+              "type" in lesson && lesson.type !== "video" && "mt-0",
             )}
           >
             {lesson?.name}
