@@ -54,7 +54,12 @@ export default function FullPlayer({
 
   return (
     <PlayerGrid>
-      <Nav user={user} titles={titles} />
+      <Nav
+        user={user}
+        titles={titles}
+        setIsSidebarOpen={setIsSidebarOpen}
+        isSidebarOpen={isSidebarOpen}
+      />
       <MainArea>
         <Sidebar
           isSidebarOpen={isSidebarOpen}
@@ -67,7 +72,7 @@ export default function FullPlayer({
               );
               return (
                 <div key={section.name} className="">
-                  <SidebarSectionTitle className="border-b border-b-background-800 mb-4 pl-4">
+                  <SidebarSectionTitle className="pl-4 mb-4 border-b border-b-background-800">
                     {section.name}
                   </SidebarSectionTitle>
                   {sectionLessons &&

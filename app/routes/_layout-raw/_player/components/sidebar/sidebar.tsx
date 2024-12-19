@@ -1,4 +1,5 @@
 import { useClickOutside } from "@mantine/hooks";
+import { cn } from "~/lib/utils/cn";
 
 type SidebarProps = {
   children: React.ReactNode;
@@ -8,21 +9,64 @@ type SidebarProps = {
 
 export default function Sidebar({
   children,
-  // isSidebarOpen,
+  isSidebarOpen = true,
   setIsSidebarOpen,
 }: SidebarProps) {
-  const ref = useClickOutside(() => setIsSidebarOpen(false));
-
   return (
-    <div className="relative">
-      <div
-        ref={ref}
-        className={`sticky top-10 z-10 pb-[160px]  duration-500 transition-all  lg:opacity-100 lg:flex  lg:visible flex flex-col  h-[calc(100vh)] overflow-auto scrollbar-transparent scrollbar pr-4 `}
+    <>
+      {/* Mobile Navbar */}
+      <MobileSidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
       >
-        <div className="relative  ">
-          <div ref={ref} className="inset-0 flex flex-col gap-8 ">
-            {children}
-          </div>
+        {children}
+      </MobileSidebar>
+      {/* Desktop Navbar */}
+      <DesktopSidebar>{children}</DesktopSidebar>
+    </>
+  );
+}
+
+function DesktopSidebar({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className={cn(
+        "top-10 z-10 pb-[160px]  duration-500 transition-all h-[calc(100vh)] overflow-auto scrollbar-transparent scrollbar pr-4",
+        "hidden", // mobile
+        "lg:opacity-100 lg:flex lg:visible   lg:flex-col lg:sticky", // desktop
+      )}
+    >
+      <div className="relative ">
+        <div className="inset-0 flex flex-col gap-8 ">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function MobileSidebar({
+  children,
+  isSidebarOpen,
+  setIsSidebarOpen,
+}: {
+  children: React.ReactNode;
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: (value: boolean) => void;
+}) {
+  const ref = useClickOutside(() => setIsSidebarOpen(false));
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "top-10 z-10 pb-[160px] duration-500 transition-all h-[calc(100vh)] overflow-auto overscroll-contain scrollbar-transparent scrollbar pr-4",
+        "absolute top-0 z-50 bg-background-900 w-[320px] border-r border-r-background-700 ", // mobile
+        isSidebarOpen && "translate-x-0 visible",
+        !isSidebarOpen && "-translate-x-full invisible", // mobile
+        "lg:hidden", // desktop
+      )}
+    >
+      <div className="relative ">
+        <div ref={ref} className="inset-0 flex flex-col gap-8 ">
+          {children}
         </div>
       </div>
     </div>

@@ -1,10 +1,18 @@
+import { cn } from "~/lib/utils/cn";
+
 export default function PlayerGrid({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid max-w-[1600px] mx-auto bg-background-900 grid-cols-1">
+    <div
+      className={cn(
+        "mx-auto w-full bg-background-900",
+        "", // mobile
+        "lg:grid", // desktop
+      )}
+    >
       {children}
     </div>
   );
