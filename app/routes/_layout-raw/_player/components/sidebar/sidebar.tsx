@@ -1,16 +1,19 @@
-import { useClickOutside } from "@mantine/hooks";
+import { useEffect, useRef } from "react";
+import { useOnClickOutside } from "~/lib/hooks/useOnClickOutside";
 import { cn } from "~/lib/utils/cn";
 
 type SidebarProps = {
   children: React.ReactNode;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (value: boolean) => void;
+  mobileNavSidebarButtonRef: any;
 };
 
 export default function Sidebar({
   children,
   isSidebarOpen = true,
   setIsSidebarOpen,
+  mobileNavSidebarButtonRef,
 }: SidebarProps) {
   return (
     <>
@@ -18,6 +21,7 @@ export default function Sidebar({
       <MobileSidebar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        mobileNavSidebarButtonRef={mobileNavSidebarButtonRef}
       >
         {children}
       </MobileSidebar>
@@ -47,15 +51,31 @@ function MobileSidebar({
   children,
   isSidebarOpen,
   setIsSidebarOpen,
+  mobileNavSidebarButtonRef,
 }: {
   children: React.ReactNode;
   isSidebarOpen: boolean;
   setIsSidebarOpen: (value: boolean) => void;
+  mobileNavSidebarButtonRef: any;
 }) {
-  const ref = useClickOutside(() => setIsSidebarOpen(false));
+  const ref = useRef(null);
+
+  useOnClickOutside(
+    ref,
+    () => setIsSidebarOpen(false),
+    undefined,
+    mobileNavSidebarButtonRef,
+  );
+
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else document.body.style.overflow = "scroll";
+    return () => {};
+  }, [isSidebarOpen]);
+
   return (
     <div
-      ref={ref}
       className={cn(
         "top-10 z-10 pb-[160px] duration-500 transition-all h-[calc(100vh)] overflow-auto overscroll-contain scrollbar-transparent scrollbar pr-4",
         "absolute top-0 z-50 bg-background-900 w-[320px] border-r border-r-background-700 ", // mobile
@@ -65,7 +85,10 @@ function MobileSidebar({
       )}
     >
       <div className="relative ">
-        <div ref={ref} className="inset-0 flex flex-col gap-8 ">
+        <div
+          className="inset-0 flex flex-col gap-8"
+          ref={isSidebarOpen ? ref : null}
+        >
           {children}
         </div>
       </div>

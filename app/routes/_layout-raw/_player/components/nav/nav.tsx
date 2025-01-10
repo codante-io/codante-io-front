@@ -21,16 +21,19 @@ export default function Nav({
   titles,
   setIsSidebarOpen,
   isSidebarOpen,
+  mobileNavSidebarButtonRef,
 }: {
   user: User | null;
   titles: Title[];
   setIsSidebarOpen: (isOpen: boolean) => void;
   isSidebarOpen: boolean;
+  mobileNavSidebarButtonRef: any;
 }) {
   return (
     <div className="w-full max-w-[1600px] px-4 mx-auto py-6 lg:pb-12 z-50">
       {/* Mobile Navbar */}
       <MobileNav
+        mobileNavSidebarButtonRef={mobileNavSidebarButtonRef} // isso é usado para o useclickoutside
         titles={titles}
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
@@ -45,18 +48,22 @@ function MobileNav({
   titles,
   setIsSidebarOpen,
   isSidebarOpen,
+  mobileNavSidebarButtonRef,
 }: {
   titles: Title[];
   setIsSidebarOpen: (isOpen: boolean) => void;
   isSidebarOpen: boolean;
+  mobileNavSidebarButtonRef: any;
 }) {
   return (
     <div className="lg:hidden">
       <div className="flex items-center gap-2 px-3 py-2 rounded-lg dark:bg-background-800">
-        {/* <Link to="/"><CodanteLogo className="w-12 h-12" /></Link> */}
         <MenuIcon
+          ref={mobileNavSidebarButtonRef}
           className="w-8 h-8 cursor-pointer shrink-0"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          onClick={() => {
+            setIsSidebarOpen(!isSidebarOpen);
+          }}
         />
         <div className="h-10 mx-2 border-r-2 border-r-background-700"></div>
 

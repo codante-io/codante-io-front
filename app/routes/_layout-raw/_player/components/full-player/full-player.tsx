@@ -8,7 +8,7 @@ import SidebarItem from "../sidebar/sidebar-item";
 import SidebarSectionTitle from "../sidebar/sidebar-section-title";
 import { SidebarLesson, SidebarSection, Title } from "../sidebar/types";
 import { User } from "~/lib/models/user.server";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Lesson } from "~/lib/models/lesson.server";
 
 type FullPlayerProps = {
@@ -30,6 +30,7 @@ export default function FullPlayer({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const [nextLesson, setNextLesson] = useState<SidebarLesson | null>(null);
+  const mobileNavSidebarButtonRef = useRef(null);
 
   useEffect(() => {
     const currentIndex = lessons.findIndex((l) => l.id === lesson.id);
@@ -38,6 +39,7 @@ export default function FullPlayer({
     } else {
       setNextLesson(null);
     }
+    setIsSidebarOpen(false);
   }, [lesson, lessons]);
 
   async function handleVideoEnded(lessonId: number) {
@@ -55,6 +57,7 @@ export default function FullPlayer({
   return (
     <PlayerGrid>
       <Nav
+        mobileNavSidebarButtonRef={mobileNavSidebarButtonRef}
         user={user}
         titles={titles}
         setIsSidebarOpen={setIsSidebarOpen}
@@ -64,6 +67,7 @@ export default function FullPlayer({
         <Sidebar
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
+          mobileNavSidebarButtonRef={mobileNavSidebarButtonRef}
         >
           {lessonSections &&
             lessonSections.map((section) => {
