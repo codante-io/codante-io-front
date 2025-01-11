@@ -48,7 +48,7 @@ export default function MainContent({
           <h1
             id="video-title"
             className={cn(
-              "mt-12 text-2xl lg:mt-0 font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend",
+              "mt-6 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl font-lexend",
               "type" in lesson && lesson.type !== "video" && "mt-0",
             )}
           >

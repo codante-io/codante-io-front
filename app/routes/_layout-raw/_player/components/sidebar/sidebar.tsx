@@ -78,7 +78,7 @@ function MobileSidebar({
     <div
       className={cn(
         "top-10 z-10 pb-[160px] duration-500 transition-all h-[calc(100vh)] overflow-auto overscroll-contain scrollbar-transparent scrollbar pr-4",
-        "absolute top-0 z-50 bg-background-900 w-[320px] border-r border-r-background-700 ", // mobile
+        "absolute top-0 z-50 bg-background-50 dark:bg-background-900 w-[320px] border-r border-r-background-700 ", // mobile
         isSidebarOpen && "translate-x-0 visible",
         !isSidebarOpen && "-translate-x-full invisible", // mobile
         "lg:hidden", // desktop

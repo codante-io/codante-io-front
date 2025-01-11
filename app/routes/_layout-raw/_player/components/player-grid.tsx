@@ -8,7 +8,7 @@ export default function PlayerGrid({
   return (
     <div
       className={cn(
-        "mx-auto w-full bg-background-900",
+        "mx-auto w-full dark:bg-background-900 bg-background-50",
         "", // mobile
         "lg:grid", // desktop
       )}

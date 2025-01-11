@@ -14,7 +14,7 @@ interface Track extends ConfigItem {
 }
 
 interface Config {
-  workshop?: ConfigItem;
+  workshop?: ConfigItem & { lessons: ConfigItem[] };
   challenge?: ConfigItem;
   track?: Track;
 }
@@ -74,8 +74,8 @@ export default function makeTitles(config: Config): Title[] {
       {
         type: "workshop",
         title: config.workshop.name,
-        subTitle: `${moduleNumber}. Módulo`,
-        url: `/trilhas/${config.track.slug}/modulo-${moduleNumber}`,
+        subTitle: `Módulo ${moduleNumber}`,
+        url: `/trilhas/${config.track.slug}/modulo/${config.workshop.slug}/${config.workshop.lessons[0].slug}`,
       },
     ];
   }

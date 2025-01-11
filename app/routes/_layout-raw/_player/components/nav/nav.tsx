@@ -57,15 +57,15 @@ function MobileNav({
 }) {
   return (
     <div className="lg:hidden">
-      <div className="flex items-center gap-2 px-3 py-2 rounded-lg dark:bg-background-800">
+      <div className="flex items-center gap-2 px-3 py-2 rounded-lg dark:bg-background-800 bg-background-150">
         <MenuIcon
           ref={mobileNavSidebarButtonRef}
-          className="w-8 h-8 cursor-pointer shrink-0"
+          className="w-8 h-8 text-gray-600 cursor-pointer dark:text-white shrink-0"
           onClick={() => {
             setIsSidebarOpen(!isSidebarOpen);
           }}
         />
-        <div className="h-10 mx-2 border-r-2 border-r-background-700"></div>
+        <div className="h-10 mx-2 border-r-2 dark:border-r-background-700 border-r-gray-600"></div>
 
         {titles.map((title, index) => {
           const isLast = index === titles.length - 1;
@@ -81,10 +81,10 @@ function MobileNav({
                       )}
                     >
                       <div className="flex flex-col">
-                        <span className="text-xs transition-colors dark:text-gray-500 group-hover:dark:text-brand-300">
+                        <span className="text-xs text-gray-500 transition-colors group-hover:dark:text-brand-300">
                           {title.subTitle}
                         </span>
-                        <h2 className="text-sm font-semibold leading-tight text-gray-400 transition-colors font-lexend group-hover:text-white">
+                        <h2 className="text-sm font-semibold leading-tight text-gray-600 transition-colors dark:text-gray-400 font-lexend group-hover:text-white">
                           {title.title}
                         </h2>
                       </div>
@@ -100,12 +100,12 @@ function MobileNav({
                         <Link
                           key={dropdownTitle.type}
                           to={dropdownTitle.url}
-                          className="flex flex-col px-4 py-2 rounded-lg hover:bg-background-800"
+                          className="flex flex-col px-4 py-2 rounded-lg hover:bg-background-150 dark:hover:bg-background-800"
                         >
-                          <span className="text-xs dark:text-gray-500">
+                          <span className="text-xs text-gray-500">
                             {dropdownTitle.subTitle}
                           </span>
-                          <span className="text-sm font-semibold leading-tight text-gray-400">
+                          <span className="text-sm font-semibold leading-tight text-gray-600 dark:text-gray-400">
                             {dropdownTitle.title}
                           </span>
                         </Link>
@@ -126,11 +126,11 @@ function MobileNav({
 function DesktopNav({ titles, user }: { titles: Title[]; user: User | null }) {
   return (
     <div className="hidden lg:justify-between lg:items-center lg:flex">
-      <div className="flex items-center gap-2 px-6 py-2 rounded-lg dark:bg-background-800">
+      <div className="flex items-center gap-2 px-6 py-2 rounded-lg dark:bg-background-800 bg-background-150">
         <Link to="/">
           <CodanteLogo className="w-14 h-14" />
         </Link>
-        <div className="h-10 mx-4 border-r-2 border-r-background-700"></div>
+        <div className="h-10 mx-4 border-r-2 dark:border-r-background-700 border-r-gray-600"></div>
 
         {titles.map((title, index) => {
           const isLast = index === titles.length - 1;
@@ -143,10 +143,10 @@ function DesktopNav({ titles, user }: { titles: Title[]; user: User | null }) {
                   !isLast && "hidden lg:block",
                 )}
               >
-                <span className="text-xs transition-colors dark:text-gray-500 group-hover:dark:text-brand-300">
+                <span className="text-xs text-gray-500 transition-colors group-hover:dark:text-brand-300">
                   {title.subTitle}
                 </span>
-                <h2 className="-mt-1 font-semibold text-gray-400 transition-colors font-lexend group-hover:text-white ">
+                <h2 className="-mt-1 font-semibold text-gray-700 transition-colors group-hover:text-gray-800 dark:text-gray-400 font-lexend dark:group-hover:text-white ">
                   {title.title}
                 </h2>
               </Link>

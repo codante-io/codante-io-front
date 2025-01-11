@@ -10,7 +10,7 @@ export default function SidebarSectionTitle({
   return (
     <h3
       className={cn(
-        `text-lg bg-background-900 font-lexend pb-2 font-semibold z-20 sticky top-0 text-background-700 dark:text-gray-300`,
+        `text-lg dark:bg-background-900 bg-background-50 font-lexend pb-2 font-semibold z-20 sticky top-0 text-gray-700 dark:text-gray-300`,
         className,
       )}
     >

@@ -25,13 +25,13 @@ export default function SidebarItem({
     <Link to={href}>
       <li
         id={`lesson-${id}`}
-        className="flex items-center gap-4  ml-2 pl-2 dark:hover:bg-background-700 hover:bg-background-150 rounded-xl group/lesson transition-colors"
+        className="flex items-center gap-4 pl-2 ml-2 transition-colors dark:hover:bg-background-700 hover:bg-background-150 rounded-xl group/lesson"
       >
         <div className="relative py-[1.4rem]">
           {!isFirst && (
             <div
               className={
-                "absolute h-[23%] top-0 left-[calc(50%-1px)] w-[2px] rounded-b-full dark:bg-background-600 bg-background-600"
+                "absolute h-[23%] top-0 left-[calc(50%-1px)] w-[2px] rounded-b-full dark:bg-background-600 bg-background-300"
               }
             />
           )}
@@ -46,12 +46,12 @@ export default function SidebarItem({
           ) : (
             <div className="relative">
               {current && (
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full dark:bg-white bg-background-600 opacity-75"></span>
+                <span className="absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping dark:bg-white bg-background-600"></span>
               )}
 
               <div
                 className={cn(
-                  "w-3 h-3 rounded-full dark:bg-background-600 bg-background-600",
+                  "w-3 h-3 rounded-full dark:bg-background-600 bg-background-400",
                   completed && "dark:bg-emerald-600 bg-emerald-600",
                   current && "dark:bg-white bg-background-600 scale-125 ",
                 )}
@@ -62,7 +62,7 @@ export default function SidebarItem({
           {!isLast && (
             <div
               className={
-                "absolute h-[23%] bottom-0 left-[calc(50%-1px)] w-[2px] rounded-t-full dark:bg-background-600 bg-background-600"
+                "absolute h-[23%] bottom-0 left-[calc(50%-1px)] w-[2px] rounded-t-full dark:bg-background-600 bg-background-300"
               }
             />
           )}

@@ -76,7 +76,7 @@ export default function FullPlayer({
               );
               return (
                 <div key={section.name} className="">
-                  <SidebarSectionTitle className="pl-4 mb-4 border-b border-b-background-800">
+                  <SidebarSectionTitle className="pl-4 mb-4 border-b dark:border-b-background-800">
                     {section.name}
                   </SidebarSectionTitle>
                   {sectionLessons &&

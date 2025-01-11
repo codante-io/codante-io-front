@@ -112,8 +112,11 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: #17212b;
     border-radius: 4px;
+  }
+
+  .dark .scrollbar::-webkit-scrollbar-thumb {
+    background: #17212b;
   }
 
   ::-webkit-scrollbar {
