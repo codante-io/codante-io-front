@@ -10,7 +10,6 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import React from "react";
 import { Toaster } from "react-hot-toast";
 import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
 import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
@@ -167,6 +166,7 @@ export default function App() {
               "bg-background-50 dark:bg-background-800 dark:text-gray-50",
           }}
         />
+
         {getPublicEnv("NODE_ENV") !== "production" && (
           <div className="fixed z-50 w-20 py-2 font-bold text-center text-blue-700 bg-blue-100 rounded-full bottom-2 left-2">
             <span className="block sm:hidden">xs</span>

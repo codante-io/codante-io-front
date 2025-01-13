@@ -9,7 +9,7 @@ export type PlanFeaturesByCategory = {
 }[];
 
 export type PlanDetails = {
-  name: "Gratuito" | "Vitalício";
+  name: "Gratuito" | "Vitalício" | "Anual";
   installments: number;
   fullPrice?: number;
   monthlyPrice?: number;

@@ -102,7 +102,7 @@ function StepContent({
   return (
     <div className="flex flex-col min-w-0 ml-4">
       <h4 className="text-sm font-medium">{title}</h4>
-      <div className="mt-1 text-xs text-gray-500 dark:text-gray-300">
+      <div className="mt-1 text-xs text-gray-500 dark:text-gray-500 font-light">
         {description}
         {status === "current" ? children : null}
       </div>

@@ -20,7 +20,7 @@ const PriceCard = ({
   return (
     <article
       className={cn(
-        "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl relative md:w-[450px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full shrink-0 grow-0 transition-all",
+        "border-gray-300 dark:border-background-600 border-[1.5px] bg-white shadow-2xl relative md:w-[400px] dark:bg-background-800 rounded-2xl py-6 px-8 pt-3 font-lexend w-full shrink-0 grow-0 transition-all",
         className,
       )}
     >
@@ -69,8 +69,9 @@ const PriceCardPricing = ({
   totalPrice,
   isLoading,
 }: PriceCardPricingProps) => {
-  const formattedMonthlyPrice =
-    (monthlyPrice || 0) % 2 === 0 ? monthlyPrice : monthlyPrice?.toFixed(2);
+  const formattedMonthlyPrice = Number.isInteger(monthlyPrice)
+    ? monthlyPrice
+    : monthlyPrice?.toFixed(2);
 
   return (
     <div className="h-[150px] flex flex-col justify-center items-center">
