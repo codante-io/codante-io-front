@@ -30,7 +30,7 @@ export default function Nav({
   mobileNavSidebarButtonRef: any;
 }) {
   return (
-    <div className="w-full max-w-[1600px] px-4 mx-auto py-6 lg:pb-12 z-50">
+    <div className="w-full max-w-[1700px] px-4 mx-auto py-6 lg:pb-12 z-50">
       {/* Mobile Navbar */}
       <MobileNav
         mobileNavSidebarButtonRef={mobileNavSidebarButtonRef} // isso é usado para o useclickoutside
