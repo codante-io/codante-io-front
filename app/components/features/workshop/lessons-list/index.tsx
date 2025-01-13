@@ -35,7 +35,7 @@ export default function LessonsList({
             <div>
               {section.sectionName && (
                 <SidebarSectionTitle
-                  className="relative pl-4 mb-4 bg-transparent border-b border-b-background-800"
+                  className="relative pl-4 mb-4 bg-transparent border-b dark:bg-transparent border-b-background-800"
                   key={section.sectionName}
                 >
                   {section.sectionName}
