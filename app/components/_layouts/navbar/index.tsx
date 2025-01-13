@@ -25,10 +25,10 @@ const navigation = [
     name: "Mini Projetos",
     href: "/mini-projetos",
   },
-  {
-    name: "Trilhas",
-    href: "/trilhas",
-  },
+  // {
+  //   name: "Trilhas",
+  //   href: "/trilhas",
+  // },
   // {
   //   name: "Agenda",
   //   href: "/agenda",
