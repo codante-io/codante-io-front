@@ -30,7 +30,7 @@ export default function Nav({
   mobileNavSidebarButtonRef: any;
 }) {
   return (
-    <div className="w-full max-w-[1700px] px-4 mx-auto py-6 lg:pb-12 z-50">
+    <div className="w-full max-w-[1650px] px-4 mx-auto py-6 lg:pb-12 z-50">
       {/* Mobile Navbar */}
       <MobileNav
         mobileNavSidebarButtonRef={mobileNavSidebarButtonRef} // isso é usado para o useclickoutside
@@ -126,11 +126,11 @@ function MobileNav({
 function DesktopNav({ titles, user }: { titles: Title[]; user: User | null }) {
   return (
     <div className="hidden lg:justify-between lg:items-center lg:flex">
-      <div className="flex items-center gap-2 px-6 py-2 rounded-lg dark:bg-background-800 bg-background-150">
+      <div className="flex items-center gap-2 px-6 py-2 rounded-lg dark:bg-background-700 bg-background-150">
         <Link to="/">
           <CodanteLogo className="w-14 h-14" />
         </Link>
-        <div className="h-10 mx-4 border-r-2 dark:border-r-background-700 border-r-gray-600"></div>
+        <div className="h-10 mx-4 border-r-2 dark:border-r-background-600 border-r-gray-600"></div>
 
         {titles.map((title, index) => {
           const isLast = index === titles.length - 1;
