@@ -13,6 +13,7 @@ import { TbCalendarCheck } from "react-icons/tb";
 import LessonsList from "~/components/features/workshop/lessons-list";
 import NextLessonPreview from "~/components/features/workshop/next-lesson-preview";
 import { Button } from "~/components/ui/button";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
@@ -63,6 +64,17 @@ export default function WorkshopDetails({
             }
           />
         )}
+
+        <div className="mt-16">
+          <>
+            {/* <Subtitle text="Sobre o Workshop" /> */}
+            <div className="text-gray-600 dark:text-gray-300">
+              <p>
+                <MarkdownRenderer markdown={workshop.description} />
+              </p>
+            </div>
+          </>
+        </div>
 
         {!showDescription && !userIsPro && (
           <div className="p-6 mt-6 mb-8 text-sm text-gray-600 dark:text-gray-300 bg-background-800 rounded-xl">
