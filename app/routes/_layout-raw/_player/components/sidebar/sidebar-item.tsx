@@ -31,7 +31,7 @@ export default function SidebarItem({
           {!isFirst && (
             <div
               className={
-                "absolute h-[23%] top-0 left-[calc(50%-1px)] w-[2px] rounded-b-full dark:bg-background-600 bg-background-300"
+                "absolute h-[23%] top-0 left-[calc(50%-1px)] w-[2px] rounded-b-full dark:bg-background-600 bg-background-200"
               }
             />
           )}
@@ -51,9 +51,9 @@ export default function SidebarItem({
 
               <div
                 className={cn(
-                  "w-3 h-3 rounded-full dark:bg-background-600 bg-background-400",
+                  "w-3 h-3 rounded-full dark:bg-background-600 bg-background-300",
                   completed && "dark:bg-emerald-600 bg-emerald-600",
-                  current && "dark:bg-white bg-background-600 scale-125 ",
+                  current && "dark:bg-white bg-brand-500 scale-125 ",
                 )}
               />
             </div>
@@ -62,7 +62,7 @@ export default function SidebarItem({
           {!isLast && (
             <div
               className={
-                "absolute h-[23%] bottom-0 left-[calc(50%-1px)] w-[2px] rounded-t-full dark:bg-background-600 bg-background-300"
+                "absolute h-[23%] bottom-0 left-[calc(50%-1px)] w-[2px] rounded-t-full dark:bg-background-600 bg-background-200"
               }
             />
           )}
