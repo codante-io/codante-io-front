@@ -20,7 +20,7 @@ export default function Solution() {
 
   return (
     <div className="container">
-      <div className="flex flex-wrap lg:flex-nowrap lg:gap-14">
+      <div className="flex flex-wrap md:flex-nowrap md:gap-5 lg:gap-14">
         {/* left Side */}
         <div className="w-full mb-6 lb:mt-12">
           {/* Video */}
@@ -35,7 +35,7 @@ export default function Solution() {
           />
         </div>
         {/* Right Side */}
-        <div className="lg:w-3/5 space-y-12 mx-auto">
+        <div className="mx-auto space-y-12 md:w-3/5">
           {/* Aulas */}
           <LessonsList
             lessons={lessons}
