@@ -45,24 +45,6 @@
   background-clip: text;
 }
 
-/* WebKit */
-.overflow-scrollbar::-webkit-scrollbar {
-  height: 6px;
-  background-color: lightgray;
-  border-radius: 10px;
-}
-
-.overflow-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #3b82f6;
-  border-radius: 10px;
-}
-
-/* Firefox */
-.overflow-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #3b82f6 transparent;
-}
-
 :root {
   font-family: "Inter", sans-serif;
 }
@@ -88,10 +70,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-html {
-  /* scroll-behavior: smooth; */
 }
 
 /* Estiliza o autofill no dark mode */
@@ -121,30 +99,38 @@ html {
 
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
-    width: 20px;
+    width: 10px;
     height: 20px;
   }
 
   .scrollbar::-webkit-scrollbar-track {
-    background: #1e2b38;
+    background: #0e141a;
+  }
+
+  .scrollbar-transparent::-webkit-scrollbar-track {
+    background: transparent !important;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: rgb(44, 63, 82);
+    border-radius: 4px;
+  }
+
+  .dark .scrollbar::-webkit-scrollbar-thumb {
+    background: #17212b;
   }
 
   ::-webkit-scrollbar {
-    width: 16px;
-    height: 16px;
+    width: 10px;
+    height: 20px;
   }
 
   ::-webkit-scrollbar-corner,
   ::-webkit-scrollbar-track {
-    background-color: rgb(64, 64, 64);
+    background-color: rgb(224, 224, 224);
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: rgb(96, 96, 96);
+    background-color: rgb(188, 187, 187);
     background-clip: padding-box;
     border: 2px solid transparent;
   }
@@ -168,8 +154,8 @@ html {
 
   /* Up */
   ::-webkit-scrollbar-button:single-button:vertical:decrement {
-    height: 16px;
-    width: 16px;
+    height: 10px;
+    width: 20px;
     background-position: center 6px;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
   }

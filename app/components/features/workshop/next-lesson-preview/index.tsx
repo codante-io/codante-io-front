@@ -1,28 +1,27 @@
 import { Link } from "@remix-run/react";
 import { HiMiniArrowSmallRight, HiMiniPlayCircle } from "react-icons/hi2";
-import type { Lesson } from "~/lib/models/lesson.server";
-import type { Workshop } from "~/lib/models/workshop.server";
+
+// thumbnail
 
 function NextLessonPreview({
-  workshop,
-  nextLesson,
+  lessonName,
+  lessonNumber,
+  lessonUrl,
+  thumbnailUrl,
+  type = "keep-watching",
 }: {
-  workshop: Workshop;
-  nextLesson: Lesson;
+  lessonName: string;
+  lessonNumber: number;
+  lessonUrl: string;
+  thumbnailUrl?: string;
+  type?: "keep-watching" | "watch-now";
 }) {
   return (
     <Link
-      to={`/workshops/${workshop.slug}/${nextLesson.slug}`}
+      to={lessonUrl}
       className={`relative flex items-center justify-center aspect-video overflow-hidden rounded-xl bg-background-200 dark:bg-background-800 group dark:border-none border-2`}
     >
-      {nextLesson.thumbnail_url && (
-        <img
-          key={nextLesson.id}
-          className="opacity-70"
-          src={nextLesson.thumbnail_url}
-          alt=""
-        />
-      )}
+      {thumbnailUrl && <img className="opacity-70" src={thumbnailUrl} alt="" />}
 
       <div className="absolute z-10 opacity-90 sm:opacity-70 group-hover:opacity-90 scale-100 group-hover:scale-110 transition-all duration-300">
         <HiMiniPlayCircle className="sm:w-28 sm:h-28 h-16 w-16 text-brand-500" />
@@ -33,19 +32,16 @@ function NextLessonPreview({
           <div className="flex items-center gap-2">
             <div>
               <h3 className="text-xs sm:text-lg font-semibold text-gray-800 dark:text-gray-50">
-                {nextLesson.id === workshop.lessons[0].id
+                {type === "watch-now"
                   ? "Assistir agora"
                   : "Continuar assistindo"}
                 <HiMiniArrowSmallRight className="inline-block" />
               </h3>
               <p className="text-xs sm:text-sm font-light text-gray-500 dark:text-gray-300">
                 <b className="sm:text-xs text-[10px] text-brand-500">
-                  {workshop.lessons.findIndex(
-                    (lesson) => lesson.id === nextLesson.id,
-                  ) + 1}
-                  .
+                  {lessonNumber}.
                 </b>{" "}
-                {nextLesson.name}
+                {lessonName}
               </p>
             </div>
           </div>

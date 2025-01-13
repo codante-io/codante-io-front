@@ -81,7 +81,7 @@ function WorkshopCard({
                     <div className={`flex items-center gap-1`}>
                       <AiOutlineSolution className="w-3 h-3 group-hover:text-green-500 opacity-70" />
 
-                      <span>Tutorial</span>
+                      <span>Resolução de Projeto</span>
                     </div>
                   )}
                 </div>

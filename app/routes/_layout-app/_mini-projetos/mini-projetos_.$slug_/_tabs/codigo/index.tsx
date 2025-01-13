@@ -48,9 +48,6 @@ export default function SolutionCode() {
 
   return (
     <section className="container">
-      <h1 className="flex items-center mb-4 text-2xl font-semibold font-lexend text-brand">
-        Código completo
-      </h1>
       <div className="relative w-full h-[65vh] rounded-lg overflow-hidden">
         <div className="absolute inset-0 bg-cover lg:bg-fill bg-center bg-no-repeat blur-sm bg-[url('/img/cover-stackblitz-light.png')] dark:bg-[url('/img/cover-stackblitz-dark.png')]"></div>
         {(user && user?.is_pro) || (user && !challenge.is_premium) ? (

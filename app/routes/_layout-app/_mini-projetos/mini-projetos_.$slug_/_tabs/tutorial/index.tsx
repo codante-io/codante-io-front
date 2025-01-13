@@ -1,34 +1,13 @@
-import { useOutletContext, useNavigate } from "@remix-run/react";
-import type { Challenge } from "~/lib/models/challenge.server";
+import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 
-import WorkshopDetails from "~/components/features/workshop/workshop-details";
-import type { User } from "~/lib/models/user.server";
-import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
+// Esta rota foi movida para /resolucao. Para preservar o SEO, vamos redirecionar para a nova rota.
+export const loader: LoaderFunction = async ({ request }) => {
+  const newPath = request.url.replace("/resolucao", "/resolucao");
+  return redirect(newPath, 301);
+};
 
-export default function Resolution() {
-  const context = useOutletContext<{ challenge: Challenge; user: User }>();
-  const user = useUserFromOutletContext();
-  const navigate = useNavigate();
-  const challenge = context?.challenge;
-  const workshop = challenge?.workshop;
-
-  if (!challenge?.has_solution) {
-    return navigate(`/mini-projetos/${challenge?.slug}`);
-  }
-
-  return (
-    <>
-      <div className="container">
-        {workshop && (
-          <WorkshopDetails
-            workshop={workshop}
-            nextLesson={workshop.lessons[0]}
-            showDescription={false}
-            isFree={!workshop.is_premium}
-            userIsPro={user?.is_pro}
-          />
-        )}
-      </div>
-    </>
-  );
+export default function Resolucao() {
+  // This component will not be rendered because of the redirect
+  return null;
 }

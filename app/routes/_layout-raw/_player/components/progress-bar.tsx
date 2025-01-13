@@ -2,17 +2,17 @@ import { Link, useOutletContext } from "@remix-run/react";
 import toast from "react-hot-toast";
 import { PiCertificateLight } from "react-icons/pi";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
-import type { Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import type { WorkshopUser } from "~/lib/models/workshop.server";
 import { formatDateDDMMYYYY } from "~/lib/utils/format-date";
+import { SidebarLesson } from "./sidebar/types";
 
 export default function ProgressBar({
   lessons,
   showStatus = false,
   workshopUser,
 }: {
-  lessons: Lesson[];
+  lessons: SidebarLesson[];
   showStatus?: boolean;
   workshopUser?: WorkshopUser;
 }) {
@@ -43,7 +43,7 @@ export default function ProgressBar({
   }
   return (
     <>
-      <div className="pr-4 mt-4">
+      <div className="">
         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
           <div
             className={`${
@@ -56,7 +56,7 @@ export default function ProgressBar({
         </div>
       </div>
       {showStatus && (
-        <div className="flex gap-3 items-center mt-5">
+        <div className="flex gap-3 items-center mt-2">
           <p className="dark:text-gray-400 text-gray-600 text-xs">
             {workshopUser?.completed_at &&
               `Você completou esse Workshop em ${formatDateDDMMYYYY(
@@ -77,7 +77,7 @@ export default function ProgressBar({
                 Certificado
               </Link>
             ) : (
-              <span className="">
+              <span className="text-xs font-light text-gray-500">
                 {completedPercentage === 0
                   ? "Você ainda não assistiu nenhuma aula."
                   : `Você já assistiu ${Math.round(completedPercentage)}% desse

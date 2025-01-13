@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react";
 
 const useIntersectionObserver = (setActiveId: any) => {
-  const headingElementsRef = useRef({});
+  const headingElementsRef = useRef<{
+    [key: string]: IntersectionObserverEntry;
+  }>({});
   useEffect(() => {
     const callback = (headings: any) => {
       headingElementsRef.current = headings.reduce(
@@ -25,7 +27,7 @@ const useIntersectionObserver = (setActiveId: any) => {
         setActiveId(visibleHeadings[0].target.id);
       } else if (visibleHeadings.length > 1) {
         const sortedVisibleHeadings = visibleHeadings.sort(
-          (a, b) => getIndexFromId(a.target.id) > getIndexFromId(b.target.id),
+          (a, b) => getIndexFromId(a.target.id) - getIndexFromId(b.target.id),
         );
         setActiveId(sortedVisibleHeadings[0].target.id);
       }

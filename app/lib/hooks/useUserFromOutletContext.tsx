@@ -1,5 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
-import type { ContextType } from "~/types/contextType";
+import { ContextType } from "../types/contextType";
 
 export function useUserFromOutletContext() {
   const ctx = useOutletContext<ContextType>();

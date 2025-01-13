@@ -20,12 +20,18 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
   ref: RefObject<T>,
   handler: (event: MouseEvent) => void,
   mouseEvent: "mousedown" | "mouseup" = "mousedown",
+  secondRef?: RefObject<T>,
 ): void {
   useEventListener(mouseEvent, (event) => {
     const el = ref.current;
+    const secondEl = secondRef?.current;
 
     // Do nothing if clicking ref's element or descendent elements
-    if (!el || el.contains(event.target as Node)) {
+    if (
+      !el ||
+      el.contains(event.target as Node) ||
+      (secondEl && secondEl.contains(event.target as Node))
+    ) {
       return;
     }
 

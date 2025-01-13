@@ -3,6 +3,7 @@ import type { Workshop } from "./workshop.server";
 import type { ChallengeUser, UserAvatar } from "./user.server";
 import type { TrackablePivot } from "~/lib/models/track.server";
 import { createAxios } from "~/lib/services/axios.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
 
 export type ChallengeDifficulty = "newbie" | "intermediate" | "advanced";
 export type ChallengeEstimatedEffort = "1_day" | "2_days" | "1_week";
@@ -50,6 +51,14 @@ export type Challenge = {
   weekly_featured_start_date: string | null;
   solution_publish_date: string | null;
   is_weekly_featured?: boolean;
+  solution: {
+    lesson_sections: {
+      name: string;
+      lesson_ids: number[];
+    }[];
+    lessons: SidebarLesson[];
+    first_unwatched_lesson: SidebarLesson;
+  };
 };
 
 export type ChallengeCard = {
@@ -200,7 +209,7 @@ export async function joinChallenge({
     const axios = await createAxios(request);
     await axios.post(`/challenges/${slug}/join`);
     return { success: "Sua participação no mini projeto foi registrada." };
-  } catch (err) {
+  } catch {
     return { error: "Não foi possível registrar sua participação." };
   }
 }
@@ -269,7 +278,7 @@ export async function updateUserJoinedDiscord({
     });
 
     return { success: "Passo concluído." };
-  } catch (err) {
+  } catch {
     return {
       error:
         "Não foi possível concluir este passo. Por favor, tente novamente.",
@@ -294,7 +303,7 @@ export async function updateChallengeCompleted({
     });
 
     return { success: "Parabéns! Você concluiu esse mini-projeto." };
-  } catch (err) {
+  } catch {
     return {
       error:
         "Não foi possível concluir este passo. Por favor, tente novamente.",
