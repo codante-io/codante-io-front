@@ -33,12 +33,14 @@ export default function LessonsList({
         {sectionsWithLessons?.map((section) => {
           return (
             <div>
-              <SidebarSectionTitle
-                className="border-b border-b-background-800 mb-4 pl-4 bg-transparent relative"
-                key={section.sectionName}
-              >
-                {section.sectionName}
-              </SidebarSectionTitle>
+              {section.sectionName && (
+                <SidebarSectionTitle
+                  className="relative pl-4 mb-4 bg-transparent border-b border-b-background-800"
+                  key={section.sectionName}
+                >
+                  {section.sectionName}
+                </SidebarSectionTitle>
+              )}
               {section.lessons.map((lesson, index) => {
                 if (!lesson) return null;
                 return (
