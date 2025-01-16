@@ -64,7 +64,6 @@ export default function FullPlayer({
         setIsSidebarOpen={setIsSidebarOpen}
         isSidebarOpen={isSidebarOpen}
       />
-      <button onClick={handleVideoEnded}>olaaaa</button>
       <MainArea>
         <Sidebar
           isSidebarOpen={isSidebarOpen}
