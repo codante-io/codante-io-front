@@ -365,7 +365,6 @@ export default function ChallengeSlug() {
             <>
               <Overview
                 challenge={challenge}
-                hasSolution={challenge.has_solution}
                 steps={steps}
                 challengeUser={challengeUser as ChallengeUser}
               />
