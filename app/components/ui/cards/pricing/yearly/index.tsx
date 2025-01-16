@@ -80,7 +80,9 @@ export default function YearlyPricingCard() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const coupon = new FormData(e.currentTarget).get("couponCode") as string;
-    planDetails.load(`/plans?coupon=${coupon}`);
+    planDetails.load(
+      `/plans?coupon=${coupon}&plan_id=${planDetails.data?.plan?.id}`,
+    );
   };
 
   return (
