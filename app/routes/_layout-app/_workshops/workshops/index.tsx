@@ -6,14 +6,10 @@ import {
   SiNextdotjs,
   SiReact,
   SiReactHex,
-  SiTailwindcss,
-  SiTailwindcssHex,
 } from "@icons-pack/react-simple-icons";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
-import { AiOutlineSolution } from "react-icons/ai";
-import { RiLiveLine } from "react-icons/ri";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { getWorkshops } from "~/lib/models/workshop.server";
@@ -68,12 +64,6 @@ export default function Workshops() {
       workshop.is_standalone,
   );
 
-  const pastTutorials = workshops.filter(
-    (workshop) =>
-      workshop.published_at &&
-      new Date(workshop.published_at) < new Date() &&
-      !workshop.is_standalone,
-  );
   const upcomingWorkshops = workshops.filter(
     (workshop) =>
       workshop.published_at && new Date(workshop.published_at) >= new Date(),
@@ -90,14 +80,14 @@ export default function Workshops() {
       hoverClass: "dark:group-hover:text-[#fff] group-hover:text-black",
       selectClass: "text-black dark:text-white",
     },
-    {
-      name: "TailwindCSS",
-      icon: (props: any) => <SiTailwindcss {...props} />,
-      color: SiTailwindcssHex,
-      value: "tailwindcss",
-      hoverClass: "group-hover:text-[#06B6D4]",
-      selectClass: "text-[#06B6D4]",
-    },
+    // {
+    //   name: "TailwindCSS",
+    //   icon: (props: any) => <SiTailwindcss {...props} />,
+    //   color: SiTailwindcssHex,
+    //   value: "tailwindcss",
+    //   hoverClass: "group-hover:text-[#06B6D4]",
+    //   selectClass: "text-[#06B6D4]",
+    // },
     {
       name: "React",
       icon: (props: any) => <SiReact {...props} />,
@@ -127,8 +117,7 @@ export default function Workshops() {
   return (
     <main className="container mx-auto text-center">
       <h1 className="mb-10 text-4xl font-lexend">
-        <span className="">Workshops</span> e{" "}
-        <span className="">Resoluções de Projeto</span>
+        <span className="">Workshops</span>
       </h1>
 
       {upcomingWorkshops.length > 0 && (
@@ -169,19 +158,19 @@ export default function Workshops() {
         })}
       </div>
 
-      {pastWorkshops.length > 0 && (
+      {/* {pastWorkshops.length > 0 && (
         <div className="flex items-center mt-16 gap-4">
           <RiLiveLine className="w-6 h-6 text-red-400 opacity-70" />
           <h2 className="text-xl font-lexend text-left ">Workshops</h2>
         </div>
-      )}
+      )} */}
       <section className="grid grid-cols-1 mt-6 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 place-items-center auto-rows-fr">
         {pastWorkshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}
       </section>
 
-      {pastTutorials.length > 0 && (
+      {/* {pastTutorials.length > 0 && (
         <div className="flex items-center mt-16 gap-4">
           <AiOutlineSolution className="w-6 h-6 text-green-500 opacity-70" />
           <h2 className="text-xl font-lexend text-left">
@@ -193,7 +182,7 @@ export default function Workshops() {
         {pastTutorials.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}
-      </section>
+      </section> */}
     </main>
   );
 }
