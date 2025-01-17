@@ -66,10 +66,13 @@ export default function PriceButtonPro({
 
     // wait 2 seconds to show the toast (wait promise)
     setTimeout(() => {
-      fetcher.submit(coupon ? { coupon } : null, {
-        method: "post",
-        action: "/plans",
-      });
+      fetcher.submit(
+        { coupon: coupon ?? null, plan_id: "2" },
+        {
+          method: "post",
+          action: "/plans",
+        },
+      );
     }, 2000);
   }
 

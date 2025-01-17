@@ -12,7 +12,7 @@ export default function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
 
   function handleCheckClick(
     event: MouseEvent<HTMLButtonElement>,
-    lessonId: string,
+    lessonId: number,
     markCompleted: boolean,
   ) {
     event.preventDefault();
@@ -30,6 +30,7 @@ export default function MarkCompletedButton({ lesson }: { lesson: Lesson }) {
       } else {
         toast.success("Aula desmarcada");
       }
+      // eslint-disable-next-line
     } catch (error) {
       toast.error("Erro ao marcar aula...");
     }

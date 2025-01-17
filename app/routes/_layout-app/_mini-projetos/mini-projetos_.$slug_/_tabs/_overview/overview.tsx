@@ -1,23 +1,20 @@
+import { Card } from "~/components/ui/cards/card";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";
-import RepositoryInfoSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/repository-info-section";
-import JoinChallengeSection from "./components/steps/join-challenge-section";
-import ResolutionSection from "./components/resolution-section";
-import ResourcesSection from "./components/resources-section";
-import { Card } from "~/components/ui/cards/card";
-import CurrentStatus from "./components/current-status";
-import type { ChallengeUser } from "~/lib/models/user.server";
-import type { UserStep } from "../../build-steps.server";
 import type { Challenge } from "~/lib/models/challenge.server";
+import type { ChallengeUser } from "~/lib/models/user.server";
+import RepositoryInfoSection from "~/routes/_layout-app/_mini-projetos/mini-projetos_.$slug_/_tabs/_overview/components/repository-info-section";
+import type { UserStep } from "../../build-steps.server";
+import CurrentStatus from "./components/current-status";
+import ResourcesSection from "./components/resources-section";
+import JoinChallengeSection from "./components/steps/join-challenge-section";
 
 export default function Overview({
   challenge,
-  hasSolution,
   steps,
   challengeUser,
 }: {
   challenge: Challenge;
-  hasSolution: boolean;
   steps: UserStep[];
   challengeUser: ChallengeUser;
 }) {
@@ -40,6 +37,7 @@ export default function Overview({
             className="object-scale-down w-full bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
           />
         )}
+        {/* TODO: Trocar aqui para a aula do challenge */}
         <div className="!mt-6">
           <MarkdownRenderer
             markdown={challenge?.description ?? ""}
@@ -70,12 +68,6 @@ export default function Overview({
           }}
         />
         <ResourcesSection challenge={challenge} />
-
-        <ResolutionSection
-          isAvailable={hasSolution}
-          thumbnailUrl={challenge.workshop?.image_url}
-          challenge={challenge}
-        />
       </div>
     </div>
   );

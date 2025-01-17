@@ -468,17 +468,19 @@ function Testimonial() {
           className="rounded-lg grid grid-cols-1 md:grid-cols-2 xl:grid-cols-10 gap-5 w-full mt-16"
           initial={{ x: 2 }}
         >
-          {featuredTestimonials.map((testimonial, index) => (
-            <TestimonialCard
-              wide={[2, 4].includes(index)}
-              key={index}
-              testimonial={testimonial.body}
-              avatarUrl={testimonial.avatar_url}
-              name={testimonial.name}
-              socialMediaProfileName={testimonial.social_media_nickname}
-              socialMediaProfileUrl={testimonial.social_media_link}
-            />
-          ))}
+          {featuredTestimonials.map((testimonial, index) => {
+            return (
+              <TestimonialCard
+                wide={[2, 4].includes(index)}
+                key={index}
+                testimonial={testimonial.body}
+                avatarUrl={testimonial.avatar_url}
+                name={testimonial.name}
+                socialMediaProfileName={testimonial.social_media_nickname}
+                socialMediaProfileUrl={testimonial.social_media_link}
+              />
+            );
+          })}
         </motion.section>
       </div>
     </section>

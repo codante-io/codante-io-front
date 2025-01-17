@@ -24,13 +24,14 @@ export async function action({ request }: { request: Request }) {
 
   const formData = await request.formData();
   const coupon = formData.get("coupon");
+  const planId = formData.get("plan_id") ?? 1;
 
   try {
     const response = await axios.get<{
       checkoutLink: string;
       pagarmeOrderID: string;
       subscription: Subscription;
-    }>(`/pagarme/get-link?coupon=${coupon}`);
+    }>(`/pagarme/get-link?coupon=${coupon}&plan_id=${planId}`);
 
     return redirect(`${response.data.checkoutLink}`);
   } catch (error: any) {

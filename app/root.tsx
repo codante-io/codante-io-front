@@ -134,12 +134,12 @@ export default function App() {
   const user = loaderData.user;
 
   return (
-    <html lang="pt" suppressHydrationWarning className="dark">
+    <html lang="pt" className="dark" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
-        <Meta />
         <Links />
+        <Meta />
       </head>
       <body className="text-gray-800 bg-white dark:bg-gray-dark dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-gray-50 dark:scrollbar">
         <script

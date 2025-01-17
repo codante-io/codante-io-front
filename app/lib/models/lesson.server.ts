@@ -1,12 +1,13 @@
+import React from "react";
 import type { Comment } from "./comments.server";
 import { createAxios } from "~/lib/services/axios.server";
 
 export type Lesson = {
-  id: string;
+  id: number;
   workshop_id: string;
   name: string;
   description?: string;
-  content?: string;
+  content?: string | React.JSX.Element;
   slug: string;
   duration_in_seconds: number;
   created_at: string;
@@ -21,13 +22,23 @@ export type Lesson = {
   comments: Comment[];
 };
 
+// export type LessonsGroupedBySection = Record<string, Lesson[]>;
+
 export type AvailableTo = "all" | "logged_in" | "pro";
 
-export async function getLesson(slug: string) {
-  const axios = await createAxios();
+export async function getLesson(
+  slug: string,
+  request: any,
+): Promise<Lesson | null> {
+  const axios = await createAxios(request);
   const lesson = await axios
     .get(`/lessons/${slug}`)
-    .then((res) => res.data.data);
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
   return lesson;
 }
 

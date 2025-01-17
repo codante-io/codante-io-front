@@ -1,10 +1,11 @@
-import type { Challenge } from "~/lib/models/challenge.server";
-import type { Workshop } from "~/lib/models/workshop.server";
-import type { Instructor } from "./instructor.server";
-import type { Lesson } from "./lesson.server";
-import type { Tag } from "~/lib/models/tag.server";
-import { createAxios } from "~/lib/services/axios.server";
 import axios from "axios";
+import type { Challenge } from "~/lib/models/challenge.server";
+import type { Tag } from "~/lib/models/tag.server";
+import { ChallengeUser } from "~/lib/models/user.server";
+import type { Workshop } from "~/lib/models/workshop.server";
+import { createAxios } from "~/lib/services/axios.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
+import type { Instructor } from "./instructor.server";
 
 export type Track = {
   id: string;
@@ -16,10 +17,40 @@ export type Track = {
   status: "draft" | "published" | "soon" | "archived";
   difficulty: 1 | 2 | 3;
   duration_in_minutes: number;
+  trackables: (WorkshopTrackable | ChallengeTrackable)[];
+  created_at: string;
+  updated_at: string;
+};
+
+export type WorkshopTrackable = {
+  id: number;
+  type: "workshop";
+  name: string;
+  slug: string;
+  video_url: string;
   instructor: Instructor;
-  lessons: Lesson[];
-  tags: any[];
-  sections: TrackSection[];
+  lessons: SidebarLesson[];
+  lesson_sections: {
+    name: string;
+    lesson_ids: number[];
+  }[];
+};
+
+export type ChallengeTrackable = {
+  id: number;
+  name: string;
+  slug: string;
+  image_url: string;
+  challengeUser: ChallengeUser;
+  type: "challenge";
+  track_lessons: SidebarLesson[];
+  solution: {
+    lessons: SidebarLesson[];
+    lesson_sections: {
+      name: string;
+      lesson_ids: number[];
+    }[];
+  };
 };
 
 export type TrackSection = {
@@ -57,6 +88,13 @@ export type TrackablePivot = {
   section_id: number;
 };
 
+// type guard
+export function isWorkshopTrackable(
+  workshop: WorkshopTrackable | ChallengeTrackable,
+): workshop is WorkshopTrackable {
+  return (workshop as WorkshopTrackable).lessons !== undefined;
+}
+
 export async function getTracks(): Promise<Array<Track>> {
   const axios = await createAxios();
 
@@ -67,7 +105,15 @@ export async function getTracks(): Promise<Array<Track>> {
 export async function getTrack(slug: string, request: Request): Promise<Track> {
   const axios = await createAxios(request);
 
-  const track = await axios.get(`/tracks/${slug}`).then((res) => res.data.data);
+  const track = await axios
+    .get(`/tracks/${slug}`)
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response.status === 404) {
+        return null;
+      }
+    });
+
   return track;
 }
 

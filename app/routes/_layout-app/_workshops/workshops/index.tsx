@@ -6,8 +6,6 @@ import {
   SiNextdotjs,
   SiReact,
   SiReactHex,
-  SiTailwindcss,
-  SiTailwindcssHex,
 } from "@icons-pack/react-simple-icons";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -61,8 +59,11 @@ export default function Workshops() {
 
   const pastWorkshops = workshops.filter(
     (workshop) =>
-      workshop.published_at && new Date(workshop.published_at) < new Date(),
+      workshop.published_at &&
+      new Date(workshop.published_at) < new Date() &&
+      workshop.is_standalone,
   );
+
   const upcomingWorkshops = workshops.filter(
     (workshop) =>
       workshop.published_at && new Date(workshop.published_at) >= new Date(),
@@ -79,14 +80,14 @@ export default function Workshops() {
       hoverClass: "dark:group-hover:text-[#fff] group-hover:text-black",
       selectClass: "text-black dark:text-white",
     },
-    {
-      name: "TailwindCSS",
-      icon: (props: any) => <SiTailwindcss {...props} />,
-      color: SiTailwindcssHex,
-      value: "tailwindcss",
-      hoverClass: "group-hover:text-[#06B6D4]",
-      selectClass: "text-[#06B6D4]",
-    },
+    // {
+    //   name: "TailwindCSS",
+    //   icon: (props: any) => <SiTailwindcss {...props} />,
+    //   color: SiTailwindcssHex,
+    //   value: "tailwindcss",
+    //   hoverClass: "group-hover:text-[#06B6D4]",
+    //   selectClass: "text-[#06B6D4]",
+    // },
     {
       name: "React",
       icon: (props: any) => <SiReact {...props} />,
@@ -116,8 +117,7 @@ export default function Workshops() {
   return (
     <main className="container mx-auto text-center">
       <h1 className="mb-10 text-4xl font-lexend">
-        <span className=" decoration-4 decoration-red-400">Workshops</span> e{" "}
-        <span className=" decoration-4 decoration-green-400">Tutoriais</span>
+        <span className="">Workshops</span>
       </h1>
 
       {upcomingWorkshops.length > 0 && (
@@ -158,11 +158,31 @@ export default function Workshops() {
         })}
       </div>
 
-      <section className="grid grid-cols-1 mt-16 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 place-items-center auto-rows-fr">
+      {/* {pastWorkshops.length > 0 && (
+        <div className="flex items-center mt-16 gap-4">
+          <RiLiveLine className="w-6 h-6 text-red-400 opacity-70" />
+          <h2 className="text-xl font-lexend text-left ">Workshops</h2>
+        </div>
+      )} */}
+      <section className="grid grid-cols-1 mt-6 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 place-items-center auto-rows-fr">
         {pastWorkshops.map((workshop) => (
           <WorkshopCard key={workshop.slug} workshop={workshop} />
         ))}
       </section>
+
+      {/* {pastTutorials.length > 0 && (
+        <div className="flex items-center mt-16 gap-4">
+          <AiOutlineSolution className="w-6 h-6 text-green-500 opacity-70" />
+          <h2 className="text-xl font-lexend text-left">
+            Resoluções de Projeto
+          </h2>
+        </div>
+      )}
+      <section className="grid grid-cols-1 mt-6 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 place-items-center auto-rows-fr">
+        {pastTutorials.map((workshop) => (
+          <WorkshopCard key={workshop.slug} workshop={workshop} />
+        ))}
+      </section> */}
     </main>
   );
 }

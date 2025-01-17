@@ -3,7 +3,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 import type { StepStatus, UserStepsIds } from "../../../../build-steps.server";
 import type { FormProps } from "@remix-run/react";
-import { Form, useLocation, useNavigation } from "@remix-run/react";
+import { Form, useLocation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Card } from "~/components/ui/cards/card";
 
@@ -29,11 +29,13 @@ type StepFormProps = {
   slug: string;
   user: any;
   children: ReactNode;
+  action?: string;
   className?: string;
 } & FormProps;
 
 type StepPrimaryButtonProps = {
   stepId: UserStepsIds;
+  status?: "idle" | "loading" | "submitting";
   children: ReactNode;
 
   onClick?: EventHandler<React.MouseEvent>;
@@ -142,13 +144,20 @@ function StepIconUpcoming() {
 }
 
 // Step form component
-function StepForm({ slug, user, children, className, ...rest }: StepFormProps) {
+function StepForm({
+  slug,
+  user,
+  children,
+  className,
+  action = undefined,
+  ...rest
+}: StepFormProps) {
   const location = useLocation();
   return (
     <Form
       className={cn("mt-2 pr-1", className)}
       method="post"
-      action={`/mini-projetos/${slug}`}
+      action={action ? action : `/mini-projetos/${slug}`}
       preventScrollReset
       {...rest}
     >
@@ -163,14 +172,14 @@ function StepForm({ slug, user, children, className, ...rest }: StepFormProps) {
 function StepPrimaryButton({
   stepId,
   children,
+  status = "idle",
   onClick,
 }: StepPrimaryButtonProps) {
-  const navigation = useNavigation();
   return (
     <LoadingButton
       onClick={onClick}
       size="sm"
-      status={navigation.state}
+      status={status}
       type="submit"
       className="mt-3"
       name="intent"

@@ -25,13 +25,13 @@ export async function action({ request }: { request: Request }) {
   const isHuman = await isUserHuman(token, key);
 
   if (!isHuman) {
-    const forwardedFor = request.headers.get('X-Forwarded-For');
-    const realIp = request.headers.get('X-Real-IP');
-    const clientIp = request.headers.get('Client-IP');
+    const forwardedFor = request.headers.get("X-Forwarded-For");
+    const realIp = request.headers.get("X-Real-IP");
+    const clientIp = request.headers.get("Client-IP");
 
     const ip = forwardedFor
-      ? forwardedFor.split(',')[0].trim()
-      : realIp || clientIp || 'IP not found';
+      ? forwardedFor.split(",")[0].trim()
+      : realIp || clientIp || "IP not found";
 
     await sendDiscordAdminNotification(
       `Novo cadastro de ${name} (${email} - ${ip}) não verificado como humano`,

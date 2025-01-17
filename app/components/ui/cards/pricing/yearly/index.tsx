@@ -5,7 +5,7 @@ import {
   yearlyPlanFeatures,
 } from "~/components/ui/cards/pricing/data";
 import PriceCard from "~/components/ui/cards/pricing/price-card";
-import PriceButtonPro from "~/components/ui/cards/pricing/pro/button";
+import PriceButtonPro from "~/components/ui/cards/pricing/yearly/button";
 import type { PlanDetails } from "~/components/ui/cards/pricing/pricing.d";
 import type { Coupon, Plan } from "~/lib/models/plan.server";
 
@@ -80,7 +80,9 @@ export default function YearlyPricingCard() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const coupon = new FormData(e.currentTarget).get("couponCode") as string;
-    planDetails.load(`/plans?coupon=${coupon}`);
+    planDetails.load(
+      `/plans?coupon=${coupon}&plan_id=${planDetails.data?.plan?.id}`,
+    );
   };
 
   return (

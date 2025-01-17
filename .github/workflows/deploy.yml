@@ -18,6 +18,8 @@ jobs:
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
+        with:
+          install-command: npm i --force
 
       - name: Build Remix App
         run: npm run build

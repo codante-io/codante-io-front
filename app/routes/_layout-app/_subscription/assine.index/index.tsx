@@ -15,7 +15,6 @@ import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
-
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import UserAvatar from "~/components/ui/user-avatar";
@@ -53,7 +52,7 @@ export default function HomePage() {
         <Submissions />
         <WorkShops />
         <Challenges />
-        <Tracks />
+        {/* <Tracks /> */}
         <Community />
         <Founders />
         <Testimonial />
@@ -450,7 +449,7 @@ function ProgressivePractice() {
             <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
-                Muita gente acha que quando está assitindo um curso e
+                Muita gente acha que quando está assistindo um curso e
                 programando junto com o professor, está praticando de forma{" "}
                 <span className="color-underline decoration-brand-500">
                   ativa
@@ -813,116 +812,116 @@ function Challenges() {
   );
 }
 
-function Tracks() {
-  const { colorMode } = useColorMode();
+// function Tracks() {
+//   const { colorMode } = useColorMode();
 
-  return (
-    <section id="mini-projects" className="flex justify-center w-full">
-      <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
-        <div className="relative w-full">
-          <h2 className="mt-14 text-center font-lexend mb-2 dark:text-gray-300 text-gray-600">
-            Siga um caminho detalhado com nossas{" "}
-          </h2>
+//   return (
+//     <section id="mini-projects" className="flex justify-center w-full">
+//       <div className="container flex flex-col items-center w-full border-t border-gray-200 dark:border-gray-800 mt-10">
+//         <div className="relative w-full">
+//           <h2 className="mt-14 text-center font-lexend mb-2 dark:text-gray-300 text-gray-600">
+//             Siga um caminho detalhado com nossas{" "}
+//           </h2>
 
-          <motion.h1
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.8 }}
-            variants={{
-              visible: { opacity: 1, y: 0 },
-              hidden: { opacity: 0.5, y: -10 },
-            }}
-            className="mb-8 text-4xl font-light font-lexend text-center"
-          >
-            Trilhas
-          </motion.h1>
-          <img
-            src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
-            alt="Line stroke effect"
-            className="absolute top-[120px] w-64 left-1/2 transform -translate-x-1/2 -z-10"
-          />
-          <motion.img
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.8 }}
-            variants={{
-              visible: { opacity: 1, scaleZ: 1 },
-              hidden: { opacity: 0, scaleZ: 0 },
-            }}
-            src={`/img/blue-smoke.svg`}
-            alt="Smoke effect"
-            className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
-          />
-        </div>
+//           <motion.h1
+//             initial="hidden"
+//             whileInView="visible"
+//             transition={{ duration: 0.8 }}
+//             variants={{
+//               visible: { opacity: 1, y: 0 },
+//               hidden: { opacity: 0.5, y: -10 },
+//             }}
+//             className="mb-8 text-4xl font-light font-lexend text-center"
+//           >
+//             Trilhas
+//           </motion.h1>
+//           <img
+//             src={`/img/pencil-stroke-subtitle-${colorMode}.svg`}
+//             alt="Line stroke effect"
+//             className="absolute top-[120px] w-64 left-1/2 transform -translate-x-1/2 -z-10"
+//           />
+//           <motion.img
+//             initial="hidden"
+//             whileInView="visible"
+//             transition={{ duration: 0.8 }}
+//             variants={{
+//               visible: { opacity: 1, scaleZ: 1 },
+//               hidden: { opacity: 0, scaleZ: 0 },
+//             }}
+//             src={`/img/blue-smoke.svg`}
+//             alt="Smoke effect"
+//             className="absolute top-0 w-full left-1/2 transform translate-x-[-50%]"
+//           />
+//         </div>
 
-        <div className="flex gap-16 mt-20 mb-10 px-4 flex-col lg:flex-row">
-          <p className="mt-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl prose w-full md:w-3/4">
-            Nossas{" "}
-            <span className="color-underline decoration-brand-400">
-              trilhas
-            </span>{" "}
-            são a junção de{" "}
-            <b>
-              <i>projetos</i>
-            </b>
-            ,{" "}
-            <b>
-              <i>workshops</i>
-            </b>{" "}
-            e{" "}
-            <b>
-              <i>links externos</i>
-            </b>{" "}
-            de uma forma sequencial, para quem gosta de ter um caminho pra
-            seguir.
-            <br />
-            <br />
-            Ao invés de fazer um curso, você pode ir seguindo o passo-a-passo da
-            trilha, dessa forma você aprende de forma muito mais ativa.
-            <br />
-            <br />
-            Alguns conteúdos das trilhas são gratuitos. Assinando o{" "}
-            <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
-              PRO
-            </span>
-            , você tem acesso a{" "}
-            <b>
-              <u>
-                <i>todas as trilhas de forma completa</i>
-              </u>
-            </b>
-            . Inclusive as próximas que lançarmos.
-          </p>
-          <div className="w-full">
-            <motion.img
-              initial="hidden"
-              whileInView="visible"
-              transition={{ duration: 0.8 }}
-              variants={{
-                visible: { opacity: 1, x: 0 },
-                hidden: { opacity: 0.5, x: 10 },
-              }}
-              src="img/vendas/trilhas.webp"
-              alt="Fundo gradiente com screenshot da tela de mini projetos"
-              className="w-[40rem] shrink-0 grow-0"
-            />
-          </div>
-        </div>
+//         <div className="flex gap-16 mt-20 mb-10 px-4 flex-col lg:flex-row">
+//           <p className="mt-10 font-light dark:text-gray-300 text-gray-600 font-inter text-md md:text-xl prose w-full md:w-3/4">
+//             Nossas{" "}
+//             <span className="color-underline decoration-brand-400">
+//               trilhas
+//             </span>{" "}
+//             são a junção de{" "}
+//             <b>
+//               <i>projetos</i>
+//             </b>
+//             ,{" "}
+//             <b>
+//               <i>workshops</i>
+//             </b>{" "}
+//             e{" "}
+//             <b>
+//               <i>links externos</i>
+//             </b>{" "}
+//             de uma forma sequencial, para quem gosta de ter um caminho pra
+//             seguir.
+//             <br />
+//             <br />
+//             Ao invés de fazer um curso, você pode ir seguindo o passo-a-passo da
+//             trilha, dessa forma você aprende de forma muito mais ativa.
+//             <br />
+//             <br />
+//             Alguns conteúdos das trilhas são gratuitos. Assinando o{" "}
+//             <b>Codante</b>{" "}
+//             <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+//               PRO
+//             </span>
+//             , você tem acesso a{" "}
+//             <b>
+//               <u>
+//                 <i>todas as trilhas de forma completa</i>
+//               </u>
+//             </b>
+//             . Inclusive as próximas que lançarmos.
+//           </p>
+//           <div className="w-full">
+//             <motion.img
+//               initial="hidden"
+//               whileInView="visible"
+//               transition={{ duration: 0.8 }}
+//               variants={{
+//                 visible: { opacity: 1, x: 0 },
+//                 hidden: { opacity: 0.5, x: 10 },
+//               }}
+//               src="img/vendas/trilhas.webp"
+//               alt="Fundo gradiente com screenshot da tela de mini projetos"
+//               className="w-[40rem] shrink-0 grow-0"
+//             />
+//           </div>
+//         </div>
 
-        <section className="flex justify-center w-full mt-10 mb-10">
-          <Link
-            to="/trilhas"
-            target="_blank"
-            className="px-4 py-2 bg-white rounded-full dark:bg-background-800"
-          >
-            Ver todas
-          </Link>
-        </section>
-      </div>
-    </section>
-  );
-}
+//         {/* <section className="flex justify-center w-full mt-10 mb-10">
+//           <Link
+//             to="/trilhas"
+//             target="_blank"
+//             className="px-4 py-2 bg-white rounded-full dark:bg-background-800"
+//           >
+//             Ver todas
+//           </Link>
+//         </section> */}
+//       </div>
+//     </section>
+//   );
+// }
 
 function Community() {
   const { homeInfo } = useLoaderData<typeof loader>();

@@ -24,15 +24,15 @@ export const sitemapPages: SitemapPagesItem[] = [
     changefreq: "weekly",
     priority: 0.9,
   },
-  {
-    name: "Trilhas",
-    url: "/trilhas",
-    priority: 0.9,
-  },
-  {
-    name: "Trilhas",
-    url: "/trilhas/next-js",
-  },
+  // {
+  //   name: "Trilhas",
+  //   url: "/trilhas",
+  //   priority: 0.9,
+  // },
+  // {
+  //   name: "Trilhas",
+  //   url: "/trilhas/next-js",
+  // },
   {
     name: "Seja Pro",
     url: "/assine",

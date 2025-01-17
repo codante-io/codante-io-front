@@ -1,10 +1,10 @@
-import type { Instructor } from "./instructor.server";
-import type { Lesson } from "./lesson.server";
-import type { Tag } from "./tag.server";
-import type { Certificate } from "./certificates.server";
-import type { TrackablePivot } from "~/lib/models/track.server";
 import type { Challenge } from "~/lib/models/challenge.server";
+import type { TrackablePivot } from "~/lib/models/track.server";
 import { createAxios } from "~/lib/services/axios.server";
+import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/types";
+import type { Certificate } from "./certificates.server";
+import type { Instructor } from "./instructor.server";
+import type { Tag } from "./tag.server";
 
 export type WorkshopUser = {
   id: number;
@@ -18,7 +18,7 @@ export type WorkshopUser = {
 };
 
 export type Workshop = {
-  id: string;
+  id: string | number;
   name: string;
   slug: string;
   short_description: string;
@@ -27,7 +27,7 @@ export type Workshop = {
   image_url?: string;
   video_url?: string;
   difficulty: 1 | 2 | 3;
-  duration_in_minutes: number;
+  duration_in_seconds: number;
   published_at?: string;
   streaming_url?: string | null;
   resources: {
@@ -39,11 +39,11 @@ export type Workshop = {
   is_standalone: boolean;
   lesson_sections?: {
     name: string;
-    lessons: string[];
+    lesson_ids: number[];
   }[];
-  lessons: Lesson[];
+  lessons: SidebarLesson[];
   tags: Tag[];
-  next_lesson: Lesson | null;
+  first_unwatched_lesson: SidebarLesson | null;
   challenge?: Challenge;
 
   workshop_user: WorkshopUser;
