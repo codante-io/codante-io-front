@@ -95,13 +95,13 @@ export default function ChallengesIndex() {
         <FeaturedChallengeSection featuredChallenge={featuredChallenge} />
       )}
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-4">
-        <div className="flex flex-col gap-3 w-full">
+        <div className="flex flex-col gap-3 w-full md:w-auto">
           <Search placeholder="Pesquisar" />
           <span className="text-xs text-gray-500 dark:text-gray-400">
             Exibindo {challenges.length} de {totalChallenges} mini projetos
           </span>
         </div>
-        <div className="flex gap-4 w-full">
+        <div className="flex gap-4 w-full md:w-auto">
           <OrderBy />
           <FiltersSheet />
         </div>
