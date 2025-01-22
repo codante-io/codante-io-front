@@ -34,7 +34,7 @@ export default function OrderBySelect() {
 
   return (
     <Select value={selectedOption} onValueChange={setSelectedOption}>
-      <SelectTrigger className="w-full min-w-48 border-[1.5px] border-background-300 rounded-md focus:outline-none focus:border-brand-300 dark:bg-background-800 dark:text-gray-300 dark:border-background-600">
+      <SelectTrigger className="w-full min-w-48 border-[1.5px] border-background-300 rounded-md focus:outline-none focus:border-brand-300 dark:bg-background-800 dark:text-gray-300 dark:border-background-600 font-light">
         <div className="flex items-center gap-2">
           <ArrowDownUp className="w-4 h-4" />
           <SelectValue placeholder="Ordenar por" />

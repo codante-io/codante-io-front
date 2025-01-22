@@ -36,7 +36,7 @@ export function FiltersSheet() {
         <div className="flex flex-col gap-2 min-w-32 justify-start">
           <Button
             variant="outline"
-            className="flex items-center gap-2 font-light w-full justify-start"
+            className="flex items-center gap-2 font-light w-full justify-start "
           >
             <ListFilter className="w-4 h-4" /> Filtros
             <span className="text-xstext-gray-500 dark:text-gray-400">

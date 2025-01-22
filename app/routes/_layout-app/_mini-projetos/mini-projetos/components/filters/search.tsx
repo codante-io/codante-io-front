@@ -54,7 +54,7 @@ export default function SearchFilter({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={placeholder}
-          className="pl-10 pr-3 py-3 text-sm font-light transition-colors border-[1.5px] cursor-pointer bg-background-100 dark:bg-background-800 border-background-300 dark:border-background-600"
+          className="pl-10 pr-3 py-3 text-sm font-light transition-colors border-[1.5px] cursor-pointer dark:bg-background-800 border-background-300 dark:border-background-600"
         />
       </div>
     </div>
