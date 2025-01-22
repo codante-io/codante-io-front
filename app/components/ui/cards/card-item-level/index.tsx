@@ -18,13 +18,10 @@ const difficultyLevelMap: Record<ChallengeDifficulty, 1 | 2 | 3> = {
   advanced: 3,
 };
 
-export default function CardItemLevel({
-  difficulty,
-  ...classes
-}: CardItemLevelProps) {
+export default function CardItemLevel({ difficulty }: CardItemLevelProps) {
   return (
-    <span className="rounded-full text-sm font-light flex items-center gap-1 border border-background-200 dark:border-background-600 px-2 py-1">
-      <div className="w-6 h-6">
+    <span className="rounded-xl text-xs font-light flex items-center gap-1 border border-background-100 dark:border-background-700 p-2 text-gray-800 dark:text-gray-300">
+      <div className="w-4 h-4">
         <LevelIcon level={difficultyLevelMap[difficulty]} />
       </div>
 

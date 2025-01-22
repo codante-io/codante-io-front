@@ -1,12 +1,12 @@
 import { json } from "@remix-run/node";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getChallenges } from "~/lib/models/challenge.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { metaV1 } from "@remix-run/v1-meta";
-import MainTechFilter from "~/components/features/main-tech-filter/main-tech-filter";
 import FeaturedChallengeSection from "./featured-challenge-section";
+import { Search, OrderBy, FiltersSheet } from "./components/filters";
 
 export function meta(args: any) {
   const title = "Mini Projetos | Codante.io";
@@ -35,48 +35,98 @@ export function meta(args: any) {
 
 export async function loader({ request }: { request: Request }) {
   const url = new URL(request.url);
-  const tech = url.searchParams.get("tecnologia") ?? "";
-
-  const { challenges, featuredChallenge } = await getChallenges({
-    tech,
-    request,
-  });
+  const tecnologia = url.searchParams.get("tecnologia") ?? "";
+  const dificuldade = url.searchParams.get("dificuldade") ?? "";
+  const q = url.searchParams.get("q") ?? "";
+  const gratuito = url.searchParams.get("gratuito") ?? "";
+  const ordenacao = url.searchParams.get("ordenacao") ?? "";
+  const { challenges, featuredChallenge, totalChallenges } =
+    await getChallenges({
+      filters: {
+        tecnologia,
+        dificuldade,
+        q,
+        gratuito,
+        ordenacao,
+      },
+      request,
+    });
 
   return json({
     challenges,
     featuredChallenge,
+    totalChallenges,
   });
 }
 
 export default function ChallengesIndex() {
-  const { challenges, featuredChallenge } = useLoaderData<typeof loader>();
-  const [searchParams] = useSearchParams();
-  const selectedTechs = searchParams.get("tecnologia");
+  const { challenges, featuredChallenge, totalChallenges } =
+    useLoaderData<typeof loader>();
+
+  function getChallengesGroupedByTech() {
+    const challengesGroupedByTech = challenges.reduce<
+      Record<string, ChallengeCardType[]>
+    >((acc, challenge) => {
+      const tech = challenge.main_technology.name;
+      acc[tech] = acc[tech] || [];
+      acc[tech].push(challenge);
+      return acc;
+    }, {});
+
+    return Object.entries(challengesGroupedByTech).sort(
+      (a, b) => techOrder.indexOf(a[0]) - techOrder.indexOf(b[0]),
+    );
+  }
+
+  const techOrder = [
+    "Next.js",
+    "TailwindCSS",
+    "React",
+    "Fundamentos",
+    "Hackathon",
+  ];
 
   return (
     <main className="container mx-auto">
       <h1 className="mb-10 text-3xl text-center lg:text-4xl font-lexend">
         Mini Projetos
       </h1>
-      <FeaturedChallengeSection featuredChallenge={featuredChallenge} />
-      <MainTechFilter
-        selectedTechs={selectedTechs}
-        baseUrl="/mini-projetos"
-        techsToDisplay={[
-          "nextjs",
-          "tailwindcss",
-          "react",
-          "fundamentos",
-          "hackathon",
-        ]}
-      />
-      <section className="flex flex-col gap-20 mt-16">
-        <div className="grid grid-cols-1 gap-0 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
-          {challenges.map((challenge: ChallengeCardType) => (
-            <ChallengeCard key={challenge.id} challenge={challenge} />
-          ))}
+      {featuredChallenge && (
+        <FeaturedChallengeSection featuredChallenge={featuredChallenge} />
+      )}
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex flex-col gap-3">
+          <Search placeholder="Pesquisar" />
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            Exibindo {challenges.length} de {totalChallenges} mini projetos
+          </span>
         </div>
-      </section>
+        <div className="flex gap-4">
+          <FiltersSheet />
+          <OrderBy />
+        </div>
+      </div>
+      {challenges.length > 0 && (
+        <section className="flex flex-col gap-20 mt-16">
+          {getChallengesGroupedByTech().map(([tech, groupedChallenges]) => (
+            <div key={tech}>
+              <h2 className="text-2xl mb-4 flex items-center gap-2 font-light">
+                <img
+                  src={groupedChallenges[0].main_technology.image_url}
+                  alt={tech}
+                  className="w-8 h-8"
+                />
+                {tech}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
+                {groupedChallenges.map((challenge: ChallengeCardType) => (
+                  <ChallengeCard key={challenge.id} challenge={challenge} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
     </main>
   );
 }
