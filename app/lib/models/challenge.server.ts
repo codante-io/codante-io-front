@@ -112,33 +112,46 @@ export type ChallengesByTechnology = {
 };
 
 type GetChallengeArgs = {
-  tech: string;
+  filters: {
+    tecnologia?: string;
+    dificuldade?: string;
+    q?: string;
+    gratuito?: string;
+    ordenacao?: string;
+  };
   request: Request;
 };
 
 export async function getChallenges({
-  tech,
+  filters,
   request,
 }: GetChallengeArgs): Promise<{
   challenges: ChallengeCard[];
   featuredChallenge: ChallengeCard;
+  totalChallenges: number;
 }> {
   const axios = await createAxios(request);
 
-  if (!tech) {
+  if (!filters) {
     const data = await axios.get("/challenges").then((res) => res.data.data);
     return {
       challenges: data.challenges,
       featuredChallenge: data.featuredChallenge,
+      totalChallenges: data.totalChallenges,
     };
   }
 
+  const url = Object.entries(filters)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+
   const data = await axios
-    .get(`/challenges?tecnologia=${tech}`)
+    .get(`/challenges?${url}`)
     .then((res) => res.data.data);
   return {
     challenges: data.challenges,
     featuredChallenge: data.featuredChallenge,
+    totalChallenges: data.totalChallenges,
   };
 }
 

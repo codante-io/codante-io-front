@@ -15,9 +15,9 @@ export default function FeaturedChallengeSection({
   if (!featuredChallenge) return null;
   return (
     <>
-      <section className="md:relative md:h-[500px] lg:h-[500px] mb-20 md:mb-32 mt-[80px] rounded-lg md:pl-[420px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col">
-        <div className="flex-col px-6 pt-6">
-          <h3 className="font-light text-yellow-400 ">
+      <section className="md:relative py-8 mb-20 md:mb-32 mt-[80px] rounded-lg md:pl-[420px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col">
+        <div className="flex-col px-6">
+          <h3 className="font-cursive text-yellow-400 ">
             Mini Projeto em destaque
           </h3>
           <h1 className="text-2xl font-bold text-white ">
@@ -53,7 +53,7 @@ export default function FeaturedChallengeSection({
           <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
             <Button
               type="button"
-              className="hidden text-white bg-transparent border-2 border-yellow-400 md:block hover:bg-blue-600 "
+              className="hidden text-white bg-transparent border-2 border-yellow-400 md:block hover:bg-blue-600"
             >
               Participe do Mini Projeto
             </Button>
@@ -69,7 +69,7 @@ export default function FeaturedChallengeSection({
           </div>
         </div>
       </section>
-      <div className="w-full h-[1px] dark:bg-gray-800 bg-gray-200 mb-12 md:mb-24" />
+      <div className="w-full h-[1px] dark:bg-background-800 bg-background-200 mb-12" />
     </>
   );
 }

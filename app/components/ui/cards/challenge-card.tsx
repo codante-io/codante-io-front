@@ -5,9 +5,9 @@ import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.
 import classNames from "~/lib/utils/class-names";
 import UserAvatar from "../user-avatar";
 import CardItemLevel from "~/components/ui/cards/card-item-level";
-import CardItemEffort from "~/components/ui/cards/card-item-effort";
 import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
-import CardItemTagsText from "~/components/ui/cards/card-item-tags-text";
+import { ArrowRight } from "lucide-react";
+import { Button } from "~/components/ui/button";
 
 export default function ChallengeCard({
   challenge,
@@ -37,16 +37,7 @@ export default function ChallengeCard({
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
         hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ${className}`}
       >
-        <div
-          className={`flex m-1 flex-col items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600`}
-        >
-          {challenge?.main_technology?.name && (
-            <CardItemMainTechnology
-              technologyName={challenge.main_technology?.name}
-              technologyImgSrc={challenge.main_technology?.image_url}
-            />
-          )}
-
+        <div className="flex m-1 flex-col items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600">
           <div className="flex items-center justify-center w-full h-full pt-4 overflow-hidden">
             <img
               src={challenge.image_url}
@@ -72,36 +63,22 @@ export default function ChallengeCard({
         <div className="flex flex-col justify-between flex-grow h-full px-6 py-4">
           <div>
             <div className="mb-2 card-header">
-              <h2 className="mb-4 text-2xl font-medium text-gray-700 min-h-16 dark:text-gray-50 line-clamp-2">
+              <h2 className="mb-4 text-2xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
                 {challenge?.name}
               </h2>
-              <div className="flex items-baseline gap-2">
-                <span className="text-xs text-gray-600 dark:text-gray-400">
-                  Nível:{" "}
-                </span>
+
+              <div className="flex justify-start items-start gap-2">
+                {challenge?.main_technology?.name && (
+                  <CardItemMainTechnology
+                    technologyName={challenge.main_technology?.name}
+                    technologyImgSrc={challenge.main_technology?.image_url}
+                  />
+                )}
                 <CardItemLevel difficulty={challenge?.difficulty} />
-              </div>
-
-              {challenge?.estimated_effort && (
-                <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">
-                    Para fazer em:{" "}
-                  </span>
-                  <CardItemEffort effort={challenge?.estimated_effort} />
-                </div>
-              )}
-
-              <div className="px-2 my-4 border-t border-gray-200 dark:border-gray-800"></div>
-
-              <div className="mt-10 mb-10">
-                <span className="text-xs text-gray-600 dark:text-gray-400">
-                  O que você vai aprender:
-                </span>
-                <CardItemTagsText light tags={challenge?.tags} />
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-end w-full mt-8">
+          <div className="flex justify-between w-full mt-8 gap-2 border-t border-gray-200 dark:border-gray-800 pt-4">
             <section>
               <div className="flex -space-x-3 overflow-hidden">
                 {challenge?.avatars?.map((avatar, index) => (
@@ -119,6 +96,13 @@ export default function ChallengeCard({
                 )}
               </div>
             </section>
+            <Button
+              variant="ghost"
+              className="flex items-center justify-center gap-2 rounded-xl font-light text-gray-500 dark:text-gray-400"
+            >
+              Ver projeto
+              <ArrowRight className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </article>

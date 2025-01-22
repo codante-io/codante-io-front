@@ -19,6 +19,25 @@ type MainTechFilterProps = {
   techsToDisplay?: string[];
 };
 
+function getUrl(
+  baseUrl: string,
+  isSelected: boolean | undefined,
+  tech: string,
+) {
+  if (typeof window === "undefined") {
+    return baseUrl;
+  }
+
+  const url = new URL(window.location.href);
+  const searchParams = new URLSearchParams(url.search);
+  if (isSelected) {
+    searchParams.delete("tecnologia");
+  } else {
+    searchParams.set("tecnologia", tech);
+  }
+  return `${url.pathname}?${searchParams.toString()}`;
+}
+
 export default function MainTechFilter({
   selectedTechs,
   baseUrl,
@@ -80,19 +99,17 @@ export default function MainTechFilter({
   );
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+    <div className="flex flex-wrap gap-2 md:gap-3">
       {filteredTechs.map((technology) => {
         const isSelected = selectedTechs?.includes(technology.value);
         return (
           <Link
-            to={
-              isSelected ? baseUrl : `${baseUrl}?tecnologia=${technology.value}`
-            }
+            to={getUrl(baseUrl, isSelected, technology.value)}
             preventScrollReset
             prefetch="intent"
             key={technology.value}
             className={cn(
-              "flex items-center gap-2 p-3 md:py-3 py-2 text-sm text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-gray-700 border-gray-300 hover:border-brand-300 hover:dark:border-brand-300",
+              "flex items-center gap-2 p-3 md:py-3 py-2 text-xs text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-background-700 border-background-300 hover:border-brand-300 hover:dark:border-brand-300",
               isSelected &&
                 "border-brand-300 dark:border-brand-300 dark:text-white text-gray-700 bg-background-100 dark:bg-background-800",
             )}
