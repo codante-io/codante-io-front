@@ -367,6 +367,7 @@ export default function ChallengeSlug() {
                 challenge={challenge}
                 steps={steps}
                 challengeUser={challengeUser as ChallengeUser}
+                showFullDescription={!challenge.is_premium || !!user?.is_pro}
               />
             </>
           ) : (

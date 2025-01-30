@@ -243,6 +243,7 @@ export default function MarkdownRenderer({
   return (
     <div
       className={cn(
+        "relative",
         prose && "prose dark:prose-invert prose-ul:ml-0 prose-h2:mb-2",
         fontSize === "small" ? "lg:prose-base" : "lg:prose-lg",
         wrapperClasses,
