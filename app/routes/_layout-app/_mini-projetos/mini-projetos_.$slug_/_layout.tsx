@@ -200,6 +200,9 @@ export default function ChallengeSlug() {
     challengeUsers?.length && challengeUsers.length > 0,
   );
 
+  const userCanJoinChallenge =
+    !challenge.is_premium || !!user?.is_pro || challenge.is_weekly_featured;
+
   const location = useLocation();
 
   useEffect(() => {
@@ -367,7 +370,7 @@ export default function ChallengeSlug() {
                 challenge={challenge}
                 steps={steps}
                 challengeUser={challengeUser as ChallengeUser}
-                showFullDescription={!challenge.is_premium || !!user?.is_pro}
+                userCanJoinChallenge={!!userCanJoinChallenge}
               />
             </>
           ) : (

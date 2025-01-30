@@ -15,12 +15,12 @@ export default function Overview({
   challenge,
   steps,
   challengeUser,
-  showFullDescription = false,
+  userCanJoinChallenge,
 }: {
   challenge: Challenge;
   steps: UserStep[];
   challengeUser: ChallengeUser;
-  showFullDescription: boolean;
+  userCanJoinChallenge: boolean;
 }) {
   return (
     <div className="container grid grid-cols-3 gap-6 xl:gap-10">
@@ -48,7 +48,7 @@ export default function Overview({
             wrapperClasses="mx-auto px-2 md:px-4"
           />
 
-          {!showFullDescription && (
+          {!userCanJoinChallenge && (
             <div className="relative">
               <MarkdownRenderer
                 markdown={generateSimpleLoremIpsum()}
@@ -72,6 +72,7 @@ export default function Overview({
             steps={steps}
             slug={challenge?.slug}
             githubRepoUrl={challenge.repository_name}
+            userCanJoinChallenge={userCanJoinChallenge}
           />
         </div>
 
