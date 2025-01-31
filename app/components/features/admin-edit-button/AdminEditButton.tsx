@@ -12,16 +12,15 @@ export default function AdminEditButton({
 }: AdminEditButtonProps) {
   const user = useUserFromOutletContext();
 
+  if (!user?.is_admin) return null;
   return (
-    user?.is_admin && (
-      <a
-        href={baseURL + url}
-        target="_blank"
-        rel="noreferrer"
-        className="p-2 text-xs inline-block align-middle"
-      >
-        <BiEdit className="w-6 h-6 text-red-200" />
-      </a>
-    )
+    <a
+      href={baseURL + url}
+      target="_blank"
+      rel="noreferrer"
+      className="p-2 text-xs inline-block align-middle"
+    >
+      <BiEdit className="w-6 h-6 text-red-200" />
+    </a>
   );
 }
