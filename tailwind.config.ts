@@ -3,6 +3,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 import tailwindForm from "@tailwindcss/forms";
 import tailwindTypography from "@tailwindcss/typography";
 import tailwindContainerQueries from "@tailwindcss/container-queries";
+import tailwindAnimate from "tailwindcss-animate";
 
 const config = {
   darkMode: "class",
@@ -152,7 +153,12 @@ const config = {
       },
     },
   },
-  plugins: [tailwindForm, tailwindTypography, tailwindContainerQueries],
+  plugins: [
+    tailwindForm,
+    tailwindTypography,
+    tailwindContainerQueries,
+    tailwindAnimate,
+  ],
 } satisfies Config;
 
 export default config;

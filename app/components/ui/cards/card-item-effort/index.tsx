@@ -19,13 +19,10 @@ const effortLevelMap: Record<ChallengeEstimatedEffort, 1 | 2 | 3> = {
   "1_week": 3,
 };
 
-export default function CardItemEffort({
-  effort,
-  ...classes
-}: CardItemEffortProps) {
+export default function CardItemEffort({ effort }: CardItemEffortProps) {
   return (
-    <span className="rounded-full text-sm font-light flex items-center gap-1 border border-background-200 dark:border-background-600 px-2 py-1">
-      <div className="w-6 h-6">
+    <span className="rounded-full text-xs font-light flex items-center gap-1 border border-background-200 dark:border-background-600 px-2 py-1">
+      <div className="w-4 h-4">
         <LevelIcon level={effortLevelMap[effort]} color="orange" />
       </div>
 

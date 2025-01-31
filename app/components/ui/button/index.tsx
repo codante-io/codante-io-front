@@ -14,11 +14,11 @@ const buttonVariants = cva(
         destructive:
           "bg-red-500 text-gray-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-gray-50 dark:hover:bg-red-900/90",
         outline:
-          "border-[1.5px] border-gray-200 bg-white text-gray-800 hover:text-gray-900 hover:bg-gray-100 dark:border-background-600 dark:bg-background-800 dark:hover:bg-background-700 dark:hover:text-gray-100 dark:text-gray-50",
+          "border-[1.5px] border-background-300 bg-white text-gray-800 hover:text-gray-900 hover:bg-gray-100 dark:border-background-600 dark:bg-background-800 dark:hover:bg-background-700 dark:hover:text-gray-100 dark:text-gray-50",
         "outline-ghost":
-          "border-[1.5px] border-gray-200 dark:border-background-600 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50",
+          "border-[1.5px] border-background-300 dark:border-background-600 hover:bg-background-100 hover:text-gray-900 dark:hover:bg-background-700 dark:hover:text-gray-100 dark:text-gray-50",
         secondary:
-          "bg-gray-100 text-gray-900 hover:bg-gray-100/80 dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-800/80",
+          "bg-background-100 text-background-900 hover:bg-background-100/80 dark:bg-background-800 dark:text-background-50 dark:hover:bg-background-800/80",
         ghost:
           "hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-50",
         link: "text-gray-900 underline-offset-4 hover:underline dark:text-gray-50",
