@@ -1,5 +1,4 @@
 import { Link } from "@remix-run/react";
-import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 
 import classNames from "~/lib/utils/class-names";
@@ -51,12 +50,7 @@ export default function ChallengeCard({
             />
           </div>
         </div>
-        {challenge?.status === "soon" && (
-          <CardItemRibbon
-            className="group-hover:animate-tada"
-            text="Em breve"
-          />
-        )}
+        {challenge?.status === "soon" && <Chip text="Em breve" />}
 
         {!challenge?.is_premium && <Chip type="free" text="Gratuito" />}
 
