@@ -7,12 +7,15 @@ import {
   FiGlobe,
 } from "react-icons/fi";
 import { cardVariants } from "~/components/ui/cards/card";
+import BecomeProDialog from "~/components/ui/become-pro-dialog";
 import type { Challenge } from "~/lib/models/challenge.server";
 
 export default function ResourcesSection({
   challenge,
+  userCanAccessResources,
 }: {
   challenge: Challenge;
+  userCanAccessResources: boolean;
 }) {
   type Resource = {
     type: string;
@@ -32,6 +35,7 @@ export default function ResourcesSection({
   if (!hasResourcesToShow) {
     return null;
   }
+
   return (
     <div>
       <h1 className="flex items-center mb-4 text-xl font-semibold text-gray-700 font-lexend dark:text-gray-300">
@@ -39,16 +43,8 @@ export default function ResourcesSection({
       </h1>
 
       <div className="flex flex-col items-center justify-center gap-2">
-        {resources.map((resource) => (
-          <Link
-            to={resource.url}
-            key={resource.url}
-            target="_blank"
-            className={cardVariants({
-              hover: "brand-light",
-              className: "block text-left relative w-full p-4 group",
-            })}
-          >
+        {resources.map((resource) => {
+          const ResourceContent = (
             <section className="flex items-center">
               <Icon resource={resource} />
               <p className="flex items-center gap-2 font-extralight ">
@@ -60,8 +56,36 @@ export default function ResourcesSection({
                 )}
               </p>
             </section>
-          </Link>
-        ))}
+          );
+
+          return userCanAccessResources ? (
+            <Link
+              to={resource.url}
+              key={resource.url}
+              target="_blank"
+              className={cardVariants({
+                hover: "brand-light",
+                className: "block text-left relative w-full p-4 group",
+              })}
+            >
+              {ResourceContent}
+            </Link>
+          ) : (
+            <BecomeProDialog
+              trigger={
+                <div
+                  className={cardVariants({
+                    hover: "brand-light",
+                    className: "block text-left relative w-full p-4 group",
+                  })}
+                >
+                  {ResourceContent}
+                </div>
+              }
+              key={resource.url}
+            />
+          );
+        })}
       </div>
     </div>
   );

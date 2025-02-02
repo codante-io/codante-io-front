@@ -77,6 +77,7 @@ export default function Overview({
         </div>
 
         <RepositoryInfoSection
+          userCanJoinChallenge={userCanJoinChallenge}
           repository={{
             organization: "codante-io",
             name: challenge.repository_name,
@@ -84,7 +85,10 @@ export default function Overview({
             stars: challenge?.stars,
           }}
         />
-        <ResourcesSection challenge={challenge} />
+        <ResourcesSection
+          challenge={challenge}
+          userCanAccessResources={userCanJoinChallenge}
+        />
       </div>
     </div>
   );
