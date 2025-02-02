@@ -170,7 +170,7 @@ export default function LessonSubmitSolution({
         <Step
           id="join-challenge"
           title="Participe do Mini Projeto"
-          description="Participe. É 100% gratuito!"
+          description="Registre sua participação."
           status={
             steps.find((step) => step.id === "join-challenge")?.status ??
             "upcoming"

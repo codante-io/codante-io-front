@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import {
+  MovingBorderCard,
   Card,
   CardContent,
   CardFooter,
@@ -45,6 +46,31 @@ function BecomeProCard({ hideContent = false }: { hideContent?: boolean }) {
         </div>
       </CardFooter>
     </Card>
+  );
+}
+
+export function SmallBecomeProCard() {
+  return (
+    <MovingBorderCard
+      border="dull"
+      movingBorderColor="pro"
+      className="w-full md:w-[400px] text-center relative text-sm"
+    >
+      <CardHeader>
+        <CardTitle className="md:text-md lg:text-lg xl:text-lg text-xs">
+          <span className="font-medium text-gray-700 dark:text-gray-50">
+            Acesso exclusivo para membros <ProSpanWrapper>PRO</ProSpanWrapper>
+          </span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="text-sm">
+        <Link to="/planos" className="w-full text-xs md:text-md">
+          <Button variant="pro" className="w-full font-bold">
+            Assinar agora
+          </Button>
+        </Link>
+      </CardContent>
+    </MovingBorderCard>
   );
 }
 

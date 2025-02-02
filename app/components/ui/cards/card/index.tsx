@@ -39,12 +39,45 @@ const cardVariants = cva(
   },
 );
 
+const movingBorderCardVariants = cva("relative overflow-hidden", {
+  variants: {
+    rounded: {
+      default: "rounded-lg",
+      "2xl": "rounded-2xl",
+    },
+  },
+  defaultVariants: {
+    rounded: "default",
+  },
+});
+
+const movingBorderCardSpanVariants = cva(
+  "absolute -z-0 inset-0 group/border scale-x-[1.5] blur before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-full before:bg-[conic-gradient(var(--tw-gradient-stops))] before:via-transparent before:to-transparent before:animate-rotate-bg",
+  {
+    variants: {
+      movingBorderColor: {
+        blue: "before:from-blue-900 dark:before:from-[#67d7eb]",
+        pro: "before:from-amber-400 dark:before:from-amber-400",
+      },
+    },
+    defaultVariants: {
+      movingBorderColor: "blue",
+    },
+  },
+);
+
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {
   asChild?: boolean;
   as?: string;
 }
+
+export interface MovingBorderProps
+  extends VariantProps<typeof movingBorderCardSpanVariants>,
+    VariantProps<typeof movingBorderCardVariants> {}
+
+export interface MovingBorderCardProps extends CardProps, MovingBorderProps {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
@@ -71,7 +104,45 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 );
 Card.displayName = "Card";
 
-// Other Components
+const MovingBorderCard = React.forwardRef<
+  HTMLDivElement,
+  MovingBorderCardProps
+>(
+  (
+    {
+      className,
+      as = "div",
+      asChild = false,
+      border,
+      hover,
+      rounded,
+      movingBorderColor,
+      ...props
+    },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : as;
+    return (
+      <div
+        className={cn(
+          "relative p-[1px] bg-transparent",
+          movingBorderCardVariants({ rounded }),
+        )}
+      >
+        <span
+          aria-hidden="true"
+          className={movingBorderCardSpanVariants({ movingBorderColor })}
+        ></span>
+        <Comp
+          ref={ref}
+          className={cn(cardVariants({ rounded, className, border, hover }))}
+          {...props}
+        ></Comp>
+      </div>
+    );
+  },
+);
+MovingBorderCard.displayName = "MovingBorderCard";
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -140,4 +211,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  MovingBorderCard,
 };

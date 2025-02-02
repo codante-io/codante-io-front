@@ -8,21 +8,25 @@ import type { UserStep } from "../../build-steps.server";
 import CurrentStatus from "./components/current-status";
 import ResourcesSection from "./components/resources-section";
 import JoinChallengeSection from "./components/steps/join-challenge-section";
+import { generateSimpleLoremIpsum } from "~/lib/utils/string-utils";
+import { SmallBecomeProCard } from "~/components/ui/become-pro-card";
 
 export default function Overview({
   challenge,
   steps,
   challengeUser,
+  userCanJoinChallenge,
 }: {
   challenge: Challenge;
   steps: UserStep[];
   challengeUser: ChallengeUser;
+  userCanJoinChallenge: boolean;
 }) {
   return (
     <div className="container grid grid-cols-3 gap-6 xl:gap-10">
       <Card
-        border={"default"}
-        className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2"
+        border="default"
+        className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2 relative"
       >
         {challenge.video_url ? (
           <div>
@@ -41,8 +45,20 @@ export default function Overview({
         <div className="!mt-6">
           <MarkdownRenderer
             markdown={challenge?.description ?? ""}
-            wrapperClasses="mx-auto px-2 md:px-4 pb-12"
+            wrapperClasses="mx-auto px-2 md:px-4"
           />
+
+          {!userCanJoinChallenge && (
+            <div className="relative">
+              <MarkdownRenderer
+                markdown={generateSimpleLoremIpsum()}
+                wrapperClasses="mx-auto px-2 md:px-4 pb-12 blur-sm"
+              />
+              <div className="absolute flex justify-center items-center top-0 left-0 right-0 mx-auto p-10 md:px-4">
+                <SmallBecomeProCard />
+              </div>
+            </div>
+          )}
         </div>
       </Card>
 
@@ -56,10 +72,12 @@ export default function Overview({
             steps={steps}
             slug={challenge?.slug}
             githubRepoUrl={challenge.repository_name}
+            userCanJoinChallenge={userCanJoinChallenge}
           />
         </div>
 
         <RepositoryInfoSection
+          userCanJoinChallenge={userCanJoinChallenge}
           repository={{
             organization: "codante-io",
             name: challenge.repository_name,
@@ -67,7 +85,10 @@ export default function Overview({
             stars: challenge?.stars,
           }}
         />
-        <ResourcesSection challenge={challenge} />
+        <ResourcesSection
+          challenge={challenge}
+          userCanAccessResources={userCanJoinChallenge}
+        />
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import { Link } from "@remix-run/react";
-import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 
 import classNames from "~/lib/utils/class-names";
@@ -8,6 +7,7 @@ import CardItemLevel from "~/components/ui/cards/card-item-level";
 import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
 import { ArrowRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import Chip from "~/components/ui/chip";
 
 export default function ChallengeCard({
   challenge,
@@ -50,16 +50,10 @@ export default function ChallengeCard({
             />
           </div>
         </div>
-        {challenge?.status === "soon" && (
-          <CardItemRibbon
-            className="group-hover:animate-tada"
-            text="Em breve"
-          />
-        )}
+        {challenge?.status === "soon" && <Chip text="Em breve" />}
 
-        {!challenge?.is_premium && (
-          <CardItemRibbon type="success" text="Free" />
-        )}
+        {!challenge?.is_premium && <Chip type="free" text="Gratuito" />}
+
         <div className="flex flex-col justify-between flex-grow h-full px-6 py-4">
           <div>
             <div className="mb-2 card-header">
