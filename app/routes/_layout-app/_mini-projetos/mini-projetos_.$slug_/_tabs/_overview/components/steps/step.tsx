@@ -6,6 +6,9 @@ import type { FormProps } from "@remix-run/react";
 import { Form, useLocation } from "@remix-run/react";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Card } from "~/components/ui/cards/card";
+import BecomeProDialog from "~/components/ui/become-pro-dialog";
+import { Button } from "~/components/ui/button";
+import { LockIcon } from "lucide-react";
 
 // Types for props
 type StepProps = {
@@ -190,6 +193,26 @@ function StepPrimaryButton({
   );
 }
 
+function StepBecomeProDialogButton() {
+  return (
+    <BecomeProDialog
+      trigger={
+        <Button size="sm" className="justify-start">
+          <LockIcon className="w-4 h-4 mr-2" />
+          Participar
+        </Button>
+      }
+      content={
+        <div>
+          <p>
+            Considere assinar para ter acesso a esse e muitos outros projetos.
+          </p>
+        </div>
+      }
+    />
+  );
+}
+
 // Steps container component
 function StepsContainer({ children, className }: StepsContainerProps) {
   return (
@@ -217,5 +240,5 @@ Step.Content = StepContent;
 Step.IconCompleted = StepIconCompleted;
 Step.IconCurrent = StepIconCurrent;
 Step.IconUpcoming = StepIconUpcoming;
-
+Step.BecomeProDialogButton = StepBecomeProDialogButton;
 export default Step;

@@ -26,7 +26,7 @@ export function userSteps(user: User | null, challengeUser?: ChallengeUser) {
   });
 
   // Se não há user, o primeiro passo é conectar o GitHub
-  if (!user) {
+  if (!user || !user?.github_user) {
     steps.find((step) => step.id === "connect-github")!.status = "current";
   }
 

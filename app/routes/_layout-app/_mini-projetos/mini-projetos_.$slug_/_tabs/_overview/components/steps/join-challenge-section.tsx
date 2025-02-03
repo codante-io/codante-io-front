@@ -9,8 +9,6 @@ import "./filepond-style.css";
 import Step from "./step";
 import SubmissionStepForm from "./submission-step-form";
 import { Link } from "@remix-run/react";
-import BecomeProDialog from "~/components/ui/become-pro-dialog";
-import { LockIcon } from "lucide-react";
 
 type JoinChallengeSectionProps = {
   className?: string;
@@ -57,22 +55,7 @@ export default function JoinChallengeSection({
               Participar
             </Step.PrimaryButton>
           ) : (
-            <BecomeProDialog
-              trigger={
-                <Button size="sm" className="justify-start">
-                  <LockIcon className="w-4 h-4 mr-2" />
-                  Participar
-                </Button>
-              }
-              content={
-                <div>
-                  <p>
-                    Considere assinar para ter acesso a esse e muitos outros
-                    projetos.
-                  </p>
-                </div>
-              }
-            />
+            <Step.BecomeProDialogButton />
           )}
         </Step.Form>
       </Step>
