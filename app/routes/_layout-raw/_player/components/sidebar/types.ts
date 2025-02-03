@@ -11,7 +11,7 @@ export type SidebarLesson = {
   user_completed: boolean;
   thumbnail_url: string;
   duration_in_seconds: number;
-  open: boolean;
+  user_can_view: boolean;
 };
 
 export type Title = {

@@ -256,7 +256,8 @@ export default function LessonIndex() {
                             id={sectionLesson.id}
                             key={sectionLesson.id}
                             name={sectionLesson.name}
-                            href={sectionLesson.url}
+                            slug={sectionLesson.slug}
+                            userCanView={sectionLesson.user_can_view}
                             completed={sectionLesson.user_completed}
                             isFirst={index === 0}
                             current={lesson.id === sectionLesson.id}

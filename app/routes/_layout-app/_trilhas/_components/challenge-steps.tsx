@@ -26,10 +26,7 @@ interface ChallengeLessonsProps {
 //   };
 // }
 
-export function ChallengeSteps({
-  trackLessons,
-  challengeSlug,
-}: ChallengeLessonsProps) {
+export function ChallengeSteps({ trackLessons }: ChallengeLessonsProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
@@ -47,9 +44,10 @@ export function ChallengeSteps({
               <SidebarItem
                 id={lesson.id}
                 name={lesson.name}
+                userCanView={lesson.user_can_view}
                 current={false}
                 completed={lesson.user_completed}
-                href={lesson.url}
+                slug={lesson.slug}
                 isFirst={index === 0}
                 isLast={index === trackLessons.length - 1}
               />
