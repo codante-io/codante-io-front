@@ -88,8 +88,9 @@ export default function FullPlayer({
                           id={sectionLesson.id}
                           key={sectionLesson.id}
                           name={sectionLesson.name}
-                          href={sectionLesson.url}
+                          slug={sectionLesson.slug}
                           completed={sectionLesson.user_completed}
+                          userCanView={sectionLesson.user_can_view}
                           isFirst={index === 0}
                           current={lesson.id === sectionLesson.id}
                           isLast={index === sectionLessons.length - 1}

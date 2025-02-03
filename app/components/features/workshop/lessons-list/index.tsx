@@ -30,9 +30,9 @@ export default function LessonsList({
   return (
     <ol className="">
       <div className={cn("inset-0", "flex flex-col gap-8")}>
-        {sectionsWithLessons?.map((section) => {
+        {sectionsWithLessons?.map((section, index) => {
           return (
-            <div>
+            <div key={index}>
               {section.sectionName && (
                 <SidebarSectionTitle
                   className="relative pl-4 mb-4 bg-transparent border-b dark:bg-transparent border-b-background-800"
@@ -43,14 +43,16 @@ export default function LessonsList({
               )}
               {section.lessons.map((lesson, index) => {
                 if (!lesson) return null;
+
                 return (
                   <SidebarItem
                     id={lesson.id}
                     key={lesson.id}
                     name={lesson.name}
-                    href={lesson.url}
+                    slug={lesson.slug}
                     completed={lesson.user_completed}
                     current={lesson.id == nextLessonId}
+                    userCanView={lesson.user_can_view}
                     isFirst={index === 0}
                     isLast={index === section.lessons.length - 1}
                   />

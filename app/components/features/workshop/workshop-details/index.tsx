@@ -14,7 +14,6 @@ import LessonsList from "~/components/features/workshop/lessons-list";
 import NextLessonPreview from "~/components/features/workshop/next-lesson-preview";
 import { Button } from "~/components/ui/button";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
-import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import YoutubePlayer from "~/components/ui/video-players/youtube-player";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";
@@ -27,17 +26,11 @@ import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/t
 type WorkshopDetailsProps = {
   workshop: Workshop;
   nextLesson: SidebarLesson;
-  showDescription?: boolean;
-  isFree?: boolean;
-  userIsPro?: boolean;
 };
 
 export default function WorkshopDetails({
   workshop,
   nextLesson,
-  showDescription = true,
-  isFree = false,
-  userIsPro = false,
 }: WorkshopDetailsProps) {
   const user = useUserFromOutletContext();
 
@@ -69,46 +62,10 @@ export default function WorkshopDetails({
           <>
             {/* <Subtitle text="Sobre o Workshop" /> */}
             <div className="text-gray-600 dark:text-gray-300">
-              <p>
-                <MarkdownRenderer markdown={workshop.description} />
-              </p>
+              <MarkdownRenderer markdown={workshop.description} />
             </div>
           </>
         </div>
-
-        {!showDescription && !userIsPro && (
-          <div className="p-6 mt-6 mb-8 text-sm text-gray-600 dark:text-gray-300 bg-background-800 rounded-xl">
-            <p>
-              Todos os nossos projetos são{" "}
-              <span className="underline decoration-green-400">gratuitos</span>,
-              porém os tutoriais são exclusivos para membros do{" "}
-              <b>
-                Codante <ProSpanWrapper>PRO</ProSpanWrapper>
-              </b>
-              .{" "}
-              {isFree
-                ? "Este é um tutorial gratuito, para que você possa assistir e experimentar."
-                : "Algumas aulas estão abertas para você experimentar."}
-            </p>
-            <p className="mt-4">
-              Se gostar, considere assinar para ter acesso a todos os tutoriais
-              e apoiar o projeto!
-            </p>
-
-            <div className="flex max-w-md gap-4 mt-4">
-              <Link to="/assine" className="w-full">
-                <Button variant="secondary" className="w-full font-bold">
-                  Saiba mais
-                </Button>
-              </Link>
-              <Link to="/planos" className="w-full">
-                <Button variant="pro" className="w-full font-bold">
-                  Assinar agora
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
       {/* Right Side */}
       <div className="mx-auto space-y-12 lg:w-3/5">

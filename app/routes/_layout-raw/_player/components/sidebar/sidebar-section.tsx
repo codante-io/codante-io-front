@@ -26,8 +26,9 @@ export default function SidebarSection({
             id={lesson.id}
             key={lesson.id}
             name={lesson.name}
-            href={lesson.url}
+            slug={lesson.slug}
             completed={lesson.user_completed}
+            userCanView={lesson.user_can_view}
             current={lesson.id == currentLessonId}
             isFirst={index === 0}
             isLast={index === lessons.length - 1}
