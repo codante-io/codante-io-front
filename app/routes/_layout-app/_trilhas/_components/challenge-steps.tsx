@@ -47,7 +47,7 @@ export function ChallengeSteps({ trackLessons }: ChallengeLessonsProps) {
                 userCanView={lesson.user_can_view}
                 current={false}
                 completed={lesson.user_completed}
-                slug={lesson.slug}
+                url={lesson.url}
                 isFirst={index === 0}
                 isLast={index === trackLessons.length - 1}
               />

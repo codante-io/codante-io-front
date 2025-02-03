@@ -49,7 +49,7 @@ export default function LessonsList({
                     id={lesson.id}
                     key={lesson.id}
                     name={lesson.name}
-                    slug={lesson.slug}
+                    url={lesson.url}
                     completed={lesson.user_completed}
                     current={lesson.id == nextLessonId}
                     userCanView={lesson.user_can_view}

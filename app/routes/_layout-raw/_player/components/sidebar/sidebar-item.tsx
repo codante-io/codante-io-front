@@ -7,7 +7,7 @@ type SidebarItemProps = {
   id: number;
   name: string;
   current: boolean;
-  slug: string;
+  url: string;
   completed: boolean;
   userCanView: boolean;
   isFirst: boolean;
@@ -20,12 +20,12 @@ export default function SidebarItem({
   current,
   completed,
   userCanView,
-  slug,
+  url,
   isFirst,
   isLast,
 }: SidebarItemProps) {
   return (
-    <Link to={slug}>
+    <Link to={url}>
       <li
         id={`lesson-${id}`}
         className="flex items-center gap-4 pl-2 ml-2 transition-colors dark:hover:bg-background-700 hover:bg-background-150 rounded-xl group/lesson"
