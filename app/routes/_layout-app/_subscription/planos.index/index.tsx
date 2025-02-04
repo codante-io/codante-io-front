@@ -1,5 +1,4 @@
 import faqQuestions from "../faq-questions";
-import { Link } from "@remix-run/react";
 import FaqItem from "~/components/ui/faq-item";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import FreePricingCard from "~/components/ui/cards/pricing/free";
@@ -19,24 +18,10 @@ export default function AssinePage() {
       <section>
         <div className="flex flex-col items-center ">
           <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-3xl">
-            O Codante <ProSpanWrapper>PRO</ProSpanWrapper> vai te ajudar a
-            conquistar os seus objetivos de carreira. Saiba mais sobre a nossa
-            metodologia{" "}
-            <Link to="/assine" className="underline font-bold">
-              {" "}
-              clicando aqui
-            </Link>
-            .
-          </p>
-          <p className="mt-2 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-3xl">
-            Assine nosso{" "}
-            <span className="text-brand-400">
-              plano vitalício com valor promocional de lançamento
-            </span>{" "}
-            <span className="font-bold underline text-brand-400">
-              por tempo limitado
-            </span>
-            . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
+            Domine o frontend moderno com o Codante{" "}
+            <ProSpanWrapper>PRO</ProSpanWrapper>. <br /> Tenha acesso completo a
+            todos os nossos <span className="font-bold">workshops</span> e{" "}
+            <span className="font-bold">mini projetos</span>.
           </p>
 
           <section className="flex flex-col-reverse justify-center gap-10 mt-10 mb-20 lg:flex-row">

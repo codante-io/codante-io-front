@@ -31,6 +31,8 @@ import AlertBanner from "~/components/ui/alert-banner";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import ProPricingCard from "~/components/ui/cards/pricing/pro";
 import FreePricingCard from "~/components/ui/cards/pricing/free";
+import YearlyPricingCard from "~/components/ui/cards/pricing/yearly";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
 export const loader = async () => {
   return json({
@@ -104,15 +106,16 @@ function Headline() {
         )}
 
         <h1 className="text-5xl font-light text-center md:mt-10 font-lexend lg:text-7xl">
-          Evolua na programação <br />
+          Domine o <br />
           <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
-            front-end
+            frontend
             <img
               src={`/img/pencil-stroke-${colorMode}.webp`}
               alt="Line stroke effect"
               className="absolute top-[55%] md:top-[55%] md:h-10 h-6 left-6 w-full md:left-10 -z-10"
             />
-          </span>
+          </span>{" "}
+          moderno
         </h1>
       </div>
       <div className="mb-16 container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full">
@@ -400,18 +403,14 @@ function Pricing() {
           </span>
         </h1>
         <p className="mt-6 mb-4 font-light text-center font-inter text-md md:text-xl lg:max-w-4xl">
-          No Codante sempre teremos muito conteúdo gratuito. Para uma
-          experiência completa, assine nosso{" "}
-          <span className="text-brand-400">
-            plano vitalício com valor promocional de lançamento
-          </span>{" "}
-          <span className="font-bold underline text-brand-400">
-            por tempo limitado
-          </span>
-          . Sem assinaturas. Pague apenas uma vez, acesse para sempre.
+          Domine o frontend moderno com o Codante{" "}
+          <ProSpanWrapper>PRO</ProSpanWrapper>. <br /> Tenha acesso completo a
+          todos os nossos <span className="font-bold">workshops</span> e{" "}
+          <span className="font-bold">mini projetos</span>.
         </p>
         <section className="flex flex-col-reverse justify-center gap-20 mt-10 mb-20 lg:flex-row text-start">
           <FreePricingCard />
+          <YearlyPricingCard />
           <ProPricingCard />
         </section>
       </div>
