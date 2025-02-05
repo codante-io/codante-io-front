@@ -1,7 +1,5 @@
-import { Link } from "@remix-run/react";
 import { CalendarDaysIcon, ClockIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "~/components/ui/button";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 
@@ -12,10 +10,16 @@ type FeaturedChallengeSectionProps = {
 export default function FeaturedChallengeSection({
   featuredChallenge,
 }: FeaturedChallengeSectionProps) {
+  function renderDate(date: string) {
+    return new Date(Date.parse(date)).toLocaleDateString("pt-BR", {
+      dateStyle: "short",
+    });
+  }
+
   if (!featuredChallenge) return null;
   return (
     <>
-      <section className="md:relative py-8 mb-20 md:mb-32 mt-[80px] rounded-lg md:pl-[420px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-center flex-col">
+      <section className="md:relative py-8 mb-20 md:mb-32 mt-[80px] rounded-lg md:pl-[400px] border-[1.5px] border-brand bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-sky-700 to-indigo-900 md:flex justify-center items-start flex-col bg-grainy">
         <div className="flex-col px-6">
           <h3 className="font-cursive text-yellow-400 ">
             Mini Projeto em destaque
@@ -23,45 +27,25 @@ export default function FeaturedChallengeSection({
           <h1 className="text-2xl font-bold text-white ">
             {featuredChallenge.name}
           </h1>
-          <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base">
+          <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base max-w-lg">
             Participe do Mini Projeto da semana com a gente. Toda semana um novo
             Mini Projeto que será resolvido oficialmente pela equipe do Codante.
           </p>
           <p className="mt-4 text-sm ">
             <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200">
-              <CalendarDaysIcon className="inline w-4 h-4 " />
+              <CalendarDaysIcon className="inline w-4 h-4" />
               Resolução:
               <strong className="text-white dark:text-white ">
-                {new Date(
-                  Date.parse(featuredChallenge.solution_publish_date as string),
-                ).toLocaleDateString("pt-BR", {
-                  dateStyle: "short",
-                }) +
-                  ", " +
-                  new Date(
-                    Date.parse(
-                      featuredChallenge.solution_publish_date as string,
-                    ),
-                  ).toLocaleTimeString("pt-BR", {
-                    timeStyle: "short",
-                  })}
+                {renderDate(featuredChallenge.solution_publish_date!)}
               </strong>
             </span>{" "}
           </p>
 
           <Countdown featuredChallenge={featuredChallenge} />
-          <Link to={`/mini-projetos/${featuredChallenge.slug}`}>
-            <Button
-              type="button"
-              className="hidden text-white bg-transparent border-2 border-yellow-400 md:block hover:bg-blue-600"
-            >
-              Participe do Mini Projeto
-            </Button>
-          </Link>
         </div>
 
-        <div className="flex justify-center md:absolute md:-top-[50px] md:left-10">
-          <div className="w-96">
+        <div className="flex justify-center md:absolute md:-top-[50px] md:left-16">
+          <div className="w-80">
             <ChallengeCard
               className="shadow-[7px_7px_20px_0px_rgba(255,255,255,0.10)] dark:hover:shadow-[7px_7px_20px_0px_rgba(255,255,255,0.20)]"
               challenge={featuredChallenge}
@@ -120,7 +104,7 @@ function Countdown({
 
   if (!remainingTime)
     return (
-      <p className="mt-2 mb-8 text-sm h-10">
+      <p className="mt-2 text-sm">
         <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
           <ClockIcon className="inline w-4 h-4 " />
           Faltam:
@@ -130,7 +114,7 @@ function Countdown({
 
   return (
     <>
-      <p className="mt-2 mb-8 text-sm h-10">
+      <p className="mt-2 text-sm">
         {!timerEnded ? (
           <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
             <ClockIcon className="inline w-4 h-4 " />
