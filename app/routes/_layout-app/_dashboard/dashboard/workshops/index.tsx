@@ -35,15 +35,18 @@ export default function WorkshopsDashboard() {
         </h1>
         <div className="grid justify-center w-full grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
           {ongoingWorkshops && ongoingWorkshops.length > 0 ? (
-            ongoingWorkshops.map((workshop) => (
-              <WorkshopCard
-                size={"sm"}
-                key={workshop.id}
-                workshop={workshop}
-                withProgress
-                withChip={false}
-              />
-            ))
+            ongoingWorkshops.map(
+              (workshop) =>
+                !!workshop.is_standalone && (
+                  <WorkshopCard
+                    size={"sm"}
+                    key={workshop.id}
+                    workshop={workshop}
+                    withProgress
+                    withChip={false}
+                  />
+                ),
+            )
           ) : (
             <h2 className="dark:text-gray-600 text-gray-400">
               Você não possui{" "}
@@ -59,15 +62,18 @@ export default function WorkshopsDashboard() {
         </h1>
         <div className="grid justify-center w-full grid-cols-1 gap-4 px-0 md:grid-cols-2 lg:grid-cols-3">
           {completedWorkshops && completedWorkshops.length > 0 ? (
-            completedWorkshops.map((workshop) => (
-              <WorkshopCard
-                withProgress
-                size={"sm"}
-                key={workshop.id}
-                workshop={workshop}
-                withChip={false}
-              />
-            ))
+            completedWorkshops.map(
+              (workshop) =>
+                !!workshop.is_standalone && (
+                  <WorkshopCard
+                    withProgress
+                    size={"sm"}
+                    key={workshop.id}
+                    workshop={workshop}
+                    withChip={false}
+                  />
+                ),
+            )
           ) : (
             <h2 className="dark:text-gray-600 text-gray-400">
               Você não concluiu nenhum{" "}
