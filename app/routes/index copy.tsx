@@ -78,17 +78,6 @@ function Headline() {
   const { colorMode } = useColorMode();
   const { user } = useOutletContext<{ user: User }>();
 
-  function sortByEnrolledUsersCount(challengesList: ChallengeCardType[]) {
-    if (!challengesList) return [];
-    return challengesList.sort(
-      (a, b) => b.enrolled_users_count - a.enrolled_users_count,
-    );
-  }
-
-  const orderedChallengeList = sortByEnrolledUsersCount(
-    homeInfo.featured_challenges,
-  );
-
   const avatarSection = homeInfo.avatar_section;
 
   return (
@@ -130,16 +119,24 @@ function Headline() {
             <b className="">workshops</b> e <b className="">mini projetos</b>.
           </h2>
         </TextFade>
+
+        {/* <h1 className="text-4xl font-light text-center md:mt-10 font-lexend lg:text-6xl">
+          Domine o
+          <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+            frontend
+            <img
+              src={`/img/pencil-stroke-${colorMode}.webp`}
+              alt="Line stroke effect"
+              className="absolute top-[55%] md:top-[55%] md:h-10 h-6 left-6 w-full md:left-10 -z-10"
+            />
+          </span>{" "}
+          moderno
+        </h1>
+        <h2 className="text-xl dark:text-gray-300 text-gray-800 font-light text-center md:mt-10 font-lexend lg:text-2xl max-w-3xl">
+          Aprenda as tecnologias que importam, de forma prática e objetiva com
+          nossos workshops e mini projetos.
+        </h2> */}
       </div>
-      {/* <div className="mt-16 ">
-        <section className="flex overflow-auto w-full">
-          {orderedChallengeList.map((challenge) => (
-            <div key={challenge.slug} className="mx-auto w-full min-w-96">
-              <ChallengeCard challenge={challenge} />
-            </div>
-          ))}
-        </section>
-      </div> */}
       <div className="mb-16 container flex mt-16 lg:mt-24 gap-6 lg:flex-row flex-col h-full">
         <section className="flex flex-col basis-2/5 lg:pr-10 justify-between">
           <div>
@@ -346,7 +343,7 @@ function Challenges() {
           <span className="italic font-bold text-brand-400">mini projetos</span>{" "}
           e depois assista a resolução feita por profissionais do mercado.
         </p>
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
           {orderedChallengeList.map((challenge) => (
             <div key={challenge.slug} className="mx-auto w-full">
               <ChallengeCard challenge={challenge} />
