@@ -27,7 +27,7 @@ export default function ChallengeCard({
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
       className={classNames(
-        "relative group block p-3 h-full max-w-[450px] w-full mx-auto",
+        "relative group block h-full max-w-[450px] w-full mx-auto",
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer",
       )}
     >
@@ -35,7 +35,7 @@ export default function ChallengeCard({
         className={`group
           relative flex flex-col w-full h-full bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
-        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ${className}`}
+        hover:border-blue-300 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-shadow ${className}`}
       >
         <div className="flex m-1 flex-col items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600">
           <div className="flex items-center justify-center w-full h-full pt-4 overflow-hidden">
@@ -54,10 +54,10 @@ export default function ChallengeCard({
 
         {!challenge?.is_premium && <Chip type="free" text="Gratuito" />}
 
-        <div className="flex flex-col justify-between flex-grow h-full px-6 py-4">
+        <div className="flex flex-col justify-between flex-grow h-full p-4">
           <div>
             <div className="mb-2 card-header">
-              <h2 className="mb-4 text-2xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
+              <h2 className="mb-4 text-xl font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
                 {challenge?.name}
               </h2>
 
@@ -80,11 +80,11 @@ export default function ChallengeCard({
                     key={index}
                     avatar={avatar}
                     cursor="cursor-pointer"
-                    className="w-9 h-9 m-[2px]"
+                    className="w-7 h-7 m-[2px]"
                   />
                 ))}
                 {challenge.enrolled_users_count > 5 && (
-                  <div className="relative w-9 h-9 text-[0.7rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
+                  <div className="relative w-7 h-7 text-[0.5rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
                     +{challenge.enrolled_users_count - 5}
                   </div>
                 )}
@@ -92,6 +92,7 @@ export default function ChallengeCard({
             </section>
             <Button
               variant="ghost"
+              size="sm"
               className="flex items-center justify-center gap-2 rounded-xl font-light text-gray-500 dark:text-gray-400"
             >
               Ver projeto
