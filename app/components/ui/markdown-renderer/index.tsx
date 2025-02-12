@@ -67,6 +67,12 @@ function H2WithDivider({
 }
 
 function isAlert(firstChild: React.ReactElement) {
+  if (
+    !firstChild.props.children[0] ||
+    typeof firstChild.props.children[0] !== "string"
+  )
+    return false;
+
   if (firstChild.props.children[0].startsWith("Dica"))
     return { color: "#22c55e", text: "Dica", imgPath: "/icons/bulb-icons.svg" };
   if (firstChild.props.children[0].startsWith("Informação"))
