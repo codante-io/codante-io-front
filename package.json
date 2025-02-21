@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "remix vite:dev",
     "build": "remix vite:build",
-    "start": "dotenv -e .env.production remix-serve ./build/server/index.js",
+    "start": "dotenv -e .env remix-serve ./build/server/index.js",
     "typecheck": "tsc",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",

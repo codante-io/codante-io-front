@@ -7,6 +7,7 @@ export function useAnimateScroll({
 }) {
   const { scrollYProgress } = useScroll({
     target: containerRef,
+    layoutEffect: false,
   });
 
   return {

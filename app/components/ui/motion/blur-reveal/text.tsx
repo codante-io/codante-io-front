@@ -5,7 +5,7 @@ export function BlurRevealText({
   children,
   element,
   className,
-  delay = 0,
+  delay = 0.2,
 }: {
   children: React.ReactNode;
   element: string | ForwardRefExoticComponent<any>;

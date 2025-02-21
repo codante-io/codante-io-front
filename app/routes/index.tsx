@@ -173,7 +173,6 @@ function Challenges() {
 
   return (
     <>
-      {" "}
       <section id="mini-projects" className="flex justify-center w-full">
         <div className="container flex flex-col items-center w-full mt-24">
           <div className="relative w-full">
@@ -187,7 +186,7 @@ function Challenges() {
 
             <BlurRevealText
               element="p"
-              delay={0.2}
+              delay={0.4}
               className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
             >
               Os mini projetos são uma maneira prática de aprender, colocando a
@@ -235,7 +234,7 @@ function Challenges() {
               </BlurRevealText>
               <BlurRevealText
                 element="p"
-                delay={0.2}
+                delay={0.4}
                 className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
               >
                 Para cada projeto, fornecemos uma lista de requisitos, como se
@@ -264,7 +263,7 @@ function Challenges() {
               </BlurRevealText>
               <BlurRevealText
                 element="p"
-                delay={0.2}
+                delay={0.4}
                 className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
               >
                 Também disponibilizamos designs completos no Figma, com cores,
@@ -285,7 +284,7 @@ function Challenges() {
               </BlurRevealText>
               <BlurRevealText
                 element="p"
-                delay={0.2}
+                delay={0.4}
                 className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
               >
                 Conecte com{" "}
@@ -320,7 +319,7 @@ function Challenges() {
               </BlurRevealText>
               <BlurRevealText
                 element="p"
-                delay={0.2}
+                delay={0.4}
                 className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
               >
                 Faça o deploy de seu projeto no Vercel, Netlify ou qualquer
@@ -342,7 +341,7 @@ function Challenges() {
               </BlurRevealText>
               <BlurRevealText
                 element="p"
-                delay={0.2}
+                delay={0.4}
                 className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
               >
                 Envie a sua solução para aparecer na nossa galeria. Você pode
@@ -406,7 +405,7 @@ function Challenges() {
               </BlurRevealText>
               <BlurRevealText
                 element="p"
-                delay={0.2}
+                delay={0.4}
                 className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
               >
                 Para quem gosta de uma explicação detalhada, disponibilizamos
@@ -441,7 +440,7 @@ function Workshops() {
 
           <BlurRevealText
             element="p"
-            delay={0.2}
+            delay={0.4}
             className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
           >
             Os workshops são aulas completas sobre temas específicos dentro do
@@ -485,7 +484,7 @@ function Workshops() {
             </BlurRevealText>
             <BlurRevealText
               element="p"
-              delay={0.2}
+              delay={0.4}
               className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
             >
               Os workshops são transmitidos ao vivo para nossa comunidade,
@@ -516,7 +515,7 @@ function Workshops() {
             </BlurRevealText>
             <BlurRevealText
               element="p"
-              delay={0.2}
+              delay={0.4}
               className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
             >
               Nos workshops, entramos nas partes teóricas, mas ainda focando no
@@ -535,7 +534,7 @@ function Workshops() {
             </BlurRevealText>
             <BlurRevealText
               element="p"
-              delay={0.2}
+              delay={0.4}
               className="max-w-2xl mt-4 text-gray-600 dark:text-gray-300"
             >
               Ao finalizar um workshop pela nossa plataforma, os nossos usuários{" "}
@@ -578,7 +577,7 @@ function Community() {
 
           <BlurRevealText
             element="p"
-            delay={0.2}
+            delay={0.4}
             className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
           >
             Quem caminha em grupo vai mais longe! Por isso, nos esforçamos para
@@ -588,7 +587,7 @@ function Community() {
 
           <BlurRevealText
             element="p"
-            delay={0.2}
+            delay={0.4}
             className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
           >
             Já somos{" "}
@@ -685,7 +684,7 @@ function Pricing() {
 
           <BlurRevealText
             element="p"
-            delay={0.2}
+            delay={0.4}
             className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
           >
             Tenha acesso completo a todos os nossos{" "}
@@ -719,7 +718,7 @@ function Faq() {
           </BlurRevealText>
           <BlurRevealText
             element="p"
-            delay={0.2}
+            delay={0.4}
             className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
           >
             Aqui você encontra respostas para as perguntas mais frequentes sobre
@@ -757,7 +756,7 @@ function SocialNetworks() {
           </BlurRevealText>
           <BlurRevealText
             element="p"
-            delay={0.2}
+            delay={0.4}
             className="max-w-2xl mt-6 text-gray-600 dark:text-gray-300"
           >
             Siga nossas redes sociais e ajude a divulgar o Codante para nos

@@ -13,7 +13,7 @@ function Demo({ parentRef }: { parentRef: React.RefObject<HTMLDivElement> }) {
   );
 
   return (
-    <div style={{ perspective: "1900px" }} className="w-full mt-16">
+    <div style={{ perspective: "1800px" }} className="w-full mt-16">
       <motion.div
         style={animate}
         className="scale-105 mx-auto max-w-screen-xl aspect-video w-full border-2 border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden translate-z-2 mt-4 mb-10"
@@ -60,7 +60,6 @@ function Demo({ parentRef }: { parentRef: React.RefObject<HTMLDivElement> }) {
           }
           className="w-full h-full aspect-video"
           loading="lazy"
-          allowTransparency
         ></iframe>
       </motion.div>
     </div>

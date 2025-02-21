@@ -54,7 +54,7 @@ function SocialNetworksList() {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 items-start w-full mt-20 gap-4 text-center">
       {socialNetworks.map((socialNetwork) =>
         socialNetwork.to === "discord" ? (
-          <DiscordButton onlyWrapper>
+          <DiscordButton onlyWrapper key={socialNetwork.to}>
             <SocialNetworkCard {...socialNetwork} />
           </DiscordButton>
         ) : (
@@ -62,6 +62,7 @@ function SocialNetworksList() {
             to={socialNetwork.to}
             target="_blank"
             className="cursor-pointer"
+            key={socialNetwork.to}
           >
             <SocialNetworkCard {...socialNetwork} />
           </Link>
