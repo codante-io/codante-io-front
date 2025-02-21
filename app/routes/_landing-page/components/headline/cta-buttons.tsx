@@ -26,7 +26,7 @@ function CTAButtons() {
             transition={{ duration: 0.2 }}
           >
             Conheça os{" "}
-            <Sparkles soundEnabled enableOnHover color="yellow">
+            <Sparkles enableOnHover color="yellow">
               Mini Projetos
             </Sparkles>
           </motion.span>
@@ -58,7 +58,7 @@ function CTAButtons() {
             transition={{ duration: 0.2 }}
           >
             Conheça os{" "}
-            <Sparkles soundEnabled enableOnHover color="blue">
+            <Sparkles enableOnHover color="blue">
               Workshops
             </Sparkles>
           </motion.span>
