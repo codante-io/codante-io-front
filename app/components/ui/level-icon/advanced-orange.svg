@@ -4,16 +4,16 @@
     <rect width="100" height="360" x="481" y="204" fill="url(#c)" rx="24" />
     <defs>
         <linearGradient id="a" x1="237" x2="300.848" y1="384" y2="647.042" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#FCDF77" />
-            <stop offset="1" stopColor="#C9349F" />
+            <stop stop-color="#FCDF77" />
+            <stop offset="1" stop-color="#C9349F" />
         </linearGradient>
         <linearGradient id="b" x1="384" x2="509.62" y1="304" y2="662.291" gradientUnits="userSpaceOnUse">
-           <stop stopColor="#FCDF77" />
-            <stop offset="1" stopColor="#C9349F" />
+           <stop stop-color="#FCDF77" />
+            <stop offset="1" stop-color="#C9349F" />
         </linearGradient>
         <linearGradient id="c" x1="531" x2="749.86" y1="204" y2="654.832" gradientUnits="userSpaceOnUse">
-           <stop stopColor="#FCDF77" />
-            <stop offset="1" stopColor="#C9349F" />
+           <stop stop-color="#FCDF77" />
+            <stop offset="1" stop-color="#C9349F" />
         </linearGradient>
     </defs>
 </svg>
