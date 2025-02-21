@@ -1,14 +1,11 @@
-"use client";
 import { motion, useInView } from "framer-motion";
 import * as React from "react";
 
-export function TextFade({
-  direction,
+export function BlurReveal({
   children,
   className = "",
   staggerChildren = 0.1,
 }: {
-  direction: "up" | "down";
   children: React.ReactNode;
   className?: string;
   staggerChildren?: number;

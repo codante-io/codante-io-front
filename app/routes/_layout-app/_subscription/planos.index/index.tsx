@@ -24,7 +24,7 @@ export default function AssinePage() {
             <span className="font-bold">mini projetos</span>.
           </p>
 
-          <section className="flex flex-col-reverse justify-center gap-10 mt-10 mb-20 lg:flex-row">
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between gap-8 mt-10 mb-20 lg:flex-row text-start flex-wrap">
             <FreePricingCard />
             <YearlyPricingCard />
             <ProPricingCard />

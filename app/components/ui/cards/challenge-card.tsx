@@ -27,7 +27,7 @@ export default function ChallengeCard({
         challenge?.status === "soon" ? `#` : `/mini-projetos/${challenge?.slug}`
       }
       className={classNames(
-        "relative group block h-full max-w-[450px] w-full mx-auto",
+        "relative group block h-full w-full max-w-[18rem] mx-auto",
         challenge?.status === "soon" ? "cursor-not-allowed" : "cursor-pointer",
       )}
     >
@@ -35,9 +35,9 @@ export default function ChallengeCard({
         className={`group
           relative flex flex-col w-full h-full bg-background-50 dark:bg-background-800 shadow-md rounded-2xl
           font-lexend border-[1.5px] border-background-200 dark:border-background-600
-        hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow ${className}`}
+        hover:border-background-500 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-shadow ${className}`}
       >
-        <div className="flex m-1 flex-col items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600">
+        <div className="flex m-1 flex-col items-center justify-center h-44 bg-opacity-20 rounded-t-xl dark:bg-opacity-40 bg-background-600 overflow-hidden bg-grainy before:opacity-50 min-h-48">
           <div className="flex items-center justify-center w-full h-full pt-4 overflow-hidden">
             <img
               src={challenge.image_url}
