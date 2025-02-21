@@ -1,5 +1,10 @@
 const faqQuestions = [
   {
+    question: "Quais são as vantagens de se tornar um assinante PRO?",
+    answer:
+      "Como assinante PRO, além de participar de todos os Mini Projetos, poderá ter acesso às resoluções oficiais com vídeo, realizadas pela equipe Codante, e acesso total a todos os Workshops da plataforma. Os assinantes PRO também ficarão elegíveis a receberem certificados, além de outros benefícios como o Pro Badge e canais PRO na comunidade.",
+  },
+  {
     question: 'O que significa plano "vitalício" ?',
     answer:
       "O plano Vitalício do Codante é uma assinatura em que você paga uma única vez, mas tem acesso para sempre. Isso significa que, na prática, enquanto o Codante existir, você terá acesso aos recursos e benefícios exclusivos do plano PRO. Inclusive atualizações e novos conteúdos que forem adicionados no futuro.",
@@ -10,14 +15,9 @@ const faqQuestions = [
       "Sim! O plano Vitalício do Codante garante acesso a todos os novos conteúdos que forem adicionados no futuro, sem custo adicional.",
   },
   {
-    question: "Quais são as vantagens de se tornar um assinante PRO?",
-    answer:
-      "Como assinante PRO, além de participar de todos os Mini Projetos, poderá ter acesso às resoluções oficiais com vídeo, realizadas pela equipe Codante, e acesso total a todos os Workshops da plataforma. Os assinantes PRO também ficarão elegíveis a receberem certificados, além de outros benefícios como o Pro Badge, canais PRO na comunidade e acesso ao Ranking Premiado.",
-  },
-  {
     question: "Qual a frequência de novos conteúdos?",
     answer:
-      "Temos como meta adicionar novos conteúdos semanalmente. Mas veja, ainda estamos no começo da jornada e isso poderá variar de acordo com a disponibilidade da nossa equipe.",
+      "Nos adicionamos novos projetos e/ou workshops todos as semanas, podendo variar de acordo com a disponibilidade da nossa equipe.",
   },
   {
     question: "Mas vocês não eram gratuitos/open-source?",

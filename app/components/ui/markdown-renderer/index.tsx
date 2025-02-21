@@ -73,21 +73,27 @@ function isAlert(firstChild: React.ReactElement) {
   )
     return false;
 
-  if (firstChild.props.children[0].startsWith("Dica"))
+  if (
+    !firstChild.props.children[0] ||
+    typeof firstChild.props.children[0] !== "string"
+  )
+    return false;
+
+  if (firstChild.props.children[0]?.startsWith("Dica"))
     return { color: "#22c55e", text: "Dica", imgPath: "/icons/bulb-icons.svg" };
-  if (firstChild.props.children[0].startsWith("Informação"))
+  if (firstChild.props.children[0]?.startsWith("Informação"))
     return {
       color: "#3b82f6",
       text: "Informação",
       imgPath: "/icons/info.svg",
     };
-  if (firstChild.props.children[0].startsWith("Importante"))
+  if (firstChild.props.children[0]?.startsWith("Importante"))
     return {
       color: "#a855f7",
       text: "Importante",
       imgPath: "/icons/icon-important.svg",
     };
-  if (firstChild.props.children[0].startsWith("Aviso"))
+  if (firstChild.props.children[0]?.startsWith("Aviso"))
     return {
       color: "#fde047",
       text: "Aviso",
