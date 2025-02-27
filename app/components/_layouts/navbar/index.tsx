@@ -47,6 +47,11 @@ const moreMenuNavigation = [
     external: false,
   },
   {
+    name: "Agenda",
+    href: "/agenda",
+    external: false,
+  },
+  {
     name: "Ranking",
     href: "/ranking",
     external: false,
@@ -69,8 +74,8 @@ const moreMenuNavigation = [
 ];
 
 export default function Navbar({
-  user,
   hideLinks,
+  user,
 }: {
   user: User | null;
   hideLinks?: boolean;
@@ -88,7 +93,7 @@ export default function Navbar({
               <DesktopNavbar hideLinks={hideLinks} user={user} />
             </div>
           </div>
-          <MobileNavbar open={open} user={user} hideLinks={hideLinks} />
+          <MobileNavbar open={open} hideLinks={hideLinks} />
         </>
       )}
     </Disclosure>
@@ -202,24 +207,7 @@ function DesktopNavbar({
                   {item.name}
                 </NavLink>
               ))}
-              {!user?.is_pro && (
-                <NavLink
-                  to="/assine"
-                  className={({ isActive }) =>
-                    classNames(
-                      isActive
-                        ? "bg-background-100/70 dark:bg-background-700 dark:hover:bg-background-700 dark:text-white text-gray-700"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900",
-                      "rounded-md px-3 py-2 text-sm font-medium",
-                    )
-                  }
-                >
-                  Seja{" "}
-                  <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
-                    PRO
-                  </span>
-                </NavLink>
-              )}
+
               <Menu as="div" className="relative z-50 inline-block text-left">
                 <Menu.Button
                   className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
@@ -304,11 +292,9 @@ function MobileNavbarButton({ open }: { open: boolean }) {
 
 function MobileNavbar({
   open,
-  user,
   hideLinks,
 }: {
   open: boolean;
-  user: User | null;
   hideLinks?: boolean;
 }) {
   const matches = useMatches();
@@ -342,21 +328,7 @@ function MobileNavbar({
                   {item.name}
                 </Disclosure.Button>
               ))}
-              {!user?.is_pro && (
-                <Disclosure.Button
-                  onClick={() => navigate("/assine")}
-                  className={`block px-3 py-2 text-base font-medium text-gray-700 rounded-md w-full dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 ${setActiveClassForPath(
-                    matches,
-                    "/assine",
-                    "dark:bg-background-800 dark:text-white bg-white text-gray-700",
-                  )} `}
-                >
-                  Seja{" "}
-                  <span className="text-white font-semibold dark:text-gray-900 px-[2px] py-[1px] rounded bg-amber-400">
-                    PRO
-                  </span>
-                </Disclosure.Button>
-              )}
+
               <Menu
                 as="div"
                 className="block w-full text-base font-medium text-gray-700 dark:text-gray-300"
