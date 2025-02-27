@@ -130,10 +130,18 @@ export default function Calendar() {
             setSelectedFilter(value as "upcoming" | "previous")
           }
         >
-          <ToggleGroupItem value="previous" aria-label="Toggle previous">
+          <ToggleGroupItem
+            value="previous"
+            aria-label="Toggle previous"
+            className="data-[state=on]:pointer-events-none"
+          >
             Eventos passados
           </ToggleGroupItem>
-          <ToggleGroupItem value="upcoming" aria-label="Toggle upcoming">
+          <ToggleGroupItem
+            value="upcoming"
+            aria-label="Toggle upcoming"
+            className="data-[state=on]:pointer-events-none"
+          >
             Próximos eventos
           </ToggleGroupItem>
         </ToggleGroup>
