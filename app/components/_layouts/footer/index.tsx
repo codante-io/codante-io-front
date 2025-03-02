@@ -131,7 +131,7 @@ export default function Footer() {
           </Link>
         </div>
         <div className="col-span-1 flex flex-col gap-4">
-          <Link to="/recursos">Outros recursos</Link>
+          <span>Outros recursos</span>
           <Link
             to="/testes-tecnicos"
             className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
@@ -160,7 +160,13 @@ export default function Footer() {
           </Link>
         </div>
         <div className="col-span-1 flex flex-col gap-4">
-          <Link to="/empresa">Empresa</Link>
+          <span>Empresa</span>
+          <Link
+            to="/agenda"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Agenda
+          </Link>
           <Link
             to="/blog"
             className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
