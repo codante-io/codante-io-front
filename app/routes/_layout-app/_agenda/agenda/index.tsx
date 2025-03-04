@@ -90,148 +90,194 @@ export default function Calendar() {
   );
 
   return (
-    <main className="container mx-auto">
-      <BlurReveal>
-        <h1 className="text-5xl font-lexend mb-6">Agenda</h1>
-      </BlurReveal>
-      <div className="flex gap-4 mb-6 justify-between flex-wrap">
-        <ToggleGroup
-          type="single"
-          defaultValue=""
-          value={selectedType}
-          onValueChange={(value) =>
-            setSelectedType(
-              value as "challenge" | "workshop" | "challenge-resolution",
-            )
-          }
-        >
-          <ToggleGroupItem value="challenge" aria-label="Toggle challenge">
-            <MonitorPlay className="size-4 text-amber-400" />
-            Mini Projetos
-          </ToggleGroupItem>
-          <ToggleGroupItem value="workshop" aria-label="Toggle workshop">
-            <RiLiveLine className="size-4 text-brand-400" />
-            Workshops
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="challenge-resolution"
-            aria-label="Toggle challenge resolution"
+    <div className="container mx-auto">
+      <div className="xl:w-2/3 w-full">
+        <BlurReveal>
+          <h1 className="text-4xl font-lexend mb-6">Agenda</h1>
+        </BlurReveal>
+        <div className="flex gap-4 mb-6 justify-between flex-wrap">
+          <ToggleGroup
+            type="single"
+            defaultValue=""
+            value={selectedType}
+            className="flex-wrap justify-start"
+            onValueChange={(value) =>
+              setSelectedType(
+                value as "challenge" | "workshop" | "challenge-resolution",
+              )
+            }
           >
-            <PencilRuler className="size-4 text-green-500" />
-            Resoluções de Mini Projetos
-          </ToggleGroupItem>
-        </ToggleGroup>
-        <ToggleGroup
-          type="single"
-          defaultValue="upcoming"
-          className="gap-2"
-          value={selectedFilter}
-          onValueChange={(value) =>
-            setSelectedFilter(value as "upcoming" | "previous")
-          }
-        >
-          <ToggleGroupItem
-            value="previous"
-            aria-label="Toggle previous"
-            className="data-[state=on]:pointer-events-none"
-          >
-            Eventos passados
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="upcoming"
-            aria-label="Toggle upcoming"
-            className="data-[state=on]:pointer-events-none"
-          >
-            Próximos eventos
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
-      <div className="space-y-6">
-        {filteredEvents.map((event, index) => (
-          <div className="relative flex gap-2" key={event.id}>
-            <Card
-              className={cn(
-                "md:absolute w-20 top-0 h-20 aspect-square -left-24 opacity-0",
-                isDifferentDateFromPrevious(filteredEvents, index) &&
-                  "opacity-100",
-                isCurrentDate(event.datetime) &&
-                  "!bg-background-200 dark:!bg-background-700 !dark:border-background-500 !border-background-400",
-              )}
+            <ToggleGroupItem
+              className="text-xs"
+              value="challenge"
+              aria-label="Toggle challenge"
             >
-              <CardContent className="bg-grainy w-full h-full flex flex-col items-center justify-center p-0">
-                <h1 className="text-3xl font-bold">
-                  {format(parseISO(event.datetime), "d")}
-                </h1>
-                <p className="text-xs dark:text-gray-400 text-gray-600">
-                  {format(parseISO(event.datetime), "MMMM", {
-                    locale: ptBR,
-                  })}
-                </p>
-                {isDifferentYearFromCurrent(event.datetime) && (
-                  <p className="text-xs scale-75 dark:text-gray-500 text-gray-500">
-                    {format(parseISO(event.datetime), "(yyyy)", {
+              <MonitorPlay className="size-4 text-amber-400" />
+              Mini Projetos
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              className="text-xs"
+              value="workshop"
+              aria-label="Toggle workshop"
+            >
+              <RiLiveLine className="size-4 text-brand-400" />
+              Workshops
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="challenge-resolution"
+              className="text-xs"
+              aria-label="Toggle challenge resolution"
+            >
+              <PencilRuler className="size-4 text-green-500" />
+              Resoluções de Mini Projetos
+            </ToggleGroupItem>
+          </ToggleGroup>
+          <ToggleGroup
+            type="single"
+            defaultValue="upcoming"
+            className="gap-2"
+            value={selectedFilter}
+            onValueChange={(value) =>
+              setSelectedFilter(value as "upcoming" | "previous")
+            }
+          >
+            <ToggleGroupItem
+              value="upcoming"
+              aria-label="Toggle upcoming"
+              className="data-[state=on]:pointer-events-none text-xs"
+            >
+              Próximos eventos
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="previous"
+              aria-label="Toggle previous"
+              className="data-[state=on]:pointer-events-none text-xs"
+            >
+              Eventos passados
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+        <div className="space-y-6 w-full">
+          {filteredEvents.map((event, index) => (
+            <div
+              className={cn(
+                "relative flex gap-2",
+                isDifferentDateFromPrevious(filteredEvents, index) &&
+                  index !== 0 &&
+                  "pt-8",
+              )}
+              key={event.id}
+            >
+              <Card
+                className={cn(
+                  "w-20 h-20 aspect-square opacity-0",
+                  isDifferentDateFromPrevious(filteredEvents, index) &&
+                    "opacity-100",
+                  isCurrentDate(event.datetime) &&
+                    "!bg-background-200 dark:!bg-background-700 !dark:border-background-500 !border-background-400",
+                )}
+              >
+                <CardContent className="bg-grainy w-full h-full flex flex-col items-center justify-center p-0">
+                  <h1 className="text-3xl font-bold">
+                    {format(parseISO(event.datetime), "d")}
+                  </h1>
+                  <p className="text-xs dark:text-gray-400 text-gray-600">
+                    {format(parseISO(event.datetime), "MMMM", {
                       locale: ptBR,
                     })}
                   </p>
-                )}
-                {isCurrentDate(event.datetime) && (
-                  <p className="text-xs scale-75 dark:text-gray-500 text-gray-500">
-                    Hoje
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-
-            <Link className="w-full" to={event.url}>
-              <Card
-                key={event.id}
-                className={cn(
-                  "overflow-hidden w-full",
-                  getBorderColor(event.type),
-                )}
-              >
-                <CardContent className="p-4 flex items-start space-x-4 bg-grainy">
-                  <div className="flex items-center gap-2 dark:bg-background-700 rounded-md bg-background-200 size-20 overflow-hidden">
-                    {event.image_url ? (
-                      <img
-                        src={event.image_url}
-                        alt={event.title}
-                        className="object-cover h-full"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full w-full">
-                        <Icon type={event.type} />
-                      </div>
-                    )}
-                  </div>
-                  <div className="w-full">
-                    <h2 className="text-lg font-semibold">{event.title}</h2>
-                    <div className="mb-1 text-sm dark:text-gray-400 text-gray-600">
-                      {event.description}
-                    </div>
-                  </div>
+                  {isDifferentYearFromCurrent(event.datetime) && (
+                    <p className="text-xs scale-75 dark:text-gray-500 text-gray-500">
+                      {format(parseISO(event.datetime), "(yyyy)", {
+                        locale: ptBR,
+                      })}
+                    </p>
+                  )}
+                  {isCurrentDate(event.datetime) && (
+                    <p className="text-xs scale-75 dark:text-gray-500 text-gray-500">
+                      Hoje
+                    </p>
+                  )}
                 </CardContent>
               </Card>
-            </Link>
-          </div>
-        ))}
+
+              <Link className="basis-full" to={event.url}>
+                <Card
+                  key={event.id}
+                  className={cn(
+                    "overflow-hidden w-full",
+                    getBorderColor(event.type),
+                  )}
+                >
+                  <CardContent className="p-4 flex items-start space-x-4 bg-grainy">
+                    <div className=" items-center gap-2 dark:bg-background-700 rounded-md bg-background-200 h-20 overflow-hidden aspect-video hidden lg:flex">
+                      {event.image_url ? (
+                        <img
+                          src={event.image_url}
+                          alt={event.title}
+                          className="object-cover h-full"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full w-full">
+                          <Icon type={event.type} />
+                        </div>
+                      )}
+                    </div>
+                    <div className="w-full">
+                      <h2 className="text-lg font-semibold flex flex-col-reverse lg:flex-row w-full justify-between mb-2">
+                        {event.title}{" "}
+                        <div className="flex items-center gap-2">
+                          <Badge type={event.type} />
+                        </div>
+                      </h2>
+                      <div className="mb-1 text-sm dark:text-gray-400 text-gray-600 prose prose-sm">
+                        {event.description}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
 
+const iconMap = {
+  challenge: <PencilRuler className="size-8 text-amber-400" />,
+  workshop: <RiLiveLine className="size-8 text-brand-400" />,
+  "challenge-resolution": <MonitorPlay className="size-8 text-green-500" />,
+};
+
 function Icon({ type }: { type: string }) {
-  if (type === "challenge") {
-    return <PencilRuler className="size-8 text-amber-400" />;
-  }
+  return iconMap[type as keyof typeof iconMap] || null;
+}
 
-  if (type === "workshop") {
-    return <RiLiveLine className="size-8 text-brand-400" />;
-  }
+const badgeMap = {
+  challenge: {
+    icon: <PencilRuler className="size-4 text-amber-400" />,
+    label: "Mini Projeto",
+  },
+  workshop: {
+    icon: <RiLiveLine className="size-4 text-brand-400" />,
+    label: "Workshop",
+  },
+  "challenge-resolution": {
+    icon: <MonitorPlay className="size-4 text-green-500" />,
+    label: "Resolução de Mini Projeto",
+  },
+};
 
-  if (type === "resolution") {
-    return <MonitorPlay className="size-8 text-green-500" />;
-  }
+function Badge({ type }: { type: string }) {
+  const badge = badgeMap[type as keyof typeof badgeMap];
+  if (!badge) return null;
 
-  return null;
+  return (
+    <div className="bg-background-100 dark:bg-background-700 rounded-md px-2 py-1 text-xs flex items-center gap-2 font-light">
+      {badge.icon}
+      {badge.label}
+    </div>
+  );
 }
