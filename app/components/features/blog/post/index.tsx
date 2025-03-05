@@ -16,7 +16,7 @@ export default function Post({
   withAuthor?: boolean;
 }) {
   return (
-    <div className={`max-w-3xl`}>
+    <div className={`max-w-3xl w-full`}>
       {withBreadcrumbs && <BlogBreadcrumbs postTitle={blogPost.title} />}
       <div className={`prose lg:prose-lg dark:prose-invert`}>
         <h1>{blogPost.title}</h1>
