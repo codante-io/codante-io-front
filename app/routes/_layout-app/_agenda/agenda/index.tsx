@@ -6,7 +6,12 @@ import { parseISO, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 import { metaV1 } from "@remix-run/v1-meta";
-import { Card, CardContent } from "~/components/ui/cards/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/cards/card";
 
 import { BlurReveal } from "~/components/ui/motion/blur-reveal";
 import {
@@ -20,6 +25,7 @@ import { MonitorPlay, PencilRuler } from "lucide-react";
 import { RiLiveLine } from "react-icons/ri";
 import { cn } from "~/lib/utils/cn";
 import { useState } from "react";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
 // meta function
 export function meta(args: any) {
@@ -90,7 +96,7 @@ export default function Calendar() {
   );
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto flex gap-20 flex-col xl:flex-row">
       <div className="xl:w-2/3 w-full">
         <BlurReveal>
           <h1 className="text-4xl font-lexend mb-6">Agenda</h1>
@@ -112,7 +118,7 @@ export default function Calendar() {
               value="challenge"
               aria-label="Toggle challenge"
             >
-              <MonitorPlay className="size-4 text-amber-400" />
+              <PencilRuler className="size-4 text-amber-400" />
               Mini Projetos
             </ToggleGroupItem>
             <ToggleGroupItem
@@ -128,7 +134,7 @@ export default function Calendar() {
               className="text-xs"
               aria-label="Toggle challenge resolution"
             >
-              <PencilRuler className="size-4 text-green-500" />
+              <MonitorPlay className="size-4 text-green-500" />
               Resoluções de Mini Projetos
             </ToggleGroupItem>
           </ToggleGroup>
@@ -158,6 +164,12 @@ export default function Calendar() {
           </ToggleGroup>
         </div>
         <div className="space-y-6 w-full">
+          {filteredEvents.length === 0 && (
+            <div className="flex h-full w-full mt-20">
+              <p className="text-gray-500">Nenhum evento encontrado</p>
+            </div>
+          )}
+
           {filteredEvents.map((event, index) => (
             <div
               className={cn(
@@ -230,7 +242,7 @@ export default function Calendar() {
                           <Badge type={event.type} />
                         </div>
                       </h2>
-                      <div className="mb-1 text-sm dark:text-gray-400 text-gray-600 prose prose-sm">
+                      <div className="mb-1 text-sm dark:text-gray-400 text-gray-600 prose prose-sm font-light">
                         {event.description}
                       </div>
                     </div>
@@ -240,6 +252,33 @@ export default function Calendar() {
             </div>
           ))}
         </div>
+      </div>
+      <div className="xl:w-1/3 w-full hidden xl:block">
+        <Link to="/planos" className="sticky top-20">
+          <Card
+            border="default"
+            className="w-full text-sm rounded-lg overflow-hidden bg-grainy mt-32"
+          >
+            <CardHeader>
+              <CardTitle className="md:text-md lg:text-lg xl:text-lg text-xs">
+                <span className="font-medium text-gray-700 dark:text-gray-50">
+                  Conheça o Codante <ProSpanWrapper>PRO</ProSpanWrapper>
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm text-gray-700 dark:text-gray-300">
+              <p>
+                Tenha acesso completo a todos os nossos Mini Projetos e
+                Workshops.
+              </p>
+              <img
+                src="/img/agenda-promo.webp"
+                alt="Codante Pro"
+                className="w-full"
+              />
+            </CardContent>
+          </Card>
+        </Link>
       </div>
     </div>
   );
