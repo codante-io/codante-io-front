@@ -173,13 +173,13 @@ export default function Footer() {
           >
             Blog
           </Link>
-          <Link
+          {/* <Link
             to="https://changelog.codante.io"
             className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
             target="_blank"
           >
             Changelog
-          </Link>
+          </Link> */}
 
           <Link
             to="/planos"

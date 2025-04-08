@@ -53,11 +53,11 @@ const moreMenuNavigation = [
     href: "/blog",
     external: false,
   },
-  {
-    name: "Changelog",
-    href: "https://changelog.codante.io/",
-    external: true,
-  },
+  // {
+  //   name: "Changelog",
+  //   href: "https://changelog.codante.io/",
+  //   external: true,
+  // },
   {
     name: "Codante APIs",
     href: "https://apis.codante.io/",
