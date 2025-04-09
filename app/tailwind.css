@@ -1,12 +1,12 @@
-@import url("/fonts/fonts.css") layer(base);
-
 @import "tailwindcss";
+
+@import url("/fonts/fonts.css") layer(base);
+@import "./typography.css" layer(components);
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
-
   --font-sans:
     Inter var, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -171,7 +171,7 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
-@layer base {
+/* @layer base {
   *,
   ::after,
   ::before,
@@ -179,7 +179,7 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
-}
+} */
 
 @utility color-underline {
   @apply font-bold decoration-2 decoration-solid underline hover:opacity-90 transition-all;
