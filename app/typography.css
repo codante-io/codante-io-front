@@ -1,5 +1,5 @@
 .prose {
-  --prose-color: var(--color-gray-700);
+  --prose-color: var(--color-gray-800);
   --prose-heading-color: var(--color-gray-950);
   --prose-strong-color: var(--color-gray-950);
   --prose-link-color: var(--color-gray-950);
@@ -80,7 +80,8 @@
     font-size: var(--text-xl);
     line-height: 1.5;
     /* color: var(--prose-code-color); */
-    font-weight: 100;
+    color: var(--prose-color);
+    font-weight: 200;
   }
 
   h2:where(:not(.not-prose, .not-prose *)) {
