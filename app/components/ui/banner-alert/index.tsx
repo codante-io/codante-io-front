@@ -18,7 +18,7 @@ export default function BannerAlert({
       className={cn(
         bgColor || "bg-brand-100 dark:bg-brand-950",
         borderColor || "border-brand",
-        "px-4 py-3 mb-8 -mt-8 border rounded shadow-md",
+        "px-4 py-3 mb-8 -mt-8 border rounded-xs shadow-md",
         className,
       )}
     >

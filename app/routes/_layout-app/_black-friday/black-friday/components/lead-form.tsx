@@ -81,7 +81,7 @@ const LeadForm = () => {
           status={status}
           isSuccessfulSubmission={isSuccessfulSubmission}
         >
-          <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
+          <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-linear-to-b from-transparent via-transparent to-gray-700"></span>
           <span className="relative">Cadastrar</span>
         </LoadingButton>
       </Form>

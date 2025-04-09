@@ -99,7 +99,7 @@ function SubmissionForm({
             </span>
           </label>
           <div className="mt-2">
-            <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
+            <div className="flex rounded-md shadow-2xs ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
               <input
                 type="text"
                 name="submission_url"

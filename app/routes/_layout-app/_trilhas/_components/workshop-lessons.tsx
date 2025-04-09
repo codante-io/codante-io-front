@@ -9,10 +9,7 @@ import { SidebarLesson } from "~/routes/_layout-raw/_player/components/sidebar/t
 interface WorkshopLessonsProps {
   lessons: SidebarLesson[];
   workshopSlug: string;
-  lesson_sections?: {
-    name: string;
-    lesson_ids: number[];
-  }[];
+  lesson_sections?: { name: string; lesson_ids: number[] }[];
 }
 
 function findNextLessonId(lessons: SidebarLesson[]) {
@@ -36,7 +33,6 @@ function findNextLessonId(lessons: SidebarLesson[]) {
 export function WorkshopLessons({
   lessons,
   lesson_sections,
-  workshopSlug,
 }: WorkshopLessonsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -44,10 +40,7 @@ export function WorkshopLessons({
 
   useEffect(() => {
     if (lastCompletedLessonId) {
-      ref.current?.scrollTo({
-        top: ref.current.offsetTop,
-        behavior: "smooth",
-      });
+      ref.current?.scrollTo({ top: ref.current.offsetTop, behavior: "smooth" });
     }
   }, [lastCompletedLessonId]);
 
@@ -186,7 +179,7 @@ export function WorkshopLessons({
               </Link>
             ))}
       </div>
-      <div className="flex absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t dark:from-background-800 from-background-50 to-transparent items-end justify-end pb-4 pr-8 pointer-events-none">
+      <div className="flex absolute bottom-0 left-0 w-full h-24 bg-linear-to-t dark:from-background-800 from-background-50 to-transparent items-end justify-end pb-4 pr-8 pointer-events-none">
         <Button
           onClick={() => setIsOpen((prev) => !prev)}
           size="sm"

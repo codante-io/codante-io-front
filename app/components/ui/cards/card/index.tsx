@@ -11,13 +11,13 @@ const cardVariants = cva(
     variants: {
       border: {
         default:
-          "dark:border-background-700 border-background-200 dark:shadow-md shadow",
+          "dark:border-background-700 border-background-200 dark:shadow-md shadow-xs",
         bright: "dark:border-background-600 border-background-200 shadow-md", // mais brilhante
-        dull: "dark:border-background-700 border-background-100 shadow", // mais discreto
+        dull: "dark:border-background-700 border-background-100 shadow-xs", // mais discreto
         brand: "border-brand-500 dark:border-brand-500 shadow-md",
         "brand-l":
           "dark:border-background-600 border-background-200 border-l-brand-500 dark:border-l-brand-500 dark:border-l-4 border-l-4 shadow-md",
-        none: "border-0 shadow",
+        none: "border-0 shadow-xs",
       },
       hover: {
         default: "",
@@ -52,7 +52,7 @@ const movingBorderCardVariants = cva("relative overflow-hidden", {
 });
 
 const movingBorderCardSpanVariants = cva(
-  "absolute -z-0 inset-0 group/border scale-x-[1.5] blur before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-full before:bg-[conic-gradient(var(--tw-gradient-stops))] before:via-transparent before:to-transparent before:animate-rotate-bg",
+  "absolute -z-0 inset-0 group/border scale-x-[1.5] blur-xs before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-full before:bg-[conic-gradient(var(--tw-gradient-stops))] before:via-transparent before:to-transparent before:animate-rotate-bg",
   {
     variants: {
       movingBorderColor: {

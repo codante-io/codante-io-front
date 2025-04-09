@@ -23,7 +23,7 @@ export default function SocialNetworkCard({
     >
       <div className="flex flex-col items-center justify-center gap-6">
         {icon}
-        <span className="text-xs dark:text-gray-300 text-gray-600 bg-transparent dark:bg-transparent group-hover:bg-background-100 group-hover:dark:bg-background-700 px-4 py-1 rounded-full relative">
+        <span className="text-xs dark:text-gray-300 text-gray-600 bg-transparent dark:bg-transparent group-hover:bg-background-100 dark:group-hover:bg-background-700 px-4 py-1 rounded-full relative">
           <span className="opacity-100 group-hover:opacity-0 transition-opacity duration-300 dark:text-gray-400">
             {description}
           </span>

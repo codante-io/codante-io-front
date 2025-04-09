@@ -38,11 +38,11 @@ export default function Overview({
           <img
             src={challenge.image_url}
             alt="Project preview"
-            className="object-scale-down w-full bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
+            className="object-scale-down w-full bg-linear-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
           />
         )}
         {/* TODO: Trocar aqui para a aula do challenge */}
-        <div className="!mt-6">
+        <div className="mt-6!">
           <MarkdownRenderer
             markdown={challenge?.description ?? ""}
             wrapperClasses="mx-auto px-2 md:px-4"
@@ -52,7 +52,7 @@ export default function Overview({
             <div className="relative">
               <MarkdownRenderer
                 markdown={generateSimpleLoremIpsum()}
-                wrapperClasses="mx-auto px-2 md:px-4 pb-12 blur-sm"
+                wrapperClasses="mx-auto px-2 md:px-4 pb-12 blur-xs"
               />
               <div className="absolute flex justify-center items-center top-0 left-0 right-0 mx-auto p-10 md:px-4">
                 <SmallBecomeProCard />

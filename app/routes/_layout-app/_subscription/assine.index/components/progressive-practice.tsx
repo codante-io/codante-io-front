@@ -46,7 +46,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#FFDCC9] dark:to-[#9e7158] from-[#FFDCC9] to-[#F4AD85] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#FFDCC9] dark:to-[#9e7158] from-[#FFDCC9] to-[#F4AD85] back rounded-xl flex justify-center items-center">
         <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Base{" "}
           <span className="font-bold text-[#F4AD85] dark:text-[#FFDCC9]">
@@ -93,7 +93,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#EAC9FF] dark:to-[#975eba] from-[#EAC9FF] to-[#C27AEE] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#EAC9FF] dark:to-[#975eba] from-[#EAC9FF] to-[#C27AEE] back rounded-xl flex justify-center items-center">
         <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Prática{" "}
           <span className="font-bold text-[#C27AEE] dark:text-[#EAC9FF]">
@@ -139,7 +139,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#C9E5FF] dark:to-[#41678b] from-[#C9E5FF] to-[#71BBFF] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#C9E5FF] dark:to-[#41678b] from-[#C9E5FF] to-[#71BBFF] back rounded-xl flex justify-center items-center">
         <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Prática{" "}
           <span className="font-bold text-[#71BBFF] dark:text-[#C9E5FF]">
@@ -187,7 +187,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#DDFFC9] dark:to-[#68974c] from-[#DDFFC9] to-[#7CE03F] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#DDFFC9] dark:to-[#68974c] from-[#DDFFC9] to-[#7CE03F] back rounded-xl flex justify-center items-center">
         <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Mundo{" "}
           <span className="font-bold text-[#7CE03F] dark:text-[#DDFFC9]">

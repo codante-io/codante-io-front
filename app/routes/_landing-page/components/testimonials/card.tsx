@@ -19,7 +19,7 @@ function TestimonialCard({
   return (
     <article
       className={cn(
-        "flex gap-6 flex-shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg col-span-1 xl:col-span-3 bg-grainy overflow-hidden",
+        "flex gap-6 shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg col-span-1 xl:col-span-3 bg-grainy overflow-hidden",
         wide && "xl:col-span-4",
       )}
     >

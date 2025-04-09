@@ -19,8 +19,8 @@ export async function action({
   request: Request;
   params: { slug: string };
 }) {
-  let formData = await request.formData();
-  let submissionUrl = formData.get("submission_url") as string;
+  const formData = await request.formData();
+  const submissionUrl = formData.get("submission_url") as string;
   // const metadata = getMetadataFromFormData(formData);
   const intent = formData.get("intent");
   switch (intent) {
@@ -46,7 +46,7 @@ export default function MySubmission() {
   const transition = useNavigation();
 
   const status = transition.state;
-  let isSuccessfulSubmission = status === "idle" && errors === null;
+  const isSuccessfulSubmission = status === "idle" && errors === null;
 
   const navigate = useNavigate();
 
@@ -65,7 +65,6 @@ export default function MySubmission() {
           challengeUser={challengeUser}
           status={status}
           isSuccessfulSubmission={isSuccessfulSubmission}
-          challenge={challenge}
         />
       )}
     </div>
@@ -76,12 +75,10 @@ function SubmissionForm({
   challengeUser,
   status,
   isSuccessfulSubmission,
-  challenge,
 }: {
   challengeUser: ChallengeUser;
   status: "idle" | "loading" | "submitting";
   isSuccessfulSubmission: boolean;
-  challenge: Challenge;
 }) {
   return (
     <>
@@ -101,7 +98,7 @@ function SubmissionForm({
             </span>
           </label>
           <div className="mt-2">
-            <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
+            <div className="flex rounded-md shadow-2xs ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
               <input
                 type="text"
                 name="submission_url"

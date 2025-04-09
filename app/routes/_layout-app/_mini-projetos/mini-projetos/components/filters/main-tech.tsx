@@ -109,7 +109,7 @@ export default function MainTechFilter({
             prefetch="intent"
             key={technology.value}
             className={cn(
-              "flex items-center gap-2 p-3 md:py-3 py-2 text-xs text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-background-700 border-background-300 hover:border-brand-300 hover:dark:border-brand-300",
+              "flex items-center gap-2 p-3 md:py-3 py-2 text-xs text-gray-500 dark:text-gray-400 font-light transition-colors border-[1.5px] rounded-xl cursor-pointer group dark:border-background-700 border-background-300 hover:border-brand-300 dark:hover:border-brand-300",
               isSelected &&
                 "border-brand-300 dark:border-brand-300 dark:text-white text-gray-700 bg-background-100 dark:bg-background-800",
             )}

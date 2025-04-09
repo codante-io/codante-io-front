@@ -23,23 +23,13 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-export async function loader({
-  request,
-  params,
-}: {
-  request: Request;
-  params: { id: string };
-}) {
-  return json({
-    dashboardData: await getDashboardData(request),
-  });
+export async function loader({ request }: { request: Request }) {
+  return json({ dashboardData: await getDashboardData(request) });
 }
 
 export default function Dashboard() {
   const { dashboardData } = useLoaderData<typeof loader>();
-  const { user } = useOutletContext<{
-    user: User;
-  }>();
+  const { user } = useOutletContext<{ user: User }>();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -102,7 +92,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex min-h-screen w-full flex-col container mx-auto">
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-col gap-4 bg-muted/40 md:gap-8">
+      <main className="flex min-h-[calc(100vh-(--spacing(16)))] flex-col gap-4 bg-muted/40 md:gap-8">
         <div className="mx-auto grid w-full gap-2">
           <h1 className="text-center md:text-start text-3xl font-semibold">
             Dashboard

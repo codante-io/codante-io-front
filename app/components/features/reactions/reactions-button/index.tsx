@@ -196,7 +196,7 @@ export default function ReactionsButton({
                 whileHover="animate"
                 onClick={() => handleClick(reaction)}
                 className={classNames(
-                  "flex flex-row items-center gap-1 p-2 transition-colors border rounded-xl hover:bg-background-150 hover:dark:bg-background-700",
+                  "flex flex-row items-center gap-1 p-2 transition-colors border rounded-xl hover:bg-background-150 dark:hover:bg-background-700",
                   localUserReacted.includes(reaction)
                     ? "border-opacity-100 border-brand-500 bg-background-150 dark:bg-background-700"
                     : "border-transparent border-opacity-0",

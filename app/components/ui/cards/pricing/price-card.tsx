@@ -191,7 +191,7 @@ function PriceCardFeatureItem({
       <div className="text-[13px] md:text-[14px] flex items-center gap-x-1">
         {feature.isAvailable ? (
           <>
-            <AiOutlineCheck className="flex-shrink-0 w-3 h-3 mr-2 text-green-600 md:w-5 md:h-5 md:mr-5 dark:text-green-300" />
+            <AiOutlineCheck className="shrink-0 w-3 h-3 mr-2 text-green-600 md:w-5 md:h-5 md:mr-5 dark:text-green-300" />
             <span className="font-light">{feature.title}</span>
           </>
         ) : (

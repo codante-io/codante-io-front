@@ -50,15 +50,15 @@ function getBorderColor(type: string) {
   let borderColor;
 
   if (type === "challenge") {
-    borderColor = "!border-l-amber-400";
+    borderColor = "border-l-amber-400!";
   }
 
   if (type === "workshop") {
-    borderColor = "!border-l-brand-400";
+    borderColor = "border-l-brand-400!";
   }
 
   if (type === "challenge-resolution") {
-    borderColor = "!border-l-green-500";
+    borderColor = "border-l-green-500!";
   }
 
   return `border-l-2 ${borderColor}`;
@@ -186,7 +186,7 @@ export default function Calendar() {
                   isDifferentDateFromPrevious(filteredEvents, index) &&
                     "opacity-100",
                   isCurrentDate(event.datetime) &&
-                    "!bg-background-200 dark:!bg-background-700 !dark:border-background-500 !border-background-400",
+                    "bg-background-200! dark:bg-background-700! !dark:border-background-500 border-background-400!",
                 )}
               >
                 <CardContent className="bg-grainy w-full h-full flex flex-col items-center justify-center p-0">

@@ -79,10 +79,7 @@ function WaitingSubmissionBanner({
           )}
         >
           <div className="flex-none w-10 h-10">
-            <UserAvatar
-              avatar={user.avatar}
-              className="flex-shrink-0 w-10 h-10"
-            />
+            <UserAvatar avatar={user.avatar} className="shrink-0 w-10 h-10" />
           </div>
           <div className="w-full">
             <h4 className="text-xs dark:text-gray-400 font-regular">

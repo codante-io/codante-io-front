@@ -147,7 +147,7 @@ function DesktopNavbar({
   return (
     <>
       <div className="flex items-center justify-center flex-1 md:items-stretch md:justify-start">
-        <div className="flex items-center flex-shrink-0">
+        <div className="flex items-center shrink-0">
           <Link to="/">
             {colorMode === "light" ? (
               <img
@@ -213,7 +213,7 @@ function DesktopNavbar({
                   }
                 >
                   Seja{" "}
-                  <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+                  <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
                     PRO
                   </span>
                 </NavLink>
@@ -235,7 +235,7 @@ function DesktopNavbar({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-hidden">
                     <div className="px-1 py-1 ">
                       {moreMenuNavigation.map((item) => (
                         <Menu.Item key={item.name}>
@@ -291,7 +291,7 @@ function MobileNavbarButton({ open }: { open: boolean }) {
     <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
       {/* Mobile menu button*/}
       <Disclosure.Button
-        className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-gray-50 dark:hover:bg-background-700 hover:bg-background-100 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-700 dark:focus:ring-white"
+        className="inline-flex items-center justify-center p-2 text-gray-900 rounded-md dark:text-gray-50 dark:hover:bg-background-700 hover:bg-background-100 dark:hover:text-white focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-gray-700 dark:focus:ring-white"
         onClick={() => playSound()}
       >
         <span className="sr-only">Open main menu</span>
@@ -351,7 +351,7 @@ function MobileNavbar({
                   )} `}
                 >
                   Seja{" "}
-                  <span className="text-white font-semibold dark:text-gray-900 px-[2px] py-[1px] rounded bg-amber-400">
+                  <span className="text-white font-semibold dark:text-gray-900 px-[2px] py-[1px] rounded-xs bg-amber-400">
                     PRO
                   </span>
                 </Disclosure.Button>
@@ -376,7 +376,7 @@ function MobileNavbar({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="w-full m-auto mt-2 divide-y rounded-md shadow-lg focus:outline-none">
+                  <Menu.Items className="w-full m-auto mt-2 divide-y rounded-md shadow-lg focus:outline-hidden">
                     <div className="px-1 py-1 ">
                       {moreMenuNavigation.map((item) => (
                         <Menu.Item key={item.name}>

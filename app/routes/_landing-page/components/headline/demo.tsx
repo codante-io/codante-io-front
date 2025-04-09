@@ -16,7 +16,7 @@ function Demo({ parentRef }: { parentRef: React.RefObject<HTMLDivElement> }) {
     <div style={{ perspective: "1800px" }} className="w-full mt-16">
       <motion.div
         style={animate}
-        className="scale-105 mx-auto max-w-screen-xl aspect-video w-full border-2 border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden translate-z-2 mt-4 mb-10"
+        className="scale-105 mx-auto max-w-(--breakpoint-xl) aspect-video w-full border-2 border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden translate-z-2 mt-4 mb-10"
       >
         <div className="w-full h-12 bg-background-100 dark:bg-background-800 flex justify-between items-center px-4  border-b-4 border-background-200 dark:border-background-700">
           <div className="flex justify-start self-end w-72">
@@ -24,7 +24,7 @@ function Demo({ parentRef }: { parentRef: React.RefObject<HTMLDivElement> }) {
               <button
                 onClick={() => setSelectedDemo("challenge")}
                 aria-selected={selectedDemo === "challenge"}
-                className="px-4 py-2 dark:bg-background-800 bg-background-100 aria-selected:dark:bg-background-700 aria-selected:bg-background-100 rounded-t-lg flex items-center gap-1 group text-xs whitespace-nowrap"
+                className="px-4 py-2 dark:bg-background-800 bg-background-100 dark:aria-selected:bg-background-700 aria-selected:bg-background-100 rounded-t-lg flex items-center gap-1 group text-xs whitespace-nowrap"
               >
                 <PencilRuler className="w-3 h-3 opacity-70 group-hover:opacity-100 transition-all duration-300 group-hover:text-amber-400" />
                 mini projeto
@@ -32,7 +32,7 @@ function Demo({ parentRef }: { parentRef: React.RefObject<HTMLDivElement> }) {
               <button
                 onClick={() => setSelectedDemo("workshop")}
                 aria-selected={selectedDemo === "workshop"}
-                className="px-4 py-2 dark:bg-background-800 bg-background-100 aria-selected:dark:bg-background-700 aria-selected:bg-background-100 rounded-t-lg flex items-center gap-1 group text-xs whitespace-nowrap"
+                className="px-4 py-2 dark:bg-background-800 bg-background-100 dark:aria-selected:bg-background-700 aria-selected:bg-background-100 rounded-t-lg flex items-center gap-1 group text-xs whitespace-nowrap"
               >
                 <RiLiveLine className="w-3 h-3 opacity-70 group-hover:opacity-100 transition-all duration-300 group-hover:text-brand-400" />
                 workshop

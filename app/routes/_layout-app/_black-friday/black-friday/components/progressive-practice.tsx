@@ -34,7 +34,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#FFDCC9] dark:to-[#9e7158] from-[#FFDCC9] to-[#F4AD85] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#FFDCC9] dark:to-[#9e7158] from-[#FFDCC9] to-[#F4AD85] back rounded-xl flex justify-center items-center">
         <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Reunião{" "}
           <span className="font-bold text-[#F4AD85] dark:text-[#FFDCC9]">
@@ -63,7 +63,7 @@ const content = [
         <br />
         <br />
         Para ter acesso, bastar assinar o <b>Codante</b>{" "}
-        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
           PRO
         </span>{" "}
         agora. Depois, basta entrar em contato pelo Discord a qualquer momento
@@ -91,7 +91,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#C9E5FF] dark:to-[#41678b] from-[#C9E5FF] to-[#71BBFF] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#C9E5FF] dark:to-[#41678b] from-[#C9E5FF] to-[#71BBFF] back rounded-xl flex justify-center items-center">
         <span className="rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Análise de{" "}
           <span className="font-bold text-[#71BBFF] dark:text-[#C9E5FF]">
@@ -136,7 +136,7 @@ const content = [
       </>
     ),
     content: (
-      <div className="w-full h-full bg-gradient-to-br dark:from-[#EAC9FF] dark:to-[#975eba] from-[#EAC9FF] to-[#C27AEE] back rounded-xl flex justify-center items-center">
+      <div className="w-full h-full bg-linear-to-br dark:from-[#EAC9FF] dark:to-[#975eba] from-[#EAC9FF] to-[#C27AEE] back rounded-xl flex justify-center items-center">
         <span className="-rotate-2 inline-block p-4 rounded-xl dark:text-gray-200 text-gray-600 bg-background-100 dark:bg-background-800 font-lexend text-2xl">
           Planner{" "}
           <span className="font-bold text-[#C27AEE] dark:text-[#EAC9FF]">

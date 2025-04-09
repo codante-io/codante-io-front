@@ -37,7 +37,7 @@ export default function SolutionButtonsSection({
   return (
     <div className="mt-10 w-full flex md:gap-8 gap-4">
       <a
-        className={`dark:bg-background-800/50 hover:dark:bg-background-800/100 transition-colors flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 justify-between dark:border-background-700 border-gray-300 w-full rounded-lg p-5 cursor-pointer`}
+        className={`dark:bg-background-800/50 dark:hover:bg-background-800/100 transition-colors flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow-xs bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 justify-between dark:border-background-700 border-gray-300 w-full rounded-lg p-5 cursor-pointer`}
         href={challengeUser.fork_url ?? ""}
         target="_blank"
         rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export default function SolutionButtonsSection({
 
       {challengeUser.submission_url && (
         <a
-          className={`dark:bg-background-800/50 hover:dark:bg-background-800/100 transition-colors flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 justify-between dark:border-background-700 border-gray-300 w-full rounded-lg p-5`}
+          className={`dark:bg-background-800/50 dark:hover:bg-background-800/100 transition-colors flex flex-col-reverse md:flex-row text-center md:text-start gap-2 items-center shadow-xs bg-white border-[1.5px] group dark:hover:border-brand-500 hover:border-brand-500 justify-between dark:border-background-700 border-gray-300 w-full rounded-lg p-5`}
           href={challengeUser?.submission_url}
           target="_blank"
           rel="noopener noreferrer"

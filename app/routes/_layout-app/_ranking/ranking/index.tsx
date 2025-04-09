@@ -35,7 +35,7 @@ export async function loader({ request }: { request: Request }) {
 export default function RankingList() {
   const loaderData = useLoaderData<typeof loader>();
   const rankingUsers = loaderData.rankingUsers;
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   // get search params
 
@@ -141,7 +141,7 @@ export default function RankingList() {
             <span
               aria-hidden="true"
               className={classNames(
-                "absolute -z-0 inset-0 group/border scale-x-[1.5] blur before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-full before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible  before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg",
+                "absolute -z-0 inset-0 group/border scale-x-[1.5] blur-xs before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-full before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible  before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg",
                 index === 0 && "before:from-amber-400",
                 index === 1 && "before:from-slate-300",
                 index === 2 && "before:from-amber-700",

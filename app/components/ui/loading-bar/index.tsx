@@ -3,11 +3,6 @@ import ReactLoadingBar from "react-top-loading-bar";
 import type { LoadingBarRef } from "react-top-loading-bar";
 import { useNavigation } from "@remix-run/react";
 
-import resolveConfig from "tailwindcss/resolveConfig.js";
-import tailwindConfig from "../../../../tailwind.config.js";
-
-const fullConfig = resolveConfig(tailwindConfig);
-
 export default function TopLoadingBar() {
   const ref = React.useRef<LoadingBarRef>(null);
   const navigation = useNavigation();
@@ -20,11 +15,5 @@ export default function TopLoadingBar() {
     }
   }, [navigation.state]);
 
-  return (
-    <ReactLoadingBar
-      shadow
-      color={(fullConfig.theme?.colors?.brand as { DEFAULT: string })?.DEFAULT}
-      ref={ref}
-    />
-  );
+  return <ReactLoadingBar shadow color={"#5282ff"} ref={ref} />;
 }

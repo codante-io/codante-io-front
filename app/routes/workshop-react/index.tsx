@@ -171,7 +171,7 @@ export default function HomePage() {
                   </article>
                   <span
                     aria-hidden="true"
-                    className="absolute -z-0 inset-0 group/border scale-x-[1.5] blur before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-[400px] before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible before:from-blue-900 dark:before:from-[rgb(103, 215, 235)] before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg"
+                    className="absolute -z-0 inset-0 group/border scale-x-[1.5] blur-xs before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-[400px] before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible before:from-blue-900 dark:before:from-[rgb(103, 215, 235)] before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg"
                   ></span>
                 </div>
               ))}

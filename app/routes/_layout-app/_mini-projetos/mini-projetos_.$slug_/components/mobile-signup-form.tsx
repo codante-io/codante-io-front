@@ -27,7 +27,7 @@ function MobileSignupForm({ user }: { user: User | null }) {
           visible: { opacity: 1, y: 0 },
           hidden: { opacity: 0, y: -20 },
         }}
-        className="w-full bottom-0 h-20 z-20 bg-gradient-to-tr animate-bg from-background-50 to-background-100 border-background-100 dark:from-background-700 dark:to-background-900 fixed shadow-lg border-t dark:border-background-700 flex items-center justify-center"
+        className="w-full bottom-0 h-20 z-20 bg-linear-to-tr animate-bg from-background-50 to-background-100 border-background-100 dark:from-background-700 dark:to-background-900 fixed shadow-lg border-t dark:border-background-700 flex items-center justify-center"
       >
         <ResponsiveEmailSignup slug={slug} />
       </motion.section>

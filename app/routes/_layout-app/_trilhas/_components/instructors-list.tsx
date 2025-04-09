@@ -27,7 +27,7 @@ export const InstructorsList = ({
 
   return (
     <>
-      {instructors.map((item, idx) => (
+      {instructors.map((item) => (
         <div
           className="-mr-4 relative group dark:text-white text-gray-80"
           key={item.name}
@@ -41,11 +41,7 @@ export const InstructorsList = ({
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                transition: {
-                  type: "spring",
-                  stiffness: 260,
-                  damping: 10,
-                },
+                transition: { type: "spring", stiffness: 260, damping: 10 },
               }}
               exit={{ opacity: 0, y: 20, scale: 0.6 }}
               style={{
@@ -55,8 +51,8 @@ export const InstructorsList = ({
               }}
               className="absolute -top-16 -left-1/2 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md dark:bg-background-700 bg-background-00 z-50 shadow-xl px-4 py-2"
             >
-              <div className="absolute inset-x-10 z-30 w-[20%] -bottom-px bg-gradient-to-r from-transparent via-brand-800 to-transparent h-px " />
-              <div className="absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-brand-500 to-transparent h-px " />
+              <div className="absolute inset-x-10 z-30 w-[20%] -bottom-px bg-linear-to-r from-transparent via-brand-800 to-transparent h-px " />
+              <div className="absolute left-10 w-[40%] z-30 -bottom-px bg-linear-to-r from-transparent via-brand-500 to-transparent h-px " />
               <div className="font-bold relative z-30 text-base">
                 {item.name}
               </div>
@@ -69,7 +65,7 @@ export const InstructorsList = ({
             width={100}
             src={item.avatar_url}
             alt={item.name}
-            className="object-cover !m-0 !p-0 object-top rounded-full h-14 w-14 border-2 group-hover:scale-105 group-hover:z-30 border-background-100 dark:border-background-700 relative transition duration-500"
+            className="object-cover m-0! p-0! object-top rounded-full h-14 w-14 border-2 group-hover:scale-105 group-hover:z-30 border-background-100 dark:border-background-700 relative transition duration-500"
           />
         </div>
       ))}
