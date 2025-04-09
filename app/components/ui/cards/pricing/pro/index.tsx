@@ -82,7 +82,7 @@ export default function ProPricingCard() {
   };
 
   return (
-    <PriceCard className="border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white">
+    <PriceCard className="border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl dark:hover:shadow-blue-300 border-4 bg-white">
       <PriceCard.Ribbon text="Recomendado" />
       <PriceCard.Title isLoading={!proPlanInfo}>
         <span className="text-gray-800 dark:text-gray-50">

@@ -23,7 +23,7 @@ export default function FaqItem({
         isVisible
           ? "border-brand-500"
           : "border-background-300 dark:border-background-600 transition-colors",
-        "cursor-pointer shadow mb-6 mx-2 lg:mx-24 border-[1.5px] font-lexend rounded-lg bg-white dark:bg-background-800 px-4 md:px-10 py-4 z-10",
+        "cursor-pointer shadow-xs mb-6 mx-2 lg:mx-24 border-[1.5px] font-lexend rounded-lg bg-white dark:bg-background-800 px-4 md:px-10 py-4 z-10",
         className,
       )}
       onClick={() => {
@@ -38,7 +38,7 @@ export default function FaqItem({
           {question}
         </h3>
         <RiArrowDownSLine
-          className={`text-3xl md:text-4xl transition-transform flex-shrink-0 ${
+          className={`text-3xl md:text-4xl transition-transform shrink-0 ${
             isVisible ? "-rotate-180 text-brand-500" : "text-gray-400"
           }`}
         />

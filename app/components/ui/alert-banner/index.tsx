@@ -94,7 +94,7 @@ function AlertBanner({
   return (
     <div
       className={cn(
-        "px-4 py-3 shadow-md rounded border",
+        "px-4 py-3 shadow-md rounded-xs border",
         bgColor,
         borderColor,
         bannerSize,

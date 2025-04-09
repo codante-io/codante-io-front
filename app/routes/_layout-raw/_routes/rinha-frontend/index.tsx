@@ -61,8 +61,8 @@ export default function HomePage() {
   useEffect(() => {
     if (window?.screen?.width < 640) return;
 
-    let xy = [mousePosition.x, mousePosition.y];
-    let position = xy.concat([imageRef.current]);
+    const xy = [mousePosition.x, mousePosition.y];
+    const position = xy.concat([imageRef.current]);
 
     window.requestAnimationFrame(function () {
       transformElement(imageRef.current, position);
@@ -125,7 +125,7 @@ export default function HomePage() {
                 <Link
                   to={challengeURL}
                   rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+                  className="flex items-center gap-2 px-4 py-2 text-white rounded-full animate-bg bg-linear-to-r from-blue-500 via-indigo-500 to-blue-900"
                 >
                   <BsFillPersonFill className="mr-2" color="#fff" /> Participe
                 </Link>
@@ -194,7 +194,7 @@ export default function HomePage() {
                   </article>
                   <span
                     aria-hidden="true"
-                    className="absolute -z-0 inset-0 group/border scale-x-[1.5] blur before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-[400px] before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible before:from-blue-900 dark:before:from-[#67d7eb] before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg"
+                    className="absolute -z-0 inset-0 group/border scale-x-[1.5] blur-xs before:absolute before:inset-0 before:h-10 before:top-[45%] before:w-[400px] before:bg-[conic-gradient(var(--tw-gradient-stops))] group-hover/border:visible invisible before:from-blue-900 dark:before:from-[#67d7eb] before:via-transparent before:to-transparent group-hover/border:before:animate-rotate-bg"
                   ></span>
                 </div>
               ))}
@@ -204,7 +204,7 @@ export default function HomePage() {
               <Link
                 to={challengeURL}
                 rel="noreferrer"
-                className="flex items-center justify-center w-56 h-12 gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+                className="flex items-center justify-center w-56 h-12 gap-2 px-4 py-2 text-white rounded-full animate-bg bg-linear-to-r from-blue-500 via-indigo-500 to-blue-900"
               >
                 <BsFillPersonPlusFill className="mr-2" color="#fff" />{" "}
                 Participar
@@ -243,7 +243,7 @@ export default function HomePage() {
               <Link
                 to={challengeURL}
                 rel="noreferrer"
-                className="flex items-center justify-center w-56 h-12 gap-2 px-4 py-2 text-white rounded-full animate-bg bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-900"
+                className="flex items-center justify-center w-56 h-12 gap-2 px-4 py-2 text-white rounded-full animate-bg bg-linear-to-r from-blue-500 via-indigo-500 to-blue-900"
               >
                 <BsFillPersonPlusFill className="mr-2" color="#fff" />{" "}
                 Participar

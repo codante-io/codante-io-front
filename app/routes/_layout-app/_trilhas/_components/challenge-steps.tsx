@@ -71,7 +71,7 @@ export function ChallengeSteps({ trackLessons }: ChallengeLessonsProps) {
           ))}
         </ul> */}
       </div>
-      {/* <div className="flex absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t dark:from-background-800 from-background-50 to-transparent items-end justify-end pb-4 pr-8 pointer-events-none">
+      {/* <div className="flex absolute bottom-0 left-0 w-full h-24 bg-linear-to-t dark:from-background-800 from-background-50 to-transparent items-end justify-end pb-4 pr-8 pointer-events-none">
         <Button
           onClick={() => setIsOpen((prev) => !prev)}
           size="sm"

@@ -10,7 +10,7 @@ export default function ProfileMenu({ user }: { user: User }) {
   return (
     <Menu as="div" className="relative z-50">
       <div>
-        <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
+        <Menu.Button className="flex text-sm rounded-full text-slate-800 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900">
           <span className="sr-only">Open user menu</span>
           {user?.avatar?.avatar_url ? (
             <UserAvatar
@@ -32,7 +32,7 @@ export default function ProfileMenu({ user }: { user: User }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-background-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-background-800 ring-1 ring-black ring-opacity-5 focus:outline-hidden">
           <Menu.Item>
             <>
               <div className="block px-4 py-2 text-xs font-light text-gray-500 dark:text-gray-300">

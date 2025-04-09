@@ -33,15 +33,11 @@ export function meta(args: any) {
   });
 }
 
-export const loader = async ({ request }: { request: Request }) => {
-  return json({
-    assessments: await getAssessments(),
-  });
+export const loader = async () => {
+  return json({ assessments: await getAssessments() });
 };
 
-type CheckboxState = {
-  [key: string]: boolean;
-};
+type CheckboxState = { [key: string]: boolean };
 
 export default function TestesTecnicosPage() {
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
@@ -59,9 +55,7 @@ export default function TestesTecnicosPage() {
         search: e.target.value,
       });
     } else {
-      setSearchParams({
-        stack: searchParams.getAll("stack"),
-      });
+      setSearchParams({ stack: searchParams.getAll("stack") });
     }
   }
 
@@ -135,7 +129,7 @@ export default function TestesTecnicosPage() {
         <div className="relative w-full">
           <GoSearch className="absolute -translate-y-1/2 opacity-50 left-3 top-1/2" />
           <input
-            className="h-full pl-9 w-full rounded-lg py-2 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light disabled:dark:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
+            className="h-full pl-9 w-full rounded-lg py-2 dark:bg-[#0e141a] border dark:border-slate-700 border-slate-300 dark:text-gray-50 text-gray-600 font-light dark:disabled:text-gray-400 disabled:text-gray-400 disabled:cursor-not-allowed disabled:bg-background-50 dark:disabled:bg-background-800"
             id="nameSearch"
             name="nameSearch"
             onChange={(e) => handleSearchBar(e)}
@@ -148,7 +142,7 @@ export default function TestesTecnicosPage() {
               <input
                 id="front-checkbox"
                 type="checkbox"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-xs focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                 onChange={() => handleClickStack("frontend")}
                 checked={checkboxes.frontend}
               />
@@ -167,7 +161,7 @@ export default function TestesTecnicosPage() {
                 type="checkbox"
                 onChange={() => handleClickStack("backend")}
                 checked={checkboxes.backend}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-xs focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
                 htmlFor="back-checkbox"
@@ -183,8 +177,8 @@ export default function TestesTecnicosPage() {
                 id="fullstack-checkbox"
                 type="checkbox"
                 checked={checkboxes.fullstack}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                onChange={({ target }) => handleClickStack("fullstack")}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-xs focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                onChange={() => handleClickStack("fullstack")}
               />
               <label
                 htmlFor="fullstack-checkbox"

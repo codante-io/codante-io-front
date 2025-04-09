@@ -66,7 +66,7 @@ function BlogBreadcrumbs({ postTitle }: { postTitle?: string }) {
       {/* Botão voltar (mobile) */}
       <Link
         to="/blog"
-        className="inline-block p-2 text-sm text-gray-500 transition-colors rounded md:invisible dark:hover:text-white dark:hover:bg-gray-800"
+        className="inline-block p-2 text-sm text-gray-500 transition-colors rounded-xs md:invisible dark:hover:text-white dark:hover:bg-gray-800"
       >
         <div className="flex items-center gap-2 ">
           <TiArrowBackOutline />

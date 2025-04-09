@@ -364,7 +364,7 @@ function MainSection({
   user: User;
 }) {
   return (
-    <main className="dark:border-background-700 border-gray-300 overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow w-full dark:bg-background-700">
+    <main className="dark:border-background-700 border-gray-300 overflow-hidden rounded-xl border-[1.5px] shadow-2xs text-gray-800 dark:text-white transition-shadow w-full dark:bg-background-700">
       <div className="">
         <img
           className={cn("cursor-pointer")}
@@ -498,13 +498,13 @@ function EditSection({
                               Atualize o link do deploy da sua aplicação
                             </label>
                             <div className="mt-2">
-                              <div className="flex rounded-md shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
+                              <div className="flex rounded-md shadow-2xs ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md">
                                 <input
                                   type="text"
                                   name="submission_url"
                                   defaultValue={submissionUser.submission_url}
                                   id="submission_url"
-                                  className="rounded block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-200 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                  className="rounded-xs block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-800 dark:text-gray-200 dark:placeholder:text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                   placeholder="https://mp-example.vercel.app/"
                                 />
                               </div>

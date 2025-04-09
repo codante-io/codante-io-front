@@ -137,10 +137,10 @@ function CodanteProButton() {
       className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-100 bg-brand-500 rounded-lg group w-full lg:w-7/12"
     >
       <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-background-700 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
-      <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
+      <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-linear-to-b from-transparent via-transparent to-gray-700"></span>
       <span className="relative">
         Quero essa oferta da{" "}
-        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-500">
+        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-500">
           Black Friday
         </span>
       </span>
@@ -327,7 +327,7 @@ function Headline() {
                     }}
                     className="absolute -top-16 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md dark:bg-background-700 bg-background-50 z-50 shadow-xl px-4 py-2"
                   >
-                    <div className="absolute left-2 translate-x-1/2 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-brand-500 to-transparent h-px " />
+                    <div className="absolute left-2 translate-x-1/2 w-[40%] z-30 -bottom-px bg-linear-to-r from-transparent via-brand-500 to-transparent h-px " />
                     <div className="font-bold relative z-30 text-base">
                       {technology.name}
                     </div>
@@ -345,7 +345,7 @@ function Headline() {
                   }}
                   onMouseEnter={() => setHoveredIndex(technology.name)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-gradient-to-br dark:from-background-700 dark:to-background-900 from-background-50 to-background-100 rounded-xl flex justify-center items-center"
+                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-linear-to-br dark:from-background-700 dark:to-background-900 from-background-50 to-background-100 rounded-xl flex justify-center items-center"
                 >
                   <img
                     src={`img/vendas/techs/${technology.image}.svg`}
@@ -411,7 +411,7 @@ function ProgressivePractice() {
               hidden: { x: 100, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Quando você está assistindo uma aula ou vendo um curso, você
@@ -438,7 +438,7 @@ function ProgressivePractice() {
             }}
             className="relative -rotate-2 max-h-16 max-w-96"
           >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Quando você está de fato colocando a mão na massa, você está na
@@ -471,7 +471,7 @@ function ProgressivePractice() {
             }}
             className="relative rotate-1 max-h-16 max-w-2xl"
           >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Muita gente acha que quando está assitindo um curso e
@@ -611,7 +611,7 @@ function WorkShops() {
             <br />
             <br />
             Assinando o <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
             , você tem acesso a{" "}
@@ -762,7 +762,7 @@ function Challenges() {
             <br />
             As listas de requisitos e Figmas são gratuitos. Assinando o{" "}
             <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
             , você tem acesso a{" "}
@@ -870,7 +870,7 @@ function Tracks() {
             <br />
             Alguns conteúdos das trilhas são gratuitos. Assinando o{" "}
             <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
             , você tem acesso a{" "}
@@ -989,7 +989,7 @@ function Community() {
           <br />
           <br />
           Assinando o <b>Codante</b>{" "}
-          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
             PRO
           </span>
           , você tem acesso a um{" "}
@@ -1316,10 +1316,10 @@ function Submissions() {
       id="community-submission"
       className="w-full max-w-[1920px] relative mt-16"
     >
-      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
+      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
         <h1 className="mt-14 mb-8 text-3xl md:text-4xl font-light font-lexend text-center w-full lg:w-6/12">
           Veja o que a nossa{" "}
-          <span className="relative font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+          <span className="relative font-bold text-transparent animate-bg bg-linear-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
             comunidade
           </span>{" "}
           está construindo com base na{" "}
@@ -1371,8 +1371,8 @@ function Submissions() {
               />
             ))}
           </section>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
         </div>
       </div>
     </section>
@@ -1463,7 +1463,7 @@ function TestimonialCard({
   return (
     <article
       className={cn(
-        "flex gap-6 flex-shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-700 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg translate-x-2 col-span-1 xl:col-span-3",
+        "flex gap-6 shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-700 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg translate-x-2 col-span-1 xl:col-span-3",
         wide && "xl:col-span-4",
       )}
     >

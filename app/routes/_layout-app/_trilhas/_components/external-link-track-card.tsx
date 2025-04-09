@@ -33,7 +33,7 @@ function LinkTrackCard({ trackItem, userIsPro }: ExternalLinkTrackCardProps) {
         <Chip type="free" text="Gratuito" />
       )}
 
-      <div className="flex flex-col justify-between p-8 h-full flex-grow">
+      <div className="flex flex-col justify-between p-8 h-full grow">
         <div>
           <div className="mb-2 card-header">
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">

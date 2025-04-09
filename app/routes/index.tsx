@@ -357,7 +357,7 @@ function Challenges() {
         </div>
       </section>
       <section id="community-submission" className="w-full max-w-[1920px]">
-        <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto mt-10">
+        <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide shrink-0 scroll-auto mt-10">
           <div className="relative mb-20">
             <section className=" flex gap-4 upper-post-list mb-4">
               {submissions.slice(0, 12).map((submission, index) => (
@@ -380,8 +380,8 @@ function Challenges() {
                 />
               ))}
             </section>
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
           </div>
         </div>
       </section>
@@ -677,7 +677,7 @@ function Pricing() {
             className="mb-8 text-4xl sm:text-5xl font-lexend max-w-2xl mt-10"
           >
             Domine o frontend moderno com o Codante{" "}
-            <span className="text-white font-semibold dark:text-gray-900 text-4xl px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 text-4xl px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
           </BlurRevealText>

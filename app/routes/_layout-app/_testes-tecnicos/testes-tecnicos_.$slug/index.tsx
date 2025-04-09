@@ -73,22 +73,14 @@ export function ErrorBoundary() {
   return <Error500 error={error} />;
 }
 
-export const loader = async ({
-  request,
-  params,
-}: {
-  request: Request;
-  params: { slug: string };
-}) => {
+export const loader = async ({ params }: { params: { slug: string } }) => {
   const assessment = await getAssessment(params.slug);
 
   if (!assessment) {
     return abort404();
   }
 
-  return {
-    assessment,
-  };
+  return { assessment };
 };
 
 export default function TestesTecnicosSlugPage() {
@@ -97,12 +89,12 @@ export default function TestesTecnicosSlugPage() {
   const { colorMode } = useColorMode();
 
   return (
-    <div className="container md:grid md:grid-cols-[120px,1fr] lg:grid-cols-[250px,1fr] mx-auto relative">
+    <div className="container md:grid md:grid-cols-[120px_1fr] lg:grid-cols-[250px_1fr] mx-auto relative">
       <div className="hidden md:flex sticky w-24 h-24 lg:w-48 lg:h-48 rounded-lg top-4 shadow-lg overflow-hidden dark:bg-background-800 bg-white dark:border-[1.5px] border-background-200 dark:border-background-700 items-center justify-center">
         <img
           src={
             colorMode === "dark"
-              ? assessment.image_url_dark ?? assessment.image_url
+              ? (assessment.image_url_dark ?? assessment.image_url)
               : assessment.image_url
           }
           alt=""
@@ -110,7 +102,7 @@ export default function TestesTecnicosSlugPage() {
         />
       </div>
       <div>
-        <header className="flex items-start justify-start gap-6 mb-12 rounded-2xl p-6 lg:gap-6 shadow dark:bg-background-800 bg-white dark:border-[1.5px] border border-background-100 dark:border-background-700">
+        <header className="flex items-start justify-start gap-6 mb-12 rounded-2xl p-6 lg:gap-6 shadow-xs dark:bg-background-800 bg-white dark:border-[1.5px] border border-background-100 dark:border-background-700">
           <div className="flex flex-col flex-1 gap-6">
             <div className="">
               <p>
@@ -180,7 +172,7 @@ export default function TestesTecnicosSlugPage() {
                 )}
               </div>
             </div>
-            <div className=" dark:bg-background-800 rounded-xl shadow bg-white border-[1.5px] border-background-100 dark:border-background-700">
+            <div className=" dark:bg-background-800 rounded-xl shadow-xs bg-white border-[1.5px] border-background-100 dark:border-background-700">
               <div className="p-4 lg:py-6 lg:px-16 dark:prose-headings:text-gray-300 prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h2:mt-8 prose-h1:mt-2 lg:prose-h1:mt-4 max-w-none">
                 <MarkdownRenderer
                   markdown={assessment.assessment_instructions_text ?? ""}
@@ -306,7 +298,7 @@ function OutdatedAlert({ assessment }: { assessment: Assessment }) {
   return (
     <div className="p-4 border border-l-4 border-yellow-400 rounded-lg bg-yellow-50 dark:bg-background-800">
       <div className="flex">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <ExclamationTriangleIcon
             className="w-5 h-5 text-yellow-400"
             aria-hidden="true"

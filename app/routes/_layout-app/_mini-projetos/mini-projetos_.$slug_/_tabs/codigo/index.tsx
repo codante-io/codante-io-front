@@ -49,7 +49,7 @@ export default function SolutionCode() {
   return (
     <section className="container">
       <div className="relative w-full h-[65vh] rounded-lg overflow-hidden">
-        <div className="absolute inset-0 bg-cover lg:bg-fill bg-center bg-no-repeat blur-sm bg-[url('/img/cover-stackblitz-light.png')] dark:bg-[url('/img/cover-stackblitz-dark.png')]"></div>
+        <div className="absolute inset-0 bg-cover lg:bg-fill bg-center bg-no-repeat blur-xs bg-[url('/img/cover-stackblitz-light.png')] dark:bg-[url('/img/cover-stackblitz-dark.png')]"></div>
         {(user && user?.is_pro) || (user && !challenge.is_premium) ? (
           <iframe
             title="slug"
@@ -57,7 +57,7 @@ export default function SolutionCode() {
               getStackblitzUrl() +
               `?&showSidebar=1&embed=1&terminalHeight=0&file=src%2Fapp%2Fpage.tsx&hideNavigation=1&view=editor&theme=${colorMode}`
             }
-            className="w-full h-full rounded-lg shadow blur-none relative z-10"
+            className="w-full h-full rounded-lg shadow-xs blur-none relative z-10"
           ></iframe>
         ) : (
           <div className="absolute flex w-full h-full justify-center items-center">

@@ -91,7 +91,7 @@ export default function WorkshopsDashboard() {
 //     <article className="w-full flex flex-col justify-center items-center xl:max-w-[292px] max-w-[298px]">
 //       <Link
 //         to={`/workshops/${workshop.workshop_slug}`}
-//         className="relative flex-col w-full flex-grow flex max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl overflow-hidden bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow sm:h-[225px]"
+//         className="relative flex-col w-full grow flex max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl overflow-hidden bg-background-50 shadow-xs dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow sm:h-[225px]"
 //       >
 //         <div
 //           style={{
@@ -101,7 +101,7 @@ export default function WorkshopsDashboard() {
 //             backgroundSize: "cover",
 //             backgroundPosition: "center",
 //           }}
-//           className="w-full h-40 rounded-t-xl shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] "
+//           className="w-full h-40 rounded-t-xl shadow-[inset_0_-190px_50px_-100px_var(--color-background-50)] dark:shadow-[inset_0_-190px_50px_-100px_var(--color-background-700)] "
 //         ></div>
 
 //         <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[400px] overflow-hidden">

@@ -54,7 +54,7 @@ export default function ChallengeCard({
 
         {!challenge?.is_premium && <Chip type="free" text="Gratuito" />}
 
-        <div className="flex flex-col justify-between flex-grow h-full p-4">
+        <div className="flex flex-col justify-between grow h-full p-4">
           <div>
             <div className="mb-2 card-header">
               <h2 className="mb-4 text-lg leading-tight text-gray-700 dark:text-gray-50 line-clamp-2">

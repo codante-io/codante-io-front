@@ -50,7 +50,7 @@ export default function ResumedChallengeCard({
             />
           </div>
         </div>
-        <div className="flex flex-col justify-between py-4 px-6 h-full flex-grow">
+        <div className="flex flex-col justify-between py-4 px-6 h-full grow">
           <div>
             <div className="mb-2 card-header">
               <h2 className="text-lg font-medium text-gray-700 dark:text-gray-50 line-clamp-2">
