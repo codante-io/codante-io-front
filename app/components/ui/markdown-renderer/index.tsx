@@ -1,4 +1,4 @@
-/* eslint-disable react/display-name */
+ 
 import Markdown from "markdown-to-jsx";
 import { Highlight, themes } from "prism-react-renderer";
 import React, { type ReactElement } from "react";
@@ -24,11 +24,13 @@ const getCodeComponent =
         {({ tokens, getLineProps, getTokenProps }) => (
           <pre className={className}>
             {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line })}>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token })} />
-                ))}
-              </div>
+              <>
+                <div key={i} {...getLineProps({ line })}>
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token })} />
+                  ))}
+                </div>
+              </>
             ))}
           </pre>
         )}
@@ -119,8 +121,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   pre: {
     component: getCodeComponent(colorMode),
     props: {
-      className:
-        "dark:bg-background-700 bg-background-200 p-4 rounded-lg my-10",
+      className: "dark:bg-background-700 bg-background-200 p-4 rounded-lg my-8",
     },
   },
 
@@ -173,7 +174,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
   code: {
     props: {
       className:
-        "dark:text-brand-300 dark:bg-background-700 bg-background-200 font-medium px-1.5 py-0.5 rounded-md font-mono before:content-[''] after:content-['']",
+        "dark:text-background-400 dark:bg-background-800 bg-background-200 border dark:border-background-700 border-background-200 px-1.5 py-0.5 rounded-md font-mono before:content-[''] after:content-['']",
     },
   },
 
@@ -186,31 +187,31 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
 
   h3: {
     props: {
-      className: "text-lg mt-4 mb-2 font-semibold",
+      className: "",
     },
   },
 
   p: {
     props: {
-      className: `${fontSize === "small" ? "text-sm" : ""} my-4 font-light`,
+      className: `${fontSize === "small" ? "text-sm" : ""}  font-light`,
     },
   },
 
   ul: {
     props: {
-      className: "list-disc ml-8 font-light",
+      className: "",
     },
   },
 
   li: {
     props: {
-      className: "my-3",
+      className: "",
     },
   },
 
   a: {
     props: {
-      className: "text-blue-500 no-underline hover:underline break-words",
+      className: "no-underline hover:underline break-words",
     },
   },
 
@@ -256,7 +257,7 @@ export default function MarkdownRenderer({
     <div
       className={cn(
         "relative",
-        prose && "prose dark:prose-invert prose-ul:ml-0 prose-h2:mb-2",
+        prose && "prose dark:prose-invert prose-h2:mb-2",
         fontSize === "small" ? "lg:prose-base" : "lg:prose-lg",
         wrapperClasses,
       )}

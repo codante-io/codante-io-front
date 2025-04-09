@@ -33,13 +33,13 @@ export default function Post({
           )}
 
           {withAuthor && (
-            <div className="flex items-center gap-4 max-h-8">
+            <div className="flex items-center gap-4 max-h-8 mt-0">
               <img
                 src={blogPost.instructor.avatar_url}
                 alt=""
                 className="w-8 h-8 m-0 rounded-full"
               />
-              <span className="text-sm">{blogPost.instructor?.name}</span>
+              <span className="text-sm mt-0">{blogPost.instructor?.name}</span>
             </div>
           )}
         </div>
