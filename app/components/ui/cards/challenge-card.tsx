@@ -72,19 +72,18 @@ export default function ChallengeCard({
               </div>
             </div>
           </div>
-          <div className="flex justify-between w-full mt-8 gap-2 border-t border-gray-200 dark:border-gray-800 pt-4">
-            <section>
-              <div className="flex -space-x-3 overflow-hidden">
+          <div className="flex justify-between w-full mt-8 gap-1 border-t border-gray-200 dark:border-gray-800 pt-4">
+            <section className="flex items-center">
+              <div className="flex -space-x-[9px]">
                 {challenge?.avatars?.map((avatar, index) => (
                   <UserAvatar
                     key={index}
                     avatar={avatar}
-                    cursor="cursor-pointer"
-                    className="w-7 h-7 m-[2px]"
+                    className="size-7 rounded-full ring-2 ring-white dark:ring-background-800"
                   />
                 ))}
                 {challenge.enrolled_users_count > 5 && (
-                  <div className="relative w-7 h-7 text-[0.5rem] m-[2px] flex items-center justify-center rounded-full ring-2 ring-white dark:ring-background-800 bg-blue-300 text-blue-900 font-bold">
+                  <div className="flex size-7 items-center justify-center rounded-full bg-blue-100 text-[9px] font-medium text-blue-800 ring-2 ring-white dark:ring-background-800 dark:bg-blue-900 dark:text-blue-200">
                     +{challenge.enrolled_users_count - 5}
                   </div>
                 )}
@@ -93,7 +92,7 @@ export default function ChallengeCard({
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center justify-center gap-2 rounded-xl font-light text-gray-500 dark:text-gray-400"
+              className="flex items-center justify-center gap-2 rounded-xl font-light text-gray-500 dark:text-gray-400 cursor-pointer"
             >
               Ver projeto
               <ArrowRight className="w-4 h-4" />

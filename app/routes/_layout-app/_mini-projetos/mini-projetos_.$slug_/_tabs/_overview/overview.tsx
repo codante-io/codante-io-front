@@ -42,11 +42,10 @@ export default function Overview({
           />
         )}
         {/* TODO: Trocar aqui para a aula do challenge */}
-        <div className="mt-6!">
-          <MarkdownRenderer
-            markdown={challenge?.description ?? ""}
-            wrapperClasses="mx-auto px-2 md:px-4"
-          />
+        <div className="mt-6">
+          <div className="max-w-3xl mx-auto lg:px-10 pb-12">
+            <MarkdownRenderer markdown={challenge?.description ?? ""} />
+          </div>
 
           {!userCanJoinChallenge && (
             <div className="relative">

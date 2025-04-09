@@ -98,8 +98,14 @@ export default function BlogPost() {
 
   return (
     <main className="container mx-auto">
-      <section className="flex justify-between">
-        <Post blogPost={blogPost} withBreadcrumbs={true} withReactions={true} />
+      <section className="flex justify-between gap-8">
+        <div className="max-w-[70ch]">
+          <Post
+            blogPost={blogPost}
+            withBreadcrumbs={true}
+            withReactions={true}
+          />
+        </div>
         <BlogTableOfContents headers={headers} activeId={activeId} />
       </section>
     </main>
