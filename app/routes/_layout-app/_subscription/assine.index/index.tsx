@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import {
   Link,
   isRouteErrorResponse,
@@ -20,7 +20,6 @@ import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import UserAvatar from "~/components/ui/user-avatar";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
-import { getHome } from "~/lib/models/home.server";
 import { cn } from "~/lib/utils/cn";
 import Faq from "~/routes/_layout-app/_subscription/faq";
 import { BoldColored } from "./components/bold-colored-text";
@@ -31,9 +30,8 @@ import FreePricingCard from "~/components/ui/cards/pricing/free";
 import YearlyPricingCard from "~/components/ui/cards/pricing/yearly";
 
 export const loader = async () => {
-  return json({
-    homeInfo: await getHome(),
-  });
+  // Redirect to /planos
+  return redirect("/planos");
 };
 
 export default function HomePage() {
@@ -90,10 +88,10 @@ function CodanteProButton() {
       className="relative inline-flex items-center justify-center text-lg lg:text-2xl px-10 py-4 overflow-hidden font-medium text-gray-100 bg-brand-500 rounded-lg group w-full lg:w-7/12"
     >
       <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-background-700 rounded-full group-hover:w-[105%] group-hover:h-56"></span>
-      <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
+      <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-linear-to-b from-transparent via-transparent to-gray-700"></span>
       <span className="relative">
         Quero ter acesso ao <span className="font-bold">Codante</span>{" "}
-        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-500">
+        <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-500">
           PRO
         </span>
       </span>
@@ -143,7 +141,7 @@ function Headline() {
         <div className="container flex flex-col items-center gap-2 mt-2">
           <h1 className="text-3xl font-light text-center mt-6 font-lexend md:text-6xl">
             Aprenda front-end <br />
-            <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+            <span className="relative pr-4 px-6 font-bold text-transparent animate-bg bg-linear-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
               de verdade
               <img
                 src={`/img/pencil-stroke-${colorMode}.webp`}
@@ -198,7 +196,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone de ampulheta"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-linear-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 Acesso vitalício
               </h2>
             </div>
@@ -215,7 +213,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone de medalha"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-linear-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 30 dias de garantia
               </h2>
             </div>
@@ -232,7 +230,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone do Discord"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-linear-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 Comunidade no Discord
               </h2>
             </div>
@@ -249,7 +247,7 @@ function Headline() {
                 className="lg:w-24 w-12 lg:h-24 h-12"
                 alt="Fundo em gradiente com ícone de escudo"
               />
-              <h2 className="animate-bg text-transparent bg-gradient-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
+              <h2 className="animate-bg text-transparent bg-linear-to-r from-gray-700 to-gray-600 dark:from-gray-300 dark:to-gray-600 bg-clip-text">
                 Pagamento seguro
               </h2>
             </div>
@@ -302,7 +300,7 @@ function Headline() {
                     }}
                     className="absolute -top-16 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md dark:bg-background-700 bg-background-50 z-50 shadow-xl px-4 py-2"
                   >
-                    <div className="absolute left-2 translate-x-1/2 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-brand-500 to-transparent h-px " />
+                    <div className="absolute left-2 translate-x-1/2 w-[40%] z-30 -bottom-px bg-linear-to-r from-transparent via-brand-500 to-transparent h-px " />
                     <div className="font-bold relative z-30 text-base">
                       {technology.name}
                     </div>
@@ -320,7 +318,7 @@ function Headline() {
                   }}
                   onMouseEnter={() => setHoveredIndex(technology.name)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-gradient-to-br dark:from-background-700 dark:to-background-900 from-background-50 to-background-100 rounded-xl flex justify-center items-center"
+                  className="w-16 h-16 lg:w-24 lg:h-24 animate-bg bg-linear-to-br dark:from-background-700 dark:to-background-900 from-background-50 to-background-100 rounded-xl flex justify-center items-center"
                 >
                   <img
                     src={`img/vendas/techs/${technology.image}.svg`}
@@ -386,7 +384,7 @@ function ProgressivePractice() {
               hidden: { x: 100, opacity: 0 },
             }}
           >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Quando você está assistindo uma aula ou vendo um curso, você
@@ -413,7 +411,7 @@ function ProgressivePractice() {
             }}
             className="relative -rotate-2 max-h-16 max-w-96"
           >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Quando você está de fato colocando a mão na massa, você está na
@@ -446,7 +444,7 @@ function ProgressivePractice() {
             }}
             className="relative rotate-1 max-h-16 max-w-2xl"
           >
-            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+            <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
             <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
               <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                 Muita gente acha que quando está assistindo um curso e
@@ -532,7 +530,7 @@ function ProgressivePractice() {
               }}
               className="relative rotate-1 max-h-16 max-w-2xl"
             >
-              <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur p-[0.5] -z-10" />
+              <div className="absolute top-1 h-full w-full bg-background-100 dark:bg-background-600 opacity-30 blur-xs p-[0.5] -z-10" />
               <div className="dark:bg-background-800 p-4 rounded-xl dark:border-background-700 bg-background-100 border-background-50 border">
                 <p className="font-light font-inter text-sm dark:text-gray-300 text-gray-700">
                   E o aprendizado continua... depois que você chega no{" "}
@@ -623,7 +621,7 @@ function WorkShops() {
             <br />
             <br />
             Assinando o <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
             , você tem acesso a{" "}
@@ -774,7 +772,7 @@ function Challenges() {
             <br />
             As listas de requisitos e Figmas são gratuitos. Assinando o{" "}
             <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
             , você tem acesso a{" "}
@@ -882,7 +880,7 @@ function Challenges() {
 //             <br />
 //             Alguns conteúdos das trilhas são gratuitos. Assinando o{" "}
 //             <b>Codante</b>{" "}
-//             <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+//             <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
 //               PRO
 //             </span>
 //             , você tem acesso a{" "}
@@ -1001,7 +999,7 @@ function Community() {
           <br />
           <br />
           Assinando o <b>Codante</b>{" "}
-          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+          <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
             PRO
           </span>
           , você tem acesso a um{" "}
@@ -1328,10 +1326,10 @@ function Submissions() {
       id="community-submission"
       className="w-full max-w-[1920px] relative mt-16"
     >
-      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
+      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
         <h1 className="mt-14 mb-8 text-3xl md:text-4xl font-light font-lexend text-center w-full lg:w-6/12">
           Veja o que a nossa{" "}
-          <span className="relative font-bold text-transparent animate-bg bg-gradient-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
+          <span className="relative font-bold text-transparent animate-bg bg-linear-to-r dark:from-blue-200 dark:to-blue-500 from-blue-500 via-indigo-500 to-blue-900 bg-clip-text">
             comunidade
           </span>{" "}
           está construindo com base na{" "}
@@ -1383,8 +1381,8 @@ function Submissions() {
               />
             ))}
           </section>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-white dark:from-[#11181F] via-transparent right-[90%]"></div>
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-l from-white dark:from-[#161F29] via-transparent left-[90%]"></div>
         </div>
       </div>
     </section>
@@ -1401,7 +1399,7 @@ function Pricing() {
       id="pricing"
       className="flex justify-center w-full -mb-10 text-center text-gray-800 dark:text-gray-50 container px-8"
     >
-      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide flex-shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
+      <div className="flex flex-col items-center w-full overflow-hidden scrollbar-hide shrink-0 scroll-auto border-t border-gray-200 dark:border-gray-800 ">
         <div className="relative w-full">
           <h2 className="mt-14 text-center mb-2 text-gray-600 dark:text-gray-400 font-lexend">
             Assine agora o
@@ -1417,7 +1415,7 @@ function Pricing() {
             className="mb-8  text-4xl font-light font-lexend text-center"
           >
             Codante{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>
           </motion.h1>
@@ -1501,7 +1499,7 @@ function Bonus() {
             <br />
             <br />
             Para ter acesso, bastar assinar o <b>Codante</b>{" "}
-            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded bg-amber-400">
+            <span className="text-white font-semibold dark:text-gray-900 px-[3px] py-[2px] rounded-xs bg-amber-400">
               PRO
             </span>{" "}
             agora. Depois disso, você precisa usar a plataforma e submeter 2
@@ -1620,7 +1618,7 @@ function TestimonialCard({
   return (
     <article
       className={cn(
-        "flex gap-6 flex-shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-700 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg translate-x-2 col-span-1 xl:col-span-3",
+        "flex gap-6 shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-700 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg translate-x-2 col-span-1 xl:col-span-3",
         wide && "xl:col-span-4",
       )}
     >

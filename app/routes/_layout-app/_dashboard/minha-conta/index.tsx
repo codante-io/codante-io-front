@@ -474,7 +474,7 @@ function SubscriptionSection({ subscription }: { subscription: Subscription }) {
       <AuthCard className="max-w-xl mt-6">
         <p className="mb-6 text-sm font-light text-gray-600 dark:text-gray-400 text-inter">
           Codante
-          <span className="px-1 mx-1 text-xs rounded py-0.5 bg-amber-400 text-background-50 dark:text-background-900">
+          <span className="px-1 mx-1 text-xs rounded-xs py-0.5 bg-amber-400 text-background-50 dark:text-background-900">
             PRO
           </span>{" "}
           - Vitalício

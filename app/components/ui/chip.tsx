@@ -50,7 +50,7 @@ function Chip({
     >
       <div
         className={cn(
-          "px-2 py-1 backdrop-blur-sm border text-white mx-auto text-center rounded-lg relative",
+          "px-2 py-1 backdrop-blur-xs border text-white mx-auto text-center rounded-lg relative",
           bgColor,
           borderColor,
         )}
@@ -60,7 +60,7 @@ function Chip({
         </span>
         <div
           className={cn(
-            "absolute inset-x-0 h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent to-transparent",
+            "absolute inset-x-0 h-px -bottom-px bg-linear-to-r w-3/4 mx-auto from-transparent to-transparent",
             borderBottonColor,
           )}
         />

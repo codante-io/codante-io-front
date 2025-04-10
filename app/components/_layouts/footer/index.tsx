@@ -80,9 +80,139 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-transparent dark:bg-background-900">
+    <footer className="bg-background-100 dark:bg-background-800 bg-opacity-80">
+      <section className="px-6 py-12 mx-auto max-w-7xl grid grid-cols-2 gap-8 lg:grid-cols-5 lg:px-8 justify-center">
+        <nav className="col-span-1 flex flex-col gap-4">
+          <Link to="/projetos">Projetos</Link>
+          <Link
+            to="/projetos?tecnologia=react"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Projetos de React
+          </Link>
+          <Link
+            to="/projetos?tecnologia=nextjs"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Projetos de Next.js
+          </Link>
+          <Link
+            to="/projetos?tecnologia=tailwindcss"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Projetos de Tailwind CSS
+          </Link>
+          <Link
+            to="/projetos?tecnologia=fundamentos"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Projetos de Fundamentos
+          </Link>
+        </nav>
+        <div className="col-span-1 flex flex-col gap-4">
+          <Link to="/workshops">Workshops</Link>
+          <Link
+            to="/workshops?tecnologia=react"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Workshops de React
+          </Link>
+          <Link
+            to="/workshops?tecnologia=nextjs"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Workshops de Next.js
+          </Link>
+          <Link
+            to="/workshops?tecnologia=fundamentos"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Workshops de Fundamentos
+          </Link>
+        </div>
+        <div className="col-span-1 flex flex-col gap-4">
+          <span>Outros recursos</span>
+          <Link
+            to="/testes-tecnicos"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Testes técnicos
+          </Link>
+          <Link
+            to="https://docs.apis.codante.io/"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+            target="_blank"
+          >
+            APIs gratuitas
+          </Link>
+          <Link
+            to="https://guias.codante.io"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+            target="_blank"
+          >
+            Guias dos workshops
+          </Link>
+          <Link
+            to="/ranking"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Ranking
+          </Link>
+        </div>
+        <div className="col-span-1 flex flex-col gap-4">
+          <span>Empresa</span>
+          <Link
+            to="/agenda"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Agenda
+          </Link>
+          <Link
+            to="/blog"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Blog
+          </Link>
+          {/* <Link
+            to="https://changelog.codante.io"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+            target="_blank"
+          >
+            Changelog
+          </Link> */}
+
+          <Link
+            to="/planos"
+            className="text-xs dark:text-gray-400 dark:hover:text-gray-500 text-gray-500 hover:text-gray-600"
+          >
+            Planos e preços
+          </Link>
+        </div>
+      </section>
+
       <div className="px-6 py-12 mx-auto max-w-7xl md:flex md:items-center md:justify-between lg:px-8">
-        <div className="flex justify-center space-x-6 md:order-2">
+        <nav className="mt-8 md:mt-0 flex justify-center space-x-6 items-center">
+          <Link
+            to={"/termos-de-uso"}
+            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
+          >
+            Termos de Uso
+          </Link>
+          <div className="w-1 h-1 bg-gray-500 rounded-full" />
+          <Link
+            to={"/politica-de-privacidade"}
+            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
+          >
+            Política de Privacidade
+          </Link>
+        </nav>
+
+        <div className="p-2 text-xs font-light text-center text-gray-700 dark:text-gray-500 ">
+          © {new Date().getFullYear()} Codante Educação Ltda CNPJ:
+          26.607.049/0001-09
+        </div>
+
+        <nav className="flex justify-center space-x-6">
           {navigation.map((item) => (
             <a
               key={item.name}
@@ -95,31 +225,7 @@ export default function Footer() {
               <item.icon className="w-6 h-6" aria-hidden="true" />
             </a>
           ))}
-        </div>
-        <div className="mt-8 md:order-1 md:mt-0">
-          <Link
-            to={"/termos-de-uso"}
-            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
-          >
-            Termos de Uso
-          </Link>
-          <Link
-            to={"/politica-de-privacidade"}
-            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
-          >
-            Política de Privacidade
-          </Link>
-          <a
-            href="https://changelog.codante.io"
-            className="block text-xs leading-5 text-center text-gray-500 hover:underline"
-          >
-            Changelog do Codante
-          </a>
-        </div>
-      </div>
-      <div className="p-2 text-sm font-light text-center text-gray-700 dark:text-gray-400 dark:bg-background-950 bg-background-150">
-        © {new Date().getFullYear()} Codante Educação Ltda CNPJ:
-        26.607.049/0001-09
+        </nav>
       </div>
     </footer>
   );

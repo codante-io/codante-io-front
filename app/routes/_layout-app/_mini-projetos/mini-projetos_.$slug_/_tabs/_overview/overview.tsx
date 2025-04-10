@@ -8,21 +8,25 @@ import type { UserStep } from "../../build-steps.server";
 import CurrentStatus from "./components/current-status";
 import ResourcesSection from "./components/resources-section";
 import JoinChallengeSection from "./components/steps/join-challenge-section";
+import { generateSimpleLoremIpsum } from "~/lib/utils/string-utils";
+import { SmallBecomeProCard } from "~/components/ui/become-pro-card";
 
 export default function Overview({
   challenge,
   steps,
   challengeUser,
+  userCanJoinChallenge,
 }: {
   challenge: Challenge;
   steps: UserStep[];
   challengeUser: ChallengeUser;
+  userCanJoinChallenge: boolean;
 }) {
   return (
     <div className="container grid grid-cols-3 gap-6 xl:gap-10">
       <Card
-        border={"default"}
-        className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2"
+        border="default"
+        className="col-span-3 space-y-10 overflow-hidden lg:space-y-20 lg:col-span-2 relative"
       >
         {challenge.video_url ? (
           <div>
@@ -34,15 +38,26 @@ export default function Overview({
           <img
             src={challenge.image_url}
             alt="Project preview"
-            className="object-scale-down w-full bg-gradient-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
+            className="object-scale-down w-full bg-linear-to-br from-brand-500 via-indigo-300 to-indigo-500 max-h-96"
           />
         )}
         {/* TODO: Trocar aqui para a aula do challenge */}
-        <div className="!mt-6">
-          <MarkdownRenderer
-            markdown={challenge?.description ?? ""}
-            wrapperClasses="mx-auto px-2 md:px-4 pb-12"
-          />
+        <div className="mt-6">
+          <div className="max-w-3xl mx-auto lg:px-10 pb-12">
+            <MarkdownRenderer markdown={challenge?.description ?? ""} />
+          </div>
+
+          {!userCanJoinChallenge && (
+            <div className="relative">
+              <MarkdownRenderer
+                markdown={generateSimpleLoremIpsum()}
+                wrapperClasses="mx-auto px-2 md:px-4 pb-12 blur-xs"
+              />
+              <div className="absolute flex justify-center items-center top-0 left-0 right-0 mx-auto p-10 md:px-4">
+                <SmallBecomeProCard />
+              </div>
+            </div>
+          )}
         </div>
       </Card>
 
@@ -56,10 +71,12 @@ export default function Overview({
             steps={steps}
             slug={challenge?.slug}
             githubRepoUrl={challenge.repository_name}
+            userCanJoinChallenge={userCanJoinChallenge}
           />
         </div>
 
         <RepositoryInfoSection
+          userCanJoinChallenge={userCanJoinChallenge}
           repository={{
             organization: "codante-io",
             name: challenge.repository_name,
@@ -67,7 +84,10 @@ export default function Overview({
             stars: challenge?.stars,
           }}
         />
-        <ResourcesSection challenge={challenge} />
+        <ResourcesSection
+          challenge={challenge}
+          userCanAccessResources={userCanJoinChallenge}
+        />
       </div>
     </div>
   );

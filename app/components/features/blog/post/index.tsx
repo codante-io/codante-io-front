@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import { TiArrowBackOutline } from "react-icons/ti";
 import type { BlogPost } from "~/lib/models/blog-post.server";
 import ReactionsButton from "../../reactions/reactions-button";
-import MarkdownRenderer from "../../../ui/markdown-renderer";
+import MarkdownRenderer from "~/components/ui/markdown-renderer";
 
 export default function Post({
   blogPost,
@@ -16,9 +16,9 @@ export default function Post({
   withAuthor?: boolean;
 }) {
   return (
-    <div className={`max-w-3xl`}>
+    <div className={`max-w-3xl w-full`}>
       {withBreadcrumbs && <BlogBreadcrumbs postTitle={blogPost.title} />}
-      <div className={`prose lg:prose-lg dark:prose-invert`}>
+      <div className={`prose dark:prose-invert`}>
         <h1>{blogPost.title}</h1>
         <p className="lead">{blogPost.short_description}</p>
         <div className="flex items-center justify-between">
@@ -33,13 +33,13 @@ export default function Post({
           )}
 
           {withAuthor && (
-            <div className="flex items-center gap-4 max-h-8">
+            <div className="flex items-center gap-4 max-h-8 mt-0">
               <img
                 src={blogPost.instructor.avatar_url}
                 alt=""
                 className="w-8 h-8 m-0 rounded-full"
               />
-              <span className="text-sm">{blogPost.instructor?.name}</span>
+              <span className="text-sm mt-0">{blogPost.instructor?.name}</span>
             </div>
           )}
         </div>
@@ -66,7 +66,7 @@ function BlogBreadcrumbs({ postTitle }: { postTitle?: string }) {
       {/* Botão voltar (mobile) */}
       <Link
         to="/blog"
-        className="inline-block p-2 text-sm text-gray-500 transition-colors rounded md:invisible dark:hover:text-white dark:hover:bg-gray-800"
+        className="inline-block p-2 text-sm text-gray-500 transition-colors rounded-xs md:invisible dark:hover:text-white dark:hover:bg-gray-800"
       >
         <div className="flex items-center gap-2 ">
           <TiArrowBackOutline />

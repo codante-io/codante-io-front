@@ -5,16 +5,8 @@ import { Card, CardFooter } from "~/components/ui/cards/card";
 import { cn } from "~/lib/utils/cn";
 
 const submissionCardVariants = cva("", {
-  variants: {
-    size: {
-      sm: "w-[275px]",
-      md: "w-[377px]",
-      full: "w-full",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+  variants: { size: { sm: "w-[275px]", md: "w-[377px]", full: "w-full" } },
+  defaultVariants: { size: "md" },
 });
 
 interface SubmissionCardProps
@@ -31,7 +23,7 @@ function SubmissionCard({
     <Card
       as="article"
       className={cn(
-        " overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow",
+        " overflow-hidden rounded-xl border-[1.5px] shadow-2xs text-gray-800 dark:text-white transition-shadow",
         "dark:border-background-600 border-background-200",
         submissionCardVariants({ size }),
         className,
@@ -43,10 +35,7 @@ function SubmissionCard({
   );
 }
 
-type SubmissionCardImageProps = {
-  imageUrl: string;
-  submissionUrl?: string;
-};
+type SubmissionCardImageProps = { imageUrl: string; submissionUrl?: string };
 
 function SubmissionCardImage({ imageUrl }: SubmissionCardImageProps) {
   return (
@@ -58,8 +47,7 @@ function SubmissionCardImage({ imageUrl }: SubmissionCardImageProps) {
   );
 }
 
-interface SubmissionCardFooterProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+type SubmissionCardFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 function SubmissionCardFooter({
   children,

@@ -42,7 +42,7 @@ export default function CardItemRibbon({
   return (
     <div
       className={cn(
-        "absolute z-10 overflow-hidden rounded-sm w-36 aspect-square -top-2 -right-2",
+        "absolute z-10 overflow-hidden rounded-xs w-36 aspect-square -top-2 -right-2",
         className,
       )}
     >
@@ -52,7 +52,7 @@ export default function CardItemRibbon({
       ></div>
       <span
         className={cn(
-          "w-[210px] px-8 py-1.5 font-semibold uppercase text-xs tracking-wider block w-square-diagonal text-center absolute bottom-0 right-0 rotate-45 origin-bottom-right shadow-sm",
+          "w-[210px] px-8 py-1.5 font-semibold uppercase text-xs tracking-wider block w-square-diagonal text-center absolute bottom-0 right-0 rotate-45 origin-bottom-right shadow-2xs",
           bgColorLight,
           textColor,
         )}

@@ -23,6 +23,7 @@ import { user } from "./lib/services/auth.server";
 import { DarkModeScriptInnerHtml } from "./lib/utils/dark-mode";
 import { getOgGeneratorUrl } from "./lib/utils/path-utils";
 import stylesheet from "./tailwind.css?url";
+import { cn } from "./lib/utils/cn";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -65,15 +66,9 @@ export const meta: MetaFunction = () => {
       content:
         "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
     },
-    {
-      property: "og:image",
-      content: getOgGeneratorUrl("Codante"),
-    },
+    { property: "og:image", content: getOgGeneratorUrl("Codante") },
     { property: "og:type", content: "website" },
-    {
-      name: "twitter:card",
-      content: "summary_large_image",
-    },
+    { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:domain", content: "codante.io" },
     {
       name: "twitter:title",
@@ -84,14 +79,8 @@ export const meta: MetaFunction = () => {
       content:
         "Fuja dos mesmos cursos e tutoriais de sempre e aprimore suas skills em programação com workshops e mini projetos ensinados pelos melhores profissionais do mercado!",
     },
-    {
-      name: "twitter:image",
-      content: getOgGeneratorUrl("Codante"),
-    },
-    {
-      name: "twitter:image:alt",
-      content: "Codante",
-    },
+    { name: "twitter:image", content: getOgGeneratorUrl("Codante") },
+    { name: "twitter:image:alt", content: "Codante" },
   ];
 };
 
@@ -141,12 +130,13 @@ export default function App() {
         <Links />
         <Meta />
       </head>
-      <body className="text-gray-800 bg-white dark:bg-gray-dark dark:bg-gradient-to-br dark:from-gray-darkest dark:to-gray-dark bg-gradient-to-br from-white via-slate-50 to-slate-100 dark:text-gray-50 dark:scrollbar">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: DarkModeScriptInnerHtml,
-          }}
-        />
+      <body
+        className={cn(
+          "text-gray-800 bg-white bg-linear-to-br from-white via-slate-50 to-slate-100 bg-grainy relative",
+          "dark:bg-gray-dark dark:bg-linear-to-br dark:from-gray-darkest dark:to-gray-dark via-none dark:text-gray-50 dark:scrollbar",
+        )}
+      >
+        <script dangerouslySetInnerHTML={{ __html: DarkModeScriptInnerHtml }} />
         <GoogleTagManager
           environment={process.env.NODE_ENV}
           gtmTrackingId="GTM-NXHM2J7"
@@ -198,11 +188,7 @@ export function ErrorBoundary() {
         <meta charSet="utf-8" />
       </head>
       <body className="text-gray-800 dark:bg-background-900 bg-background-50 dark:text-gray-50">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: DarkModeScriptInnerHtml,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: DarkModeScriptInnerHtml }} />
         <ColorModeProvider>
           <LoadingBar />
 

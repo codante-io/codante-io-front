@@ -100,7 +100,7 @@ function CertificateCard({
         onClick={(event) => handleClick(event)}
         title={certificate.certifiable_name}
       >
-        <p className="flex items-center gap-1 flex-shrink-0">
+        <p className="flex items-center gap-1 shrink-0">
           {pending ? (
             <Clock className="w-3 h-3 text-yellow-300 sm:mr-2" />
           ) : (
@@ -111,7 +111,7 @@ function CertificateCard({
               ? "Workshop"
               : "MP"}
           </span>{" "}
-          <span className="max-w-[185px] sm:max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <span className="max-w-[185px] sm:max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
             {certificate.certifiable_name}
           </span>
         </p>
@@ -147,7 +147,7 @@ function ProBanner() {
         Certificados.
       </span>
       <Link to="/assine" className="w-full inline-block mt-4">
-        <button className="mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-gradient-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
+        <button className="mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-linear-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
           <FaCrown className="mr-2 text-amber-500" />
           <span>
             Seja

@@ -1,124 +1,311 @@
-@import url("/fonts/fonts.css");
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("/fonts/fonts.css") layer(base);
+@import "./typography.css" layer(components);
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+@custom-variant dark (&:is(.dark *));
 
-/* For IE, Edge and Firefox */
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+@theme {
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --font-sans:
+    Inter var, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-lexend: Lexend, sans-serif;
+  --font-inter: Inter var, sans-serif;
+  --font-cursive: Gloria Hallelujah, cursive;
 
-.lower-post-list {
-  animation: slide-to-right 100s linear infinite alternate;
-}
+  --color-gray-darkest: #0e141a;
+  --color-gray-dark: #17212b;
 
-@keyframes slide-to-right {
-  0% {
-    transform: translateX(22%);
+  --color-brand-50: #ffffff;
+  --color-brand-100: #f5f8ff;
+  --color-brand-200: #ccdaff;
+  --color-brand-300: #a4bdff;
+  --color-brand-400: #7b9fff;
+  --color-brand-500: #5282ff;
+  --color-brand-600: #1a59ff;
+  --color-brand-700: #003ee1;
+  --color-brand-800: #002fa9;
+  --color-brand-900: #001f71;
+  --color-brand-950: #001755;
+  --color-brand: #5282ff;
+
+  --color-background-50: #fcfcfd;
+  --color-background-100: #f1f4f8;
+  --color-background-150: #e9eef3;
+  --color-background-200: #cdd8e4;
+  --color-background-300: #a8bcd0;
+  --color-background-400: #84a0bd;
+  --color-background-500: #5f84a9;
+  --color-background-600: #364c63;
+  --color-background-700: #1e2b38;
+  --color-background-800: #17212b;
+  --color-background-900: #0e141a;
+  --color-background-950: #040608;
+  --color-background: #0e141a;
+
+  --animate-bg: bg 5s ease infinite;
+  --animate-rotate-bg: rotate-bg 5s linear infinite;
+  --animate-tada: tada 1s ease-in-out;
+  --animate-float: float 2s ease-in-out infinite;
+  --animate-popover: popover 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
-  100% {
-    transform: translateX(-22%);
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes bg {
+    0%,
+    100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+  @keyframes rotate-bg {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes tada {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+    10%,
+    20% {
+      transform: scale3d(0.97, 0.97, 0.97) rotate3d(0, 0, 1, -3deg);
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, 3deg);
+    }
+    40%,
+    60%,
+    80% {
+      transform: scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, -3deg);
+    }
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+  }
+  @keyframes float {
+    0% {
+      transform: translatey(0px);
+    }
+    50% {
+      transform: translatey(-5px);
+    }
+    100% {
+      transform: translatey(0px);
+    }
+  }
+  @keyframes popover {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
+    }
   }
 }
 
-.upper-post-list {
-  animation: slide-to-left 100s linear infinite alternate;
-}
-
-@keyframes slide-to-left {
-  0% {
-    transform: translateX(-22%);
+@utility container {
+  padding-inline: 0.8rem;
+  @media (width >= theme(--breakpoint-sm)) {
+    padding-inline: 2rem;
   }
-  100% {
-    transform: translateX(22%);
+  @media (width >= theme(--breakpoint-lg)) {
+    padding-inline: 1.5rem;
   }
-}
-
-.bg-clip-text {
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-:root {
-  font-family: "Inter", sans-serif;
-}
-
-@supports (font-variation-settings: normal) {
-  :root {
-    font-family: "Inter var", sans-serif;
+  @media (width >= theme(--breakpoint-xl)) {
+    padding-inline: 3rem;
+  }
+  @media (width >= theme(--breakpoint-2xl)) {
+    padding-inline: 10rem;
   }
 }
 
-:focus-visible {
-  outline: 2px solid #5282ff;
-}
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-.vimeo-full-width {
-  padding: 56.25% 0 0 0;
-  position: relative;
-}
-
-.vimeo-full-width iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Estiliza o autofill no dark mode */
-.dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover,
-.dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #dedede;
-  transition: background-color 5000s ease-in-out 0s;
-  box-shadow: inset 0 0 20px 20px #364c63ff;
-}
-
-.text-shadow {
-  text-shadow:
-    rgba(13, 15, 18, 0.4) 0px 1px 2px,
-    rgba(13, 15, 18, 0.4) 0px 2px 4px,
-    rgba(13, 15, 18, 0.4) 0px 4px 8px,
-    rgba(13, 15, 18, 0.4) 0px 8px 16px;
-}
-
-@layer components {
-  .color-underline {
-    @apply font-bold decoration-2 decoration-solid underline hover:opacity-90 transition-all;
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+/* @layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
+} */
+
+@utility color-underline {
+  @apply font-bold decoration-2 decoration-solid underline hover:opacity-90 transition-all;
 }
 
-@layer utilities {
-  .scrollbar::-webkit-scrollbar {
+@utility scrollbar {
+  &::-webkit-scrollbar {
     width: 10px;
     height: 20px;
   }
 
-  .scrollbar::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background: #0e141a;
   }
 
-  .scrollbar-transparent::-webkit-scrollbar-track {
-    background: transparent !important;
-  }
-
-  .scrollbar::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     border-radius: 4px;
   }
 
-  .dark .scrollbar::-webkit-scrollbar-thumb {
+  .dark &::-webkit-scrollbar-thumb {
     background: #17212b;
   }
+}
 
+@utility scrollbar-transparent {
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+}
+
+@utility dark {
+  & .scrollbar::-webkit-scrollbar-thumb {
+    background: #17212b;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .lower-post-list {
+    animation: slide-to-right 100s linear infinite alternate;
+  }
+
+  @keyframes slide-to-right {
+    0% {
+      transform: translateX(22%);
+    }
+    100% {
+      transform: translateX(-22%);
+    }
+  }
+
+  .upper-post-list {
+    animation: slide-to-left 100s linear infinite alternate;
+  }
+
+  @keyframes slide-to-left {
+    0% {
+      transform: translateX(-22%);
+    }
+    100% {
+      transform: translateX(22%);
+    }
+  }
+
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  :root {
+    font-family: "Inter", sans-serif;
+  }
+
+  @supports (font-variation-settings: normal) {
+    :root {
+      font-family: "Inter var", sans-serif;
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid #5282ff;
+  }
+
+  .vimeo-full-width {
+    padding: 56.25% 0 0 0;
+    position: relative;
+  }
+
+  .vimeo-full-width iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Estiliza o autofill no dark mode */
+  .dark input:-webkit-autofill,
+  .dark input:-webkit-autofill:hover,
+  .dark input:-webkit-autofill:focus,
+  .dark input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #dedede;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #364c63ff;
+  }
+
+  .text-shadow {
+    text-shadow:
+      rgba(13, 15, 18, 0.4) 0px 1px 2px,
+      rgba(13, 15, 18, 0.4) 0px 2px 4px,
+      rgba(13, 15, 18, 0.4) 0px 4px 8px,
+      rgba(13, 15, 18, 0.4) 0px 8px 16px;
+  }
+}
+
+@layer utilities {
   ::-webkit-scrollbar {
     width: 10px;
     height: 20px;
@@ -183,4 +370,23 @@
   ::-webkit-scrollbar-button:single-button:vertical:increment:active {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 100,0 50,50'/></svg>");
   }
+}
+
+.bg-grainy {
+  position: relative;
+}
+
+.bg-grainy:before {
+  content: "";
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.09 0 0 0 0.09  0 0.13 0 0 0.13  0 0 0.17 0 0.17  0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 182px;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }

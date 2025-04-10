@@ -41,7 +41,7 @@ function TrackCard({ track }: { track: Track }) {
             />
           )}
         </AnimatePresence>
-        <article className="group relative aspect-square border-[1.5px] border-gray-300 dark:border-background-700 rounded-2xl bg-background-50 dark:bg-background-800 shadow-sm hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col items-center justify-center transition-all duration-500">
+        <article className="group relative aspect-square border-[1.5px] border-gray-300 dark:border-background-700 rounded-2xl bg-background-50 dark:bg-background-800 shadow-2xs hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg flex flex-col items-center justify-center transition-all duration-500">
           {track?.status === "soon" && <CardItemRibbon text="Em breve" />}
 
           <img

@@ -2,16 +2,18 @@ import { BsDiscord } from "react-icons/bs";
 import { getPublicEnv } from "../../../_layouts/public-env";
 import React from "react";
 import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/lib/utils/cn";
 
 type Props = {
   className?: string;
   textSizeClass?: string;
   children?: React.ReactNode;
+  onlyWrapper?: boolean;
 };
 
 export default function DiscordButton({
   className = "",
-  textSizeClass = "text-base",
+  onlyWrapper = false,
   children = (
     <React.Fragment>
       <BsDiscord className="w-4 h-4 mr-2" />
@@ -30,7 +32,7 @@ export default function DiscordButton({
       href={discordUrl}
       target="_blank"
       rel="noreferrer"
-      className={buttonVariants({ size: "sm" })}
+      className={cn(!onlyWrapper && buttonVariants({ size: "sm" }), className)}
     >
       {children}
     </a>

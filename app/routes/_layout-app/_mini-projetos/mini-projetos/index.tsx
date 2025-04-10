@@ -118,7 +118,7 @@ export default function ChallengesIndex() {
                 />
                 {tech}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 auto-rows-min">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 auto-rows-min">
                 {groupedChallenges.map((challenge: ChallengeCardType) => (
                   <ChallengeCard key={challenge.id} challenge={challenge} />
                 ))}

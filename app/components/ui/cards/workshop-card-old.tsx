@@ -25,7 +25,7 @@ function WorkshopCard({
       <Link
         to={`/workshops/${workshop?.slug}`}
         target={openInNewTab ? "_blank" : "_self"}
-        className="relative flex-col w-full flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
+        className="relative flex-col w-full grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow-xs dark:bg-background-700 mb-4  hover:border-blue-300 hover:shadow-lg dark:hover:border-blue-900 dark:hover:shadow-lg transition-shadow"
       >
         {workshop?.status === "soon" && !hasHappened(workshop) && (
           <CardItemRibbon text="Em breve" />
@@ -45,7 +45,7 @@ function WorkshopCard({
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-          className="w-full md:w-56 lg:w-40 xl:w-56 md:h-auto h-40 rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_theme('colors.background.50')] dark:shadow-[inset_0_-190px_50px_-100px_theme('colors.background.700')] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
+          className="w-full md:w-56 lg:w-40 xl:w-56 md:h-auto h-40 rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:m-[4px] shadow-[inset_0_-190px_50px_-100px_var(--color-background-50)] dark:shadow-[inset_0_-190px_50px_-100px_var(--color-background-700)] md:dark:shadow-[inset_none] md:shadow-[inset_none]"
         ></div>
 
         <div className="flex flex-col justify-between flex-1 px-6 py-4 -mt-10 text-left md:mt-0 h-[410px] overflow-hidden">
@@ -59,7 +59,7 @@ function WorkshopCard({
                 {workshop?.name}
               </h2>
               <div className=" flex flex-wrap gap-1 ">
-                {workshop.tags?.map((tag, i) => {
+                {workshop.tags?.map((tag) => {
                   return (
                     <Fragment key={tag.id}>
                       <WorkshopCardTag

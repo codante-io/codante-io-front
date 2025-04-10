@@ -99,7 +99,7 @@ export default function Login() {
               status={status}
               type="submit"
               size="xl"
-              className="relative w-full text-white transition duration-200  rounded-lg [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>*]:w-full [&>*]:gap-4 [&>*]:p-2 [&>*]:text-white [&>*]:transition [&>*]:duration-200 [&>*]:text-lg hover:bg-opacity-90 bg-background-700 "
+              className="relative w-full text-white transition duration-200  rounded-lg *:flex *:items-center *:justify-center *:w-full *:gap-4 *:p-2 *:text-white *:transition *:duration-200 *:text-lg hover:bg-opacity-90 bg-background-700 "
             >
               <img src="/img/github-logo.svg" alt="" />
               Entrar com GitHub

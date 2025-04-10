@@ -82,14 +82,12 @@ export default function ProPricingCard() {
   };
 
   return (
-    <PriceCard className="border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl hover:dark:shadow-blue-300 border-4 bg-white">
-      <PriceCard.Ribbon text="Plano vitalício" />
+    <PriceCard className="border-blue-300 dark:border-brand shadow-blue-200 dark:shadow-blue-400 shadow-2xl dark:hover:shadow-blue-300 border-4 bg-white">
+      <PriceCard.Ribbon text="Recomendado" />
       <PriceCard.Title isLoading={!proPlanInfo}>
-        <span className="px-1 dark:font-normal rounded text-white  dark:text-amber-400 dark:bg-transparent bg-amber-400 drop-shadow-[0_0.8px_0.8px_rgba(0,0,0,0.4)]">
-          PRO
-        </span>
         <span className="text-gray-800 dark:text-gray-50">
-          ({proPlanInfo?.name})
+          <span className="font-light">Plano</span>{" "}
+          {proPlanInfo?.name.toLowerCase()}
         </span>
       </PriceCard.Title>
 

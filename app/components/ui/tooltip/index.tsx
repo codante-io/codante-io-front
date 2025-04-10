@@ -35,7 +35,7 @@ export default function TooltipWrapper({
                 "bg-gray-50 dark:bg-background-800 border border-background-300 dark:border-background-600",
               textColor || "dark:text-white",
               maxWidth || "max-w-xs",
-              "z-10 text-xs rounded shadow-lg TooltipContent",
+              "z-10 text-xs rounded-xs shadow-lg TooltipContent",
             )}
             sideOffset={5}
           >

@@ -256,7 +256,8 @@ export default function LessonIndex() {
                             id={sectionLesson.id}
                             key={sectionLesson.id}
                             name={sectionLesson.name}
-                            href={sectionLesson.url}
+                            url={sectionLesson.url}
+                            userCanView={sectionLesson.user_can_view}
                             completed={sectionLesson.user_completed}
                             isFirst={index === 0}
                             current={lesson.id === sectionLesson.id}
@@ -290,7 +291,7 @@ export default function LessonIndex() {
 function MainArea({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`w-full min-h-screen  max-w-[1600px] flex lg:grid transition-all duration-500 lg:grid-cols-[350px,1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8`}
+      className={`w-full min-h-screen  max-w-[1600px] flex lg:grid transition-all duration-500 lg:grid-cols-[350px_1fr] mx-auto lg:gap-8 justify-center  lg:min-h-[calc(100vh-200px)] relative lg:px-8`}
     >
       {children}
     </div>

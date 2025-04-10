@@ -79,7 +79,7 @@ export default function VimeoPlayer({
   return (
     <div className="relative aspect-video">
       <div
-        className={`absolute top-0 z-10 w-full overflow-hidden opacity-1 ${roundedClassName} `}
+        className={`absolute top-0 z-10 w-full overflow-hidden opacity-100 ${roundedClassName} `}
       >
         <main
           title={title ? `Video ${title}` : "Vimeo Player"}

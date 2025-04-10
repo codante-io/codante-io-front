@@ -81,7 +81,7 @@ function MobileNav({
                       )}
                     >
                       <div className="flex flex-col">
-                        <span className="text-xs text-gray-500 transition-colors group-hover:dark:text-brand-300">
+                        <span className="text-xs text-gray-500 transition-colors dark:group-hover:text-brand-300">
                           {title.subTitle}
                         </span>
                         <h2 className="text-sm font-semibold leading-tight text-gray-600 transition-colors dark:text-gray-400 font-lexend group-hover:text-white">
@@ -143,7 +143,7 @@ function DesktopNav({ titles, user }: { titles: Title[]; user: User | null }) {
                   !isLast && "hidden lg:block",
                 )}
               >
-                <span className="text-xs text-gray-500 transition-colors group-hover:dark:text-brand-300">
+                <span className="text-xs text-gray-500 transition-colors dark:group-hover:text-brand-300">
                   {title.subTitle}
                 </span>
                 <h2 className="-mt-1 font-semibold text-gray-700 transition-colors group-hover:text-gray-800 dark:text-gray-400 font-lexend dark:group-hover:text-white ">

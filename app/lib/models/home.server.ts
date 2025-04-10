@@ -24,6 +24,7 @@ export type HomeInfo = {
   } | null;
   featured_workshops: WorkshopCard[];
   featured_challenges: ChallengeCard[];
+  submission_count: number;
   plan_info: {
     id: number;
     name: string;

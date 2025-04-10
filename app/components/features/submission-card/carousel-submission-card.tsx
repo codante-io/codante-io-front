@@ -50,7 +50,7 @@ function CarouselSubmissionCardFooter({ avatar }: { avatar: UserAvatarType }) {
 
 function BlurImageWrapper(props: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className="transition-all bg-black opacity-20 hover:opacity-100 sm:blur-sm sm:hover:blur-none ">
+    <div className="transition-all bg-black opacity-20 hover:opacity-100 sm:blur-xs sm:hover:blur-none ">
       {props.children}
     </div>
   );

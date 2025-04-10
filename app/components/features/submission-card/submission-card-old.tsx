@@ -55,7 +55,7 @@ export default function SubmissionCard({
   return (
     <article
       className={classNames(
-        "relative overflow-hidden rounded-xl border-[1.5px] shadow-sm text-gray-800 dark:text-white transition-shadow",
+        "relative overflow-hidden rounded-xl border-[1.5px] shadow-2xs text-gray-800 dark:text-white transition-shadow",
         size === "medium" && "max-w-[377px]",
         !listed && (!user || user.id !== challengeUser.user.id) && "hidden",
         challengeUser.is_solution
@@ -83,7 +83,7 @@ export default function SubmissionCard({
             className={classNames(
               "w-full transition-all delay-75 aspect-video",
               isHomePage
-                ? "opacity-40 md:blur-sm lg:group-hover:blur-none group-hover:opacity-100"
+                ? "opacity-40 md:blur-xs lg:group-hover:blur-none group-hover:opacity-100"
                 : "",
             )}
           />
@@ -100,7 +100,7 @@ export default function SubmissionCard({
         <div className="w-10 h-10 flex-none">
           <UserAvatar
             avatar={challengeUser.avatar}
-            className="w-10 h-10 flex-shrink-0"
+            className="w-10 h-10 shrink-0"
           />
         </div>
         <div className="w-full">

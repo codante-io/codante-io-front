@@ -144,7 +144,7 @@ function CommentCard({
   const fetcher = useFetcher();
 
   const [toastId, setToastId] = useState<string | null>(null);
-  let isSubmittingOrLoading =
+  const isSubmittingOrLoading =
     fetcher.state === "submitting" || fetcher.state === "loading";
 
   useEffect(() => {
@@ -264,7 +264,7 @@ function CommentCard({
   return (
     <Card
       id={`comment-${comment.id}`}
-      className="px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-sm bg-white dark:bg-transparent "
+      className="px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-2xs bg-white dark:bg-transparent "
     >
       <div>
         <CommentInfo
@@ -354,7 +354,7 @@ const CommentInput = React.forwardRef<
       <form ref={formRef} className={`${formClass}`}>
         <Card
           hover="brand-light"
-          className={`${padding} dark:border-background-700 border-gray-300 group hover:dark:border-background-600 focus-within:dark:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
+          className={`${padding} dark:border-background-700 border-gray-300 group dark:hover:border-background-600 dark:focus-within:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
         >
           {
             <div className="hidden sm:block self-start">
@@ -364,7 +364,7 @@ const CommentInput = React.forwardRef<
           <TextareaAutosize
             {...props}
             name="comment"
-            className="focus:ring-0 resize-none text-sm sm:text-base flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+            className="focus:ring-0 resize-none text-sm sm:text-base grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
             placeholder="Escreva um comentário..."
             title="Experimente utilizar markdown para formatar seu comentário."
             ref={ref}
@@ -436,7 +436,7 @@ const CommentInfo = React.forwardRef<
     return (
       <section className="flex flex-col items-start h-fit">
         <div className="items-center gap-2 flex w-full">
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <UserAvatar avatar={comment.user.avatar} className={avatarSize} />
           </div>
           <div className="flex flex-col w-full">
@@ -455,7 +455,7 @@ const CommentInfo = React.forwardRef<
                 <TextareaAutosize
                   ref={ref}
                   name="edit-comment"
-                  className="w-full h-full focus:ring-0 resize-none flex-grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+                  className="w-full h-full focus:ring-0 resize-none grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
                   placeholder="Edite o comentário..."
                   defaultValue={comment.comment}
                   onInput={disableEditButtonFunction}
@@ -591,7 +591,7 @@ function DeleteModal({
                         comentário também serão deletadas.
                       </h1>
                       <div className="mt-2">
-                        <div className="flex rounded-lg shadow-sm ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md"></div>
+                        <div className="flex rounded-lg shadow-2xs ring-1 ring-inset dark:ring-gray-600 ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 sm:max-w-md"></div>
                       </div>
                     </div>
                     <div className="mt-8 flex gap-x-3">

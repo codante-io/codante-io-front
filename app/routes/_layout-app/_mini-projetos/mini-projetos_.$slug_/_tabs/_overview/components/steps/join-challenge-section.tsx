@@ -17,6 +17,7 @@ type JoinChallengeSectionProps = {
   slug: string;
   action?: string;
   githubRepoUrl: string;
+  userCanJoinChallenge: boolean;
 };
 
 export default function JoinChallengeSection({
@@ -26,6 +27,7 @@ export default function JoinChallengeSection({
   slug,
   action = undefined,
   githubRepoUrl,
+  userCanJoinChallenge,
 }: JoinChallengeSectionProps) {
   return (
     <Step.StepsContainer className={className}>
@@ -44,13 +46,17 @@ export default function JoinChallengeSection({
       <Step
         id="join-challenge"
         title="Participe do Mini Projeto"
-        description="Participe. É 100% gratuito!"
+        description="Registre sua participação."
         status={steps.find((step) => step.id === "join-challenge")?.status!}
       >
         <Step.Form user={user} slug={slug} action={action}>
-          <Step.PrimaryButton stepId="join-challenge">
-            Participar
-          </Step.PrimaryButton>
+          {userCanJoinChallenge ? (
+            <Step.PrimaryButton stepId="join-challenge">
+              Participar
+            </Step.PrimaryButton>
+          ) : (
+            <Step.BecomeProDialogButton />
+          )}
         </Step.Form>
       </Step>
       <Step

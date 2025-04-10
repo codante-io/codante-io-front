@@ -54,7 +54,7 @@ function WorkshopCard({
       >
         <div
           className={cn(
-            "relative flex-col  flex-grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow dark:bg-background-800 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-all duration-300 overflow-hidden",
+            "relative flex-col  grow flex md:flex-row max-w-xl border-[1.5px] border-background-200 dark:border-background-600 rounded-2xl bg-background-50 shadow-xs dark:bg-background-800 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-500 dark:hover:shadow-lg transition-all duration-300 overflow-hidden",
             workshopCardVariants({ size }),
           )}
         >
@@ -231,7 +231,7 @@ function VideoHoverElement({ workshop }: { workshop: WorkshopCard }) {
         )}
       />
 
-      <div className="absolute w-full right-0 z-10 bg-transparent h-full opacity-100 dark:shadow-[inset_200px_0px_250px_0px_theme('colors.background.800')] shadow-[inset_200px_0px_50px_-100px_theme('colors.background.50')]"></div>
+      <div className="absolute w-full right-0 z-10 bg-transparent h-full opacity-100 dark:shadow-[inset_200px_0px_250px_0px_var(--color-background-800)] shadow-[inset_200px_0px_50px_-100px_var(--color-background-50)]"></div>
     </>
   );
 }

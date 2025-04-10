@@ -21,7 +21,7 @@ export const yearlyPlanFeatures: PlanFeaturesByCategory = [
   {
     "Mini Projetos": [
       {
-        title: "Acesso a todos os Mini Projetos por 12 meses",
+        title: "Acesso a todos os Mini Projetos",
         isAvailable: true,
       },
       {
@@ -30,7 +30,7 @@ export const yearlyPlanFeatures: PlanFeaturesByCategory = [
       },
       {
         title: "Tutorial de resolução de projetos",
-        info: "Nós disponibilizamos resolução oficial dos Mini Projetos em vídeo para membros PRO",
+        info: "Nós disponibilizamos nossa resolução oficial dos Mini Projetos em vídeo para os membros PRO",
         isAvailable: true,
       },
       {
@@ -43,7 +43,7 @@ export const yearlyPlanFeatures: PlanFeaturesByCategory = [
   {
     Workshops: [
       {
-        title: "Acesso a todos os workshops por 12 meses",
+        title: "Acesso a todos os workshops",
         isAvailable: true,
       },
       {
@@ -53,19 +53,7 @@ export const yearlyPlanFeatures: PlanFeaturesByCategory = [
       },
     ],
   },
-  {
-    Trilhas: [
-      {
-        title: "Acesso a todas as trilhas por 12 meses",
-        isAvailable: true,
-      },
-      {
-        title: "Certificado",
-        info: "Obtenha um certificado de conclusão da trilha",
-        isAvailable: true,
-      },
-    ],
-  },
+
   {
     "Outras vantagens": [
       {
@@ -78,7 +66,6 @@ export const yearlyPlanFeatures: PlanFeaturesByCategory = [
         info: "Acesse os canais exclusivos da comunidade PRO no Discord, com prioridade nas respostas",
         isAvailable: true,
       },
-
       {
         title: "Plano Anual: tenha acesso a todos os conteúdos por 12 meses",
         isAvailable: true,
@@ -124,19 +111,6 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
     ],
   },
   {
-    Trilhas: [
-      {
-        title: "Acesso a todas as trilhas",
-        isAvailable: true,
-      },
-      {
-        title: "Certificado",
-        info: "Obtenha um certificado de conclusão da trilha",
-        isAvailable: true,
-      },
-    ],
-  },
-  {
     "Outras vantagens": [
       {
         title: "Pro Badge",
@@ -150,7 +124,8 @@ export const proPlanFeatures: PlanFeaturesByCategory = [
       },
 
       {
-        title: "Plano Vitalício: pague uma vez, tenha para sempre",
+        title:
+          "Plano Vitalício: pague uma vez, tenha acesso enquanto o Codante existir",
         isAvailable: true,
       },
     ],
@@ -161,15 +136,15 @@ export const freePlanFeatures: PlanFeaturesByCategory = [
   {
     "Mini Projetos": [
       {
+        title: "Acesso aos Mini Projetos gratuitos",
+        isAvailable: true,
+      },
+      {
+        title: "Acesso aos Mini Projetos em destaque",
+        isAvailable: true,
+      },
+      {
         title: "Acesso a todos os Mini Projetos",
-        isAvailable: true,
-      },
-      {
-        title: "Submeta sua resolução",
-        isAvailable: true,
-      },
-      {
-        title: "Tutorial de resolução de projetos",
         isAvailable: false,
       },
       {
@@ -208,10 +183,6 @@ export const freePlanFeatures: PlanFeaturesByCategory = [
       },
       {
         title: "Pro Badge",
-        isAvailable: false,
-      },
-      {
-        title: "Acesso ao Ranking Premiado",
         isAvailable: false,
       },
     ],
