@@ -25,6 +25,10 @@ const navigation = [
     name: "Mini Projetos",
     href: "/mini-projetos",
   },
+  {
+    name: "Agenda",
+    href: "/agenda",
+  },
 ];
 
 const moreMenuNavigation = [
@@ -36,11 +40,6 @@ const moreMenuNavigation = [
   {
     name: "Testes Técnicos",
     href: "/testes-tecnicos",
-    external: false,
-  },
-  {
-    name: "Agenda",
-    href: "/agenda",
     external: false,
   },
   {
