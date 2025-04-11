@@ -139,7 +139,7 @@ export default function App() {
       >
         <script dangerouslySetInnerHTML={{ __html: DarkModeScriptInnerHtml }} />
         <GoogleTagManager
-          environment={process.env.NODE_ENV}
+          environment={process.env.NODE_ENV ?? "development"}
           gtmTrackingId="GTM-NXHM2J7"
           user={user}
         />
