@@ -58,7 +58,10 @@ export function ResponsiveDialog({
             {triggerLabel}
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent
+          aria-describedby="responsive-dialog-description"
+          className="sm:max-w-[425px]"
+        >
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>

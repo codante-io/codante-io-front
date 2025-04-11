@@ -18,7 +18,10 @@ function SignInDialog({ trigger, redirectTo }: SignInDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="w-11/12 sm:max-w-md rounded-md">
+      <DialogContent
+        aria-describedby="sign-in-dialog-description"
+        className="w-11/12 sm:max-w-md rounded-md"
+      >
         <DialogHeader>
           <DialogTitle className="text-start text-lg md:text-xl font-medium text-gray-700 dark:text-gray-50">
             Você precisa fazer login para marcar esse item como concluído.

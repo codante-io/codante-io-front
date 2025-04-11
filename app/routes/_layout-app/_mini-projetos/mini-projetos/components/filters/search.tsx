@@ -30,17 +30,21 @@ export default function SearchFilter({
     if (debouncedTerm) {
       const url = new URL(window.location.href);
       url.searchParams.set("q", debouncedTerm);
-      return navigate(`${url.pathname}?${url.searchParams.toString()}`, {
-        preventScrollReset: true,
-      });
+      (async () => {
+        await navigate(`${url.pathname}?${url.searchParams.toString()}`, {
+          preventScrollReset: true,
+        });
+      })();
     }
 
     if (debouncedTerm === "") {
       const url = new URL(window.location.href);
       url.searchParams.delete("q");
-      return navigate(`${url.pathname}?${url.searchParams.toString()}`, {
-        preventScrollReset: true,
-      });
+      (async () => {
+        await navigate(`${url.pathname}?${url.searchParams.toString()}`, {
+          preventScrollReset: true,
+        });
+      })();
     }
   }, [debouncedTerm, navigate]);
 

@@ -1,6 +1,7 @@
 import {
   Form,
   Link,
+  redirect,
   useActionData,
   useLoaderData,
   useNavigate,
@@ -9,15 +10,14 @@ import {
 } from "react-router";
 import { useState } from "react";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
-import { login } from "~/lib/services/auth.server";
+import { login, sessionStorage } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import { authenticator } from "~/lib/services/github-auth.server";
 import LoadingButton from "~/components/features/form/loading-button";
 import type { LoaderFunctionArgs } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "react-router";
 
 export function links() {
   return [
@@ -59,9 +59,19 @@ export async function action({ request }: { request: Request }) {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  await authenticator.isAuthenticated(request, {
-    successRedirect: "/",
-  });
+  // await authenticator.isAuthenticated(request, {
+  //   successRedirect: "/",
+  // });
+
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
+
+  const user = session.get("user");
+  if (user) {
+    return redirect("/");
+  }
+
   // vamos pegar o redirectTo da query string
   // para passar como parâmetro hidden para o form
   const redirectTo = new URL(request.url).searchParams.get("redirectTo");

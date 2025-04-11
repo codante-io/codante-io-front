@@ -1,5 +1,4 @@
 import { Authenticator } from "remix-auth";
-// import { sessionStorage } from "./auth.server";
 import { GitHubStrategy } from "remix-auth-github";
 import { environment } from "~/lib/models/environment";
 import { createAxios } from "~/lib/services/axios.server";
@@ -16,7 +15,7 @@ const gitHubStrategy = new GitHubStrategy(
     const axios = await createAxios();
 
     const res = await axios.post("/github-login", {
-      github_token: params.tokens.accessToken,
+      github_token: params.tokens.accessToken(),
     });
     const token = res.data.token;
 
