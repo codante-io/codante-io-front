@@ -6,7 +6,7 @@ import {
   SubmissionCardFooter,
   SubmissionCardImage,
 } from "./submission-card";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 
 type CarouselSubmissionCardProps = {
   submissionImageUrl: string;

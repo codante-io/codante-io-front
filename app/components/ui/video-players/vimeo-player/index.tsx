@@ -70,8 +70,8 @@ export default function VimeoPlayer({
 
     getPlaybackRateFromLocalStorage();
 
-    return () => {
-      player.destroy();
+    return async () => {
+      await player.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vimeoUrl]);

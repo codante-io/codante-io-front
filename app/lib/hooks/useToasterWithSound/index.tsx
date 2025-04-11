@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import errorSound from "~/lib/sounds/error.wav";
 import successSound from "~/lib/sounds/success.mp3";
 import { Button } from "~/components/ui/button";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 
 export const useToasterWithSound = () => {
   const [playSuccess] = useSound(successSound);

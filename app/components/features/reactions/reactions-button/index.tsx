@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import useSound from "~/lib/hooks/use-sound/use-sound";
 import pop from "~/lib/sounds/pop.wav";
 import classNames from "~/lib/utils/class-names";
-import { useFetcher } from "@remix-run/react";
+import { useFetcher } from "react-router";
 import type { Reactions, AllowedReaction } from "~/lib/models/reactions.server";
 import { useToasterWithSound } from "~/lib/hooks/useToasterWithSound";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";

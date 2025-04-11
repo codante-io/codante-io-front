@@ -1,25 +1,20 @@
-import { remixConfigRoutes } from "@react-router/remix-config-routes-adapter";
-import { layout, route, RouteConfig } from "@remix-run/route-config";
+import { remixRoutesOptionAdapter } from "@react-router/remix-routes-option-adapter";
 import flatRoutes from "remix-flat-routes";
 
-// export default remixConfigRoutes((defineRoutes) => {
-//   return flatRoutes("routes", defineRoutes, {
-//     /* options */
-//   });
-// });
+// export default [
+//   ...(await remixConfigRoutes((defineRoutes) =>
+//     flatRoutes("routes", defineRoutes, {}),
+//   )),
+// ] satisfies RouteConfig;
 
-export default [
-  // layout("new-routes/layouts/layout-raw.tsx", [
-  //   route(
-  //     "mini-projetos/:challengeSlug/resolucao/:lessonSlug",
-  //     // "new-routes/hello.tsx",
-  //     "routes/_layout-raw/_player/_mini-projeto-resolucao/mini-projeto-resolucao.tsx",
-  //   ),
-  // ]),
-
-  ...(await remixConfigRoutes(
-    (defineRoutes) => flatRoutes("routes", defineRoutes, {}),
-
-    // http://localhost:3000/mini-projetos/drag-and-drop-com-react-e-framer-motion/resolucao/apresentacao-do-projeto
-  )),
-] satisfies RouteConfig;
+export default remixRoutesOptionAdapter((defineRoutes) => {
+  return flatRoutes("routes", defineRoutes, {
+    ignoredRouteFiles: ["**/.*"], // Ignore dot files (like .DS_Store)
+    //appDir: 'app',
+    //routeDir: 'routes',
+    //basePath: '/',
+    //paramPrefixChar: '$',
+    //nestedDirectoryChar: '+',
+    //routeRegex: /((\${nestedDirectoryChar}[\/\\][^\/\\:?*]+)|[\/\\]((index|route|layout|page)|(_[^\/\\:?*]+)|([^\/\\:?*]+\.route)))\.(ts|tsx|js|jsx|md|mdx)$$/,
+  });
+});

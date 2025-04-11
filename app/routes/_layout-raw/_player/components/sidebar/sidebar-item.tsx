@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { BsCheck } from "react-icons/bs";
 import { FaLock } from "react-icons/fa";
 import { cn } from "~/lib/utils/cn";

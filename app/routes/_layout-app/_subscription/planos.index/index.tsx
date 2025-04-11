@@ -8,8 +8,7 @@ import { BlurReveal } from "~/components/ui/motion/blur-reveal";
 import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
 import Sparkles from "~/components/ui/motion/sparkles";
 import { motion } from "framer-motion";
-import { useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
+import { useLoaderData } from "react-router";
 import { getHome } from "~/lib/models/home.server";
 
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
@@ -18,9 +17,9 @@ import { Crisp } from "crisp-sdk-web";
 import { useEffect } from "react";
 
 export const loader = async () => {
-  return json({
+  return {
     homeInfo: await getHome(),
-  });
+  };
 };
 
 export default function PlanosPage() {
@@ -111,6 +110,7 @@ export default function PlanosPage() {
             {featuredTestimonials.map((testimonial, index) => {
               return (
                 <TestimonialCard
+                  key={index}
                   wide={[2, 4].includes(index)}
                   testimonial={testimonial.body}
                   avatarUrl={testimonial.avatar_url}

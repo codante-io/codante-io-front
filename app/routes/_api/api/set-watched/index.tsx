@@ -1,4 +1,4 @@
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { isRouteErrorResponse, useRouteError } from "react-router";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import { setCompleted } from "~/lib/models/lesson.server";

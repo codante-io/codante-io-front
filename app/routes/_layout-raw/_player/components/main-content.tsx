@@ -1,4 +1,4 @@
-import { useLocation } from "@remix-run/react";
+import { useLocation } from "react-router";
 import CommentSection from "~/components/features/comments/comment-section";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";
 import VimeoPlayer from "~/components/ui/video-players/vimeo-player";

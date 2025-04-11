@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "@remix-run/react";
+import { Link, useOutletContext } from "react-router";
 import toast from "react-hot-toast";
 import { PiCertificateLight } from "react-icons/pi";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";

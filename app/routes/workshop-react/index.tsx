@@ -2,7 +2,7 @@ import {
   isRouteErrorResponse,
   useOutletContext,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { useEffect, useRef } from "react";
 
 import AppLayout from "~/components/_layouts/root-layout";
@@ -17,7 +17,7 @@ import { techs, steps } from "./data";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import LeadForm from "./lead-form";
 import { registerMarketingLead } from "~/lib/models/lead.server";
-import { ActionFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs } from "react-router";
 
 export const meta = () => {
   return [

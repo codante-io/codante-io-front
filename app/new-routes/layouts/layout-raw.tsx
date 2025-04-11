@@ -1,4 +1,4 @@
-import { Outlet, isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { Outlet, isRouteErrorResponse, useRouteError } from "react-router";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import Navbar from "~/components/_layouts/navbar";

@@ -3,7 +3,7 @@ import {
   isRouteErrorResponse,
   useOutletContext,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import type { User } from "~/lib/models/user.server";

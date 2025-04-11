@@ -7,9 +7,8 @@ import {
   SiReact,
   SiReactHex,
 } from "@icons-pack/react-simple-icons";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "react-router";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { getWorkshops } from "~/lib/models/workshop.server";
@@ -40,16 +39,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const tech = url.searchParams.get("tecnologia") ?? "";
 
-  return json(
-    {
-      workshops: await getWorkshops({ tech }),
-    },
-    {
-      headers: {
-        "Cache-Control": "public, max-age=120, s-maxage=120",
-      },
-    },
-  );
+  return {
+    workshops: await getWorkshops({ tech }),
+  };
 };
 
 export default function Workshops() {

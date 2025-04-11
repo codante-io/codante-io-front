@@ -1,6 +1,6 @@
 import { sendPasswordLink } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import { Form, useActionData, useNavigation } from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "react-router";
 import LoadingButton from "~/components/features/form/loading-button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -23,7 +23,7 @@ export default function PasswordReset() {
   const transition = useNavigation();
 
   const status = transition.state;
-  let isSuccessfulSubmission = status === "idle" && errors === null;
+  const isSuccessfulSubmission = status === "idle" && errors === null;
 
   return (
     <AuthCard>

@@ -28,8 +28,8 @@ const MoonIcon = React.forwardRef(function MoonIcon(
   );
 });
 
-const MotionSun = motion(SunIcon);
-const MotionMoon = motion(MoonIcon);
+const MotionSun = motion.create(SunIcon);
+const MotionMoon = motion.create(MoonIcon);
 
 export default function ToggleColorMode() {
   const [playSound] = useSound(toggleSound);

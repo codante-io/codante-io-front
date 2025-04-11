@@ -7,7 +7,7 @@ import {
   useFetcher,
   useLoaderData,
   useNavigation,
-} from "@remix-run/react";
+} from "react-router";
 import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -219,7 +219,10 @@ export default function Conta() {
             open={avatarDialogOpen}
             onOpenChange={() => setAvatarDialogOpen((value) => !value)}
           >
-            <DialogContent className="w-11/12 sm:max-w-md rounded-md p-8">
+            <DialogContent
+              aria-describedby="avatar-dialog-description"
+              className="w-11/12 sm:max-w-md rounded-md p-8"
+            >
               <DialogHeader>
                 <DialogTitle className="text-start text-lg md:text-xl font-medium text-gray-700 dark:text-gray-50 mb-6">
                   Altere seu Avatar

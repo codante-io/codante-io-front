@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "react-router";
 import { redirectToCookie } from "~/lib/services/auth.server";
 import { authenticator } from "~/lib/services/github-auth.server";
 

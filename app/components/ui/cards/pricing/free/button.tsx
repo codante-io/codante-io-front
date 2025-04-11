@@ -1,4 +1,4 @@
-import { useNavigate } from "@remix-run/react";
+import { useNavigate } from "react-router";
 
 import { FiGithub } from "react-icons/fi";
 import { useUserFromOutletContext } from "~/lib/hooks/useUserFromOutletContext";

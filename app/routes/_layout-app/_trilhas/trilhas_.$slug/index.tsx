@@ -1,10 +1,10 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "react-router";
 import {
   isRouteErrorResponse,
   useActionData,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import invariant from "tiny-invariant";
 import AdminEditButton from "~/components/features/admin-edit-button/AdminEditButton";
 import type {

@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import { Card } from "~/components/ui/cards/card";
 import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";

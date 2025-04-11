@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { BsCheck } from "react-icons/bs";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";

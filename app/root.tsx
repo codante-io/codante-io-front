@@ -1,5 +1,6 @@
-import { json, type LinksFunction } from "@remix-run/node";
-import type { MetaFunction } from "@remix-run/react";
+import { data, type LinksFunction } from "react-router";
+
+import type { MetaFunction } from "react-router";
 import {
   Links,
   Meta,
@@ -9,7 +10,7 @@ import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { Toaster } from "react-hot-toast";
 import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
 import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
@@ -106,7 +107,7 @@ export async function loader({ request }: { request: Request }) {
     headers.set("Cache-Control", "private, max-age=20");
   }
 
-  return json(
+  return data(
     {
       user: userData,
       ENV: {

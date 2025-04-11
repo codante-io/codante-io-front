@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { getPublicEnv } from "~/components/_layouts/public-env";
 
 export default function NotFound({ error }: { error?: any }) {

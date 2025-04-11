@@ -1,23 +1,23 @@
 import {
   Form,
   Link,
+  redirect,
   useActionData,
   useLoaderData,
   useNavigate,
   useNavigation,
   useSearchParams,
-} from "@remix-run/react";
+} from "react-router";
 import { useState } from "react";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
-import { login } from "~/lib/services/auth.server";
+import { login, sessionStorage } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
-import { authenticator } from "~/lib/services/github-auth.server";
 import LoadingButton from "~/components/features/form/loading-button";
-import { metaV1 } from "@remix-run/v1-meta";
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
+import type { MetaFunction } from "react-router";
 
 export function links() {
   return [
@@ -28,13 +28,18 @@ export function links() {
   ];
 }
 
-export function meta(args: any) {
-  return metaV1(args, {
-    title: "Login | Codante.io",
-    description:
-      "Entre para ter acesso a todas as funcionalidades da plataforma.",
-  });
-}
+export const meta: MetaFunction = () => {
+  const title = "Login | Codante.io";
+  const description =
+    "Entre para ter acesso a todas as funcionalidades da plataforma.";
+
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+  ];
+};
 
 export async function action({ request }: { request: Request }) {
   const formData = await request.formData();
@@ -54,9 +59,19 @@ export async function action({ request }: { request: Request }) {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  await authenticator.isAuthenticated(request, {
-    successRedirect: "/",
-  });
+  // await authenticator.isAuthenticated(request, {
+  //   successRedirect: "/",
+  // });
+
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
+
+  const user = session.get("user");
+  if (user) {
+    return redirect("/");
+  }
+
   // vamos pegar o redirectTo da query string
   // para passar como parâmetro hidden para o form
   const redirectTo = new URL(request.url).searchParams.get("redirectTo");

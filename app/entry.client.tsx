@@ -4,7 +4,7 @@
  * For more information, see https://remix.run/docs/en/main/file-conventions/entry.client
  */
 
-import { RemixBrowser } from "@remix-run/react";
+import { HydratedRouter } from "react-router/dom";
 import React, { startTransition, StrictMode } from "react";
 import { ColorModeProvider } from "./lib/contexts/color-mode-context";
 import { hydrateRoot } from "react-dom/client";
@@ -14,7 +14,7 @@ startTransition(() => {
     document,
     <StrictMode>
       <ColorModeProvider>
-        <RemixBrowser />
+        <HydratedRouter />
       </ColorModeProvider>
     </StrictMode>,
   );

@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "@remix-run/react";
+import { Link, useOutletContext } from "react-router";
 import Chip from "~/components/ui/chip";
 import { Separator } from "~/components/ui/separator";
 import type {

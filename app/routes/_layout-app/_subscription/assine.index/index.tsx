@@ -1,10 +1,10 @@
-import { redirect } from "@remix-run/node";
+import { redirect } from "react-router";
 import {
   Link,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { Crisp } from "crisp-sdk-web";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { PlayCircle } from "lucide-react";

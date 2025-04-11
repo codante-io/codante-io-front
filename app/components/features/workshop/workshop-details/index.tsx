@@ -1,9 +1,4 @@
-import {
-  Link,
-  useFetcher,
-  useNavigate,
-  useSearchParams,
-} from "@remix-run/react";
+import { Link, useFetcher, useNavigate, useSearchParams } from "react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AiOutlineSolution } from "react-icons/ai";
 import { CgSpinner } from "react-icons/cg";

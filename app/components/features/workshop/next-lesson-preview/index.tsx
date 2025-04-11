@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { HiMiniArrowSmallRight, HiMiniPlayCircle } from "react-icons/hi2";
 
 // thumbnail

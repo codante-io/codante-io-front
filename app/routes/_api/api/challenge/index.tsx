@@ -1,4 +1,4 @@
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { isRouteErrorResponse, useRouteError } from "react-router";
 import { Error500 } from "~/components/features/error-handling/500";
 import NotFound from "~/components/features/error-handling/not-found";
 import {
@@ -43,14 +43,14 @@ export async function action({ request }: { request: any }) {
 
     case "submit-challenge":
       // get the url from the form
-      //eslint-disable-next-line
+       
       return await submitChallenge(
         request,
         slug,
         formData.get("submission-url") as string,
-      ); //eslint-disable-line
+      );  
     case "submit-challenge-without-deploy":
-      //eslint-disable-next-line
+       
       return await submitChallengeWithoutDeploy(
         request,
         slug,

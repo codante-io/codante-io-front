@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { ChevronDownIcon, ChevronRight, MenuIcon } from "lucide-react";
 import { BsArrowRight } from "react-icons/bs";
 import ProfileMenu from "~/components/_layouts/navbar/profile-menu";

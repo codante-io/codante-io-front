@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import LevelIcon from "~/components/ui/level-icon";
 import { ChallengeDifficulty } from "~/lib/models/challenge.server";
 import { cn } from "~/lib/utils/cn";

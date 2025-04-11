@@ -1,9 +1,9 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "react-router";
 import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { useState } from "react";
 import slugify from "slugify";
 import { Error500 } from "~/components/features/error-handling/500";

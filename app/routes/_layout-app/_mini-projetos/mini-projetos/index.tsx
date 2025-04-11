@@ -1,37 +1,35 @@
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import { getChallenges } from "~/lib/models/challenge.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import { metaV1 } from "@remix-run/v1-meta";
 import FeaturedChallengeSection from "./featured-challenge-section";
 import { Search, OrderBy, FiltersSheet } from "./components/filters";
+import type { MetaFunction } from "@remix-run/node";
 
-export function meta(args: any) {
+export const meta: MetaFunction = () => {
   const title = "Mini Projetos | Codante.io";
   const description =
     "Mini Projetos de programação para você aprender praticando. Escolha um Mini Projeto para você se desafiar e aprender ainda mais.";
   const imageUrl = getOgGeneratorUrl("Mini Projetos");
 
-  return metaV1(args, {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/mini-projetos`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/mini-projetos`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": "Mini Projetos Codante",
-  });
-}
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://codante.io/mini-projetos" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:domain", content: "codante.io" },
+    { name: "twitter:url", content: "https://codante.io/mini-projetos" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image", content: imageUrl },
+    { name: "twitter:image:alt", content: "Mini Projetos Codante" },
+  ];
+};
 
 export async function loader({ request }: { request: Request }) {
   const url = new URL(request.url);
@@ -52,11 +50,11 @@ export async function loader({ request }: { request: Request }) {
       request,
     });
 
-  return json({
+  return {
     challenges,
     featuredChallenge,
     totalChallenges,
-  });
+  };
 }
 
 export default function ChallengesIndex() {

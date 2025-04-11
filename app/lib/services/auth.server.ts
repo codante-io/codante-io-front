@@ -1,15 +1,15 @@
-import type { TypedResponse } from "@remix-run/node";
+import type { TypedResponse } from "react-router";
 import {
   createCookie,
   createCookieSessionStorage,
   redirect,
-} from "@remix-run/node";
+} from "react-router";
 import type { AxiosResponse } from "axios";
 import type { User } from "~/lib/models/user.server";
 import { environment } from "~/lib/models/environment";
 import { createAxios } from "~/lib/services/axios.server";
 
-export let sessionStorage = createCookieSessionStorage({
+export const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "codante_session",
     secure: environment().NODE_ENV === "production",
@@ -21,7 +21,7 @@ export let sessionStorage = createCookieSessionStorage({
   },
 });
 
-export let { getSession, commitSession, destroySession } = sessionStorage;
+export const { getSession, commitSession, destroySession } = sessionStorage;
 
 export async function register({
   request,
@@ -68,7 +68,7 @@ export async function login({
   redirectTo?: string;
 }) {
   let response: AxiosResponse;
-  let session = await sessionStorage.getSession(request.headers.get("Cookie"));
+  const session = await sessionStorage.getSession(request.headers.get("Cookie"));
   const axios = await createAxios(request);
 
   try {
@@ -104,7 +104,7 @@ export async function logout({
     request.headers.get("Cookie"),
   );
 
-  let user = session.get("user");
+  const user = session.get("user");
 
   if (!user?.token) return redirect(redirectTo);
   const axios = await createAxios(request);
@@ -131,7 +131,7 @@ export async function logoutWithRedirectAfterLogin({
     request.headers.get("Cookie"),
   );
 
-  let user = session.get("user");
+  const user = session.get("user");
 
   if (!user?.token) return redirect(`/login?redirectTo=${redirectTo}`);
 
@@ -191,7 +191,7 @@ export async function requireGuest({ request }: { request: Request }) {
 }
 
 export async function requireAuth({ request }: { request: Request }) {
-  let token = await currentToken({ request });
+  const token = await currentToken({ request });
 
   if (!token) {
     throw redirect("/login");
@@ -237,7 +237,7 @@ export async function sendPasswordLink({ email }: { email: string }) {
   }
 }
 
-export let redirectToCookie = createCookie("redirect-to", {
+export const redirectToCookie = createCookie("redirect-to", {
   path: "/",
   httpOnly: true,
   sameSite: "lax",
