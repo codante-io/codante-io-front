@@ -1,13 +1,5 @@
 import { Disclosure, Switch } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
-import {
-  Form,
-  Link,
-  useActionData,
-  useFetcher,
-  useLoaderData,
-  useNavigation,
-} from "react-router";
 import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,6 +7,15 @@ import { BsGithub } from "react-icons/bs";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import {
+  Form,
+  Link,
+  redirect,
+  useActionData,
+  useFetcher,
+  useLoaderData,
+  useNavigation,
+} from "react-router";
 import DiscordButton from "~/components/features/auth/discord-button";
 import LoadingButton from "~/components/features/form/loading-button";
 import {
@@ -32,7 +33,6 @@ import type { Subscription } from "~/lib/models/subscription.server";
 import { getSubscription } from "~/lib/models/subscription.server";
 import type { User } from "~/lib/models/user.server";
 import { logoutWithRedirectAfterLogin, user } from "~/lib/services/auth.server";
-import { authenticator } from "~/lib/services/github-auth.server";
 import AuthCard from "../../_auth/auth-card";
 import AvatarUpload from "./avatar-image-uploader";
 import {
@@ -126,9 +126,9 @@ export async function loader({ request }: { request: Request }) {
     return userData;
   }
 
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login",
-  });
+  if (!userData) {
+    return redirect("/login");
+  }
 
   const subscription = await getSubscription({ request });
 
@@ -179,17 +179,19 @@ export default function Conta() {
   }
 
   if (actionData && "changeName" in actionData) {
-    isChangeNameSuccess = actionData.changeName && changeNameStatus === "idle";
+    isChangeNameSuccess =
+      (actionData.changeName ?? false) && changeNameStatus === "idle";
   }
 
   if (actionData && "changeLinkedinUrl" in actionData) {
     isChangeLinkedinUrlSuccess =
-      actionData.changeLinkedinUrl && changeLinkedinUrlStatus === "idle";
+      (actionData.changeLinkedinUrl ?? false) &&
+      changeLinkedinUrlStatus === "idle";
   }
 
   if (actionData && "changePassword" in actionData) {
     isChangePasswordSuccess =
-      actionData.changePassword && changePasswordStatus === "idle";
+      (actionData.changePassword ?? false) && changePasswordStatus === "idle";
   }
 
   useEffect(() => {
