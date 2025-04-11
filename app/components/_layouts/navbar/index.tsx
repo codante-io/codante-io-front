@@ -1,4 +1,4 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure, Menu, MenuButton, Transition } from "@headlessui/react";
 import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
@@ -219,13 +219,13 @@ function DesktopNavbar({
               )}
 
               <Menu as="div" className="relative z-50 inline-block text-left">
-                <Menu.Button
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                <MenuButton
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 cursor-pointer"
                   onClick={() => playSound()}
                 >
                   <AiOutlineMenu />
                   <BsFillCaretDownFill className="w-[10px] h-[10px] p-0 m-0 ml-1 transition-transform ui-open:-rotate-180" />
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   enter="transition ease-out duration-150"
                   enterFrom="transform opacity-0 scale-95"
