@@ -1,4 +1,5 @@
-import { json, type LinksFunction } from "@remix-run/node";
+import { data, type LinksFunction } from "@remix-run/node";
+
 import type { MetaFunction } from "@remix-run/react";
 import {
   Links,
@@ -106,7 +107,7 @@ export async function loader({ request }: { request: Request }) {
     headers.set("Cache-Control", "private, max-age=20");
   }
 
-  return json(
+  return data(
     {
       user: userData,
       ENV: {

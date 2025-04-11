@@ -1,4 +1,3 @@
-import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import ChallengeCard from "~/components/ui/cards/challenge-card";
 import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
@@ -52,11 +51,11 @@ export async function loader({ request }: { request: Request }) {
       request,
     });
 
-  return json({
+  return {
     challenges,
     featuredChallenge,
     totalChallenges,
-  });
+  };
 }
 
 export default function ChallengesIndex() {

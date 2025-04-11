@@ -1,11 +1,11 @@
-import { json, Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { environment } from "~/lib/models/environment";
 
 export async function loader() {
   const { RECAPTCHA_SITE_KEY } = environment();
 
-  return json({ ENV: { RECAPTCHA_SITE_KEY } });
+  return { ENV: { RECAPTCHA_SITE_KEY } };
 }
 
 export default function AuthLayout() {

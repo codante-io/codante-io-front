@@ -1,4 +1,3 @@
-import { json } from "@remix-run/node";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { BsFillHeartFill, BsTools } from "react-icons/bs";
 import { FaMedal, FaCalendar } from "react-icons/fa";
@@ -27,9 +26,9 @@ export async function loader({ request }: { request: Request }) {
 
   const rankingUsers = await getRanking(monthly);
 
-  return json({
+  return {
     rankingUsers,
-  });
+  };
 }
 
 export default function RankingList() {

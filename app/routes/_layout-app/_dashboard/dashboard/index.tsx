@@ -1,17 +1,14 @@
 import {
   Link,
   Outlet,
-  json,
   useLoaderData,
   useLocation,
   useNavigate,
   useOutletContext,
 } from "@remix-run/react";
-import { PiCertificateLight } from "react-icons/pi";
-import { MdComputer, MdOutlineUpload } from "react-icons/md";
-import { getDashboardData } from "~/lib/models/dashboard.server";
 import { useEffect } from "react";
-import type { User } from "~/lib/models/user.server";
+import { MdComputer, MdOutlineUpload } from "react-icons/md";
+import { PiCertificateLight } from "react-icons/pi";
 import NotFound from "~/components/features/error-handling/not-found";
 import {
   Select,
@@ -22,9 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { getDashboardData } from "~/lib/models/dashboard.server";
+import type { User } from "~/lib/models/user.server";
 
 export async function loader({ request }: { request: Request }) {
-  return json({ dashboardData: await getDashboardData(request) });
+  return { dashboardData: await getDashboardData(request) };
 }
 
 export default function Dashboard() {

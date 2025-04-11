@@ -1,5 +1,4 @@
 import TitleIcon from "~/components/ui/title-icon";
-import { json } from "@remix-run/node";
 import { getAssessments } from "~/lib/models/assessments.server";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
@@ -34,7 +33,7 @@ export function meta(args: any) {
 }
 
 export const loader = async () => {
-  return json({ assessments: await getAssessments() });
+  return { assessments: await getAssessments() };
 };
 
 type CheckboxState = { [key: string]: boolean };

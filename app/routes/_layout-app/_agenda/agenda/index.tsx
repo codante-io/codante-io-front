@@ -1,6 +1,5 @@
 import type React from "react";
 
-import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { parseISO, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -43,7 +42,7 @@ export const loader = async () => {
   const upcoming = await getUpcomingEvents();
   const previous = await getPreviousEvents();
 
-  return json({ upcoming, previous });
+  return { upcoming, previous };
 };
 
 function getBorderColor(type: string) {

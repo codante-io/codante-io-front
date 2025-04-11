@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { ActionFunctionArgs } from "@remix-run/node";
 import {
   Link,
   isRouteErrorResponse,
@@ -63,9 +63,9 @@ export const meta = () => {
 };
 
 export const loader = async () => {
-  return json({
+  return {
     homeInfo: await getHome(),
-  });
+  };
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
