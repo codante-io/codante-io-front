@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build",
-    "start": "dotenv -e .env.production remix-serve ./build/server/index.js",
+    "start": "dotenv -e .env.production react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
