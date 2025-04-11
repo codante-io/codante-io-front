@@ -4,7 +4,7 @@ import {
   useLoaderData,
   useOutletContext,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { motion } from "framer-motion";
 import BackgroundBlur from "~/components/_layouts/background-blur";
 import AppLayout from "~/components/_layouts/root-layout";

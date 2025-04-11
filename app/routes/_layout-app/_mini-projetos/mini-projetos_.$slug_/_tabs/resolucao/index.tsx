@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from "@remix-run/react";
+import { useNavigate, useOutletContext } from "react-router";
 import type { Challenge } from "~/lib/models/challenge.server";
 import LessonsList from "~/components/features/workshop/lessons-list";
 import NextLessonPreview from "~/components/features/workshop/next-lesson-preview";

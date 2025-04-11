@@ -1,36 +1,35 @@
 import TitleIcon from "~/components/ui/title-icon";
 import { getAssessments } from "~/lib/models/assessments.server";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "react-router";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AssessmentCard from "./components/assessment-card";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
-import { metaV1 } from "@remix-run/v1-meta";
+import type { MetaFunction } from "@remix-run/node";
 
-export function meta(args: any) {
+export const meta: MetaFunction = () => {
   const title = "Testes técnicos | Codante.io";
   const description =
     "Testes técnicos de programação utilizados em grandes empresas. Se prepare para ser aprovado no processo seletivo da sua empresa dos sonhos.";
   const imageUrl = getOgGeneratorUrl("Testes tecnicos");
 
-  return metaV1(args, {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/testes-tecnicos`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/testes-tecnicos`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": "Testes técnicos Codante",
-  });
-}
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://codante.io/testes-tecnicos" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:domain", content: "codante.io" },
+    { name: "twitter:url", content: "https://codante.io/testes-tecnicos" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image", content: imageUrl },
+    { name: "twitter:image:alt", content: "Testes técnicos Codante" },
+  ];
+};
 
 export const loader = async () => {
   return { assessments: await getAssessments() };

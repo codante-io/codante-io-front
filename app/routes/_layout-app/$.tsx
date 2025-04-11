@@ -1,4 +1,4 @@
-import { data } from "@remix-run/node";
+import { data } from "react-router";
 import NotFound from "~/components/features/error-handling/not-found";
 
 export const loader = () => {

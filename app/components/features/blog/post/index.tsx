@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { TiArrowBackOutline } from "react-icons/ti";
 import type { BlogPost } from "~/lib/models/blog-post.server";
 import ReactionsButton from "../../reactions/reactions-button";

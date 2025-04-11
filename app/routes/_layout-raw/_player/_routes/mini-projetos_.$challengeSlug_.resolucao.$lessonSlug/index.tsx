@@ -1,4 +1,4 @@
-import { useLoaderData, useOutletContext } from "@remix-run/react";
+import { useLoaderData, useOutletContext } from "react-router";
 import { getLesson, Lesson } from "~/lib/models/lesson.server";
 import type { User } from "~/lib/models/user.server";
 import { userJoinedWorkshop } from "~/lib/models/workshop.server";

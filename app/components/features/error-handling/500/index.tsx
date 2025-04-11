@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export function Error500({ error = null }: { error?: any }) {
   return (

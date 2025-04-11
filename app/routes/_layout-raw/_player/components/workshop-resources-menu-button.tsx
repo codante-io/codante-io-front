@@ -1,6 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
 import { FolderArrowDownIcon } from "@heroicons/react/24/outline";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { Fragment } from "react";
 import { FiDownload, FiFigma, FiGithub, FiGlobe } from "react-icons/fi";
 import classNames from "~/lib/utils/class-names";

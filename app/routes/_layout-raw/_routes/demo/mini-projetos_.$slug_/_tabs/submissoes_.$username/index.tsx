@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs, MetaArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaArgs } from "react-router";
 import {
   Form,
   useActionData,
@@ -6,7 +6,7 @@ import {
   useNavigate,
   useNavigation,
   useOutletContext,
-} from "@remix-run/react";
+} from "react-router";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";
 import UserAvatar from "~/components/ui/user-avatar";

@@ -1,5 +1,5 @@
-import { Outlet, useLoaderData } from "@remix-run/react";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { Outlet, useLoaderData } from "react-router";
+import { GoogleReCaptchaProvider } from "@wojtekmaj/react-recaptcha-v3";
 import { environment } from "~/lib/models/environment";
 
 export async function loader() {

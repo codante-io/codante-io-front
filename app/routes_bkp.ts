@@ -1,5 +1,5 @@
 import { remixConfigRoutes } from "@react-router/remix-config-routes-adapter";
-import { RouteConfig } from "@remix-run/route-config";
+import { RouteConfig } from "@react-router/dev/routes";
 import flatRoutes from "remix-flat-routes";
 
 // export default remixConfigRoutes((defineRoutes) => {

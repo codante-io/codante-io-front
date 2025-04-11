@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from "@remix-run/react";
+import { useNavigate, useOutletContext } from "react-router";
 import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import ReactionsButton from "~/components/features/reactions/reactions-button";

@@ -7,8 +7,8 @@ import {
   SiReact,
   SiReactHex,
 } from "@icons-pack/react-simple-icons";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "react-router";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import WorkshopCard from "~/components/ui/cards/workshop-card";
 import useLazyLoading from "~/lib/hooks/use-lazy-loading";
 import { getWorkshops } from "~/lib/models/workshop.server";

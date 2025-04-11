@@ -1,4 +1,4 @@
-import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
+import { Form, Link, useActionData, useNavigation } from "react-router";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import { register } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
@@ -7,7 +7,7 @@ import LoadingButton from "~/components/features/form/loading-button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useCallback, useEffect, useState } from "react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useGoogleReCaptcha } from "@wojtekmaj/react-recaptcha-v3";
 import { isUserHuman } from "~/lib/utils/recaptcha";
 import { sendDiscordAdminNotification } from "~/lib/services/notifications.server";
 

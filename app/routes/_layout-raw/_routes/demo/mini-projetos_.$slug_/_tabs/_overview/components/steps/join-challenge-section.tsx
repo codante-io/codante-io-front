@@ -8,7 +8,7 @@ import type { UserStep } from "../../../../build-steps.server";
 import "./filepond-style.css";
 import Step from "./step";
 import SubmissionStepForm from "./submission-step-form";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 
 type JoinChallengeSectionProps = {
   className?: string;

@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import type { AlertBannerProps } from "../alert-banner";
 import AlertBanner from "../alert-banner";
 import { useEffect, useState } from "react";
-import { useLocation } from "@remix-run/react";
+import { useLocation } from "react-router";
 
 type AlertBannerPortalProps = AlertBannerProps & {
   position?: "top" | "bottom";

@@ -1,5 +1,5 @@
-import { useOutletContext } from "@remix-run/react";
-import { Navigate } from "react-router-dom";
+import { useOutletContext } from "react-router";
+import { Navigate } from "react-router";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
 import type { Challenge } from "~/lib/models/challenge.server";
 import type { ChallengeUser, User } from "~/lib/models/user.server";

@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import type { LoaderFunction } from "react-router";
+import { redirect } from "react-router";
 
 // Esta rota foi movida para /resolucao. Para preservar o SEO, vamos redirecionar para a nova rota.
 export const loader: LoaderFunction = async ({ request }) => {

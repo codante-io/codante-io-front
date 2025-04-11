@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Input } from "~/components/ui/input";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate } from "react-router";
 import { Search } from "lucide-react";
 
 type SearchFilterProps = {

@@ -1,12 +1,12 @@
 import { Button } from "~/components/ui/button";
 
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import Sparkles from "~/components/ui/motion/sparkles";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 function CTAButtons() {
-  const MotionButton = motion(Button);
+  const MotionButton = motion.create(Button);
 
   return (
     <div className="w-full flex gap-4 flex-wrap mt-10">

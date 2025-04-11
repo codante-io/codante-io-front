@@ -1,7 +1,7 @@
 import React from "react";
 import ReactLoadingBar from "react-top-loading-bar";
 import type { LoadingBarRef } from "react-top-loading-bar";
-import { useNavigation } from "@remix-run/react";
+import { useNavigation } from "react-router";
 
 export default function TopLoadingBar() {
   const ref = React.useRef<LoadingBarRef>(null);

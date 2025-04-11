@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import { BsFillHeartFill, BsTools } from "react-icons/bs";
 import { FaMedal, FaCalendar } from "react-icons/fa";
 import { getRanking } from "~/lib/models/ranking.server";
@@ -9,16 +9,21 @@ import {
 } from "~/components/features/ranking/ranking-badges";
 import classNames from "~/lib/utils/class-names";
 import UserAvatar from "~/components/ui/user-avatar";
-import { metaV1 } from "@remix-run/v1-meta";
+import type { MetaFunction } from "@remix-run/node";
 
 // meta function
-export function meta(args: any) {
-  return metaV1(args, {
-    title: "Ranking | Codante.io",
-    description:
-      "Veja o ranking dos usuários do Codante. Quem será que está no topo?",
-  });
-}
+export const meta: MetaFunction = () => {
+  const title = "Ranking | Codante.io";
+  const description =
+    "Veja o ranking dos usuários do Codante. Quem será que está no topo?";
+
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+  ];
+};
 
 export async function loader({ request }: { request: Request }) {
   // get montly query parameter

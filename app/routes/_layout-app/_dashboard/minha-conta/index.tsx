@@ -7,7 +7,7 @@ import {
   useFetcher,
   useLoaderData,
   useNavigation,
-} from "@remix-run/react";
+} from "react-router";
 import { Edit } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";

@@ -1,6 +1,6 @@
 import { LockClosedIcon } from "@heroicons/react/24/outline";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { data, useLoaderData, useOutletContext } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "react-router";
+import { data, useLoaderData, useOutletContext } from "react-router";
 import { AiOutlineSolution } from "react-icons/ai";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiGift } from "react-icons/pi";

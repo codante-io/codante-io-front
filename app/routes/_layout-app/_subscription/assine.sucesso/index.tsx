@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "react-router";
 import { FiCopy, FiExternalLink } from "react-icons/fi";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { getSubscriptionByPagarmeOrderId } from "~/lib/models/subscription.server";

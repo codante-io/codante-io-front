@@ -1,10 +1,10 @@
 import type React from "react";
+import type { MetaFunction } from "@remix-run/node";
 
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "react-router";
 import { parseISO, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import { metaV1 } from "@remix-run/v1-meta";
 import {
   Card,
   CardContent,
@@ -26,13 +26,15 @@ import { cn } from "~/lib/utils/cn";
 import { useState } from "react";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 
-// meta function
-export function meta(args: any) {
-  return metaV1(args, {
-    title: "Agenda | Codante.io",
-    description: "Acompanhe a agenda de workshops e mini projetos da Codante.",
-  });
-}
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Agenda | Codante.io" },
+    {
+      name: "description",
+      content: "Acompanhe a agenda de workshops e mini projetos da Codante.",
+    },
+  ];
+};
 
 export const loader = async () => {
   /**

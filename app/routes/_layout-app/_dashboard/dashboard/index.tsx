@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigate,
   useOutletContext,
-} from "@remix-run/react";
+} from "react-router";
 import { useEffect } from "react";
 import { MdComputer, MdOutlineUpload } from "react-icons/md";
 import { PiCertificateLight } from "react-icons/pi";

@@ -1,16 +1,19 @@
-import { json } from "@remix-run/node";
-import { useLoaderData, Outlet } from "@remix-run/react";
+import { useLoaderData, Outlet, MetaFunction } from "react-router";
 import TrackCard from "~/components/ui/cards/track-card";
-import { metaV1 } from "@remix-run/v1-meta";
 import { getTracks } from "~/lib/models/track.server";
 
-export function meta(args: any) {
-  return metaV1(args, {
-    title: "Trilhas | Codante.io",
-    description:
-      "Nas trilhas você tem a união de workshops e mini projetos para aprender temas específicos em programação.",
-  });
-}
+export const meta: MetaFunction = () => {
+  const title = "Trilhas | Codante.io";
+  const description =
+    "Nas trilhas você tem a união de workshops e mini projetos para aprender temas específicos em programação.";
+
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+  ];
+};
 
 export const loader = async () => {
   const tracks = await getTracks();

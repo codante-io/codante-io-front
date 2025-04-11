@@ -8,7 +8,7 @@ import { BlurReveal } from "~/components/ui/motion/blur-reveal";
 import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
 import Sparkles from "~/components/ui/motion/sparkles";
 import { motion } from "framer-motion";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import { getHome } from "~/lib/models/home.server";
 
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
