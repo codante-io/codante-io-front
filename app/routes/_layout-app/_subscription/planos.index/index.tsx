@@ -111,6 +111,7 @@ export default function PlanosPage() {
             {featuredTestimonials.map((testimonial, index) => {
               return (
                 <TestimonialCard
+                  key={index}
                   wide={[2, 4].includes(index)}
                   testimonial={testimonial.body}
                   avatarUrl={testimonial.avatar_url}
