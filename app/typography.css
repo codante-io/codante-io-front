@@ -1,4 +1,5 @@
 .prose {
+  /* Variables */
   --prose-color: var(--color-gray-800);
   --prose-heading-color: var(--color-gray-950);
   --prose-strong-color: var(--color-gray-950);
@@ -15,6 +16,7 @@
   --prose-hr-color: color-mix(in oklab, var(--color-gray-950) 5%, transparent);
   --prose-blockquote-border-color: var(--color-gray-300);
 
+  /* Dark Mode Variables */
   &:where(.dark, .dark *) {
     --prose-color: var(--color-gray-300);
     --prose-heading-color: var(--color-white);
@@ -32,6 +34,8 @@
     --prose-hr-color: color-mix(in oklab, var(--color-white) 10%, transparent);
     --prose-blockquote-border-color: var(--color-gray-600);
   }
+
+  /* System Dark Mode */
   @media (prefers-color-scheme: dark) {
     &:where(.system, .system *) {
       --prose-color: var(--color-gray-300);
@@ -56,16 +60,19 @@
     }
   }
 
+  /* Base Styles */
   color: var(--prose-color);
   font-size: var(--text-base);
   line-height: 1.8;
   max-width: 70ch;
 
+  /* Spacing between elements */
   *:where(:not(.not-prose, .not-prose *))
     + *:where(:not(.not-prose, .not-prose *)) {
     margin-top: calc(var(--spacing) * 6);
   }
 
+  /* Headings */
   h1:where(:not(.not-prose, .not-prose *)) {
     font-size: var(--text-5xl);
     line-height: 1.1;
@@ -130,23 +137,44 @@
     }
   }
 
+  /* Lists */
   ul:where(:not(.not-prose, .not-prose *)) {
     padding-left: calc(var(--spacing) * 4);
     list-style-type: square;
+
+    li + li:where(:not(.not-prose, .not-prose *)) {
+      margin-top: calc(var(--spacing) * 1.5);
+    }
   }
 
   ul li:where(:not(.not-prose, .not-prose *)) {
     padding-left: calc(var(--spacing) * 3);
-  }
-
-  ul li + li:where(:not(.not-prose, .not-prose *)) {
-    margin-top: calc(var(--spacing) * 2);
+    font-weight: var(--font-weight-light);
   }
 
   ul li:where(:not(.not-prose, .not-prose *))::marker {
     color: var(--prose-marker-color);
   }
 
+  ol:where(:not(.not-prose, .not-prose *)) {
+    padding-left: calc(var(--spacing) * 4);
+    list-style-type: decimal;
+  }
+
+  ol li:where(:not(.not-prose, .not-prose *)) {
+    padding-left: calc(var(--spacing) * 3);
+    font-weight: var(--font-weight-light);
+  }
+
+  ol li + li:where(:not(.not-prose, .not-prose *)) {
+    margin-top: calc(var(--spacing) * 1.5);
+  }
+
+  ol li:where(:not(.not-prose, .not-prose *))::marker {
+    color: var(--prose-marker-color);
+  }
+
+  /* Links */
   a:not(:where(:is(h2, h3, h4) *)):where(:not(.not-prose, .not-prose *)) {
     color: var(--prose-link-color);
     font-weight: var(--font-weight-semibold);
@@ -324,6 +352,7 @@
     }
   }
 
+  /* Reset margins for first and last elements */
   :first-child:where(:not(.not-prose, .not-prose *)) {
     margin-top: 0;
   }
@@ -333,6 +362,7 @@
   }
 }
 
+/* Images */
 .prose {
   img:where(:not(.not-prose, .not-prose *)) {
     @media (max-width: theme(--breakpoint-sm)) {
