@@ -23,22 +23,22 @@ const getCodeComponent =
     return (
       <Highlight
         theme={colorMode === "light" ? themes.nightOwlLight : themes.nightOwl}
-        code={children?.props?.children}
+        code={children?.props?.children?.trim()}
         language={language || "javascript"}
       >
-        {({ tokens, getLineProps, getTokenProps }) => (
-          <pre className={className}>
-            {tokens.map((line, i) => (
-              <>
+        {({ tokens, getLineProps, getTokenProps }) => {
+          return (
+            <pre className={className}>
+              {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token })} />
                   ))}
                 </div>
-              </>
-            ))}
-          </pre>
-        )}
+              ))}
+            </pre>
+          );
+        }}
       </Highlight>
     );
   };
