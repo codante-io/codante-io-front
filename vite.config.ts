@@ -1,10 +1,7 @@
 /** @type {import('@remix-run/dev').AppConfig} */
-import { vitePlugin as remix } from "@remix-run/dev";
-import { installGlobals } from "@remix-run/node";
+import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-
-installGlobals();
 
 export default defineConfig({
   server: {
@@ -14,7 +11,7 @@ export default defineConfig({
     noExternal: ["react-easy-crop", "tslib"],
   },
   plugins: [
-    remix({
+    reactRouter({
       // routes: async (defineRoutes) => {
       //   return flatRoutes("routes", defineRoutes);
       // },

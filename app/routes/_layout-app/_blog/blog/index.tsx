@@ -1,35 +1,34 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import type { BlogPost } from "~/lib/models/blog-post.server";
 import { getPosts } from "~/lib/models/blog-post.server";
 import BlogPostCard from "./components/blog-post-card";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
-import { metaV1 } from "@remix-run/v1-meta";
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "react-router";
+import type { MetaFunction } from "@remix-run/node";
 
-export function meta(args: any) {
+export const meta: MetaFunction = () => {
   const title = "Blog | Codante.io";
   const description =
     "Blog do Codante. Fique por dentro das últimas novidades sobre desenvolvimento front-end.";
   const imageUrl = getOgGeneratorUrl("Blog do Codante");
 
-  return metaV1(args, {
-    title: title,
-    description: description,
-    "og:title": title,
-    "og:description": description,
-    "og:image": imageUrl,
-    "og:type": "website",
-    "og:url": `https://codante.io/blog`,
-
-    "twitter:card": "summary_large_image",
-    "twitter:domain": "codante.io",
-    "twitter:url": `https://codante.io/blog`,
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:image": imageUrl,
-    "twitter:image:alt": "Blog do Codante",
-  });
-}
+  return [
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: imageUrl },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://codante.io/blog" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:domain", content: "codante.io" },
+    { name: "twitter:url", content: "https://codante.io/blog" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image", content: imageUrl },
+    { name: "twitter:image:alt", content: "Blog do Codante" },
+  ];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const blogPosts = await getPosts(request);

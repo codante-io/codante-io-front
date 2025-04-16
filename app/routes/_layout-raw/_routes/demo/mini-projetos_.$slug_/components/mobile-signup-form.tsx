@@ -1,4 +1,4 @@
-import { useLocation } from "@remix-run/react";
+import { useLocation } from "react-router";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ResponsiveEmailSignup from "~/components/features/auth/responsive-email-signup";

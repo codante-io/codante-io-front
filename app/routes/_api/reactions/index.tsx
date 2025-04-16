@@ -1,7 +1,7 @@
 import { react } from "~/lib/models/reactions.server";
 import type { AllowedReaction } from "~/lib/models/reactions.server";
 import { abort404 } from "~/lib/utils/responses.server";
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { isRouteErrorResponse, useRouteError } from "react-router";
 import NotFound from "~/components/features/error-handling/not-found";
 import { Error500 } from "~/components/features/error-handling/500";
 

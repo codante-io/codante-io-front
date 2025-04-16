@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import React from "react";
 import { FiExternalLink } from "react-icons/fi";
 import type { Workshop } from "~/lib/models/workshop.server";

@@ -1,5 +1,5 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Link, NavLink, useMatches, useNavigate } from "@remix-run/react";
+import { Disclosure, Menu, MenuButton, Transition } from "@headlessui/react";
+import { Link, NavLink, useMatches, useNavigate } from "react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { BsArrowRight, BsFillCaretDownFill } from "react-icons/bs";
 import useSound from "~/lib/hooks/use-sound/use-sound";
@@ -25,6 +25,10 @@ const navigation = [
     name: "Mini Projetos",
     href: "/mini-projetos",
   },
+  {
+    name: "Agenda",
+    href: "/agenda",
+  },
 ];
 
 const moreMenuNavigation = [
@@ -36,11 +40,6 @@ const moreMenuNavigation = [
   {
     name: "Testes Técnicos",
     href: "/testes-tecnicos",
-    external: false,
-  },
-  {
-    name: "Agenda",
-    href: "/agenda",
     external: false,
   },
   {
@@ -220,13 +219,13 @@ function DesktopNavbar({
               )}
 
               <Menu as="div" className="relative z-50 inline-block text-left">
-                <Menu.Button
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900"
+                <MenuButton
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md dark:text-gray-300 hover:bg-background-100 dark:hover:bg-background-700 hover:text-gray-900 cursor-pointer"
                   onClick={() => playSound()}
                 >
                   <AiOutlineMenu />
                   <BsFillCaretDownFill className="w-[10px] h-[10px] p-0 m-0 ml-1 transition-transform ui-open:-rotate-180" />
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   enter="transition ease-out duration-150"
                   enterFrom="transform opacity-0 scale-95"
@@ -235,7 +234,7 @@ function DesktopNavbar({
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black ring-opacity-5 focus:outline-hidden">
+                  <Menu.Items className="absolute top-10 right-0 w-40 mt-2 divide-y rounded-md shadow-lg bg-background-100 dark:bg-background-700 ring-1 ring-black/20  focus:outline-hidden">
                     <div className="px-1 py-1 ">
                       {moreMenuNavigation.map((item) => (
                         <Menu.Item key={item.name}>

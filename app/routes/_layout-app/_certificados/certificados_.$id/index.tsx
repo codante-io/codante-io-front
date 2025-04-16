@@ -1,5 +1,4 @@
-import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "react-router";
 import { getCertificateById } from "~/lib/models/certificates.server";
 import { pdf } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
@@ -21,18 +20,12 @@ import { IoCopySharp } from "react-icons/io5";
 import SearchCertificate from "../components/search-certificate";
 import { Button } from "~/components/ui/button";
 
-export async function loader({
-  request,
-  params,
-}: {
-  request: Request;
-  params: { id: string };
-}) {
+export async function loader({ params }: { params: { id: string } }) {
   const certificate = await getCertificateById(params.id);
-  if (!certificate || certificate.error) return json({ certificate: null });
-  return json({
+  if (!certificate || certificate.error) return { certificate: null };
+  return {
     certificate,
-  });
+  };
 }
 
 export default function CertificadoId() {

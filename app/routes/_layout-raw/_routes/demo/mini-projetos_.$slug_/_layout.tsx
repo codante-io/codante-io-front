@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   Link,
   Outlet,
@@ -8,7 +8,7 @@ import {
   useLocation,
   useNavigate,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 
 import axios from "axios";
 import { useEffect } from "react";

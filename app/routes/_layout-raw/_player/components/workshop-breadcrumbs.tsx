@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import type { Lesson } from "~/lib/models/lesson.server";
 import type { Workshop } from "~/lib/models/workshop.server";
 

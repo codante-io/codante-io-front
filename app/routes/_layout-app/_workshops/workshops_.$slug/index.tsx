@@ -1,6 +1,6 @@
 import { LockClosedIcon } from "@heroicons/react/24/outline";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json, useLoaderData, useOutletContext } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "react-router";
+import { data, useLoaderData, useOutletContext } from "react-router";
 import { AiOutlineSolution } from "react-icons/ai";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiGift } from "react-icons/pi";
@@ -17,12 +17,21 @@ import CardItemLessonsCount from "~/components/ui/cards/card-item-lessons-count"
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
 import { ResponsiveHoverCard } from "~/components/ui/responsive-hover-card";
 import type { User } from "~/lib/models/user.server";
-import { getWorkshop, userJoinedWorkshop } from "~/lib/models/workshop.server";
+import {
+  getWorkshop,
+  userJoinedWorkshop,
+  Workshop,
+} from "~/lib/models/workshop.server";
 import { getPublishedDateAndTime, humanTimeFormat } from "~/lib/utils/interval";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import { abort404 } from "~/lib/utils/responses.server";
 import { hasHappened } from "~/lib/utils/workshop-utils";
 import InstructorCard, { InstructorCardContent } from "./instructor-card";
+
+interface LoaderData {
+  slug: string;
+  workshop: Workshop;
+}
 
 export const meta = ({ data, params }: any) => {
   if (!data?.workshop) return {};
@@ -79,7 +88,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     headers.set("Cache-Control", "private, max-age=15");
   }
 
-  return json({ slug: params.slug, workshop }, { headers });
+  return data({ slug: params.slug, workshop }, { headers });
 };
 
 export const action = async ({ request }: LoaderFunctionArgs) => {
@@ -88,14 +97,13 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 
   const entered = await userJoinedWorkshop(slug as string, request);
 
-  return entered ? json({ success: true }) : json({ success: false });
+  return entered ? { success: true } : { success: false };
 };
 
 export default function WorkshopSlug() {
-  const loaderData = useLoaderData<typeof loader>();
-
+  const loaderData = useLoaderData<LoaderData>();
   const { user } = useOutletContext<{ user: User }>();
-  const workshop = loaderData?.workshop;
+  const workshop = loaderData.workshop;
   const nextLesson = workshop?.first_unwatched_lesson || workshop?.lessons[0];
 
   const [publishedDate, publishedTime] = getPublishedDateAndTime(

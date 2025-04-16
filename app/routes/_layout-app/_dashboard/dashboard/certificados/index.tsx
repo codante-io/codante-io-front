@@ -1,7 +1,7 @@
-import { useOutletContext } from "@remix-run/react";
+import { useOutletContext } from "react-router";
 import { FaRegClock } from "react-icons/fa6";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type {
   CertificateDashboard,
   Dashboard,

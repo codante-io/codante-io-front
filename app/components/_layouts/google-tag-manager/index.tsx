@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
-import { useLocation } from "@remix-run/react";
+import { useLocation } from "react-router";
 import { useEffect } from "react";
 import type { User } from "~/lib/models/user.server";
 

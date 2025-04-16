@@ -1,4 +1,4 @@
-import { useOutletContext } from "@remix-run/react";
+import { useOutletContext } from "react-router";
 import { ContextType } from "../types/contextType";
 
 export function useUserFromOutletContext() {

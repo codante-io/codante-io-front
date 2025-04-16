@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { BsFillPlayFill } from "react-icons/bs";
 import CardItemRibbon from "~/components/ui/cards/card-item-ribbon";
 import type { Challenge } from "~/lib/models/challenge.server";

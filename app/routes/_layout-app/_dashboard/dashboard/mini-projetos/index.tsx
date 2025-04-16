@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "@remix-run/react";
+import { Link, useOutletContext } from "react-router";
 import { Separator } from "~/components/ui/separator";
 // import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
 import type {

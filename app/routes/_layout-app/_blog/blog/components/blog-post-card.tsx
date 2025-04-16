@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import ReactionsButton from "~/components/features/reactions/reactions-button";
 import type { BlogPost } from "~/lib/models/blog-post.server";
 

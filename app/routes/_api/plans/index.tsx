@@ -1,4 +1,4 @@
-import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
+import { redirect, type LoaderFunctionArgs } from "react-router";
 import { getPlanDetails } from "~/lib/models/plan.server";
 import { createAxios } from "~/lib/services/axios.server";
 import type { Subscription } from "~/lib/models/subscription.server";

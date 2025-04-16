@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { AiFillGithub, AiOutlineFork, AiOutlineStar } from "react-icons/ai";
 import BecomeProDialog from "~/components/ui/become-pro-dialog";
 import { cardVariants } from "~/components/ui/cards/card";

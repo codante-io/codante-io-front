@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import type { Challenge } from "~/lib/models/challenge.server";
 
 import classNames from "~/lib/utils/class-names";

@@ -1,4 +1,4 @@
-import type { UIMatch } from "@remix-run/react";
+import type { UIMatch } from "react-router";
 import slugify from "slugify";
 
 export function getOgGeneratorUrl(title: string, subtitle = "") {

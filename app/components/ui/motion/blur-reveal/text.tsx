@@ -12,7 +12,7 @@ export function BlurRevealText({
   className?: string;
   delay?: number;
 }) {
-  const Component = motion(element);
+  const Component = motion.create(element);
 
   return (
     <Component

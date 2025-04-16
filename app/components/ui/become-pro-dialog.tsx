@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import React from "react";
 import {
   Dialog,
@@ -22,7 +22,10 @@ function BecomeProDialog({ trigger, content, title }: BecomeProDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="w-11/12 sm:max-w-md rounded-md p-8">
+      <DialogContent
+        aria-describedby="become-pro-dialog-description"
+        className="w-11/12 sm:max-w-md rounded-md p-8"
+      >
         <DialogHeader>
           <DialogTitle className="text-start text-lg md:text-xl font-medium text-gray-700 dark:text-gray-50">
             {title ?? (

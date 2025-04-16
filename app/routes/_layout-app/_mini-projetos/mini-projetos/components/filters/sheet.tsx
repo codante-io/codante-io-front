@@ -9,7 +9,7 @@ import {
 } from "~/components/ui/sheet";
 
 import { useState } from "react";
-import { Link, useSearchParams } from "@remix-run/react";
+import { Link, useSearchParams } from "react-router";
 import { ListFilter } from "lucide-react";
 import { Separator } from "~/components/ui/separator";
 

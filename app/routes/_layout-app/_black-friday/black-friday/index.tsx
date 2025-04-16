@@ -1,10 +1,10 @@
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { ActionFunctionArgs } from "react-router";
 import {
   Link,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState } from "react";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
@@ -63,9 +63,9 @@ export const meta = () => {
 };
 
 export const loader = async () => {
-  return json({
+  return {
     homeInfo: await getHome(),
-  });
+  };
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {

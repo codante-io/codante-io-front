@@ -9,7 +9,7 @@ import {
   SiTailwindcss,
   SiTailwindcssHex,
 } from "@icons-pack/react-simple-icons";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { AiFillTrophy } from "react-icons/ai";
 import { cn } from "~/lib/utils/cn";
 

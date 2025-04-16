@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "@remix-run/react";
+import { Link, useOutletContext } from "react-router";
 import { Send } from "lucide-react";
 import { Card, CardContent, CardFooter } from "~/components/ui/cards/card";
 import { Button } from "~/components/ui/button";

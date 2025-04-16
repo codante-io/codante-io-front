@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { Gift, Star } from "lucide-react";
 import { cn } from "~/lib/utils/cn";
 

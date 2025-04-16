@@ -1,4 +1,4 @@
-import { useNavigate } from "@remix-run/react";
+import { useNavigate } from "react-router";
 import { useRef } from "react";
 import { Card } from "~/components/ui/cards/card";
 import { Button } from "~/components/ui/button";
@@ -9,7 +9,7 @@ export default function SearchCertificate({ error }: { error?: boolean }) {
   const inputValueRef = useRef("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = () => {
     navigate(`/certificados/${inputValueRef.current}`);
   };
   return (

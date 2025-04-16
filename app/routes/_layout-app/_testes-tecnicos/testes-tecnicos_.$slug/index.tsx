@@ -12,7 +12,7 @@ import {
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { MdLocationCity } from "react-icons/md";
 import { TbWorld } from "react-icons/tb";
 import MarkdownRenderer from "~/components/ui/markdown-renderer";

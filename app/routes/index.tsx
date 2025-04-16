@@ -1,56 +1,55 @@
-import { json } from "@remix-run/node";
 import {
   Link,
   isRouteErrorResponse,
   useLoaderData,
   useOutletContext,
   useRouteError,
-} from "@remix-run/react";
-import AppLayout from "~/components/_layouts/root-layout";
-import BackgroundBlur from "~/components/_layouts/background-blur";
+} from "react-router";
 import { motion } from "framer-motion";
+import BackgroundBlur from "~/components/_layouts/background-blur";
+import AppLayout from "~/components/_layouts/root-layout";
 import AlertBanner from "~/components/ui/alert-banner";
+import UserAvatar from "~/components/ui/user-avatar";
 import { getHome } from "~/lib/models/home.server";
 import type { User } from "~/lib/models/user.server";
-import UserAvatar from "~/components/ui/user-avatar";
 
-import { useRef } from "react";
-import { RiLiveLine } from "react-icons/ri";
 import { ArrowRight, PencilRuler } from "lucide-react";
-import { BlurReveal } from "~/components/ui/motion/blur-reveal";
-import Sparkles from "~/components/ui/motion/sparkles";
-import NotFound from "~/components/features/error-handling/not-found";
+import { useRef } from "react";
+import { BsDiscord } from "react-icons/bs";
+import { RiLiveLine } from "react-icons/ri";
+import DiscordButton from "~/components/features/auth/discord-button";
 import { Error500 } from "~/components/features/error-handling/500";
+import NotFound from "~/components/features/error-handling/not-found";
+import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
+import ChallengeCard from "~/components/ui/cards/challenge-card";
+import FreePricingCard from "~/components/ui/cards/pricing/free";
+import ProPricingCard from "~/components/ui/cards/pricing/pro";
+import YearlyPricingCard from "~/components/ui/cards/pricing/yearly";
+import WorkshopCard from "~/components/ui/cards/workshop-card";
+import FaqItem from "~/components/ui/faq-item";
+import { BlurReveal } from "~/components/ui/motion/blur-reveal";
+import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
+import Sparkles from "~/components/ui/motion/sparkles";
+import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import { useColorMode } from "~/lib/contexts/color-mode-context";
+import useLazyLoading from "~/lib/hooks/use-lazy-loading";
+import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
 import AvatarsSection from "~/routes/_landing-page/components/headline/avatars";
 import Demo from "~/routes/_landing-page/components/headline/demo";
-import { useColorMode } from "~/lib/contexts/color-mode-context";
-import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.server";
-import ChallengeCard from "~/components/ui/cards/challenge-card";
-import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
-import CarouselSubmissionCard from "~/components/features/submission-card/carousel-submission-card";
-import useLazyLoading from "~/lib/hooks/use-lazy-loading";
-import WorkshopCard from "~/components/ui/cards/workshop-card";
-import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
-import DiscordButton from "~/components/features/auth/discord-button";
-import { BsDiscord } from "react-icons/bs";
-import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
-import FreePricingCard from "~/components/ui/cards/pricing/free";
-import YearlyPricingCard from "~/components/ui/cards/pricing/yearly";
-import ProPricingCard from "~/components/ui/cards/pricing/pro";
-import faqQuestions from "~/routes/_layout-app/_subscription/faq-questions";
-import FaqItem from "~/components/ui/faq-item";
-import SocialNetworksList from "~/routes/_landing-page/components/social-networks/list";
-import RequirementsList from "~/routes/_landing-page/components/projects/requirements-list";
 import Backend from "~/routes/_landing-page/components/projects/backend";
 import Deploy from "~/routes/_landing-page/components/projects/deploy";
+import RequirementsList from "~/routes/_landing-page/components/projects/requirements-list";
+import SocialNetworksList from "~/routes/_landing-page/components/social-networks/list";
+import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
 import CarouselWorkshops from "~/routes/_landing-page/components/workshops/carousel";
+import faqQuestions from "~/routes/_layout-app/_subscription/faq-questions";
 
 import CTAButtons from "~/routes/_landing-page/components/headline/cta-buttons";
 
 export const loader = async () => {
-  return json({
+  return {
     homeInfo: await getHome(),
-  });
+  };
 };
 
 export default function HomePage() {

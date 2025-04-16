@@ -3,13 +3,15 @@ import LazyLoad from "vanilla-lazyload";
 
 export default function useLazyLoading(refreshDeps: any[] = []) {
   useEffect(() => {
-    let lazyLoadInstance = new LazyLoad({
+    const lazyLoadInstance = new LazyLoad({
       elements_selector: ".lazy",
     });
     lazyLoadInstance.update();
 
     return () => {
-      lazyLoadInstance.destroy();
+      if (lazyLoadInstance && typeof lazyLoadInstance.destroy === "function") {
+        lazyLoadInstance.destroy();
+      }
     };
   }, [refreshDeps]);
 }
