@@ -10,6 +10,7 @@ const gitHubStrategy = new GitHubStrategy(
     clientId: environment().GITHUB_ID as string,
     clientSecret: environment().GITHUB_SECRET as string,
     redirectURI: environment().GITHUB_CALLBACK_URL as string,
+    scopes: ["user:email", "read:user"],
   },
   async (params) => {
     const axios = await createAxios();
