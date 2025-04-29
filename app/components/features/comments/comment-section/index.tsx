@@ -264,7 +264,7 @@ function CommentCard({
   return (
     <Card
       id={`comment-${comment.id}`}
-      className="px-6 py-8 dark:border-background-700 border-gray-300 rounded-lg shadow-2xs bg-white dark:bg-transparent "
+      className="px-6 py-8 dark:border-background-700 dark:bg-background-800 border-gray-300 rounded-lg shadow-2xs bg-white"
     >
       <div>
         <CommentInfo

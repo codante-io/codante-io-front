@@ -1,4 +1,3 @@
- 
 import Markdown from "markdown-to-jsx";
 import { Highlight, themes } from "prism-react-renderer";
 import React, { type ReactElement } from "react";
@@ -9,7 +8,13 @@ import type { ColorMode } from "~/lib/utils/dark-mode";
 
 const getCodeComponent =
   (colorMode: ColorMode) =>
-  ({ className, children }: { className: string; children: ReactElement }) => {
+  ({
+    className,
+    children,
+  }: {
+    className: string;
+    children: ReactElement<{ children: string }>;
+  }) => {
     const language = className
       ?.split(" ")
       ?.find((className) => className?.includes("lang-"))
@@ -18,22 +23,22 @@ const getCodeComponent =
     return (
       <Highlight
         theme={colorMode === "light" ? themes.nightOwlLight : themes.nightOwl}
-        code={children?.props?.children}
+        code={children?.props?.children?.trim()}
         language={language || "javascript"}
       >
-        {({ tokens, getLineProps, getTokenProps }) => (
-          <pre className={className}>
-            {tokens.map((line, i) => (
-              <>
+        {({ tokens, getLineProps, getTokenProps }) => {
+          return (
+            <pre className={className}>
+              {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token })} />
                   ))}
                 </div>
-              </>
-            ))}
-          </pre>
-        )}
+              ))}
+            </pre>
+          );
+        }}
       </Highlight>
     );
   };
@@ -68,40 +73,42 @@ function H2WithDivider({
   );
 }
 
-function isAlert(firstChild: React.ReactElement) {
-  if (
-    !firstChild.props.children[0] ||
-    typeof firstChild.props.children[0] !== "string"
-  )
-    return false;
+function isAlert(
+  firstChild: React.ReactElement<{
+    children: React.ReactNode[] | React.ReactNode;
+  }>,
+) {
+  const children = Array.isArray(firstChild.props.children)
+    ? firstChild.props.children
+    : [firstChild.props.children];
 
-  if (
-    !firstChild.props.children[0] ||
-    typeof firstChild.props.children[0] !== "string"
-  )
-    return false;
+  if (!children[0] || typeof children[0] !== "string") return false;
 
-  if (firstChild.props.children[0]?.startsWith("Dica"))
-    return { color: "#22c55e", text: "Dica", imgPath: "/icons/bulb-icons.svg" };
-  if (firstChild.props.children[0]?.startsWith("Informação"))
+  if (children[0]?.startsWith("Dica"))
+    return {
+      color: "#22c55e",
+      text: "Dica",
+      imgPath: "/icons/bulb-icons.svg",
+    };
+  if (children[0]?.startsWith("Informação"))
     return {
       color: "#3b82f6",
       text: "Informação",
       imgPath: "/icons/info.svg",
     };
-  if (firstChild.props.children[0]?.startsWith("Importante"))
+  if (children[0]?.startsWith("Importante"))
     return {
       color: "#a855f7",
       text: "Importante",
       imgPath: "/icons/icon-important.svg",
     };
-  if (firstChild.props.children[0]?.startsWith("Aviso"))
+  if (children[0]?.startsWith("Aviso"))
     return {
       color: "#fde047",
       text: "Aviso",
       imgPath: "/icons/warning.svg",
     };
-  if (firstChild.props.children[0].startsWith("Cuidado"))
+  if (children[0].startsWith("Cuidado"))
     return {
       color: "#ef4444",
       text: "Cuidado",
@@ -129,12 +136,34 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
     component: ({ children }: { children: React.ReactElement }) => {
       const firstChild = React.Children.toArray(
         children,
-      )[0] as React.ReactElement;
-      const alertInfo = isAlert(firstChild as React.ReactElement);
+      )[0] as React.ReactElement<{ children: React.ReactNode[] }>;
+      const alertInfo = isAlert(firstChild);
 
       if (alertInfo) {
         const firstWord = firstChild.props.children[0];
-        const restOfText = firstChild.props.children.slice(1);
+        const restOfText = firstChild.props.children
+          .slice(1)
+          .map((child: any) => {
+            if (typeof child === "string") {
+              return child
+                .split("\n")
+                .map((text, i) => (i > 0 ? [<br key={i} />, text] : text));
+            }
+            return child;
+          })
+          .flat();
+
+        // if firstWord has a \n, brake it and take the first line
+        const firstLine =
+          typeof firstWord === "string" ? firstWord.split("\n")[0] : "";
+        const restOfFirstLine =
+          typeof firstWord === "string"
+            ? firstWord
+                .split("\n")
+                .slice(1)
+                .map((text, i) => (i > 0 ? [<br key={i} />, text] : text))
+                .flat()
+            : [];
 
         return (
           <blockquote
@@ -150,11 +179,14 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
                 src={alertInfo.imgPath}
                 alt={alertInfo.text}
               />
-              <span style={{ color: alertInfo.color }} className="">
-                {firstWord}
+              <span style={{ color: alertInfo.color }} className="mt-0">
+                {firstLine}
               </span>
             </div>
-            <div className="font-light text-base">{restOfText}</div>
+            {restOfFirstLine.length > 0 && (
+              <div className="font-light text-base mt-0">{restOfFirstLine}</div>
+            )}
+            <div className="font-light text-base mt-0">{restOfText}</div>
           </blockquote>
         );
       }
