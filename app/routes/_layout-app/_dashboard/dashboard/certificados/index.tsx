@@ -147,7 +147,7 @@ function ProBanner() {
         Certificados.
       </span>
       <Link to="/assine" className="w-full inline-block mt-4">
-        <button className="mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-linear-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
+        <button className="cursor-pointer mx-auto w-full flex gap-1 justify-center items-center px-4 py-4 text-gray-700 rounded-lg bg-linear-to-r animate-bg from-amber-200 via-amber-300 to-amber-400">
           <FaCrown className="mr-2 text-amber-500" />
           <span>
             Seja
