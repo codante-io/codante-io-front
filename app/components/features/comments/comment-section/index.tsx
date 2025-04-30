@@ -1,5 +1,5 @@
 import { useFetcher, useNavigate, useOutletContext } from "react-router";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState, RefObject } from "react";
 import type { Comment } from "~/lib/models/comments.server";
 import type { User } from "~/lib/models/user.server";
 import { formatName } from "~/lib/utils/format-name";
@@ -348,7 +348,7 @@ const CommentInput = React.forwardRef<
       if (setShowReplyInput) setShowReplyInput(false);
     }
 
-    useOnClickOutside(formRef, handleClickOutside);
+    useOnClickOutside(formRef as RefObject<HTMLElement>, handleClickOutside);
 
     return (
       <form ref={formRef} className={`${formClass}`}>
