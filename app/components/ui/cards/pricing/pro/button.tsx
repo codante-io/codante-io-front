@@ -116,7 +116,7 @@ export default function PriceButtonPro({
       onClick={checkout}
       disabled={showLoader}
       className={classNames(
-        "w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand",
+        "w-full p-2 text-white rounded-md hover:bg-opacity-70 sm:py-2 md:py-4 bg-brand cursor-pointer",
         showLoader && "cursor-not-allowed",
         showLoader && "bg-opacity-50 hover:bg-opacity-50",
         !showLoader && "hover:bg-opacity-70",

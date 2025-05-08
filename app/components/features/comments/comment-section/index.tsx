@@ -1,5 +1,5 @@
 import { useFetcher, useNavigate, useOutletContext } from "react-router";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState, RefObject } from "react";
 import type { Comment } from "~/lib/models/comments.server";
 import type { User } from "~/lib/models/user.server";
 import { formatName } from "~/lib/utils/format-name";
@@ -348,13 +348,13 @@ const CommentInput = React.forwardRef<
       if (setShowReplyInput) setShowReplyInput(false);
     }
 
-    useOnClickOutside(formRef, handleClickOutside);
+    useOnClickOutside(formRef as RefObject<HTMLElement>, handleClickOutside);
 
     return (
       <form ref={formRef} className={`${formClass}`}>
         <Card
           hover="brand-light"
-          className={`${padding} dark:border-background-700 border-gray-300 group dark:hover:border-background-600 dark:focus-within:border-background-600 focus-within:border-brand-300 flex items-center bg-background-50`}
+          className={`${padding} dark:border-background-700 border-gray-300 group dark:hover:border-background-600 dark:focus-within:border-background-600 focus-within:border-brand-300 flex items-center gap-2 bg-background-50`}
         >
           {
             <div className="hidden sm:block self-start">
@@ -364,7 +364,7 @@ const CommentInput = React.forwardRef<
           <TextareaAutosize
             {...props}
             name="comment"
-            className="focus:ring-0 resize-none text-sm sm:text-base grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+            className="p-2  focus:ring-0 resize-none text-sm sm:text-base grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
             placeholder="Escreva um comentário..."
             title="Experimente utilizar markdown para formatar seu comentário."
             ref={ref}
@@ -455,7 +455,7 @@ const CommentInfo = React.forwardRef<
                 <TextareaAutosize
                   ref={ref}
                   name="edit-comment"
-                  className="w-full h-full focus:ring-0 resize-none grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
+                  className="p-2 w-full h-full focus:ring-0  resize-none grow border-none dark:bg-background-800 rounded-lg dark:border-background-700 bg-background-50"
                   placeholder="Edite o comentário..."
                   defaultValue={comment.comment}
                   onInput={disableEditButtonFunction}
