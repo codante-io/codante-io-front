@@ -181,6 +181,13 @@
   }
 } */
 
+@layer base {
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+}
+
 @utility color-underline {
   @apply font-bold decoration-2 decoration-solid underline hover:opacity-90 transition-all;
 }

@@ -13,7 +13,7 @@ function CTAButtons() {
       <Link to="/mini-projetos">
         <MotionButton
           variant="register"
-          className="w-fit flex items-center gap-2 group cursor-pointer"
+          className="w-fit flex items-center gap-2 group"
           whileHover="hover"
           whileTap="hover"
         >
@@ -45,7 +45,7 @@ function CTAButtons() {
       <Link to="/workshops">
         <MotionButton
           variant="register"
-          className="w-fit flex items-center gap-2 group cursor-pointer"
+          className="w-fit flex items-center gap-2 group"
           whileHover="hover"
           whileTap="hover"
         >
