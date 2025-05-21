@@ -45,6 +45,7 @@ import CarouselWorkshops from "~/routes/_landing-page/components/workshops/carou
 import faqQuestions from "~/routes/_layout-app/_subscription/faq-questions";
 
 import CTAButtons from "~/routes/_landing-page/components/headline/cta-buttons";
+import WhatsButton from "~/components/features/button-whatsapp";
 
 export const loader = async () => {
   return {
@@ -58,6 +59,7 @@ export default function HomePage() {
   return (
     <AppLayout user={user}>
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
+        <WhatsButton />
         <BackgroundBlur />
         <Headline />
         <Challenges />
