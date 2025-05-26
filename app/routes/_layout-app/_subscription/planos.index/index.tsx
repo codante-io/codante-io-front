@@ -13,8 +13,7 @@ import { getHome } from "~/lib/models/home.server";
 
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
 import { features } from "./data";
-import { Crisp } from "crisp-sdk-web";
-import { useEffect } from "react";
+import WhatsButton from "~/components/features/button-whatsapp";
 
 export const loader = async () => {
   return {
@@ -26,12 +25,9 @@ export default function PlanosPage() {
   const { homeInfo } = useLoaderData<typeof loader>();
   const featuredTestimonials = homeInfo.featured_testimonials?.slice(0, 6);
 
-  useEffect(() => {
-    Crisp.configure("dec01a18-bf11-4fb8-a820-6a53760ba042");
-  }, []);
-
   return (
     <main className="container mx-auto">
+      <WhatsButton />
       <section className="flex flex-col items-start w-full">
         <BlurReveal className="flex flex-col items-start w-full gap-4">
           <h1 className="text-3xl sm:text-4xl text-start md:mt-10 font-lexend lg:text-5xl max-w-5xl">
