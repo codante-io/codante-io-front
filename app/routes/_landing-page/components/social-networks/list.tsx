@@ -13,19 +13,19 @@ import SocialNetworkCard from "~/routes/_landing-page/components/social-networks
 const socialNetworks = [
   {
     icon: <BsYoutube className="w-10 h-10" />,
-    description: "4.42k inscritos",
+    description: "5.31k inscritos",
     callToAction: "Inscreva-se",
     to: "https://www.youtube.com/@codante-io",
   },
   {
     icon: <BsDiscord className="w-10 h-10" />,
-    description: "1.6k membros",
+    description: "1.7k membros",
     callToAction: "Inscreva-se",
     to: "discord",
   },
   {
     icon: <BsGithub className="w-10 h-10" />,
-    description: "174 seguidores",
+    description: "195 seguidores",
     callToAction: "Siga",
     to: "https://github.com/codante-io",
   },
@@ -37,13 +37,13 @@ const socialNetworks = [
   },
   {
     icon: <BsInstagram className="w-10 h-10" />,
-    description: "607 seguidores",
+    description: "631 seguidores",
     callToAction: "Siga",
     to: "https://www.instagram.com/codante.io",
   },
   {
     icon: <BsTiktok className="w-10 h-10" />,
-    description: "1.1k seguidores",
+    description: "1.3k seguidores",
     callToAction: "Siga",
     to: "https://www.tiktok.com/@codante.io",
   },
