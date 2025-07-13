@@ -12,19 +12,21 @@ export default [
   eslintConfigPrettier,
 
   {
-    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     ignores: [
       "**/node_modules/",
       "**/dist/",
       "**/build/",
       "**/public/",
       "**/.husky/",
-      "**/.husky/",
       "**/.github/",
       "**/.vscode/",
       "**/.cache/",
-      "**/dist",
+      "**/.react-router/",
     ],
+  },
+
+  {
+    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     plugins: {
       react,
       "react-hooks": fixupPluginRules(reactHooks),
