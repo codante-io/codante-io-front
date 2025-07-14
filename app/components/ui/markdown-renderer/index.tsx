@@ -117,7 +117,7 @@ function isAlert(
   return false;
 }
 
-const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
+const generateClassOverrides = (colorMode: ColorMode) => ({
   h1: {
     component: H1WithDivider,
     props: {
@@ -225,7 +225,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
 
   p: {
     props: {
-      className: `${fontSize === "small" ? "text-sm" : ""}  font-light`,
+      className: "font-light",
     },
   },
 
@@ -249,7 +249,7 @@ const generateClassOverrides = (colorMode: ColorMode, fontSize?: string) => ({
 
   span: {
     props: {
-      className: fontSize === "small" ? "text-sm" : "",
+      className: "",
     },
   },
 });
@@ -290,13 +290,13 @@ export default function MarkdownRenderer({
       className={cn(
         "relative",
         prose && "prose dark:prose-invert prose-h2:mb-2",
-        fontSize === "small" ? "lg:prose-base" : "lg:prose-lg",
+        fontSize === "small" ? "prose-sm" : "lg:prose-lg",
         wrapperClasses,
       )}
     >
       <Markdown
         options={{
-          overrides: generateClassOverrides(colorMode, fontSize),
+          overrides: generateClassOverrides(colorMode),
           slugify: (text) => slugify(text, { lower: true }),
         }}
       >
