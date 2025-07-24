@@ -24,18 +24,18 @@ export default function FeaturedChallengeSection({
           <h3 className="font-cursive text-yellow-400 ">
             Mini Projeto em destaque
           </h3>
-          <h1 className="text-2xl font-bold text-white ">
+          <h1 className="text-2xl font-bold dark:text-white ">
             {featuredChallenge.name}
           </h1>
-          <p className="mt-3 text-gray-100 font-extralight md:text-sm lg:text-base max-w-lg">
+          <p className="mt-3 dark:text-gray-100 font-extralight md:text-sm lg:text-base max-w-lg">
             Participe do Mini Projeto da semana com a gente. Toda semana um novo
             Mini Projeto que será resolvido oficialmente pela equipe do Codante.
           </p>
           <p className="mt-4 text-sm ">
-            <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200">
+            <span className="inline-flex items-center gap-1 text-brand-400 dark:text-brand-200">
               <CalendarDaysIcon className="inline w-4 h-4" />
               Resolução:
-              <strong className="text-white dark:text-white ">
+              <strong className="text-gray-800 dark:text-white ">
                 {renderDate(featuredChallenge.solution_publish_date!)}
               </strong>
             </span>{" "}
@@ -105,7 +105,7 @@ function Countdown({
   if (!remainingTime)
     return (
       <p className="mt-2 text-sm">
-        <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+        <span className="inline-flex items-center gap-1 text-brand-400 dark:text-brand-200 ">
           <ClockIcon className="inline w-4 h-4 " />
           Faltam:
         </span>
@@ -116,16 +116,16 @@ function Countdown({
     <>
       <p className="mt-2 text-sm">
         {!timerEnded ? (
-          <span className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 ">
+          <span className="inline-flex items-center gap-1 text-brand-400 dark:text-brand-200 ">
             <ClockIcon className="inline w-4 h-4 " />
             Faltam:
-            <strong className="text-white dark:text-white">
+            <strong className="text-gray-800 dark:text-white">
               {days === 0 ? "" : `${days} ${days === 1 ? "dia" : "dias"}, `}
               {hours}:{minutes}:{seconds}
             </strong>
           </span>
         ) : (
-          <strong className="inline-flex items-center gap-1 text-brand-200 dark:text-brand-200 text-md">
+          <strong className="inline-flex items-center gap-1 text-brand-400 dark:text-brand-200 text-md">
             Tutorial será publicado em breve
           </strong>
         )}
