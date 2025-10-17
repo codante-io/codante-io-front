@@ -1,4 +1,4 @@
-name: Deploy v2
+name: Deploy v3
 
 on:
   push:
