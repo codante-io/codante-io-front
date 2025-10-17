@@ -9,7 +9,7 @@ import {
 } from "~/components/features/ranking/ranking-badges";
 import classNames from "~/lib/utils/class-names";
 import UserAvatar from "~/components/ui/user-avatar";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "react-router";
 
 // meta function
 export const meta: MetaFunction = () => {

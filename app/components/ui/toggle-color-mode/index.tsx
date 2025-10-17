@@ -55,7 +55,7 @@ export default function ToggleColorMode() {
       <motion.div
         className="flex items-center justify-center w-5 h-5 rounded-full bg-background-200/50 dark:bg-background-900"
         layout
-        transition={{ ...spring, staggerChildren: 0.07 }}
+        transition={{ ...(spring as any), staggerChildren: 0.07 }}
       >
         <div>
           {colorMode === "light" ? (

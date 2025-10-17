@@ -13,8 +13,8 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export async function action({ request }: { request: Request }) {
-  let formData = await request.formData();
+  const formData = await request.formData();
 
-  let redirectTo = (formData.get("redirectTo") as string) || "/";
+  const redirectTo = (formData.get("redirectTo") as string) || "/";
   return logout({ request, redirectTo });
 }

@@ -7,20 +7,26 @@ function TestimonialCard({
   name,
   socialMediaProfileName,
   socialMediaProfileUrl,
-  wide,
+  wide = false,
+  columnSpanClassName,
 }: {
   testimonial: string;
   avatarUrl: string;
   name: string;
   socialMediaProfileName: string;
   socialMediaProfileUrl: string;
-  wide: boolean;
+  wide?: boolean;
+  columnSpanClassName?: string;
 }) {
+  const spanClassName =
+    columnSpanClassName ??
+    (wide ? "col-span-1 xl:col-span-4" : "col-span-1 xl:col-span-3");
+
   return (
     <article
       className={cn(
-        "flex gap-6 shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg col-span-1 xl:col-span-3 bg-grainy overflow-hidden",
-        wide && "xl:col-span-4",
+        "flex gap-6 shrink-0 flex-col justify-between w-full bg-background-50 lg:h-96 dark:bg-background-800 p-5 text-sm rounded-xl border-[1.5px] border-background-200 dark:border-background-600 hover:border-blue-300 hover:shadow-lg dark:hover:border-background-600 transition-all dark:hover:shadow-lg bg-grainy overflow-hidden",
+        spanClassName,
       )}
     >
       <MarkdownRenderer

@@ -38,7 +38,7 @@ export async function getSubscriptionByPagarmeOrderId({
 }) {
   const axios = await createAxios(request);
 
-  let endpoint = `/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
+  const endpoint = `/pagarme/get-subscription-by-order-id/${pagarmeOrderId}`;
 
   try {
     const data: Subscription | null = await axios
@@ -46,7 +46,7 @@ export async function getSubscriptionByPagarmeOrderId({
       .then((res) => res.data.data);
 
     return data;
-  } catch (e) {
+  } catch {
     return null;
   }
 }

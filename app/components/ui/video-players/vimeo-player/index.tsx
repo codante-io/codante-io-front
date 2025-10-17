@@ -59,19 +59,17 @@ export default function VimeoPlayer({
       localStorage.setItem("videoSpeed", data.playbackRate.toString());
     });
 
-    async function getPlaybackRateFromLocalStorage() {
+    (async function getPlaybackRateFromLocalStorage() {
       if (localStorage.getItem("videoSpeed")) {
         const playbackRate = await player.getPlaybackRate();
         if (Number(localStorage.getItem("videoSpeed")) !== playbackRate) {
           player.setPlaybackRate(Number(localStorage.getItem("videoSpeed")));
         }
       }
-    }
+    })();
 
-    getPlaybackRateFromLocalStorage();
-
-    return async () => {
-      await player.destroy();
+    return () => {
+      player.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vimeoUrl]);

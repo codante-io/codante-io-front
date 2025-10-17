@@ -7,10 +7,7 @@ export async function loader({ request }: ActionFunctionArgs) {
   const redirectTo = url.searchParams.get("redirectTo") as string | null;
 
   try {
-    return await authenticator.authenticate("github", request, {
-      successRedirect: redirectTo ?? "/minha-conta",
-      failureRedirect: "/",
-    });
+    return await authenticator.authenticate("github", request);
   } catch (error) {
     if (!redirectTo) throw error;
     if (error instanceof Response && isRedirect(error)) {

@@ -5,7 +5,7 @@ import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import AssessmentCard from "./components/assessment-card";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "react-router";
 
 export const meta: MetaFunction = () => {
   const title = "Testes técnicos | Codante.io";

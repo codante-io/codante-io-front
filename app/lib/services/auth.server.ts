@@ -1,4 +1,3 @@
-import type { TypedResponse } from "react-router";
 import {
   createCookie,
   createCookieSessionStorage,
@@ -68,7 +67,9 @@ export async function login({
   redirectTo?: string;
 }) {
   let response: AxiosResponse;
-  const session = await sessionStorage.getSession(request.headers.get("Cookie"));
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
   const axios = await createAxios(request);
 
   try {
@@ -157,27 +158,18 @@ export async function currentToken({ request }: { request: Request }) {
 
 export async function user({
   request,
-  params,
 }: {
   request: Request;
-  params?: any;
-}): Promise<User | null | TypedResponse<User>> {
+}): Promise<User | null> {
   let response;
   const axios = await createAxios(request);
 
   try {
     response = await axios.get<User>("/user");
   } catch (error: any) {
-    // se o usuário não estiver autenticado, destrua a sessão e redirecione de volta.
+    // se o usuário não estiver autenticado, apenas retorne null
     if (error?.response?.status === 401) {
-      const session = await getSession(request.headers.get("Cookie"));
-      if (session.has("user")) {
-        return redirect(`/${params?.name}`, {
-          headers: {
-            "Set-Cookie": await sessionStorage.destroySession(session),
-          },
-        });
-      }
+      return null;
     }
     return null;
   }

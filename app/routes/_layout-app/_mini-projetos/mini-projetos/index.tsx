@@ -5,7 +5,7 @@ import { getChallenges } from "~/lib/models/challenge.server";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import FeaturedChallengeSection from "./featured-challenge-section";
 import { Search, OrderBy, FiltersSheet } from "./components/filters";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "react-router";
 
 export const meta: MetaFunction = () => {
   const title = "Mini Projetos | Codante.io";

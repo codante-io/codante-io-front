@@ -10,12 +10,12 @@ const SlidingText = ({
   speed?: number;
 }) => {
   // Animation settings for the sliding text
-  const slideAnimation = {
+  const slideAnimation: any = {
     x: ["-50%", "-200%"], // Slide from right to left
     transition: {
       x: {
         repeat: Infinity,
-        repeatType: "loop",
+        repeatType: "loop" as const,
         duration: speed,
         ease: "linear",
       },

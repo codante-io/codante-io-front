@@ -4,7 +4,7 @@ import { getPosts } from "~/lib/models/blog-post.server";
 import BlogPostCard from "./components/blog-post-card";
 import { getOgGeneratorUrl } from "~/lib/utils/path-utils";
 import type { LoaderFunctionArgs } from "react-router";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "react-router";
 
 export const meta: MetaFunction = () => {
   const title = "Blog | Codante.io";
