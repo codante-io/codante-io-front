@@ -16,8 +16,7 @@ import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
 import { registerMarketingLead } from "~/lib/models/lead.server";
 import { getHome } from "~/lib/models/home.server";
-import { MonitorSmartphone, FileText, Users } from "lucide-react";
-import { Calendar } from "lucide-react";
+import { MonitorSmartphone, FileText, Users, Calendar } from "lucide-react";
 
 const COURSE_TAG = "curso-ao-vivo-codando-com-ia-v1";
 
@@ -98,33 +97,33 @@ const schedule = [
   },
 ];
 
-const benefits = [
+const benefits: {
+  title: string;
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+}[] = [
   {
     title: "Aulas ao vivo",
     description:
       "Encontros sempre das 19h às 21h para tirar dúvidas em tempo real.",
-    image: "img/landing-page/mp-player.webp",
-    imageAlt: "Ilustração de player de vídeo representando aulas ao vivo",
+    icon: Broadcast,
   },
   {
     title: "Comunidade Codante PRO",
     description:
       "Acesso direto à comunidade para networking e suporte contínuo.",
-    image: "img/vendas/discord.webp",
-    imageAlt: "Ilustração representando a comunidade Codante PRO",
+    icon: Users2,
   },
   {
     title: "Certificado de conclusão",
     description:
       "Receba um certificado para adicionar ao portfólio e LinkedIn.",
-    image: "img/landing-page/certificate.webp",
-    imageAlt: "Mockup de certificado da Codante",
+    icon: Medal,
   },
   {
     title: "Assinatura anual inclusa",
     description: "Não assinantes ganham 1 ano de Codante ao garantir o curso.",
-    image: "img/vendas/bonus.webp",
-    imageAlt: "Ilustração simbolizando bônus de assinatura anual",
+    icon: Gift,
   },
 ];
 
@@ -395,11 +394,9 @@ function Benefits() {
               className="rounded-2xl border border-background-200 dark:border-background-700 bg-white/70 dark:bg-background-800/80 backdrop-blur-sm p-6"
             >
               <div className="flex flex-col sm:flex-row items-start gap-5">
-                <img
-                  src={benefit.image}
-                  alt={benefit.imageAlt}
-                  className="h-16 w-16 sm:h-20 sm:w-20 object-contain rounded-lg bg-background-50 dark:bg-background-900/60 p-2"
-                />
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-lg bg-background-50 dark:bg-background-900/60 border border-background-200 dark:border-background-700 flex items-center justify-center">
+                  <benefit.icon className="h-8 w-8 text-amber-500" />
+                </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
                     {benefit.title}
@@ -472,8 +469,9 @@ function Schedule() {
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
-          {schedule.map((session) => {
+          {schedule.map((session, index) => {
             const asset = instructorAssets[session.instructor];
+            const lessonNumber = String(index + 1).padStart(2, "0");
 
             return (
               <article
@@ -483,7 +481,7 @@ function Schedule() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
-                      {session.title}
+                      {lessonNumber} - {session.title}
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
                       {session.date} • {session.instructor}
@@ -501,29 +499,29 @@ function Schedule() {
                     </div>
                   )}
                 </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
-                    Teoria
-                  </h4>
-                  <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    {session.theoryTopics.map((topic) => (
-                      <li key={topic}>• {topic}</li>
-                    ))}
-                  </ul>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
+                      Teoria
+                    </h4>
+                    <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                      {session.theoryTopics.map((topic) => (
+                        <li key={topic}>• {topic}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
+                      Prática
+                    </h4>
+                    <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                      {session.practiceTopics.map((topic) => (
+                        <li key={topic}>• {topic}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
-                    Prática
-                  </h4>
-                  <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    {session.practiceTopics.map((topic) => (
-                      <li key={topic}>• {topic}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </article>
+              </article>
             );
           })}
         </div>

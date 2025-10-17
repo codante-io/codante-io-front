@@ -107,7 +107,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=20"
   },
   "lint-staged": {
     "**/*": [

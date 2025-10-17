@@ -1,6 +1,11 @@
-# Welcome to Remix!
+# Welcome to React Router!
 
-- [Remix Docs](https://remix.run/docs)
+## Requirements
+
+- Node.js >= 20
+- npm or yarn
+
+- [React Router Docs](https://reactrouter.com/docs)
 
 ## Development
 

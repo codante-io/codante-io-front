@@ -2,6 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+# CLAUDE.md
+
+## Quick Reference
+
+### Requirements
+
+- **Node.js**: >= 20
+- **Package Manager**: npm
+- **Framework**: React Router v7 (formerly Remix)
+- **React**: 19.2+
+- **TypeScript**: 5.9+
+
 ## Development Commands
 
 ```bash
