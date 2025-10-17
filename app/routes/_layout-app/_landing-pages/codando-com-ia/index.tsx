@@ -16,7 +16,15 @@ import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
 import { registerMarketingLead } from "~/lib/models/lead.server";
 import { getHome } from "~/lib/models/home.server";
-import { MonitorSmartphone, FileText, Users, Calendar } from "lucide-react";
+import {
+  MonitorSmartphone,
+  FileText,
+  Users,
+  Calendar,
+  Video,
+  Award,
+  Gift,
+} from "lucide-react";
 
 const COURSE_TAG = "curso-ao-vivo-codando-com-ia-v1";
 
@@ -106,19 +114,19 @@ const benefits: {
     title: "Aulas ao vivo",
     description:
       "Encontros sempre das 19h às 21h para tirar dúvidas em tempo real.",
-    icon: Broadcast,
+    icon: Video,
   },
   {
     title: "Comunidade Codante PRO",
     description:
       "Acesso direto à comunidade para networking e suporte contínuo.",
-    icon: Users2,
+    icon: Users,
   },
   {
     title: "Certificado de conclusão",
     description:
       "Receba um certificado para adicionar ao portfólio e LinkedIn.",
-    icon: Medal,
+    icon: Award,
   },
   {
     title: "Assinatura anual inclusa",
@@ -394,8 +402,8 @@ function Benefits() {
               className="rounded-2xl border border-background-200 dark:border-background-700 bg-white/70 dark:bg-background-800/80 backdrop-blur-sm p-6"
             >
               <div className="flex flex-col sm:flex-row items-start gap-5">
-                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-lg bg-background-50 dark:bg-background-900/60 border border-background-200 dark:border-background-700 flex items-center justify-center">
-                  <benefit.icon className="h-8 w-8 text-amber-500" />
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl bg-amber-500/10 border border-amber-400/30 dark:border-amber-500/40 flex items-center justify-center text-amber-600 dark:text-amber-300">
+                  <benefit.icon className="h-8 w-8" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
@@ -476,14 +484,14 @@ function Schedule() {
             return (
               <article
                 key={session.id}
-                className="rounded-2xl border border-background-200 dark:border-background-700 bg-white/80 dark:bg-background-900/80 backdrop-blur p-6 flex flex-col gap-4"
+                className="rounded-2xl border border-background-200/60 dark:border-background-800/80 bg-gradient-to-br from-background-50/95 via-white/85 to-amber-50/40 dark:from-background-900/80 dark:via-background-900/65 dark:to-background-800/55 shadow-lg backdrop-blur p-6 flex flex-col gap-4"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                       {lessonNumber} - {session.title}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className="text-sm text-gray-600 dark:text-gray-400/90">
                       {session.date} • {session.instructor}
                     </p>
                   </div>
@@ -501,20 +509,20 @@ function Schedule() {
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
+                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                       Teoria
                     </h4>
-                    <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300/90">
                       {session.theoryTopics.map((topic) => (
                         <li key={topic}>• {topic}</li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
+                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
                       Prática
                     </h4>
-                    <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300/90">
                       {session.practiceTopics.map((topic) => (
                         <li key={topic}>• {topic}</li>
                       ))}
