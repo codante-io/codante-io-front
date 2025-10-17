@@ -21,6 +21,23 @@ import { Calendar } from "lucide-react";
 
 const COURSE_TAG = "curso-ao-vivo-codando-com-ia-v1";
 
+const instructorAssets: Record<
+  string,
+  {
+    imageSrc: string;
+    imageAlt: string;
+  }
+> = {
+  "Ícaro Harry": {
+    imageSrc: "/img/vendas/icaro.webp",
+    imageAlt: "Foto do instrutor Ícaro Harry",
+  },
+  "Roberto Cestari": {
+    imageSrc: "/img/vendas/cestari.webp",
+    imageAlt: "Foto do instrutor Roberto Cestari",
+  },
+};
+
 const schedule = [
   {
     id: "aula-01",
@@ -455,27 +472,35 @@ function Schedule() {
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
-          {schedule.map((session) => (
-            <article
-              key={session.id}
-              className="rounded-2xl border border-background-200 dark:border-background-700 bg-white/80 dark:bg-background-900/80 backdrop-blur p-6 flex flex-col gap-4"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
-                    {session.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {session.date} • {session.instructor}
-                  </p>
-                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                    Placeholder para miniatura do instrutor
-                  </p>
+          {schedule.map((session) => {
+            const asset = instructorAssets[session.instructor];
+
+            return (
+              <article
+                key={session.id}
+                className="rounded-2xl border border-background-200 dark:border-background-700 bg-white/80 dark:bg-background-900/80 backdrop-blur p-6 flex flex-col gap-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
+                      {session.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {session.date} • {session.instructor}
+                    </p>
+                  </div>
+                  {asset ? (
+                    <img
+                      src={asset.imageSrc}
+                      alt={asset.imageAlt}
+                      className="h-16 w-16 rounded-full object-cover border border-background-200 dark:border-background-700"
+                    />
+                  ) : (
+                    <div className="h-16 w-16 rounded-full border border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center text-xs text-gray-500">
+                      Foto
+                    </div>
+                  )}
                 </div>
-                <div className="h-16 w-16 rounded-full border border-dashed border-gray-400 dark:border-gray-600 flex items-center justify-center text-xs text-gray-500">
-                  Foto
-                </div>
-              </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
@@ -499,7 +524,8 @@ function Schedule() {
                 </div>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
