@@ -24,6 +24,7 @@ import {
   Video,
   Award,
   Gift,
+  User,
 } from "lucide-react";
 
 const COURSE_TAG = "curso-ao-vivo-codando-com-ia-v1";
@@ -466,7 +467,7 @@ function Schedule() {
       <div className="container flex flex-col gap-6">
         <div>
           <span className="text-sm uppercase tracking-wide text-amber-500">
-            Sempre das 19h às 21h
+            Aulas das 19h às 21h
           </span>
           <h2 className="text-3xl md:text-4xl font-lexend mt-2 text-gray-800 dark:text-white">
             Cronograma ao vivo
@@ -488,11 +489,19 @@ function Schedule() {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                      {lessonNumber} - {session.title}
+                    <h3 className="text-xl font-semibold text-brand-500 dark:text-brand-300">
+                      <span className="font-normal text-gray-400 dark:text-gray-500">
+                        {lessonNumber} -
+                      </span>{" "}
+                      {session.title}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400/90">
-                      {session.date} • {session.instructor}
+                    <p className="text-sm text-gray-600 dark:text-gray-400/90 flex items-center gap-2 mt-3">
+                      <Calendar className="h-4 w-4" />
+                      {session.date}/2025
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400/90 flex items-center gap-2 mt-1 mb-4">
+                      <User className="h-4 w-4" />
+                      {session.instructor}
                     </p>
                   </div>
                   {asset ? (
@@ -509,7 +518,7 @@ function Schedule() {
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                    <h4 className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
                       Teoria
                     </h4>
                     <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300/90">
@@ -519,7 +528,7 @@ function Schedule() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100 uppercase tracking-wide">
+                    <h4 className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
                       Prática
                     </h4>
                     <ul className="mt-2 space-y-2 text-sm text-gray-600 dark:text-gray-300/90">
