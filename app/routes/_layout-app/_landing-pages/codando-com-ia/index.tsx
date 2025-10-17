@@ -86,20 +86,28 @@ const benefits = [
     title: "Aulas ao vivo",
     description:
       "Encontros sempre das 19h às 21h para tirar dúvidas em tempo real.",
+    image: "img/landing-page/mp-player.webp",
+    imageAlt: "Ilustração de player de vídeo representando aulas ao vivo",
   },
   {
     title: "Comunidade Codante PRO",
     description:
       "Acesso direto à comunidade para networking e suporte contínuo.",
+    image: "img/vendas/discord.webp",
+    imageAlt: "Ilustração representando a comunidade Codante PRO",
   },
   {
     title: "Certificado de conclusão",
     description:
       "Receba um certificado para adicionar ao portfólio e LinkedIn.",
+    image: "img/landing-page/certificate.webp",
+    imageAlt: "Mockup de certificado da Codante",
   },
   {
     title: "Assinatura anual inclusa",
     description: "Não assinantes ganham 1 ano de Codante ao garantir o curso.",
+    image: "img/vendas/bonus.webp",
+    imageAlt: "Ilustração simbolizando bônus de assinatura anual",
   },
 ];
 
@@ -245,7 +253,7 @@ function Hero({ actionData }: { actionData: LeadFeedback | undefined }) {
               <span>05/11/2025 a 10/12/2025 • aulas das 19h às 21h</span>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 mt-8">
+          {/* <div className="grid gap-4 sm:grid-cols-2 mt-8">
             <HighlightCard
               title="Preço garantido"
               description="R$599 à vista ou em 12x. Assinantes Codante PRO participam sem custo extra."
@@ -254,7 +262,7 @@ function Hero({ actionData }: { actionData: LeadFeedback | undefined }) {
               title="E ganhe 1 ano de Codante"
               description="Compre o curso e receba 1 ano de acesso Codante!"
             />
-          </div>
+          </div> */}
           <ul className="flex flex-col sm:flex-row gap-3 text-sm text-gray-700 dark:text-gray-200">
             <li className="px-4 py-2 rounded-full bg-amber-100 text-amber-900 dark:bg-amber-500/10 dark:text-amber-300">
               Aulas ao vivo com dúvidas respondidas
@@ -274,24 +282,24 @@ function Hero({ actionData }: { actionData: LeadFeedback | undefined }) {
   );
 }
 
-function HighlightCard({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
-  return (
-    <div className="rounded-xl border border-background-200 dark:border-background-700 bg-white/80 dark:bg-background-800/80 backdrop-blur-sm p-5 shadow-sm">
-      <h3 className="text-base font-semibold text-gray-900 dark:text-gray-50">
-        {title}
-      </h3>
-      <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-        {description}
-      </p>
-    </div>
-  );
-}
+// function HighlightCard({
+//   title,
+//   description,
+// }: {
+//   title: string;
+//   description: string;
+// }) {
+//   return (
+//     <div className="rounded-xl border border-background-200 dark:border-background-700 bg-white/80 dark:bg-background-800/80 backdrop-blur-sm p-5 shadow-sm">
+//       <h3 className="text-base font-semibold text-gray-900 dark:text-gray-50">
+//         {title}
+//       </h3>
+//       <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+//         {description}
+//       </p>
+//     </div>
+//   );
+// }
 
 function LeadFormCard({
   actionData,
@@ -369,15 +377,21 @@ function Benefits() {
               key={benefit.title}
               className="rounded-2xl border border-background-200 dark:border-background-700 bg-white/70 dark:bg-background-800/80 backdrop-blur-sm p-6"
             >
-              <div className="mb-4 h-12 w-12 rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-300 dark:bg-amber-500/10 flex items-center justify-center text-sm font-semibold uppercase">
-                Img
+              <div className="flex flex-col sm:flex-row items-start gap-5">
+                <img
+                  src={benefit.image}
+                  alt={benefit.imageAlt}
+                  className="h-16 w-16 sm:h-20 sm:w-20 object-contain rounded-lg bg-background-50 dark:bg-background-900/60 p-2"
+                />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
+                    {benefit.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                    {benefit.description}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
-                {benefit.title}
-              </h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                {benefit.description}
-              </p>
             </div>
           ))}
         </div>
@@ -410,7 +424,7 @@ function Audience() {
             </li>
           </ul>
         </div>
-        <div className="rounded-3xl border border-amber-200 dark:border-amber-500/40 bg-amber-500/10 dark:bg-amber-500/10 p-8">
+        {/* <div className="rounded-3xl border border-amber-200 dark:border-amber-500/40 bg-amber-500/10 dark:bg-amber-500/10 p-8">
           <h3 className="text-xl font-semibold text-amber-700 dark:text-amber-300">
             Não é para você se...
           </h3>
@@ -418,7 +432,7 @@ function Audience() {
             <li>• Busca um curso totalmente introdutório sem código.</li>
             <li>• Prefere conteúdo gravado sem interação ao vivo.</li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </section>
   );
