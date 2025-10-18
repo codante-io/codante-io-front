@@ -10,25 +10,50 @@ import { Link } from "react-router";
 
 type CarouselSubmissionCardProps = {
   submissionImageUrl: string;
-  avatar: UserAvatarType;
+  avatar?: UserAvatarType | null;
   challengeSlug?: string;
+  user?: {
+    name?: string | null;
+    github_user?: string | null;
+    avatar_url?: string | null;
+  };
 };
 
 export default function CarouselSubmissionCard({
   submissionImageUrl,
   avatar,
   challengeSlug,
+  user,
 }: CarouselSubmissionCardProps) {
-  const submissionUrl = `/mini-projetos/${challengeSlug}/submissoes/${avatar.github_user}`;
+  const safeAvatar: UserAvatarType = avatar ?? {
+    badge: null,
+    avatar_url: user?.avatar_url ?? "",
+    name: user?.name ?? "Codante Member",
+    github_user: user?.github_user ?? undefined,
+  };
+
+  const githubUser = safeAvatar.github_user ?? user?.github_user ?? undefined;
+  const submissionUrl =
+    challengeSlug && githubUser
+      ? `/mini-projetos/${challengeSlug}/submissoes/${githubUser}`
+      : challengeSlug
+        ? `/mini-projetos/${challengeSlug}`
+        : undefined;
   return (
     <SubmissionCard size="sm">
-      <Link to={submissionUrl}>
+      {submissionUrl ? (
+        <Link to={submissionUrl}>
+          <BlurImageWrapper>
+            <SubmissionCardImage imageUrl={submissionImageUrl} />
+          </BlurImageWrapper>
+        </Link>
+      ) : (
         <BlurImageWrapper>
           <SubmissionCardImage imageUrl={submissionImageUrl} />
         </BlurImageWrapper>
-      </Link>
+      )}
       <SubmissionCardFooter>
-        <CarouselSubmissionCardFooter avatar={avatar} />
+        <CarouselSubmissionCardFooter avatar={safeAvatar} />
       </SubmissionCardFooter>
     </SubmissionCard>
   );

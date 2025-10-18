@@ -1367,6 +1367,7 @@ function Submissions() {
                 challengeSlug={submission.challenge.slug}
                 submissionImageUrl={submission.submission_image_url}
                 avatar={submission.avatar}
+                user={submission.user}
               />
             ))}
           </section>
@@ -1378,6 +1379,7 @@ function Submissions() {
                 challengeSlug={submission.challenge.slug}
                 submissionImageUrl={submission.submission_image_url}
                 avatar={submission.avatar}
+                user={submission.user}
               />
             ))}
           </section>
