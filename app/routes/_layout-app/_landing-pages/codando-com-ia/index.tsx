@@ -34,6 +34,8 @@ import {
   Code,
   FolderOpen,
 } from "lucide-react";
+import TooltipWrapper from "~/components/ui/tooltip";
+import { BsInfoCircle } from "react-icons/bs";
 
 const COURSE_TAG = "curso-ao-vivo-codando-com-ia-v1";
 
@@ -285,16 +287,26 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const email = (formData.get("email") as string) ?? "";
   const name = (formData.get("name") as string) ?? "";
   const phone = (formData.get("phone") as string) ?? "";
+  const isCodantePro = formData.get("isCodantePro") === "true";
+  const leadTag = isCodantePro ? `${COURSE_TAG}-assinante-codante` : COURSE_TAG;
 
   const leadResponse = await registerMarketingLead(request, {
     email,
     name,
     phone,
-    tag: COURSE_TAG,
+    tag: leadTag,
   });
 
   if (leadResponse?.error) {
     return leadResponse;
+  }
+
+  if (isCodantePro) {
+    return {
+      success:
+        leadResponse?.success ??
+        "Cadastro realizado. Como assinante Codante PRO, você já tem acesso gratuito ao curso!",
+    } satisfies LeadFeedback;
   }
 
   try {
@@ -374,7 +386,7 @@ function Hero({ actionData }: { actionData: LeadFeedback | undefined }) {
             <span className="text-sm uppercase tracking-wide text-amber-500">
               🔴 Curso ao vivo do Codante
             </span>
-            <h1 className="text-4xl xl:text-5xl font-lexend max-w-3xl dark:text-white text-gray-800">
+            <h1 className="text-4xl xl:text-7xl font-bold font-lexend max-w-3xl dark:text-white text-gray-800">
               Codando com IA
             </h1>
             <p className="text-lg font-light max-w-2xl text-gray-700 dark:text-gray-500">
@@ -444,16 +456,12 @@ function LeadFormCard({
     name: "",
     phone: "",
     email: "",
+    isCodantePro: false,
   });
 
-  const phoneDigits = formValues.phone.replace(/\D/g, "");
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const isFormValid =
-    formValues.name.trim().length > 0 &&
-    phoneDigits.length >= 10 &&
-    formValues.email.trim().length > 0;
-  const isDisabled = !isFormValid || isSubmitting;
+  const isDisabled = isSubmitting;
 
   return (
     <div className="w-full rounded-2xl border border-background-200 dark:border-background-700 bg-white dark:bg-background-900 p-6 shadow-xl">
@@ -464,7 +472,12 @@ function LeadFormCard({
         Avise a gente que você quer participar. Vamos te enviar a abertura das
         vagas e os próximos passos direto no seu e-mail.
       </p>
-      <Form method="post" replace className="flex flex-col gap-4" noValidate>
+      <Form
+        id="lead-form"
+        method="post"
+        replace
+        className="flex flex-col gap-4"
+      >
         <label className="flex flex-col gap-2 text-sm font-medium text-gray-800 dark:text-gray-200">
           Nome
           <input
@@ -514,6 +527,27 @@ function LeadFormCard({
             className="w-full rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-4 py-2 text-base focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
         </label>
+        <div className="flex items-center justify-start gap-2 rounded-lg  px-4 pl-2 py-3">
+          <label className="flex items-center gap-3 text-sm font-medium text-gray-800 dark:text-gray-200">
+            <input
+              type="checkbox"
+              name="isCodantePro"
+              value="true"
+              checked={formValues.isCodantePro}
+              onChange={(event) =>
+                setFormValues((prev) => ({
+                  ...prev,
+                  isCodantePro: event.target.checked,
+                }))
+              }
+              className="h-4 w-4 rounded border-background-300 text-amber-500 focus:ring-amber-500"
+            />
+            <span>Já sou assinante do Codante PRO</span>
+          </label>
+          <TooltipWrapper text="Se você já é assinante do Codante, você já tem acesso a esse curso gratuitamente, basta se inscrever.">
+            <BsInfoCircle className="h-5 w-5 text-gray-400 hover:text-gray-600 dark:text-background-500 dark:hover:text-background-300" />
+          </TooltipWrapper>
+        </div>
         <button
           type="submit"
           disabled={isDisabled}
@@ -1026,7 +1060,7 @@ function OfferCard({
   accent: string;
 }) {
   const scrollToForm = () => {
-    const formElement = document.querySelector('form[method="post"]');
+    const formElement = document.getElementById("lead-form");
     if (formElement) {
       formElement.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -1170,23 +1204,18 @@ function LeadFormCompact({
     name: "",
     phone: "",
     email: "",
+    isCodantePro: false,
   });
 
-  const compactPhoneDigits = formValues.phone.replace(/\D/g, "");
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const isFormValid =
-    formValues.name.trim().length > 0 &&
-    compactPhoneDigits.length >= 10 &&
-    formValues.email.trim().length > 0;
-  const isDisabled = !isFormValid || isSubmitting;
+  const isDisabled = isSubmitting;
 
   return (
     <Form
       method="post"
       replace
       className="flex flex-col gap-3 bg-white dark:bg-background-900 rounded-2xl border border-amber-200 dark:border-amber-500/30 p-6 shadow-sm"
-      noValidate
     >
       <label className="flex flex-col text-xs font-semibold text-gray-700 dark:text-gray-300 gap-1">
         Nome
@@ -1237,6 +1266,27 @@ function LeadFormCompact({
           className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
         />
       </label>
+      <div className="flex items-center justify-between rounded-lg   px-3 py-2">
+        <label className="flex items-center gap-2 text-xs font-semibold text-gray-700 dark:text-gray-300">
+          <input
+            type="checkbox"
+            name="isCodantePro"
+            value="true"
+            checked={formValues.isCodantePro}
+            onChange={(event) =>
+              setFormValues((prev) => ({
+                ...prev,
+                isCodantePro: event.target.checked,
+              }))
+            }
+            className="h-3.5 w-3.5 rounded border-background-300 text-amber-500 focus:ring-amber-500"
+          />
+          <span>Já sou assinante do Codante PRO</span>
+        </label>
+        <TooltipWrapper text="Se você já é assinante do Codante, você já tem acesso a esse curso gratuitamente, basta se inscrever.">
+          <BsInfoCircle className="h-4 w-4 text-gray-400 hover:text-gray-600 dark:text-background-500 dark:hover:text-background-300" />
+        </TooltipWrapper>
+      </div>
       <button
         type="submit"
         disabled={isDisabled}
