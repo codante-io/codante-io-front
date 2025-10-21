@@ -1177,13 +1177,13 @@ function Faq() {
 function FinalCta({ actionData }: { actionData: LeadFeedback | undefined }) {
   return (
     <section className="flex justify-center w-full mt-32 mb-24">
-      <div className="container rounded-3xl border border-amber-200 dark:border-amber-500/40 bg-amber-500/10 dark:bg-amber-500/10 p-10">
+      <div className="container rounded-3xl border border-blue-200 dark:border-blue-500/40 bg-blue-500/10 dark:bg-blue-500/10 p-10">
         <div className="grid gap-8 md:grid-cols-[1.3fr_1fr] items-center">
           <div className="flex flex-col gap-4">
             <h2 className="text-3xl font-lexend text-gray-800 dark:text-white">
               Garanta prioridade no primeiro curso ao vivo da Codante
             </h2>
-            <p className="text-sm text-amber-900/80 dark:text-amber-100">
+            <p className="text-sm text-blue-900/80 dark:text-blue-100">
               Preencha seus dados e se inscreva. As vagas são limitadas. Temos
               certeza que você vai se surpreender com o curso.
             </p>
@@ -1215,7 +1215,7 @@ function LeadFormCompact({
     <Form
       method="post"
       replace
-      className="flex flex-col gap-3 bg-white dark:bg-background-900 rounded-2xl border border-amber-200 dark:border-amber-500/30 p-6 shadow-sm"
+      className="flex flex-col gap-3 bg-white dark:bg-background-900 rounded-2xl border border-blue-200 dark:border-blue-500/30 p-6 shadow-sm"
     >
       <label className="flex flex-col text-xs font-semibold text-gray-700 dark:text-gray-300 gap-1">
         Nome
@@ -1230,7 +1230,7 @@ function LeadFormCompact({
               name: event.target.value,
             }))
           }
-          className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
       <label className="flex flex-col text-xs font-semibold text-gray-700 dark:text-gray-300 gap-1">
@@ -1247,7 +1247,7 @@ function LeadFormCompact({
               phone: event.target.value,
             }))
           }
-          className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
       <label className="flex flex-col text-xs font-semibold text-gray-700 dark:text-gray-300 gap-1">
@@ -1263,7 +1263,7 @@ function LeadFormCompact({
               email: event.target.value,
             }))
           }
-          className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className="rounded-lg border border-background-200 dark:border-background-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
       <div className="flex items-center justify-between rounded-lg   px-3 py-2">
@@ -1279,7 +1279,7 @@ function LeadFormCompact({
                 isCodantePro: event.target.checked,
               }))
             }
-            className="h-3.5 w-3.5 rounded border-background-300 text-amber-500 focus:ring-amber-500"
+            className="h-3.5 w-3.5 rounded border-background-300 text-blue-500 focus:ring-blue-500"
           />
           <span>Já sou assinante do Codante PRO</span>
         </label>
@@ -1292,10 +1292,10 @@ function LeadFormCompact({
         disabled={isDisabled}
         aria-disabled={isDisabled}
         aria-busy={isSubmitting}
-        className={`inline-flex items-center justify-center gap-2 rounded-lg text-gray-900 font-semibold py-2 text-sm transition-colors ${
+        className={`inline-flex items-center justify-center gap-2 rounded-lg text-gray-900 dark:text-white font-semibold py-2 text-sm transition-colors ${
           isDisabled
-            ? "bg-amber-200 cursor-not-allowed opacity-70"
-            : "bg-amber-600 hover:bg-amber-700"
+            ? "bg-blue-200 cursor-not-allowed opacity-70"
+            : "bg-blue-600 hover:bg-blue-700"
         }`}
       >
         {isSubmitting && (
