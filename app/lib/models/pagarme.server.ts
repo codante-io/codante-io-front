@@ -83,3 +83,36 @@ export async function getCodandoComIaOrderStatus({
     throw new Error(fallbackError);
   }
 }
+
+export type CheckoutLinkV2Response = {
+  url: string;
+  id: string;
+};
+
+export async function createCheckoutLinkV2({
+  request,
+  planSlug,
+}: {
+  request: Request;
+  planSlug: string;
+}): Promise<CheckoutLinkV2Response> {
+  const axios = await createAxios(request);
+
+  try {
+    const response = await axios.post<CheckoutLinkV2Response>(
+      "/pagarme/checkout-link-v2",
+      {
+        plan_slug: planSlug,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError<{ message?: string }>;
+    const fallbackError =
+      axiosError.response?.data?.message ??
+      "Não foi possível criar o link de checkout.";
+
+    throw new Error(fallbackError);
+  }
+}
