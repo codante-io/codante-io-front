@@ -18,7 +18,7 @@ import FaqItem from "~/components/ui/faq-item";
 import { BlurRevealText } from "~/components/ui/motion/blur-reveal/text";
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
 import { registerMarketingLead } from "~/lib/models/lead.server";
-import { createCodandoComIaCheckout } from "~/lib/models/pagarme.server";
+import { createCheckoutLinkV2 } from "~/lib/models/pagarme.server";
 import { getHome } from "~/lib/models/home.server";
 import {
   MonitorSmartphone,
@@ -310,22 +310,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   try {
-    const checkout = await createCodandoComIaCheckout({
+    const checkout = await createCheckoutLinkV2({
       request,
-      name,
-      email,
-      phone,
-      tag: COURSE_TAG,
+      planSlug: "codando-com-ia-v1",
     });
 
-    if (!checkout.checkoutLink) {
+    if (!checkout.url) {
       return {
         error:
           "Não foi possível iniciar o checkout agora. Por favor, tente novamente em instantes.",
       };
     }
 
-    return redirect(checkout.checkoutLink);
+    return redirect(checkout.url);
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error
