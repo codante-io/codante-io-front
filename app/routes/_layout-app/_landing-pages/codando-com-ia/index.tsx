@@ -10,6 +10,7 @@ import {
 } from "react-router";
 import type { ActionFunctionArgs, MetaFunction } from "react-router";
 import { withMask } from "use-mask-input";
+import { useMetaPixel } from "~/lib/hooks/useMetaPixel";
 
 import BackgroundBlur from "~/components/_layouts/background-blur";
 import { Error500 } from "~/components/features/error-handling/500";
@@ -460,6 +461,24 @@ function LeadFormCard({
   const isSubmitting = navigation.state === "submitting";
   const isDisabled = isSubmitting;
 
+  const { trackLead, trackInitiateCheckout } = useMetaPixel();
+
+  const handleFormSubmit = () => {
+    // Track Lead event
+    trackLead({
+      value: "0",
+      currency: "BRL",
+    });
+
+    // Track InitiateCheckout se não for Codante PRO
+    if (!formValues.isCodantePro) {
+      trackInitiateCheckout({
+        value: "0",
+        currency: "BRL",
+      });
+    }
+  };
+
   return (
     <div className="w-full rounded-2xl border border-background-200 dark:border-background-700 bg-white dark:bg-background-900 p-6 shadow-xl">
       <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-50">
@@ -474,6 +493,7 @@ function LeadFormCard({
         method="post"
         replace
         className="flex flex-col gap-4"
+        onSubmit={handleFormSubmit}
       >
         <label className="flex flex-col gap-2 text-sm font-medium text-gray-800 dark:text-gray-200">
           Nome
