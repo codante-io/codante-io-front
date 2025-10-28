@@ -13,6 +13,7 @@ import {
 } from "react-router";
 import { Toaster } from "react-hot-toast";
 import { GoogleTagManager } from "./components/_layouts/google-tag-manager";
+import { MetaPixel } from "./components/_layouts/meta-pixel";
 import PublicEnv, { getPublicEnv } from "./components/_layouts/public-env";
 import { Error500 } from "./components/features/error-handling/500";
 import NotFound from "./components/features/error-handling/not-found";
@@ -113,6 +114,7 @@ export async function loader({ request }: { request: Request }) {
       ENV: {
         BASE_URL: environment().BASE_URL,
         NODE_ENV: environment().NODE_ENV,
+        META_PIXEL_ID: process.env.META_PIXEL_ID || "",
       },
     },
     { headers },
@@ -138,6 +140,7 @@ export default function App() {
         )}
       >
         <script dangerouslySetInnerHTML={{ __html: DarkModeScriptInnerHtml }} />
+        <MetaPixel pixelId={loaderData.ENV.META_PIXEL_ID} />
         <GoogleTagManager
           environment={process.env.NODE_ENV ?? "development"}
           gtmTrackingId="GTM-NXHM2J7"
