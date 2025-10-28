@@ -1,7 +1,7 @@
 import type React from "react";
 import type { MetaFunction } from "react-router";
 
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useOutletContext } from "react-router";
 import { parseISO, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -25,6 +25,7 @@ import { RiLiveLine } from "react-icons/ri";
 import { cn } from "~/lib/utils/cn";
 import { useState } from "react";
 import ProSpanWrapper from "~/components/ui/pro-span-wrapper";
+import type { User } from "~/lib/models/user.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -67,6 +68,7 @@ function getBorderColor(type: string) {
 
 export default function Calendar() {
   const events = useLoaderData<typeof loader>();
+  const { user } = useOutletContext<{ user: User | null }>();
 
   const [selectedFilter, setSelectedFilter] = useState<"upcoming" | "previous">(
     "upcoming",
@@ -254,33 +256,35 @@ export default function Calendar() {
           ))}
         </div>
       </div>
-      <div className="xl:w-1/3 w-full hidden xl:block">
-        <Link to="/planos" className="sticky top-20">
-          <Card
-            border="default"
-            className="w-full text-sm rounded-lg overflow-hidden bg-grainy mt-32"
-          >
-            <CardHeader>
-              <CardTitle className="md:text-md lg:text-lg xl:text-lg text-xs">
-                <span className="font-medium text-gray-700 dark:text-gray-50">
-                  Conheça o Codante <ProSpanWrapper>PRO</ProSpanWrapper>
-                </span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-gray-700 dark:text-gray-300">
-              <p>
-                Tenha acesso completo a todos os nossos Mini Projetos e
-                Workshops.
-              </p>
-              <img
-                src="/img/agenda-promo.webp"
-                alt="Codante Pro"
-                className="w-full"
-              />
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
+      {(!user || !user.is_pro) && (
+        <div className="xl:w-1/3 w-full hidden xl:block">
+          <Link to="/planos" className="sticky top-20">
+            <Card
+              border="default"
+              className="w-full text-sm rounded-lg overflow-hidden bg-grainy mt-32"
+            >
+              <CardHeader>
+                <CardTitle className="md:text-md lg:text-lg xl:text-lg text-xs">
+                  <span className="font-medium text-gray-700 dark:text-gray-50">
+                    Conheça o Codante <ProSpanWrapper>PRO</ProSpanWrapper>
+                  </span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-gray-700 dark:text-gray-300">
+                <p>
+                  Tenha acesso completo a todos os nossos Mini Projetos e
+                  Workshops.
+                </p>
+                <img
+                  src="/img/agenda-promo.webp"
+                  alt="Codante Pro"
+                  className="w-full"
+                />
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
