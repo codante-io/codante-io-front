@@ -1,4 +1,4 @@
-import { useState, type ComponentType } from "react";
+import { useState, useEffect, type ComponentType } from "react";
 import {
   Form,
   isRouteErrorResponse,
@@ -39,6 +39,13 @@ import TooltipWrapper from "~/components/ui/tooltip";
 import { BsInfoCircle } from "react-icons/bs";
 
 const COURSE_TAG = "curso-ao-vivo-codando-com-ia-v1";
+const LEAD_FORM_STORAGE_KEY = "codante-codando-com-ia-lead-form";
+
+type StoredLeadData = {
+  name: string;
+  email: string;
+  phone: string;
+};
 
 const instructorAssets: Record<
   string,
@@ -291,6 +298,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const isCodantePro = formData.get("isCodantePro") === "true";
   const leadTag = isCodantePro ? `${COURSE_TAG}-assinante-codante` : COURSE_TAG;
 
+  // Always attempt to register the lead (for tracking/analytics)
   const leadResponse = await registerMarketingLead(request, {
     email,
     name,
@@ -298,18 +306,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     tag: leadTag,
   });
 
-  if (leadResponse?.error) {
-    return leadResponse;
-  }
-
+  // For Pro users, return the lead response (success or error)
+  // They don't need checkout, so we show them the registration result
   if (isCodantePro) {
-    return {
-      success:
-        leadResponse?.success ??
-        "Cadastro realizado. Como assinante Codante PRO, você já tem acesso gratuito ao curso!",
-    } satisfies LeadFeedback;
+    return leadResponse?.error
+      ? leadResponse
+      : ({
+          success:
+            leadResponse?.success ??
+            "Cadastro realizado. Como assinante Codante PRO, você já tem acesso gratuito ao curso!",
+        } satisfies LeadFeedback);
   }
 
+  // For non-Pro users, always proceed to checkout
+  // Lead registration errors (like duplicate) should not block checkout
   try {
     const checkout = await createCheckoutLinkV2({
       request,
@@ -463,6 +473,24 @@ function LeadFormCard({
 
   const { trackLead, trackInitiateCheckout } = useMetaPixel();
 
+  // Load saved form data from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem(LEAD_FORM_STORAGE_KEY);
+    if (stored) {
+      try {
+        const data = JSON.parse(stored) as StoredLeadData;
+        setFormValues((prev) => ({
+          ...prev,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+        }));
+      } catch {
+        // Ignore parsing errors silently
+      }
+    }
+  }, []);
+
   const handleFormSubmit = () => {
     // Track Lead event
     trackLead({
@@ -476,6 +504,20 @@ function LeadFormCard({
         value: "0",
         currency: "BRL",
       });
+
+      // Save to localStorage ONLY for non-Pro users
+      try {
+        localStorage.setItem(
+          LEAD_FORM_STORAGE_KEY,
+          JSON.stringify({
+            name: formValues.name,
+            email: formValues.email,
+            phone: formValues.phone,
+          }),
+        );
+      } catch {
+        // Ignore storage errors silently
+      }
     }
   };
 
@@ -502,6 +544,7 @@ function LeadFormCard({
             name="name"
             type="text"
             placeholder="Seu nome"
+            value={formValues.name}
             onChange={(event) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -518,6 +561,7 @@ function LeadFormCard({
             name="phone"
             type="text"
             placeholder="(11) 99999-9999"
+            value={formValues.phone}
             ref={withMask("(99) 99999-9999")}
             onChange={(event) =>
               setFormValues((prev) => ({
@@ -535,6 +579,7 @@ function LeadFormCard({
             name="email"
             type="email"
             placeholder="seuemail@exemplo.com"
+            value={formValues.email}
             onChange={(event) =>
               setFormValues((prev) => ({
                 ...prev,
@@ -1228,11 +1273,62 @@ function LeadFormCompact({
   const isSubmitting = navigation.state === "submitting";
   const isDisabled = isSubmitting;
 
+  const { trackLead, trackInitiateCheckout } = useMetaPixel();
+
+  // Load saved form data from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem(LEAD_FORM_STORAGE_KEY);
+    if (stored) {
+      try {
+        const data = JSON.parse(stored) as StoredLeadData;
+        setFormValues((prev) => ({
+          ...prev,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+        }));
+      } catch {
+        // Ignore parsing errors silently
+      }
+    }
+  }, []);
+
+  const handleFormSubmit = () => {
+    // Track Lead event
+    trackLead({
+      value: "0",
+      currency: "BRL",
+    });
+
+    // Track InitiateCheckout se não for Codante PRO
+    if (!formValues.isCodantePro) {
+      trackInitiateCheckout({
+        value: "0",
+        currency: "BRL",
+      });
+
+      // Save to localStorage ONLY for non-Pro users
+      try {
+        localStorage.setItem(
+          LEAD_FORM_STORAGE_KEY,
+          JSON.stringify({
+            name: formValues.name,
+            email: formValues.email,
+            phone: formValues.phone,
+          }),
+        );
+      } catch {
+        // Ignore storage errors silently
+      }
+    }
+  };
+
   return (
     <Form
       method="post"
       replace
       className="flex flex-col gap-3 bg-white dark:bg-background-900 rounded-2xl border border-blue-200 dark:border-blue-500/30 p-6 shadow-sm"
+      onSubmit={handleFormSubmit}
     >
       <label className="flex flex-col text-xs font-semibold text-gray-700 dark:text-gray-300 gap-1">
         Nome
@@ -1241,6 +1337,7 @@ function LeadFormCompact({
           name="name"
           type="text"
           placeholder="Seu nome"
+          value={formValues.name}
           onChange={(event) =>
             setFormValues((prev) => ({
               ...prev,
@@ -1257,6 +1354,7 @@ function LeadFormCompact({
           name="phone"
           type="text"
           placeholder="(11) 99999-9999"
+          value={formValues.phone}
           ref={withMask("(99) 99999-9999")}
           onChange={(event) =>
             setFormValues((prev) => ({
@@ -1274,6 +1372,7 @@ function LeadFormCompact({
           name="email"
           type="email"
           placeholder="seuemail@exemplo.com"
+          value={formValues.email}
           onChange={(event) =>
             setFormValues((prev) => ({
               ...prev,
