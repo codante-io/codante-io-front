@@ -122,7 +122,7 @@ export default function WorkshopSlug() {
           subtitle={`${
             hasHappened(workshop)
               ? "Aguarde que em breve estará disponível na plataforma."
-              : `Você poderá assisti-lo ao vivo ${
+              : `Assista ao vivo ${
                   publishedDate
                     ? `no dia ${publishedDate}${
                         publishedTime ? ` às ${publishedTime}` : ""

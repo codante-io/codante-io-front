@@ -37,6 +37,18 @@ export default function WorkshopDetails({
         {workshop.status === "streaming" && workshop.streaming_url && (
           <YoutubePlayer youtubeEmbedUrl={workshop.streaming_url} />
         )}
+
+        {/* Imagem Promocional para workshops "soon" */}
+        {workshop.status === "soon" && workshop.image_url && (
+          <div className="w-full aspect-video rounded-xl overflow-hidden mb-8">
+            <img
+              src={workshop.image_url}
+              alt={`Imagem promocional - ${workshop.name}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
         {workshop.status === "published" && (
           <NextLessonPreview
             lessonName={nextLesson.name}
