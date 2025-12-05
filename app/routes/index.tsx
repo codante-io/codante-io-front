@@ -46,7 +46,6 @@ import faqQuestions from "~/routes/_layout-app/_subscription/faq-questions";
 
 import CTAButtons from "~/routes/_landing-page/components/headline/cta-buttons";
 import WhatsButton from "~/components/features/button-whatsapp";
-import CodandoComIaBanner from "~/routes/_landing-page/components/codando-com-ia-banner";
 
 export const loader = async () => {
   return {
@@ -62,7 +61,6 @@ export default function HomePage() {
       <div className="flex flex-col items-center justify-center text-gray-900 dark:text-gray-50">
         <WhatsButton />
         <BackgroundBlur />
-        <CodandoComIaBanner />
         <Headline />
         <Challenges />
         <Workshops />
