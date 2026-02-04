@@ -105,7 +105,6 @@ export default function HomePage() {
         <Founders />
         <Testimonial />
         <FAQ />
-        <WhatsAppButton />
       </div>
     </>
   );
@@ -1493,29 +1492,5 @@ function TestimonialCard({
         </div>
       </div>
     </article>
-  );
-}
-
-function WhatsAppButton() {
-  return (
-    <Link
-      to="https://wa.me/5531991652767?text=Olá, gostaria de saber mais sobre a Black Friday do Codante"
-      target="_blank"
-      rel="noreferrer"
-      className="fixed lg:bottom-10 lg:right-10 bottom-5 right-5 flex items-center gap-2 z-50"
-    >
-      <motion.img
-        initial="hidden"
-        whileInView="visible"
-        transition={{ duration: 0.8 }}
-        variants={{
-          visible: { opacity: 1, scaleZ: 1 },
-          hidden: { opacity: 0, scaleZ: 0 },
-        }}
-        src="/img/black-friday/whatsapp.svg"
-        alt="WhatsApp"
-        className="w-16 hover:animate-bounce shadow-lg cursor-pointer"
-      />
-    </Link>
   );
 }

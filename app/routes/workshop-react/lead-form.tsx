@@ -65,7 +65,7 @@ const LeadForm = () => {
             />
           </div>
           <div className="mb-4">
-            <Label className="dark:text-gray-200">Telefone (WhatsApp):</Label>
+            <Label className="dark:text-gray-200">Telefone:</Label>
             <Input
               className="dark:bg-background-50 dark:text-gray-800"
               name="phone"

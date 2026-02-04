@@ -12,17 +12,9 @@ import type { ChallengeUser, User } from "~/lib/models/user.server";
 import UserAvatar from "~/components/ui/user-avatar";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import ReactionsButton from "~/components/features/reactions/reactions-button";
-import {
-  LinkedinShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
+import { LinkedinShareButton, TwitterShareButton } from "react-share";
 import { useEffect, useState, Fragment } from "react";
-import {
-  RiLinkedinBoxLine,
-  RiTwitterXLine,
-  RiWhatsappLine,
-} from "react-icons/ri";
+import { RiLinkedinBoxLine, RiTwitterXLine } from "react-icons/ri";
 import { formatName } from "~/lib/utils/format-name";
 import toast from "react-hot-toast";
 import { HiOutlineLink } from "react-icons/hi";
@@ -342,11 +334,6 @@ function ShareSection({
           <RiLinkedinBoxLine title="Linkedin" className="text-lg" />
         </div>
       </LinkedinShareButton>
-      <WhatsappShareButton url={location}>
-        <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
-          <RiWhatsappLine title="WhatsApp" className="text-lg" />
-        </div>
-      </WhatsappShareButton>
       <TwitterShareButton hashtags={["codante", "front"]} url={location}>
         <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
           <RiTwitterXLine title="Twitter" className="text-lg" />

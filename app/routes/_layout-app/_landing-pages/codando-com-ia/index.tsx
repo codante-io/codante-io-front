@@ -207,7 +207,7 @@ const benefits: {
     icon: Gift,
   },
   {
-    title: "Grupo de WhatsApp exclusivo",
+    title: "Grupo exclusivo da comunidade",
     description:
       "Conecte-se com outros alunos e instrutores para trocar experiências e dúvidas.",
     icon: MessageCircle,

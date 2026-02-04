@@ -13,7 +13,6 @@ import { getHome } from "~/lib/models/home.server";
 
 import TestimonialCard from "~/routes/_landing-page/components/testimonials/card";
 import { features } from "./data";
-import WhatsButton from "~/components/features/button-whatsapp";
 
 export const loader = async () => {
   return {
@@ -27,7 +26,6 @@ export default function PlanosPage() {
 
   return (
     <main className="container mx-auto">
-      <WhatsButton />
       <section className="flex flex-col items-start w-full">
         <BlurReveal className="flex flex-col items-start w-full gap-4">
           <h1 className="text-3xl sm:text-4xl text-start md:mt-10 font-lexend lg:text-5xl max-w-5xl">
