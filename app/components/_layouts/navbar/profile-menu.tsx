@@ -33,13 +33,11 @@ export default function ProfileMenu({ user }: { user: User }) {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-background-800 ring-1 ring-black ring-opacity-5 focus:outline-hidden">
-          <Menu.Item>
-            <>
-              <div className="block px-4 py-2 text-xs font-light text-gray-500 dark:text-gray-300">
-                Olá {user.name}
-              </div>
-              <hr className="dark:border-gray-800" />
-            </>
+          <Menu.Item as="div">
+            <div className="block px-4 py-2 text-xs font-light text-gray-500 dark:text-gray-300">
+              Olá {user.name}
+            </div>
+            <hr className="dark:border-gray-800" />
           </Menu.Item>
           <Menu.Item>
             {({ active }) => (
