@@ -87,7 +87,9 @@ describe("ChallengeCard", () => {
     renderWithRouter(() => (
       <ChallengeCard challenge={popularChallenge as any} />
     ));
-    expect(screen.getByText("+10")).toBeInTheDocument();
+    const extraCount = screen.getByText("+10");
+    expect(extraCount).toBeInTheDocument();
+    expect(extraCount).toHaveClass("relative", "z-10");
   });
 
   it("has cursor-not-allowed for soon challenges", () => {

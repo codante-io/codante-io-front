@@ -101,7 +101,7 @@ export default function ChallengeCard({
                   ),
                 )}
                 {challenge.enrolled_users_count > 5 && (
-                  <div className="flex size-7 items-center justify-center rounded-full bg-blue-100 text-[9px] font-medium text-blue-800 ring-2 ring-white dark:ring-background-800 dark:bg-blue-900 dark:text-blue-200">
+                  <div className="relative z-10 flex size-7 items-center justify-center rounded-full bg-blue-100 text-[9px] font-medium text-blue-800 ring-2 ring-white dark:ring-background-800 dark:bg-blue-900 dark:text-blue-200">
                     +{challenge.enrolled_users_count - 5}
                   </div>
                 )}

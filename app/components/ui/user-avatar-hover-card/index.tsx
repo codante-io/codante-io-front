@@ -72,7 +72,7 @@ export default function UserAvatarHoverCard({
         ref={triggerRef}
         onMouseEnter={openCard}
         onMouseLeave={closeCard}
-        className="relative z-10"
+        className={isOpen ? "relative z-20" : "relative"}
       >
         {children}
       </span>
