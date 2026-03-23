@@ -10,7 +10,10 @@
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
@@ -86,17 +89,22 @@
     "@react-router/remix-routes-option-adapter": "^7.10.1",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/howler": "^2.2.12",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/vimeo__player": "^2.18.3",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
+    "jsdom": "^27.0.1",
     "lint-staged": "^15.5.2",
     "prettier": "^3.7.4",
     "remix-flat-routes": "^0.8",
@@ -104,7 +112,8 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1",
     "vite": "^7.2.6",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=20"
