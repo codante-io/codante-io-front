@@ -1,5 +1,6 @@
 import { Authenticator } from "remix-auth";
 import { GitHubStrategy } from "remix-auth-github";
+import { isAxiosError } from "axios";
 import { environment } from "~/lib/models/environment";
 import { createAxios } from "~/lib/services/axios.server";
 
@@ -15,13 +16,28 @@ const gitHubStrategy = new GitHubStrategy(
   async (params) => {
     const axios = await createAxios();
 
-    const res = await axios.post("/github-login", {
-      github_token: params.tokens.accessToken(),
-    });
-    const token = res.data.token;
+    try {
+      const res = await axios.post("/github-login", {
+        github_token: params.tokens.accessToken(),
+      });
+      const token = res.data.token;
 
-    // Vamos enviar o token e o is_new_signup value para o cliente
-    return { token: token, is_new_signup: res.data.is_new_signup };
+      // Vamos enviar o token e o is_new_signup value para o cliente
+      return { token: token, is_new_signup: res.data.is_new_signup };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const status = error.response?.status ?? "unknown";
+        const data = error.response?.data;
+        const backendMessage =
+          (typeof data?.error === "string" && data.error) ||
+          (typeof data?.message === "string" && data.message) ||
+          error.message;
+
+        throw new Error(`GitHub login failed (${status}): ${backendMessage}`);
+      }
+
+      throw error;
+    }
   },
 );
 

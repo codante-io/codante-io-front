@@ -7,6 +7,8 @@ import classNames from "~/lib/utils/class-names";
 import UserAvatar from "~/components/ui/user-avatar";
 
 export default function ProfileMenu({ user }: { user: User }) {
+  const githubUser = user.github_user ?? user.avatar?.github_user;
+
   return (
     <Menu as="div" className="relative z-50">
       <div>
@@ -65,6 +67,21 @@ export default function ProfileMenu({ user }: { user: User }) {
               </Link>
             )}
           </Menu.Item>
+          {githubUser && (
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to={`/perfil/${githubUser}`}
+                  className={classNames(
+                    active ? "dark:bg-background-800/50 bg-background-50" : "",
+                    "block px-4 py-2 text-sm dark:text-gray-50 text-gray-700",
+                  )}
+                >
+                  Meu Perfil
+                </Link>
+              )}
+            </Menu.Item>
+          )}
           <Menu.Item>
             {({ active }) => (
               <Form action="/logout" method="post">

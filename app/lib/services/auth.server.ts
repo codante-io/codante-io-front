@@ -107,10 +107,15 @@ export async function logout({
 
   const user = session.get("user");
 
-  if (!user?.token) return redirect(redirectTo);
-  const axios = await createAxios(request);
+  if (user?.token) {
+    const axios = await createAxios(request);
 
-  await axios.post("/logout");
+    try {
+      await axios.post("/logout");
+    } catch {
+      // Even if the API token is already invalid, we still need to clear the app session.
+    }
+  }
 
   return redirect(redirectTo, {
     headers: {
@@ -134,9 +139,13 @@ export async function logoutWithRedirectAfterLogin({
 
   const user = session.get("user");
 
-  if (!user?.token) return redirect(`/login?redirectTo=${redirectTo}`);
-
-  await axios.post("/logout");
+  if (user?.token) {
+    try {
+      await axios.post("/logout");
+    } catch {
+      // We still want to drop the local session and continue the re-login flow.
+    }
+  }
 
   return redirect(`/login?redirectTo=${redirectTo}`, {
     headers: {

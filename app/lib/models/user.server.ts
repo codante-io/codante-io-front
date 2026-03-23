@@ -53,6 +53,59 @@ export type UserAvatar = {
   github_user?: string;
 };
 
+export type UserProfile = {
+  user: {
+    name: string;
+    github_user: string;
+    linkedin_user: string | null;
+    avatar: UserAvatar;
+    created_at: string;
+  };
+  stats: {
+    points: number;
+    completed_challenge_count: number;
+    received_reaction_count: number;
+  };
+  completed_challenges: ProfileChallengeSubmission[];
+  certificates: ProfileCertificate[];
+};
+
+export type ProfileChallengeSubmission = {
+  id: number;
+  submission_image_url: string;
+  submission_url: string;
+  submitted_at: string;
+  challenge: {
+    name: string;
+    slug: string;
+    image_url: string;
+  };
+};
+
+export type ProfileCertificate = {
+  id: string;
+  metadata: {
+    certifiable_source_name: string;
+    certifiable_slug: string;
+    [key: string]: unknown;
+  };
+  status: string;
+  created_at: string;
+};
+
+export async function getUserProfile(
+  githubUser: string,
+): Promise<UserProfile | null> {
+  const axios = await createAxios();
+  return axios
+    .get(`/users/${githubUser}/profile`)
+    .then((res) => res.data.data)
+    .catch((e) => {
+      if (e.response?.status === 404) return null;
+      throw e;
+    });
+}
+
 export async function impersonate(
   request: any,
   userId: string,

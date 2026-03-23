@@ -7,6 +7,12 @@ vi.mock("~/components/ui/tooltip", () => ({
   default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
+vi.mock("~/components/ui/user-avatar-hover-card", () => ({
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="avatar-hover-card">{children}</div>
+  ),
+}));
+
 const mockChallenge = {
   id: 1,
   name: "Landing Page com Tailwind",
@@ -90,5 +96,18 @@ describe("ChallengeCard", () => {
     ));
     const link = screen.getByRole("link");
     expect(link.className).toContain("cursor-not-allowed");
+  });
+
+  it("does not render avatar hover cards by default", () => {
+    renderWithRouter(() => <ChallengeCard challenge={mockChallenge as any} />);
+    expect(screen.queryByTestId("avatar-hover-card")).not.toBeInTheDocument();
+  });
+
+  it("renders avatar hover cards when enabled", () => {
+    renderWithRouter(() => (
+      <ChallengeCard challenge={mockChallenge as any} showAvatarHoverCard />
+    ));
+
+    expect(screen.getAllByTestId("avatar-hover-card")).toHaveLength(2);
   });
 });

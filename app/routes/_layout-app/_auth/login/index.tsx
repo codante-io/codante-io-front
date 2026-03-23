@@ -10,7 +10,7 @@ import {
 } from "react-router";
 import { useState } from "react";
 import { useColorMode } from "~/lib/contexts/color-mode-context";
-import { login, sessionStorage } from "~/lib/services/auth.server";
+import { login, user as getUser } from "~/lib/services/auth.server";
 import AuthCard from "../auth-card";
 import LoadingButton from "~/components/features/form/loading-button";
 import type { LoaderFunctionArgs } from "react-router";
@@ -59,15 +59,12 @@ export async function action({ request }: { request: Request }) {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  // await authenticator.isAuthenticated(request, {
-  //   successRedirect: "/",
-  // });
+  const user = await getUser({ request });
 
-  const session = await sessionStorage.getSession(
-    request.headers.get("Cookie"),
-  );
+  if (user instanceof Response) {
+    return user;
+  }
 
-  const user = session.get("user");
   if (user) {
     return redirect("/");
   }

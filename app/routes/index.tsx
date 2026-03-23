@@ -200,7 +200,11 @@ function Challenges() {
           <section className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 auto-rows-min mt-24">
             {orderedChallengeList.map((challenge) => (
               <div key={challenge.slug} className="mx-auto">
-                <ChallengeCard openInNewTab challenge={challenge} />
+                <ChallengeCard
+                  openInNewTab
+                  showAvatarHoverCard
+                  challenge={challenge}
+                />
               </div>
             ))}
           </section>
