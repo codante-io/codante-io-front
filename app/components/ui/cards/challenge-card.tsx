@@ -3,6 +3,7 @@ import type { ChallengeCard as ChallengeCardType } from "~/lib/models/challenge.
 
 import classNames from "~/lib/utils/class-names";
 import UserAvatar from "../user-avatar";
+import UserAvatarHoverCard from "~/components/ui/user-avatar-hover-card";
 import CardItemLevel from "~/components/ui/cards/card-item-level";
 import CardItemMainTechnology from "~/components/ui/cards/card-item-main-technology";
 import { ArrowRight } from "lucide-react";
@@ -13,10 +14,12 @@ export default function ChallengeCard({
   challenge,
   className = "",
   openInNewTab,
+  showAvatarHoverCard = false,
 }: {
   challenge: ChallengeCardType;
   openInNewTab?: boolean;
   className?: string;
+  showAvatarHoverCard?: boolean;
 }) {
   return (
     <Link
@@ -75,13 +78,28 @@ export default function ChallengeCard({
           <div className="flex justify-between w-full mt-8 gap-1 border-t border-gray-200 dark:border-gray-800 pt-4">
             <section className="flex items-center">
               <div className="flex -space-x-[9px]">
-                {challenge?.avatars?.map((avatar, index) => (
-                  <UserAvatar
-                    key={index}
-                    avatar={avatar}
-                    className="size-7 rounded-full ring-2 ring-white dark:ring-background-800"
-                  />
-                ))}
+                {challenge?.avatars?.map((avatar, index) =>
+                  showAvatarHoverCard ? (
+                    <UserAvatarHoverCard
+                      key={index}
+                      avatar={avatar}
+                      profileTarget={openInNewTab ? "_blank" : "_self"}
+                    >
+                      <UserAvatar
+                        avatar={avatar}
+                        className="size-7 rounded-full ring-2 ring-white dark:ring-background-800"
+                        showTooltip={false}
+                      />
+                    </UserAvatarHoverCard>
+                  ) : (
+                    <UserAvatar
+                      key={index}
+                      avatar={avatar}
+                      className="size-7 rounded-full ring-2 ring-white dark:ring-background-800"
+                      showTooltip={false}
+                    />
+                  ),
+                )}
                 {challenge.enrolled_users_count > 5 && (
                   <div className="flex size-7 items-center justify-center rounded-full bg-blue-100 text-[9px] font-medium text-blue-800 ring-2 ring-white dark:ring-background-800 dark:bg-blue-900 dark:text-blue-200">
                     +{challenge.enrolled_users_count - 5}
