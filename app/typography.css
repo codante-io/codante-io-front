@@ -371,3 +371,10 @@
     }
   }
 }
+
+/* Small prose variant for comments */
+.prose-sm {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  max-width: 65ch;
+}
