@@ -5,16 +5,8 @@ import { useEffect, useState } from "react";
 import CertificatePDF from "~/components/_layouts/certificate-pdf";
 import { formatDate } from "~/lib/utils/format-date";
 import { Card } from "~/components/ui/cards/card";
-import {
-  LinkedinShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share";
-import {
-  RiLinkedinBoxLine,
-  RiTwitterXLine,
-  RiWhatsappLine,
-} from "react-icons/ri";
+import { LinkedinShareButton, TwitterShareButton } from "react-share";
+import { RiLinkedinBoxLine, RiTwitterXLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { IoCopySharp } from "react-icons/io5";
 import SearchCertificate from "../components/search-certificate";
@@ -142,14 +134,6 @@ export default function CertificadoId() {
                   />
                 </div>
               </LinkedinShareButton>
-              <WhatsappShareButton url={location}>
-                <div className="hover:text-brand-500 hover:opacity-70 rounded-md flex p-1">
-                  <RiWhatsappLine
-                    title="WhatsApp"
-                    className="text-lg text-gray-600 dark:text-gray-400"
-                  />
-                </div>
-              </WhatsappShareButton>
             </div>
           </div>
 
